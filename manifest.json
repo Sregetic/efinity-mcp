@@ -1,0 +1,153 @@
+{
+  "version": "0.1.0",
+  "repository": "Sregetic/efinity-mcp",
+  "github_code_uploaded": false,
+  "github_bootstrap_commit": "e00f5dd5d050e273c5a2b0962b3a8df2e0b402fc",
+  "validation": {
+    "passed": 52,
+    "skipped": 1,
+    "real_mcp_protocol_verified": false,
+    "windows_verified": false,
+    "real_efinity_verified": false,
+    "fpga_verified": false,
+    "compileall": "passed",
+    "wheel_build": "passed"
+  },
+  "files": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "bytes": 948,
+      "sha256": "16a62663eacb65cb768d62016af990fbdd7bb538b3303ed7f7f1ecd843eeb23f"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 220,
+      "sha256": "939f6d95cf1ebbbda7e2d114e727e7be47cb77ef3219a9d8d6af71935c7b968b"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 1168,
+      "sha256": "26109e231817d00f91fad91db4e8e02c13c410ca98bd1dadb7098abad92765e5"
+    },
+    {
+      "path": "IMPLEMENTATION_STATUS.md",
+      "bytes": 2635,
+      "sha256": "be3da6a77402d118f1990c939e6e6535f150e3e98446192437a098b5ebd5ec3b"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1081,
+      "sha256": "2e824abe12869a36a809d755f390dfc9d67c14cf69cb17479b8caa06afd383e2"
+    },
+    {
+      "path": "README.md",
+      "bytes": 6288,
+      "sha256": "6c2084fac91a2982daead4cbc3e6840f559ad86900ca02a2a0fba8b1d9230a89"
+    },
+    {
+      "path": "SECURITY.md",
+      "bytes": 2605,
+      "sha256": "70c00c99a1834d777a5ff078733969c605a7fae4a5a1f4e6f9346f89eee9369e"
+    },
+    {
+      "path": "docs/roadmap.md",
+      "bytes": 1744,
+      "sha256": "2c1deb3f291590c43aae0b3065a75e05d4907e8b03f2448ad668b97f8bfcd24e"
+    },
+    {
+      "path": "docs/validation.md",
+      "bytes": 2513,
+      "sha256": "5eaab4b9830e6162c13a2effed522c364bb318ac77dd03becfa64f02cfee74e6"
+    },
+    {
+      "path": "docs/vendor-interfaces.md",
+      "bytes": 2331,
+      "sha256": "c25c41446ac3f49e26d85f6b905a3ff4749a49159158c5c6ab487b4adf1af18a"
+    },
+    {
+      "path": "examples/codex.toml",
+      "bytes": 600,
+      "sha256": "757ef11aeaa1c6fab9ccfa146e674e8e660bd3c2fa279fe872f63a29e1cd2517"
+    },
+    {
+      "path": "examples/efinity-mcp.linux.toml",
+      "bytes": 307,
+      "sha256": "44269181082704968fdd223653b8cffc15c0b3b37bf10002bda9428ca64827ac"
+    },
+    {
+      "path": "examples/efinity-mcp.windows.toml",
+      "bytes": 550,
+      "sha256": "19418394a139304516f5d9be948564db11ef85b8b2241b78eb75b2b7322595f2"
+    },
+    {
+      "path": "pyproject.toml",
+      "bytes": 762,
+      "sha256": "2c7530a282c8c75dfb7bd71e7ead222d07f9c57a55d4ee44ed3ef105e3377702"
+    },
+    {
+      "path": "src/efinity_mcp/__init__.py",
+      "bytes": 100,
+      "sha256": "6e6be18c5c4f611c722bc8f765b9561c9da5b2dc503379a5b21f8289ed04c9ba"
+    },
+    {
+      "path": "src/efinity_mcp/__main__.py",
+      "bytes": 1312,
+      "sha256": "ea268fb4b9b307f2d669e172cb3fcf6d89d55524a183cbc4e85f2951017f22ea"
+    },
+    {
+      "path": "src/efinity_mcp/adapter.py",
+      "bytes": 4667,
+      "sha256": "e5b5b916657e03103b7acb10f03f9353bc624fe41a35604a924a2871e87bc498"
+    },
+    {
+      "path": "src/efinity_mcp/config.py",
+      "bytes": 5928,
+      "sha256": "4d903cf099838e6c3e8790487583278deedbf794655e62d2efb9e05a152fdc25"
+    },
+    {
+      "path": "src/efinity_mcp/jobs.py",
+      "bytes": 10603,
+      "sha256": "65974bd1cb00bd16426d2a7819f05b445bd8400b48c2e094ff0f718b62d53098"
+    },
+    {
+      "path": "src/efinity_mcp/reports.py",
+      "bytes": 4980,
+      "sha256": "dfb243bf982e6d2bbec4251216018bcb9535d3c2a3b8cfa2ba7e4de28094857d"
+    },
+    {
+      "path": "src/efinity_mcp/server.py",
+      "bytes": 4824,
+      "sha256": "1ef06cb17eb9cc02ca5869616a3b67c6d2d398fba34e0b32eeba828d693cf5f2"
+    },
+    {
+      "path": "src/efinity_mcp/service.py",
+      "bytes": 6021,
+      "sha256": "dda2dd2bab348ae8420d8b5729f6dcdade01a838c1bb3863696496d4cefec3f1"
+    },
+    {
+      "path": "test-results/local-pytest.txt",
+      "bytes": 270,
+      "sha256": "561806a82345a84d86a4f36e5e0482cce708306e6a4b37b6449417c687b4cdf7"
+    },
+    {
+      "path": "test-results/local-pytest.xml",
+      "bytes": 5324,
+      "sha256": "c25190444e578aff0d2856f8b5b25e2c489621ac54fd88aac6b0c430cf3573b6"
+    },
+    {
+      "path": "tests/conftest.py",
+      "bytes": 3439,
+      "sha256": "a2ef60499d9be03338e23c80a2ff9b0c4e9cf1b9dba5ebd057e5d915ed5ebf48"
+    },
+    {
+      "path": "tests/test_core.py",
+      "bytes": 10571,
+      "sha256": "7b4e4558df801f913661ad34401aeae499ec35fb2d1ea3dfc12cc313547d48dd"
+    },
+    {
+      "path": "tests/test_mcp.py",
+      "bytes": 1854,
+      "sha256": "c91818dcb92f978e69e61f4126521072966a6472796bbb390a752f7b27a214a6"
+    }
+  ]
+}

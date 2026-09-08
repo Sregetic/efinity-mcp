@@ -1,0 +1,9 @@
+# Merge this table into your local MCP client's Codex configuration.
+# Replace paths; this is not a repository-level auto-execution instruction.
+[mcp_servers.efinity]
+command = 'C:\work\efinity-mcp\.venv\Scripts\python.exe'
+args = ['-m', 'efinity_mcp', '--config', 'C:\work\efinity-mcp\efinity-mcp.local.toml']
+startup_timeout_sec = 30
+tool_timeout_sec = 30
+# Start without any hardware tools. Add them only after separate operator review.
+enabled_tools = ['doctor', 'list_projects', 'get_project', 'preview_build', 'run_build', 'get_job', 'cancel_job', 'get_job_log', 'list_reports', 'read_report']

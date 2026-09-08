@@ -1,0 +1,4 @@
+....................................................                     [100%]
+=========================== short test summary info ============================
+SKIPPED [1] tests/test_mcp.py:15: MCP SDK unavailable locally; CI requires it
+52 passed, 1 skipped in 17.77s

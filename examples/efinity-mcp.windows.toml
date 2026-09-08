@@ -1,0 +1,20 @@
+# Edit these example paths; never commit your local config, licenses or secrets.
+workspace = 'C:\fpga-work'
+
+[efinity]
+home = 'C:\Efinity\2026.1'
+# Optional override: the vendor Python EXECUTABLE, not a .bat wrapper or the MCP venv.
+# python = 'C:\Efinity\2026.1\python3\python.exe'
+
+[projects.edge]
+xml = 'edge_demo/demo.xml'
+output_dir = 'outflow'
+# Operator must review the project, all scripts, I/O assignments and constraints first.
+trusted = false
+
+[limits]
+timeout_seconds = 3600
+max_log_bytes = 16777216
+
+[hardware]
+allow_programming = false

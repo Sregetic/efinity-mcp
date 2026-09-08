@@ -1,0 +1,17 @@
+workspace = '/home/user/fpga-work'
+
+[efinity]
+home = '/opt/efinity/2026.1'
+# python = '/opt/efinity/2026.1/python3/bin/python3'
+
+[projects.edge]
+xml = 'edge_demo/demo.xml'
+output_dir = 'outflow'
+trusted = false
+
+[limits]
+timeout_seconds = 3600
+max_log_bytes = 16777216
+
+[hardware]
+allow_programming = false
