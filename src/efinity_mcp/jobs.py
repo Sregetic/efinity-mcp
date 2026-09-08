@@ -135,7 +135,7 @@ class Jobs:
                 if cancel.is_set():
                     record["status"] = "cancelled"
                 else:
-                    proc = subprocess.Popen(command.argv, cwd=command.cwd, env=env,
+                    proc = subprocess.Popen(command.popen_args, cwd=command.cwd, env=env,
                                             stdin=subprocess.DEVNULL, stdout=handle,
                                             stderr=subprocess.STDOUT, shell=False,
                                             start_new_session=os.name != "nt",
@@ -159,6 +159,9 @@ class Jobs:
                             record["status"] = "log_limit_exceeded"
                         else:
                             record["status"] = "succeeded" if proc.returncode == 0 else "failed"
+                            if proc.returncode != 0:
+                                record["error"] = (f"Vendor process exited with code {proc.returncode}. "
+                                                   "Read get_job_log for the command output.")
             if output is not None:
                 after = catalog(output)
                 old = {f["path"]: f for f in before["files"]}

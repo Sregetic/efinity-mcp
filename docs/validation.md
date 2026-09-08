@@ -14,8 +14,8 @@
 ## 首轮 Windows 验收顺序
 
 1. 在 Efinity GUI 中打开 VF-Ti60F225 厂商示例，记录 IDE/补丁版本、器件完整型号、板卡版本。先手动证明原工程可构建；保留原件。
-2. 用独立 Python 虚拟环境安装本服务，将审核后的工程复制到 ASCII 路径并登记 TOML。保持 `trusted=false` 与 `allow_programming=false`，运行 `--doctor`。
-3. 通过 MCP 检查工具列表、`get_project` 和 `preview_build`。人工核对实际 Efinity Python、脚本路径和输出目录。
+2. 用独立 Python 虚拟环境安装本服务，将审核后的工程复制到 ASCII 路径并登记 TOML。保持 `trusted=false` 与 `allow_programming=false`，运行 `--doctor`；也可先用 `--init-config` 生成不授权执行的新配置。
+3. 运行 `--check-mcp` 测试真实协议连接，再用 `--print-codex-config` 输出客户端配置段。通过 MCP 检查工具列表、`get_project` 和 `preview_build`。人工核对实际 Efinity Python、脚本路径和输出目录。
 4. 审核全部 Tcl、脚本、外部引用和 I/O 约束后，在本地设置该项目 `trusted=true`，重启服务。先跑 `map`，核对退出码与日志；再跑 `compile`。
 5. 将 GUI 与 MCP 两次结果的器件、资源、时序约束、关键路径及位流产物逐项核对。出现未约束路径不能因为 WNS 非负就宣称时序合格。
 6. 将真实报告的脱敏小样本作为后续解析器 fixture，注明安装版本、原始行号及允许再分发的范围。不得上传许可证、私有 IP 或受限源文件。

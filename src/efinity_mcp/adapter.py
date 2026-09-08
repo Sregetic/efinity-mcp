@@ -17,6 +17,12 @@ FLOWS = ("compile", "map", "interface", "pnr", "pgm", "rtlsim", "mapsim")
 class Command:
     argv: list[str]
     cwd: Path
+    windows_line: str | None = None
+
+    @property
+    def popen_args(self) -> list[str] | str:
+        # cmd.exe does not follow the C runtime quoting rules used by list2cmdline.
+        return self.windows_line if self.windows_line is not None else self.argv
 
 
 def cmd_quote(value: str) -> str:
@@ -71,7 +77,11 @@ class Adapter:
             system = Path(os.environ.get("SystemRoot", "C:/Windows")) / "System32/cmd.exe"
             line = (f"call {cmd_quote(str(setup))} >nul && cd /d {cmd_quote(str(cwd))} && "
                     + " ".join(cmd_quote(arg) for arg in program))
-            return Command([str(system), "/d", "/v:off", "/s", "/c", line], home)
+            # Pass the complete command line unchanged to CreateProcess. A list would
+            # escape embedded quotes as \"; cmd.exe treats those backslashes literally.
+            windows_line = f'{cmd_quote(str(system))} /d /v:off /s /c "{line}"'
+            return Command([str(system), "/d", "/v:off", "/s", "/c", line], home,
+                           windows_line=windows_line)
         # Positional arguments, not interpolation, keep even spaces literal to bash.
         line = 'source "$1" >/dev/null && cd -- "$2" && shift 2 && exec "$@"'
         return Command(["/bin/bash", "--noprofile", "--norc", "-c", line,
