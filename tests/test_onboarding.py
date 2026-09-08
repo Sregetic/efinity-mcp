@@ -26,7 +26,8 @@ def test_init_registers_project_without_authorizing_it(settings, tmp_path):
                  vendor_python=str(settings.vendor_python))
     loaded = load_settings(config)
     assert loaded.home == settings.home
-    assert loaded.vendor_python == settings.vendor_python
+    # Configuration canonicalizes paths; Linux runners expose python as a symlink.
+    assert loaded.vendor_python == settings.vendor_python.resolve()
     assert loaded.projects["edge"].xml == settings.projects["edge"].xml
     assert loaded.projects["edge"].trusted is False
     assert loaded.allow_programming is False
