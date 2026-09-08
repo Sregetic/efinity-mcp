@@ -20,3 +20,10 @@ Windows 官方还提供 `efx_run.bat`；本适配器在加载 `setup.bat` 后，
 ## 不做未经证实的接口承诺
 
 v0.1.0 不使用未公开的内部脚本，不猜测 `.peri.xml` 或器件封装/引脚定义，不把 FPGA 内软核工具链当作 MCP 运行时，不推断 HTTP 硬件服务安全配置。Python API 工程创建、真实报告结构化解析、远程硬件调试将在实际环境验证后另行实现。
+
+
+## Windows 子进程引号处理（v0.1.1）
+
+Windows CI 暴露了原命令列表在含空格路径下启动失败的问题。Python 将列表转换成命令行时使用 MS C runtime 的引号规则，而 `cmd.exe /s /c` 使用不同规则。适配器现在只对固定的 `cmd.exe` 包装入口构造完整命令行，保留已有参数字符检查、`/d`、`/v:off` 和 `shell=False`；不开放任意 Shell 字符串。Linux 仍使用参数列表。回归测试实际执行含空格路径及失败的 setup 脚本，而非仅检查字符串。
+
+依据：[Python subprocess Windows 参数转换](https://docs.python.org/3.11/library/subprocess.html#converting-an-argument-sequence-to-a-string-on-windows)、[Microsoft cmd 文档](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd)。

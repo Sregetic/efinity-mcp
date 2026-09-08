@@ -2,11 +2,11 @@
 
 面向 Efinix Efinity 的本地 MCP 适配器。目标是让支持本地 stdio MCP 的客户端调用已有 FPGA 工程的构建流程、读取原始日志与报告，并在明确授权后进行 JTAG 配置。
 
-**v0.1.0 是待真机验收的首版，不是 Efinix 官方产品。** 软件测试使用合成的替身程序，不代表已经在 Efinity 2026.1 或 VF-Ti60F225 上完成综合、时序收敛或烧录。该仓库不包含 Efinity 安装包、许可证、厂商 IP、板卡工程或真实位流。
+**v0.1.1 是待 Efinity/板卡实测的适配器，不是 Efinix 官方产品。** 软件测试使用合成的替身程序，不代表已经在 Efinity 2026.1 或 VF-Ti60F225 上完成综合、时序收敛或烧录。该仓库不包含 Efinity 安装包、许可证、厂商 IP、板卡工程或真实位流。
 
 ## 已实现的范围
 
-| 能力 | v0.1.0 行为 |
+| 能力 | 当前行为 |
 |---|---|
 | MCP 服务 | 官方 Python SDK v1，stdio；不监听网络端口 |
 | 环境检查 | 检查安装目录、setup 脚本、厂商 Python、flow/programmer 脚本是否存在 |
@@ -28,16 +28,30 @@ git clone https://github.com/Sregetic/efinity-mcp.git
 cd efinity-mcp
 py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -e ".[dev]"
-Copy-Item examples\efinity-mcp.windows.toml efinity-mcp.local.toml
 ```
 
-使用你实际安装的 Python 版本替换 `-3.12`。编辑 `efinity-mcp.local.toml`，填写 Efinity 安装路径和**已在 GUI 中验证的官方/板卡示例工程**。然后运行：
+使用你实际安装的 Python 版本替换 `-3.12`。以下目录和工程名需要替换为你的真实路径；工作区、Efinity 安装目录和 XML 必须已经存在：
+
+```powershell
+.\.venv\Scripts\python.exe -m efinity_mcp --init-config --workspace "D:\fpga" --efinity-home "C:\Efinity\2026.1" --project-xml "edge\demo.xml"
+```
+
+这会创建 `efinity-mcp.local.toml`，不会覆盖已有配置，默认不授权工程执行和烧录。已有配置可直接保留；也可以继续采用 `examples/` 内手工配置方式。然后运行：
 
 ```powershell
 .\.venv\Scripts\python.exe -m efinity_mcp --config efinity-mcp.local.toml --doctor
 ```
 
 `toolchain_available: true` 仅代表必要文件存在，**不代表许可证、工程、下载器或板卡通过验收**。自动寻找厂商 Python 失败时，按 doctor 提示在 `[efinity]` 中设置真实 `python.exe` 路径。不要把 MCP 虚拟环境解释器误填成厂商解释器。
+
+先验证服务本身可连接，再接入客户端：
+
+```powershell
+.\.venv\Scripts\python.exe -m efinity_mcp --check-mcp
+.\.venv\Scripts\python.exe -m efinity_mcp --print-codex-config
+```
+
+`--check-mcp` 通过真实 SDK 启动子进程，完成握手、工具发现和两个只读调用。`protocol_ok: true` 只表示 MCP 连通，不执行 Efinity、不枚举 USB、不烧录。它会创建服务本地状态目录。`--print-codex-config` 输出包含当前虚拟环境和配置绝对路径的 Codex 配置段；将这一段合并到本地 `~/.codex/config.toml`，不要覆盖原配置。生成的工具列表排除了硬件操作。客户端配置依据见 [官方 MCP 文档](https://developers.openai.com/codex/mcp/)。
 
 服务启动命令：
 
@@ -59,7 +73,7 @@ Linux 参见 [examples/efinity-mcp.linux.toml](examples/efinity-mcp.linux.toml)�
 
 ## 正确解释结果
 
-`status="succeeded"` 表示厂商**进程退出码为 0**，不表示 RTL 功能正确、时序完全约束、所有时钟满足要求、引脚电压安全或硬件运行正确。v0.1.0 不在未获得真实报告样本的情况下猜测 WNS/LUT 表格格式；`timing_pass` 保持 `null`，以原始报告为准。
+`status="succeeded"` 表示厂商**进程退出码为 0**，不表示 RTL 功能正确、时序完全约束、所有时钟满足要求、引脚电压安全或硬件运行正确。当前版本不在未获得真实报告样本的情况下猜测 WNS/LUT 表格格式；`timing_pass` 保持 `null`，以原始报告为准。
 
 每次任务记录命令、时间、退出码、工程 XML 哈希、产物哈希。`job_id` 过滤只列出本次新建/变化的产物；文件后来被改动会标记 `changed_since_job`。这不是完整工程快照，源代码版本仍应由 Git 管理。扫描有上限，截断与跳过计数会显式返回。
 
@@ -80,7 +94,9 @@ python -m compileall -q src
 python -m build
 ```
 
-CI 在 Linux/Windows 上安装真实 MCP SDK，并强制执行 stdio 握手、工具发现及调用测试。其 Efinity 后端仍是 `tests/conftest.py` 中明确标注的替身，不下载商业 EDA，也不接触 FPGA。没有安装 SDK 的离线环境会跳过协议测试；CI 设置 `EFINITY_REQUIRE_MCP=1`，不允许因缺依赖而跳过。
+CI 在 Linux/Windows 上安装真实 MCP SDK，并强制执行 stdio 握手、工具发现、异步构建/失败、轮询、日志和报告读取测试。其 Efinity 后端仍是 `tests/conftest.py` 中明确标注的替身，不下载商业 EDA，也不接触 FPGA。没有安装 SDK 的离线环境会跳过协议测试；CI 设置 `EFINITY_REQUIRE_MCP=1`，不允许因缺依赖而跳过。
+
+当前进度见 [IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md)。根目录的 v0.1.0 ZIP、旧状态文件及 `manifest.json` 是导入时的历史快照，不作为当前源码和测试状态清单。
 
 首轮真机验收、已知限制和下一阶段工作见 [docs/validation.md](docs/validation.md) 和 [docs/roadmap.md](docs/roadmap.md)。
 
