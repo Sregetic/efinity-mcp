@@ -1,0 +1,59 @@
+name: Efinity FPGA build
+on:
+  workflow_dispatch:
+    inputs:
+      smoke_only:
+        description: Run service-identity host checks only
+        type: boolean
+        default: false
+# Enable filtered main push only after the first successful manual acceptance.
+permissions:
+  contents: read
+concurrency:
+  group: efinity-ti60-device
+  cancel-in-progress: false
+jobs:
+  build:
+    if: github.repository == 'Sregetic/efinity-mcp' && github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, Windows, X64, efinity, ti60]
+    timeout-minutes: 90
+    defaults:
+      run:
+        shell: pwsh
+    env:
+      GIT_LFS_SKIP_SMUDGE: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          lfs: false
+      - name: Isolated simulation and Efinity compile
+        id: fpga
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+          BUILD_RUN_ID: ${{ github.run_id }}
+          SMOKE_ONLY: ${{ inputs.smoke_only }}
+        run: |
+          $args = @('-NoProfile','-File','scripts/runner/Invoke-FpgaBuild.ps1','-CommitSha',$env:SOURCE_SHA,'-BuildRunId',$env:BUILD_RUN_ID)
+          if ($env:SMOKE_ONLY -eq 'true') { $args += '-SmokeOnly' }
+          & pwsh @args
+          exit $LASTEXITCODE
+      - name: Upload this run's diagnostics, including failures
+        if: always() && steps.fpga.outputs.upload_dir != ''
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: efinity-diagnostics-${{ github.run_id }}
+          path: |
+            ${{ steps.fpga.outputs.upload_dir }}/diagnostics
+            ${{ steps.fpga.outputs.upload_dir }}/result.json
+          if-no-files-found: error
+          retention-days: 14
+      - name: Upload qualified bitstream only
+        if: success() && inputs.smoke_only != true
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: efinity-bitstream-${{ github.run_id }}
+          path: ${{ steps.fpga.outputs.upload_dir }}/deploy/
+          if-no-files-found: error
+          retention-days: 14

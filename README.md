@@ -1,5 +1,7 @@
 # efinity-mcp
 
+Windows 本机 FPGA 构建与独立 SRAM 下载部署说明见 [Self-hosted Runner](docs/self-hosted-runner.md)。本机工作流需先审核合入 main，再手动验收；构建产物通过 Actions artifact 回传。
+
 面向 Efinix Efinity 的本地 MCP 适配器。目标是让支持本地 stdio MCP 的客户端调用已有 FPGA 工程的构建流程、读取原始日志与报告，并在明确授权后进行 JTAG 配置。
 
 **v0.1.1 是待 Efinity/板卡实测的适配器，不是 Efinix 官方产品。** 软件测试使用合成的替身程序，不代表已经在 Efinity 2026.1 或 VF-Ti60F225 上完成综合、时序收敛或烧录。该仓库不包含 Efinity 安装包、许可证、厂商 IP、板卡工程或真实位流。
