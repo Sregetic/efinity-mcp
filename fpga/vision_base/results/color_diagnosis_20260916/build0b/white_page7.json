@@ -1,0 +1,107 @@
+[
+  {
+    "magic": "56495331",
+    "build": "2609167b",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609167b78100407000000000000000000000000",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789533677.398136,
+    "rgb_sums_or_clips": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "magic": "56495331",
+    "build": "2609167b",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609167b78100407000000000000000000000000",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789533677.614189,
+    "rgb_sums_or_clips": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "magic": "56495331",
+    "build": "2609167b",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609167b78100407000000000000000000000000",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789533677.8321292,
+    "rgb_sums_or_clips": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "magic": "56495331",
+    "build": "2609167b",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609167b78100407000000000000000000000000",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789533678.047383,
+    "rgb_sums_or_clips": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "magic": "56495331",
+    "build": "2609167b",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609167b38100407000000000000000000000000",
+    "canny_fault": 0,
+    "canny_busy": 0,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789533678.2646496,
+    "rgb_sums_or_clips": [
+      0,
+      0,
+      0
+    ]
+  }
+]

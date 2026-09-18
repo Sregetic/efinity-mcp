@@ -1,0 +1,2 @@
+CHROMA TONE PASS 800 samples, RGB/common gain, black, gray, pure colors, bypass, DE/HS/VS alignment
+sim/vision/tb_chroma_tone.sv:26: $finish called at 8046000 (1ps)

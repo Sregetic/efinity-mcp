@@ -1,0 +1,106 @@
+INFO     : Elitestek FPGA Synthesis.
+INFO     : Version: 2026.1.132.3.9
+INFO     : Compiled: Aug 24 2026.
+INFO     : 
+INFO     : Copyright (C) 2013 - 2026 Efinix, Inc. All rights reserved.
+
+INFO     : Reading project database "F:\Project\fpga\vision_base\board\hdmi_bringup\hdmi_bringup.xml" [FlowMsg::ProjectDatabaseReading]
+INFO     : Maximum concurrency has been set to 8 [FlowMsg::MaxThreads]
+INFO     : Reading project database "F:\Project\fpga\vision_base\board\hdmi_bringup\hdmi_bringup.xml" [FlowMsg::ProjectDatabaseReading]
+INFO     : ***** Beginning Analysis ... *****
+INFO     : default VHDL library search path is now "F:/Efinity/2026.1/sim_models/vhdl/packages/vhdl_2008" [VHDL-1504]
+INFO     : Restoring all Verilog modules from file 'F:/Efinity/2026.1/sim_models/maplib/perilib_efxlib_parsetree.vdb' [VERI-2484]
+INFO     : Restoring all Verilog modules from file 'F:/Efinity/2026.1/sim_models/maplib/maplib_efxlib_parsetree.vdb' [VERI-2484]
+INFO     : Analyzing Verilog file 'F:/Efinity/2026.1/sim_models/maplib/efinix_maplib.v' [VERI-1482]
+INFO     : Analyzing Verilog file 'F:/Efinity/2026.1/sim_models/maplib/efinix_peri_lib.v' [VERI-1482]
+INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\hdmi_bringup.sv' [VERI-1482]
+INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\dvi_encoder.v' [VERI-1482]
+INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\encode.v' [VERI-1482]
+INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\rtl\video_test_pattern.sv' [VERI-1482]
+INFO     : Analysis took 0.0160779 seconds [FlowMsg::StageDuration]
+INFO     :     Analysis took 0 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Analysis virtual memory usage: begin = 60.78 MB, end = 60.796 MB, delta = 0.016 MB [FlowMsg::VMUsage]
+INFO     :     Analysis peak virtual memory usage = 60.804 MB [FlowMsg::VMUsage::Peak]
+INFO     : Analysis resident set memory usage: begin = 65.812 MB, end = 68.78 MB, delta = 2.968 MB [FlowMsg::RSSUsage]
+INFO     :     Analysis peak resident set memory usage = 68.78 MB [FlowMsg::RSSUsage::Peak]
+INFO     : ***** Ending Analysis ... *****
+INFO     : ***** Beginning Elaboration ... *****
+INFO     : F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\hdmi_bringup.sv(1): compiling module 'hdmi_bringup' [VERI-1018]
+INFO     : F:\Project\fpga\vision_base\rtl\video_test_pattern.sv(4): compiling module 'video_test_pattern' [VERI-1018]
+INFO     : F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\dvi_encoder.v(2): compiling module 'dvi_encoder' [VERI-1018]
+INFO     : F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\encode.v(46): compiling module 'encode' [VERI-1018]
+WARNING  : F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\encode.v(167): expression size 9 truncated to fit in target size 8 [VERI-1209]
+INFO     : Elaboration took 0.0081303 seconds [FlowMsg::StageDuration]
+INFO     :     Elaboration took 0 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Elaboration virtual memory usage: begin = 60.796 MB, end = 60.8 MB, delta = 0.004 MB [FlowMsg::VMUsage]
+INFO     :     Elaboration peak virtual memory usage = 60.808 MB [FlowMsg::VMUsage::Peak]
+INFO     : Elaboration resident set memory usage: begin = 68.824 MB, end = 70.156 MB, delta = 1.332 MB [FlowMsg::RSSUsage]
+INFO     :     Elaboration peak resident set memory usage = 70.156 MB [FlowMsg::RSSUsage::Peak]
+INFO     : ***** Ending Elaboration ... *****
+INFO     : ... Setting Synthesis Option: mode=speed
+INFO     : ***** Beginning Reading Mapping Library ... *****
+INFO     : Reading Mapping Library took 0.0026081 seconds [FlowMsg::StageDuration]
+INFO     :     Reading Mapping Library took 0 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Reading Mapping Library virtual memory usage: begin = 60.8 MB, end = 60.8 MB, delta = 0 MB [FlowMsg::VMUsage]
+INFO     :     Reading Mapping Library peak virtual memory usage = 60.808 MB [FlowMsg::VMUsage::Peak]
+INFO     : Reading Mapping Library resident set memory usage: begin = 71.308 MB, end = 71.308 MB, delta = 0 MB [FlowMsg::RSSUsage]
+INFO     :     Reading Mapping Library peak resident set memory usage = 71.308 MB [FlowMsg::RSSUsage::Peak]
+INFO     : ***** Ending Reading Mapping Library ... *****
+INFO     : ... Pre-synthesis checks begin
+INFO     : Module Instance 'encr' input pin 'c0' is tied to constant (=0). [EFX-0266]
+INFO     : Module Instance 'encr' input pin 'c1' is tied to constant (=0). [EFX-0266]
+INFO     : Module Instance 'encg' input pin 'c0' is tied to constant (=0). [EFX-0266]
+INFO     : Module Instance 'encg' input pin 'c1' is tied to constant (=0). [EFX-0266]
+INFO     : ... Pre-synthesis checks end (Real time : 0s)
+INFO     : ... NameSpace init begin
+INFO     : ... NameSpace init end (Real time : 0s)
+INFO     : ... Mapping design "hdmi_bringup"
+INFO     : ... Hierarchical pre-synthesis "video_test_pattern" begin
+INFO     : ... Hierarchical pre-synthesis "video_test_pattern" end (Real time : 0s)
+INFO     : ... Hierarchical pre-synthesis "encode" begin
+INFO     : ... Hierarchical pre-synthesis "encode" end (Real time : 0s)
+INFO     : ... Hierarchical pre-synthesis "dvi_encoder" begin
+INFO     : ... Hierarchical pre-synthesis "dvi_encoder" end (Real time : 0s)
+INFO     : ... Hierarchical pre-synthesis "hdmi_bringup" begin
+INFO     : ... Clock Enable Synthesis Performed on 24 flops.
+INFO     : ... Hierarchical pre-synthesis "hdmi_bringup" end (Real time : 0s)
+INFO     : ... Flat optimizations begin
+INFO     : ... Flat optimizations end (Real time : 0s)
+INFO     : ... Flat synthesis begin
+INFO     : ... Flat synthesis end (Real time : 0s)
+INFO     : ... Flat optimizations begin
+INFO     : ... Flat optimizations end (Real time : 0s)
+INFO     : ... Check and break combinational loops begin
+INFO     : ... Check and break combinational loops end (Real time : 0s)
+INFO     : ... Setup for logic synthesis begin
+INFO     : ... Setup for logic synthesis end (Real time : 0s)
+INFO     : ... LUT mapping begin
+INFO     : ... LS, strategy: 3, nd: 264, ed: 833, lv: 4, pw: 813.85
+INFO     : ... LUT mapping end (Real time : 1s)
+INFO     : ... Post-synthesis Verific netlist creation begin
+INFO     : ... Post-synthesis Verific netlist creation end (Real time : 0s)
+INFO     : ***** Beginning VDB Netlist Checker ... *****
+WARNING  : F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\hdmi_bringup.sv(3): Input/inout port jtag_inst1_RESET is unconnected. Place and route may remove this unconnected port. [VDB-8003]
+WARNING  : Found 6 warnings in the post-synthesis netlist.
+INFO     : VDB Netlist Checker took 0.0007613 seconds [FlowMsg::StageDuration]
+INFO     :     VDB Netlist Checker took 0 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : VDB Netlist Checker virtual memory usage: begin = 67.504 MB, end = 67.576 MB, delta = 0.072 MB [FlowMsg::VMUsage]
+INFO     :     VDB Netlist Checker peak virtual memory usage = 119.776 MB [FlowMsg::VMUsage::Peak]
+INFO     : VDB Netlist Checker resident set memory usage: begin = 84.308 MB, end = 84.444 MB, delta = 0.136 MB [FlowMsg::RSSUsage]
+INFO     :     VDB Netlist Checker peak resident set memory usage = 125.52 MB [FlowMsg::RSSUsage::Peak]
+INFO     : ***** Ending VDB Netlist Checker ... *****
+INFO     : Resource Summary 
+INFO     : ======================================= 
+INFO     : EFX_ADD                 : 	223
+INFO     : EFX_LUT4                : 	267
+INFO     : EFX_FF                  : 	280
+INFO     : ======================================= 
+INFO     : ... Post-Map Verilog Writer begin
+INFO     : Writing netlist 'hdmi_bringup' to Verilog file 'outflow\hdmi_bringup.map.v' [VDB-1030]
+INFO     : ... Post-Map Verilog Writer end (Real time : 0s)
+INFO     : The entire flow of EFX_MAP took 1.7085604 seconds [FlowMsg::StageDuration]
+INFO     :     The entire flow of EFX_MAP took 1.453125 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : The entire flow of EFX_MAP virtual memory usage: begin = 19.196 MB, end = 74.208 MB, delta = 55.012 MB [FlowMsg::VMUsage]
+INFO     :     The entire flow of EFX_MAP peak virtual memory usage = 119.776 MB [FlowMsg::VMUsage::Peak]
+INFO     : The entire flow of EFX_MAP resident set memory usage: begin = 20.16 MB, end = 88.452 MB, delta = 68.292 MB [FlowMsg::RSSUsage]
+INFO     :     The entire flow of EFX_MAP peak resident set memory usage = 125.52 MB [FlowMsg::RSSUsage::Peak]

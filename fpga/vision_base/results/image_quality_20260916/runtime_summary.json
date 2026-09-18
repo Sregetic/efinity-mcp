@@ -1,0 +1,22 @@
+{
+  "build": "26091607",
+  "current_mode": 0,
+  "wns_ns": 0.292,
+  "whs_ns": 0.027,
+  "source_hash_mismatches": [],
+  "capture_fps_estimate": 30.2,
+  "canny_jobs_per_second": 14.13,
+  "sampling_seconds": 4.105,
+  "canny_fault": 0,
+  "canny_ready": true,
+  "write_errors_first": 1,
+  "write_errors_last": 1,
+  "write_errors_delta": 0,
+  "error_observation_seconds": 113.2,
+  "write_error_note": "One error already present at first observation after programming; no subsequent growth. Startup attribution not confirmed. Not a zero-error qualification.",
+  "canny_analysis": [
+    480,
+    270
+  ],
+  "visual_color_and_edges": "pending user comparison"
+}

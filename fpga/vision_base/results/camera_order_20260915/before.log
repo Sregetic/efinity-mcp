@@ -1,0 +1,18 @@
+PAIR 0 : 3 2
+PAIR 1 : 1 0
+PAIR 2 : 7 6
+PAIR 3 : 5 4
+PAIR 4 : 11 10
+PAIR 5 : 9 8
+PAIR 6 : 15 14
+PAIR 7 : 13 12
+PAIR 8 : 19 18
+PAIR 9 : 17 16
+PAIR 10 : 23 22
+PAIR 11 : 21 20
+PAIR 12 : 27 26
+PAIR 13 : 25 24
+PAIR 14 : 31 30
+PAIR 15 : 29 28
+RESULT pairs=32 errors=32
+results/camera_order_20260915/tb_order.sv:33: $finish called at 2251000 (1ps)

@@ -1,0 +1,64 @@
+{
+  "device": "UGREEN 25854",
+  "capture_mode": "1920x1080 MJPEG requested 30 fps",
+  "capture_open_after_viewer_exit": true,
+  "fpga_state": "USER_MODE",
+  "cdone": 1,
+  "nstatus": 1,
+  "captures": [
+    {
+      "file": "capture_mjpeg.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "extrema": [
+        [
+          7,
+          7
+        ],
+        [
+          7,
+          7
+        ],
+        [
+          7,
+          7
+        ]
+      ],
+      "mean_rgb": [
+        7.0,
+        7.0,
+        7.0
+      ]
+    },
+    {
+      "file": "capture_after_3s.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "extrema": [
+        [
+          7,
+          7
+        ],
+        [
+          7,
+          7
+        ],
+        [
+          7,
+          7
+        ]
+      ],
+      "mean_rgb": [
+        7.0,
+        7.0,
+        7.0
+      ]
+    }
+  ],
+  "hdmi_signal_lock_confirmed": false,
+  "no_reprogramming_during_diagnosis": true
+}

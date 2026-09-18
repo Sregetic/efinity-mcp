@@ -1,0 +1,2 @@
+RESULT pairs=512 checked=260 errors=0
+results/channel_identity_20260916/tb_blue.sv:21: $finish called at 6431000 (1ps)

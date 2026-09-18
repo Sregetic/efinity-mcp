@@ -1,0 +1,14 @@
+{
+  "build": "2609160b",
+  "mode": 0,
+  "canny_fault": 0,
+  "capture_id": 4399,
+  "write_errors": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "source_hash_mismatches": [],
+  "visual_color_acceptance": "pending after removing white paper"
+}

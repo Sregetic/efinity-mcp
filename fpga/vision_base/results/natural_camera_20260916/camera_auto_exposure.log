@@ -1,0 +1,2 @@
+AE PASS: dark/bright direction, 64 samples, deadband, freeze, fault and manual
+sim/vision/tb_camera_auto_exposure.sv:28: $finish called at 192660000 (1ps)

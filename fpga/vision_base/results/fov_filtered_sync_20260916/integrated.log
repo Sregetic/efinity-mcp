@@ -1,0 +1,5 @@
+FRAME_END 1 cumulative_words=518400
+FRAME_END 2 cumulative_words=1036800
+FRAME_END 3 cumulative_words=1555200
+RESULT words=1555200 expected=1555200 pixels=6220800 errors=0
+results/fov_filtered_sync_20260916/tb_integrated.sv:45: $finish called at 29698991000 (1ps)

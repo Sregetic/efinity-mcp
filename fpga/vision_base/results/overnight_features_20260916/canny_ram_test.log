@@ -1,0 +1,2 @@
+CANNY pixels32400 edges942 errors0
+results/overnight_features_20260916/tb_canny.sv:20: $finish called at 21590976000 (1ps)

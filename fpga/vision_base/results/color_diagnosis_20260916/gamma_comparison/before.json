@@ -1,0 +1,80 @@
+[
+  {
+    "magic": "56495331",
+    "build": "2609166b",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609166b78100407007eaf6f0066289300658409",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789533920.8131766,
+    "rgb_sums_or_clips": [
+      8302447,
+      6695059,
+      6652937
+    ],
+    "rgb_mean": [
+      126.68528747558594,
+      102.15849304199219,
+      101.51576232910156
+    ]
+  },
+  {
+    "magic": "56495331",
+    "build": "2609166b",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609166b78100407007eb704006632e100657fed",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789533921.0296197,
+    "rgb_sums_or_clips": [
+      8304388,
+      6697697,
+      6651885
+    ],
+    "rgb_mean": [
+      126.71490478515625,
+      102.19874572753906,
+      101.49971008300781
+    ]
+  },
+  {
+    "magic": "56495331",
+    "build": "2609166b",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609166b78100407007ea6970066243b00656c85",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789533921.2445707,
+    "rgb_sums_or_clips": [
+      8300183,
+      6693947,
+      6646917
+    ],
+    "rgb_mean": [
+      126.65074157714844,
+      102.14152526855469,
+      101.42390441894531
+    ]
+  }
+]

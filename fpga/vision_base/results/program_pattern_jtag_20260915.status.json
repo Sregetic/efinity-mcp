@@ -1,0 +1,13 @@
+{
+  "finished_utc": "2026-09-14T17:50:28.2434012Z",
+  "tool": "Efinity Programmer CLI",
+  "mode": "JTAG SRAM",
+  "image": "pattern",
+  "target": "Ti60F225I3",
+  "pcb_match": "user_confirmed_same_as_reference",
+  "file": "F:/Project/fpga/vision_base/artifacts/pattern/ti60f225_oob.bit",
+  "sha256": "F61A3D90A0415CF32C65D0247A63DACD84C73C623A39E513347AC7A6B89AF49F",
+  "exit_code": 0,
+  "flash_written": false,
+  "log": "F:/Project/fpga/vision_base/results/program_pattern_jtag_20260915.log"
+}

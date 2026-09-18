@@ -1,0 +1,107 @@
+[
+  {
+    "magic": "56495331",
+    "build": "2609168b",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609168b3810040700a200a10100000000000000",
+    "canny_fault": 0,
+    "canny_busy": 0,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789533667.9361615,
+    "physical_gains_rgb": [
+      162,
+      161,
+      256
+    ]
+  },
+  {
+    "magic": "56495331",
+    "build": "2609168b",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609168b3810040700a200a10100000000000000",
+    "canny_fault": 0,
+    "canny_busy": 0,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789533668.1524124,
+    "physical_gains_rgb": [
+      162,
+      161,
+      256
+    ]
+  },
+  {
+    "magic": "56495331",
+    "build": "2609168b",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609168b7810040700a200a10100000000000000",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789533668.3690617,
+    "physical_gains_rgb": [
+      162,
+      161,
+      256
+    ]
+  },
+  {
+    "magic": "56495331",
+    "build": "2609168b",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609168b7810040700a200a10100000000000000",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789533668.5701194,
+    "physical_gains_rgb": [
+      162,
+      161,
+      256
+    ]
+  },
+  {
+    "magic": "56495331",
+    "build": "2609168b",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609168b7810040700a200a10100000000000000",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789533668.7867818,
+    "physical_gains_rgb": [
+      162,
+      161,
+      256
+    ]
+  }
+]

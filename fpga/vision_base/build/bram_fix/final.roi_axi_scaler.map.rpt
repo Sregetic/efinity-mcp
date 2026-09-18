@@ -1,0 +1,153 @@
+Efinity Synthesis report for project roi_axi_scaler
+Version: 2026.1.132.3.9
+Generated at: Sep 08, 2026 01:36:17
+Copyright (C) 2013 - 2026  All rights reserved.
+
+Top-level Entity Name : roi_axi_scaler
+
+family : Titanium
+device : Ti60F225
+project : roi_axi_scaler
+root : roi_axi_scaler
+binary-db : outflow\roi_axi_scaler.vdb
+insert-ios : 0
+insert-gclk : 0
+max-carry-cascade : 320
+max-dsp-cascade : 16
+max_mult : -1
+max_ram : -1
+mode : speed
+num_srl : -1
+output-dir : outflow
+proj_curr_path : F:\Project\fpga\vision_base\efinity
+project : roi_axi_scaler
+project-xml : F:\Project\fpga\vision_base\efinity\roi_axi_scaler.xml
+root : roi_axi_scaler
+work-dir : ../build/efinity_scaler
+write-efx-verilog : outflow\roi_axi_scaler.map.v
+
+File List:
+
+F:\Project\fpga\vision_base\rtl\roi_scaler.sv
+F:\Project\fpga\vision_base\rtl\axi_line_reader.sv
+F:\Project\fpga\vision_base\rtl\roi_axi_scaler.sv
+
+### ### Report Section Start ### ###
+
+"MEM|SYN-0677" : ... Memory 'line_buf' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:54)
+
+### ### EFX_FF CE enables (begin) ### ### ###
+
+Total number of enable signals: 21
+Total number of FFs with enable signals: 657
++------------+------------------+
+|CE Signal   |Number of FF loads|
++------------+------------------+
+|reader/n477 |              130 |
+|scaler/n5731|              107 |
+|ceg_net230  |               90 |
+|n6          |               65 |
+|ceg_net236  |               60 |
+|ceg_net244  |               50 |
+|ceg_net33   |               45 |
+|ceg_net460  |               45 |
+|ceg_net34   |               16 |
+|ceg_net623  |               16 |
+|ceg_net32   |                9 |
+|ceg_net591  |                5 |
+|ceg_net226  |                4 |
+|reader/n1394|                4 |
+|ceg_net35   |                3 |
+|ceg_net29   |                3 |
+|ceg_net625  |                1 |
+|ceg_net36   |                1 |
+|n7          |                1 |
+|ceg_net38   |                1 |
+|ceg_net26   |                1 |
++------------+------------------+
+
+### ### EFX_FF CE enables (end) ### ### ###
+
+### ### EFX_FF SR set/reset (begin) ### ### ###
+
+Total number of set/reset signals: 7
+Total number of FFs with set/reset signals: 660
++-------------+------------------+
+|SR Signal    |Number of FF loads|
++-------------+------------------+
+|rst_n        |              654 |
+|reader/n1406 |                1 |
+|reader/n1405 |                1 |
+|n223         |                1 |
+|reader/n1426 |                1 |
+|scaler/n6162 |                1 |
+|scaler/n10919|                1 |
++-------------+------------------+
+
+### ### EFX_FF SR set/reset (end) ### ### ###
+
+### ### Sequential Elements/Signals Trimming Report (begin) ### ### ### 
+'m_axi_araddr[0]' (F:\Project\fpga\vision_base\rtl\roi_axi_scaler.sv:22) (optimized to 0)
+'m_axi_araddr[1]' (F:\Project\fpga\vision_base\rtl\roi_axi_scaler.sv:22) (optimized to 0)
+'m_axi_araddr[2]' (F:\Project\fpga\vision_base\rtl\roi_axi_scaler.sv:22) (optimized to 0)
+'m_axi_araddr[3]' (F:\Project\fpga\vision_base\rtl\roi_axi_scaler.sv:22) (optimized to 0)
+### ### Sequential Elements Trimming Report (end) ### ### ### 
+
+### ### Module Resource Usage Distribution Estimates (begin) ### ###
+
+**Note: some resources maybe grouped under different hierarchy due to optimization and LUT mapping
+
+Module                                FFs      SRLs      ADDs      LUTs    COMB4s      RAMs DSP/MULTs
+-------------------------------       ---      ----      ----      ----      ----      ---- ---------
+roi_axi_scaler:roi_axi_scaler      660(1)      0(0)    482(0)    921(4)      0(0)      8(0)      4(0)
+ +scaler:roi_scaler              448(448)      0(0)  350(350)  667(667)      0(0)      8(8)      4(4)
+ +reader:axi_line_reader         211(211)      0(0)  132(132)  250(250)      0(0)      0(0)      0(0)
+
+### ### Module Resource Usage Distribution Estimates (end) ### ###
+
+
+### ### Wide Multiplier Decomposition Report (begin) ### ### ### 
+
+'mult_31' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:168) 32x17 decomposed into 2 partial products.
+'mult_78' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:219) 32x16 decomposed into 2 partial products.
+
+### ### Wide Multiplier Decomposition Report (end) ### ### ### 
+
+### ### DSP Usage Report (begin) ### ### ### 
+
++------------------+-----+------+-------+------+-------+---------+----+
+|DSP               |TYPE |SIGNED|SHIFTER|BFLOAT|CAS_OUT|    O    |REGS|
++------------------+-----+------+-------+------+-------+---------+----+
+|scaler/n825_pp_0x0|DSP48|      |       |      | (A*B) |  (A*B)  |    |
+|scaler/n825_pp_1x0|DSP48|      |       |      |       |(A*B)+CIN|    |
+|scaler/n195_pp_0x0|DSP48|      |       |      | (A*B) |  (A*B)  | A  |
+|scaler/n195_pp_1x0|DSP48|      |       |      |       |(A*B)+CIN| A  |
++------------------+-----+------+-------+------+-------+---------+----+
+
+### ### Clock Load Distribution Report (begin) ### ###
+
++-----+----------+----------+------------+----------------+
+|Clock|Flip-Flops|Shift-Regs|Memory Ports|Multipliers/DSPs|
++-----+----------+----------+------------+----------------+
+|clk  |      660 |        0 |         16 |              2 |
++-----+----------+----------+------------+----------------+
+
+### ### Clock Load Distribution Report (end) ### ###
+
+### ### Resource Summary (begin) ### ### ### 
+
+INPUT  PORTS    : 	393
+OUTPUT PORTS    : 	138
+
+EFX_ADD                 : 	482
+EFX_LUT4                : 	921
+   1-2  Inputs          : 	218
+   3    Inputs          : 	256
+   4    Inputs          : 	447
+EFX_DSP48               : 	4
+EFX_FF                  : 	660
+EFX_RAM10               : 	8
+### ### Resource Summary (end) ### ### ###
+
+Plain synthesis (without verilog dump and post-map checks) time : 5s
+Elapsed synthesis time : 5s

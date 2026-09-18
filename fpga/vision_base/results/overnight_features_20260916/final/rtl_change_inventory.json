@@ -1,0 +1,62 @@
+[
+  {
+    "file": "ti60f225_oob_top.v",
+    "change": "modified"
+  },
+  {
+    "file": "frame_buffer_V3\\ddr_buffer.v",
+    "change": "modified"
+  },
+  {
+    "file": "frame_buffer_V3\\frame_buffer.v",
+    "change": "modified"
+  },
+  {
+    "file": "vision\\vision_canny.sv",
+    "change": "added"
+  },
+  {
+    "file": "vision\\vision_controls.sv",
+    "change": "added"
+  },
+  {
+    "file": "vision\\vision_display.sv",
+    "change": "added"
+  },
+  {
+    "file": "vision\\vision_frame_history.sv",
+    "change": "added"
+  },
+  {
+    "file": "vision\\vision_frontend.sv",
+    "change": "added"
+  },
+  {
+    "file": "vision\\vision_hysteresis.sv",
+    "change": "added"
+  },
+  {
+    "file": "vision\\vision_median9.sv",
+    "change": "added"
+  },
+  {
+    "file": "vision\\vision_osd.sv",
+    "change": "added"
+  },
+  {
+    "file": "vision\\vision_sobel.sv",
+    "change": "added"
+  },
+  {
+    "file": "vision\\vision_sparse_window.sv",
+    "change": "added"
+  },
+  {
+    "file": "vision\\vision_window3.sv",
+    "change": "added"
+  },
+  {
+    "file": "vision\\vision_write_commit.sv",
+    "change": "added"
+  }
+]

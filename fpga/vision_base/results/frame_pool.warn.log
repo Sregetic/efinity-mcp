@@ -1,0 +1,14 @@
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 08, 2026 01:42:12
+///////////////////////////////////
+
+[EFX-0200 WARNING] Removing redundant signal : i[31:0]. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:143)
+[EFX-0200 WARNING] Removing redundant signal : j[31:0]. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:144)
+[EFX-0200 WARNING] Removing redundant signal : k[31:0]. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:145)
+[EFX-0200 WARNING] Removing redundant signal : n[31:0]. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:146)
+[EFX-0657 WARNING] Mapping into logic memory block 'frame_id_q' (128 bits) (F:\Project\fpga\vision_base\rtl\frame_pool.sv:73) because it has all constant reader/writer.
+[EFX-0657 WARNING] Mapping into logic memory block 'config_id_q' (128 bits) (F:\Project\fpga\vision_base\rtl\frame_pool.sv:74) because it has all constant reader/writer.
+[EFX-0011 VERI-WARNING] Net vcc is dangling. (VDB-8009) 
+[EFX-0011 VERI-WARNING] Found 1 warnings in the post-synthesis netlist. 

@@ -1,0 +1,19 @@
+[
+  {
+    "magic": "56495331",
+    "build": "26091604",
+    "mode": 5,
+    "median": 0,
+    "memory": 0,
+    "index": 0,
+    "threshold": 128,
+    "raw": "564953312609160478a008000000033b0000033b000007a8",
+    "capture_id": 827,
+    "display_id": 827,
+    "canny_completed": 1960,
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6
+  }
+]

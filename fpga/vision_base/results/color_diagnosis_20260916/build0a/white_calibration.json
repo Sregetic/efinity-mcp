@@ -1,0 +1,24 @@
+{
+  "nominal_means": [
+    33.50987243652344,
+    47.743682861328125,
+    52.91337585449219
+  ],
+  "old_nominal_gains": [
+    256,
+    230,
+    256
+  ],
+  "new_nominal_gains": [
+    256,
+    161,
+    162
+  ],
+  "physical_gains_rgb": [
+    162,
+    161,
+    256
+  ],
+  "reference": "user white paper after BLC before gamma",
+  "method": "normalize to weakest channel"
+}

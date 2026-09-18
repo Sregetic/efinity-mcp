@@ -1,0 +1,4 @@
+PASS integrated error=0 pixels=88 bursts=6 cycles=126
+PASS integrated error=1 pixels=88 bursts=6 cycles=122
+PASS tb_roi_axi_scaler cases=2
+F:\Project\fpga\vision_base\sim\tb_roi_axi_scaler.sv:162: $finish called at 2560000 (1ps)

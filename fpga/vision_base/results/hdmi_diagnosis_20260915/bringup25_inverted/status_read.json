@@ -1,0 +1,50 @@
+[
+  {
+    "raw": "a5000000",
+    "marker": 165,
+    "ref25": 0,
+    "ref27": 0,
+    "pll_lock": 0,
+    "frames": 0
+  },
+  {
+    "raw": "a50516fb",
+    "marker": 165,
+    "ref25": 6,
+    "ref27": 27,
+    "pll_lock": 1,
+    "frames": 82
+  },
+  {
+    "raw": "a55cc7c9",
+    "marker": 165,
+    "ref25": 104,
+    "ref27": 133,
+    "pll_lock": 1,
+    "frames": 113
+  },
+  {
+    "raw": "a5ac9a88",
+    "marker": 165,
+    "ref25": 200,
+    "ref27": 236,
+    "pll_lock": 1,
+    "frames": 15
+  },
+  {
+    "raw": "a5347abb",
+    "marker": 165,
+    "ref25": 39,
+    "ref27": 83,
+    "pll_lock": 1,
+    "frames": 45
+  },
+  {
+    "raw": "a5c4e6ea",
+    "marker": 165,
+    "ref25": 135,
+    "ref27": 187,
+    "pll_lock": 1,
+    "frames": 76
+  }
+]

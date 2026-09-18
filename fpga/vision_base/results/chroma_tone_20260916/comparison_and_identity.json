@@ -1,0 +1,44 @@
+{
+  "same_frozen_frame_comparison": {
+    "0": {
+      "rgb_mean": [
+        31.383209228515625,
+        27.536407470703125,
+        32.23197937011719
+      ],
+      "channel_spread_over_peak": 0.14568053191816716
+    },
+    "1": {
+      "rgb_mean": [
+        95.78488159179688,
+        90.59730529785156,
+        98.14414978027344
+      ],
+      "channel_spread_over_peak": 0.07689551032147979
+    },
+    "2": {
+      "rgb_mean": [
+        88.43301391601562,
+        78.10035705566406,
+        93.22332763671875
+      ],
+      "channel_spread_over_peak": 0.16222302898248037
+    }
+  },
+  "source_hash_mismatches": [],
+  "final_tone_mode": 2,
+  "memory": 0,
+  "mode": 0,
+  "physical_gains_rgb": [
+    162,
+    161,
+    256
+  ],
+  "canny_fault": 0,
+  "write_errors": [
+    1,
+    1,
+    1
+  ],
+  "visual_acceptance": "pending user"
+}

@@ -1,0 +1,1 @@
+A2 payload is a blanking snapshot: upper 10 bits of each 40-bit sample encode input DE/VS/HS, not clock word. snapshot.json has mode-correct labels. read_snapshot.py is the generic acquisition script; its raw pixel interpretation is not valid for A2 control/auxiliary data.

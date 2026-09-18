@@ -1,0 +1,2 @@
+PASS tb_frame_render_control freeze/live final-response error vblank deadline
+F:\Project\fpga\vision_base\sim\tb_frame_render_control.sv:84: $finish called at 630000 (1ps)

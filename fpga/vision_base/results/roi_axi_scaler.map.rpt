@@ -1,0 +1,202 @@
+Efinity Synthesis report for project roi_axi_scaler
+Version: 2026.1.132.3.9
+Generated at: Sep 08, 2026 09:58:02
+Copyright (C) 2013 - 2026  All rights reserved.
+
+Top-level Entity Name : roi_axi_scaler
+
+family : Titanium
+device : Ti60F225
+project : roi_axi_scaler
+root : roi_axi_scaler
+binary-db : outflow\roi_axi_scaler.vdb
+insert-ios : 0
+insert-gclk : 0
+max-carry-cascade : 320
+max-dsp-cascade : 16
+max_mult : -1
+max_ram : -1
+mode : speed
+num_srl : -1
+output-dir : outflow
+proj_curr_path : F:\Project\fpga\vision_base\efinity
+project : roi_axi_scaler
+project-xml : F:\Project\fpga\vision_base\efinity\roi_axi_scaler.xml
+root : roi_axi_scaler
+work-dir : ../build/efinity_scaler
+write-efx-verilog : outflow\roi_axi_scaler.map.v
+
+File List:
+
+F:\Project\fpga\vision_base\rtl\roi_scaler.sv
+F:\Project\fpga\vision_base\rtl\axi_line_reader.sv
+F:\Project\fpga\vision_base\rtl\roi_axi_scaler.sv
+
+### ### Report Section Start ### ###
+
+"MEM|SYN-0677" : ... Memory 'mem' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+"MEM|SYN-0677" : ... Memory 'fifo_mem' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:50)
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'reader/fifo_mem__D$12' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:50).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'reader/fifo_mem__D$f1' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:50).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'reader/fifo_mem__D$e12' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:50).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'reader/fifo_mem__D$d12' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:50).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'reader/fifo_mem__D$c12' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:50).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'reader/fifo_mem__D$b12' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:50).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'reader/fifo_mem__D$2' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:50).
+
+### ### EFX_FF CE enables (begin) ### ### ###
+
+Total number of enable signals: 32
+Total number of FFs with enable signals: 847
++------------------------+------------------+
+|CE Signal               |Number of FF loads|
++------------------------+------------------+
+|ceg_net431              |              128 |
+|reader/load_next        |              128 |
+|scaler/n6695            |              107 |
+|ceg_net289              |               90 |
+|scaler/n2546            |               64 |
+|ceg_net448              |               60 |
+|ceg_net298              |               45 |
+|scaler/capture_pending_c|               37 |
+|reader/emit             |               34 |
+|scaler/read_issue_c     |               31 |
+|scaler/n6680            |               19 |
+|scaler/n6692            |               18 |
+|scaler/n6639            |               17 |
+|scaler/n6642            |               17 |
+|ceg_net299              |               12 |
+|ceg_net296              |                9 |
+|ceg_net450              |                5 |
+|ceg_net446              |                4 |
+|reader/n4338            |                4 |
+|reader/fifo_push        |                4 |
+|ceg_net303              |                2 |
+|ceg_net300              |                2 |
+|ceg_net291              |                1 |
+|reader/n676             |                1 |
+|ceg_net292              |                1 |
+|ceg_net290              |                1 |
+|ceg_net452              |                1 |
+|ceg_net293              |                1 |
+|ceg_net454              |                1 |
+|ceg_net295              |                1 |
+|ceg_net304              |                1 |
+|ceg_net301              |                1 |
++------------------------+------------------+
+
+### ### EFX_FF CE enables (end) ### ### ###
+
+### ### EFX_FF SR set/reset (begin) ### ### ###
+
+Total number of set/reset signals: 10
+Total number of FFs with set/reset signals: 971
++-------------+------------------+
+|SR Signal    |Number of FF loads|
++-------------+------------------+
+|rst_n        |              930 |
+|scaler/n10846|               18 |
+|reader/n4385 |               13 |
+|reader/n4374 |                3 |
+|scaler/n10564|                2 |
+|reader/n4375 |                1 |
+|scaler/n10560|                1 |
+|scaler/n10565|                1 |
+|scaler/n10566|                1 |
+|reader/n4746 |                1 |
++-------------+------------------+
+
+### ### EFX_FF SR set/reset (end) ### ### ###
+
+### ### Sequential Elements/Signals Trimming Report (begin) ### ### ### 
+'m_axi_araddr[0]' (F:\Project\fpga\vision_base\rtl\roi_axi_scaler.sv:24) (optimized to 0)
+'m_axi_araddr[1]' (F:\Project\fpga\vision_base\rtl\roi_axi_scaler.sv:24) (optimized to 0)
+'m_axi_araddr[2]' (F:\Project\fpga\vision_base\rtl\roi_axi_scaler.sv:24) (optimized to 0)
+'m_axi_araddr[3]' (F:\Project\fpga\vision_base\rtl\roi_axi_scaler.sv:24) (optimized to 0)
+'reader/fifo_wr_ptr[3]_q_3' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'reader/fifo_wr_ptr[2]_q_3' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'reader/fifo_wr_ptr[1]_q_3' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'reader/fifo_wr_ptr[0]_q_3' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'reader/fifo_wr_ptr[3]_q_4' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'reader/fifo_wr_ptr[2]_q_4' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'reader/fifo_wr_ptr[1]_q_4' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'reader/fifo_wr_ptr[0]_q_4' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'reader/fifo_wr_ptr[3]_q_5' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'reader/fifo_wr_ptr[2]_q_5' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'reader/fifo_wr_ptr[1]_q_5' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'reader/fifo_wr_ptr[0]_q_5' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'reader/fifo_wr_ptr[3]_q_6' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'reader/fifo_wr_ptr[2]_q_6' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'reader/fifo_wr_ptr[1]_q_6' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'reader/fifo_wr_ptr[0]_q_6' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'reader/fifo_wr_ptr[3]_q_7' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'reader/fifo_wr_ptr[2]_q_7' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'reader/fifo_wr_ptr[1]_q_7' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'reader/fifo_wr_ptr[0]_q_7' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'reader/fifo_wr_ptr[3]_q_2' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'reader/fifo_wr_ptr[2]_q_2' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'reader/fifo_wr_ptr[1]_q_2' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'reader/fifo_wr_ptr[0]_q_2' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+### ### Sequential Elements Trimming Report (end) ### ### ### 
+
+### ### Module Resource Usage Distribution Estimates (begin) ### ###
+
+**Note: some resources maybe grouped under different hierarchy due to optimization and LUT mapping
+
+Module                                            FFs      SRLs      ADDs       LUTs    COMB4s      RAMs DSP/MULTs
+------------------------------------------        ---      ----      ----       ----      ----      ---- ---------
+roi_axi_scaler:roi_axi_scaler                 1104(0)      0(0)    579(0)    1806(0)      0(0)     23(0)      4(0)
+ +scaler:roi_scaler                          588(588)      0(0)  433(433)  1080(992)      0(0)     16(0)      4(4)
+  +bank0:roi_line_ram_2r2w(ADDR_WIDTH=12)        0(0)      0(0)      0(0)     25(25)      0(0)      8(8)      0(0)
+  +bank1:roi_line_ram_2r2w(ADDR_WIDTH=12)        0(0)      0(0)      0(0)     63(63)      0(0)      8(8)      0(0)
+ +reader:axi_line_reader                     516(516)      0(0)  146(146)   726(726)      0(0)      7(7)      0(0)
+
+### ### Module Resource Usage Distribution Estimates (end) ### ###
+
+
+### ### Wide Multiplier Decomposition Report (begin) ### ### ### 
+
+'mult_110' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:321) 32x18 decomposed into 2 partial products.
+'mult_38' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:248) 32x16 decomposed into 2 partial products.
+
+### ### Wide Multiplier Decomposition Report (end) ### ### ### 
+
+### ### DSP Usage Report (begin) ### ### ### 
+
++------------------+-----+------+-------+------+-------+---------+----+
+|DSP               |TYPE |SIGNED|SHIFTER|BFLOAT|CAS_OUT|    O    |REGS|
++------------------+-----+------+-------+------+-------+---------+----+
+|scaler/n185_pp_1x0|DSP48|      |       |      |       |(A*B)+CIN|    |
+|scaler/n185_pp_0x0|DSP48|      |       |      | (A*B) |  (A*B)  |    |
+|scaler/n993_pp_0x0|DSP48|      |       |      | (A*B) |  (A*B)  | A  |
+|scaler/n993_pp_1x0|DSP48|      |       |      |       |(A*B)+CIN| A  |
++------------------+-----+------+-------+------+-------+---------+----+
+
+### ### Clock Load Distribution Report (begin) ### ###
+
++-----+----------+----------+------------+----------------+
+|Clock|Flip-Flops|Shift-Regs|Memory Ports|Multipliers/DSPs|
++-----+----------+----------+------------+----------------+
+|clk  |     1104 |        0 |         46 |              2 |
++-----+----------+----------+------------+----------------+
+
+### ### Clock Load Distribution Report (end) ### ###
+
+### ### Resource Summary (begin) ### ### ### 
+
+INPUT  PORTS    : 	393
+OUTPUT PORTS    : 	156
+
+EFX_ADD                 : 	579
+EFX_LUT4                : 	1806
+   1-2  Inputs          : 	336
+   3    Inputs          : 	791
+   4    Inputs          : 	679
+EFX_DSP48               : 	4
+EFX_FF                  : 	1104
+EFX_RAM10               : 	7
+EFX_DPRAM10             : 	16
+### ### Resource Summary (end) ### ### ###
+
+Plain synthesis (without verilog dump and post-map checks) time : 7s
+Elapsed synthesis time : 7s

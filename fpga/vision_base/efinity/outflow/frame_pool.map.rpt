@@ -1,0 +1,124 @@
+Efinity Synthesis report for project frame_pool
+Version: 2026.1.132.3.9
+Generated at: Sep 08, 2026 01:42:12
+Copyright (C) 2013 - 2026  All rights reserved.
+
+Top-level Entity Name : frame_pool
+
+family : Titanium
+device : Ti60F225
+project : frame_pool
+root : frame_pool
+binary-db : outflow\frame_pool.vdb
+insert-ios : 0
+insert-gclk : 0
+max-carry-cascade : 320
+max-dsp-cascade : 16
+max_mult : -1
+max_ram : -1
+mode : speed
+num_srl : -1
+output-dir : outflow
+proj_curr_path : F:\Project\fpga\vision_base\efinity
+project : frame_pool
+project-xml : F:\Project\fpga\vision_base\efinity\frame_pool.xml
+root : frame_pool
+work-dir : ../build/efinity_pool
+write-efx-verilog : outflow\frame_pool.map.v
+
+File List:
+
+F:\Project\fpga\vision_base\rtl\frame_pool.sv
+
+### ### Report Section Start ### ###
+
+"MEM|SYN-0677" : ... Memory 'frame_id_q' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:73)
+"MEM|SYN-0677" : ... Memory 'config_id_q' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:74)
+"MEM|SYN-0657" : Mapping into logic memory block 'frame_id_q' (128 bits) (F:\Project\fpga\vision_base\rtl\frame_pool.sv:73) because it has all constant reader/writer.
+"MEM|SYN-0657" : Mapping into logic memory block 'config_id_q' (128 bits) (F:\Project\fpga\vision_base\rtl\frame_pool.sv:74) because it has all constant reader/writer.
+
+### ### EFX_FF CE enables (begin) ### ### ###
+
+Total number of enable signals: 18
+Total number of FFs with enable signals: 245
++---------------------+------------------+
+|CE Signal            |Number of FF loads|
++---------------------+------------------+
+|cap_req_fire         |               98 |
+|analysis_acquire_fire|               66 |
+|display_acquire_fire |               66 |
+|ceg_net52            |                1 |
+|ceg_net56            |                1 |
+|ceg_net49            |                1 |
+|ceg_net58            |                1 |
+|ceg_net64            |                1 |
+|ceg_net67            |                1 |
+|ceg_net70            |                1 |
+|ceg_net48            |                1 |
+|ceg_net54            |                1 |
+|ceg_net53            |                1 |
+|ceg_net57            |                1 |
+|ceg_net61            |                1 |
+|ceg_net59            |                1 |
+|ceg_net60            |                1 |
+|ceg_net55            |                1 |
++---------------------+------------------+
+
+### ### EFX_FF CE enables (end) ### ### ###
+
+### ### EFX_FF SR set/reset (begin) ### ### ###
+
+Total number of set/reset signals: 5
+Total number of FFs with set/reset signals: 245
++---------+------------------+
+|SR Signal|Number of FF loads|
++---------+------------------+
+|rst_n    |              241 |
+|n5603    |                1 |
+|n5532    |                1 |
+|n5601    |                1 |
+|n5602    |                1 |
++---------+------------------+
+
+### ### EFX_FF SR set/reset (end) ### ### ###
+
+### ### Module Resource Usage Distribution Estimates (begin) ### ###
+
+**Note: some resources maybe grouped under different hierarchy due to optimization and LUT mapping
+
+Module                        FFs      SRLs      ADDs       LUTs    COMB4s      RAMs DSP/MULTs
+-----------------------       ---      ----      ----       ----      ----      ---- ---------
+frame_pool:frame_pool    501(501)      0(0)    31(31) 1551(1551)      0(0)      0(0)      0(0)
+
+### ### Module Resource Usage Distribution Estimates (end) ### ###
+
+
+### ### DSP Usage Report (begin) ### ### ### 
+
+ No DSP in design
+
+### ### Clock Load Distribution Report (begin) ### ###
+
++-----+----------+----------+------------+----------------+
+|Clock|Flip-Flops|Shift-Regs|Memory Ports|Multipliers/DSPs|
++-----+----------+----------+------------+----------------+
+|clk  |      501 |        0 |          0 |              0 |
++-----+----------+----------+------------+----------------+
+
+### ### Clock Load Distribution Report (end) ### ###
+
+### ### Resource Summary (begin) ### ### ### 
+
+INPUT  PORTS    : 	43
+OUTPUT PORTS    : 	223
+
+EFX_ADD                 : 	31
+EFX_LUT4                : 	1551
+   1-2  Inputs          : 	512
+   3    Inputs          : 	530
+   4    Inputs          : 	509
+EFX_FF                  : 	501
+### ### Resource Summary (end) ### ### ###
+
+Plain synthesis (without verilog dump and post-map checks) time : 6s
+Elapsed synthesis time : 6s

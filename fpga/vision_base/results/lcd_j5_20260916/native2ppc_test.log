@@ -1,0 +1,2 @@
+LCD NATIVE 2PPC PASS: 8 pairs/16 pixels per active line, stable paired RGB
+sim/vision/tb_lcd_ref_2ppc.sv:28: $finish called at 1475000 (1ps)

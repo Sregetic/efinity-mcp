@@ -1,0 +1,147 @@
+INFO     : Elitestek FPGA Synthesis.
+INFO     : Version: 2026.1.132.3.9
+INFO     : Compiled: Aug 24 2026.
+INFO     : 
+INFO     : Copyright (C) 2013 - 2026 Efinix, Inc. All rights reserved.
+
+INFO     : Reading project database "F:\Project\fpga\vision_base\efinity\frame_render_engine.xml" [FlowMsg::ProjectDatabaseReading]
+INFO     : Maximum concurrency has been set to 8 [FlowMsg::MaxThreads]
+INFO     : Reading project database "F:\Project\fpga\vision_base\efinity\frame_render_engine.xml" [FlowMsg::ProjectDatabaseReading]
+INFO     : ***** Beginning Analysis ... *****
+INFO     : default VHDL library search path is now "F:/Efinity/2026.1/sim_models/vhdl/packages/vhdl_2008" [VHDL-1504]
+INFO     : Restoring all Verilog modules from file 'F:/Efinity/2026.1/sim_models/maplib/perilib_efxlib_parsetree.vdb' [VERI-2484]
+INFO     : Restoring all Verilog modules from file 'F:/Efinity/2026.1/sim_models/maplib/maplib_efxlib_parsetree.vdb' [VERI-2484]
+INFO     : Analyzing Verilog file 'F:/Efinity/2026.1/sim_models/maplib/efinix_maplib.v' [VERI-1482]
+INFO     : Analyzing Verilog file 'F:/Efinity/2026.1/sim_models/maplib/efinix_peri_lib.v' [VERI-1482]
+INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\rtl\frame_pool.sv' [VERI-1482]
+INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\rtl\frame_render_control.sv' [VERI-1482]
+INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\rtl\roi_scaler.sv' [VERI-1482]
+INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\rtl\axi_line_reader.sv' [VERI-1482]
+INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\rtl\roi_axi_scaler.sv' [VERI-1482]
+INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv' [VERI-1482]
+INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\rtl\frame_render_engine.sv' [VERI-1482]
+INFO     : Analysis took 0.017184 seconds [FlowMsg::StageDuration]
+INFO     :     Analysis took 0 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Analysis virtual memory usage: begin = 60.76 MB, end = 60.772 MB, delta = 0.012 MB [FlowMsg::VMUsage]
+INFO     :     Analysis peak virtual memory usage = 60.78 MB [FlowMsg::VMUsage::Peak]
+INFO     : Analysis resident set memory usage: begin = 69.148 MB, end = 72.264 MB, delta = 3.116 MB [FlowMsg::RSSUsage]
+INFO     :     Analysis peak resident set memory usage = 72.264 MB [FlowMsg::RSSUsage::Peak]
+INFO     : ***** Ending Analysis ... *****
+INFO     : ***** Beginning Elaboration ... *****
+INFO     : F:\Project\fpga\vision_base\rtl\frame_render_engine.sv(4): compiling module 'frame_render_engine' [VERI-1018]
+INFO     : F:\Project\fpga\vision_base\rtl\frame_render_control.sv(4): compiling module 'frame_render_control' [VERI-1018]
+INFO     : F:\Project\fpga\vision_base\rtl\frame_pool.sv(7): compiling module 'frame_pool(BANK_ID_WIDTH=2)' [VERI-1018]
+INFO     : F:\Project\fpga\vision_base\rtl\frame_pool.sv(73): extracting RAM for identifier 'frame_id_q' [VERI-2571]
+INFO     : F:\Project\fpga\vision_base\rtl\frame_pool.sv(74): extracting RAM for identifier 'config_id_q' [VERI-2571]
+INFO     : F:\Project\fpga\vision_base\rtl\roi_axi_scaler.sv(4): compiling module 'roi_axi_scaler' [VERI-1018]
+INFO     : F:\Project\fpga\vision_base\rtl\roi_scaler.sv(45): compiling module 'roi_scaler' [VERI-1018]
+INFO     : F:\Project\fpga\vision_base\rtl\roi_scaler.sv(7): compiling module 'roi_line_ram_2r2w(ADDR_WIDTH=12)' [VERI-1018]
+INFO     : F:\Project\fpga\vision_base\rtl\roi_scaler.sv(25): extracting RAM for identifier 'mem' [VERI-2571]
+INFO     : F:\Project\fpga\vision_base\rtl\axi_line_reader.sv(8): compiling module 'axi_line_reader' [VERI-1018]
+INFO     : F:\Project\fpga\vision_base\rtl\axi_line_reader.sv(50): extracting RAM for identifier 'fifo_mem' [VERI-2571]
+INFO     : F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv(11): compiling module 'axi_frame_writer' [VERI-1018]
+INFO     : F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv(87): extracting RAM for identifier 'fifo_mem' [VERI-2571]
+WARNING  : F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv(168): expression size 9 truncated to fit in target size 8 [VERI-1209]
+INFO     : Elaboration took 0.1021746 seconds [FlowMsg::StageDuration]
+INFO     :     Elaboration took 0.09375 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Elaboration virtual memory usage: begin = 60.772 MB, end = 88.48 MB, delta = 27.708 MB [FlowMsg::VMUsage]
+INFO     :     Elaboration peak virtual memory usage = 88.48 MB [FlowMsg::VMUsage::Peak]
+INFO     : Elaboration resident set memory usage: begin = 72.308 MB, end = 100.572 MB, delta = 28.264 MB [FlowMsg::RSSUsage]
+INFO     :     Elaboration peak resident set memory usage = 100.572 MB [FlowMsg::RSSUsage::Peak]
+INFO     : ***** Ending Elaboration ... *****
+INFO     : ... Setting Synthesis Option: mode=speed
+INFO     : ***** Beginning Reading Mapping Library ... *****
+INFO     : Reading Mapping Library took 0.0024311 seconds [FlowMsg::StageDuration]
+INFO     :     Reading Mapping Library took 0 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Reading Mapping Library virtual memory usage: begin = 88.48 MB, end = 88.48 MB, delta = 0 MB [FlowMsg::VMUsage]
+INFO     :     Reading Mapping Library peak virtual memory usage = 88.48 MB [FlowMsg::VMUsage::Peak]
+INFO     : Reading Mapping Library resident set memory usage: begin = 100.712 MB, end = 100.712 MB, delta = 0 MB [FlowMsg::RSSUsage]
+INFO     :     Reading Mapping Library peak resident set memory usage = 100.712 MB [FlowMsg::RSSUsage::Peak]
+INFO     : ***** Ending Reading Mapping Library ... *****
+INFO     : ... Pre-synthesis checks begin
+INFO     : ... Memory 'frame_id_q' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:73) [EFX-0677]
+INFO     : ... Memory 'config_id_q' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:74) [EFX-0677]
+WARNING  : Removing redundant signal : rj[31:0]. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:146) [EFX-0200]
+WARNING  : Removing redundant signal : cj[31:0]. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:146) [EFX-0200]
+WARNING  : Removing redundant signal : i[31:0]. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:147) [EFX-0200]
+WARNING  : Removing redundant signal : j[31:0]. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:148) [EFX-0200]
+WARNING  : Removing redundant signal : k[31:0]. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:149) [EFX-0200]
+WARNING  : Removing redundant signal : n[31:0]. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:150) [EFX-0200]
+INFO     : ... Memory 'mem' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25) [EFX-0677]
+WARNING  : Removing redundant signal : re0. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:18) [EFX-0200]
+WARNING  : Removing redundant signal : re1. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:19) [EFX-0200]
+INFO     : ... Memory 'fifo_mem' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:50) [EFX-0677]
+INFO     : ... Memory 'fifo_mem' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:87) [EFX-0677]
+INFO     : ... Pre-synthesis checks end (Real time : 0s)
+INFO     : ... NameSpace init begin
+INFO     : ... NameSpace init end (Real time : 0s)
+INFO     : ... Mapping design "frame_render_engine"
+INFO     : ... Hierarchical pre-synthesis "frame_pool(BANK_ID_WIDTH=2)" begin
+INFO     : ... Hierarchical pre-synthesis "frame_pool(BANK_ID_WIDTH=2)" end (Real time : 0s)
+INFO     : ... Hierarchical pre-synthesis "frame_render_control" begin
+INFO     : ... Hierarchical pre-synthesis "frame_render_control" end (Real time : 0s)
+INFO     : ... Hierarchical pre-synthesis "roi_line_ram_2r2w(ADDR_WIDTH=12)" begin
+INFO     : ... Hierarchical pre-synthesis "roi_line_ram_2r2w(ADDR_WIDTH=12)" end (Real time : 0s)
+INFO     : ... Hierarchical pre-synthesis "roi_scaler" begin
+INFO     : ... Hierarchical pre-synthesis "roi_scaler" end (Real time : 0s)
+INFO     : ... Hierarchical pre-synthesis "axi_line_reader" begin
+INFO     : ... Hierarchical pre-synthesis "axi_line_reader" end (Real time : 0s)
+INFO     : ... Hierarchical pre-synthesis "roi_axi_scaler" begin
+INFO     : ... Hierarchical pre-synthesis "roi_axi_scaler" end (Real time : 0s)
+INFO     : ... Hierarchical pre-synthesis "axi_frame_writer" begin
+INFO     : ... Hierarchical pre-synthesis "axi_frame_writer" end (Real time : 1s)
+INFO     : ... Hierarchical pre-synthesis "frame_render_engine" begin
+WARNING  : Mapping into logic memory block 'control/pool/config_id_q' (128 bits) (F:\Project\fpga\vision_base\rtl\frame_pool.sv:74) because it has all constant reader/writer. [EFX-0657]
+WARNING  : Mapping into logic memory block 'control/pool/frame_id_q' (128 bits) (F:\Project\fpga\vision_base\rtl\frame_pool.sv:73) because it has all constant reader/writer. [EFX-0657]
+INFO     : ... Clock Enable Synthesis Performed on 1096 flops.
+INFO     : ... Hierarchical pre-synthesis "frame_render_engine" end (Real time : 0s)
+INFO     : ... Flat optimizations begin
+INFO     : ... Flat optimizations end (Real time : 0s)
+INFO     : ... Flat synthesis begin
+INFO     : ... Flat synthesis end (Real time : 0s)
+INFO     : ... Flat optimizations begin
+INFO     : ... Flat optimizations end (Real time : 1s)
+INFO     : ... Check and break combinational loops begin
+INFO     : ... Check and break combinational loops end (Real time : 0s)
+INFO     : ... Sequential Optimization begin
+INFO     : ... Clock Network 'clk' with 2627 loads will be considered for sequential optimization.
+INFO     : ... Sequential Optimization deduced 469 equivalent points.
+INFO     : ... Sequential Optimization end (Real time : 2s)
+INFO     : ... Setup for logic synthesis begin
+INFO     : ... Setup for logic synthesis end (Real time : 0s)
+INFO     : ... LUT mapping begin
+INFO     : ... LS, strategy: 3, nd: 3963, ed: 12873, lv: 12, pw: 8468.59
+INFO     : ... LUT mapping end (Real time : 9s)
+INFO     : ... Post-synthesis Verific netlist creation begin
+INFO     : ... Post-synthesis Verific netlist creation end (Real time : 0s)
+INFO     : ... Postmap Retiming Optimization begin
+INFO     : ... Using advanced retiming technique.
+INFO     : ... Clock Network 'clk~clk' with 2583 loads will be considered for retiming optimization.
+INFO     : ... Performed 0 retime moves.
+INFO     : ... Postmap Retiming Optimization end (Real time : 0s)
+INFO     : ***** Beginning VDB Netlist Checker ... *****
+INFO     : VDB Netlist Checker took 0.0150629 seconds [FlowMsg::StageDuration]
+INFO     :     VDB Netlist Checker took 0.015625 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : VDB Netlist Checker virtual memory usage: begin = 145.944 MB, end = 145.944 MB, delta = 0 MB [FlowMsg::VMUsage]
+INFO     :     VDB Netlist Checker peak virtual memory usage = 212.332 MB [FlowMsg::VMUsage::Peak]
+INFO     : VDB Netlist Checker resident set memory usage: begin = 161.84 MB, end = 161.912 MB, delta = 0.072 MB [FlowMsg::RSSUsage]
+INFO     :     VDB Netlist Checker peak resident set memory usage = 213.872 MB [FlowMsg::RSSUsage::Peak]
+INFO     : ***** Ending VDB Netlist Checker ... *****
+INFO     : Resource Summary 
+INFO     : ======================================= 
+INFO     : EFX_ADD                 : 	1109
+INFO     : EFX_LUT4                : 	3947
+INFO     : EFX_DSP48               : 	22
+INFO     : EFX_FF                  : 	2539
+INFO     : EFX_RAM10               : 	14
+INFO     : EFX_DPRAM10             : 	16
+INFO     : ======================================= 
+INFO     : ... Post-Map Verilog Writer begin
+INFO     : Writing netlist 'frame_render_engine' to Verilog file 'outflow\frame_render_engine.map.v' [VDB-1030]
+INFO     : ... Post-Map Verilog Writer end (Real time : 0s)
+INFO     : The entire flow of EFX_MAP took 15.6613444 seconds [FlowMsg::StageDuration]
+INFO     :     The entire flow of EFX_MAP took 19.46875 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : The entire flow of EFX_MAP virtual memory usage: begin = 19.176 MB, end = 152.24 MB, delta = 133.064 MB [FlowMsg::VMUsage]
+INFO     :     The entire flow of EFX_MAP peak virtual memory usage = 212.332 MB [FlowMsg::VMUsage::Peak]
+INFO     : The entire flow of EFX_MAP resident set memory usage: begin = 24.072 MB, end = 167.808 MB, delta = 143.736 MB [FlowMsg::RSSUsage]
+INFO     :     The entire flow of EFX_MAP peak resident set memory usage = 213.872 MB [FlowMsg::RSSUsage::Peak]

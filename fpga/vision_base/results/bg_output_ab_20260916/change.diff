@@ -1,0 +1,16 @@
+--- 
+
++++ 
+
+@@ -1030,8 +1030,8 @@
+
+ (
+ 	.pixelclk      		(hdmi_tx_slow_clk          ),// system clock
+ 	.rstin         		(`VISION_TEST_PATTERN ? ~pattern_reset_sync[1] : ~vid_rst_n),// reset
+-	.blue_din      		(`VISION_TEST_PATTERN ? pattern_b : gamma_sel ? gamma_bdata	: hdmi_tx_bdata 	),//(hdmi_tx_rdata ),//(video_b            ),//(bdata_in	),   //
+-	.green_din     		  (`VISION_TEST_PATTERN ? pattern_g : gamma_sel ? gamma_gdata	: hdmi_tx_gdata   ),//(hdmi_tx_gdata ),//(video_g            ),//(gdata_in	),   //   
++	.blue_din      		(`VISION_TEST_PATTERN ? pattern_b : gamma_sel ? gamma_gdata	: hdmi_tx_gdata 	),//(hdmi_tx_rdata ),//(video_b            ),//(bdata_in	),   //
++	.green_din     		  (`VISION_TEST_PATTERN ? pattern_g : gamma_sel ? gamma_bdata	: hdmi_tx_bdata   ),//(hdmi_tx_bdata ),//(video_g            ),//(gdata_in	),   //   
+ 	.red_din       		(`VISION_TEST_PATTERN ? pattern_r : gamma_sel ? gamma_rdata	: hdmi_tx_rdata 	),//(hdmi_tx_bdata ),//(video_r            ),//(rdata_in	),   //   
+   .de            	(`VISION_TEST_PATTERN ? pattern_de : gamma_sel ? gamma_valid	: hdmi_tx_de      ),//(hdmi_tx_de    ),//(video_de           ),//(rx_de		  ),   //
+ 	.hsync         		(`VISION_TEST_PATTERN ? pattern_hs : gamma_sel ? gamma_hs	    : hdmi_tx_hs    ),//(video_hs           ),//(rx_hsync	),   //   

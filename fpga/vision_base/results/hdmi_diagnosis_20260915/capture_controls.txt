@@ -1,0 +1,6 @@
+UGREEN 25854
+property=0 current=-11 default=-11 min=-128 max=127 flags=2
+property=1 current=148 default=148 min=0 max=255 flags=2
+property=2 current=0 default=0 min=-128 max=127 flags=2
+property=3 current=164 default=180 min=0 max=255 flags=2
+

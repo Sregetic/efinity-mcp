@@ -1,0 +1,92 @@
+[
+  {
+    "addr": "0xfd90",
+    "on": "0x60",
+    "off": "0x67"
+  },
+  {
+    "addr": "0xfd9d",
+    "on": "0xd",
+    "off": "0xc"
+  },
+  {
+    "addr": "0xfda6",
+    "on": "0x7",
+    "off": "0x4"
+  },
+  {
+    "addr": "0xfda7",
+    "on": "0x36",
+    "off": "0x0"
+  },
+  {
+    "addr": "0xfda8",
+    "on": "0x1",
+    "off": "0x0"
+  },
+  {
+    "addr": "0xfda9",
+    "on": "0xbc",
+    "off": "0x0"
+  },
+  {
+    "addr": "0xfdaa",
+    "on": "0x1",
+    "off": "0x0"
+  },
+  {
+    "addr": "0xfdab",
+    "on": "0x7",
+    "off": "0x10"
+  },
+  {
+    "addr": "0xfdac",
+    "on": "0x86",
+    "off": "0x56"
+  },
+  {
+    "addr": "0xfdae",
+    "on": "0x19",
+    "off": "0x0"
+  },
+  {
+    "addr": "0xfdaf",
+    "on": "0x3",
+    "off": "0x0"
+  },
+  {
+    "addr": "0xfdb4",
+    "on": "0x70",
+    "off": "0x77"
+  },
+  {
+    "addr": "0xfdc3",
+    "on": "0x33",
+    "off": "0x0"
+  },
+  {
+    "addr": "0xfdc4",
+    "on": "0x77",
+    "off": "0x44"
+  },
+  {
+    "addr": "0xfdc5",
+    "on": "0x33",
+    "off": "0x0"
+  },
+  {
+    "addr": "0xfdc6",
+    "on": "0x77",
+    "off": "0x44"
+  },
+  {
+    "addr": "0xfdc7",
+    "on": "0x33",
+    "off": "0x0"
+  },
+  {
+    "addr": "0xfdc8",
+    "on": "0x77",
+    "off": "0x44"
+  }
+]

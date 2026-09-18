@@ -1,0 +1,132 @@
+[
+  {
+    "magic": "56495331",
+    "build": "2609166a",
+    "mode": 0,
+    "median": 0,
+    "memory": 0,
+    "index": 0,
+    "threshold": 128,
+    "raw": "564953312609166a78000807007508f4007049cc005ff127",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789533149.1458938,
+    "rgb_sums_or_clips": [
+      7670004,
+      7358924,
+      6287655
+    ],
+    "rgb_mean": [
+      117.03497314453125,
+      112.28826904296875,
+      95.94200134277344
+    ]
+  },
+  {
+    "magic": "56495331",
+    "build": "2609166a",
+    "mode": 0,
+    "median": 0,
+    "memory": 0,
+    "index": 0,
+    "threshold": 128,
+    "raw": "564953312609166a7800080700750597007045b0005ffc03",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789533149.3617866,
+    "rgb_sums_or_clips": [
+      7669143,
+      7357872,
+      6290435
+    ],
+    "rgb_mean": [
+      117.02183532714844,
+      112.272216796875,
+      95.98442077636719
+    ]
+  },
+  {
+    "magic": "56495331",
+    "build": "2609166a",
+    "mode": 0,
+    "median": 0,
+    "memory": 0,
+    "index": 0,
+    "threshold": 128,
+    "raw": "564953312609166a3800080700751bb5007054ea006005c1",
+    "canny_fault": 0,
+    "canny_busy": 0,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789533149.577374,
+    "rgb_sums_or_clips": [
+      7674805,
+      7361770,
+      6292929
+    ],
+    "rgb_mean": [
+      117.10823059082031,
+      112.33169555664062,
+      96.02247619628906
+    ]
+  },
+  {
+    "magic": "56495331",
+    "build": "2609166a",
+    "mode": 0,
+    "median": 0,
+    "memory": 0,
+    "index": 0,
+    "threshold": 128,
+    "raw": "564953312609166a7800080700751ad00070521e00600403",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789533149.7942476,
+    "rgb_sums_or_clips": [
+      7674576,
+      7361054,
+      6292483
+    ],
+    "rgb_mean": [
+      117.104736328125,
+      112.32077026367188,
+      96.01567077636719
+    ]
+  },
+  {
+    "magic": "56495331",
+    "build": "2609166a",
+    "mode": 0,
+    "median": 0,
+    "memory": 0,
+    "index": 0,
+    "threshold": 128,
+    "raw": "564953312609166a780008070075007f00704071005ff0e7",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789533150.0113237,
+    "rgb_sums_or_clips": [
+      7667839,
+      7356529,
+      6287591
+    ],
+    "rgb_mean": [
+      117.00193786621094,
+      112.25172424316406,
+      95.94102478027344
+    ]
+  }
+]

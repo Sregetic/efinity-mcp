@@ -1,0 +1,9 @@
+BAD y=3 x=8 rgb=402020402020
+BAD y=3 x=9 rgb=402020402020
+BAD y=3 x=10 rgb=402020402020
+BAD y=3 x=11 rgb=402020402020
+BAD y=3 x=12 rgb=402020402020
+BAD y=3 x=13 rgb=402020402020
+BAD y=3 x=14 rgb=402020402020
+RESULT pairs=512 checked=260 errors=260
+results/camera_rgb_stats_20260915/tb_gain.sv:21: $finish called at 6431000 (1ps)

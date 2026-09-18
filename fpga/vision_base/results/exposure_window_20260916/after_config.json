@@ -1,0 +1,112 @@
+[
+  {
+    "magic": "56495331",
+    "build": "2609168e",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609168e3810040700a200a10100000000000003",
+    "canny_fault": 0,
+    "canny_busy": 0,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789539087.2440236,
+    "physical_gains_rgb": [
+      162,
+      161,
+      256
+    ],
+    "tone_mode": 3
+  },
+  {
+    "magic": "56495331",
+    "build": "2609168e",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609168e7810040700a200a10100000000000003",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789539087.451982,
+    "physical_gains_rgb": [
+      162,
+      161,
+      256
+    ],
+    "tone_mode": 3
+  },
+  {
+    "magic": "56495331",
+    "build": "2609168e",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609168e7810040700a200a10100000000000003",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789539087.6643443,
+    "physical_gains_rgb": [
+      162,
+      161,
+      256
+    ],
+    "tone_mode": 3
+  },
+  {
+    "magic": "56495331",
+    "build": "2609168e",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609168e7810040700a200a10100000000000003",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789539087.8687189,
+    "physical_gains_rgb": [
+      162,
+      161,
+      256
+    ],
+    "tone_mode": 3
+  },
+  {
+    "magic": "56495331",
+    "build": "2609168e",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609168e7810040700a200a10100000000000003",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789539088.0842314,
+    "physical_gains_rgb": [
+      162,
+      161,
+      256
+    ],
+    "tone_mode": 3
+  }
+]

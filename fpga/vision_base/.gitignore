@@ -1,0 +1,7 @@
+build/
+efinity/outflow/
+efinity/work_syn/
+board/ti60f225_v4/outflow/
+board/ti60f225_v4/work_syn/
+board/ti60f225_v4/work_pnr/
+board/ti60f225_v4/work_dbg/

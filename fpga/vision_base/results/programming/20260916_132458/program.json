@@ -1,0 +1,13 @@
+{
+  "visual_acceptance": "pending user",
+  "operation": "JTAG SRAM",
+  "programmer_completed": true,
+  "bit_sha256": "749707B3710818652C9319C3DA820F8BD42F76D98C3830E2B2B46C3BDFA209BD",
+  "frequency_hz": 1000000,
+  "started_utc": "2026-09-16T05:24:58.6849525Z",
+  "exit_code": 0,
+  "url": "ftdi://0x0403:0x6011:4:3/2",
+  "finished_utc": "2026-09-16T05:25:09.3648774Z",
+  "device_verified": false,
+  "acceptance": "FAILED: IDCODE FFFFFFFF and USER2 all ones despite programmer completion message"
+}

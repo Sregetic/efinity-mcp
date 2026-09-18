@@ -1,0 +1,14 @@
+{
+  "sim\\vision\\canny_expected.mem": "1cdebd7ee01b6efc7567e6f8d76b1d7f512bf1644bad0d5dd32dfa635f3aacc7",
+  "sim\\vision\\canny_input.mem": "b33db9a0ad66c5bb6b016cb4c99b6474a81b92ffa90397a10508934c9ee2c6ae",
+  "sim\\vision\\canny_reference.json": "9d4af913f1282da125fbcce43534801e4e2f1bd9ce82e147af421f796a6a7e94",
+  "sim\\vision\\tb_canny.sv": "00dcb0208d5f2479a9779444ad450a41dff3963e6ab96f2a69aeb3ad83c854f4",
+  "sim\\vision\\tb_commit.sv": "4908a2d8491bc371a4d5f1bf6c48278e5bac972f95aabd81b2dffa91bc46016d",
+  "sim\\vision\\tb_controls.sv": "15f66eedc03f53f49cd0485d15fc445a0ddf97148315a63236f0395dbc370a97",
+  "sim\\vision\\tb_frontend.sv": "b3c743e3ab00b47af0abf63a1b18e133df8dd6b6600bfb96847a02a083b0e1ab",
+  "sim\\vision\\tb_history.sv": "0429ef4ea67b9b7d1ca1a688b58c88ce9309b70f87793f85261b2da9ee75e96d",
+  "sim\\vision\\tb_hysteresis.sv": "2ef2622554e74d1248b219abf25bce156c02f268ff1b124bfe32d9fac1624b05",
+  "sim\\vision\\tb_median9.sv": "cae2011bd567561480ea5513992d18cf6c189dad5883d0cbd921fdbcc642e41b",
+  "scripts\\reference_canny.py": "fceabca29c43454659ab50bf0234a430371748e7658e685a5a8f356d0c6e73e4",
+  "scripts\\verify_vision_features.ps1": "ae364fe68f09e90974a4d64a51edfaf304527e92e01b20ca7655fa3194b8a172"
+}

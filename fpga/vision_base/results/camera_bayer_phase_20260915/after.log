@@ -1,0 +1,2 @@
+RESULT pairs=512 checked=260 errors=0
+results/camera_bayer_phase_20260915/tb_rggb.sv:21: $finish called at 6431000 (1ps)

@@ -1,0 +1,13 @@
+Input #0, dshow, from 'video=UGREEN 25854':
+  Duration: N/A, start: 555269.996085, bitrate: N/A
+  Stream #0:0: Video: rawvideo (YUY2 / 0x32595559), yuyv422(tv, bt470bg/bt709/unknown), 1920x1080, 10 fps, 10 tbr, 10000k tbn, start 555269.996085
+Stream mapping:
+  Stream #0:0 -> #0:0 (rawvideo (native) -> png (native))
+Output #0, image2, to 'F:/Project/fpga/vision_base/results/hdmi_diagnosis_20260915/bringup25_yuy2.png':
+  Metadata:
+    encoder         : Lavf62.12.101
+  Stream #0:0: Video: png, rgb24(pc, gbr/bt709/unknown, progressive), 1920x1080, q=2-31, 200 kb/s, 10 fps, 10 tbn
+    Metadata:
+      encoder         : Lavc62.28.101 png
+[out#0/image2 @ 000001f8829b8c80] video:8KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown
+frame=    1 fps=0.0 q=-0.0 Lsize=N/A time=00:01:03.70 bitrate=N/A speed=0.997x elapsed=0:01:03.86    

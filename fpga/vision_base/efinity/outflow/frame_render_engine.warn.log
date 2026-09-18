@@ -1,0 +1,17 @@
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 08, 2026 09:59:59
+///////////////////////////////////
+
+[EFX-0011 VERI-WARNING] expression size 9 truncated to fit in target size 8 (VERI-1209) (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:168)
+[EFX-0200 WARNING] Removing redundant signal : rj[31:0]. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:146)
+[EFX-0200 WARNING] Removing redundant signal : cj[31:0]. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:146)
+[EFX-0200 WARNING] Removing redundant signal : i[31:0]. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:147)
+[EFX-0200 WARNING] Removing redundant signal : j[31:0]. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:148)
+[EFX-0200 WARNING] Removing redundant signal : k[31:0]. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:149)
+[EFX-0200 WARNING] Removing redundant signal : n[31:0]. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:150)
+[EFX-0200 WARNING] Removing redundant signal : re0. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:18)
+[EFX-0200 WARNING] Removing redundant signal : re1. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:19)
+[EFX-0657 WARNING] Mapping into logic memory block 'control/pool/config_id_q' (128 bits) (F:\Project\fpga\vision_base\rtl\frame_pool.sv:74) because it has all constant reader/writer.
+[EFX-0657 WARNING] Mapping into logic memory block 'control/pool/frame_id_q' (128 bits) (F:\Project\fpga\vision_base\rtl\frame_pool.sv:73) because it has all constant reader/writer.

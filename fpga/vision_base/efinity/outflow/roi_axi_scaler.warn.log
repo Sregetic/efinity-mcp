@@ -1,0 +1,95 @@
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 08, 2026 01:02:16
+///////////////////////////////////
+
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 08, 2026 01:04:04
+///////////////////////////////////
+
+[EFX-0011 VERI-WARNING] expression size 9 truncated to fit in target size 8 (VERI-1209) (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:59)
+[EFX-0657 WARNING] Mapping into logic memory block 'scaler/line_buf_2' (40960 bits) (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:54) because read port is not synchronous.
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 08, 2026 01:36:17
+///////////////////////////////////
+
+[EFX-0011 VERI-WARNING] expression size 9 truncated to fit in target size 8 (VERI-1209) (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:59)
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 08, 2026 09:33:12
+///////////////////////////////////
+
+[EFX-0011 VERI-WARNING] expression size 18 truncated to fit in target size 17 (VERI-1209) (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:288)
+[EFX-0011 VERI-WARNING] expression size 18 truncated to fit in target size 17 (VERI-1209) (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:295)
+[EFX-0011 VERI-WARNING] expression size 18 truncated to fit in target size 17 (VERI-1209) (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:309)
+[EFX-0011 VERI-WARNING] expression size 128 truncated to fit in target size 16 (VERI-1209) (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:110)
+[EFX-0011 VERI-WARNING] expression size 128 truncated to fit in target size 16 (VERI-1209) (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:111)
+[EFX-0011 VERI-WARNING] expression size 9 truncated to fit in target size 8 (VERI-1209) (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:129)
+[EFX-0683 WARNING] RAM net 'scaler/bank0/mem__D$2' has incompatible control or address signals. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0683 WARNING] RAM net 'scaler/bank0/mem__D$b12' has incompatible control or address signals. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0683 WARNING] RAM net 'scaler/bank0/mem__D$g1' has incompatible control or address signals. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0683 WARNING] RAM net 'scaler/bank0/mem__D$12' has incompatible control or address signals. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0683 WARNING] RAM net 'scaler/bank0/mem__D$c12' has incompatible control or address signals. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0683 WARNING] RAM net 'scaler/bank0/mem__D$d12' has incompatible control or address signals. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0683 WARNING] RAM net 'scaler/bank0/mem__D$e12' has incompatible control or address signals. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0683 WARNING] RAM net 'scaler/bank0/mem__D$f12' has incompatible control or address signals. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0683 WARNING] RAM net 'scaler/bank1/mem__D$b12' has incompatible control or address signals. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0683 WARNING] RAM net 'scaler/bank1/mem__D$2' has incompatible control or address signals. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0683 WARNING] RAM net 'scaler/bank1/mem__D$g1' has incompatible control or address signals. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0683 WARNING] RAM net 'scaler/bank1/mem__D$12' has incompatible control or address signals. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0683 WARNING] RAM net 'scaler/bank1/mem__D$c12' has incompatible control or address signals. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0683 WARNING] RAM net 'scaler/bank1/mem__D$d12' has incompatible control or address signals. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0683 WARNING] RAM net 'scaler/bank1/mem__D$e12' has incompatible control or address signals. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0683 WARNING] RAM net 'scaler/bank1/mem__D$f12' has incompatible control or address signals. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0655 WARNING] Mapping into logic memory block 'scaler/bank1/mem__D$f12' (5120 bits). (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0655 WARNING] Mapping into logic memory block 'scaler/bank1/mem__D$e12' (5120 bits). (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0655 WARNING] Mapping into logic memory block 'scaler/bank1/mem__D$d12' (5120 bits). (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0655 WARNING] Mapping into logic memory block 'scaler/bank0/mem__D$2' (5120 bits). (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0655 WARNING] Mapping into logic memory block 'scaler/bank0/mem__D$b12' (5120 bits). (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0655 WARNING] Mapping into logic memory block 'scaler/bank1/mem__D$c12' (5120 bits). (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0655 WARNING] Mapping into logic memory block 'scaler/bank0/mem__D$e12' (5120 bits). (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0655 WARNING] Mapping into logic memory block 'scaler/bank0/mem__D$12' (5120 bits). (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0655 WARNING] Mapping into logic memory block 'scaler/bank0/mem__D$f12' (5120 bits). (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0655 WARNING] Mapping into logic memory block 'scaler/bank0/mem__D$c12' (5120 bits). (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0655 WARNING] Mapping into logic memory block 'scaler/bank0/mem__D$d12' (5120 bits). (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0655 WARNING] Mapping into logic memory block 'scaler/bank1/mem__D$b12' (5120 bits). (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0655 WARNING] Mapping into logic memory block 'scaler/bank1/mem__D$2' (5120 bits). (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0655 WARNING] Mapping into logic memory block 'scaler/bank0/mem__D$g1' (5120 bits). (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0655 WARNING] Mapping into logic memory block 'scaler/bank1/mem__D$g1' (5120 bits). (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0655 WARNING] Mapping into logic memory block 'scaler/bank1/mem__D$12' (5120 bits). (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 08, 2026 09:38:45
+///////////////////////////////////
+
+[EFX-0011 VERI-WARNING] expression size 18 truncated to fit in target size 17 (VERI-1209) (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:288)
+[EFX-0011 VERI-WARNING] expression size 18 truncated to fit in target size 17 (VERI-1209) (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:295)
+[EFX-0011 VERI-WARNING] expression size 18 truncated to fit in target size 17 (VERI-1209) (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:309)
+[EFX-0011 VERI-WARNING] expression size 128 truncated to fit in target size 16 (VERI-1209) (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:109)
+[EFX-0011 VERI-WARNING] expression size 128 truncated to fit in target size 16 (VERI-1209) (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:110)
+[EFX-0011 VERI-WARNING] expression size 9 truncated to fit in target size 8 (VERI-1209) (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:128)
+[EFX-0200 WARNING] Removing redundant signal : re0. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:18)
+[EFX-0200 WARNING] Removing redundant signal : re1. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:19)
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 08, 2026 09:50:17
+///////////////////////////////////
+
+[EFX-0200 WARNING] Removing redundant signal : re0. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:18)
+[EFX-0200 WARNING] Removing redundant signal : re1. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:19)
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 08, 2026 09:58:02
+///////////////////////////////////
+
+[EFX-0200 WARNING] Removing redundant signal : re0. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:18)
+[EFX-0200 WARNING] Removing redundant signal : re1. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:19)

@@ -1,0 +1,2 @@
+RESULT pairs=5760 errors=0
+results/camera_pixel_audit_20260915/tb_linebuffer.sv:21: $finish called at 58591000 (1ps)

@@ -1,0 +1,91 @@
+{
+  "generated_utc": "2026-09-08T02:03:11.2048275Z",
+  "suite": "full",
+  "passed": true,
+  "verification_scope": "RTL simulation with behavioral memory; no Efinity P&R or hardware acceptance",
+  "tests": [
+    {
+      "test": "tb_board_bank_switch",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 0.146
+    },
+    {
+      "test": "tb_frame_pool",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 0.139
+    },
+    {
+      "test": "tb_frame_render_control",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 0.135
+    },
+    {
+      "test": "tb_video_test_pattern",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 12.276
+    },
+    {
+      "test": "tb_axi_frame_writer",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 25.092
+    },
+    {
+      "test": "tb_axi_line_reader",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 0.141
+    },
+    {
+      "test": "tb_roi_scaler",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 110.309
+    },
+    {
+      "test": "tb_roi_axi_scaler",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 0.145
+    },
+    {
+      "test": "tb_frame_render_engine",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 121.834
+    }
+  ],
+  "source_sha256": {
+    "board/ti60f225_v4/rtl/frame_buffer_V3/bank_switch.v": "947667362b052664d106d7d896a1f4dc9ab8b3bf5ecb1dc9eac201bbc2f96f53",
+    "rtl/axi_frame_writer.sv": "5134ea697eae5fe39ac174715ae33d6cf80b102a8ce67799be7cc8701481dd63",
+    "rtl/axi_line_reader.sv": "31fe42ee19198a87105a67c66b493319c4900125822669f2562655dbca3a6090",
+    "rtl/frame_pool.sv": "f4eea352fd0422f1db03a7f13b6eaccbd1915bf258341935ee47a4608ed38837",
+    "rtl/frame_render_control.sv": "4f09204f2e740532db994bb7edb80e7c22f2ea5120e69bdeae27f9d3585407fb",
+    "rtl/frame_render_engine.sv": "415351e448895ba188786f3f0eaee4ead031677dc9144edacb37f733e314f8f7",
+    "rtl/roi_axi_scaler.sv": "90736b5ca4937e9f3ac7e2ddb4a4a0076a24681c6a0dc7437ef22abfed47d121",
+    "rtl/roi_scaler.sv": "8d9b7e3869a749a38cd25e44115a8ab76ff048a2eeca82c2f36f5e8fe6180de4",
+    "rtl/video_test_pattern.sv": "883b31142cfa2399f4cfd748e12640731c7cff122bcca8dac705c385a9adb96d",
+    "sim/tb_axi_frame_writer.sv": "0ff0f7d48c0cd87a20b156bceeb1379c57e595fc83fcefc7d5a0c23796e7c750",
+    "sim/tb_axi_line_reader.sv": "5f70c86c99daec5ae502a4e8a48955cce3c30836c172004a173262551dcb5412",
+    "sim/tb_board_bank_switch.sv": "33fbfb8921a87df464ed50e455557cabb378861f93032b1abc881e3a151945b9",
+    "sim/tb_frame_pool.sv": "2c5a575bcde62576c4f67e5b67bfc0f721f202702c12e8cb561c8ea550b480c2",
+    "sim/tb_frame_render_control.sv": "548dc05165a95c099f2fca0bcdaabd6e4099b3f037e4c8dbb14231f1923f02d2",
+    "sim/tb_frame_render_engine.sv": "692aa281f3a659a7e8aac54fefdcf4e7c6e29750d04cb9be87d58a5fd2d863e7",
+    "sim/tb_roi_axi_scaler.sv": "14e333f22e98cb61f76374ad957b87f6227a4b5bdb11a6347da0eb0b2ab35584",
+    "sim/tb_roi_scaler.sv": "b11432cb3f425dcea32bcde40186fce8c56ef5300326419ae65211ddcc7d5d6b",
+    "sim/tb_video_test_pattern.sv": "69f8a64a5e53d39fa1241f0dae2292e44c63de2950a225e29f19bbad4d8e4b2f"
+  }
+}

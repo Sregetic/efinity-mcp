@@ -1,0 +1,4 @@
+FRAME_END received_words=515522 expected=518400
+RESULT words=518400 expected=518400 pixels=2073600 errors=0
+FATAL: results/fov_filtered_20260916/tb_frame_end.sv:38: 
+       Time: 9899711000  Scope: tb

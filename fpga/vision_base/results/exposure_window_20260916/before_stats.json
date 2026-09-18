@@ -1,0 +1,25 @@
+{
+  "sequence": 2,
+  "sample_tiles": 240,
+  "usable_tiles": 240,
+  "mean": [
+    46.15416666666667,
+    63.204166666666666,
+    63.166666666666664,
+    69.34166666666667
+  ],
+  "maximum": [
+    95.0,
+    145.0,
+    149.0,
+    141.0
+  ],
+  "near_saturated_fraction": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "pair_00_11_median_abs_difference": 24.0,
+  "pair_01_10_median_abs_difference": 1.0
+}

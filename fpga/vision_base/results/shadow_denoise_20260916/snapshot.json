@@ -1,0 +1,112 @@
+[
+  {
+    "raw": "a800000000000000000000000000000000000000d7000000",
+    "rx_beats_max": 0,
+    "rx_lines": 0,
+    "rx_ppc": 0,
+    "filter_words": 0,
+    "filter_lines": 0,
+    "filter_max_words_per_line": 0,
+    "late_at_frame_end": 0,
+    "valid": 0
+  },
+  {
+    "raw": "a82805a00e10004ad07e9004381e000100010301d71576fe",
+    "rx_beats_max": 640,
+    "rx_lines": 1440,
+    "rx_ppc": 4,
+    "filter_words": 518400,
+    "filter_lines": 1080,
+    "filter_max_words_per_line": 480,
+    "late_at_frame_end": 0,
+    "valid": 1
+  },
+  {
+    "raw": "a82805a00e10004ad07e9004381e000100020301d72430fe",
+    "rx_beats_max": 640,
+    "rx_lines": 1440,
+    "rx_ppc": 4,
+    "filter_words": 518400,
+    "filter_lines": 1080,
+    "filter_max_words_per_line": 480,
+    "late_at_frame_end": 0,
+    "valid": 1
+  },
+  {
+    "raw": "a82805a00e10004ad07e9004381e000100010301d77c97fe",
+    "rx_beats_max": 640,
+    "rx_lines": 1440,
+    "rx_ppc": 4,
+    "filter_words": 518400,
+    "filter_lines": 1080,
+    "filter_max_words_per_line": 480,
+    "late_at_frame_end": 0,
+    "valid": 1
+  },
+  {
+    "raw": "a82805a00e10004ad07e9004381e000100010301d74dfffe",
+    "rx_beats_max": 640,
+    "rx_lines": 1440,
+    "rx_ppc": 4,
+    "filter_words": 518400,
+    "filter_lines": 1080,
+    "filter_max_words_per_line": 480,
+    "late_at_frame_end": 0,
+    "valid": 1
+  },
+  {
+    "raw": "a82805a00e10004ad07e9004381e000100020301d7df58fe",
+    "rx_beats_max": 640,
+    "rx_lines": 1440,
+    "rx_ppc": 4,
+    "filter_words": 518400,
+    "filter_lines": 1080,
+    "filter_max_words_per_line": 480,
+    "late_at_frame_end": 0,
+    "valid": 1
+  },
+  {
+    "raw": "a82805a00e10004ad07e9004381e000100010301d7ee2efe",
+    "rx_beats_max": 640,
+    "rx_lines": 1440,
+    "rx_ppc": 4,
+    "filter_words": 518400,
+    "filter_lines": 1080,
+    "filter_max_words_per_line": 480,
+    "late_at_frame_end": 0,
+    "valid": 1
+  },
+  {
+    "raw": "a82805a00e10004ad07e9004381e000100010301d7ba85fe",
+    "rx_beats_max": 640,
+    "rx_lines": 1440,
+    "rx_ppc": 4,
+    "filter_words": 518400,
+    "filter_lines": 1080,
+    "filter_max_words_per_line": 480,
+    "late_at_frame_end": 0,
+    "valid": 1
+  },
+  {
+    "raw": "a82805a00e10004ad07e9004381e000100010301d78be1fe",
+    "rx_beats_max": 640,
+    "rx_lines": 1440,
+    "rx_ppc": 4,
+    "filter_words": 518400,
+    "filter_lines": 1080,
+    "filter_max_words_per_line": 480,
+    "late_at_frame_end": 0,
+    "valid": 1
+  },
+  {
+    "raw": "a82805a00e10004ad07e9004381e000100010301d719c2fe",
+    "rx_beats_max": 640,
+    "rx_lines": 1440,
+    "rx_ppc": 4,
+    "filter_words": 518400,
+    "filter_lines": 1080,
+    "filter_max_words_per_line": 480,
+    "late_at_frame_end": 0,
+    "valid": 1
+  }
+]

@@ -1,0 +1,2 @@
+Running: efx_run_map.py roi_axi_scaler --family Titanium --device Ti60F225 --project_xml F:\Project\fpga\vision_base\efinity\roi_axi_scaler.xml --output_dir outflow --work_dir ../build/efinity_scaler --timeout 180 --opt root=roi_axi_scaler --opt veri_options=verilog_mode=sv_09,vhdl_mode=vhdl_2008 work-dir=../build/efinity_scaler
+   map :	PASS 

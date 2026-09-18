@@ -1,0 +1,1036 @@
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 15, 2026 02:15:56
+///////////////////////////////////
+
+[EFX-0012 VERI-INFO] default VHDL library search path is now "F:/Efinity/2026.1/sim_models/vhdl/packages/vhdl_2008" (VHDL-1504) 
+[EFX-0012 VERI-INFO] compiling module 'hdmi_bringup' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\hdmi_bringup.sv:1)
+[EFX-0012 VERI-INFO] compiling module 'video_test_pattern' (VERI-1018) (F:\Project\fpga\vision_base\rtl\video_test_pattern.sv:4)
+[EFX-0012 VERI-INFO] compiling module 'dvi_encoder' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\dvi_encoder.v:2)
+[EFX-0012 VERI-INFO] compiling module 'encode' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\encode.v:46)
+[EFX-0011 VERI-WARNING] expression size 9 truncated to fit in target size 8 (VERI-1209) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\encode.v:167)
+[EFX-0000 INFO] ... Setting Synthesis Option: mode=speed
+[EFX-0000 INFO] ... Pre-synthesis checks begin
+[EFX-0266 INFO] Module Instance 'encr' input pin 'c0' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'encr' input pin 'c1' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'encg' input pin 'c0' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'encg' input pin 'c1' is tied to constant (=0).
+[EFX-0000 INFO] ... Pre-synthesis checks end (Real time : 0s)
+[EFX-0000 INFO] ... NameSpace init begin
+[EFX-0000 INFO] ... NameSpace init end (Real time : 0s)
+[EFX-0000 INFO] ... Mapping design "hdmi_bringup"
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "video_test_pattern" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "video_test_pattern" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "encode" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "encode" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "dvi_encoder" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "dvi_encoder" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "hdmi_bringup" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "hdmi_bringup" end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Flat synthesis begin
+[EFX-0000 INFO] ... Flat synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Check and break combinational loops begin
+[EFX-0000 INFO] ... Check and break combinational loops end (Real time : 0s)
+[EFX-0000 INFO] ... Setup for logic synthesis begin
+[EFX-0000 INFO] ... Setup for logic synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... LUT mapping begin
+[EFX-0000 INFO] ... LS, strategy: 3, nd: 219, ed: 719, lv: 4, pw: 664.59
+[EFX-0000 INFO] ... LUT mapping end (Real time : 0s)
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation begin
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation end (Real time : 0s)
+[EFX-0000 INFO] Resource Summary 
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] EFX_ADD                 : 	198
+[EFX-0000 INFO] EFX_LUT4                : 	222
+[EFX-0000 INFO] EFX_FF                  : 	151
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] ... Post-Map Verilog Writer begin
+[EFX-0000 INFO] ... Post-Map Verilog Writer end (Real time : 0s)
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 15, 2026 02:17:21
+///////////////////////////////////
+
+[EFX-0012 VERI-INFO] default VHDL library search path is now "F:/Efinity/2026.1/sim_models/vhdl/packages/vhdl_2008" (VHDL-1504) 
+[EFX-0012 VERI-INFO] compiling module 'hdmi_bringup' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\hdmi_bringup.sv:1)
+[EFX-0012 VERI-INFO] compiling module 'video_test_pattern' (VERI-1018) (F:\Project\fpga\vision_base\rtl\video_test_pattern.sv:4)
+[EFX-0012 VERI-INFO] compiling module 'dvi_encoder' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\dvi_encoder.v:2)
+[EFX-0012 VERI-INFO] compiling module 'encode' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\encode.v:46)
+[EFX-0011 VERI-WARNING] expression size 9 truncated to fit in target size 8 (VERI-1209) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\encode.v:167)
+[EFX-0000 INFO] ... Setting Synthesis Option: mode=speed
+[EFX-0000 INFO] ... Pre-synthesis checks begin
+[EFX-0266 INFO] Module Instance 'encr' input pin 'c0' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'encr' input pin 'c1' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'encg' input pin 'c0' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'encg' input pin 'c1' is tied to constant (=0).
+[EFX-0000 INFO] ... Pre-synthesis checks end (Real time : 0s)
+[EFX-0000 INFO] ... NameSpace init begin
+[EFX-0000 INFO] ... NameSpace init end (Real time : 0s)
+[EFX-0000 INFO] ... Mapping design "hdmi_bringup"
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "video_test_pattern" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "video_test_pattern" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "encode" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "encode" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "dvi_encoder" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "dvi_encoder" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "hdmi_bringup" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "hdmi_bringup" end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Flat synthesis begin
+[EFX-0000 INFO] ... Flat synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Check and break combinational loops begin
+[EFX-0000 INFO] ... Check and break combinational loops end (Real time : 0s)
+[EFX-0000 INFO] ... Setup for logic synthesis begin
+[EFX-0000 INFO] ... Setup for logic synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... LUT mapping begin
+[EFX-0000 INFO] ... LS, strategy: 3, nd: 219, ed: 719, lv: 4, pw: 664.59
+[EFX-0000 INFO] ... LUT mapping end (Real time : 0s)
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation begin
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation end (Real time : 0s)
+[EFX-0000 INFO] Resource Summary 
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] EFX_ADD                 : 	198
+[EFX-0000 INFO] EFX_LUT4                : 	222
+[EFX-0000 INFO] EFX_FF                  : 	151
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] ... Post-Map Verilog Writer begin
+[EFX-0000 INFO] ... Post-Map Verilog Writer end (Real time : 0s)
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 15, 2026 02:19:58
+///////////////////////////////////
+
+[EFX-0012 VERI-INFO] default VHDL library search path is now "F:/Efinity/2026.1/sim_models/vhdl/packages/vhdl_2008" (VHDL-1504) 
+[EFX-0012 VERI-INFO] compiling module 'hdmi_bringup' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\hdmi_bringup.sv:1)
+[EFX-0012 VERI-INFO] compiling module 'video_test_pattern' (VERI-1018) (F:\Project\fpga\vision_base\rtl\video_test_pattern.sv:4)
+[EFX-0012 VERI-INFO] compiling module 'dvi_encoder' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\dvi_encoder.v:2)
+[EFX-0012 VERI-INFO] compiling module 'encode' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\encode.v:46)
+[EFX-0011 VERI-WARNING] expression size 9 truncated to fit in target size 8 (VERI-1209) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\encode.v:167)
+[EFX-0000 INFO] ... Setting Synthesis Option: mode=speed
+[EFX-0000 INFO] ... Pre-synthesis checks begin
+[EFX-0266 INFO] Module Instance 'encr' input pin 'c0' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'encr' input pin 'c1' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'encg' input pin 'c0' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'encg' input pin 'c1' is tied to constant (=0).
+[EFX-0000 INFO] ... Pre-synthesis checks end (Real time : 0s)
+[EFX-0000 INFO] ... NameSpace init begin
+[EFX-0000 INFO] ... NameSpace init end (Real time : 0s)
+[EFX-0000 INFO] ... Mapping design "hdmi_bringup"
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "video_test_pattern" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "video_test_pattern" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "encode" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "encode" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "dvi_encoder" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "dvi_encoder" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "hdmi_bringup" begin
+[EFX-0000 INFO] ... Clock Enable Synthesis Performed on 24 flops.
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "hdmi_bringup" end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Flat synthesis begin
+[EFX-0000 INFO] ... Flat synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Check and break combinational loops begin
+[EFX-0000 INFO] ... Check and break combinational loops end (Real time : 0s)
+[EFX-0000 INFO] ... Setup for logic synthesis begin
+[EFX-0000 INFO] ... Setup for logic synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... LUT mapping begin
+[EFX-0000 INFO] ... LS, strategy: 3, nd: 244, ed: 793, lv: 4, pw: 760.97
+[EFX-0000 INFO] ... LUT mapping end (Real time : 0s)
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation begin
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation end (Real time : 0s)
+[EFX-0011 VERI-WARNING] Input/inout port jtag_inst1_RESET is unconnected. Place and route may remove this unconnected port. (VDB-8003) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\hdmi_bringup.sv:3)
+[EFX-0011 VERI-WARNING] Found 6 warnings in the post-synthesis netlist. 
+[EFX-0000 INFO] Resource Summary 
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] EFX_ADD                 : 	223
+[EFX-0000 INFO] EFX_LUT4                : 	247
+[EFX-0000 INFO] EFX_FF                  : 	209
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] ... Post-Map Verilog Writer begin
+[EFX-0000 INFO] ... Post-Map Verilog Writer end (Real time : 0s)
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 15, 2026 02:21:26
+///////////////////////////////////
+
+[EFX-0012 VERI-INFO] default VHDL library search path is now "F:/Efinity/2026.1/sim_models/vhdl/packages/vhdl_2008" (VHDL-1504) 
+[EFX-0012 VERI-INFO] compiling module 'hdmi_bringup' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\hdmi_bringup.sv:1)
+[EFX-0012 VERI-INFO] compiling module 'video_test_pattern' (VERI-1018) (F:\Project\fpga\vision_base\rtl\video_test_pattern.sv:4)
+[EFX-0012 VERI-INFO] compiling module 'dvi_encoder' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\dvi_encoder.v:2)
+[EFX-0012 VERI-INFO] compiling module 'encode' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\encode.v:46)
+[EFX-0011 VERI-WARNING] expression size 9 truncated to fit in target size 8 (VERI-1209) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\encode.v:167)
+[EFX-0000 INFO] ... Setting Synthesis Option: mode=speed
+[EFX-0000 INFO] ... Pre-synthesis checks begin
+[EFX-0266 INFO] Module Instance 'encr' input pin 'c0' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'encr' input pin 'c1' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'encg' input pin 'c0' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'encg' input pin 'c1' is tied to constant (=0).
+[EFX-0000 INFO] ... Pre-synthesis checks end (Real time : 0s)
+[EFX-0000 INFO] ... NameSpace init begin
+[EFX-0000 INFO] ... NameSpace init end (Real time : 0s)
+[EFX-0000 INFO] ... Mapping design "hdmi_bringup"
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "video_test_pattern" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "video_test_pattern" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "encode" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "encode" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "dvi_encoder" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "dvi_encoder" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "hdmi_bringup" begin
+[EFX-0000 INFO] ... Clock Enable Synthesis Performed on 24 flops.
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "hdmi_bringup" end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Flat synthesis begin
+[EFX-0000 INFO] ... Flat synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Check and break combinational loops begin
+[EFX-0000 INFO] ... Check and break combinational loops end (Real time : 0s)
+[EFX-0000 INFO] ... Setup for logic synthesis begin
+[EFX-0000 INFO] ... Setup for logic synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... LUT mapping begin
+[EFX-0000 INFO] ... LS, strategy: 3, nd: 264, ed: 833, lv: 4, pw: 813.85
+[EFX-0000 INFO] ... LUT mapping end (Real time : 1s)
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation begin
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation end (Real time : 0s)
+[EFX-0011 VERI-WARNING] Input/inout port jtag_inst1_RESET is unconnected. Place and route may remove this unconnected port. (VDB-8003) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\hdmi_bringup.sv:3)
+[EFX-0011 VERI-WARNING] Found 6 warnings in the post-synthesis netlist. 
+[EFX-0000 INFO] Resource Summary 
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] EFX_ADD                 : 	223
+[EFX-0000 INFO] EFX_LUT4                : 	267
+[EFX-0000 INFO] EFX_FF                  : 	280
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] ... Post-Map Verilog Writer begin
+[EFX-0000 INFO] ... Post-Map Verilog Writer end (Real time : 0s)
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 15, 2026 02:26:09
+///////////////////////////////////
+
+[EFX-0012 VERI-INFO] default VHDL library search path is now "F:/Efinity/2026.1/sim_models/vhdl/packages/vhdl_2008" (VHDL-1504) 
+[EFX-0012 VERI-INFO] compiling module 'hdmi_bringup' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\hdmi_bringup.sv:1)
+[EFX-0012 VERI-INFO] compiling module 'video_test_pattern' (VERI-1018) (F:\Project\fpga\vision_base\rtl\video_test_pattern.sv:4)
+[EFX-0012 VERI-INFO] compiling module 'dvi_encoder' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\dvi_encoder.v:2)
+[EFX-0012 VERI-INFO] compiling module 'encode' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\encode.v:46)
+[EFX-0011 VERI-WARNING] expression size 9 truncated to fit in target size 8 (VERI-1209) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\encode.v:167)
+[EFX-0000 INFO] ... Setting Synthesis Option: mode=speed
+[EFX-0000 INFO] ... Pre-synthesis checks begin
+[EFX-0266 INFO] Module Instance 'encr' input pin 'c0' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'encr' input pin 'c1' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'encg' input pin 'c0' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'encg' input pin 'c1' is tied to constant (=0).
+[EFX-0000 INFO] ... Pre-synthesis checks end (Real time : 0s)
+[EFX-0000 INFO] ... NameSpace init begin
+[EFX-0000 INFO] ... NameSpace init end (Real time : 0s)
+[EFX-0000 INFO] ... Mapping design "hdmi_bringup"
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "video_test_pattern" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "video_test_pattern" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "encode" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "encode" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "dvi_encoder" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "dvi_encoder" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "hdmi_bringup" begin
+[EFX-0000 INFO] ... Clock Enable Synthesis Performed on 24 flops.
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "hdmi_bringup" end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Flat synthesis begin
+[EFX-0000 INFO] ... Flat synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Check and break combinational loops begin
+[EFX-0000 INFO] ... Check and break combinational loops end (Real time : 0s)
+[EFX-0000 INFO] ... Setup for logic synthesis begin
+[EFX-0000 INFO] ... Setup for logic synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... LUT mapping begin
+[EFX-0000 INFO] ... LS, strategy: 3, nd: 264, ed: 833, lv: 4, pw: 813.92
+[EFX-0000 INFO] ... LUT mapping end (Real time : 1s)
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation begin
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation end (Real time : 0s)
+[EFX-0011 VERI-WARNING] Input/inout port jtag_inst1_RESET is unconnected. Place and route may remove this unconnected port. (VDB-8003) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\hdmi_bringup.sv:3)
+[EFX-0011 VERI-WARNING] Found 6 warnings in the post-synthesis netlist. 
+[EFX-0000 INFO] Resource Summary 
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] EFX_ADD                 : 	223
+[EFX-0000 INFO] EFX_LUT4                : 	246
+[EFX-0000 INFO] EFX_FF                  : 	280
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] ... Post-Map Verilog Writer begin
+[EFX-0000 INFO] ... Post-Map Verilog Writer end (Real time : 0s)
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 15, 2026 02:28:38
+///////////////////////////////////
+
+[EFX-0012 VERI-INFO] default VHDL library search path is now "F:/Efinity/2026.1/sim_models/vhdl/packages/vhdl_2008" (VHDL-1504) 
+[EFX-0011 VERI-WARNING] non-net output port 'ecc' cannot be initialized at declaration in SystemVerilog mode (VERI-2522) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\ecc_calc_v1.v:6)
+[EFX-0011 VERI-WARNING] parameter 'OUT_REG' becomes localparam in 'Sc_Fifo_Slr8' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:32)
+[EFX-0011 VERI-WARNING] parameter 'DATA_WIDTH' becomes localparam in 'Sc_Fifo_Slr8' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:33)
+[EFX-0011 VERI-WARNING] parameter 'DATA_DEPTH' becomes localparam in 'Sc_Fifo_Slr8' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:34)
+[EFX-0011 VERI-WARNING] parameter 'INITIAL_VALUE' becomes localparam in 'Sc_Fifo_Slr8' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:35)
+[EFX-0011 VERI-WARNING] parameter '**' becomes localparam in '**' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\encode.v_encrypted.v:144)
+[EFX-0012 VERI-INFO] undeclared symbol '**', assumed default net type '**' (VERI-2561) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\tx_aux.v_encrypted.v:322)
+[EFX-0012 VERI-INFO] undeclared symbol '**', assumed default net type '**' (VERI-2561) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:227)
+[EFX-0012 VERI-INFO] undeclared symbol '**', assumed default net type '**' (VERI-2561) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:227)
+[EFX-0012 VERI-INFO] compiling module 'hdmi_bringup' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\hdmi_bringup.sv:1)
+[EFX-0012 VERI-INFO] compiling module 'video_test_pattern' (VERI-1018) (F:\Project\fpga\vision_base\rtl\video_test_pattern.sv:4)
+[EFX-0012 VERI-INFO] compiling module 'dvi_encoder' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:2)
+[EFX-0010 VERI-ERROR] instantiating unknown module '**' (VERI-1063) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:227)
+[EFX-0012 VERI-INFO] module 'dvi_encoder' remains a black box due to errors in its contents (VERI-1073) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:2)
+[EFX-0012 VERI-INFO] module 'hdmi_bringup' remains a black box due to errors in its contents (VERI-1073) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\hdmi_bringup.sv:1)
+[EFX-0021 ERROR] Elaboration of module 'hdmi_bringup' failed. Please check previous error messages.
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 15, 2026 02:29:17
+///////////////////////////////////
+
+[EFX-0012 VERI-INFO] default VHDL library search path is now "F:/Efinity/2026.1/sim_models/vhdl/packages/vhdl_2008" (VHDL-1504) 
+[EFX-0011 VERI-WARNING] non-net output port 'ecc' cannot be initialized at declaration in SystemVerilog mode (VERI-2522) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\ecc_calc_v1.v:6)
+[EFX-0011 VERI-WARNING] parameter 'OUT_REG' becomes localparam in 'Sc_Fifo_Slr8' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:32)
+[EFX-0011 VERI-WARNING] parameter 'DATA_WIDTH' becomes localparam in 'Sc_Fifo_Slr8' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:33)
+[EFX-0011 VERI-WARNING] parameter 'DATA_DEPTH' becomes localparam in 'Sc_Fifo_Slr8' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:34)
+[EFX-0011 VERI-WARNING] parameter 'INITIAL_VALUE' becomes localparam in 'Sc_Fifo_Slr8' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:35)
+[EFX-0011 VERI-WARNING] parameter '**' becomes localparam in '**' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\encode.v_encrypted.v:144)
+[EFX-0012 VERI-INFO] undeclared symbol '**', assumed default net type '**' (VERI-2561) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\tx_aux.v_encrypted.v:322)
+[EFX-0012 VERI-INFO] undeclared symbol '**', assumed default net type '**' (VERI-2561) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:227)
+[EFX-0012 VERI-INFO] undeclared symbol '**', assumed default net type '**' (VERI-2561) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:227)
+[EFX-0012 VERI-INFO] compiling module 'hdmi_bringup' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\hdmi_bringup.sv:1)
+[EFX-0012 VERI-INFO] compiling module 'video_test_pattern' (VERI-1018) (F:\Project\fpga\vision_base\rtl\video_test_pattern.sv:4)
+[EFX-0012 VERI-INFO] compiling module 'dvi_encoder' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:2)
+[EFX-0010 VERI-ERROR] instantiating unknown module '**' (VERI-1063) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:227)
+[EFX-0012 VERI-INFO] module 'dvi_encoder' remains a black box due to errors in its contents (VERI-1073) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:2)
+[EFX-0012 VERI-INFO] module 'hdmi_bringup' remains a black box due to errors in its contents (VERI-1073) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\hdmi_bringup.sv:1)
+[EFX-0021 ERROR] Elaboration of module 'hdmi_bringup' failed. Please check previous error messages.
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 15, 2026 02:29:57
+///////////////////////////////////
+
+[EFX-0012 VERI-INFO] default VHDL library search path is now "F:/Efinity/2026.1/sim_models/vhdl/packages/vhdl_2008" (VHDL-1504) 
+[EFX-0011 VERI-WARNING] non-net output port 'ecc' cannot be initialized at declaration in SystemVerilog mode (VERI-2522) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\ecc_calc_v1.v:6)
+[EFX-0011 VERI-WARNING] parameter 'OUT_REG' becomes localparam in 'Sc_Fifo_Slr8' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:32)
+[EFX-0011 VERI-WARNING] parameter 'DATA_WIDTH' becomes localparam in 'Sc_Fifo_Slr8' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:33)
+[EFX-0011 VERI-WARNING] parameter 'DATA_DEPTH' becomes localparam in 'Sc_Fifo_Slr8' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:34)
+[EFX-0011 VERI-WARNING] parameter 'INITIAL_VALUE' becomes localparam in 'Sc_Fifo_Slr8' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:35)
+[EFX-0011 VERI-WARNING] parameter '**' becomes localparam in '**' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\encode.v_encrypted.v:144)
+[EFX-0012 VERI-INFO] undeclared symbol '**', assumed default net type '**' (VERI-2561) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\tx_aux.v_encrypted.v:322)
+[EFX-0012 VERI-INFO] undeclared symbol '**', assumed default net type '**' (VERI-2561) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:227)
+[EFX-0012 VERI-INFO] undeclared symbol '**', assumed default net type '**' (VERI-2561) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:227)
+[EFX-0012 VERI-INFO] compiling module 'hdmi_bringup' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\hdmi_bringup.sv:1)
+[EFX-0012 VERI-INFO] compiling module 'video_test_pattern' (VERI-1018) (F:\Project\fpga\vision_base\rtl\video_test_pattern.sv:4)
+[EFX-0012 VERI-INFO] compiling module 'dvi_encoder' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:2)
+[EFX-0012 VERI-INFO] compiling module 'simple_dual_port_ram(DATA_WIDTH=27,ADDR_WIDTH=6,OUTPUT_REG="FALSE")' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\simple_dual_port_ram.v:14)
+[EFX-0012 VERI-INFO] extracting RAM for identifier 'ram' (VERI-2571) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\simple_dual_port_ram.v:32)
+[EFX-0011 VERI-WARNING] expression size ** truncated to fit in target size ** (VERI-1209) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:227)
+[EFX-0011 VERI-WARNING] port '**' is not connected on this instance (VERI-2435) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\tx_aux.v_encrypted.v:322)
+[EFX-0012 VERI-INFO] compiling module 'tx_aux' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\tx_aux.v_encrypted.v:2)
+[EFX-0012 VERI-INFO] compiling module 'auxiliary_video_information_info_frame' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\auxiliary_video_information_info_frame.sv:2)
+[EFX-0012 VERI-INFO] compiling module 'audio_clock_regeneration_packet(VIDEO_RATE=1234)' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\audio_clock_regeneration_packet.sv:1)
+[EFX-0012 VERI-INFO] compiling module 'audio_packet' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\audio_packet.sv:5)
+[EFX-0011 VERI-WARNING] expression size 9 truncated to fit in target size 8 (VERI-1209) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\audio_packet.sv:152)
+[EFX-0011 VERI-WARNING] latch inferred for net 'sub[0][55]' (VERI-2580) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\audio_packet.sv:188)
+[EFX-0012 VERI-INFO] compiling module 'Sc_Fifo_Slr8' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:13)
+[EFX-0011 VERI-WARNING] expression size 32 truncated to fit in target size 4 (VERI-1209) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:98)
+[EFX-0012 VERI-INFO] compiling module 'EFX_SRL8' (VERI-1018) (../../vdb/src/efinix_maplib.v:884)
+[EFX-0011 VERI-WARNING] net 'SftReg_Data_Out[0][255]' does not have a driver (VDB-1002) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0011 VERI-WARNING] net 'SftReg_Q7_Out[0][255]' does not have a driver (VDB-1002) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:121)
+[EFX-0011 VERI-WARNING] actual bit length ** differs from formal bit length *** for port '**' (VERI-1330) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\tx_aux.v_encrypted.v:322)
+[EFX-0012 VERI-INFO] compiling module 'packet_assembler' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\packet_assembler.sv:2)
+[EFX-0011 VERI-WARNING] actual bit length ** differs from formal bit length *** for port '**' (VERI-1330) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\tx_aux.v_encrypted.v:322)
+[EFX-0011 VERI-WARNING] input port '**' is not connected on this instance (VDB-1013) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\tx_aux.v_encrypted.v:322)
+[EFX-0011 VERI-WARNING] actual bit length ** differs from formal bit length *** for port '**' (VERI-1330) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:227)
+[EFX-0012 VERI-INFO] compiling module 'encode' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\encode.v_encrypted.v:4)
+[EFX-0011 VERI-WARNING] expression size ** truncated to fit in target size ** (VERI-1209) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\encode.v_encrypted.v:144)
+[EFX-0011 VERI-WARNING] net '**' does not have a driver (VDB-1002) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:227)
+[EFX-0000 INFO] ... Setting Synthesis Option: mode=speed
+[EFX-0000 INFO] ... Pre-synthesis checks begin
+[EFX-0677 INFO] ... Memory 'ram' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\simple_dual_port_ram.v:32)
+[EFX-0200 WARNING] Removing redundant signal : clk_audio. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\audio_clock_regeneration_packet.sv:6)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][255]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][254]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][253]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][252]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][251]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][250]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][249]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][248]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][247]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][246]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0200 WARNING] Removing redundant signal : Shift_Out[255:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:167)
+[EFX-0200 WARNING] Removing redundant signal : SftReg_Q7_Out[1][255:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:121)
+[EFX-0200 WARNING] Removing redundant signal : Shift_Q7_Out[1][255:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:117)
+[EFX-0200 WARNING] Removing redundant signal : next_ecc[7:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\packet_assembler.sv:99)
+[EFX-0200 WARNING] Removing redundant signal : next_ecc.ecc[7:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\packet_assembler.sv:100)
+[EFX-0200 WARNING] Removing redundant signal : next_ecc.next_bch_bit[7:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\packet_assembler.sv:100)
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'valid_bit_l[0]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'valid_bit_l[1]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'valid_bit_l[2]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'valid_bit_l[3]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'valid_bit_r[0]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'valid_bit_r[1]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'valid_bit_r[2]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'valid_bit_r[3]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'user_data_bit_l[0]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'user_data_bit_l[1]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'user_data_bit_l[2]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'user_data_bit_l[3]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'user_data_bit_r[0]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'user_data_bit_r[1]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'user_data_bit_r[2]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'user_data_bit_r[3]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[0]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[1]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[2]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[3]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[4]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[5]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[6]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[7]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[8]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[9]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[10]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[11]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[12]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[13]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[14]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[15]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[16]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[17]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[18]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[19]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[20]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[21]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[22]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[23]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[0]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[1]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[2]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[3]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[4]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[5]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[6]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[7]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[8]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[9]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[10]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[11]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[12]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[13]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[14]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[15]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[16]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[17]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[18]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[19]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[20]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[21]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[22]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[23]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[0]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[1]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[2]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[3]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[4]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[5]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[6]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[7]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[8]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[9]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[10]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[11]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[12]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[13]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[14]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[15]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[16]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[17]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[18]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[19]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[20]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[21]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[22]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[23]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[0]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[1]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[2]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[3]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[4]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[5]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[6]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[7]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[8]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[9]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[10]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[11]' is tied to constant (=0).
+[EFX-0200 WARNING] Removing redundant signal : pkg_valid. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\tx_aux.v_encrypted.v:322)
+[EFX-0200 WARNING] Removing redundant signal : audio_word_length[3:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:20)
+[EFX-0200 WARNING] Removing redundant signal : audio_sample_frequency[3:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:19)
+[EFX-0200 WARNING] Removing redundant signal : nx_state[2:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:227)
+[EFX-0000 INFO] ... Pre-synthesis checks end (Real time : 0s)
+[EFX-0000 INFO] ... NameSpace init begin
+[EFX-0000 INFO] ... NameSpace init end (Real time : 0s)
+[EFX-0000 INFO] ... Mapping design "hdmi_bringup"
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "video_test_pattern" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "video_test_pattern" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "simple_dual_port_ram(DATA_WIDTH=27,ADDR_WIDTH=6,OUTPUT_REG="FALSE")" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "simple_dual_port_ram(DATA_WIDTH=27,ADDR_WIDTH=6,OUTPUT_REG="FALSE")" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "auxiliary_video_information_info_frame" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "auxiliary_video_information_info_frame" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "audio_clock_regeneration_packet(VIDEO_RATE=1234)" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "audio_clock_regeneration_packet(VIDEO_RATE=1234)" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "audio_packet" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "audio_packet" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "Sc_Fifo_Slr8" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "Sc_Fifo_Slr8" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "packet_assembler" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "packet_assembler" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "tx_aux" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "tx_aux" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "encode" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "encode" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "dvi_encoder" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "dvi_encoder" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "hdmi_bringup" begin
+[EFX-0000 INFO] ... Clock Enable Synthesis Performed on 325 flops.
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "hdmi_bringup" end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Flat synthesis begin
+[EFX-0000 INFO] ... Flat synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Check and break combinational loops begin
+[EFX-0000 INFO] ... Check and break combinational loops end (Real time : 0s)
+[EFX-0000 INFO] ... Setup for logic synthesis begin
+[EFX-0000 INFO] ... Setup for logic synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... LUT mapping begin
+[EFX-0000 INFO] ... LS, strategy: 3, nd: 1064, ed: 3265, lv: 5, pw: 2000.50
+[EFX-0000 INFO] ... LUT mapping end (Real time : 2s)
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation begin
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation end (Real time : 0s)
+[EFX-0011 VERI-WARNING] Input/inout port jtag_inst1_RESET is unconnected. Place and route may remove this unconnected port. (VDB-8003) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\hdmi_bringup.sv:3)
+[EFX-0011 VERI-WARNING] Found 6 warnings in the post-synthesis netlist. 
+[EFX-0000 INFO] Resource Summary 
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] EFX_ADD                 : 	256
+[EFX-0000 INFO] EFX_LUT4                : 	1095
+[EFX-0000 INFO] EFX_FF                  : 	813
+[EFX-0000 INFO] EFX_SRL8                : 	248
+[EFX-0000 INFO] EFX_RAM10               : 	2
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] ... Post-Map Verilog Writer begin
+[EFX-0000 INFO] ... Post-Map Verilog Writer end (Real time : 0s)
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 15, 2026 02:32:27
+///////////////////////////////////
+
+[EFX-0012 VERI-INFO] default VHDL library search path is now "F:/Efinity/2026.1/sim_models/vhdl/packages/vhdl_2008" (VHDL-1504) 
+[EFX-0011 VERI-WARNING] non-net output port 'ecc' cannot be initialized at declaration in SystemVerilog mode (VERI-2522) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\ecc_calc_v1.v:6)
+[EFX-0011 VERI-WARNING] parameter 'OUT_REG' becomes localparam in 'Sc_Fifo_Slr8' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:32)
+[EFX-0011 VERI-WARNING] parameter 'DATA_WIDTH' becomes localparam in 'Sc_Fifo_Slr8' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:33)
+[EFX-0011 VERI-WARNING] parameter 'DATA_DEPTH' becomes localparam in 'Sc_Fifo_Slr8' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:34)
+[EFX-0011 VERI-WARNING] parameter 'INITIAL_VALUE' becomes localparam in 'Sc_Fifo_Slr8' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:35)
+[EFX-0011 VERI-WARNING] parameter '**' becomes localparam in '**' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\encode.v_encrypted.v:144)
+[EFX-0012 VERI-INFO] undeclared symbol '**', assumed default net type '**' (VERI-2561) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\tx_aux.v_encrypted.v:322)
+[EFX-0012 VERI-INFO] undeclared symbol '**', assumed default net type '**' (VERI-2561) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:227)
+[EFX-0012 VERI-INFO] undeclared symbol '**', assumed default net type '**' (VERI-2561) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:227)
+[EFX-0012 VERI-INFO] compiling module 'hdmi_bringup' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\hdmi_bringup.sv:1)
+[EFX-0012 VERI-INFO] compiling module 'video_test_pattern_720' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\video_test_pattern_720.sv:4)
+[EFX-0012 VERI-INFO] compiling module 'dvi_encoder' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:2)
+[EFX-0012 VERI-INFO] compiling module 'simple_dual_port_ram(DATA_WIDTH=27,ADDR_WIDTH=6,OUTPUT_REG="FALSE")' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\simple_dual_port_ram.v:14)
+[EFX-0012 VERI-INFO] extracting RAM for identifier 'ram' (VERI-2571) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\simple_dual_port_ram.v:32)
+[EFX-0011 VERI-WARNING] expression size ** truncated to fit in target size ** (VERI-1209) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:227)
+[EFX-0011 VERI-WARNING] port '**' is not connected on this instance (VERI-2435) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\tx_aux.v_encrypted.v:322)
+[EFX-0012 VERI-INFO] compiling module 'tx_aux' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\tx_aux.v_encrypted.v:2)
+[EFX-0012 VERI-INFO] compiling module 'auxiliary_video_information_info_frame' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\auxiliary_video_information_info_frame.sv:2)
+[EFX-0012 VERI-INFO] compiling module 'audio_clock_regeneration_packet(VIDEO_RATE=1234)' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\audio_clock_regeneration_packet.sv:1)
+[EFX-0012 VERI-INFO] compiling module 'audio_packet' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\audio_packet.sv:5)
+[EFX-0011 VERI-WARNING] expression size 9 truncated to fit in target size 8 (VERI-1209) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\audio_packet.sv:152)
+[EFX-0011 VERI-WARNING] latch inferred for net 'sub[0][55]' (VERI-2580) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\audio_packet.sv:188)
+[EFX-0012 VERI-INFO] compiling module 'Sc_Fifo_Slr8' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:13)
+[EFX-0011 VERI-WARNING] expression size 32 truncated to fit in target size 4 (VERI-1209) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:98)
+[EFX-0012 VERI-INFO] compiling module 'EFX_SRL8' (VERI-1018) (../../vdb/src/efinix_maplib.v:884)
+[EFX-0011 VERI-WARNING] net 'SftReg_Data_Out[0][255]' does not have a driver (VDB-1002) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0011 VERI-WARNING] net 'SftReg_Q7_Out[0][255]' does not have a driver (VDB-1002) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:121)
+[EFX-0011 VERI-WARNING] actual bit length ** differs from formal bit length *** for port '**' (VERI-1330) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\tx_aux.v_encrypted.v:322)
+[EFX-0012 VERI-INFO] compiling module 'packet_assembler' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\packet_assembler.sv:2)
+[EFX-0011 VERI-WARNING] actual bit length ** differs from formal bit length *** for port '**' (VERI-1330) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\tx_aux.v_encrypted.v:322)
+[EFX-0011 VERI-WARNING] input port '**' is not connected on this instance (VDB-1013) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\tx_aux.v_encrypted.v:322)
+[EFX-0011 VERI-WARNING] actual bit length ** differs from formal bit length *** for port '**' (VERI-1330) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:227)
+[EFX-0012 VERI-INFO] compiling module 'encode' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\encode.v_encrypted.v:4)
+[EFX-0011 VERI-WARNING] expression size ** truncated to fit in target size ** (VERI-1209) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\encode.v_encrypted.v:144)
+[EFX-0011 VERI-WARNING] net '**' does not have a driver (VDB-1002) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:227)
+[EFX-0000 INFO] ... Setting Synthesis Option: mode=speed
+[EFX-0000 INFO] ... Pre-synthesis checks begin
+[EFX-0677 INFO] ... Memory 'ram' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\simple_dual_port_ram.v:32)
+[EFX-0200 WARNING] Removing redundant signal : clk_audio. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\audio_clock_regeneration_packet.sv:6)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][255]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][254]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][253]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][252]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][251]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][250]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][249]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][248]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][247]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][246]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0200 WARNING] Removing redundant signal : Shift_Out[255:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:167)
+[EFX-0200 WARNING] Removing redundant signal : SftReg_Q7_Out[1][255:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:121)
+[EFX-0200 WARNING] Removing redundant signal : Shift_Q7_Out[1][255:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:117)
+[EFX-0200 WARNING] Removing redundant signal : next_ecc[7:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\packet_assembler.sv:99)
+[EFX-0200 WARNING] Removing redundant signal : next_ecc.ecc[7:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\packet_assembler.sv:100)
+[EFX-0200 WARNING] Removing redundant signal : next_ecc.next_bch_bit[7:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\packet_assembler.sv:100)
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'valid_bit_l[0]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'valid_bit_l[1]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'valid_bit_l[2]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'valid_bit_l[3]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'valid_bit_r[0]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'valid_bit_r[1]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'valid_bit_r[2]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'valid_bit_r[3]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'user_data_bit_l[0]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'user_data_bit_l[1]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'user_data_bit_l[2]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'user_data_bit_l[3]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'user_data_bit_r[0]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'user_data_bit_r[1]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'user_data_bit_r[2]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'user_data_bit_r[3]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[0]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[1]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[2]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[3]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[4]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[5]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[6]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[7]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[8]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[9]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[10]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[11]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[12]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[13]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[14]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[15]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[16]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[17]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[18]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[19]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[20]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[21]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[22]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[23]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[0]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[1]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[2]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[3]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[4]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[5]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[6]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[7]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[8]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[9]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[10]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[11]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[12]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[13]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[14]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[15]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[16]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[17]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[18]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[19]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[20]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[21]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[22]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[23]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[0]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[1]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[2]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[3]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[4]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[5]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[6]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[7]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[8]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[9]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[10]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[11]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[12]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[13]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[14]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[15]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[16]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[17]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[18]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[19]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[20]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[21]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[22]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[23]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[0]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[1]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[2]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[3]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[4]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[5]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[6]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[7]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[8]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[9]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[10]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[11]' is tied to constant (=0).
+[EFX-0200 WARNING] Removing redundant signal : pkg_valid. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\tx_aux.v_encrypted.v:322)
+[EFX-0200 WARNING] Removing redundant signal : audio_word_length[3:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:20)
+[EFX-0200 WARNING] Removing redundant signal : audio_sample_frequency[3:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:19)
+[EFX-0200 WARNING] Removing redundant signal : nx_state[2:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:227)
+[EFX-0000 INFO] ... Pre-synthesis checks end (Real time : 0s)
+[EFX-0000 INFO] ... NameSpace init begin
+[EFX-0000 INFO] ... NameSpace init end (Real time : 0s)
+[EFX-0000 INFO] ... Mapping design "hdmi_bringup"
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "video_test_pattern_720" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "video_test_pattern_720" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "simple_dual_port_ram(DATA_WIDTH=27,ADDR_WIDTH=6,OUTPUT_REG="FALSE")" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "simple_dual_port_ram(DATA_WIDTH=27,ADDR_WIDTH=6,OUTPUT_REG="FALSE")" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "auxiliary_video_information_info_frame" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "auxiliary_video_information_info_frame" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "audio_clock_regeneration_packet(VIDEO_RATE=1234)" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "audio_clock_regeneration_packet(VIDEO_RATE=1234)" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "audio_packet" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "audio_packet" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "Sc_Fifo_Slr8" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "Sc_Fifo_Slr8" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "packet_assembler" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "packet_assembler" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "tx_aux" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "tx_aux" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "encode" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "encode" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "dvi_encoder" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "dvi_encoder" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "hdmi_bringup" begin
+[EFX-0000 INFO] ... Clock Enable Synthesis Performed on 325 flops.
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "hdmi_bringup" end (Real time : 1s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Flat synthesis begin
+[EFX-0000 INFO] ... Flat synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Check and break combinational loops begin
+[EFX-0000 INFO] ... Check and break combinational loops end (Real time : 0s)
+[EFX-0000 INFO] ... Setup for logic synthesis begin
+[EFX-0000 INFO] ... Setup for logic synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... LUT mapping begin
+[EFX-0000 INFO] ... LS, strategy: 3, nd: 1022, ed: 3074, lv: 6, pw: 1915.69
+[EFX-0000 INFO] ... LUT mapping end (Real time : 2s)
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation begin
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation end (Real time : 0s)
+[EFX-0011 VERI-WARNING] Input/inout port jtag_inst1_RESET is unconnected. Place and route may remove this unconnected port. (VDB-8003) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\hdmi_bringup.sv:3)
+[EFX-0011 VERI-WARNING] Found 6 warnings in the post-synthesis netlist. 
+[EFX-0000 INFO] Resource Summary 
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] EFX_ADD                 : 	256
+[EFX-0000 INFO] EFX_LUT4                : 	1053
+[EFX-0000 INFO] EFX_FF                  : 	813
+[EFX-0000 INFO] EFX_SRL8                : 	248
+[EFX-0000 INFO] EFX_RAM10               : 	2
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] ... Post-Map Verilog Writer begin
+[EFX-0000 INFO] ... Post-Map Verilog Writer end (Real time : 0s)
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 15, 2026 02:41:52
+///////////////////////////////////
+
+[EFX-0012 VERI-INFO] default VHDL library search path is now "F:/Efinity/2026.1/sim_models/vhdl/packages/vhdl_2008" (VHDL-1504) 
+[EFX-0011 VERI-WARNING] non-net output port 'ecc' cannot be initialized at declaration in SystemVerilog mode (VERI-2522) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\ecc_calc_v1.v:6)
+[EFX-0011 VERI-WARNING] parameter 'OUT_REG' becomes localparam in 'Sc_Fifo_Slr8' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:32)
+[EFX-0011 VERI-WARNING] parameter 'DATA_WIDTH' becomes localparam in 'Sc_Fifo_Slr8' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:33)
+[EFX-0011 VERI-WARNING] parameter 'DATA_DEPTH' becomes localparam in 'Sc_Fifo_Slr8' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:34)
+[EFX-0011 VERI-WARNING] parameter 'INITIAL_VALUE' becomes localparam in 'Sc_Fifo_Slr8' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:35)
+[EFX-0011 VERI-WARNING] parameter '**' becomes localparam in '**' with formal parameter declaration list (VERI-1199) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\encode.v_encrypted.v:144)
+[EFX-0012 VERI-INFO] undeclared symbol '**', assumed default net type '**' (VERI-2561) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\tx_aux.v_encrypted.v:322)
+[EFX-0012 VERI-INFO] undeclared symbol '**', assumed default net type '**' (VERI-2561) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:227)
+[EFX-0012 VERI-INFO] undeclared symbol '**', assumed default net type '**' (VERI-2561) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:227)
+[EFX-0012 VERI-INFO] compiling module 'hdmi_bringup' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\hdmi_bringup.sv:1)
+[EFX-0012 VERI-INFO] compiling module 'video_test_pattern_720' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\video_test_pattern_720.sv:4)
+[EFX-0012 VERI-INFO] compiling module 'dvi_encoder' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:2)
+[EFX-0012 VERI-INFO] compiling module 'simple_dual_port_ram(DATA_WIDTH=27,ADDR_WIDTH=6,OUTPUT_REG="FALSE")' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\simple_dual_port_ram.v:14)
+[EFX-0012 VERI-INFO] extracting RAM for identifier 'ram' (VERI-2571) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\simple_dual_port_ram.v:32)
+[EFX-0011 VERI-WARNING] expression size ** truncated to fit in target size ** (VERI-1209) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:227)
+[EFX-0011 VERI-WARNING] port '**' is not connected on this instance (VERI-2435) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\tx_aux.v_encrypted.v:322)
+[EFX-0012 VERI-INFO] compiling module 'tx_aux' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\tx_aux.v_encrypted.v:2)
+[EFX-0012 VERI-INFO] compiling module 'auxiliary_video_information_info_frame' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\auxiliary_video_information_info_frame.sv:2)
+[EFX-0012 VERI-INFO] compiling module 'audio_clock_regeneration_packet(VIDEO_RATE=1234)' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\audio_clock_regeneration_packet.sv:1)
+[EFX-0012 VERI-INFO] compiling module 'audio_packet' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\audio_packet.sv:5)
+[EFX-0011 VERI-WARNING] expression size 9 truncated to fit in target size 8 (VERI-1209) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\audio_packet.sv:152)
+[EFX-0011 VERI-WARNING] latch inferred for net 'sub[0][55]' (VERI-2580) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\audio_packet.sv:188)
+[EFX-0012 VERI-INFO] compiling module 'Sc_Fifo_Slr8' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:13)
+[EFX-0011 VERI-WARNING] expression size 32 truncated to fit in target size 4 (VERI-1209) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:98)
+[EFX-0012 VERI-INFO] compiling module 'EFX_SRL8' (VERI-1018) (../../vdb/src/efinix_maplib.v:884)
+[EFX-0011 VERI-WARNING] net 'SftReg_Data_Out[0][255]' does not have a driver (VDB-1002) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0011 VERI-WARNING] net 'SftReg_Q7_Out[0][255]' does not have a driver (VDB-1002) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:121)
+[EFX-0011 VERI-WARNING] actual bit length ** differs from formal bit length *** for port '**' (VERI-1330) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\tx_aux.v_encrypted.v:322)
+[EFX-0012 VERI-INFO] compiling module 'packet_assembler' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\packet_assembler.sv:2)
+[EFX-0011 VERI-WARNING] actual bit length ** differs from formal bit length *** for port '**' (VERI-1330) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\tx_aux.v_encrypted.v:322)
+[EFX-0011 VERI-WARNING] input port '**' is not connected on this instance (VDB-1013) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\tx_aux.v_encrypted.v:322)
+[EFX-0011 VERI-WARNING] actual bit length ** differs from formal bit length *** for port '**' (VERI-1330) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:227)
+[EFX-0012 VERI-INFO] compiling module 'encode' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\encode.v_encrypted.v:4)
+[EFX-0011 VERI-WARNING] expression size ** truncated to fit in target size ** (VERI-1209) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\encode.v_encrypted.v:144)
+[EFX-0011 VERI-WARNING] net '**' does not have a driver (VDB-1002) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:227)
+[EFX-0000 INFO] ... Setting Synthesis Option: mode=speed
+[EFX-0000 INFO] ... Pre-synthesis checks begin
+[EFX-0677 INFO] ... Memory 'ram' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\simple_dual_port_ram.v:32)
+[EFX-0200 WARNING] Removing redundant signal : clk_audio. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\audio_clock_regeneration_packet.sv:6)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][255]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][254]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][253]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][252]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][251]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][250]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][249]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][248]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][247]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0201 WARNING] Re-wiring to GND non-driven net/port 'SftReg_Data_Out[0][246]' in module 'Sc_Fifo_Slr8'. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:120)
+[EFX-0200 WARNING] Removing redundant signal : Shift_Out[255:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:167)
+[EFX-0200 WARNING] Removing redundant signal : SftReg_Q7_Out[1][255:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:121)
+[EFX-0200 WARNING] Removing redundant signal : Shift_Q7_Out[1][255:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v:117)
+[EFX-0200 WARNING] Removing redundant signal : next_ecc[7:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\packet_assembler.sv:99)
+[EFX-0200 WARNING] Removing redundant signal : next_ecc.ecc[7:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\packet_assembler.sv:100)
+[EFX-0200 WARNING] Removing redundant signal : next_ecc.next_bch_bit[7:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\packet_assembler.sv:100)
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'valid_bit_l[0]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'valid_bit_l[1]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'valid_bit_l[2]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'valid_bit_l[3]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'valid_bit_r[0]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'valid_bit_r[1]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'valid_bit_r[2]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'valid_bit_r[3]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'user_data_bit_l[0]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'user_data_bit_l[1]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'user_data_bit_l[2]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'user_data_bit_l[3]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'user_data_bit_r[0]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'user_data_bit_r[1]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'user_data_bit_r[2]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'user_data_bit_r[3]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[0]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[1]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[2]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[3]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[4]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[5]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[6]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[7]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[8]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[9]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[10]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[11]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[12]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[13]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[14]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[15]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[16]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[17]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[18]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[19]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[20]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[21]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[22]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L1[23]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[0]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[1]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[2]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[3]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[4]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[5]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[6]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[7]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[8]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[9]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[10]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[11]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[12]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[13]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[14]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[15]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[16]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[17]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[18]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[19]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[20]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[21]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[22]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L2[23]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[0]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[1]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[2]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[3]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[4]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[5]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[6]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[7]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[8]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[9]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[10]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[11]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[12]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[13]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[14]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[15]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[16]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[17]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[18]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[19]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[20]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[21]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[22]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_L3[23]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[0]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[1]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[2]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[3]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[4]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[5]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[6]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[7]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[8]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[9]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[10]' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'audio_packet_inst' input pin 'audio_R1[11]' is tied to constant (=0).
+[EFX-0200 WARNING] Removing redundant signal : pkg_valid. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\tx_aux.v_encrypted.v:322)
+[EFX-0200 WARNING] Removing redundant signal : audio_word_length[3:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:20)
+[EFX-0200 WARNING] Removing redundant signal : audio_sample_frequency[3:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:19)
+[EFX-0200 WARNING] Removing redundant signal : nx_state[2:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v:227)
+[EFX-0000 INFO] ... Pre-synthesis checks end (Real time : 0s)
+[EFX-0000 INFO] ... NameSpace init begin
+[EFX-0000 INFO] ... NameSpace init end (Real time : 0s)
+[EFX-0000 INFO] ... Mapping design "hdmi_bringup"
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "video_test_pattern_720" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "video_test_pattern_720" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "simple_dual_port_ram(DATA_WIDTH=27,ADDR_WIDTH=6,OUTPUT_REG="FALSE")" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "simple_dual_port_ram(DATA_WIDTH=27,ADDR_WIDTH=6,OUTPUT_REG="FALSE")" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "auxiliary_video_information_info_frame" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "auxiliary_video_information_info_frame" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "audio_clock_regeneration_packet(VIDEO_RATE=1234)" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "audio_clock_regeneration_packet(VIDEO_RATE=1234)" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "audio_packet" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "audio_packet" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "Sc_Fifo_Slr8" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "Sc_Fifo_Slr8" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "packet_assembler" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "packet_assembler" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "tx_aux" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "tx_aux" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "encode" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "encode" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "dvi_encoder" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "dvi_encoder" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "hdmi_bringup" begin
+[EFX-0000 INFO] ... Clock Enable Synthesis Performed on 325 flops.
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "hdmi_bringup" end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Flat synthesis begin
+[EFX-0000 INFO] ... Flat synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Check and break combinational loops begin
+[EFX-0000 INFO] ... Check and break combinational loops end (Real time : 0s)
+[EFX-0000 INFO] ... Setup for logic synthesis begin
+[EFX-0000 INFO] ... Setup for logic synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... LUT mapping begin
+[EFX-0000 INFO] ... LS, strategy: 3, nd: 1034, ed: 3136, lv: 6, pw: 1943.21
+[EFX-0000 INFO] ... LUT mapping end (Real time : 2s)
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation begin
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation end (Real time : 0s)
+[EFX-0011 VERI-WARNING] Input/inout port jtag_inst1_RESET is unconnected. Place and route may remove this unconnected port. (VDB-8003) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\hdmi_bringup.sv:3)
+[EFX-0011 VERI-WARNING] Found 6 warnings in the post-synthesis netlist. 
+[EFX-0000 INFO] Resource Summary 
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] EFX_ADD                 : 	256
+[EFX-0000 INFO] EFX_LUT4                : 	1065
+[EFX-0000 INFO] EFX_FF                  : 	813
+[EFX-0000 INFO] EFX_SRL8                : 	248
+[EFX-0000 INFO] EFX_RAM10               : 	2
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] ... Post-Map Verilog Writer begin
+[EFX-0000 INFO] ... Post-Map Verilog Writer end (Real time : 0s)
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 15, 2026 02:51:36
+///////////////////////////////////
+
+[EFX-0012 VERI-INFO] default VHDL library search path is now "F:/Efinity/2026.1/sim_models/vhdl/packages/vhdl_2008" (VHDL-1504) 
+[EFX-0012 VERI-INFO] compiling module 'hdmi_bringup' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\hdmi_bringup.sv:1)
+[EFX-0012 VERI-INFO] compiling module 'video_test_pattern' (VERI-1018) (F:\Project\fpga\vision_base\rtl\video_test_pattern.sv:4)
+[EFX-0012 VERI-INFO] compiling module 'dvi_encoder' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\dvi_encoder.v:2)
+[EFX-0012 VERI-INFO] compiling module 'encode' (VERI-1018) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\encode.v:46)
+[EFX-0011 VERI-WARNING] expression size 9 truncated to fit in target size 8 (VERI-1209) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\encode.v:167)
+[EFX-0000 INFO] ... Setting Synthesis Option: mode=speed
+[EFX-0000 INFO] ... Pre-synthesis checks begin
+[EFX-0266 INFO] Module Instance 'encr' input pin 'c0' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'encr' input pin 'c1' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'encg' input pin 'c0' is tied to constant (=0).
+[EFX-0266 INFO] Module Instance 'encg' input pin 'c1' is tied to constant (=0).
+[EFX-0000 INFO] ... Pre-synthesis checks end (Real time : 0s)
+[EFX-0000 INFO] ... NameSpace init begin
+[EFX-0000 INFO] ... NameSpace init end (Real time : 0s)
+[EFX-0000 INFO] ... Mapping design "hdmi_bringup"
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "video_test_pattern" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "video_test_pattern" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "encode" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "encode" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "dvi_encoder" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "dvi_encoder" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "hdmi_bringup" begin
+[EFX-0000 INFO] ... Clock Enable Synthesis Performed on 24 flops.
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "hdmi_bringup" end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Flat synthesis begin
+[EFX-0000 INFO] ... Flat synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Check and break combinational loops begin
+[EFX-0000 INFO] ... Check and break combinational loops end (Real time : 0s)
+[EFX-0000 INFO] ... Setup for logic synthesis begin
+[EFX-0000 INFO] ... Setup for logic synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... LUT mapping begin
+[EFX-0000 INFO] ... LS, strategy: 3, nd: 264, ed: 833, lv: 4, pw: 813.85
+[EFX-0000 INFO] ... LUT mapping end (Real time : 1s)
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation begin
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation end (Real time : 0s)
+[EFX-0011 VERI-WARNING] Input/inout port jtag_inst1_RESET is unconnected. Place and route may remove this unconnected port. (VDB-8003) (F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\hdmi_bringup.sv:3)
+[EFX-0011 VERI-WARNING] Found 6 warnings in the post-synthesis netlist. 
+[EFX-0000 INFO] Resource Summary 
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] EFX_ADD                 : 	223
+[EFX-0000 INFO] EFX_LUT4                : 	267
+[EFX-0000 INFO] EFX_FF                  : 	280
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] ... Post-Map Verilog Writer begin
+[EFX-0000 INFO] ... Post-Map Verilog Writer end (Real time : 0s)

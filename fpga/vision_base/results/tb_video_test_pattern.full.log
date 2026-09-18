@@ -1,0 +1,2 @@
+PASS tb_video_test_pattern total=2475000 active=2073600 positive_sync=44x5
+F:\Project\fpga\vision_base\sim\tb_video_test_pattern.sv:18: $finish called at 24750026000 (1ps)

@@ -1,0 +1,356 @@
+[
+  {
+    "raw": "a200000000000000000000000000000000000000d7000000",
+    "active_pixels": 0,
+    "video_flags": "00",
+    "pattern_mode": 0,
+    "snapshot_valid": 0,
+    "marker": 215,
+    "frames": 0,
+    "core_ticks": 0,
+    "reset_input": 0,
+    "mipi_pll_lock": 0,
+    "ddr_pll_lock": 0,
+    "video_pll_lock": 0,
+    "global_ready": 0,
+    "video_reset_released": 0,
+    "pattern_reset_released": 0,
+    "snapshot_marker": "0xa2",
+    "samples": [
+      {
+        "codes_bgr": [
+          "000",
+          "000",
+          "000"
+        ],
+        "decoded_bgr": [
+          254,
+          254,
+          254
+        ],
+        "clock_word": "000"
+      },
+      {
+        "codes_bgr": [
+          "000",
+          "000",
+          "000"
+        ],
+        "decoded_bgr": [
+          254,
+          254,
+          254
+        ],
+        "clock_word": "000"
+      },
+      {
+        "codes_bgr": [
+          "000",
+          "000",
+          "000"
+        ],
+        "decoded_bgr": [
+          254,
+          254,
+          254
+        ],
+        "clock_word": "000"
+      }
+    ]
+  },
+  {
+    "raw": "a200354d535400754d50ab00354d53547e9003ffd76eb1fe",
+    "active_pixels": 2073600,
+    "video_flags": "ff",
+    "pattern_mode": 1,
+    "snapshot_valid": 1,
+    "marker": 215,
+    "frames": 75,
+    "core_ticks": 222,
+    "reset_input": 1,
+    "mipi_pll_lock": 1,
+    "ddr_pll_lock": 1,
+    "video_pll_lock": 1,
+    "global_ready": 1,
+    "video_reset_released": 1,
+    "pattern_reset_released": 1,
+    "snapshot_marker": "0xa2",
+    "samples": [
+      {
+        "codes_bgr": [
+          "354",
+          "354",
+          "354"
+        ],
+        "decoded_bgr": [
+          253,
+          253,
+          253
+        ],
+        "clock_word": "000"
+      },
+      {
+        "codes_bgr": [
+          "0ab",
+          "354",
+          "354"
+        ],
+        "decoded_bgr": [
+          3,
+          253,
+          253
+        ],
+        "clock_word": "001"
+      },
+      {
+        "codes_bgr": [
+          "354",
+          "354",
+          "354"
+        ],
+        "decoded_bgr": [
+          253,
+          253,
+          253
+        ],
+        "clock_word": "000"
+      }
+    ]
+  },
+  {
+    "raw": "a200354d535400754d50ab00354d53547e9003ffd75ff2fe",
+    "active_pixels": 2073600,
+    "video_flags": "ff",
+    "pattern_mode": 1,
+    "snapshot_valid": 1,
+    "marker": 215,
+    "frames": 106,
+    "core_ticks": 163,
+    "reset_input": 1,
+    "mipi_pll_lock": 1,
+    "ddr_pll_lock": 1,
+    "video_pll_lock": 1,
+    "global_ready": 1,
+    "video_reset_released": 1,
+    "pattern_reset_released": 1,
+    "snapshot_marker": "0xa2",
+    "samples": [
+      {
+        "codes_bgr": [
+          "354",
+          "354",
+          "354"
+        ],
+        "decoded_bgr": [
+          253,
+          253,
+          253
+        ],
+        "clock_word": "000"
+      },
+      {
+        "codes_bgr": [
+          "0ab",
+          "354",
+          "354"
+        ],
+        "decoded_bgr": [
+          3,
+          253,
+          253
+        ],
+        "clock_word": "001"
+      },
+      {
+        "codes_bgr": [
+          "354",
+          "354",
+          "354"
+        ],
+        "decoded_bgr": [
+          253,
+          253,
+          253
+        ],
+        "clock_word": "000"
+      }
+    ]
+  },
+  {
+    "raw": "a200354d535400754d50ab00354d53547e9003ffd7cd5dfe",
+    "active_pixels": 2073600,
+    "video_flags": "ff",
+    "pattern_mode": 1,
+    "snapshot_valid": 1,
+    "marker": 215,
+    "frames": 137,
+    "core_ticks": 105,
+    "reset_input": 1,
+    "mipi_pll_lock": 1,
+    "ddr_pll_lock": 1,
+    "video_pll_lock": 1,
+    "global_ready": 1,
+    "video_reset_released": 1,
+    "pattern_reset_released": 1,
+    "snapshot_marker": "0xa2",
+    "samples": [
+      {
+        "codes_bgr": [
+          "354",
+          "354",
+          "354"
+        ],
+        "decoded_bgr": [
+          253,
+          253,
+          253
+        ],
+        "clock_word": "000"
+      },
+      {
+        "codes_bgr": [
+          "0ab",
+          "354",
+          "354"
+        ],
+        "decoded_bgr": [
+          3,
+          253,
+          253
+        ],
+        "clock_word": "001"
+      },
+      {
+        "codes_bgr": [
+          "354",
+          "354",
+          "354"
+        ],
+        "decoded_bgr": [
+          253,
+          253,
+          253
+        ],
+        "clock_word": "000"
+      }
+    ]
+  },
+  {
+    "raw": "a200354d535400754d50ab00354d53547e9003ffd7f43cfe",
+    "active_pixels": 2073600,
+    "video_flags": "ff",
+    "pattern_mode": 1,
+    "snapshot_valid": 1,
+    "marker": 215,
+    "frames": 167,
+    "core_ticks": 40,
+    "reset_input": 1,
+    "mipi_pll_lock": 1,
+    "ddr_pll_lock": 1,
+    "video_pll_lock": 1,
+    "global_ready": 1,
+    "video_reset_released": 1,
+    "pattern_reset_released": 1,
+    "snapshot_marker": "0xa2",
+    "samples": [
+      {
+        "codes_bgr": [
+          "354",
+          "354",
+          "354"
+        ],
+        "decoded_bgr": [
+          253,
+          253,
+          253
+        ],
+        "clock_word": "000"
+      },
+      {
+        "codes_bgr": [
+          "0ab",
+          "354",
+          "354"
+        ],
+        "decoded_bgr": [
+          3,
+          253,
+          253
+        ],
+        "clock_word": "001"
+      },
+      {
+        "codes_bgr": [
+          "354",
+          "354",
+          "354"
+        ],
+        "decoded_bgr": [
+          253,
+          253,
+          253
+        ],
+        "clock_word": "000"
+      }
+    ]
+  },
+  {
+    "raw": "a200354d535400754d50ab00354d53547e9003ffd7a59bfe",
+    "active_pixels": 2073600,
+    "video_flags": "ff",
+    "pattern_mode": 1,
+    "snapshot_valid": 1,
+    "marker": 215,
+    "frames": 198,
+    "core_ticks": 237,
+    "reset_input": 1,
+    "mipi_pll_lock": 1,
+    "ddr_pll_lock": 1,
+    "video_pll_lock": 1,
+    "global_ready": 1,
+    "video_reset_released": 1,
+    "pattern_reset_released": 1,
+    "snapshot_marker": "0xa2",
+    "samples": [
+      {
+        "codes_bgr": [
+          "354",
+          "354",
+          "354"
+        ],
+        "decoded_bgr": [
+          253,
+          253,
+          253
+        ],
+        "clock_word": "000"
+      },
+      {
+        "codes_bgr": [
+          "0ab",
+          "354",
+          "354"
+        ],
+        "decoded_bgr": [
+          3,
+          253,
+          253
+        ],
+        "clock_word": "001"
+      },
+      {
+        "codes_bgr": [
+          "354",
+          "354",
+          "354"
+        ],
+        "decoded_bgr": [
+          253,
+          253,
+          253
+        ],
+        "clock_word": "000"
+      }
+    ]
+  }
+]

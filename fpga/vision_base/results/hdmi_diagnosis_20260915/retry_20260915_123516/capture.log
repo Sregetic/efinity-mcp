@@ -1,0 +1,4 @@
+[in#0 @ 00000247ee063040] Could not find video device with name [UGREEN 25854] among source devices of type video.
+[in#0 @ 00000247ee0e69c0] Error opening input: I/O error
+Error opening input file video=UGREEN 25854.
+Error opening input files: I/O error

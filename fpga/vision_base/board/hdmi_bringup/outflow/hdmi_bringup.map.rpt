@@ -1,0 +1,166 @@
+Efinity Synthesis report for project hdmi_bringup
+Version: 2026.1.132.3.9
+Generated at: Sep 15, 2026 02:51:36
+Copyright (C) 2013 - 2026  All rights reserved.
+
+Top-level Entity Name : hdmi_bringup
+
+family : Titanium
+device : Ti60F225
+project : hdmi_bringup
+root : hdmi_bringup
+binary-db : outflow\hdmi_bringup.vdb
+insert-ios : 0
+insert-gclk : 0
+max-carry-cascade : 320
+max-dsp-cascade : 16
+max_mult : -1
+max_ram : -1
+mode : speed
+num_srl : -1
+mult-decomp-retime : 0
+output-dir : outflow
+proj_curr_path : F:\Project\fpga\vision_base\board\hdmi_bringup
+project : hdmi_bringup
+project-xml : F:\Project\fpga\vision_base\board\hdmi_bringup\hdmi_bringup.xml
+retiming : 0
+root : hdmi_bringup
+seq_opt : 0
+work-dir : work_syn
+write-efx-verilog : outflow\hdmi_bringup.map.v
+
+File List:
+
+F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\hdmi_bringup.sv
+F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\dvi_encoder.v
+F:\Project\fpga\vision_base\board\hdmi_bringup\rtl\encode.v
+F:\Project\fpga\vision_base\rtl\video_test_pattern.sv
+
+### ### Report Section Start ### ###
+
+
+### ### EFX_FF CE enables (begin) ### ### ###
+
+Total number of enable signals: 4
+Total number of FFs with enable signals: 51
++--------------------+------------------+
+|CE Signal           |Number of FF loads|
++--------------------+------------------+
+|ceg_net2            |               24 |
+|pattern/equal_24/n23|               12 |
+|jtag_inst1_SHIFT    |                8 |
+|pattern/n114        |                7 |
++--------------------+------------------+
+
+### ### EFX_FF CE enables (end) ### ### ###
+
+### ### EFX_FF SR set/reset (begin) ### ### ###
+
+Total number of set/reset signals: 5
+Total number of FFs with set/reset signals: 87
++------------------+------------------+
+|SR Signal         |Number of FF loads|
++------------------+------------------+
+|reset_pipe[2]     |               58 |
+|pattern/n561      |               12 |
+|jtag_inst1_CAPTURE|                8 |
+|pattern/n567      |                6 |
+|hdmi_tx_locked    |                3 |
++------------------+------------------+
+
+### ### EFX_FF SR set/reset (end) ### ### ###
+
+### ### Sequential Elements/Signals Trimming Report (begin) ### ### ### 
+'b[1]' (rtl\hdmi_bringup.sv:17) (merged to equivalence)
+'b[2]' (rtl\hdmi_bringup.sv:17) (merged to equivalence)
+'b[3]' (rtl\hdmi_bringup.sv:17) (merged to equivalence)
+'b[4]' (rtl\hdmi_bringup.sv:17) (merged to equivalence)
+'b[5]' (rtl\hdmi_bringup.sv:17) (merged to equivalence)
+'b[7]' (rtl\hdmi_bringup.sv:17) (merged to equivalence)
+'encoder/encb/din_q[1]' (rtl\encode.v:63) (merged to equivalence)
+'encoder/encb/din_q[2]' (rtl\encode.v:63) (merged to equivalence)
+'encoder/encb/din_q[3]' (rtl\encode.v:63) (merged to equivalence)
+'encoder/encb/din_q[4]' (rtl\encode.v:63) (merged to equivalence)
+'encoder/encb/din_q[5]' (rtl\encode.v:63) (merged to equivalence)
+'encoder/encb/din_q[7]' (rtl\encode.v:63) (merged to equivalence)
+'encoder/encb/n1q_m[0]' (rtl\encode.v:107) (merged to equivalence)
+'encoder/encr/de_q' (rtl\encode.v:130) (merged to equivalence)
+'encoder/encr/de_reg' (rtl\encode.v:130) (merged to equivalence)
+'g[1]' (rtl\hdmi_bringup.sv:17) (merged to equivalence)
+'g[2]' (rtl\hdmi_bringup.sv:17) (merged to equivalence)
+'g[3]' (rtl\hdmi_bringup.sv:17) (merged to equivalence)
+'g[4]' (rtl\hdmi_bringup.sv:17) (merged to equivalence)
+'g[5]' (rtl\hdmi_bringup.sv:17) (merged to equivalence)
+'g[7]' (rtl\hdmi_bringup.sv:17) (merged to equivalence)
+'encoder/encr/din_q[1]' (rtl\encode.v:63) (merged to equivalence)
+'encoder/encr/din_q[2]' (rtl\encode.v:63) (merged to equivalence)
+'encoder/encr/din_q[3]' (rtl\encode.v:63) (merged to equivalence)
+'encoder/encr/din_q[4]' (rtl\encode.v:63) (merged to equivalence)
+'encoder/encr/din_q[5]' (rtl\encode.v:63) (merged to equivalence)
+'encoder/encr/din_q[7]' (rtl\encode.v:63) (merged to equivalence)
+'encoder/encr/n1q_m[0]' (rtl\encode.v:107) (merged to equivalence)
+'encoder/encg/de_q' (rtl\encode.v:130) (merged to equivalence)
+'encoder/encg/de_reg' (rtl\encode.v:130) (merged to equivalence)
+'r[1]' (rtl\hdmi_bringup.sv:17) (merged to equivalence)
+'r[2]' (rtl\hdmi_bringup.sv:17) (merged to equivalence)
+'r[3]' (rtl\hdmi_bringup.sv:17) (merged to equivalence)
+'r[4]' (rtl\hdmi_bringup.sv:17) (merged to equivalence)
+'r[5]' (rtl\hdmi_bringup.sv:17) (merged to equivalence)
+'r[7]' (rtl\hdmi_bringup.sv:17) (merged to equivalence)
+'encoder/encg/din_q[1]' (rtl\encode.v:63) (merged to equivalence)
+'encoder/encg/din_q[2]' (rtl\encode.v:63) (merged to equivalence)
+'encoder/encg/din_q[3]' (rtl\encode.v:63) (merged to equivalence)
+'encoder/encg/din_q[4]' (rtl\encode.v:63) (merged to equivalence)
+'encoder/encg/din_q[5]' (rtl\encode.v:63) (merged to equivalence)
+'encoder/encg/din_q[7]' (rtl\encode.v:63) (merged to equivalence)
+'encoder/encg/n1q_m[0]' (rtl\encode.v:107) (merged to equivalence)
+### ### Sequential Elements Trimming Report (end) ### ### ### 
+
+### ### Module Resource Usage Distribution Estimates (begin) ### ###
+
+**Note: some resources maybe grouped under different hierarchy due to optimization and LUT mapping
+
+Module                              FFs      SRLs      ADDs      LUTs    COMB4s      RAMs DSP/MULTs
+-----------------------------       ---      ----      ----      ----      ----      ---- ---------
+hdmi_bringup:hdmi_bringup      280(156)      0(0)   223(48)   267(66)      0(0)      0(0)      0(0)
+ +pattern:video_test_pattern     40(40)      0(0)    28(28)    72(72)      0(0)      0(0)      0(0)
+ +encoder:dvi_encoder             84(0)      0(0)    147(0)    129(0)      0(0)      0(0)      0(0)
+  +encb:encode                   32(32)      0(0)    49(49)    43(43)      0(0)      0(0)      0(0)
+  +encr:encode                   26(26)      0(0)    49(49)    43(43)      0(0)      0(0)      0(0)
+  +encg:encode                   26(26)      0(0)    49(49)    43(43)      0(0)      0(0)      0(0)
+
+### ### Module Resource Usage Distribution Estimates (end) ### ###
+
+
+### ### DSP Usage Report (begin) ### ### ### 
+
+ No DSP in design
+
+### ### Clock Load Distribution Report (begin) ### ###
+
++----------------+----------+----------+------------+----------------+
+|Clock           |Flip-Flops|Shift-Regs|Memory Ports|Multipliers/DSPs|
++----------------+----------+----------+------------+----------------+
+|CLK_25M         |       33 |        0 |          0 |              0 |
+|jtag_inst1_DRCK |       80 |        0 |          0 |              0 |
+|CLK_27M         |       33 |        0 |          0 |              0 |
+|hdmi_tx_slow_clk|      134 |        0 |          0 |              0 |
++----------------+----------+----------+------------+----------------+
+
+### ### Clock Load Distribution Report (end) ### ###
+
+### ### Resource Summary (begin) ### ### ### 
+
+INPUT  PORTS    : 	14
+OUTPUT PORTS    : 	51
+
+EFX_ADD                 : 	223
+EFX_LUT4                : 	267
+   1-2  Inputs          : 	80
+   3    Inputs          : 	90
+   4    Inputs          : 	97
+EFX_FF                  : 	280
+### ### Resource Summary (end) ### ### ###
+
+Plain synthesis (without verilog dump and post-map checks) time : 1s
+Elapsed synthesis time : 1s

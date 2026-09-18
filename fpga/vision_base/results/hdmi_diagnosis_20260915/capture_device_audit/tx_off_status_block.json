@@ -1,0 +1,230 @@
+[
+  {
+    "addr": "0xfd80",
+    "value": 1,
+    "request": "00b5fd800000000000",
+    "response": "00b5fd80010c420900"
+  },
+  {
+    "addr": "0xfd84",
+    "value": 101,
+    "request": "00b5fd840000000000",
+    "response": "00b5fd8465042c0000"
+  },
+  {
+    "addr": "0xfd88",
+    "value": 5,
+    "request": "00b5fd880000000000",
+    "response": "00b5fd880500000000"
+  },
+  {
+    "addr": "0xfd8c",
+    "value": 0,
+    "request": "00b5fd8c0000000000",
+    "response": "00b5fd8c0000c00000"
+  },
+  {
+    "addr": "0xfd90",
+    "value": 103,
+    "request": "00b5fd900000000000",
+    "response": "00b5fd9067a6d01400"
+  },
+  {
+    "addr": "0xfd94",
+    "value": 0,
+    "request": "00b5fd940000000000",
+    "response": "00b5fd940004301100"
+  },
+  {
+    "addr": "0xfd98",
+    "value": 128,
+    "request": "00b5fd980000000000",
+    "response": "00b5fd988040802000"
+  },
+  {
+    "addr": "0xfd9c",
+    "value": 13,
+    "request": "00b5fd9c0000000000",
+    "response": "00b5fd9c0d0c008400"
+  },
+  {
+    "addr": "0xfda0",
+    "value": 0,
+    "request": "00b5fda00000000000",
+    "response": "00b5fda00021000100"
+  },
+  {
+    "addr": "0xfda4",
+    "value": 0,
+    "request": "00b5fda40000000000",
+    "response": "00b5fda40002040000"
+  },
+  {
+    "addr": "0xfda8",
+    "value": 0,
+    "request": "00b5fda80000000000",
+    "response": "00b5fda80000001000"
+  },
+  {
+    "addr": "0xfdac",
+    "value": 86,
+    "request": "00b5fdac0000000000",
+    "response": "00b5fdac5648000000"
+  },
+  {
+    "addr": "0xfdb0",
+    "value": 19,
+    "request": "00b5fdb00000000000",
+    "response": "00b5fdb01304040c00"
+  },
+  {
+    "addr": "0xfdb4",
+    "value": 119,
+    "request": "00b5fdb40000000000",
+    "response": "00b5fdb47730103000"
+  },
+  {
+    "addr": "0xfdb8",
+    "value": 16,
+    "request": "00b5fdb80000000000",
+    "response": "00b5fdb81005000000"
+  },
+  {
+    "addr": "0xfdbc",
+    "value": 0,
+    "request": "00b5fdbc0000000000",
+    "response": "00b5fdbc00c3015000"
+  },
+  {
+    "addr": "0xfdc0",
+    "value": 0,
+    "request": "00b5fdc00000000000",
+    "response": "00b5fdc00055550000"
+  },
+  {
+    "addr": "0xfdc4",
+    "value": 68,
+    "request": "00b5fdc40000000000",
+    "response": "00b5fdc44400440000"
+  },
+  {
+    "addr": "0xfdc8",
+    "value": 68,
+    "request": "00b5fdc80000000000",
+    "response": "00b5fdc8443f000000"
+  },
+  {
+    "addr": "0xfdcc",
+    "value": 255,
+    "request": "00b5fdcc0000000000",
+    "response": "00b5fdccff00000000"
+  },
+  {
+    "addr": "0xfdd0",
+    "value": 99,
+    "request": "00b5fdd00000000000",
+    "response": "00b5fdd06311211100"
+  },
+  {
+    "addr": "0xfdd4",
+    "value": 48,
+    "request": "00b5fdd40000000000",
+    "response": "00b5fdd43011000000"
+  },
+  {
+    "addr": "0xfdd8",
+    "value": 0,
+    "request": "00b5fdd80000000000",
+    "response": "00b5fdd80000000000"
+  },
+  {
+    "addr": "0xfddc",
+    "value": 0,
+    "request": "00b5fddc0000000000",
+    "response": "00b5fddc0000000000"
+  },
+  {
+    "addr": "0xfde0",
+    "value": 0,
+    "request": "00b5fde00000000000",
+    "response": "00b5fde00000000000"
+  },
+  {
+    "addr": "0xfde4",
+    "value": 0,
+    "request": "00b5fde40000000000",
+    "response": "00b5fde40000000000"
+  },
+  {
+    "addr": "0xfde8",
+    "value": 0,
+    "request": "00b5fde80000000000",
+    "response": "00b5fde80000000000"
+  },
+  {
+    "addr": "0xfdec",
+    "value": 0,
+    "request": "00b5fdec0000000000",
+    "response": "00b5fdec0000000000"
+  },
+  {
+    "addr": "0xfdf0",
+    "value": 0,
+    "request": "00b5fdf00000000000",
+    "response": "00b5fdf00000000000"
+  },
+  {
+    "addr": "0xfdf4",
+    "value": 0,
+    "request": "00b5fdf40000000000",
+    "response": "00b5fdf40000000000"
+  },
+  {
+    "addr": "0xfdf8",
+    "value": 0,
+    "request": "00b5fdf80000000000",
+    "response": "00b5fdf80000000000"
+  },
+  {
+    "addr": "0xfdfc",
+    "value": 0,
+    "request": "00b5fdfc0000000000",
+    "response": "00b5fdfc0000000000"
+  },
+  {
+    "addr": "0xc71a",
+    "value": 7,
+    "request": "00b5c71a0000000000",
+    "response": "00b5c71a0708980400"
+  },
+  {
+    "addr": "0xc71e",
+    "value": 101,
+    "request": "00b5c71e0000000000",
+    "response": "00b5c71e6507800400"
+  },
+  {
+    "addr": "0xc722",
+    "value": 56,
+    "request": "00b5c7220000000000",
+    "response": "00b5c7223839f31700"
+  },
+  {
+    "addr": "0xc726",
+    "value": 112,
+    "request": "00b5c7260000000000",
+    "response": "00b5c7267000c00000"
+  },
+  {
+    "addr": "0xc72a",
+    "value": 41,
+    "request": "00b5c72a0000000000",
+    "response": "00b5c72a29002c0000"
+  },
+  {
+    "addr": "0xc72e",
+    "value": 5,
+    "request": "00b5c72e0000000000",
+    "response": "00b5c72e0500000700"
+  }
+]

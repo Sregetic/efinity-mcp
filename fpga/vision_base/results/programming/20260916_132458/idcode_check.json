@@ -1,0 +1,12 @@
+[
+  {
+    "frequency_hz": 100000,
+    "idcode": "ffffffff",
+    "expected": "10660a79"
+  },
+  {
+    "frequency_hz": 1000000,
+    "idcode": "ffffffff",
+    "expected": "10660a79"
+  }
+]

@@ -1,0 +1,86 @@
+{
+  "scope": "RTL simulation, not physical display acceptance",
+  "passed": true,
+  "tests": [
+    {
+      "passed": true,
+      "test": "frontend",
+      "run_exit": 0,
+      "compile_exit": 0
+    },
+    {
+      "passed": true,
+      "test": "color",
+      "run_exit": 0,
+      "compile_exit": 0
+    },
+    {
+      "passed": true,
+      "test": "median9",
+      "run_exit": 0,
+      "compile_exit": 0
+    },
+    {
+      "passed": true,
+      "test": "chroma_tone",
+      "run_exit": 0,
+      "compile_exit": 0
+    },
+    {
+      "passed": true,
+      "test": "controls",
+      "run_exit": 0,
+      "compile_exit": 0
+    },
+    {
+      "passed": true,
+      "test": "hysteresis",
+      "run_exit": 0,
+      "compile_exit": 0
+    },
+    {
+      "passed": true,
+      "test": "hysteresis_sweep",
+      "run_exit": 0,
+      "compile_exit": 0
+    },
+    {
+      "passed": true,
+      "test": "history",
+      "run_exit": 0,
+      "compile_exit": 0
+    },
+    {
+      "passed": true,
+      "test": "commit",
+      "run_exit": 0,
+      "compile_exit": 0
+    },
+    {
+      "passed": true,
+      "test": "canny",
+      "run_exit": 0,
+      "compile_exit": 0
+    }
+  ],
+  "full": true,
+  "source_sha256": {
+    "camera_auto_exposure.sv": "A5DF3D9227EC9B26EF3A19FFE766F78388A703F6818B7165AE5B41EB0E3C16FB",
+    "rgb_chroma_tone.sv": "9BE371C474B0D53C5DDD4D02F2C598B2C2796CFE2CE307428421B50BB35127BB",
+    "sensor_exposure_writer.sv": "DD1F2ED8D6CCD190104228660AFB13E5D1A91CE5EAEBB259013E471B76277CDA",
+    "vision_canny.sv": "FE375DD5334D80255A8FCEB6C945F63E161C7D9F3709AC620EF4250138CFE5C5",
+    "vision_controls.sv": "367916E9CDBF28C4776EE6D2B27F5A4396EC716A9F66E20A44CD2B763A25F887",
+    "vision_display.sv": "B28AD36F636B4AA6121EA70FC3C5B933A75E184FE3C0D05D9BB3F03340CC36CB",
+    "vision_frame_history.sv": "D28B38C17DEF132CB1E90A15498816616DEF8A1812B7E53D76A204170D316F7D",
+    "vision_frontend.sv": "02AF8C8E3DAF951FD416A5E320175AE61C111A361E49BB4FFEECB5317272898A",
+    "vision_hysteresis_sweep.sv": "56CAC2E276966A3DF5BC13BA51D403FE1757E8199FC8B7997A965026FBD6125E",
+    "vision_hysteresis.sv": "EAE013A7685126109B4B9DBB625CAE0F1CA1FDDEECAA736349D26960C992A5AD",
+    "vision_median9.sv": "AAAD3136070BB560BA6157D5C2DDF293A8B2E16B52B2DFEC52BC08E40223A32E",
+    "vision_osd.sv": "BEC789B6CE699EADB50B39C214557B2EFD166EDDC44CC648970D0CBA01C35A31",
+    "vision_sobel.sv": "82283E72E92242B9E5F0D8F462AD2D35C6F5825FE0C14CBB0A06BD1DE36A5986",
+    "vision_sparse_window.sv": "ADA0102574DFC8628DEB82780255FF5FD5523FB3688E054B2A1D8F8818B1E496",
+    "vision_window3.sv": "80E90D1F363BA74C120ACC27DE311DAF2403AE6DB3EFB4E6232023AF4B624002",
+    "vision_write_commit.sv": "879E47FF41F3CF10B42477D9FBC0EB3F1FD217687B93B06A79C326B7F6F7FED9"
+  },
+  "generated_utc": "2026-09-16T16:26:54.2329477Z"
+}

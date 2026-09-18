@@ -1,0 +1,2 @@
+Running: efx_run_map.py frame_pool --family Titanium --device Ti60F225 --project_xml F:\Project\fpga\vision_base\efinity\frame_pool.xml --output_dir outflow --work_dir ../build/efinity_pool --timeout 180 --opt root=frame_pool --opt veri_options=verilog_mode=sv_09,vhdl_mode=vhdl_2008 work-dir=../build/efinity_pool
+   map :	PASS 

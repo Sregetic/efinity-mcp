@@ -1,0 +1,31 @@
+
+Elitestek FPGA Placement and Routing.
+Version: 2026.1.132.3.9 
+Date: Tue Sep 15 02:51:54 2026
+
+Copyright (C) 2013 - 2026 Efinix, Inc. All rights reserved.
+ 
+Family: Titanium 
+Device: Ti60F225
+Top-level Entity Name: hdmi_bringup
+Elapsed time for routing: 0 hours 0 minutes 4 seconds
+
+
+---------- GBUFCE Assignments (begin) ----------
+
+
++------------------+----------+----------+
+|    Clock Net     | GBUFCE_X | GBUFCE_Y |
++------------------+----------+----------+
+|     CLK_25M      |    1     |   164    |
+|     CLK_27M      |    1     |   159    |
+| hdmi_tx_fast_clk |   111    |    1     |
+| hdmi_tx_slow_clk |   107    |    1     |
+| jtag_inst1_DRCK  |   106    |    1     |
++------------------+----------+----------+
+
+
+----------- GBUFCE Assignments (end) ----------
+
+
+Elapsed time for Latest PnR Run: 0 hours 0 minutes 16 seconds

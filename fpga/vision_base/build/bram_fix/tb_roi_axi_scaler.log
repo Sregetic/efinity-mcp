@@ -1,0 +1,4 @@
+CASE integrated pixels=88 source_lines=5 bursts=6 cycles=197 error=0
+CASE integrated pixels=88 source_lines=5 bursts=6 cycles=199 error=1
+PASS tb_roi_axi_scaler cases=2
+sim\tb_roi_axi_scaler.sv:98: $finish called at 4030000 (1ps)

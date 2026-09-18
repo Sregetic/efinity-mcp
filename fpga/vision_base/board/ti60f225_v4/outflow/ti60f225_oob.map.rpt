@@ -1,0 +1,193 @@
+Efinity Synthesis report for project ti60f225_oob
+Version: 2026.1.132.3.9
+Generated at: Sep 18, 2026 10:01:57
+Copyright (C) 2013 - 2026  All rights reserved.
+
+Top-level Entity Name : ti60f225_oob_top
+
+family : Titanium
+device : Ti60F225
+project : ti60f225_oob
+root : ti60f225_oob_top
+binary-db : outflow\ti60f225_oob.vdb
+insert-ios : 0
+insert-gclk : 0
+max-carry-cascade : 320
+max-dsp-cascade : 16
+max_mult : -1
+max_ram : -1
+mode : speed
+num_srl : -1
+mult-decomp-retime : 0
+output-dir : outflow
+proj_curr_path : F:\Project\fpga\vision_base\board\ti60f225_v4
+project : ti60f225_oob
+project-xml : F:\Project\fpga\vision_base\board\ti60f225_v4\ti60f225_oob.xml
+retiming : 0
+root : ti60f225_oob_top
+seq_opt : 0
+work-dir : work_syn
+write-efx-verilog : outflow\ti60f225_oob.map.v
+
+File List:
+
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\lcd_dsi_tx_top.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\lcd_rgb_pack.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\lcd_ref_color_bar.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\camera_auto_exposure.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\sensor_exposure_writer.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\rgb_chroma_tone.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\rgb_roi_probe.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\raw_snapshot.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_hysteresis_sweep.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_canny.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_frame_history.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_hysteresis.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sparse_window.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_write_commit.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_controls.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_display.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_frontend.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_median9.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_osd.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_window3.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\rgb_shadow_denoise.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\bayer_fov_reduce.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_encoder_pure.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_encode_pure.v
+F:\Project\fpga\vision_base\rtl\video_test_pattern.sv
+F:\Project\fpga\vision_base\rtl\frame_pool.sv
+F:\Project\fpga\vision_base\rtl\frame_render_control.sv
+F:\Project\fpga\vision_base\rtl\roi_scaler.sv
+F:\Project\fpga\vision_base\rtl\axi_line_reader.sv
+F:\Project\fpga\vision_base\rtl\roi_axi_scaler.sv
+F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv
+F:\Project\fpga\vision_base\rtl\frame_render_engine.sv
+F:\Project\fpga\vision_base\rtl\frame_engine_timing_probe.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\user_dual_port_ram.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dual_clock_fifo.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\true_dual_port_ram.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\reset.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\simple_dual_port_ram.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\ddr3_top.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\axi4_bus_ctl\axi4_bus_ctl.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\local_bus_ctl\local_bus_ctl.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\memory_bus_ctl\memory_bus_ctl.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\phy_ctl\ddr_phy_wrlvl.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\phy_ctl\ddr_phy_rdlvl_dqs.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\phy_ctl\ddr_phy_wrcal.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\phy_ctl\ddr_calibration_ini.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\phy_ctl\ddr_phy_if.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\phy_ctl\phy_ctl.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\phy_ctl\ddr_mpr_rdlvl.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\ddr3_parameter.vh
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\lb2_axi_clk.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\common\efx_fifo_v2.3\efx_fifo_wrapper.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\debayer\line_buffer.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\debayer\debayer_top_2to1.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\debayer\raw_to_rgb.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\mipi_config\panel_config.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\cam_i2c_ctrl\i2c_master\i2c_master_byte_ctrl.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\cam_i2c_ctrl\i2c_master\i2c_master_top.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\cam_i2c_ctrl\i2c_master\i2c_master_bit_ctrl.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\cam_i2c_ctrl\i2c_master\oc_i2c_master.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\cam_i2c_ctrl\i2c\i2c_16addr_8data.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\cam_i2c_ctrl\i2c\i2c_master_reg_rom.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\cam_i2c_ctrl\i2c\i2c_master_reg_set.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\cam_i2c_ctrl\i2c\i2c_master_ctrl_top.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\ecc_calc_v1.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\audio_clock_regeneration_packet.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\audio_packet.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\auxiliary_video_information_info_frame.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\audio_infoframe_packet.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\efx_fifo.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\Sc_Fifo_Slr8.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\packet_assembler.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\encode.v_encrypted.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\tx_aux.v_encrypted.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\dvi_encoder.v_encrypted.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\gamma_conrrection\gamma_correction.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\debug_top.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\debayer\rgb_gain_v1.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\csi_rx_controller.sv
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\frame_buffer_V3\ddr_wr_buffer.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\frame_buffer_V3\bank_switch.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\frame_buffer_V3\vid_par2ser.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\frame_buffer_V3\vid_rx_align_v1.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\frame_buffer_V3\ddr_buffer.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\frame_buffer_V3\frame_info_det.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\frame_buffer_V3\par2ser_parse.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\frame_buffer_V3\frame_buffer.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\frame_buffer_V3\data_tx.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\frame_buffer_V3\ddr_rd_buffer.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\frame_buffer_V3\ser2par_v1.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\frame_buffer_V3\DC_FIFO.v
+F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\frame_buffer_V3\rst_n_piple.v
+
+### ### Report Section Start ### ###
+
+"MEM|SYN-0677" : ... Memory 'ram' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\csi_rx_controller.sv:7848)
+"MEM|SYN-0677" : ... Memory 'ram' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\csi_rx_controller.sv:7848)
+"MEM|SYN-0677" : ... Memory 'line0' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\bayer_fov_reduce.sv:16)
+"MEM|SYN-0677" : ... Memory 'line1' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\bayer_fov_reduce.sv:16)
+"MEM|SYN-0677" : ... Memory 'line2' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\bayer_fov_reduce.sv:16)
+"MEM|SYN-0677" : ... Memory 'line3' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\bayer_fov_reduce.sv:16)
+"MEM|SYN-0677" : ... Memory 'line4' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\bayer_fov_reduce.sv:17)
+"MEM|SYN-0677" : ... Memory 'line5' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\bayer_fov_reduce.sv:17)
+"MEM|SYN-0677" : ... Memory 'line6' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\bayer_fov_reduce.sv:17)
+"MEM|SYN-0677" : ... Memory 'line7' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\bayer_fov_reduce.sv:17)
+"MEM|SYN-0677" : ... Memory 'FifoBuff' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\frame_buffer_V3\DC_FIFO.v:211)
+"MEM|SYN-0677" : ... Memory 'tags' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_frame_history.sv:8)
+"MEM|SYN-0677" : ... Memory 'FifoBuff' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\frame_buffer_V3\DC_FIFO.v:211)
+"MEM|SYN-0677" : ... Memory 'ram' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\common\efx_fifo_v2.3\efx_fifo_wrapper.v:800)
+"MEM|SYN-0677" : ... Memory 'ram' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\common\efx_fifo_v2.3\efx_fifo_wrapper.v:800)
+"MEM|SYN-0677" : ... Memory 'ram' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\common\efx_fifo_v2.3\efx_fifo_wrapper.v:800)
+"MEM|SYN-0677" : ... Memory 'ram' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\common\efx_fifo_v2.3\efx_fifo_wrapper.v:800)
+"MEM|SYN-0677" : ... Memory 'ram' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\common\efx_fifo_v2.3\efx_fifo_wrapper.v:800)
+"MEM|SYN-0677" : ... Memory 'ram' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\common\efx_fifo_v2.3\efx_fifo_wrapper.v:800)
+"MEM|SYN-0677" : ... Memory 'ram' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\common\efx_fifo_v2.3\efx_fifo_wrapper.v:800)
+"MEM|SYN-0677" : ... Memory 'ram' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\true_dual_port_ram.v:35)
+"MEM|SYN-0677" : ... Memory 'r_gamma_2P' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\gamma_conrrection\gamma_correction.v:30)
+"MEM|SYN-0677" : ... Memory 'db' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_controls.sv:5)
+"MEM|SYN-0677" : ... Memory 'held' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_controls.sv:5)
+"MEM|SYN-0677" : ... Memory 'l1' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sparse_window.sv:4)
+"MEM|SYN-0677" : ... Memory 'l2' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sparse_window.sv:4)
+"MEM|SYN-0677" : ... Memory 'l1' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sparse_window.sv:4)
+"MEM|SYN-0677" : ... Memory 'l2' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sparse_window.sv:4)
+"MEM|SYN-0677" : ... Memory 'mem' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_hysteresis.sv:82)
+"MEM|SYN-0677" : ... Memory 'mem' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_hysteresis.sv:82)
+"MEM|SYN-0677" : ... Memory 'vertical' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_canny.sv:12)
+"MEM|SYN-0677" : ... Memory 'line1' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_window3.sv:7)
+"MEM|SYN-0677" : ... Memory 'line2' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_window3.sv:7)
+"MEM|SYN-0677" : ... Memory 'ram' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv:12549)
+"MEM|SYN-0677" : ... Memory 'ram' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv:12549)
+"MEM|SYN-0677" : ... Memory 'ram' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv:12549)
+"MEM|SYN-0677" : ... Memory 'ram' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv:12549)
+"MEM|SYN-0677" : ... Memory 'ram' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv:12549)
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'feature_display/front/win1/line1__D$12' (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_window3.sv:7).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'feature_display/front/win1/line1__D$2' (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_window3.sv:7).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'feature_display/front/win1/line1__D$b12' (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_window3.sv:7).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'feature_display/front/win1/line1__D$c12' (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_window3.sv:7).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'feature_display/front/win1/line1__D$d12' (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_window3.sv:7).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'feature_display/front/win1/line1__D$e12' (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_window3.sv:7).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'feature_display/front/win1/line1__D$f1' (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_window3.sv:7).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'feature_display/front/win2/line1__D$12' (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_window3.sv:7).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'feature_display/front/win2/line1__D$2' (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_window3.sv:7).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'feature_display/front/win2/line1__D$b12' (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_window3.sv:7).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'feature_display/front/win2/line1__D$c12' (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_window3.sv:7).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'feature_display/front/win2/line1__D$d12' (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_window3.sv:7).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'feature_display/front/win2/line1__D$e12' (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_window3.sv:7).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'feature_display/front/win2/line1__D$f1' (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_window3.sv:7).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'canny/nms_window/l1' (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sparse_window.sv:4).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'canny/gauss_window/l1' (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sparse_window.sv:4).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'canny/sobel_window/l1' (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sparse_window.sv:4).
+"MEM|SYN-0657" : Mapping into logic memory block 'u_ddr3_top/u_memory_bus_ctl/col_mach/fifo_ram[1].RAM32M0/memory' (256 bits) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\memory_bus_ctl\memory_bus_ctl.v:5169) because 'syn_ram_style' directive is 'register' or 'logic'.
+"MEM|SYN-0657" : Mapping into logic memory block 'checker0/u_ddr_buffer/history_mode.history/tags__D$12' (80 bits) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_frame_history.sv:8) because write and read address port is not compatible for dual-ported ram.
+"MEM|SYN-0657" : Mapping into logic memory block 'checker0/u_ddr_buffer/history_mode.history/tags__D$21' (80 bits) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_frame_history.sv:8) because write and read address port is not compatible for dual-ported ram.
+"MEM|SYN-0657" : Mapping into logic memory block 'checker0/u_ddr_buffer/history_mode.history/tags__D$b2' (80 bits) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_frame_history.sv:8) because write and read address port is not compatible for dual-ported ram.
+"MEM|SYN-0657" : Mapping into logic memory block 'feature_controls/db' (96 bits) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_controls.sv:5) because it has all constant reader/writer.
+"MEM|SYN-0657" : Mapping into logic memory block 'feature_controls/held' (96 bits) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_controls.sv:5) because it has all constant reader/writer.
+"MEM|SYN-0657" : Mapping into logic memory block 'inst_gamma_correction/r_gamma_2P' (10240 bits) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\gamma_conrrection\gamma_correction.v:30) because read port is not synchronous.

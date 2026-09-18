@@ -1,0 +1,328 @@
+--- backups\natural_camera_20260916\capture_raw_probe.py
++++ scripts\capture_raw_probe.py
+@@ -29,7 +29,7 @@
+         e.write_ir(DeviceUtils.EFX_TI_INSTR['USER2'])
+         v = int(e.read_dr(192))
+         e.go_idle()
+-        if v >> 160 != 0x56495331 or ((v >> 128) & 0xffffffff) not in [0x26091638,0x26091639,0x2609163a,0x2609163b,0x2609163c,0x2609163d,0x2609163e]:
++        if v >> 160 != 0x56495331 or ((v >> 128) & 0xffffffff) not in [0x26091638,0x26091639,0x2609163a,0x2609163b,0x2609163c,0x2609163d,0x2609163e,0x26091730]:
+             raise RuntimeError('RAW probe build/page mismatch: %048x' % v)
+         return v
+     command(126, 3)
+--- backups\natural_camera_20260916\i2c_16addr_8data.v
++++ board\ti60f225_v4\rtl\cam_i2c_ctrl\i2c\i2c_16addr_8data.v
+@@ -357,9 +357,10 @@
+ 						rd_cs <= 1'b0;
+ 						rd_wr <= 1'b0;
+ 						rd_wrdata <= 8'h00;
+-						rd_state <= S_RD_IDLE;
++						rd_state <= 4'd10;
+ 						rd_cnt <= 'd0;
+ 				end
++                4'd10: rd_state <= S_RD_IDLE;
+ 				default:;
+ 			endcase
+ 				
+@@ -370,11 +371,17 @@
+ begin
+ 		if( ~rst_n )
+ 				rd_done <= 1'b0;
+-		else if( rd_state == S_RD_CFG_SET )
++		else if( rd_state == 4'd10 )
+ 				rd_done <= 1'b1;
+ 		else
+ 				rd_done <= 1'b0;
+ end
++reg[7:0]read_latch=0;
++always @(posedge clk)begin
++ if(!rst_n)read_latch<=0;
++ else if(rd_state==4'd10)read_latch<=i2c_readdata;
++end
++assign dout=read_latch;
+ assign dout_valid = rd_done;
+ 
+ assign 	i2c_address 		= init_addr | wr_addr |rd_addr;
+--- backups\natural_camera_20260916\i2c_master_ctrl_top.v
++++ board\ti60f225_v4\rtl\cam_i2c_ctrl\i2c\i2c_master_ctrl_top.v
+@@ -9,6 +9,9 @@
+ input		wire	clk,
+ input		wire	rst_n,
+ 
++input exposure_req_toggle, input[15:0] exposure_req_value,
++output exposure_ack,exposure_fault,exposure_busy,
++output[15:0] exposure_applied,exposure_updates,output[23:0] exposure_readback,
+ input  scl_pad_i,       // SCL-line input
+ output scl_pad_o,       // SCL-line output (always 1'b0)
+ output scl_padoen_o,    // SCL-line output enable (active low)
+@@ -37,6 +40,16 @@
+ wire			 i2c_read;
+ wire			 i2c_write;
+ wire			 i2c_chipselect;
++wire configured,boot_wr,boot_rd,run_wr,run_rd;
++wire[15:0]boot_addr,run_addr;wire[7:0]boot_data,run_data;
++assign wr_en=configured?run_wr:boot_wr;
++assign rd_en=configured?run_rd:boot_rd;
++assign addr=configured?run_addr:boot_addr;
++assign set_data=configured?run_data:boot_data;
++sensor_exposure_writer exposure_writer(.clk(clk),.rst_n(rst_n),.configured(configured),
++ .req_toggle(exposure_req_toggle),.req_value(exposure_req_value),.wr_done(wr_done),.rd_done(rd_done),.read_data(get_data),
++ .wr_en(run_wr),.rd_en(run_rd),.addr(run_addr),.data(run_data),.ack_toggle(exposure_ack),.fault(exposure_fault),
++ .busy(exposure_busy),.applied(exposure_applied),.readback(exposure_readback),.updates(exposure_updates));
+ //==================================================
+ i2c_master_reg_set #(
+ 	.DATA_LENGTH (DATA_LENGTH),
+@@ -49,11 +62,11 @@
+ 	/*i*/	.init_done(init_done),
+ 	/*i*/	.rd_done(rd_done),
+ 	/*i*/	.wr_done(wr_done),
+-	/*o*/ .wr_en(wr_en),
+-	/*o*/ .rd_en(rd_en),
+-	/*o*/ .addr(addr),
+-	/*o*/ .dout(set_data),
+-	/*o*/.dev_addr(dev_addr)
++	/*o*/ .wr_en(boot_wr),
++	/*o*/ .rd_en(boot_rd),
++	/*o*/ .addr(boot_addr),
++	/*o*/ .dout(boot_data),
++	/*o*/.dev_addr(dev_addr),.configured(configured)
+ 	
+ );
+ 
+--- backups\natural_camera_20260916\i2c_master_reg_set.v
++++ board\ti60f225_v4\rtl\cam_i2c_ctrl\i2c\i2c_master_reg_set.v
+@@ -16,6 +16,7 @@
+ 	output	reg			rd_en,			//one clock pulse
+ 	output	wire	[I2C_REG_ADDR_WIDTH-1:0] addr,		//i2c register address
+ 	output	wire	[I2C_DATA_WIDTH-1:0] dout,		//i2c configure data to the register
++	output wire configured,
+ 	output	reg		[7:0] dev_addr
+ 	
+ );
+@@ -42,6 +43,7 @@
+     .rdata_out(rom_dout)
+ );
+ 
++assign configured = (cnt == DATA_LENGTH);
+ assign rom_addr = cnt;
+ assign addr = rom_dout[24:9];
+ assign dout = rom_dout[8:1];
+--- backups\natural_camera_20260916\rgb_chroma_tone.sv
++++ board\ti60f225_v4\rtl\vision\rgb_chroma_tone.sv
+@@ -1,12 +1,20 @@
+ // Common gain from max(R,G,B): lift brightness without independently changing
+ // RGB ratios. Gain is capped at 4x near black; (0,0,0) remains exactly black.
+ module rgb_chroma_tone #(
++ parameter SHADOW_FILE="./rtl/gamma_conrrection/chroma_shadow_gain_q8.mem",
+  parameter GAIN_FILE="./rtl/gamma_conrrection/chroma_tone_gain_q8.mem"
+ )(input clk,rst_n,de,hs,vs,input[7:0]r,g,b,
+  output reg ode,ohs,ovs,output reg[23:0]rgb,linear_rgb,
+- input[15:0]gain_r,gain_g,gain_b,output reg[23:0]plain_rgb,output reg highlight_active);
++ input[15:0]gain_r,gain_g,gain_b,output reg[23:0]plain_rgb,output reg highlight_active,input shadow_boost);
+ reg[15:0]gain_rom[0:255];
+ initial $readmemh(GAIN_FILE,gain_rom);
++reg[15:0]shadow_rom[0:255];initial $readmemh(SHADOW_FILE,shadow_rom);
++reg[2:0]shadow_sync=0;reg shadow_frame=0,vs_q=0,shadow1=0;
++always @(posedge clk)begin
++ shadow_sync<={shadow_sync[1:0],shadow_boost};vs_q<=vs;
++ if(vs&&!vs_q)shadow_frame<=shadow_sync[2];
++ if(!rst_n)begin shadow_sync<=0;shadow_frame<=0;vs_q<=0;end
++end
+ wire[7:0]rgmax=(r>g)?r:g;
+ wire[7:0]peak=(rgmax>b)?rgmax:b;
+ reg[7:0]peak1=0;reg[23:0]rgb1=0,rgb2=0;reg[15:0]gain2=0;
+@@ -23,7 +31,8 @@
+ endfunction
+ function automatic[3:0]min3(input[3:0]a,b,c);begin min3=(a<b)?((a<c)?a:c):((b<c)?b:c);end endfunction
+ function automatic[3:0]max3(input[3:0]a,b,c);begin max3=(a>b)?((a>c)?a:c):((b>c)?b:c);end endfunction
+-wire[3:0]near_clip=max3(score(rgb1[23:16],cr),score(rgb1[15:8],cg),score(rgb1[7:0],cb));
++wire[3:0]a_clip=score(rgb1[23:16],cr),b_clip=score(rgb1[15:8],cg),c_clip=score(rgb1[7:0],cb);
++wire[3:0]near_clip=max3((a_clip<b_clip?a_clip:b_clip),(a_clip<c_clip?a_clip:c_clip),(b_clip<c_clip?b_clip:c_clip));
+ wire[3:0]all_bright=min3(score(rgb1[23:16],lr),score(rgb1[15:8],lg),score(rgb1[7:0],lb));
+ wire[7:0]peak3a=(toned3[23:16]>toned3[15:8])?toned3[23:16]:toned3[15:8];
+ wire[7:0]peak3=(peak3a>toned3[7:0])?peak3a:toned3[7:0];
+@@ -39,11 +48,11 @@
+ wire[7:0]bb=(|pb[23:16])?8'd255:pb[15:8];
+ always @(posedge clk)begin
+  for(k=0;k<8;k=k+1)begin
+-  cr[k*9+:9]<=limit(207+4*k,gain_r);cg[k*9+:9]<=limit(207+4*k,gain_g);cb[k*9+:9]<=limit(207+4*k,gain_b);
+-  lr[k*9+:9]<=limit(112+4*k,gain_r);lg[k*9+:9]<=limit(112+4*k,gain_g);lb[k*9+:9]<=limit(112+4*k,gain_b);
++  cr[k*9+:9]<=limit(223+2*k,gain_r);cg[k*9+:9]<=limit(223+2*k,gain_g);cb[k*9+:9]<=limit(223+2*k,gain_b);
++  lr[k*9+:9]<=limit(144+8*k,gain_r);lg[k*9+:9]<=limit(144+8*k,gain_g);lb[k*9+:9]<=limit(144+8*k,gain_b);
+  end
+- peak1<=peak;rgb1<={r,g,b};sync1<={de,hs,vs};
+- gain2<=gain_rom[peak1];rgb2<=rgb1;sync2<=sync1;
++ shadow1<=shadow_frame;peak1<=peak;rgb1<={r,g,b};sync1<={de,hs,vs};
++ gain2<=shadow1?shadow_rom[peak1]:gain_rom[peak1];rgb2<=rgb1;sync2<=sync1;
+  alpha2<=(near_clip<all_bright)?near_clip:all_bright;
+  toned3<={rr,gg,bb};linear3<=rgb2;sync3<=sync2;alpha3<=alpha2;
+  {ode,ohs,ovs}<=sync3;
+--- backups\natural_camera_20260916\tb_chroma_tone.sv
++++ sim\vision\tb_chroma_tone.sv
+@@ -2,10 +2,10 @@
+ module tb;
+ reg clk=0;always #5 clk=~clk;reg rst=0,de=0,hs=0,vs=0;reg[7:0]r=0,g=0,b=0;
+ wire od,oh,ov,hit;wire[23:0]rgb,linear_rgb,plain_rgb;reg[15:0]lut[0:255];
+-rgb_chroma_tone #(.GAIN_FILE("board/ti60f225_v4/rtl/gamma_conrrection/chroma_tone_gain_q8.mem"))dut(clk,rst,de,hs,vs,r,g,b,od,oh,ov,rgb,linear_rgb,16'd256,16'd161,16'd162,plain_rgb,hit);
++rgb_chroma_tone #(.SHADOW_FILE("board/ti60f225_v4/rtl/gamma_conrrection/chroma_shadow_gain_q8.mem"),.GAIN_FILE("board/ti60f225_v4/rtl/gamma_conrrection/chroma_tone_gain_q8.mem"))dut(clk,rst,de,hs,vs,r,g,b,od,oh,ov,rgb,linear_rgb,16'd256,16'd161,16'd162,plain_rgb,hit,1'b0);
+ reg[23:0]inputs[0:802];reg[2:0]syncs[0:802];reg[23:0]expected,plain_expected;integer i,j,peak,gain,rr,gg,bb,checked=0,a,c,l,k,z,ir,ig,ib;
+ function automatic integer rank(input integer v,gain,base);
+- integer n;begin rank=0;for(n=0;n<8;n=n+1)if(v>=((base+4*n)*gain)/256)rank=n+1;end
++ integer n;begin rank=0;for(n=0;n<8;n=n+1)if(v>=((base+((base==223)?2:8)*n)*gain)/256)rank=n+1;end
+ endfunction
+ initial begin
+  $readmemh("board/ti60f225_v4/rtl/gamma_conrrection/chroma_tone_gain_q8.mem",lut);
+@@ -15,7 +15,7 @@
+   if(i%17==0)begin r=0;g=0;b=0;end
+   if(i%19==0)begin r=i;g=i;b=i;end
+   if(i%23==0)begin r=i;g=0;b=0;end
+-  if(i%29==0)begin r=192;g=150;b=151;end // Measured clipped window tile after WB.
++  if(i%29==0)begin r=239;g=150;b=151;end // Measured clipped window tile after WB.
+   if(i%31==0)begin r=239;g=30;b=20;end // Bright blue object: do not neutralize.
+   de=i<800&&i%5!=0;hs=i%7==0;vs=i%73==0;
+   inputs[i]={r,g,b};syncs[i]={de,hs,vs};@(posedge clk);#1;
+@@ -24,8 +24,9 @@
+    rr=(rr*gain+128)>>8;gg=(gg*gain+128)>>8;bb=(bb*gain+128)>>8;
+    if(rr>255)rr=255;if(gg>255)gg=255;if(bb>255)bb=255;
+    plain_expected=syncs[j][2]?{8'(rr),8'(gg),8'(bb)}:0;
+-   c=rank(ir,256,207);z=rank(ig,161,207);if(z>c)c=z;z=rank(ib,162,207);if(z>c)c=z;
+-   l=rank(ir,256,112);z=rank(ig,161,112);if(z<l)l=z;z=rank(ib,162,112);if(z<l)l=z;
++   c=rank(ir,256,223);k=rank(ig,161,223);z=rank(ib,162,223);
++   a=c<k?c:k;l=c<z?c:z;if(l>a)a=l;l=k<z?k:z;if(l>a)a=l;c=a;
++   l=rank(ir,256,144);z=rank(ig,161,144);if(z<l)l=z;z=rank(ib,162,144);if(z<l)l=z;
+    a=(c<l)?c:l;peak=rr>gg?rr:gg;if(bb>peak)peak=bb;
+    rr=rr+((peak-rr)*a+4)/8;gg=gg+((peak-gg)*a+4)/8;bb=bb+((peak-bb)*a+4)/8;
+    expected=syncs[j][2]?{8'(rr),8'(gg),8'(bb)}:0;
+--- backups\natural_camera_20260916\ti60f225_oob.xml
++++ board\ti60f225_v4\ti60f225_oob.xml
+@@ -6,6 +6,8 @@
+     </efx:device_info>
+     <efx:design_info def_veri_version="sv_09" def_vhdl_version="vhdl_2008" unified_flow="false" partition_interface_allowed_off_perimeter="true">
+         <efx:top_module name="ti60f225_oob_top" />
++        <efx:design_file name="rtl/vision/camera_auto_exposure.sv" version="default" library="default" />
++        <efx:design_file name="rtl/vision/sensor_exposure_writer.sv" version="default" library="default" />
+         <efx:design_file name="rtl/vision/rgb_chroma_tone.sv" version="default" library="default" />
+         <efx:design_file name="rtl/rgb_roi_probe.sv" version="default" library="default" />
+         <efx:design_file name="rtl/raw_snapshot.sv" version="default" library="default" />
+--- backups\natural_camera_20260916\ti60f225_oob_top.v
++++ board\ti60f225_v4\rtl\ti60f225_oob_top.v
+@@ -523,7 +523,11 @@
+ end
+ wire i2c_rst_n = i2c_rst_cnt[12];
+ 
++wire ae_req,ae_ack,ae_fault,ae_busy;wire[15:0]ae_request,ae_applied,ae_updates;wire[23:0]ae_readback;
++wire[31:0]ae_sum;wire[15:0]ae_ncenter,ae_ntotal,ae_nclip;wire[1:0]ae_decision;wire ae_shadow;
+ i2c_master_ctrl_top u2_i2c_master_ctrl_top(
++ .exposure_req_toggle(ae_req),.exposure_req_value(ae_request),.exposure_ack(ae_ack),.exposure_fault(ae_fault),
++ .exposure_busy(ae_busy),.exposure_applied(ae_applied),.exposure_updates(ae_updates),.exposure_readback(ae_readback),
+   /*i*/.clk			(CLK_5M		),
+   /*i*/.rst_n			(i2c_rst_n		),
+   /*i*/.scl_pad_i     (io_cam_scl_IN),//(1'b1),
+@@ -755,14 +759,20 @@
+ // Physical RGB white balance. The legacy debayer has R/B names reversed
+ // relative to the measured BGGR input, so gains are routed accordingly below.
+ reg[15:0]wb_r=162,wb_g=161,wb_b=256,wb_pr=162,wb_pg=161,wb_pb=256;
++reg ae_enable=1;reg[15:0]ae_manual=444;
+ reg[2:0]gain_cmd_sync=0;reg gain_cmd_seen=0,gain_vq=0;
+ always @(posedge vid_clk_dvi2)begin
+  gain_cmd_sync<={gain_cmd_sync[1:0],feature_command_toggle};gain_cmd_seen<=gain_cmd_sync[2];gain_vq<=ch0_vs;
+  if(gain_cmd_sync[2]!=gain_cmd_seen)case(feature_command[31:24])
+-  8:wb_pr<=feature_command[15:0];9:wb_pg<=feature_command[15:0];10:wb_pb<=feature_command[15:0];default:;
++  8:wb_pr<=feature_command[15:0];9:wb_pg<=feature_command[15:0];10:wb_pb<=feature_command[15:0];11:ae_enable<=feature_command[0];12:ae_manual<=feature_command[15:0];default:;
+  endcase
+  if(ch0_vs&&!gain_vq)begin wb_r<=wb_pr;wb_g<=wb_pg;wb_b<=wb_pb;end
+ end
++
++camera_auto_exposure auto_exposure(.clk(vid_clk_dvi2),.rst_n(vid_rst_n),.vs(ch0_vs),.de(ch0_de),.pixels({ch0_b,ch0_g}),
++ .capture_id(memory_display_id),.enable(ae_enable),.manual_value(ae_manual),.ack_toggle(ae_ack),.fault(ae_fault),
++ .req_toggle(ae_req),.request(ae_request),.center_sum(ae_sum),.center_count(ae_ncenter),.total_count(ae_ntotal),
++ .clip_count(ae_nclip),.decision(ae_decision),.shadow_boost(ae_shadow));
+ 
+ debayer_top_2to1 debayer_top
+ (
+@@ -962,7 +972,7 @@
+ always @(posedge hdmi_tx_slow_clk)begin legacy_delay1<={legacy_rdata,legacy_gdata,legacy_bdata};legacy_delay2<=legacy_delay1;legacy_delay3<=legacy_delay2;end
+ assign {gamma_rdata,gamma_gdata,gamma_bdata}=(tone_mode==0)?linear_rgb:((tone_mode==1)?legacy_delay3:((tone_mode==2)?plain_chroma_rgb:chroma_rgb));
+ rgb_chroma_tone chroma_tone(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n),.de(den_de),.hs(den_hs),.vs(den_vs),
+- .r(den_r),.g(den_g),.b(den_b),.ode(gamma_valid),.ohs(gamma_hs),.ovs(gamma_vs),.rgb(chroma_rgb),.linear_rgb(linear_rgb),.gain_r(wb_b),.gain_g(wb_g),.gain_b(wb_r),.plain_rgb(plain_chroma_rgb),.highlight_active(highlight_active));
++ .r(den_r),.g(den_g),.b(den_b),.ode(gamma_valid),.ohs(gamma_hs),.ovs(gamma_vs),.rgb(chroma_rgb),.linear_rgb(linear_rgb),.gain_r(wb_b),.gain_g(wb_g),.gain_b(wb_r),.plain_rgb(plain_chroma_rgb),.highlight_active(highlight_active),.shadow_boost(ae_shadow));
+ 
+ wire [7:0] con_rdata ;
+ wire [7:0] con_gdata ;
+@@ -1305,16 +1315,18 @@
+  diag_meta<={diag_frame_gray,diag_core_gray,i_arstn,i_pll_locked,pll_locked,user_pll_locked,w_arstn,vid_rst_n,pattern_reset_sync[1],1'b0};
+  diag_sync<=diag_meta;
+  if(jtag_diag_CAPTURE)begin
+-  if(feature_diag_page==10)diag_shift<={32'h56495331,32'h260916ae,feature_status,highlight_hits_hold,64'b0};
+-  else if(feature_diag_page==8)diag_shift<={32'h56495331,32'h2609168e,feature_status,wb_r,wb_g,wb_b,46'b0,tone_mode};
+-  else if(feature_diag_page==4)diag_shift<={32'h56495331,32'h2609164e,feature_status,pre_gamma_sums};
+-  else if(feature_diag_page==5)diag_shift<={32'h56495331,32'h2609165e,feature_status,post_gamma_sums};
+-  else if(feature_diag_page==6)diag_shift<={32'h56495331,32'h2609166e,feature_status,display_color_sums};
+-  else if(feature_diag_page==7)diag_shift<={32'h56495331,32'h2609167e,feature_status,post_gamma_clips};
+-  else if(feature_diag_page==3)diag_shift<={32'h56495331,32'h2609163e,feature_status,{raw_busy,16'b0,color_order,raw_read_addr},raw_read_data,raw_sequence};
+-  else if(feature_diag_page==1)diag_shift<={32'h56495331,32'h2609161e,feature_status,memory_write_errors,feature_edges_hold,feature_frames};
+-  else if(feature_diag_page==2)diag_shift<={32'h56495331,32'h2609162e,feature_status,source_checksum_hold,memory_display_id,memory_capture_id};
+-  else diag_shift<={32'h56495331,32'h2609160e,feature_status,memory_capture_id,memory_display_id,canny_completed};
++  if(feature_diag_page==11)diag_shift<={32'h56495331,32'h260917b0,feature_status,ae_applied,ae_request,ae_updates,ae_readback,20'b0,ae_shadow,ae_enable,ae_busy,ae_fault};
++  else if(feature_diag_page==12)diag_shift<={32'h56495331,32'h260917c0,feature_status,ae_sum,ae_ncenter,ae_ntotal,ae_nclip,14'b0,ae_decision};
++  else if(feature_diag_page==10)diag_shift<={32'h56495331,32'h260917a0,feature_status,highlight_hits_hold,64'b0};
++  else if(feature_diag_page==8)diag_shift<={32'h56495331,32'h26091780,feature_status,wb_r,wb_g,wb_b,46'b0,tone_mode};
++  else if(feature_diag_page==4)diag_shift<={32'h56495331,32'h26091740,feature_status,pre_gamma_sums};
++  else if(feature_diag_page==5)diag_shift<={32'h56495331,32'h26091750,feature_status,post_gamma_sums};
++  else if(feature_diag_page==6)diag_shift<={32'h56495331,32'h26091760,feature_status,display_color_sums};
++  else if(feature_diag_page==7)diag_shift<={32'h56495331,32'h26091770,feature_status,post_gamma_clips};
++  else if(feature_diag_page==3)diag_shift<={32'h56495331,32'h26091730,feature_status,{raw_busy,16'b0,color_order,raw_read_addr},raw_read_data,raw_sequence};
++  else if(feature_diag_page==1)diag_shift<={32'h56495331,32'h26091710,feature_status,memory_write_errors,feature_edges_hold,feature_frames};
++  else if(feature_diag_page==2)diag_shift<={32'h56495331,32'h26091720,feature_status,source_checksum_hold,memory_display_id,memory_capture_id};
++  else diag_shift<={32'h56495331,32'h26091700,feature_status,memory_capture_id,memory_display_id,canny_completed};
+  end
+  else if(jtag_diag_SHIFT)diag_shift<={jtag_diag_TDI,diag_shift[191:1]};
+ end
+--- backups\natural_camera_20260916\vision_control.py
++++ scripts\vision_control.py
+@@ -2,11 +2,12 @@
+ from efx_pgm.ftdi_program import acquire_jtag_engine
+ from efx_pgm.device_utils import DeviceUtils
+ from pyftdi.bits import BitSequence
+-p=argparse.ArgumentParser();p.add_argument('--url',default='ftdi://0x0403:0x6011:4:3/2');p.add_argument('--mode',type=int);p.add_argument('--threshold',type=int);p.add_argument('--median',type=int,choices=[0,1]);p.add_argument('--memory',type=int,choices=range(4));p.add_argument('--index',type=int,choices=range(6));p.add_argument('--page',type=int,default=0,choices=range(16));p.add_argument('--color-order',type=int,choices=range(6));p.add_argument('--gamma','--tone',dest='gamma',type=int,choices=[0,1,2,3]);p.add_argument('--gain-r',type=int);p.add_argument('--gain-g',type=int);p.add_argument('--gain-b',type=int);p.add_argument('--samples',type=int,default=5);a=p.parse_args()
++p=argparse.ArgumentParser();p.add_argument('--url',default='ftdi://0x0403:0x6011:4:3/2');p.add_argument('--mode',type=int);p.add_argument('--threshold',type=int);p.add_argument('--median',type=int,choices=[0,1]);p.add_argument('--memory',type=int,choices=range(4));p.add_argument('--index',type=int,choices=range(6));p.add_argument('--page',type=int,default=0,choices=range(16));p.add_argument('--color-order',type=int,choices=range(6));p.add_argument('--gamma','--tone',dest='gamma',type=int,choices=[0,1,2,3]);p.add_argument('--gain-r',type=int);p.add_argument('--gain-g',type=int);p.add_argument('--gain-b',type=int);p.add_argument('--samples',type=int,default=5);p.add_argument('--ae',type=int,choices=[0,1]);p.add_argument('--exposure',type=int);a=p.parse_args()
+ with acquire_jtag_engine(1e6,a.url) as e:
+  e.reset()
+- for op,value in [(126,a.page),(1,a.mode),(2,a.threshold),(3,a.median),(4,a.memory),(5,a.index),(6,a.color_order),(7,a.gamma),(8,a.gain_r),(9,a.gain_g),(10,a.gain_b)]:
++ for op,value in [(126,a.page),(1,a.mode),(2,a.threshold),(3,a.median),(4,a.memory),(5,a.index),(6,a.color_order),(7,a.gamma),(8,a.gain_r),(9,a.gain_g),(10,a.gain_b),(11,a.ae),(12,a.exposure)]:
+   if value is None:continue
++  if op==12 and not 112<=value<=1776:raise ValueError("exposure range112..1776")
+   if op in [8,9,10] and not 0<=value<=1024:raise ValueError('gain Q8.8 range0..1024')
+   if op==1 and not 0<=value<=7:raise ValueError('mode0..7')
+   if op==2 and not 0<=value<=2047:raise ValueError('threshold0..2047')
+@@ -18,13 +19,15 @@
+   if ((v>>128)&0xffffffff)>=0x26091604:
+    rec.update(capture_id=(v>>64)&0xffffffff,display_id=(v>>32)&0xffffffff,canny_completed=v&0xffffffff,canny_fault=(s>>31)&1,canny_busy=(s>>30)&1,canny_ready=(s>>29)&1,history_count=(s>>26)&7)
+    rec.pop('edges');rec.pop('frames');rec.pop('status')
++  actual_build=(v>>128)&0xffffffff
++  decode_build=(0x2609160e+(((actual_build>>4)&15)<<4)) if (actual_build&0xffffff0f)==0x26091700 else actual_build
+   rec['keys_n']=s&7;rec['sample_time_s']=time.time()
+-  if ((v>>128)&0xffffffff) in [0x26091615,0x26091616,0x26091617,0x26091618,0x26091619,0x2609161a,0x2609161b,0x2609161c,0x2609161d,0x2609161e]:
++  if decode_build in [0x26091615,0x26091616,0x26091617,0x26091618,0x26091619,0x2609161a,0x2609161b,0x2609161c,0x2609161d,0x2609161e]:
+    for key in ['capture_id','display_id','canny_completed']:rec.pop(key,None)
+    rec.update(write_errors=(v>>64)&0xffffffff,edges=(v>>32)&0xffffffff,frames=v&0xffffffff)
+-  elif ((v>>128)&0xffffffff) in [0x26091625,0x26091626,0x26091627,0x26091628,0x26091629,0x2609162a,0x2609162b,0x2609162c,0x2609162d,0x2609162e]:
++  elif decode_build in [0x26091625,0x26091626,0x26091627,0x26091628,0x26091629,0x2609162a,0x2609162b,0x2609162c,0x2609162d,0x2609162e]:
+    rec.pop('canny_completed',None);rec.update(checksum=(v>>64)&0xffffffff,display_id=(v>>32)&0xffffffff,capture_id=v&0xffffffff)
+-  build=(v>>128)&0xffffffff
++  build=decode_build
+   if build in [0x2609164a,0x2609165a,0x2609166a,0x2609167a,0x2609164b,0x2609165b,0x2609166b,0x2609167b,0x2609164c,0x2609165c,0x2609166c,0x2609167c,0x2609164d,0x2609165d,0x2609166d,0x2609167d,0x2609164e,0x2609165e,0x2609166e,0x2609167e]:
+    for key in ['capture_id','display_id','canny_completed']:rec.pop(key,None)
+    channels=[(v>>64)&0xffffffff,(v>>32)&0xffffffff,v&0xffffffff]
+@@ -37,6 +40,12 @@
+   if build in [0x260916ad,0x260916ae]:
+    for key in ['capture_id','display_id','canny_completed']:rec.pop(key,None)
+    rec['highlight_pixels']=(v>>64)&0xffffffff
++  if actual_build in [0x260917b0,0x260917c0]:
++   for key in ['capture_id','display_id','canny_completed']:rec.pop(key,None)
++   if actual_build==0x260917b0:rec.update(exposure_applied=(v>>80)&65535,exposure_request=(v>>64)&65535,exposure_updates=(v>>48)&65535,exposure_readback=f'{(v>>24)&0xffffff:06x}',ae_fault=v&1,ae_busy=(v>>1)&1,ae_enabled=(v>>2)&1,shadow_boost=(v>>3)&1)
++   else:
++    n=(v>>48)&65535;total=(v>>32)&65535;clips=(v>>16)&65535
++    rec.update(center_mean_raw=((v>>64)&0xffffffff)/n if n else None,center_count=n,total_count=total,clip_count=clips,clip_fraction=clips/total if total else None,ae_decision=v&3)
+   if i:out.append(rec)
+   time.sleep(.2)
+  print(json.dumps(out,indent=2))

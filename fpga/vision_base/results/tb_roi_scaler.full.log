@@ -1,0 +1,13 @@
+PASS case=1 pixels=16 source_lines=2 cycles=41 beats=8 issues=8 captures=8 accepts=8
+PASS case=2 pixels=6 source_lines=2 cycles=46 beats=4 issues=4 captures=4 accepts=4
+PASS case=3 pixels=8 source_lines=2 cycles=46 beats=4 issues=4 captures=4 accepts=4
+PASS case=4 pixels=35 source_lines=3 cycles=67 beats=20 issues=20 captures=20 accepts=20
+PASS invalid case=5 no_memory_read=1
+PASS invalid case=6 no_memory_read=1
+PASS invalid case=7 no_memory_read=1
+PASS invalid case=8 no_memory_read=1
+PASS case=90 pixels=2073600 source_lines=1080 cycles=3461340 beats=1036800 issues=1036800 captures=1036800 accepts=1036800
+PASS case=91 pixels=2073600 source_lines=720 cycles=1944505 beats=1036800 issues=1036800 captures=1036800 accepts=1036800
+PASS case=92 pixels=2073600 source_lines=540 cycles=1474264 beats=1036800 issues=1036800 captures=1036800 accepts=1036800
+PASS tb_roi_scaler
+F:\Project\fpga\vision_base\sim\tb_roi_scaler.sv:276: $finish called at 68803280000 (1ps)

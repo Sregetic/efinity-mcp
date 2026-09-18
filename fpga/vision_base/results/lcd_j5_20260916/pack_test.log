@@ -1,0 +1,2 @@
+LCD PACK PASS 2880 pairs, RGB order, 960 pairs/line, source boundary and odd-line fault
+sim/vision/tb_lcd_rgb_pack.sv:21: $finish called at 57920000 (1ps)

@@ -1,0 +1,1 @@
+No datapath or bitstream change. Fresh pre-gamma central ROI scene snapshot saved; not a covered-lens dark measurement. Gamma mappings [(0, 0), (4, 38), (8, 53), (12, 63), (16, 72), (20, 80), (24, 87), (32, 99)]. Awaiting user-covered-lens measurement before determining any black subtraction; current scene minimum is not a sensor black-level calibration.

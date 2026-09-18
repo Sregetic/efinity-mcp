@@ -1,0 +1,33 @@
+Input #0, dshow, from 'video=UGREEN 25854':
+  Duration: N/A, start: 576049.544967, bitrate: N/A
+  Stream #0:0: Video: mjpeg (Baseline) (MJPG / 0x47504A4D), yuvj422p(pc, bt470bg/bt709/unknown), 1920x1080, 30 fps, 30 tbr, 10000k tbn, start 576049.544967
+Stream mapping:
+  Stream #0:0 -> #0:0 (mjpeg (native) -> png (native))
+[swscaler @ 0000021b69f94400] deprecated pixel format used, make sure you did set range correctly
+Output #0, image2, to 'tx_return_20260915_081028/frame_%02d.png':
+  Metadata:
+    encoder         : Lavf62.12.101
+  Stream #0:0: Video: png, rgb24(pc, gbr/bt709/unknown, progressive), 1920x1080, q=2-31, 200 kb/s, 30 fps, 30 tbn
+    Metadata:
+      encoder         : Lavc62.28.101 png
+frame=    0 fps=0.0 q=0.0 size=       0KiB time=N/A bitrate=N/A speed=N/A elapsed=0:00:01.53    
+frame=    0 fps=0.0 q=0.0 size=       0KiB time=N/A bitrate=N/A speed=N/A elapsed=0:00:02.04    
+frame=    0 fps=0.0 q=0.0 size=       0KiB time=N/A bitrate=N/A speed=N/A elapsed=0:00:02.56    
+frame=    0 fps=0.0 q=0.0 size=       0KiB time=N/A bitrate=N/A speed=N/A elapsed=0:00:03.07    
+frame=    0 fps=0.0 q=0.0 size=       0KiB time=N/A bitrate=N/A speed=N/A elapsed=0:00:03.59    
+frame=    0 fps=0.0 q=0.0 size=       0KiB time=N/A bitrate=N/A speed=N/A elapsed=0:00:04.11    
+frame=    0 fps=0.0 q=0.0 size=       0KiB time=N/A bitrate=N/A speed=N/A elapsed=0:00:04.62    
+frame=    0 fps=0.0 q=0.0 size=       0KiB time=N/A bitrate=N/A speed=N/A elapsed=0:00:05.14    
+frame=    1 fps=0.2 q=-0.0 size=N/A time=00:00:01.46 bitrate=N/A speed=0.259x elapsed=0:00:05.65    
+frame=    1 fps=0.2 q=-0.0 size=N/A time=00:00:01.46 bitrate=N/A speed=0.238x elapsed=0:00:06.17    
+frame=    1 fps=0.1 q=-0.0 size=N/A time=00:00:01.46 bitrate=N/A speed=0.219x elapsed=0:00:06.69    
+frame=    1 fps=0.1 q=-0.0 size=N/A time=00:00:01.46 bitrate=N/A speed=0.204x elapsed=0:00:07.20    
+frame=    1 fps=0.1 q=-0.0 size=N/A time=00:00:01.46 bitrate=N/A speed=0.19x elapsed=0:00:07.72    
+frame=    1 fps=0.1 q=-0.0 size=N/A time=00:00:01.46 bitrate=N/A speed=0.178x elapsed=0:00:08.23    
+frame=    1 fps=0.1 q=-0.0 size=N/A time=00:00:01.46 bitrate=N/A speed=0.168x elapsed=0:00:08.75    
+frame=    1 fps=0.1 q=-0.0 size=N/A time=00:00:01.46 bitrate=N/A speed=0.158x elapsed=0:00:09.26    
+frame=    1 fps=0.1 q=-0.0 size=N/A time=00:00:01.46 bitrate=N/A speed=0.15x elapsed=0:00:09.78    
+frame=    1 fps=0.1 q=-0.0 size=N/A time=00:00:01.46 bitrate=N/A speed=0.142x elapsed=0:00:10.30    
+frame=    1 fps=0.1 q=-0.0 size=N/A time=00:00:01.46 bitrate=N/A speed=0.136x elapsed=0:00:10.81    
+[out#0/image2 @ 0000021b69a72980] video:25KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown
+frame=    3 fps=0.3 q=-0.0 Lsize=N/A time=00:00:10.96 bitrate=N/A speed=0.989x elapsed=0:00:11.08    

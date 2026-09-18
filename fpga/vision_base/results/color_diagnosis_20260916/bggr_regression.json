@@ -1,0 +1,32 @@
+[
+  {
+    "color": "red",
+    "passed": true,
+    "interior_pairs": 260,
+    "gain_r": 256,
+    "gain_g": 230,
+    "gain_b": 256,
+    "raw_pattern": "BGGR",
+    "output_permutation": "BGR to RGB"
+  },
+  {
+    "color": "green",
+    "passed": true,
+    "interior_pairs": 260,
+    "gain_r": 256,
+    "gain_g": 230,
+    "gain_b": 256,
+    "raw_pattern": "BGGR",
+    "output_permutation": "BGR to RGB"
+  },
+  {
+    "color": "blue",
+    "passed": true,
+    "interior_pairs": 260,
+    "gain_r": 256,
+    "gain_g": 230,
+    "gain_b": 256,
+    "raw_pattern": "BGGR",
+    "output_permutation": "BGR to RGB"
+  }
+]

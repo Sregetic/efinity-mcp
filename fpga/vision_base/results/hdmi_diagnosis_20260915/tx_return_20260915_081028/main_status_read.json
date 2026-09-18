@@ -1,0 +1,80 @@
+[
+  {
+    "raw": "b683f0fe",
+    "marker": 182,
+    "frames": 253,
+    "core_ticks": 160,
+    "reset_input": 1,
+    "mipi_pll_lock": 1,
+    "ddr_pll_lock": 1,
+    "video_pll_lock": 1,
+    "global_ready": 1,
+    "video_reset_released": 1,
+    "pattern_reset_released": 1
+  },
+  {
+    "raw": "b6e306fe",
+    "marker": 182,
+    "frames": 189,
+    "core_ticks": 4,
+    "reset_input": 1,
+    "mipi_pll_lock": 1,
+    "ddr_pll_lock": 1,
+    "video_pll_lock": 1,
+    "global_ready": 1,
+    "video_reset_released": 1,
+    "pattern_reset_released": 1
+  },
+  {
+    "raw": "b6b2affe",
+    "marker": 182,
+    "frames": 220,
+    "core_ticks": 202,
+    "reset_input": 1,
+    "mipi_pll_lock": 1,
+    "ddr_pll_lock": 1,
+    "video_pll_lock": 1,
+    "global_ready": 1,
+    "video_reset_released": 1,
+    "pattern_reset_released": 1
+  },
+  {
+    "raw": "b687cdfe",
+    "marker": 182,
+    "frames": 250,
+    "core_ticks": 137,
+    "reset_input": 1,
+    "mipi_pll_lock": 1,
+    "ddr_pll_lock": 1,
+    "video_pll_lock": 1,
+    "global_ready": 1,
+    "video_reset_released": 1,
+    "pattern_reset_released": 1
+  },
+  {
+    "raw": "b6146cfe",
+    "marker": 182,
+    "frames": 24,
+    "core_ticks": 72,
+    "reset_input": 1,
+    "mipi_pll_lock": 1,
+    "ddr_pll_lock": 1,
+    "video_pll_lock": 1,
+    "global_ready": 1,
+    "video_reset_released": 1,
+    "pattern_reset_released": 1
+  },
+  {
+    "raw": "b62d04fe",
+    "marker": 182,
+    "frames": 54,
+    "core_ticks": 7,
+    "reset_input": 1,
+    "mipi_pll_lock": 1,
+    "ddr_pll_lock": 1,
+    "video_pll_lock": 1,
+    "global_ready": 1,
+    "video_reset_released": 1,
+    "pattern_reset_released": 1
+  }
+]

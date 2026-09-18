@@ -1,0 +1,26 @@
+{
+  "curve": "existing display gamma peak envelope",
+  "max_common_gain": 4,
+  "black_maps_to": 0,
+  "gains_q8": {
+    "0": 0,
+    "1": 1024,
+    "4": 1024,
+    "8": 1024,
+    "16": 1024,
+    "32": 792,
+    "55": 591,
+    "128": 374,
+    "255": 256
+  },
+  "example_linear_rgb": [
+    55,
+    34,
+    34
+  ],
+  "example_output": [
+    127,
+    78,
+    78
+  ]
+}

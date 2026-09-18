@@ -1,0 +1,5 @@
+# RGB statistics and gain contract audit
+Observed 7 primed snapshots before fix: pre-gamma RGB means approximately 35.6,21.6,28.3, all channels nonzero and varying; maxima approximately 51,42,42. Gamma=0. Means assume previously measured 2073600 active samples/frame. Whole-scene means are not a white-balance reference.
+Simulation of actual gain+linebuffer+debayer chain with GRBG contract, neutral RAW32 and only red gain doubled: BEFORE all 260 checked interior pairs incorrectly amplified blue; AFTER 260 passed. Green-only and blue-only gain tests each passed 260 interior pairs after fix.
+Changed rgb_gain_v1.v even-row high-byte gain B->R, odd-row low-byte R->B. Existing numerical gain settings untouched. Backup rgb_gain.before.v. Pixel packing, sensor window and HDMI clock unchanged. Added read-only A5 channel-statistics telemetry.
+Fresh P&R WNS 0.384ns WHS 0.027ns. SRAM programmed successfully. Post-fix primed snapshots approximately R28.5 G21.7 B35.8, showing expected gain reassignment, not proof of neutral color. Three channels alive; green remains relatively low. Physical sensor Bayer phase and calibrated white balance remain unresolved.

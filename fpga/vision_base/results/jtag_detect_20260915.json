@@ -1,0 +1,15 @@
+{
+  "checked_utc": "2026-09-14T17:46:52.8057469Z",
+  "programmer": "Efinity 2026.1 Programmer CLI",
+  "jtag_device": "Ti60",
+  "idcode": "0x10660a79",
+  "chain_devices": 1,
+  "jtag_url": "ftdi://0x0403:0x6011:4:5/2",
+  "candidate_mode": "pattern",
+  "candidate_bit_sha256": "F61A3D90A0415CF32C65D0247A63DACD84C73C623A39E513347AC7A6B89AF49F",
+  "candidate_hex_sha256": "9A60FAA0191B016DE5D1AA8D48FFCBDE3625DD9481FEAD9DC6BEC77AE61FF885",
+  "artifact_hash_verified": true,
+  "pcb_pinout_match_confirmed": false,
+  "fpga_programmed": false,
+  "flash_written": false
+}

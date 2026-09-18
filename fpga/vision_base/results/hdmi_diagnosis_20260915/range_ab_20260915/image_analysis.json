@@ -1,0 +1,1046 @@
+[
+  {
+    "frame": "frame_01.png",
+    "time_utc": "2026-09-15T08:38:12.035496+00:00",
+    "extrema": [
+      [
+        0,
+        255
+      ],
+      [
+        0,
+        255
+      ],
+      [
+        0,
+        255
+      ]
+    ],
+    "white_bar": [
+      255,
+      255,
+      255
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": true
+  },
+  {
+    "frame": "frame_02.png",
+    "time_utc": "2026-09-15T08:38:13.180631+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_03.png",
+    "time_utc": "2026-09-15T08:38:13.971289+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_04.png",
+    "time_utc": "2026-09-15T08:38:15.812789+00:00",
+    "extrema": [
+      [
+        0,
+        255
+      ],
+      [
+        0,
+        255
+      ],
+      [
+        0,
+        255
+      ]
+    ],
+    "white_bar": [
+      255,
+      255,
+      255
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": true
+  },
+  {
+    "frame": "frame_05.png",
+    "time_utc": "2026-09-15T08:38:15.946800+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_06.png",
+    "time_utc": "2026-09-15T08:38:17.333188+00:00",
+    "extrema": [
+      [
+        0,
+        255
+      ],
+      [
+        0,
+        255
+      ],
+      [
+        0,
+        255
+      ]
+    ],
+    "white_bar": [
+      255,
+      255,
+      255
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": true
+  },
+  {
+    "frame": "frame_07.png",
+    "time_utc": "2026-09-15T08:38:18.068759+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_08.png",
+    "time_utc": "2026-09-15T08:38:18.989560+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_09.png",
+    "time_utc": "2026-09-15T08:38:19.954735+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_10.png",
+    "time_utc": "2026-09-15T08:38:21.023566+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_11.png",
+    "time_utc": "2026-09-15T08:38:21.958508+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_12.png",
+    "time_utc": "2026-09-15T08:38:23.067083+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_13.png",
+    "time_utc": "2026-09-15T08:38:23.992336+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_14.png",
+    "time_utc": "2026-09-15T08:38:24.945565+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_15.png",
+    "time_utc": "2026-09-15T08:38:26.962691+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_16.png",
+    "time_utc": "2026-09-15T08:38:28.049052+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_17.png",
+    "time_utc": "2026-09-15T08:38:29.345090+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_18.png",
+    "time_utc": "2026-09-15T08:38:29.946396+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_19.png",
+    "time_utc": "2026-09-15T08:38:30.992581+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_20.png",
+    "time_utc": "2026-09-15T08:38:32.131033+00:00",
+    "extrema": [
+      [
+        0,
+        255
+      ],
+      [
+        0,
+        255
+      ],
+      [
+        0,
+        255
+      ]
+    ],
+    "white_bar": [
+      255,
+      255,
+      255
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": true
+  },
+  {
+    "frame": "frame_21.png",
+    "time_utc": "2026-09-15T08:38:32.983921+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_22.png",
+    "time_utc": "2026-09-15T08:38:34.426534+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_23.png",
+    "time_utc": "2026-09-15T08:38:34.991078+00:00",
+    "extrema": [
+      [
+        0,
+        255
+      ],
+      [
+        0,
+        255
+      ],
+      [
+        0,
+        255
+      ]
+    ],
+    "white_bar": [
+      255,
+      255,
+      255
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": true
+  },
+  {
+    "frame": "frame_24.png",
+    "time_utc": "2026-09-15T08:38:35.941018+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_25.png",
+    "time_utc": "2026-09-15T08:38:37.019847+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_26.png",
+    "time_utc": "2026-09-15T08:38:37.943723+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_27.png",
+    "time_utc": "2026-09-15T08:38:39.024078+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_28.png",
+    "time_utc": "2026-09-15T08:38:39.978613+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_29.png",
+    "time_utc": "2026-09-15T08:38:40.946325+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_30.png",
+    "time_utc": "2026-09-15T08:38:42.015769+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_31.png",
+    "time_utc": "2026-09-15T08:38:43.054274+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_32.png",
+    "time_utc": "2026-09-15T08:38:44.354676+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_33.png",
+    "time_utc": "2026-09-15T08:38:45.038051+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_34.png",
+    "time_utc": "2026-09-15T08:38:46.934624+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  },
+  {
+    "frame": "frame_35.png",
+    "time_utc": "2026-09-15T08:38:46.934624+00:00",
+    "extrema": [
+      [
+        0,
+        255
+      ],
+      [
+        0,
+        255
+      ],
+      [
+        0,
+        255
+      ]
+    ],
+    "white_bar": [
+      255,
+      255,
+      255
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": true
+  },
+  {
+    "frame": "frame_36.png",
+    "time_utc": "2026-09-15T08:38:46.939629+00:00",
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "white_bar": [
+      7,
+      7,
+      7
+    ],
+    "black_bar": [
+      7,
+      7,
+      7
+    ],
+    "colorful": false
+  }
+]

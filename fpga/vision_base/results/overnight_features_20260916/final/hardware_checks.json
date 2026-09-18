@@ -1,0 +1,92 @@
+{
+  "generated_utc": "2026-09-15T19:41:42.829620+00:00",
+  "build": "26091606",
+  "automated_checks_passed": true,
+  "checks": {
+    "latest_build_programmed": true,
+    "setup_hold_pass": true,
+    "seven_feature_simulations": true,
+    "freeze_id_and_checksum": true,
+    "replay_all_six_frames": true,
+    "comparison_index4": true,
+    "comparison_index5_wrap": true,
+    "live_resumed": true,
+    "all_eight_modes": true,
+    "threshold_monotonic_on_same_frozen_frame": true,
+    "no_reported_write_errors": true,
+    "canny_ready_no_fault": true,
+    "counters_advance_during_soak": true,
+    "rtl_simulation_matches_bitstream": true
+  },
+  "wns_ns": 0.333,
+  "whs_ns": 0.026,
+  "freeze": {
+    "display_id": 782,
+    "checksum": 1651886080,
+    "capture_start": 785,
+    "capture_end": 810
+  },
+  "replay_ids": [
+    777,
+    778,
+    779,
+    780,
+    781,
+    782
+  ],
+  "comparison_index4_ids": [
+    777,
+    778
+  ],
+  "comparison_index5_ids": [
+    777,
+    782
+  ],
+  "threshold_edge_counts": {
+    "0": [
+      2061616
+    ],
+    "16": [
+      2723
+    ],
+    "32": [
+      277
+    ],
+    "64": [
+      0
+    ],
+    "128": [
+      0
+    ]
+  },
+  "soak_seconds": 169.838,
+  "capture_frames_per_second": 12.659,
+  "canny_jobs_per_second": 29.999,
+  "output_frames_per_second": 59.998,
+  "write_errors_last": 0,
+  "canny_reference": {
+    "width": 240,
+    "height": 135,
+    "strong": 1056,
+    "weak": 78,
+    "promoted_weak": 8,
+    "rejected_weak": 70,
+    "edges": 1064
+  },
+  "final_mode": {
+    "mode": 3,
+    "threshold": 64,
+    "median": 1,
+    "memory": 0,
+    "index": 0
+  },
+  "manual_display_and_buttons": "pending user morning acceptance",
+  "limits": [
+    "240x135 Canny analysis; 1080p Sobel/display",
+    "Canny result may lag live source and analyze repeated source frames",
+    "Six-frame history, alternating two-frame comparison",
+    "JTAG checksum is gamma-RGB sum, not a cryptographic pixel comparison; ID/checksum cross different frame boundaries during transitions",
+    "Write-error counters do not establish a complete MIPI/AXI/HDMI error audit",
+    "Fixed black spot and ISP calibration deferred"
+  ]
+}

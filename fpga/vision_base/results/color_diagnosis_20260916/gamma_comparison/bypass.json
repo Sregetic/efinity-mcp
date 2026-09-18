@@ -1,0 +1,106 @@
+[
+  {
+    "magic": "56495331",
+    "build": "2609166b",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609166b381004070036dba800225e7a0021d6fd",
+    "canny_fault": 0,
+    "canny_busy": 0,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789533922.8128452,
+    "rgb_sums_or_clips": [
+      3595176,
+      2252410,
+      2217725
+    ],
+    "rgb_mean": [
+      54.8580322265625,
+      34.369049072265625,
+      33.83979797363281
+    ]
+  },
+  {
+    "magic": "56495331",
+    "build": "2609166b",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609166b781004070036d386002256c40021ce0a",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789533923.0299194,
+    "rgb_sums_or_clips": [
+      3593094,
+      2250436,
+      2215434
+    ],
+    "rgb_mean": [
+      54.826263427734375,
+      34.33892822265625,
+      33.804840087890625
+    ]
+  },
+  {
+    "magic": "56495331",
+    "build": "2609166b",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609166b781004070036cef7002258210021cb8c",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789533923.2473588,
+    "rgb_sums_or_clips": [
+      3591927,
+      2250785,
+      2214796
+    ],
+    "rgb_mean": [
+      54.80845642089844,
+      34.34425354003906,
+      33.79510498046875
+    ]
+  },
+  {
+    "magic": "56495331",
+    "build": "2609166b",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609166b781004070036e153002263140021dc36",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789533923.4628131,
+    "rgb_sums_or_clips": [
+      3596627,
+      2253588,
+      2219062
+    ],
+    "rgb_mean": [
+      54.88017272949219,
+      34.38702392578125,
+      33.860198974609375
+    ]
+  }
+]

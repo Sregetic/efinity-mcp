@@ -1,0 +1,244 @@
+[
+  {
+    "file": "bringup25_720p.png",
+    "size": [
+      1280,
+      720
+    ],
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "sha256": "4ce570b6592b63aecdb3f539d65365f876e6162bdeacdb48673d3a4e3fe3c558"
+  },
+  {
+    "file": "bringup25_720p_reverse.png",
+    "size": [
+      1280,
+      720
+    ],
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "sha256": "4ce570b6592b63aecdb3f539d65365f876e6162bdeacdb48673d3a4e3fe3c558"
+  },
+  {
+    "file": "bringup25_avi16.png",
+    "size": [
+      1920,
+      1080
+    ],
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "sha256": "bdb180e95d9188dfae7cf3b8f253707c3a209cab308d8c211cdc14e47dd80bcc"
+  },
+  {
+    "file": "bringup25_capture.png",
+    "size": [
+      1920,
+      1080
+    ],
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "sha256": "bdb180e95d9188dfae7cf3b8f253707c3a209cab308d8c211cdc14e47dd80bcc"
+  },
+  {
+    "file": "bringup25_normal.png",
+    "size": [
+      1920,
+      1080
+    ],
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "sha256": "bdb180e95d9188dfae7cf3b8f253707c3a209cab308d8c211cdc14e47dd80bcc"
+  },
+  {
+    "file": "bringup25_yuy2.png",
+    "size": [
+      1920,
+      1080
+    ],
+    "extrema": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "sha256": "667fd790bc4df25b7833b00384139a71b7d54012720cc5f3b5d8a3532d896a23"
+  },
+  {
+    "file": "capture_after_3s.png",
+    "size": [
+      1920,
+      1080
+    ],
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "sha256": "bdb180e95d9188dfae7cf3b8f253707c3a209cab308d8c211cdc14e47dd80bcc"
+  },
+  {
+    "file": "capture_mjpeg.png",
+    "size": [
+      1920,
+      1080
+    ],
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "sha256": "bdb180e95d9188dfae7cf3b8f253707c3a209cab308d8c211cdc14e47dd80bcc"
+  },
+  {
+    "file": "final_main_capture.png",
+    "size": [
+      1920,
+      1080
+    ],
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "sha256": "bdb180e95d9188dfae7cf3b8f253707c3a209cab308d8c211cdc14e47dd80bcc"
+  },
+  {
+    "file": "main_probe_capture.png",
+    "size": [
+      1920,
+      1080
+    ],
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "sha256": "bdb180e95d9188dfae7cf3b8f253707c3a209cab308d8c211cdc14e47dd80bcc"
+  },
+  {
+    "file": "recheck_main_capture.png",
+    "size": [
+      1920,
+      1080
+    ],
+    "extrema": [
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        7,
+        7
+      ]
+    ],
+    "sha256": "bdb180e95d9188dfae7cf3b8f253707c3a209cab308d8c211cdc14e47dd80bcc"
+  }
+]

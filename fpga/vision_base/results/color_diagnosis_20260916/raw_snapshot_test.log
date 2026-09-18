@@ -1,0 +1,2 @@
+RAW SNAPSHOT PASS tiles32 packing, stable snapshot, rearm, independent read clock
+sim/vision/tb_raw_snapshot.sv:25: $finish called at 6720000 (1ps)

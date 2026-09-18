@@ -1,0 +1,83 @@
+{
+  "generated_utc": "2026-09-08T02:08:46.679074+00:00",
+  "scope": "RGB565 frame RTL, modeled AXI verification, board diagnostic builds and timing probe; no physical camera/DDR ROI integration",
+  "accepted": true,
+  "full_suite_tests": 9,
+  "artifact_hashes_verified": true,
+  "rtl_source_hashes_verified": true,
+  "hardware_programmed": false,
+  "physical_ddr_roi_integrated": false,
+  "frames": [
+    {
+      "case": 190,
+      "operation": "1280×720 → 1920×1080",
+      "pixels": 2073600,
+      "cycles": 1039655,
+      "time_ms": 10.39655,
+      "cycle_budget": 1666667
+    },
+    {
+      "case": 191,
+      "operation": "1920×1080 → 1920×1080",
+      "pixels": 2073600,
+      "cycles": 1046902,
+      "time_ms": 10.46902,
+      "cycle_budget": 1666667
+    },
+    {
+      "case": 192,
+      "operation": "960×540 ROI → 1920×1080",
+      "pixels": 2073600,
+      "cycles": 1039496,
+      "time_ms": 10.39496,
+      "cycle_budget": 1666667
+    }
+  ],
+  "variants": [
+    {
+      "mode": "camera",
+      "wns_ns": 0.461,
+      "whs_ns": 0.027,
+      "Inputs": "113 / 1703",
+      "Outputs": "342 / 2267",
+      "XLRs": "28424 / 60800",
+      "Clocks": "19 / 64",
+      "Memory Blocks": "89 / 256",
+      "DSP Blocks": "4 / 160",
+      "unassigned_core_pins": 0,
+      "missing_interface_pins": 7,
+      "core_clock_analyzed_max": "168.805 MHz",
+      "bit_sha256": "93BBE5273DE0BBDC8E45AEFE5950A1D969D54475A7C5CC20D0588A0F7FDBFBDA"
+    },
+    {
+      "mode": "pattern",
+      "wns_ns": 0.497,
+      "whs_ns": 0.026,
+      "Inputs": "113 / 1703",
+      "Outputs": "342 / 2267",
+      "XLRs": "16080 / 60800",
+      "Clocks": "19 / 64",
+      "Memory Blocks": "84 / 256",
+      "DSP Blocks": "0 / 160",
+      "unassigned_core_pins": 0,
+      "missing_interface_pins": 7,
+      "core_clock_analyzed_max": "207.555 MHz",
+      "bit_sha256": "F61A3D90A0415CF32C65D0247A63DACD84C73C623A39E513347AC7A6B89AF49F"
+    },
+    {
+      "mode": "timing_probe",
+      "wns_ns": 0.409,
+      "whs_ns": 0.026,
+      "Inputs": "113 / 1703",
+      "Outputs": "342 / 2267",
+      "XLRs": "20074 / 60800",
+      "Clocks": "19 / 64",
+      "Memory Blocks": "114 / 256",
+      "DSP Blocks": "6 / 160",
+      "unassigned_core_pins": 0,
+      "missing_interface_pins": 7,
+      "core_clock_analyzed_max": "126.215 MHz",
+      "bit_sha256": "C0D51025BEBA1E0034033A7EDB4A5219D25988856EC1328C54B8B0D4663CBC3C"
+    }
+  ]
+}

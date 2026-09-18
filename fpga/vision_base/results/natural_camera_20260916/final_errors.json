@@ -1,0 +1,40 @@
+[
+  {
+    "magic": "56495331",
+    "build": "26091710",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609171078100407000000010000307300001536",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789541142.1410165,
+    "write_errors": 1,
+    "edges": 12403,
+    "frames": 5430
+  },
+  {
+    "magic": "56495331",
+    "build": "26091710",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609171078100407000000010000302800001542",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789541142.3576577,
+    "write_errors": 1,
+    "edges": 12328,
+    "frames": 5442
+  }
+]

@@ -1,0 +1,46 @@
+{
+  "version": "V1.1",
+  "pages": 18,
+  "pdf_sha256": "660158527a4de46d05a329ce3c4718b001e75b4430282aaf044c8117a499467d",
+  "builder_sha256": "7cd5a0eceffe01dddeced948842bcd6f1c8aa89e23b3b79775d2c4c4c92305f6",
+  "original_v1_0_preserved": true,
+  "original_pdf_sha256": "275987f0b73f25a8263e3d0e7600f4a564dd9705d9ec81fc4bb85dc9ba0fc670",
+  "basis_sha256": "998ee9604cd1b57d0475201aa886d1fa40645faea9147a241c1d67e6d1a2e582",
+  "text_checks_passed": true,
+  "all_pages_rendered": true,
+  "contact_sheets_reviewed": [
+    [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    [
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    [
+      13,
+      14,
+      15,
+      16,
+      17,
+      18
+    ]
+  ],
+  "detail_pages_reviewed": [
+    4,
+    9,
+    15,
+    16,
+    17
+  ],
+  "min_content_bottom_pt": 127.9,
+  "rtl_or_board_config_modified": false
+}

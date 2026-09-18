@@ -1,0 +1,11 @@
+{
+  "memory_blocks": "248/256",
+  "change": "restore DSI PIXEL_FIFO_DEPTH 4096; single-plane Canny publication; raw snapshot RAM retired",
+  "exit_code": 0,
+  "time": "2026-09-17T00:33:18.4418613+08:00",
+  "sha256": "E7A7AA3A492BBAA8E393912443D45B0515BA06E31854CBEFD3F8786F56E7B673",
+  "unassigned_core_pins": 0,
+  "whs_ns": 0.026,
+  "bit": "F:\\Project\\fpga\\vision_base\\board\\ti60f225_v4\\outflow\\ti60f225_oob.bit",
+  "wns_ns": 0.264
+}

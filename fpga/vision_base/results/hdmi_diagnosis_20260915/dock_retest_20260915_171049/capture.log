@@ -1,0 +1,43 @@
+Input #0, dshow, from 'video=UGREEN 25854':
+  Duration: N/A, start: 270.526192, bitrate: N/A
+  Stream #0:0: Video: mjpeg (Baseline) (MJPG / 0x47504A4D), yuvj422p(pc, bt470bg/bt709/unknown), 1920x1080, 30 fps, 30 tbr, 10000k tbn, start 270.526192
+Stream mapping:
+  Stream #0:0 -> #0:0 (mjpeg (native) -> png (native))
+[swscaler @ 000002025e68fd40] deprecated pixel format used, make sure you did set range correctly
+Output #0, image2, to 'results/hdmi_diagnosis_20260915/dock_retest_20260915_171049/frame_%02d.png':
+  Metadata:
+    encoder         : Lavf62.12.101
+  Stream #0:0: Video: png, rgb24(pc, gbr/bt709/unknown, progressive), 1920x1080, q=2-31, 200 kb/s, 1 fps, 1 tbn
+    Metadata:
+      encoder         : Lavc62.28.101 png
+frame=    0 fps=0.0 q=0.0 size=       0KiB time=N/A bitrate=N/A speed=N/A elapsed=0:00:01.02    
+frame=    0 fps=0.0 q=0.0 size=       0KiB time=N/A bitrate=N/A speed=N/A elapsed=0:00:01.53    
+frame=    1 fps=0.5 q=-0.0 size=N/A time=00:00:01.00 bitrate=N/A speed=0.487x elapsed=0:00:02.05    
+frame=    2 fps=0.8 q=-0.0 size=N/A time=00:00:02.00 bitrate=N/A speed=0.778x elapsed=0:00:02.57    
+frame=    2 fps=0.6 q=-0.0 size=N/A time=00:00:02.00 bitrate=N/A speed=0.648x elapsed=0:00:03.08    
+frame=    3 fps=0.8 q=-0.0 size=N/A time=00:00:03.00 bitrate=N/A speed=0.833x elapsed=0:00:03.60    
+frame=    3 fps=0.7 q=-0.0 size=N/A time=00:00:03.00 bitrate=N/A speed=0.729x elapsed=0:00:04.11    
+frame=    4 fps=0.9 q=-0.0 size=N/A time=00:00:04.00 bitrate=N/A speed=0.864x elapsed=0:00:04.63    
+frame=    4 fps=0.8 q=-0.0 size=N/A time=00:00:04.00 bitrate=N/A speed=0.777x elapsed=0:00:05.14    
+frame=    5 fps=0.9 q=-0.0 size=N/A time=00:00:05.00 bitrate=N/A speed=0.883x elapsed=0:00:05.66    
+frame=    5 fps=0.8 q=-0.0 size=N/A time=00:00:05.00 bitrate=N/A speed=0.809x elapsed=0:00:06.17    
+frame=    6 fps=0.9 q=-0.0 size=N/A time=00:00:06.00 bitrate=N/A speed=0.896x elapsed=0:00:06.69    
+frame=    6 fps=0.8 q=-0.0 size=N/A time=00:00:06.00 bitrate=N/A speed=0.832x elapsed=0:00:07.21    
+frame=    7 fps=0.9 q=-0.0 size=N/A time=00:00:07.00 bitrate=N/A speed=0.906x elapsed=0:00:07.72    
+frame=    7 fps=0.8 q=-0.0 size=N/A time=00:00:07.00 bitrate=N/A speed=0.849x elapsed=0:00:08.24    
+frame=    8 fps=0.9 q=-0.0 size=N/A time=00:00:08.00 bitrate=N/A speed=0.913x elapsed=0:00:08.75    
+frame=    8 fps=0.9 q=-0.0 size=N/A time=00:00:08.00 bitrate=N/A speed=0.863x elapsed=0:00:09.27    
+frame=    9 fps=0.9 q=-0.0 size=N/A time=00:00:09.00 bitrate=N/A speed=0.919x elapsed=0:00:09.78    
+frame=    9 fps=0.9 q=-0.0 size=N/A time=00:00:09.00 bitrate=N/A speed=0.873x elapsed=0:00:10.30    
+frame=   10 fps=0.9 q=-0.0 size=N/A time=00:00:10.00 bitrate=N/A speed=0.924x elapsed=0:00:10.81    
+frame=   10 fps=0.9 q=-0.0 size=N/A time=00:00:10.00 bitrate=N/A speed=0.882x elapsed=0:00:11.33    
+frame=   11 fps=0.9 q=-0.0 size=N/A time=00:00:11.00 bitrate=N/A speed=0.928x elapsed=0:00:11.85    
+frame=   11 fps=0.9 q=-0.0 size=N/A time=00:00:11.00 bitrate=N/A speed=0.89x elapsed=0:00:12.36    
+frame=   12 fps=0.9 q=-0.0 size=N/A time=00:00:12.00 bitrate=N/A speed=0.931x elapsed=0:00:12.88    
+frame=   12 fps=0.9 q=-0.0 size=N/A time=00:00:12.00 bitrate=N/A speed=0.896x elapsed=0:00:13.39    
+frame=   13 fps=0.9 q=-0.0 size=N/A time=00:00:13.00 bitrate=N/A speed=0.934x elapsed=0:00:13.91    
+frame=   13 fps=0.9 q=-0.0 size=N/A time=00:00:13.00 bitrate=N/A speed=0.901x elapsed=0:00:14.42    
+frame=   14 fps=0.9 q=-0.0 size=N/A time=00:00:14.00 bitrate=N/A speed=0.937x elapsed=0:00:14.94    
+frame=   14 fps=0.9 q=-0.0 size=N/A time=00:00:14.00 bitrate=N/A speed=0.906x elapsed=0:00:15.45    
+[out#0/image2 @ 000002025c47c280] video:213KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown
+frame=   15 fps=1.0 q=-0.0 Lsize=N/A time=00:00:15.00 bitrate=N/A speed=0.961x elapsed=0:00:15.60    

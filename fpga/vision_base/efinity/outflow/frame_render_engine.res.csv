@@ -1,0 +1,16 @@
+sep=\t
+Module Resource Usage Distribution Estimates
+Generated at: Sep 08, 2026 09:59:59
+
+Note: some resources maybe grouped under different hierarchy due to optimization and LUT mapping
+
+Module	        FFs	      SRLs	       ADDs	       LUTs	    COMB4s	      RAMs	 DSP/MULTs
+frame_render_engine:frame_render_engine    	 2539(256)	     0(0)	 1109(256)	  3947(47)	     0(0)	    30(0)	   22(14)	
+ +control:frame_render_control             	  739(270)	     0(0)	     31(0)	 1518(328)	     0(0)	     0(0)	     0(0)	
+  +pool:frame_pool(BANK_ID_WIDTH=2)        	  469(469)	     0(0)	    31(31)	1190(1190)	     0(0)	     0(0)	     0(0)	
+ +scaler:roi_axi_scaler                    	   1009(0)	     0(0)	    535(0)	   1755(0)	     0(0)	    23(0)	     4(0)	
+  +scaler:roi_scaler                       	  493(493)	     0(0)	  389(389)	 1027(945)	     0(0)	    16(0)	     4(4)	
+   +bank0:roi_line_ram_2r2w(ADDR_WIDTH=12) 	      0(0)	     0(0)	      0(0)	    56(56)	     0(0)	     8(8)	     0(0)	
+   +bank1:roi_line_ram_2r2w(ADDR_WIDTH=12) 	      0(0)	     0(0)	      0(0)	    26(26)	     0(0)	     8(8)	     0(0)	
+  +reader:axi_line_reader                  	  516(516)	     0(0)	  146(146)	  728(728)	     0(0)	     7(7)	     0(0)	
+ +writer:axi_frame_writer                  	  535(535)	     0(0)	  287(287)	  627(627)	     0(0)	     7(7)	     4(4)	

@@ -1,0 +1,16 @@
+CASE frame_writer width=16 height=3 stride=64 bursts=4 wbeats=6 cycles=36 error=0
+CASE frame_writer width=32 height=4 stride=128 bursts=4 wbeats=16 cycles=76 error=0
+CASE frame_writer width=64 height=3 stride=256 bursts=4 wbeats=24 cycles=114 error=0
+CASE frame_writer width=96 height=2 stride=256 bursts=3 wbeats=24 cycles=120 error=0
+CASE frame_writer width=192 height=2 stride=512 bursts=5 wbeats=48 cycles=209 error=0
+CASE frame_writer width=256 height=3 stride=768 bursts=7 wbeats=96 cycles=605 error=0
+CASE frame_writer width=32 height=3 stride=128 bursts=3 wbeats=12 cycles=60 error=1
+CASE frame_writer width=64 height=3 stride=256 bursts=4 wbeats=24 cycles=113 error=1
+CASE frame_writer invalid width=20 height=2 stride=64 base=00009000
+CASE frame_writer invalid width=16 height=2 stride=32 base=00009008
+CASE frame_writer invalid width=32 height=2 stride=48 base=00009000
+CASE frame_writer invalid width=0 height=2 stride=16 base=00009000
+CASE frame_writer invalid width=16 height=2 stride=16 base=fffffff0
+CASE frame_writer width=1920 height=1080 stride=4096 bursts=16200 wbeats=259200 cycles=1036821 error=0
+PASS tb_axi_frame_writer
+F:\Project\fpga\vision_base\sim\tb_axi_frame_writer.sv:599: $finish called at 10381910000 (1ps)

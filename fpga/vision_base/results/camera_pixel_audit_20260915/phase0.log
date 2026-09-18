@@ -1,0 +1,9 @@
+BAD y=4 x=8 rgb=b464282864b4
+BAD y=4 x=9 rgb=b464282864b4
+BAD y=4 x=10 rgb=b464282864b4
+BAD y=4 x=11 rgb=b464282864b4
+BAD y=4 x=12 rgb=b464282864b4
+BAD y=4 x=13 rgb=b464282864b4
+BAD y=4 x=14 rgb=b464282864b4
+RESULT pairs=512 checked=260 errors=104
+results/camera_pixel_audit_20260915/tb_phase0.sv:21: $finish called at 6431000 (1ps)

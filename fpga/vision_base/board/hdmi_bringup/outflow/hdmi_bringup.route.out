@@ -1,0 +1,94 @@
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Router Setup
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : [Setup Parallel Routing Scheduler]
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Route Circuit with 8 threads
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Overridding delay budgets for 0 synchronizer-related pins
+INFO     : Iter  1: overlap=609     heapops=71678      (0%) cpd=2409  frr=1.00  msec=34
+INFO     : [Setup Delay Budgets | 10.2 ms]
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Hold Fixing
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Total min wire delay:    119920
+INFO     : Hold fix wire delay:          0
+INFO     : Hold fix delay ratio:     0.00%
+INFO     : Pins requiring hold fix:  0.00%
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Iter  2: overlap=229     heapops=48710      (41%) cpd=2723  frr=1.13  msec=19
+INFO     : [Rebuild Parallel Routing Scheduler]
+INFO     : Iter  3: overlap=135     heapops=30487      (58%) cpd=2643  frr=1.10  msec=18
+INFO     : Iter  4: overlap=84      heapops=22995      (65%) cpd=2550  frr=1.06  msec=16
+INFO     : Iter  5: overlap=47      heapops=18426      (68%) cpd=3028  frr=1.26  msec=15
+INFO     : Iter  6: overlap=15      heapops=10185      (73%) cpd=3028  frr=1.26  msec=13
+INFO     : Iter  7: overlap=5       heapops=4768       (77%) cpd=3028  frr=1.26  msec=11
+INFO     : Iter  8: overlap=1       heapops=2961       (78%) cpd=3028  frr=1.26  msec=10
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Iter  9: overlap=0       heapops=2122       (78%) cpd=3028  frr=1.26  msec=10
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Routing Result
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Routing Succeeded in 0.38 seconds taking 9 iterations! 
+INFO     : 
+INFO     : First iteration critical path delay = 2.409 ns 
+INFO     : Last iteration critical path delay  = 3.028 ns (ratio = 1.26)
+INFO     : Max Routing Heap Size = 381
+INFO     : Routing trace written to file 'outflow\hdmi_bringup.troutingtraces' 
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Routing took 4.3880639 seconds [FlowMsg::StageDuration]
+INFO     :     Routing took 5.28125 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Routing virtual memory usage: begin = 99.976 MB, end = 208.336 MB, delta = 108.36 MB [FlowMsg::VMUsage]
+INFO     :     Routing peak virtual memory usage = 332.464 MB [FlowMsg::VMUsage::Peak]
+INFO     : Routing resident set memory usage: begin = 121.268 MB, end = 222.548 MB, delta = 101.28 MB [FlowMsg::RSSUsage]
+INFO     :     Routing peak resident set memory usage = 333.568 MB [FlowMsg::RSSUsage::Peak]
+           ***** Beginning stage final timing analysis ... *****
+INFO     : SDC file 'hdmi_bringup.sdc' parsed successfully.
+Maximum possible analyzed clocks frequency
+   Clock Name    Period (ns)  Frequency (MHz)     Edge
+CLK_25M             1.072        932.836         (R-R)
+CLK_27M             1.282        780.031         (R-R)
+hdmi_tx_slow_clk    3.154        317.058         (R-R)
+jtag_drck           1.002        998.004         (R-R)
+
+Geomean max period: 1.444
+
+Setup (Max) Clock Relationship
+  Launch Clock    Capture Clock   Constraint (ns)     Slack (ns)          Edge
+CLK_25M          CLK_25M               40.000           38.928           (R-R)
+CLK_27M          CLK_27M               37.037           35.755           (R-R)
+hdmi_tx_slow_clk hdmi_tx_slow_clk       6.723            3.569           (R-R)
+jtag_drck        jtag_drck            166.667          165.665           (R-R)
+
+Hold (Min) Clock Relationship
+  Launch Clock    Capture Clock   Constraint (ns)     Slack (ns)          Edge
+CLK_25M          CLK_25M               0.000            0.095            (R-R)
+CLK_27M          CLK_27M               0.000            0.109            (R-R)
+hdmi_tx_slow_clk hdmi_tx_slow_clk      0.000            0.095            (R-R)
+jtag_drck        jtag_drck             0.000            0.097            (R-R)
+
+INFO     : Write Timing Report to "outflow\hdmi_bringup.timing.rpt" ...
+INFO     : final timing analysis took 2.8417504 seconds [FlowMsg::StageDuration]
+INFO     :     final timing analysis took 2.78125 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : final timing analysis virtual memory usage: begin = 207.328 MB, end = 208.256 MB, delta = 0.928 MB [FlowMsg::VMUsage]
+INFO     :     final timing analysis peak virtual memory usage = 332.464 MB [FlowMsg::VMUsage::Peak]
+INFO     : final timing analysis resident set memory usage: begin = 221.828 MB, end = 222.7 MB, delta = 0.872 MB [FlowMsg::RSSUsage]
+INFO     :     final timing analysis peak resident set memory usage = 333.568 MB [FlowMsg::RSSUsage::Peak]
+           ***** Ending stage final timing analysis *****
+           
+           ***** Beginning stage bitstream generation ... *****
+INFO     : Reading core interface constraints file "outflow\hdmi_bringup.interface.csv" [DBMsg::CoreInterfaceConstraintsFileReading]
+INFO     : Successfully read core interface constraints file "outflow\hdmi_bringup.interface.csv" [DBMsg::CoreInterfaceConstraintsFileLoadSuccess]
+INFO     : Finished writing bitstream file work_pnr\hdmi_bringup.lbf.
+INFO     : Bitstream generation took 0.9367154 seconds [FlowMsg::StageDuration]
+INFO     :     Bitstream generation took 0.890625 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Bitstream generation virtual memory usage: begin = 203.896 MB, end = 282.496 MB, delta = 78.6 MB [FlowMsg::VMUsage]
+INFO     :     Bitstream generation peak virtual memory usage = 332.464 MB [FlowMsg::VMUsage::Peak]
+INFO     : Bitstream generation resident set memory usage: begin = 220.672 MB, end = 300.568 MB, delta = 79.896 MB [FlowMsg::RSSUsage]
+INFO     :     Bitstream generation peak resident set memory usage = 333.568 MB [FlowMsg::RSSUsage::Peak]
+INFO     : The entire flow of EFX_PNR took 16.9062502 seconds [FlowMsg::StageDuration]
+INFO     :     The entire flow of EFX_PNR took 18.109375 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : The entire flow of EFX_PNR virtual memory usage: begin = 20.296 MB, end = 282.496 MB, delta = 262.2 MB [FlowMsg::VMUsage]
+INFO     :     The entire flow of EFX_PNR peak virtual memory usage = 332.464 MB [FlowMsg::VMUsage::Peak]
+INFO     : The entire flow of EFX_PNR resident set memory usage: begin = 23.128 MB, end = 300.608 MB, delta = 277.48 MB [FlowMsg::RSSUsage]
+INFO     :     The entire flow of EFX_PNR peak resident set memory usage = 333.568 MB [FlowMsg::RSSUsage::Peak]

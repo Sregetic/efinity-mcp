@@ -1,0 +1,105 @@
+CellSiteInst {
+  cell: "CLK_25M"
+  block_and_site_inst: "PKG_PIN/PKG_PIN_INOUT"
+  block_inst: "GPIOL_P_08_CLK1_P"
+}
+CellSiteInst {
+  cell: "CLK_27M"
+  block_and_site_inst: "PKG_PIN/PKG_PIN_INOUT"
+  block_inst: "GPIOL_P_10_CLK3_P"
+}
+CellSiteInst {
+  cell: "led0"
+  block_and_site_inst: "PKG_PIN/PKG_PIN_INOUT"
+  block_inst: "GPIOR_21"
+}
+CellSiteInst {
+  cell: "led1"
+  block_and_site_inst: "PKG_PIN/PKG_PIN_INOUT"
+  block_inst: "GPIOR_22"
+}
+CellSiteInst {
+  cell: "tmds_clk_TXN"
+  block_and_site_inst: "PKG_PIN/PKG_PIN_INOUT"
+  block_inst: "GPIOR_N_10_CLK9_N"
+}
+CellSiteInst {
+  cell: "tmds_clk_TXP"
+  block_and_site_inst: "PKG_PIN/PKG_PIN_INOUT"
+  block_inst: "GPIOR_P_10_CLK9_P"
+}
+CellSiteInst {
+  cell: "tmds_data0_TXN"
+  block_and_site_inst: "PKG_PIN/PKG_PIN_INOUT"
+  block_inst: "GPIOR_N_13"
+}
+CellSiteInst {
+  cell: "tmds_data0_TXP"
+  block_and_site_inst: "PKG_PIN/PKG_PIN_INOUT"
+  block_inst: "GPIOR_P_13"
+}
+CellSiteInst {
+  cell: "tmds_data1_TXN"
+  block_and_site_inst: "PKG_PIN/PKG_PIN_INOUT"
+  block_inst: "GPIOR_N_11_CLK8_N"
+}
+CellSiteInst {
+  cell: "tmds_data1_TXP"
+  block_and_site_inst: "PKG_PIN/PKG_PIN_INOUT"
+  block_inst: "GPIOR_P_11_CLK8_P"
+}
+CellSiteInst {
+  cell: "tmds_data2_TXN"
+  block_and_site_inst: "PKG_PIN/PKG_PIN_INOUT"
+  block_inst: "GPIOR_N_12"
+}
+CellSiteInst {
+  cell: "tmds_data2_TXP"
+  block_and_site_inst: "PKG_PIN/PKG_PIN_INOUT"
+  block_inst: "GPIOR_P_12"
+}
+CellSiteInst {
+  cell: "CLK_25M~GPIO"
+  block_and_site_inst: "HSIO/HSIO_SLOT0"
+  block_inst: "GPIOL_PN_08"
+}
+CellSiteInst {
+  cell: "CLK_27M~GPIO"
+  block_and_site_inst: "HSIO/HSIO_SLOT0"
+  block_inst: "GPIOL_PN_10"
+}
+CellSiteInst {
+  cell: "led0~GPIO"
+  block_and_site_inst: "HVIO/HVIO_SLOT0"
+  block_inst: "GPIOR_21"
+}
+CellSiteInst {
+  cell: "led1~GPIO"
+  block_and_site_inst: "HVIO/HVIO_SLOT0"
+  block_inst: "GPIOR_22"
+}
+CellSiteInst {
+  cell: "pll_hdmi~PLL"
+  block_and_site_inst: "PLL/PLL_SLOT0"
+  block_inst: "PLL_BR0"
+}
+CellSiteInst {
+  cell: "tmds_clk~LVDS"
+  block_and_site_inst: "HSIO/HSIO_SLOT0"
+  block_inst: "GPIOR_PN_10"
+}
+CellSiteInst {
+  cell: "tmds_data0~LVDS"
+  block_and_site_inst: "HSIO/HSIO_SLOT0"
+  block_inst: "GPIOR_PN_13"
+}
+CellSiteInst {
+  cell: "tmds_data1~LVDS"
+  block_and_site_inst: "HSIO/HSIO_SLOT0"
+  block_inst: "GPIOR_PN_11"
+}
+CellSiteInst {
+  cell: "tmds_data2~LVDS"
+  block_and_site_inst: "HSIO/HSIO_SLOT0"
+  block_inst: "GPIOR_PN_12"
+}

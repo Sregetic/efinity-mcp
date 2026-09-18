@@ -1,0 +1,64 @@
+{
+  "scope": "RTL simulation, not physical display acceptance",
+  "generated_utc": "2026-09-15T19:40:26.2609818Z",
+  "source_sha256": {
+    "vision_canny.sv": "8712FB3272EFB0877F617EE48E9B5FAC1C5A6A133FD2FEA3576403F91E5F6811",
+    "vision_controls.sv": "367916E9CDBF28C4776EE6D2B27F5A4396EC716A9F66E20A44CD2B763A25F887",
+    "vision_display.sv": "B28AD36F636B4AA6121EA70FC3C5B933A75E184FE3C0D05D9BB3F03340CC36CB",
+    "vision_frame_history.sv": "D28B38C17DEF132CB1E90A15498816616DEF8A1812B7E53D76A204170D316F7D",
+    "vision_frontend.sv": "02AF8C8E3DAF951FD416A5E320175AE61C111A361E49BB4FFEECB5317272898A",
+    "vision_hysteresis.sv": "EAE013A7685126109B4B9DBB625CAE0F1CA1FDDEECAA736349D26960C992A5AD",
+    "vision_median9.sv": "AAAD3136070BB560BA6157D5C2DDF293A8B2E16B52B2DFEC52BC08E40223A32E",
+    "vision_osd.sv": "BEC789B6CE699EADB50B39C214557B2EFD166EDDC44CC648970D0CBA01C35A31",
+    "vision_sobel.sv": "82283E72E92242B9E5F0D8F462AD2D35C6F5825FE0C14CBB0A06BD1DE36A5986",
+    "vision_sparse_window.sv": "0684EC2603AD527E6D73EE9BFBD2BA795F0B549E8338BDE4AEF7C4C720975268",
+    "vision_window3.sv": "80E90D1F363BA74C120ACC27DE311DAF2403AE6DB3EFB4E6232023AF4B624002",
+    "vision_write_commit.sv": "879E47FF41F3CF10B42477D9FBC0EB3F1FD217687B93B06A79C326B7F6F7FED9"
+  },
+  "full": true,
+  "tests": [
+    {
+      "compile_exit": 0,
+      "run_exit": 0,
+      "test": "frontend",
+      "passed": true
+    },
+    {
+      "compile_exit": 0,
+      "run_exit": 0,
+      "test": "median9",
+      "passed": true
+    },
+    {
+      "compile_exit": 0,
+      "run_exit": 0,
+      "test": "controls",
+      "passed": true
+    },
+    {
+      "compile_exit": 0,
+      "run_exit": 0,
+      "test": "hysteresis",
+      "passed": true
+    },
+    {
+      "compile_exit": 0,
+      "run_exit": 0,
+      "test": "history",
+      "passed": true
+    },
+    {
+      "compile_exit": 0,
+      "run_exit": 0,
+      "test": "commit",
+      "passed": true
+    },
+    {
+      "compile_exit": 0,
+      "run_exit": 0,
+      "test": "canny",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

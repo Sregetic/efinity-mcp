@@ -1,0 +1,4 @@
+WARNING: board/ti60f225_v4/rtl/true_dual_port_ram.v:52: $readmemh: The behaviour for reg[...] mem[N:0]; $readmemh("...", mem); changed in the 1364-2005 standard. To avoid ambiguity, use mem[0:N] or explicit range parameters $readmemh("...", mem, start, stop);. Defaulting to 1364-2005 behavior.
+WARNING: board/ti60f225_v4/rtl/true_dual_port_ram.v:52: $readmemh(./rtl/lcd/Panel_1080p_reg.mem): Not enough words in the file for the requested range [0:511].
+LCD RESET PASS held83.9ms, monotonic release, delayed backlight (DSI IP not simulated)
+sim/vision/tb_lcd_reset.sv:11: $finish called at 35000 (1ps)

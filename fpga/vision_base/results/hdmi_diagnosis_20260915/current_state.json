@@ -1,0 +1,31 @@
+{
+  "checked_utc": "2026-09-15T02:05:53.935287+00:00",
+  "goal_complete": false,
+  "black_screen_resolved": false,
+  "current_program": "main 1080p pure DVI diagnostic, all TX VOD large",
+  "programming": "JTAG SRAM 1 MHz; capture_device_audit/tx_restore_program.log",
+  "bit_path": "F:\\Project\\fpga\\vision_base\\artifacts\\pattern\\ti60f225_oob.bit",
+  "bit_sha256": "5148894c6920230c1c7e912e3b529e856ea544be17aed0500d23ea54b32b91f5",
+  "wns_ns": 0.505,
+  "whs_ns": 0.026,
+  "unassigned_core_pins": 0,
+  "telemetry": "main_pure_dvi_20260915/snapshot.json (prior equivalent build; not refreshed after final restore)",
+  "capture": "capture_device_audit/restored_capture.png",
+  "capture_uniform_rgb": [
+    7,
+    7,
+    7
+  ],
+  "hdmi_sink_lock_confirmed": false,
+  "minimal_restored_build": {
+    "wns_ns": 3.569,
+    "whs_ns": 0.095,
+    "programmed": false
+  },
+  "next_discriminating_test": "Use reversible receiver register observations to distinguish signal activity from decode/mute status; no capture firmware patches",
+  "active_pixels_per_frame": 2073600,
+  "encoder_activity_flags": "ff",
+  "capture_chip_manufacturer": "MACROSILICON",
+  "capture_chip_id": "0xd7",
+  "receiver_register_read_access": true
+}

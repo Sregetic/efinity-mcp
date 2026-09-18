@@ -1,0 +1,18 @@
+<efx:project xmlns:efx="http://www.efinixinc.com/enf_proj" name="roi_axi_scaler" description="Synthesis-only portable core; no board pins or bitstream" sw_version="2026.1.132.3.9">
+  <efx:device_info>
+    <efx:family name="Titanium" />
+    <efx:device name="Ti60F225" />
+    <efx:timing_model name="I3" />
+  </efx:device_info>
+  <efx:design_info def_veri_version="sv_09" def_vhdl_version="vhdl_2008" unified_flow="false">
+    <efx:top_module name="roi_axi_scaler" />
+    <efx:design_file name="../rtl/roi_scaler.sv" version="default" library="default" />
+    <efx:design_file name="../rtl/axi_line_reader.sv" version="default" library="default" />
+    <efx:design_file name="../rtl/roi_axi_scaler.sv" version="default" library="default" />
+  </efx:design_info>
+  <efx:constraint_info><efx:sdc_file name="core.sdc" /></efx:constraint_info>
+  <efx:synthesis tool_name="efx_map">
+    <efx:param name="work_dir" value="../build/efinity_scaler" value_type="e_string" />
+    <efx:param name="mode" value="speed" value_type="e_option" />
+  </efx:synthesis>
+</efx:project>

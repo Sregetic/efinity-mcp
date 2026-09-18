@@ -1,0 +1,2 @@
+PASS tb_board_bank_switch concurrent_events=handled frame_span=2074112
+F:\Project\fpga\vision_base\sim\tb_board_bank_switch.sv:43: $finish called at 146000 (1ps)

@@ -1,0 +1,2 @@
+CANNY pixels32400 edges1064 errors0
+sim/vision/tb_canny.sv:20: $finish called at 21612936000 (1ps)

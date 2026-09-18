@@ -1,0 +1,2 @@
+Running: efx_run_map.py frame_render_engine --family Titanium --device Ti60F225 --project_xml F:\Project\fpga\vision_base\efinity\frame_render_engine.xml --output_dir outflow --work_dir ../build/efinity_engine --timeout 600 --opt root=frame_render_engine --opt veri_options=verilog_mode=sv_09,vhdl_mode=vhdl_2008 work-dir=../build/efinity_engine
+   map :	PASS 

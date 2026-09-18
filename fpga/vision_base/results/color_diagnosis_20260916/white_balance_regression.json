@@ -1,0 +1,17 @@
+[
+  {
+    "color": "red",
+    "passed": true,
+    "interior_pairs": 260
+  },
+  {
+    "color": "green",
+    "passed": true,
+    "interior_pairs": 260
+  },
+  {
+    "color": "blue",
+    "passed": true,
+    "interior_pairs": 260
+  }
+]

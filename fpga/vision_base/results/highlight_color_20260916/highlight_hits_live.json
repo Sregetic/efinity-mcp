@@ -1,0 +1,53 @@
+[
+  {
+    "magic": "56495331",
+    "build": "260916ad",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "56495331260916ad78100407000000000000000000000000",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789535648.1385915,
+    "highlight_pixels": 0
+  },
+  {
+    "magic": "56495331",
+    "build": "260916ad",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "56495331260916ad78100407000000000000000000000000",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789535648.3407717,
+    "highlight_pixels": 0
+  },
+  {
+    "magic": "56495331",
+    "build": "260916ad",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "56495331260916ad78100407000000000000000000000000",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789535648.55645,
+    "highlight_pixels": 0
+  }
+]

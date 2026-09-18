@@ -1,0 +1,351 @@
+{
+  "date": "2026-09-08",
+  "scope": "Static review; no project compilation or board validation",
+  "records": [
+    {
+      "project": "Ti60f225_sc431hai2hdmi_v6",
+      "archive": "F:\\Project\\fpga\\参考资料\\Ti60F225_DemoBoard_v4完整资料包..zip",
+      "project_version": "2026.1.132.1.2",
+      "source_count": 60,
+      "missing_declared_sources": [],
+      "active_sources": [
+        "rtl/ti60f225_oob_top.v",
+        "rtl/user_dual_port_ram.v",
+        "rtl/dual_clock_fifo.v",
+        "rtl/true_dual_port_ram.v",
+        "rtl/reset.v",
+        "rtl/simple_dual_port_ram.v",
+        "rtl/ddr3_controller/ddr3_top.v",
+        "rtl/ddr3_controller/axi4_bus_ctl/axi4_bus_ctl.v",
+        "rtl/ddr3_controller/local_bus_ctl/local_bus_ctl.v",
+        "rtl/ddr3_controller/memory_bus_ctl/memory_bus_ctl.v",
+        "rtl/ddr3_controller/phy_ctl/ddr_phy_wrlvl.v",
+        "rtl/ddr3_controller/phy_ctl/ddr_phy_rdlvl_dqs.v",
+        "rtl/ddr3_controller/phy_ctl/ddr_phy_wrcal.v",
+        "rtl/ddr3_controller/phy_ctl/ddr_calibration_ini.v",
+        "rtl/ddr3_controller/phy_ctl/ddr_phy_if.v",
+        "rtl/ddr3_controller/phy_ctl/phy_ctl.v",
+        "rtl/ddr3_controller/phy_ctl/ddr_mpr_rdlvl.v",
+        "rtl/ddr3_controller/ddr3_parameter.vh",
+        "rtl/ddr3_controller/lb2_axi_clk.v",
+        "rtl/ddr3_controller/common/efx_fifo_v2.3/efx_fifo_wrapper.v",
+        "rtl/debayer/line_buffer.v",
+        "rtl/debayer/debayer_top_2to1.v",
+        "rtl/debayer/raw_to_rgb.v",
+        "rtl/mipi_config/panel_config.v",
+        "rtl/cam_i2c_ctrl/i2c_master/i2c_master_byte_ctrl.v",
+        "rtl/cam_i2c_ctrl/i2c_master/i2c_master_top.v",
+        "rtl/cam_i2c_ctrl/i2c_master/i2c_master_bit_ctrl.v",
+        "rtl/cam_i2c_ctrl/i2c_master/oc_i2c_master.v",
+        "rtl/cam_i2c_ctrl/i2c/i2c_16addr_8data.v",
+        "rtl/cam_i2c_ctrl/i2c/i2c_master_reg_rom.v",
+        "rtl/cam_i2c_ctrl/i2c/i2c_master_reg_set.v",
+        "rtl/cam_i2c_ctrl/i2c/i2c_master_ctrl_top.v",
+        "rtl/dvi_tx/ecc_calc_v1.v",
+        "rtl/dvi_tx/audio_clock_regeneration_packet.sv",
+        "rtl/dvi_tx/audio_packet.sv",
+        "rtl/dvi_tx/auxiliary_video_information_info_frame.sv",
+        "rtl/dvi_tx/audio_infoframe_packet.sv",
+        "rtl/dvi_tx/efx_fifo.v",
+        "rtl/dvi_tx/Sc_Fifo_Slr8.v",
+        "rtl/dvi_tx/packet_assembler.sv",
+        "rtl/dvi_tx/encode.v_encrypted.v",
+        "rtl/dvi_tx/tx_aux.v_encrypted.v",
+        "rtl/dvi_tx/dvi_encoder.v_encrypted.v",
+        "rtl/gamma_conrrection/gamma_correction.v",
+        "debug_top.v",
+        "rtl/debayer/rgb_gain_v1.v",
+        "rtl/csi_rx_controller.sv",
+        "rtl/frame_buffer_V3/ddr_wr_buffer.v",
+        "rtl/frame_buffer_V3/bank_switch.v",
+        "rtl/frame_buffer_V3/vid_par2ser.v",
+        "rtl/frame_buffer_V3/vid_rx_align_v1.v",
+        "rtl/frame_buffer_V3/ddr_buffer.v",
+        "rtl/frame_buffer_V3/frame_info_det.v",
+        "rtl/frame_buffer_V3/par2ser_parse.v",
+        "rtl/frame_buffer_V3/frame_buffer.v",
+        "rtl/frame_buffer_V3/data_tx.v",
+        "rtl/frame_buffer_V3/ddr_rd_buffer.v",
+        "rtl/frame_buffer_V3/ser2par_v1.v",
+        "rtl/frame_buffer_V3/DC_FIFO.v",
+        "rtl/frame_buffer_V3/rst_n_piple.v"
+      ],
+      "files": [
+        {
+          "path_in_project": "rtl/ti60f225_oob_top.v",
+          "sha256": "33fdb4da60060bc65417399e9fae45d1b28d0dc803e390dbc36c62e315b86bb9",
+          "excerpts": [
+            {
+              "first_line": 255,
+              "last_line": 263,
+              "text": "255: localparam MAX_HRES = 1920;\n256: localparam HFP      = 88;\n257: localparam HSP      = 44;\n258: localparam HBP      = 148;\n259: \n260: localparam MAX_VRES = 1080;\n261: localparam VFP      = 4;\n262: localparam VSP      = 5;\n263: localparam VBP      = 36;"
+            },
+            {
+              "first_line": 537,
+              "last_line": 574,
+              "text": "537:   frame_buffer #(\n538: .I_VID_WIDTH         (32),\n539: .O_VID_WIDTH         (16),\n540: .START_ADDR          (32'h00000        ),\n541: .AXI_DATA_WIDTH      ( AXI_DATA_WIDTH\t),\n542: .AXI_ADDR_WIDTH      ( AXI_ADDR_WIDTH\t),\n543: .WR_FIFO_DEPTH\t      ( 1024\t\t),    \n544: .RD_FIFO_DEPTH \t      ( 1024 \t),\n545: .BURST_LEN  \t       (127),\n546: .FB_NUM\t            (3),\n547: .MAX_VID_WIDTH\t    (960) ,\n548: .MAX_VID_HIGHT\t    (1080) \n549: \n550: \n551: )checker0(\n552:        .axi_clk\t\t(core_clk \t        ),\n553:        .rst_n\t\t\t(vid_rst_n   ),\n554: \n555: /*i*/.i_clk\t\t\t(i_mipi_rx_pclk      ),\n556: /*i*/.i_vs\t\t\t(w_mipi_rx_vs\t),\n557: /*i*/.i_de\t\t\t(w_mipi_rx_de & w_mipi_rx_hs\t),\n558: /*i*/.vin \t\t\t({w_mipi_rx_data[39:32],w_mipi_rx_data[29:22],w_mipi_rx_data[19:12],w_mipi_rx_data[9:2]}\t),\n559:                      \n560: /*i*/.o_clk\t\t\t(vid_clk_dvi2),//(i_mipi_rx_pclk\t),\n561: /*i*/.o_hs    \t\t(ch0_hs\t\t),\t\t\t\n562: /*i*/.o_vs    \t\t(ch0_vs\t\t),\t\t\t\n563: /*i*/.o_de    \t\t(ch0_de\t\t),\t\t\t\n564: /*i*/.vout    \t\t({ch0_g,ch0_b}\t),//ch0_r,\n565: \n566: /*i*/.H_FRONT_PORCH (HFP/2  \t\t),//\n567: /*i*/.H_SYNC \t \t    (HSP/2\t \t),///2\n568: /*i*/.H_VALID \t \t  (MAX_HRES/2     ),//\t\t\n569: /*i*/.H_BACK_PORCH\t(HBP/2\t\t),//\t\t\n570: /*i*/.V_FRONT_PORCH (VFP  \t\t),//\t\t\n571: /*i*/.V_SYNC \t \t    (VSP \t \t),//\t\t\n572: /*i*/.V_VALID \t \t  (MAX_VRES     ),//\t\t\n573: /*i*/.V_BACK_PORCH\t(VBP\t\t),//\t\t\n574: "
+            },
+            {
+              "first_line": 733,
+              "last_line": 750,
+              "text": "733: debayer_top_2to1 debayer_top\n734: (\n735: \t.in_pclk\t\t  (vid_clk_dvi2),//(i_mipi_rx_pclk ),\n736: \t.in_rstn\t\t  (vid_rst_n\t),\n737: \t\n738: \t.raw_vs_i\t\t  (ch0_vs\t\t      ),\n739: \t.raw_hs_i\t\t  (ch0_hs\t\t      ),\n740: \t.raw_de_i\t\t  (ch0_de\t\t      ),\n741: \t.raw_valid_i\t(ch0_de\t        ),\n742: \t.raw_datax4_i\t({ch0_b,ch0_g}\t),\n743: \t.r_gain       (|r_gain? r_gain:255 ),\n744:   .g_gain       (|g_gain? g_gain:255 ),\n745:   .b_gain       (|b_gain? b_gain:255 ),\n746: \t.rgb_vs_o\t\t  (rgb_vs         ),\n747: \t.rgb_hs_o\t\t  (rgb_hs         ),\n748: \t.rgb_de_o\t\t  (rgb_de         ),\n749: \t.rgb_valid_o\t(rgb_valid      ),\n750: \t.rgb_datax2_o (rgb_datax2     )//b,g,r,b,g,r"
+            }
+          ]
+        },
+        {
+          "path_in_project": "rtl/debayer/debayer_top_2to1.v",
+          "sha256": "f6240a41141046ce9888cff98a5e59fb18ce81b7e7de46dc2db70c8f144b6dd9",
+          "excerpts": [
+            {
+              "first_line": 71,
+              "last_line": 85,
+              "text": "71: \t\tline_buffer\n72: \t\t#(\n73: \t\t\t.P_DEPTH\t(8),\n74: \t\t\t.X_CNT_WIDTH(10)\n75: \t\t)\n76: \t\tinst_line_buffer_debayer\n77: \t\t(\n78: \t\t\t.i_arstn\t(in_rstn\t),\n79: \t\t\t.i_pclk\t\t(in_pclk\t),\n80: \t\t\t\n81: \t\t\t.i_vsync\t(w_gain_vs),\t//(raw_vs_i\t\t),//\t\t\t\t\t\n82: \t\t\t.i_hsync\t(w_gain_hs),\t//(raw_hs_i\t\t),//\n83: \t\t\t.i_de\t\t(w_gain_de),\t//(raw_de_i\t\t),//\n84: \t\t\t.i_valid\t(w_gain_de),\t//(raw_valid_i\t),//\n85: \t\t\t.i_p\t\t(w_gain_data),\t//(raw_datax4_i\t),//"
+            }
+          ]
+        },
+        {
+          "path_in_project": "ti60f225_oob.sdc",
+          "sha256": "7dea948873e6bbaa2fda92e4e26c67f5cf0fd435a26d3b53bfaa46659b3325ff",
+          "excerpts": [
+            {
+              "first_line": 1,
+              "last_line": 27,
+              "text": "1: # PLL Constraints\n2: #################\n3: # PLL Constraints\n4: #################\n5: \n6: create_clock -period 2.500 -name tx_cal_clk_90edge [get_ports {tx_cal_clk_90edge}]\n7: create_clock -period 2.500 -name sdram_clk [get_ports {sdram_clk}]\n8: create_clock -period 2.500 -name rx_cal_clk [get_ports {rx_cal_clk}]\n9: create_clock -period 2.500 -name tx_cal_clk [get_ports {tx_cal_clk}]\n10: create_clock -period 10.000 -name clk_100m [get_ports {clk_100m}]\n11: create_clock -period 13.468 -name vid_clk_dvi2 [get_ports {vid_clk_dvi2}]\n12: create_clock -period 6.734 -name hdmi_tx_slow_clk [get_ports {hdmi_tx_slow_clk}]\n13: create_clock -period 18.519 -name fb [get_ports {fb}]\n14: create_clock -waveform {0.337 1.010} -period 1.347 -name hdmi_tx_fast_clk [get_ports {hdmi_tx_fast_clk}]\n15: create_clock -period 10.000 -name core_clk [get_ports {core_clk}]\n16: create_clock -waveform {1.000 2.000} -period 2.000 -name i_mipi_txc_sclk [get_ports {i_mipi_txc_sclk}]\n17: create_clock -waveform {0.500 1.500} -period 2.000 -name i_mipi_txd_sclk [get_ports {i_mipi_txd_sclk}]\n18: create_clock -period 8.000 -name i_mipi_tx_pclk [get_ports {i_mipi_tx_pclk}]\n19: create_clock -period 20.000 -name i_mipi_rx_pclk [get_ports {i_mipi_rx_pclk}]\n20: create_clock -period 200.000 -name CLK_5M [get_ports {CLK_5M}]\n21: \n22: \n23: create_clock -period 10.000 -name i_cam_ck_CLKOUT [get_ports {i_cam_ck_CLKOUT}]\n24: \n25: set_clock_groups -exclusive  -group {i_mipi_rx_pclk} -group {jtag_inst1_TCK}\n26: set_clock_groups -exclusive -group {core_clk} -group {tx_cal_clk} -group {i_mipi_tx_pclk} -group {vid_clk_dvi2} -group {CLK_5M} -group {i_mipi_rx_pclk} -group {sdram_clk} -group {rx_cal_clk}\n27: set_clock_groups -exclusive -group {i_mipi_tx_pclk}    -group {i_mipi_rx_pclk}"
+            },
+            {
+              "first_line": 80,
+              "last_line": 87,
+              "text": "80: # Create separate clock groups for JTAG clocks. Remove DRCK clock from the list below if it is not defined.\n81: # set_clock_groups -asynchronous -group {jtag_inst2_autodbg_TCK__ jtag_inst2_autodbg_DRCK__}\n82: \n83: \n84: # HSIO GPIO Constraints\n85: #########################\n86: create_clock -period <USER_PERIOD> [get_ports {CLK_25M}]\n87: set_output_delay -clock sdram_clk -reference_pin [get_ports {sdram_clk~CLKOUT~218~95}] -max 0.302 [get_ports {ddr_addr[0]}]"
+            }
+          ]
+        },
+        {
+          "path_in_project": "rtl/csi_rx_controller.sv",
+          "sha256": "685d96fd52a604434a1da0bb404131cd4413bf76ed8ee738ac596b32ce373e5a",
+          "excerpts": [
+            {
+              "first_line": 1,
+              "last_line": 5,
+              "text": "1: // =============================================================================\n2: // Generated by efx_ipmgr\n3: // Version: 2025.2.288.4.15\n4: // IP Version: 5.15\n5: // ============================================================================="
+            }
+          ]
+        },
+        {
+          "path_in_project": "ip/csi_rx_controller/settings.json",
+          "sha256": "21ace23896a1d40671c9fe7c2510ab82b6a126aff0c7bc81859edd41d6607e1b",
+          "excerpts": [
+            {
+              "first_line": 1,
+              "last_line": 45,
+              "text": "1: {\n2:     \"args\": [\n3:         \"-o\",\n4:         \"csi_rx_controller\",\n5:         \"--base_path\",\n6:         \"ip\",\n7:         \"--vlnv\",\n8:         {\n9:             \"vendor\": \"efinixinc.com\",\n10:             \"library\": \"mipi\",\n11:             \"name\": \"efx_csi2_rx\",\n12:             \"version\": \"5.16\"\n13:         }\n14:     ],\n15:     \"conf\": {\n16:         \"tLPX_NS\": \"50\",\n17:         \"tINIT_NS\": \"100000\",\n18:         \"tCLK_TERM_EN_NS\": \"38\",\n19:         \"tD_TERM_EN_NS\": \"25\",\n20:         \"tHS_SETTLE_NS\": \"125\",\n21:         \"tHS_PREPARE_ZERO_NS\": \"155\",\n22:         \"NUM_DATA_LANE\": \"4\",\n23:         \"ASYNC_STAGE\": \"2\",\n24:         \"HS_BYTECLK_MHZ\": \"50\",\n25:         \"CLOCK_FREQ_MHZ\": \"100\",\n26:         \"DPHY_CLOCK_MODE\": \"\\\"Discontinuous\\\"\",\n27:         \"PIXEL_FIFO_DEPTH\": \"2048\",\n28:         \"AREGISTER\": \"8\",\n29:         \"ENABLE_USER_DESKEWCAL\": \"1'b0\",\n30:         \"Pack_40\": \"1'b1\",\n31:         \"Pack_48\": \"1'b0\",\n32:         \"Pack_56\": \"1'b0\",\n33:         \"Pack_64\": \"1'b0\",\n34:         \"FRAME_MODE\": \"\\\"GENERIC\\\"\",\n35:         \"ENABLE_VCX\": \"1'b0\",\n36:         \"MIPI_CSI2_RX_DEBUG\": \"1'b1\",\n37:         \"MIPI_CSI2_RX_PIXEL_SIDEBAND\": \"1'b0\"\n38:     },\n39:     \"output\": {\n40:         \"external_source_source\": []\n41:     },\n42:     \"ooc_synthesis\": {},\n43:     \"sw_version\": \"2026.1.132.2.19\",\n44:     \"external_path_option\": \"RELATIVE_PATH\"\n45: }"
+            }
+          ]
+        },
+        {
+          "path_in_project": "rtl/frame_buffer_V3/frame_buffer.v",
+          "sha256": "e2f0691300ebb1317315ef42e582853fe1184a8cf1a5db11044b67d077221bdc",
+          "excerpts": [
+            {
+              "first_line": 186,
+              "last_line": 217,
+              "text": "186: ddr_buffer #(\n187: .AXI_DATA_WIDTH ( AXI_DATA_WIDTH\t),\n188: .AXI_ADDR_WIDTH ( AXI_ADDR_WIDTH\t),\n189: .WR_FIFO_DEPTH\t( WR_FIFO_DEPTH\t\t),    \n190: .RD_FIFO_DEPTH \t( RD_FIFO_DEPTH \t),\n191: .START_ADDR\t\t\t( START_ADDR      ),\n192: .I_VID_WIDTH    ( I_VID_WIDTH     ),\n193: .BURST_LEN      (BURST_LEN        )\n194: )u_ddr_buffer(\n195:     .axi_clk\t\t    (axi_clk\t),\n196:     .wr_clk_rst_n (wr_clk_rst_n),\n197:     .axi_clk_rst_n(axi_clk_rst_n),\n198:     .rd_clk_rst_n (rd_clk_rst_n),\n199:     \n200: /*i*/.rd_start\t      (fifo_rd_period),\n201: /*i*/.wr_start\t      (frame_start & frame_stable),\n202:     .wr_busrt_len     (ddr_frame_len ),//ddr address scope for one frame\n203:     .rd_burst_len     (ddr_frame_len ),//ddr address scope for one frame\n204: \n205: \t   .test_cnt\t\t\t\t(test_cnt),\n206: /*i*/.wr_fifo_wrclk\t\t(i_clk\t\t\t\t\t),\n207: /*i*/.wr_fifo_rst_p   ( fifo_rst        ),\n208: /*i*/.wr_fifo_wren\t\t(wr_fifo_wren\t\t  ),\n209: /*o*/.wr_fifo_wrfull\t(wr_fifo_wrfull\t  ),\n210: /*i*/.wr_fifo_wrdata\t(wr_fifo_wrdata\t  ), \n211: \n212: /*i*/.rd_fifo_rdclk\t\t(o_clk\t\t\t\t\t  ),\n213: /*i*/.rd_fifo_rst_p   (neg_rd_period    ),\n214: /*o*/.rd_fifo_rdvalid\t(rd_fifo_rdvalid\t),\n215: /*o*/.rd_fifo_rddata\t(rd_fifo_rddata\t  ),\n216: /*o*/.rd_fifo_rdempty\t(rd_fifo_rdempty\t),\n217: /*i*/.rd_fifo_rden\t\t(rd_fifo_rden     ),"
+            }
+          ]
+        },
+        {
+          "path_in_project": "rtl/frame_buffer_V3/ddr_buffer.v",
+          "sha256": "770d5e55e0a81775a2980d5696af36eaa8738a03e80ba4f0615f135eb1bdbdc4",
+          "excerpts": [
+            {
+              "first_line": 4,
+              "last_line": 15,
+              "text": "4: module ddr_buffer #(\n5: parameter AXI_DATA_WIDTH = 512, //!AXI接口位宽\n6: parameter AXI_ADDR_WIDTH = 33,  //!AXI地址位宽\n7: parameter WR_FIFO_DEPTH\t= 1024, //!Write fifo depth   \n8: parameter RD_FIFO_DEPTH = 1024, //!read fifo depth\n9: parameter FB_NUM\t\t\t= \t3,//2 buffer ,3 buffer   \n10: parameter MAX_VID_WIDTH\t\t=\t1920 ,//video width \n11: parameter MAX_VID_HIGHT\t\t=\t1080 ,//wideo height\n12: parameter START_ADDR\t\t\t\t=\t33'h000201900,\n13: parameter BURST_LEN       = 8'd15,\n14: parameter I_VID_WIDTH = 16,\n15: parameter AXI_STRB_WIDTH = AXI_DATA_WIDTH/8//!总共的字节数量，= AXI_DATA_WIDTH/8"
+            },
+            {
+              "first_line": 118,
+              "last_line": 137,
+              "text": "118: ddr_wr_buffer # (\n119:     .AXI_DATA_WIDTH(AXI_DATA_WIDTH),\n120:     .AXI_ADDR_WIDTH(AXI_ADDR_WIDTH),\n121:     .WR_FIFO_DEPTH(WR_FIFO_DEPTH),\n122:     .BURST_LEN (BURST_LEN        )\n123:   )\n124: \n125:   u_ddr_wr_buffer (//_inst\n126:     .axi_clk(axi_clk),\n127:     .rst_n(axi_clk_rst_n),//(rst_n),\n128:     .wr_start(wr_start),\n129:     .start_addr(wr_start_addr),//(0),//\n130:     .total_burst_len(wr_busrt_len),\n131: /*i*/.bank_sw_ack\t(wr_sw_ack   \t),\n132: /*o*/.bank_sw \t\t  (wr_sw  \t\t \t),\n133:     .test_cnt(test_cnt),\n134:     .wr_fifo_rst_p(wr_fifo_rst_p),\n135:     .wr_fifo_wrclk(wr_fifo_wrclk),\n136:     .wr_fifo_wren(wr_fifo_wren),\n137:     .wr_fifo_wrfull(wr_fifo_wrfull),"
+            },
+            {
+              "first_line": 169,
+              "last_line": 190,
+              "text": "169: ddr_rd_buffer # (\n170:     .AXI_DATA_WIDTH(AXI_DATA_WIDTH),\n171:     .AXI_ADDR_WIDTH(AXI_ADDR_WIDTH),\n172:     .RD_FIFO_DEPTH(RD_FIFO_DEPTH),\n173:     .BURST_LEN (BURST_LEN        )\n174:   )\n175:   ddr_rd_buffer_inst (\n176:     .axi_clk(axi_clk),\n177:     .axi_clk_rst_n(axi_clk_rst_n),\n178:     .start(rd_start),\n179:     .start_addr(rd_start_addr),//(0),//\n180:     .burst_len(rd_burst_len),\n181:     .rd_fifo_rdclk(rd_fifo_rdclk),\n182:     .rd_fifo_rst_p (rd_fifo_rst_p),\n183:     .rd_fifo_rdvalid(rd_fifo_rdvalid),\n184:     .rd_fifo_rddata(rd_fifo_rddata),\n185:     .rd_fifo_rdempty(rd_fifo_rdempty),\n186:     .rd_fifo_rden(rd_fifo_rden),\n187: /*i*/.bank_sw_ack\t(rd_sw_ack   \t),\n188: /*o*/.bank_sw \t\t  (rd_sw  \t\t \t),\n189:     .arid(arid),\n190:     .araddr(araddr),"
+            }
+          ]
+        },
+        {
+          "path_in_project": "rtl/frame_buffer_V3/ddr_rd_buffer.v",
+          "sha256": "711d99275cb984b2aa84b47248c7d5b55b99a9ce852044cefb8ce7f5388a5ab0",
+          "excerpts": [
+            {
+              "first_line": 183,
+              "last_line": 193,
+              "text": "183: //====================================================================================\n184: //address process\n185: always @(posedge axi_clk or negedge axi_clk_rst_n) \n186: begin\n187: \tif (!axi_clk_rst_n) \t\t\t\t\t\t\t\t\tddr_addr <= start_addr_r;\n188: \telse if( sync_r2 )\t\t\t\t\t\t                ddr_addr <= start_addr_r;\n189: \telse if (rd_addr_en) \t\t\t\t\t\t            ddr_addr <= nx_ddr_addr;\n190:     \n191: end \n192: assign nx_ddr_addr =  ddr_addr + {(ddr_arlen+1),{ADDR_SHIFT_BITS{1'b0}} };  \n193: "
+            },
+            {
+              "first_line": 222,
+              "last_line": 261,
+              "text": "222: assign arapcmd  = 1'b0;  \n223: assign arlock   = 1'b0;  \n224: assign arqos    = 1'b0; \n225: assign arid     = 6'h00;\n226: assign arsize   = AXSIZE_WTH;\n227: assign arlen\t= ddr_arlen;\n228: assign arburst  = 2'b01;\n229: assign araddr   = ddr_addr;    \n230: assign arprot       = 3'd2;\n231: assign arcache \t\t= 4'd3; \n232: // assign rready   = ~rd_fifo_wr_full & start ;\n233: \n234: \n235: assign rd_addr_en = arvalid & arready;\n236: \n237: always @(posedge axi_clk or negedge axi_clk_rst_n )\t\t\t\t\t\t\t\t\t\t\t\n238: begin\n239: \tif( !axi_clk_rst_n )\t\t\t\t\t\t\t\t\tddr_rd_valid <= 1'b0;\n240: \telse\t\t\t\t\t\t\t\t\t\t\tddr_rd_valid <= rvalid;\t\t\t\t\n241: end \t\t\t\n242: \n243: always @( posedge axi_clk )\n244: begin\n245:     ddr_rd_data <= rdata;\n246: end\n247: \n248: //==========================================================================================\n249: reg [1:0] state = 2'd0;\n250: reg rd_req = 0;\n251: reg ddr_read_stop = 'd0;\n252: always @( posedge axi_clk or negedge axi_clk_rst_n )\n253: begin\n254:     if( !axi_clk_rst_n )\n255:         ddr_read_stop <= 1'b0;\n256:     else if( sync_r2 )\n257:         ddr_read_stop <= 1'b0;\n258:     else if( rd_addr_en &&burst_last )\n259:         ddr_read_stop <= 1'b1;\n260: end\n261: assign bank_sw = ddr_read_stop;"
+            }
+          ]
+        },
+        {
+          "path_in_project": "rtl/frame_buffer_V3/ddr_wr_buffer.v",
+          "sha256": "182c396ecd29e838323cedee9aa17ed5ef33713884dde1216bd30a6a58fb7311",
+          "excerpts": [
+            {
+              "first_line": 290,
+              "last_line": 307,
+              "text": "290:     else if(burst_add_en && burst_num == total_burst_num+2)\t\tddr_awlen\t<= last_burst_cnt;\n291:     else if( burst_add_en )\t\t\t\t\t\t                ddr_awlen \t<= BURST_LEN;//cfg_alen_r;\t\n292: end\n293: \n294: \n295: always @( posedge axi_clk or negedge rst_n )\n296: begin\n297: \tif( !rst_n )\t\t\t\t\t\t\t\t\t\t            burst_last <= 1'b0;\n298: \telse if(sync_r2)\t\t\t\t\t\t                    burst_last <= 1'b0;\t//( pos_sync )\t\n299: \telse if(burst_add_en && burst_num == total_burst_num+'d2  ) burst_last <= 1'b1;\n300:     else if(burst_add_en && burst_num == total_burst_num+'d1 )  burst_last <= 1'b0;\n301: end \n302: assign bank_sw = burst_last;\n303: \n304: \n305: //======================================================================================================\n306: reg [1:0] state = 2'd0;\n307: reg wr_req = 0;"
+            }
+          ]
+        },
+        {
+          "path_in_project": "rtl/frame_buffer_V3/data_tx.v",
+          "sha256": "5dc2cf6ba15ea207b79cb31d49b51a78ee0c2c8446811e714ac8f6916e2a1ad8",
+          "excerpts": [
+            {
+              "first_line": 367,
+              "last_line": 386,
+              "text": "367: \talways @( posedge clk )\n368: \tbegin\n369: \t\t\tif( h_state == S_H_VALID && v_state == S_V_VALID ) begin\n370: \t\t\t\t\tfifo_rd_en <= 1'b1;\n371: \t\t\tend else begin\n372: \t\t\t\t\tfifo_rd_en <= 1'b0;\n373: \t\t\tend\n374: \tend\n375: \t\n376: \talways @( posedge clk )\n377: \tbegin\n378: \t\t\tvout <= de_r2 ? fifo_rd_data : 0;\n379: \tend\n380: \t\n381: \talways @( posedge clk )\n382: \tbegin\n383: \t\t\tde_r1 <= (h_state == S_H_VALID && v_state == S_V_VALID );\n384: \t\t\tde_r2 <= de_r1;\n385: \t\t\to_de  <= de_r2;\n386: \tend"
+            },
+            {
+              "first_line": 423,
+              "last_line": 432,
+              "text": "423: \talways @( posedge clk )\n424: \tbegin\n425: \t\t\tfifo_rd_period <=  ~(v_state == S_V_SYNC && v_cnt == 0) ;\n426: \tend\n427: \treg\tfifo_rd_period_d0 = 1'b0;\n428: \talways @( posedge clk )\n429: \t\t\tfifo_rd_period_d0 <= fifo_rd_period;\n430: \t\n431: \tassign neg_fifo_rd_period = fifo_rd_period_d0 & (~fifo_rd_period);   \n432: \tassign fifo_rst = neg_fifo_rd_period;"
+            }
+          ]
+        },
+        {
+          "path_in_project": "rtl/frame_buffer_V3/bank_switch.v",
+          "sha256": "47e886098c21ef3b0217f333efe5573e7628dd65e8a0f02501aca8c5b103d263",
+          "excerpts": [
+            {
+              "first_line": 31,
+              "last_line": 37,
+              "text": "31: localparam AXI_BYTE_NUMBER = AXI_DATA_WIDTH/8  ;\n32: localparam FRAME_LEN =   MAX_VID_WIDTH*MAX_VID_HIGHT*VID_DATA_WIDTH/8 + 32'h200;  \n33: \n34: localparam FRAME_1ST_START_ADDR = START_ADDR;\n35: localparam FRAME_2ND_START_ADDR = FRAME_LEN + START_ADDR ;\n36: \n37: localparam FRAME_3RD_START_ADDR = FRAME_LEN+ FRAME_2ND_START_ADDR;"
+            },
+            {
+              "first_line": 97,
+              "last_line": 159,
+              "text": "97: \tend else if( FB_NUM == 3 ) begin :three_fb\n98: \t\treg\t[1:0] \tdirt_bank = 2'b10;\n99: \t\treg\t\t\tdirt_en = 1'b1;\n100: \t\treg\t[1:0]\tclean_bank = 2'b00;\n101: \t\treg\t\t\tclean_en = 1'b0;\n102: \t\twire\t\tpos_wr_sw_en;\n103: \t\twire\t\tpos_rd_sw_en;\n104: \t\treg\t\t\twr_sw_d1 = 1'b0;\n105: \t\treg\t\t\trd_sw_d1 = 1'b0;\n106: \t\talways @( posedge ddr_clk )\n107: \t\tbegin\n108: \t\t\t\twr_sw_d1 <= wr_sw;\n109: \t\t\t\trd_sw_d1 <= rd_sw;\n110: \t\tend\n111: \t\tassign pos_wr_sw_en = {wr_sw_d1,wr_sw} == 2'b01;\n112: \t\tassign pos_rd_sw_en = {rd_sw_d1,rd_sw} == 2'b01;\n113: \t\t\n114: \t\talways @( posedge ddr_clk )\n115: \t\tbegin\n116: \t\t\twr_sw_ack <= pos_wr_sw_en;\n117: \t\t\trd_sw_ack <= pos_rd_sw_en;\n118: \t\tend\n119: \t\talways @( posedge ddr_clk or negedge rst_n)\n120: \t\tbegin\n121: \t\t\tif( !rst_n ) begin\n122: \t\t\t\twr_bank <= 2'b00;\n123: \t\t\t\trd_bank <= 2'b01;\n124: \t\t\t\tdirt_bank <= 2'b10;\n125: \t\t\t\tdirt_en <= 1'b1;\n126: \t\t\t\tclean_en <= 1'b0;\n127: \t\t\t\tclean_bank <= 2'b00;    \n128: \t\t\t\t\n129: \t\t\t\twr_start_addr <= FRAME_1ST_START_ADDR;\n130: \t\t\t\trd_start_addr <= FRAME_2ND_START_ADDR; \n131: \t\t\tend\telse if( pos_wr_sw_en ) begin\n132: \t\t\t\t\t\t\n133: \t\t\t\tif( dirt_en ) begin\n134: \t\t\t\t\t\twr_bank <= dirt_bank; \n135: \t\t\t\t\t\twr_start_addr <= (dirt_bank ==  2'b00) ? FRAME_1ST_START_ADDR :((dirt_bank == 2'b01)? FRAME_2ND_START_ADDR : FRAME_3RD_START_ADDR );\n136: \t\t\t\t\t\tclean_bank <= wr_bank;\n137: \t\t\t\t\t\tclean_en <= 1'b1;\n138: \t\t\t\t\t\tdirt_en\t<= 1'b0;\n139: \t\t\t\tend else begin\n140: \t\t\t\t\t\twr_bank <= wr_bank;\n141: \t\t\t\t\t\tclean_en <= clean_en;\n142: \t\t\t\tend\n143: \t\t\t\t\t\t\n144: \t\t\tend else if( pos_rd_sw_en ) begin\n145: \t\t\t\tif( clean_en ) begin\n146: \t\t\t\t\t\trd_bank <= clean_bank;   \n147: \t\t\t\t\t\trd_start_addr <= (clean_bank ==  2'b00) ? FRAME_1ST_START_ADDR :((clean_bank == 2'b01)? FRAME_2ND_START_ADDR : FRAME_3RD_START_ADDR );\n148: \t\t\t\t\t\tdirt_bank <= rd_bank;\n149: \t\t\t\t\t\tdirt_en <= 1'b1;\n150: \t\t\t\t\t\tclean_en <= 1'b0;\n151: \t\t\t\tend else begin\n152: \t\t\t\t\t\trd_bank <= rd_bank;\n153: \t\t\t\t\t\tdirt_en <= dirt_en;\n154: \t\t\t\tend\n155: \t\t\t\tclean_en <= 1'b0;\n156: \t\t\tend\n157: \t\tend\n158: \t\t\t\t\t\t\n159: \tend"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "project": "Ti60f225_csi2dsi_sc431hai_v3.5",
+      "archive": "F:\\Project\\fpga\\参考资料\\Ti60F225_DemoBoard_v4完整资料包..zip",
+      "project_version": "2025.2.288.4.15",
+      "source_count": 53,
+      "missing_declared_sources": [],
+      "active_sources": [
+        "rtl/ti60f225_oob_top.v",
+        "rtl/dual_clock_fifo.v",
+        "rtl/true_dual_port_ram.v",
+        "rtl/reset.v",
+        "rtl/simple_dual_port_ram.v",
+        "rtl/ddr3_controller/ddr3_top.v",
+        "rtl/ddr3_controller/axi4_bus_ctl/axi4_bus_ctl.v",
+        "rtl/ddr3_controller/local_bus_ctl/local_bus_ctl.v",
+        "rtl/ddr3_controller/memory_bus_ctl/memory_bus_ctl.v",
+        "rtl/ddr3_controller/phy_ctl/ddr_phy_wrlvl.v",
+        "rtl/ddr3_controller/phy_ctl/ddr_phy_rdlvl_dqs.v",
+        "rtl/ddr3_controller/phy_ctl/ddr_phy_wrcal.v",
+        "rtl/ddr3_controller/phy_ctl/ddr_calibration_ini.v",
+        "rtl/ddr3_controller/phy_ctl/ddr_phy_if.v",
+        "rtl/ddr3_controller/phy_ctl/phy_ctl.v",
+        "rtl/ddr3_controller/phy_ctl/ddr_mpr_rdlvl.v",
+        "rtl/ddr3_controller/ddr3_parameter.vh",
+        "rtl/ddr3_controller/lb2_axi_clk.v",
+        "rtl/ddr3_controller/common/efx_fifo_v2.3/efx_fifo_wrapper.v",
+        "rtl/frame_buffer/par2ser_128_24_v1.v",
+        "rtl/frame_buffer/vid_check.v",
+        "rtl/frame_buffer/frame_info_det.v",
+        "rtl/frame_buffer/par2ser_parse.v",
+        "rtl/frame_buffer/ser2par_16_128_v1.v",
+        "rtl/frame_buffer/vid_rx_align_v1.v",
+        "rtl/frame_buffer/ddr_wr_buffer.v",
+        "rtl/frame_buffer/data_tx.v",
+        "rtl/frame_buffer/frame_buffer.v",
+        "rtl/frame_buffer/ser2par_24_128_v1.v",
+        "rtl/frame_buffer/rst_n_piple.v",
+        "rtl/frame_buffer/ddr_rd_buffer.v",
+        "rtl/frame_buffer/ddr_buffer.v",
+        "rtl/frame_buffer/bank_switch.v",
+        "rtl/frame_buffer/par2ser_128_16_v1.v",
+        "rtl/frame_buffer/par2ser_128_32_v1.v",
+        "rtl/frame_buffer/ser2par_32_128_v1.v",
+        "rtl/debayer/rgb_gain.v",
+        "rtl/debayer/line_buffer.v",
+        "rtl/debayer/debayer_top_2to1.v",
+        "rtl/debayer/raw_to_rgb.v",
+        "rtl/mipi_config/panel_config.v",
+        "rtl/cam_i2c_ctrl/i2c_master/i2c_master_byte_ctrl.v",
+        "rtl/cam_i2c_ctrl/i2c_master/i2c_master_top.v",
+        "rtl/cam_i2c_ctrl/i2c_master/i2c_master_bit_ctrl.v",
+        "rtl/cam_i2c_ctrl/i2c_master/oc_i2c_master.v",
+        "rtl/cam_i2c_ctrl/i2c/i2c_16addr_8data.v",
+        "rtl/cam_i2c_ctrl/i2c/i2c_master_reg_rom.v",
+        "rtl/cam_i2c_ctrl/i2c/i2c_master_reg_set.v",
+        "rtl/cam_i2c_ctrl/i2c/i2c_master_ctrl_top.v",
+        "rtl/sensor_clipper.v",
+        "rtl/color_bar_v3.0/color_bar_rgb.v",
+        "rtl/dsi_tx/dsi_tx_top.v",
+        "rtl/frame_buffer/DC_FIFO.v"
+      ],
+      "files": [
+        {
+          "path_in_project": "rtl/ti60f225_oob_top.v",
+          "sha256": "86393a08622648122ccd897dbca78db7bd0b2db6e5f9688e6cd4934b37c5a788",
+          "excerpts": [
+            {
+              "first_line": 558,
+              "last_line": 598,
+              "text": "558: \n559: \n560: // IMX219\n561:   frame_buffer #(\n562: .I_VID_WIDTH         (32),\n563: .O_VID_WIDTH         (16),\n564: .START_ADDR          (32'h00000        ),\n565: .AXI_DATA_WIDTH      ( AXI_DATA_WIDTH\t),\n566: .AXI_ADDR_WIDTH      ( AXI_ADDR_WIDTH\t),\n567: .WR_FIFO_DEPTH\t      ( 1024\t\t),    \n568: .RD_FIFO_DEPTH \t      ( 1024 \t),\n569: .BURST_LEN  \t       (127),\n570: .FB_NUM\t            (3),\n571: .MAX_VID_WIDTH\t    (960) ,\n572: .MAX_VID_HIGHT\t    (1080) \n573: \n574: \n575: )checker0(\n576:        .axi_clk\t\t(core_clk \t        ),\n577:        .rst_n\t\t\t(pixel_data_en),//(vid_rst_n   ),\n578: \n579: /*i*/.i_clk\t\t\t(i_mipi_rx_pclk      ),//(vid_clk_dvi2),//\n580: /*i*/.i_vs\t\t\t(w_mipi_rx_vs\t),//(vs),//\n581: /*i*/.i_de\t\t\t(w_mipi_rx_de & w_mipi_rx_hs\t),//(de),//\n582: /*i*/.vin \t\t({w_mipi_rx_data[39:32],w_mipi_rx_data[29:22],w_mipi_rx_data[19:12],w_mipi_rx_data[9:2]}\t),//\t({rgb_3,rgb_2,rgb_1,rgb_0}),//\n583:                      \n584: /*i*/.o_clk\t\t\t(vid_clk_dvi2),//(i_mipi_rx_pclk\t),\n585: /*i*/.o_hs    \t\t(ch0_hs\t\t),\t\t\t\n586: /*i*/.o_vs    \t\t(ch0_vs\t\t),\t\t\t\n587: /*i*/.o_de    \t\t(ch0_de\t\t),\t\t\t\n588: /*i*/.vout    \t\t({ch0_g,ch0_b}\t),//ch0_r,\n589: \n590: /*i*/.H_FRONT_PORCH (HFP/2  \t\t),//\n591: /*i*/.H_SYNC \t \t    (HSP/2\t \t),///2\n592: /*i*/.H_VALID \t \t  (MAX_HRES/2     ),//\t\t\n593: /*i*/.H_BACK_PORCH\t(HBP/2\t\t),//\t\t\n594: /*i*/.V_FRONT_PORCH (VFP  \t\t),//\t\t\n595: /*i*/.V_SYNC \t \t    (VSP \t \t),//\t\t\n596: /*i*/.V_VALID \t \t  (MAX_VRES     ),//\t\t\n597: /*i*/.V_BACK_PORCH\t(VBP\t\t),//\t\t\n598: "
+            },
+            {
+              "first_line": 814,
+              "last_line": 835,
+              "text": "814: dsi_tx_top # (\n815:     .HACT(MAX_HRES),\n816:     .VACT(MAX_VRES),\n817:     .HSP(HSP),\n818:     .HBP(HBP),\n819:     .HFP(HFP),\n820:     .VSP(VSP),\n821:     .VBP(VBP),\n822:     .VFP(VFP)\n823:   )\n824:   dsi_tx_top_inst1 (\n825: \t.rst_n(w_arstn),\n826:     .i_mipi_clk(i_mipi_clk),\n827:     .i_mipi_tx_pclk(i_mipi_tx_pclk),\n828:     .i_sysclk_div_2(vid_clk_dvi2),\n829: \n830:    /*i*/.pixel_vs_i  (rgb_vs\t\t\t\t\t\t\t\t),//(o_vs),                //\n831:    /*i*/.pixel_hs_i  (rgb_hs\t\t\t\t\t\t\t\t),//(o_hs),                //\n832:    /*i*/.pixel_de_i  (rgb_de\t\t\t\t\t\t\t\t),//(o_de),                //\n833:    /*i*/.pixel_data_i({16'd0,rgb_datax2}\t  ),//({16'd0,dout}),        //\n834:    /*o*/.pixel_data_en(pixel_data_en),\n835: "
+            },
+            {
+              "first_line": 883,
+              "last_line": 904,
+              "text": "883: dsi_tx_top # (\n884:     .HACT(MAX_HRES),\n885:     .VACT(MAX_VRES),\n886:     .HSP(HSP),\n887:     .HBP(HBP),\n888:     .HFP(HFP),\n889:     .VSP(VSP),\n890:     .VBP(VBP),\n891:     .VFP(VFP)\n892:   )\n893:   dsi_tx_top_inst2 (\n894: \t.rst_n(w_arstn),\n895:     .i_mipi_clk(i_mipi_clk),\n896:     .i_mipi_tx_pclk(i_mipi_tx_pclk),\n897:     .i_sysclk_div_2(vid_clk_dvi2),\n898: \n899:    /*i*/.pixel_vs_i  (rgb_vs\t\t\t\t\t\t\t\t),//(o_vs),                //\n900:    /*i*/.pixel_hs_i  (rgb_hs\t\t\t\t\t\t\t\t),//(o_hs),                //\n901:    /*i*/.pixel_de_i  (rgb_de\t\t\t\t\t\t\t\t),//(o_de),                //\n902:    /*i*/.pixel_data_i({16'd0,rgb_datax2}\t  ),//({16'd0,dout}),        //\n903:    /*o*/.pixel_data_en(),\n904: "
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "archive": "D:\\李言昊\\下载\\VF-Ti60F225_HDK_V2.1_20251009奥唯思赛题4文件包..zip",
+      "member": "VF-Ti60F225_HDK_V2.1_20251009/VF-Ti60F225_HDK_V2.1_20251009/07-FPGA_HDL_Image-2023.2/03-1_Ti60_SC130GS_MIPIx4_HDMI_1280720/src/Sensor_Image_XYCrop.v",
+      "sha256": "a8d1f2d273aea58f6b0f95efd3f52fce75cfa6e8e08d49c750624708648a1f86",
+      "excerpts": [
+        {
+          "first_line": 118,
+          "last_line": 132,
+          "text": "118: wire \t\t\tw_image_out_href = (image_in_href == 1'b1) && (\n119: \t\t\t\t\t\t\t\t  ((image_ypos >= (IMAGE_VSIZE_SOURCE - IMAGE_YSIZE_TARGET)/2) && \n120: \t\t\t\t\t\t\t\t   (image_ypos <  (IMAGE_VSIZE_SOURCE - IMAGE_YSIZE_TARGET)/2 + IMAGE_YSIZE_TARGET) &&\n121: \t\t\t\t\t\t\t\t   (image_xpos >= (IMAGE_HSIZE_SOURCE - IMAGE_HSIZE_TARGET)/2) && \n122: \t\t\t\t\t\t\t\t   (image_xpos <  (IMAGE_HSIZE_SOURCE - IMAGE_HSIZE_TARGET)/2 + IMAGE_HSIZE_TARGET))? 1'b1 : 1'b0);\n123: \n124: reg \t\t\timage_out_href_r = 0; \n125: always @(posedge clk) begin\t\n126: \timage_out_href_r <= w_image_out_href; \n127: end\n128: assign image_out_href = image_out_href_r; \n129: \n130: assign \timage_out_de = image_in_de_r; \n131: \n132: assign\timage_out_data = image_in_data_r;\t\t\t\t   "
+        }
+      ]
+    }
+  ],
+  "local_simulation": {
+    "module": "HDMI V6 bank_switch.v",
+    "source_sha256": "47e886098c21ef3b0217f333efe5573e7628dd65e8a0f02501aca8c5b103d263",
+    "tool": "Icarus Verilog",
+    "result": "NORMAL: rd_ack=1 rd_bank=0 expected_bank=0\nSIMULTANEOUS: wr_ack=1 rd_ack=1 rd_bank=1 pending_clean_bank=0\nREPRODUCED: read request acknowledged without selecting the pending completed frame.\nF:\\Project\\fpga\\output\\review\\bank_switch_probe\\tb_bank_switch.sv:38: $finish called at 126000 (1ps)\n",
+    "scope": "Isolated original RTL; no full video simulation",
+    "configuration": {
+      "FB_NUM": 3,
+      "MAX_VID_WIDTH": 1920,
+      "MAX_VID_HIGHT": 1080,
+      "VID_DATA_WIDTH": 32,
+      "AXI_DATA_WIDTH": 128,
+      "START_ADDR": 0
+    },
+    "testbench_sha256": "92d8325354763b6c5b4daa847e267cf0f6e23e407f983d5fa7496bf0cbd39270"
+  }
+}

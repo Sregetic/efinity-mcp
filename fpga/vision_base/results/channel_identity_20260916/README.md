@@ -1,0 +1,3 @@
+Current RGB pack/unpack and HDMI encoder source inspection: B->TMDS0 G->TMDS1 R->TMDS2. Gamma paths use same-channel data.
+Current debayer chain (including RAW16 black subtraction and horizontal phase diagnostic), synthetic RGGB pure-green and pure-blue tests with unity test gains:260 interior pairs each passed. This verifies declared RGGB interpretation, not actual full-FOV sensor Bayer phase or physical display lane identity.
+No RTL/bitstream changes this turn. Need distinguish actual green->blue hue interchange from general cast; full-FOV changed sensor window origin and physical CFA phase is not independently measured.

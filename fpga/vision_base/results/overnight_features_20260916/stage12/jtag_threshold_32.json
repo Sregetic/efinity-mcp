@@ -1,0 +1,28 @@
+[
+  {
+    "magic": "56495331",
+    "build": "26091601",
+    "mode": 3,
+    "median": 0,
+    "memory": 0,
+    "index": 0,
+    "threshold": 32,
+    "edges": 363,
+    "frames": 5761,
+    "status": "d7fb3efe",
+    "raw": "5649533126091601006002000000016b00001681d7fb3efe"
+  },
+  {
+    "magic": "56495331",
+    "build": "26091601",
+    "mode": 3,
+    "median": 0,
+    "memory": 0,
+    "index": 0,
+    "threshold": 32,
+    "edges": 446,
+    "frames": 5774,
+    "status": "d7e743fe",
+    "raw": "564953312609160100600200000001be0000168ed7e743fe"
+  }
+]

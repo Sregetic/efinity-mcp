@@ -1,0 +1,14 @@
+Input #0, dshow, from 'video=UGREEN 25854':
+  Duration: N/A, start: 557194.960996, bitrate: N/A
+  Stream #0:0: Video: mjpeg (Baseline) (MJPG / 0x47504A4D), yuvj422p(pc, bt470bg/bt709/unknown), 1920x1080, 30 fps, 30 tbr, 10000k tbn, start 557194.960995
+Stream mapping:
+  Stream #0:0 -> #0:0 (mjpeg (native) -> png (native))
+[swscaler @ 0000024984a46f80] deprecated pixel format used, make sure you did set range correctly
+Output #0, image2, to 'recheck_main_capture.png':
+  Metadata:
+    encoder         : Lavf62.12.101
+  Stream #0:0: Video: png, rgb24(pc, gbr/bt709/unknown, progressive), 1920x1080, q=2-31, 200 kb/s, 30 fps, 30 tbn
+    Metadata:
+      encoder         : Lavc62.28.101 png
+[out#0/image2 @ 000002498273e0c0] video:8KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown
+frame=    1 fps=0.7 q=-0.0 Lsize=N/A time=00:00:01.43 bitrate=N/A speed=0.983x elapsed=0:00:01.45    

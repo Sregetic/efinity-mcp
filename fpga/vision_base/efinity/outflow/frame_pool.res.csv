@@ -1,0 +1,8 @@
+sep=\t
+Module Resource Usage Distribution Estimates
+Generated at: Sep 08, 2026 01:42:12
+
+Note: some resources maybe grouped under different hierarchy due to optimization and LUT mapping
+
+Module	       FFs	      SRLs	      ADDs	       LUTs	    COMB4s	      RAMs	 DSP/MULTs
+frame_pool:frame_pool  	 501(501)	     0(0)	   31(31)	1551(1551)	     0(0)	     0(0)	     0(0)	

@@ -1,0 +1,9 @@
+BAD y=3 x=8 rgb=646e6464b464
+BAD y=3 x=9 rgb=646e6464b464
+BAD y=3 x=10 rgb=646e6464b464
+BAD y=3 x=11 rgb=646e6464b464
+BAD y=3 x=12 rgb=646e6464b464
+BAD y=3 x=13 rgb=646e6464b464
+BAD y=3 x=14 rgb=646e6464b464
+RESULT pairs=512 checked=260 errors=260
+results/camera_bayer_phase_20260915/tb_rggb.sv:21: $finish called at 6431000 (1ps)

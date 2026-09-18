@@ -1,0 +1,2 @@
+RESULT words=518400 expected=518400 pixels=2073600 errors=0
+results/full_fov_20260916/tb_reduce.sv:29: $finish called at 9849761000 (1ps)

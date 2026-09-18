@@ -1,0 +1,59 @@
+
+Elitestek FPGA Placement and Routing.
+Version: 2026.1.132.3.9 
+Date: Tue Sep 15 02:51:45 2026
+
+Copyright (C) 2013 - 2026 Efinix, Inc. All rights reserved.
+ 
+Family: Titanium 
+Device: Ti60F225
+Top-level Entity Name: hdmi_bringup
+
+---------- IO Interface Summary (begin) ----------
+
++------------------------+--------------+
+| Missing Interface Pins | Input/Output |
++------------------------+--------------+
+|     jtag_inst1_SEL     |    Input     |
+|     jtag_inst1_TMS     |    Input     |
+|     jtag_inst1_TCK     |    Input     |
+|    jtag_inst1_RESET    |    Input     |
+|   jtag_inst1_RUNTEST   |    Input     |
+|   jtag_inst1_UPDATE    |    Input     |
+|           FB           |    Input     |
++------------------------+--------------+
+
+----------- IO Interface Summary (end) ----------
+
+
+---------- Module Resource Usage Distribution Estimates (begin) ----------
+
+'Module Resource Usage Distribution Estimates' table printed in: outflow\hdmi_bringup.hier_util.rpt
+
+----------- Module Resource Usage Distribution Estimates (end) ----------
+
+Elapsed time for packing: 0 hours 0 minutes 0 seconds
+---------- Resource Summary (begin) ----------
+Inputs: 9 / 1703 (0.53%)
+Outputs: 60 / 2267 (2.65%)
+Global Clocks (GBUF): 5 / 32 (15.62%)
+Regional Clocks (RBUF): 0 / 32 (0.00%)
+	RBUF: Core: 0 / 16 (0.00%)
+	RBUF: Periphery: 0 / 8 (0.00%)
+	RBUF: Multi-Region: 0 / 8 (0.00%)
+XLRs: 579 / 60800 (0.95%)
+	XLRs needed for LUT4: 141 / 60800 (0.23%)
+	XLRs needed for LUT4 + FF: 128 / 60800 (0.21%)
+	XLRs needed for COMB4: 0 / 60800 (0.00%)
+	XLRs needed for COMB4 + FF: 0 / 60800 (0.00%)
+	XLRs needed for Adder: 158 / 60800 (0.26%)
+	XLRs needed for Adder + FF: 65 / 60800 (0.11%)
+	XLRs needed for SRL8: 0 / 14720 (0.00%)
+	XLRs needed for SRL8 + FF: 0 / 14720 (0.00%)
+	XLRs needed for FF: 87 / 60800 (0.14%)
+	XLRs needed for Routing: 0 / 60800 (0.00%)
+Memory Blocks: 0 / 256 (0.00%)
+DSP Blocks: 0 / 160 (0.00%)
+---------- Resource Summary (end) ----------
+
+Elapsed time for placement: 0 hours 0 minutes 4 seconds

@@ -1,0 +1,17 @@
+{
+  "path": "\\\\?\\HID#VID_2B89&PID_5854&MI_04#9&208f6724&0&0000#{4d1e55b2-f16f-11cf-88cb-001111000030}",
+  "access": "metadata only; no report writes",
+  "Manufacturer": "MACROSILICON",
+  "Product": "UGREEN 25854",
+  "SerialNumber": {
+    "error": 87
+  },
+  "caps_status": "0x110000",
+  "caps": {
+    "usage": 1,
+    "usage_page": 65280,
+    "input_bytes": 0,
+    "output_bytes": 0,
+    "feature_bytes": 9
+  }
+}

@@ -1,0 +1,94 @@
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 08, 2026 09:59:59
+///////////////////////////////////
+
+[EFX-0012 VERI-INFO] default VHDL library search path is now "F:/Efinity/2026.1/sim_models/vhdl/packages/vhdl_2008" (VHDL-1504) 
+[EFX-0012 VERI-INFO] compiling module 'frame_render_engine' (VERI-1018) (F:\Project\fpga\vision_base\rtl\frame_render_engine.sv:4)
+[EFX-0012 VERI-INFO] compiling module 'frame_render_control' (VERI-1018) (F:\Project\fpga\vision_base\rtl\frame_render_control.sv:4)
+[EFX-0012 VERI-INFO] compiling module 'frame_pool(BANK_ID_WIDTH=2)' (VERI-1018) (F:\Project\fpga\vision_base\rtl\frame_pool.sv:7)
+[EFX-0012 VERI-INFO] extracting RAM for identifier 'frame_id_q' (VERI-2571) (F:\Project\fpga\vision_base\rtl\frame_pool.sv:73)
+[EFX-0012 VERI-INFO] extracting RAM for identifier 'config_id_q' (VERI-2571) (F:\Project\fpga\vision_base\rtl\frame_pool.sv:74)
+[EFX-0012 VERI-INFO] compiling module 'roi_axi_scaler' (VERI-1018) (F:\Project\fpga\vision_base\rtl\roi_axi_scaler.sv:4)
+[EFX-0012 VERI-INFO] compiling module 'roi_scaler' (VERI-1018) (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:45)
+[EFX-0012 VERI-INFO] compiling module 'roi_line_ram_2r2w(ADDR_WIDTH=12)' (VERI-1018) (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:7)
+[EFX-0012 VERI-INFO] extracting RAM for identifier 'mem' (VERI-2571) (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0012 VERI-INFO] compiling module 'axi_line_reader' (VERI-1018) (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:8)
+[EFX-0012 VERI-INFO] extracting RAM for identifier 'fifo_mem' (VERI-2571) (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:50)
+[EFX-0012 VERI-INFO] compiling module 'axi_frame_writer' (VERI-1018) (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:11)
+[EFX-0012 VERI-INFO] extracting RAM for identifier 'fifo_mem' (VERI-2571) (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:87)
+[EFX-0011 VERI-WARNING] expression size 9 truncated to fit in target size 8 (VERI-1209) (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:168)
+[EFX-0000 INFO] ... Setting Synthesis Option: mode=speed
+[EFX-0000 INFO] ... Pre-synthesis checks begin
+[EFX-0677 INFO] ... Memory 'frame_id_q' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:73)
+[EFX-0677 INFO] ... Memory 'config_id_q' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:74)
+[EFX-0200 WARNING] Removing redundant signal : rj[31:0]. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:146)
+[EFX-0200 WARNING] Removing redundant signal : cj[31:0]. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:146)
+[EFX-0200 WARNING] Removing redundant signal : i[31:0]. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:147)
+[EFX-0200 WARNING] Removing redundant signal : j[31:0]. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:148)
+[EFX-0200 WARNING] Removing redundant signal : k[31:0]. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:149)
+[EFX-0200 WARNING] Removing redundant signal : n[31:0]. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:150)
+[EFX-0677 INFO] ... Memory 'mem' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+[EFX-0200 WARNING] Removing redundant signal : re0. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:18)
+[EFX-0200 WARNING] Removing redundant signal : re1. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:19)
+[EFX-0677 INFO] ... Memory 'fifo_mem' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:50)
+[EFX-0677 INFO] ... Memory 'fifo_mem' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:87)
+[EFX-0000 INFO] ... Pre-synthesis checks end (Real time : 0s)
+[EFX-0000 INFO] ... NameSpace init begin
+[EFX-0000 INFO] ... NameSpace init end (Real time : 0s)
+[EFX-0000 INFO] ... Mapping design "frame_render_engine"
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "frame_pool(BANK_ID_WIDTH=2)" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "frame_pool(BANK_ID_WIDTH=2)" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "frame_render_control" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "frame_render_control" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "roi_line_ram_2r2w(ADDR_WIDTH=12)" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "roi_line_ram_2r2w(ADDR_WIDTH=12)" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "roi_scaler" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "roi_scaler" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "axi_line_reader" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "axi_line_reader" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "roi_axi_scaler" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "roi_axi_scaler" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "axi_frame_writer" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "axi_frame_writer" end (Real time : 1s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "frame_render_engine" begin
+[EFX-0657 WARNING] Mapping into logic memory block 'control/pool/config_id_q' (128 bits) (F:\Project\fpga\vision_base\rtl\frame_pool.sv:74) because it has all constant reader/writer.
+[EFX-0657 WARNING] Mapping into logic memory block 'control/pool/frame_id_q' (128 bits) (F:\Project\fpga\vision_base\rtl\frame_pool.sv:73) because it has all constant reader/writer.
+[EFX-0000 INFO] ... Clock Enable Synthesis Performed on 1096 flops.
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "frame_render_engine" end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Flat synthesis begin
+[EFX-0000 INFO] ... Flat synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 1s)
+[EFX-0000 INFO] ... Check and break combinational loops begin
+[EFX-0000 INFO] ... Check and break combinational loops end (Real time : 0s)
+[EFX-0000 INFO] ... Sequential Optimization begin
+[EFX-0000 INFO] ... Clock Network 'clk' with 2627 loads will be considered for sequential optimization.
+[EFX-0000 INFO] ... Sequential Optimization deduced 469 equivalent points.
+[EFX-0000 INFO] ... Sequential Optimization end (Real time : 2s)
+[EFX-0000 INFO] ... Setup for logic synthesis begin
+[EFX-0000 INFO] ... Setup for logic synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... LUT mapping begin
+[EFX-0000 INFO] ... LS, strategy: 3, nd: 3963, ed: 12873, lv: 12, pw: 8468.59
+[EFX-0000 INFO] ... LUT mapping end (Real time : 9s)
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation begin
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation end (Real time : 0s)
+[EFX-0000 INFO] ... Postmap Retiming Optimization begin
+[EFX-0000 INFO] ... Using advanced retiming technique.
+[EFX-0000 INFO] ... Clock Network 'clk~clk' with 2583 loads will be considered for retiming optimization.
+[EFX-0000 INFO] ... Performed 0 retime moves.
+[EFX-0000 INFO] ... Postmap Retiming Optimization end (Real time : 0s)
+[EFX-0000 INFO] Resource Summary 
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] EFX_ADD                 : 	1109
+[EFX-0000 INFO] EFX_LUT4                : 	3947
+[EFX-0000 INFO] EFX_DSP48               : 	22
+[EFX-0000 INFO] EFX_FF                  : 	2539
+[EFX-0000 INFO] EFX_RAM10               : 	14
+[EFX-0000 INFO] EFX_DPRAM10             : 	16
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] ... Post-Map Verilog Writer begin
+[EFX-0000 INFO] ... Post-Map Verilog Writer end (Real time : 0s)

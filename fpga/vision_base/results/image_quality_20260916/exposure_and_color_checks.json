@@ -1,0 +1,25 @@
+{
+  "only_changed_sensor_registers": {
+    "3e00": [
+      1,
+      0
+    ],
+    "3e01": [
+      187,
+      111
+    ],
+    "3e02": [
+      240,
+      0
+    ]
+  },
+  "old_half_lines": 7103,
+  "new_half_lines": 1776,
+  "ratio": 0.25003519639588906,
+  "rgb_frontend_test": {
+    "checked": 450,
+    "errors": 0,
+    "channels": "independent ramp/inverse-ramp/constant, median off and on"
+  },
+  "visual_acceptance": "pending"
+}

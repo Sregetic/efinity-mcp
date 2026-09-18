@@ -1,0 +1,435 @@
+Efinity Synthesis report for project frame_render_engine
+Version: 2026.1.132.3.9
+Generated at: Sep 08, 2026 09:59:59
+Copyright (C) 2013 - 2026  All rights reserved.
+
+Top-level Entity Name : frame_render_engine
+
+family : Titanium
+device : Ti60F225
+project : frame_render_engine
+root : frame_render_engine
+binary-db : outflow\frame_render_engine.vdb
+insert-ios : 0
+insert-gclk : 0
+max-carry-cascade : 320
+max-dsp-cascade : 16
+max_mult : -1
+max_ram : -1
+mode : speed
+num_srl : -1
+output-dir : outflow
+proj_curr_path : F:\Project\fpga\vision_base\efinity
+project : frame_render_engine
+project-xml : F:\Project\fpga\vision_base\efinity\frame_render_engine.xml
+root : frame_render_engine
+work-dir : ../build/efinity_engine
+write-efx-verilog : outflow\frame_render_engine.map.v
+
+File List:
+
+F:\Project\fpga\vision_base\rtl\frame_pool.sv
+F:\Project\fpga\vision_base\rtl\frame_render_control.sv
+F:\Project\fpga\vision_base\rtl\roi_scaler.sv
+F:\Project\fpga\vision_base\rtl\axi_line_reader.sv
+F:\Project\fpga\vision_base\rtl\roi_axi_scaler.sv
+F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv
+F:\Project\fpga\vision_base\rtl\frame_render_engine.sv
+
+### ### Report Section Start ### ###
+
+"MEM|SYN-0677" : ... Memory 'frame_id_q' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:73)
+"MEM|SYN-0677" : ... Memory 'config_id_q' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\rtl\frame_pool.sv:74)
+"MEM|SYN-0677" : ... Memory 'mem' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:25)
+"MEM|SYN-0677" : ... Memory 'fifo_mem' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:50)
+"MEM|SYN-0677" : ... Memory 'fifo_mem' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:87)
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'scaler/reader/fifo_mem__D$12' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:50).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'scaler/reader/fifo_mem__D$f1' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:50).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'scaler/reader/fifo_mem__D$e12' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:50).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'scaler/reader/fifo_mem__D$d12' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:50).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'scaler/reader/fifo_mem__D$c12' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:50).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'scaler/reader/fifo_mem__D$b12' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:50).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'scaler/reader/fifo_mem__D$2' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:50).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'writer/fifo_mem__D$12' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:87).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'writer/fifo_mem__D$f1' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:87).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'writer/fifo_mem__D$e12' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:87).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'writer/fifo_mem__D$d12' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:87).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'writer/fifo_mem__D$c12' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:87).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'writer/fifo_mem__D$b12' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:87).
+"MEM|SYN-0690" : Inserted write-first bypass logic for memory block 'writer/fifo_mem__D$2' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:87).
+"MEM|SYN-0657" : Mapping into logic memory block 'control/pool/config_id_q' (128 bits) (F:\Project\fpga\vision_base\rtl\frame_pool.sv:74) because it has all constant reader/writer.
+"MEM|SYN-0657" : Mapping into logic memory block 'control/pool/frame_id_q' (128 bits) (F:\Project\fpga\vision_base\rtl\frame_pool.sv:73) because it has all constant reader/writer.
+
+### ### EFX_FF CE enables (begin) ### ### ###
+
+Total number of enable signals: 75
+Total number of FFs with enable signals: 1878
++----------------------------------+------------------+
+|CE Signal                         |Number of FF loads|
++----------------------------------+------------------+
+|n478                              |              226 |
+|n885                              |              130 |
+|ceg_net511                        |              128 |
+|scaler/reader/load_next           |              128 |
+|control/pool/cap_req_fire         |               98 |
+|ceg_net923                        |               92 |
+|ceg_net380                        |               90 |
+|scaler/scaler/n4217               |               78 |
+|writer/n9048                      |               73 |
+|control/pool/analysis_acquire_fire|               66 |
+|control/n1900                     |               65 |
+|ceg_net827                        |               60 |
+|ceg_net389                        |               45 |
+|scaler/scaler/capture_pending_c   |               37 |
+|scaler/reader/emit                |               34 |
+|control/pool/display_acquire_fire |               34 |
+|writer/n10734                     |               33 |
+|scaler/scaler/n1809               |               32 |
+|writer/n6966                      |               32 |
+|writer/n6934                      |               32 |
+|writer/n6902                      |               32 |
+|ceg_net557                        |               32 |
+|ceg_net835                        |               32 |
+|control/n1899                     |               32 |
+|control/finish                    |               32 |
+|scaler/scaler/read_issue_c        |               29 |
+|scaler/scaler/n6680               |               19 |
+|scaler/scaler/n6692               |               18 |
+|scaler/scaler/n6639               |               17 |
+|scaler/scaler/n6642               |               17 |
+|ceg_net1077                       |               16 |
+|ceg_net390                        |               12 |
+|ceg_net387                        |                9 |
+|ceg_net829                        |                5 |
+|writer/fifo_push                  |                5 |
+|ceg_net1085                       |                5 |
+|scaler/reader/fifo_push           |                4 |
+|ceg_net825                        |                4 |
+|scaler/reader/n4338               |                4 |
+|ceg_net1107                       |                3 |
+|ceg_net1112                       |                2 |
+|ceg_net391                        |                2 |
+|ceg_net394                        |                2 |
+|ceg_net831                        |                1 |
+|ceg_net538                        |                1 |
+|ceg_net839                        |                1 |
+|ceg_net841                        |                1 |
+|ceg_net1095                       |                1 |
+|ceg_net395                        |                1 |
+|ceg_net845                        |                1 |
+|ceg_net529                        |                1 |
+|ceg_net537                        |                1 |
+|ceg_net386                        |                1 |
+|ceg_net532                        |                1 |
+|ceg_net540                        |                1 |
+|ceg_net544                        |                1 |
+|ceg_net547                        |                1 |
+|ceg_net550                        |                1 |
+|ceg_net542                        |                1 |
+|ceg_net543                        |                1 |
+|ceg_net541                        |                1 |
+|ceg_net553                        |                1 |
+|ceg_net539                        |                1 |
+|ceg_net381                        |                1 |
+|writer/n6436                      |                1 |
+|ceg_net536                        |                1 |
+|ceg_net531                        |                1 |
+|ceg_net535                        |                1 |
+|ceg_net392                        |                1 |
+|ceg_net833                        |                1 |
+|ceg_net384                        |                1 |
+|scaler/reader/n676                |                1 |
+|ceg_net383                        |                1 |
+|ceg_net382                        |                1 |
+|ceg_net851                        |                1 |
++----------------------------------+------------------+
+
+### ### EFX_FF CE enables (end) ### ### ###
+
+### ### EFX_FF SR set/reset (begin) ### ### ###
+
+Total number of set/reset signals: 16
+Total number of FFs with set/reset signals: 1825
++--------------------+------------------+
+|SR Signal           |Number of FF loads|
++--------------------+------------------+
+|rst_n               |             1634 |
+|writer/n10136       |              145 |
+|scaler/scaler/n10846|               18 |
+|scaler/reader/n4385 |               13 |
+|scaler/reader/n4374 |                3 |
+|scaler/scaler/n10572|                2 |
+|control/pool/n5028  |                1 |
+|control/pool/n5029  |                1 |
+|control/pool/n5030  |                1 |
+|scaler/reader/n4746 |                1 |
+|control/pool/n4954  |                1 |
+|scaler/reader/n4375 |                1 |
+|scaler/scaler/n10568|                1 |
+|scaler/scaler/n10574|                1 |
+|scaler/scaler/n10573|                1 |
+|writer/n6525        |                1 |
++--------------------+------------------+
+
+### ### EFX_FF SR set/reset (end) ### ### ###
+
+### ### Sequential Elements/Signals Trimming Report (begin) ### ### ### 
+'scaler/scaler/base_addr_r[0]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[1]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[2]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[3]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[4]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[5]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[6]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[7]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[8]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[9]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[10]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[11]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[12]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[13]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[14]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[15]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[16]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[17]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[18]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[19]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[20]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[21]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[24]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[25]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[26]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[27]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[28]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[29]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[30]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'scaler/scaler/base_addr_r[31]' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:101) (optimized to 0)
+'m_axi_araddr[0]' (F:\Project\fpga\vision_base\rtl\frame_render_engine.sv:30) (optimized to 0)
+'m_axi_araddr[1]' (F:\Project\fpga\vision_base\rtl\frame_render_engine.sv:30) (optimized to 0)
+'m_axi_araddr[2]' (F:\Project\fpga\vision_base\rtl\frame_render_engine.sv:30) (optimized to 0)
+'m_axi_araddr[3]' (F:\Project\fpga\vision_base\rtl\frame_render_engine.sv:30) (optimized to 0)
+'writer/row_bytes_r[0]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:72) (optimized to 0)
+'writer/row_bytes_r[17]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:72) (optimized to 0)
+'writer/row_bytes_r[18]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:72) (optimized to 0)
+'writer/row_bytes_r[19]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:72) (optimized to 0)
+'writer/row_bytes_r[20]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:72) (optimized to 0)
+'writer/row_bytes_r[21]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:72) (optimized to 0)
+'writer/row_bytes_r[22]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:72) (optimized to 0)
+'writer/row_bytes_r[23]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:72) (optimized to 0)
+'writer/row_bytes_r[24]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:72) (optimized to 0)
+'writer/row_bytes_r[25]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:72) (optimized to 0)
+'writer/row_bytes_r[26]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:72) (optimized to 0)
+'writer/row_bytes_r[27]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:72) (optimized to 0)
+'writer/row_bytes_r[28]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:72) (optimized to 0)
+'writer/row_bytes_r[29]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:72) (optimized to 0)
+'writer/row_bytes_r[30]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:72) (optimized to 0)
+'writer/row_bytes_r[31]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:72) (optimized to 0)
+'writer/row_beats_r[13]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (optimized to 0)
+'writer/row_beats_r[14]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (optimized to 0)
+'writer/row_beats_r[15]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (optimized to 0)
+'writer/row_beats_r[16]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (optimized to 0)
+'writer/row_beats_r[17]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (optimized to 0)
+'writer/row_beats_r[18]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (optimized to 0)
+'writer/row_beats_r[19]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (optimized to 0)
+'writer/row_beats_r[20]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (optimized to 0)
+'writer/row_beats_r[21]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (optimized to 0)
+'writer/row_beats_r[22]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (optimized to 0)
+'writer/row_beats_r[23]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (optimized to 0)
+'writer/row_beats_r[24]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (optimized to 0)
+'writer/row_beats_r[25]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (optimized to 0)
+'writer/row_beats_r[26]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (optimized to 0)
+'writer/row_beats_r[27]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (optimized to 0)
+'writer/row_beats_r[28]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (optimized to 0)
+'writer/row_beats_r[29]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (optimized to 0)
+'writer/row_beats_r[30]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (optimized to 0)
+'writer/row_beats_r[31]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (optimized to 0)
+'writer/input_row_beats_r[15]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (optimized to 0)
+'writer/input_row_beats_r[16]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (optimized to 0)
+'writer/input_row_beats_r[17]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (optimized to 0)
+'writer/input_row_beats_r[18]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (optimized to 0)
+'writer/input_row_beats_r[19]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (optimized to 0)
+'writer/input_row_beats_r[20]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (optimized to 0)
+'writer/input_row_beats_r[21]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (optimized to 0)
+'writer/input_row_beats_r[22]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (optimized to 0)
+'writer/input_row_beats_r[23]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (optimized to 0)
+'writer/input_row_beats_r[24]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (optimized to 0)
+'writer/input_row_beats_r[25]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (optimized to 0)
+'writer/input_row_beats_r[26]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (optimized to 0)
+'writer/input_row_beats_r[27]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (optimized to 0)
+'writer/input_row_beats_r[28]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (optimized to 0)
+'writer/input_row_beats_r[29]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (optimized to 0)
+'writer/input_row_beats_r[30]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (optimized to 0)
+'writer/input_row_beats_r[31]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (optimized to 0)
+'writer/pack_count[2]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:85) (optimized to 0)
+'writer/row_beats_r[2]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (merged to equivalence)
+'writer/row_beats_r[3]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (merged to equivalence)
+'writer/row_beats_r[4]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (merged to equivalence)
+'writer/row_beats_r[5]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (merged to equivalence)
+'writer/row_beats_r[6]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (merged to equivalence)
+'writer/row_beats_r[1]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (merged to equivalence)
+'writer/row_beats_r[0]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (merged to equivalence)
+'writer/row_beats_r[7]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (merged to equivalence)
+'writer/row_beats_r[8]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (merged to equivalence)
+'writer/row_beats_r[9]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (merged to equivalence)
+'writer/row_beats_r[10]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (merged to equivalence)
+'writer/row_beats_r[11]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (merged to equivalence)
+'writer/row_beats_r[12]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:73) (merged to equivalence)
+'writer/input_row_beats_r[14]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (merged to equivalence)
+'writer/input_row_beats_r[13]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (merged to equivalence)
+'writer/input_row_beats_r[12]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (merged to equivalence)
+'writer/input_row_beats_r[11]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (merged to equivalence)
+'writer/input_row_beats_r[10]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (merged to equivalence)
+'writer/input_row_beats_r[9]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (merged to equivalence)
+'writer/input_row_beats_r[8]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (merged to equivalence)
+'writer/input_row_beats_r[7]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (merged to equivalence)
+'writer/input_row_beats_r[6]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (merged to equivalence)
+'writer/input_row_beats_r[5]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (merged to equivalence)
+'writer/input_row_beats_r[4]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (merged to equivalence)
+'writer/input_row_beats_r[3]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (merged to equivalence)
+'writer/input_row_beats_r[2]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (merged to equivalence)
+'writer/input_row_beats_r[1]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (merged to equivalence)
+'writer/input_row_beats_r[0]' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:74) (merged to equivalence)
+'scaler/reader/fifo_wr_ptr[3]_q_5' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'scaler/reader/fifo_wr_ptr[2]_q_5' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'scaler/reader/fifo_wr_ptr[1]_q_5' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'scaler/reader/fifo_wr_ptr[0]_q_5' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'scaler/reader/fifo_wr_ptr[3]_q_6' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'scaler/reader/fifo_wr_ptr[2]_q_6' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'scaler/reader/fifo_wr_ptr[1]_q_6' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'scaler/reader/fifo_wr_ptr[0]_q_6' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'scaler/reader/fifo_wr_ptr[3]_q_7' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'scaler/reader/fifo_wr_ptr[2]_q_7' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'scaler/reader/fifo_wr_ptr[1]_q_7' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'scaler/reader/fifo_wr_ptr[0]_q_7' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'scaler/reader/fifo_wr_ptr[3]_q_2' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'scaler/reader/fifo_wr_ptr[2]_q_2' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'scaler/reader/fifo_wr_ptr[1]_q_2' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'scaler/reader/fifo_wr_ptr[0]_q_2' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'scaler/reader/fifo_wr_ptr[3]_q' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'scaler/reader/fifo_wr_ptr[2]_q' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'scaler/reader/fifo_wr_ptr[1]_q' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'scaler/reader/fifo_wr_ptr[0]_q' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'scaler/reader/fifo_wr_ptr[3]_q_3' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'scaler/reader/fifo_wr_ptr[2]_q_3' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'scaler/reader/fifo_wr_ptr[1]_q_3' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'scaler/reader/fifo_wr_ptr[0]_q_3' (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:51) (merged to equivalence)
+'writer/fifo_wr_ptr[4]_q_4' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[3]_q_4' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[2]_q_4' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[1]_q_4' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[0]_q_4' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[4]_q_5' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[3]_q_5' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[2]_q_5' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[1]_q_5' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[0]_q_5' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[4]_q_6' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[3]_q_6' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[2]_q_6' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[1]_q_6' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[0]_q_6' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[4]_q_7' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[3]_q_7' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[2]_q_7' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[1]_q_7' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[0]_q_7' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[4]_q_2' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[3]_q_2' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[2]_q_2' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[1]_q_2' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[0]_q_2' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[4]_q' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[3]_q' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[2]_q' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[1]_q' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+'writer/fifo_wr_ptr[0]_q' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:88) (merged to equivalence)
+### ### Sequential Elements Trimming Report (end) ### ### ### 
+
+### ### Module Resource Usage Distribution Estimates (begin) ### ###
+
+**Note: some resources maybe grouped under different hierarchy due to optimization and LUT mapping
+
+Module                                             FFs      SRLs       ADDs       LUTs    COMB4s      RAMs DSP/MULTs
+-------------------------------------------        ---      ----       ----       ----      ----      ---- ---------
+frame_render_engine:frame_render_engine      2539(256)      0(0)  1109(256)   3947(47)      0(0)     30(0)    22(14)
+ +control:frame_render_control                739(270)      0(0)      31(0)  1518(328)      0(0)      0(0)      0(0)
+  +pool:frame_pool(BANK_ID_WIDTH=2)           469(469)      0(0)     31(31) 1190(1190)      0(0)      0(0)      0(0)
+ +scaler:roi_axi_scaler                        1009(0)      0(0)     535(0)    1755(0)      0(0)     23(0)      4(0)
+  +scaler:roi_scaler                          493(493)      0(0)   389(389)  1027(945)      0(0)     16(0)      4(4)
+   +bank0:roi_line_ram_2r2w(ADDR_WIDTH=12)        0(0)      0(0)       0(0)     56(56)      0(0)      8(8)      0(0)
+   +bank1:roi_line_ram_2r2w(ADDR_WIDTH=12)        0(0)      0(0)       0(0)     26(26)      0(0)      8(8)      0(0)
+  +reader:axi_line_reader                     516(516)      0(0)   146(146)   728(728)      0(0)      7(7)      0(0)
+ +writer:axi_frame_writer                     535(535)      0(0)   287(287)   627(627)      0(0)      7(7)      4(4)
+
+### ### Module Resource Usage Distribution Estimates (end) ### ###
+
+
+### ### Wide Multiplier Decomposition Report (begin) ### ### ### 
+
+'mult_110' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:321) 32x18 decomposed into 2 partial products.
+'mult_38' (F:\Project\fpga\vision_base\rtl\roi_scaler.sv:248) 32x16 decomposed into 2 partial products.
+'mult_43' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:108) 16x32 decomposed into 2 partial products.
+'mult_4' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:99) 32x16 decomposed into 2 partial products.
+'mult_23' (F:\Project\fpga\vision_base\rtl\axi_frame_writer.sv:103) 32x16 decomposed into 2 partial products.
+'mult_4' (F:\Project\fpga\vision_base\rtl\frame_render_engine.sv:57) 32x64 decomposed into 8 partial products.
+'mult_7' (F:\Project\fpga\vision_base\rtl\frame_render_engine.sv:58) 32x64 decomposed into 8 partial products.
+
+### ### Wide Multiplier Decomposition Report (end) ### ### ### 
+
+### ### DSP Usage Report (begin) ### ### ### 
+
++------------------------------------------+-----+------+-------+------+---------+---------+----+
+|DSP                                       |TYPE |SIGNED|SHIFTER|BFLOAT| CAS_OUT |    O    |REGS|
++------------------------------------------+-----+------+-------+------+---------+---------+----+
+|mult_7_pp_0x0                             |DSP48|      |       |      |  (A*B)  |  (A*B)  |    |
+|mult_4_pp_0x0                             |DSP48|      |       |      |  (A*B)  |  (A*B)  |    |
+|scaler/scaler/n185_pp_1x0                 |DSP48|      |       |      |         |(A*B)+CIN| A  |
+|scaler/scaler/n185_pp_0x0                 |DSP48|      |       |      |  (A*B)  |  (A*B)  | A  |
+|scaler/scaler/n993_pp_0x0                 |DSP48|      |       |      |  (A*B)  |  (A*B)  | A  |
+|mult_4_pp_0x1                             |DSP48|      |       |      |(A*B)+CIN|(A*B)+CIN|    |
+|mult_4_pp_0x2                             |DSP48|      |       |      |         |  (A*B)  |    |
+|mult_4_pp_0x3                             |DSP48|      |       |      |         |  (A*B)  |    |
+|mult_4_pp_1x0                             |DSP48|      |       |      |(A*B)+CIN|         |    |
+|mult_4_pp_1x1                             |DSP48|      |       |      |         |(A*B)+CIN|    |
+|mult_4_pp_1x2                             |DSP48|      |       |      |         |  (A*B)  |    |
+|mult_7_pp_0x1                             |DSP48|      |       |      |(A*B)+CIN|(A*B)+CIN|    |
+|mult_7_pp_0x2                             |DSP48|      |       |      |         |  (A*B)  |    |
+|mult_7_pp_0x3                             |DSP48|      |       |      |         |  (A*B)  |    |
+|mult_7_pp_1x0                             |DSP48|      |       |      |(A*B)+CIN|         |    |
+|mult_7_pp_1x1                             |DSP48|      |       |      |         |(A*B)+CIN|    |
+|mult_7_pp_1x2                             |DSP48|      |       |      |         |  (A*B)  |    |
+|writer/output_total_beats_product_w_pp_0x0|DSP48|      |       |      |         |  (A*B)  |A,B |
+|writer/input_total_beats_product_w_pp_0x0 |DSP48|      |       |      |         |  (A*B)  |A,B |
+|writer/n316_pp_0x1                        |DSP48|      |       |      |         |(A*B)+CIN| B  |
+|writer/n316_pp_0x0                        |DSP48|      |       |      |  (A*B)  |  (A*B)  | B  |
+|scaler/scaler/n993_pp_1x0                 |DSP48|      |       |      |         |(A*B)+CIN| A  |
++------------------------------------------+-----+------+-------+------+---------+---------+----+
+
+### ### Clock Load Distribution Report (begin) ### ###
+
++-----+----------+----------+------------+----------------+
+|Clock|Flip-Flops|Shift-Regs|Memory Ports|Multipliers/DSPs|
++-----+----------+----------+------------+----------------+
+|clk  |     2539 |        0 |         60 |              8 |
++-----+----------+----------+------------+----------------+
+
+### ### Clock Load Distribution Report (end) ### ###
+
+### ### Resource Summary (begin) ### ### ### 
+
+INPUT  PORTS    : 	406
+OUTPUT PORTS    : 	550
+
+EFX_ADD                 : 	1109
+EFX_LUT4                : 	3947
+   1-2  Inputs          : 	829
+   3    Inputs          : 	1299
+   4    Inputs          : 	1819
+EFX_DSP48               : 	22
+EFX_FF                  : 	2539
+EFX_RAM10               : 	14
+EFX_DPRAM10             : 	16
+### ### Resource Summary (end) ### ### ###
+
+Plain synthesis (without verilog dump and post-map checks) time : 15s
+Elapsed synthesis time : 15s

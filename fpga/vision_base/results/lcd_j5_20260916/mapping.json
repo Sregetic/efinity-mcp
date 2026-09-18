@@ -1,0 +1,15 @@
+{
+  "connector": "J5",
+  "camera_connector": "J4",
+  "panel": "JJX035FHD05-V9 (user confirmed reference match)",
+  "clock": "GPIOT_PN_13",
+  "data": [
+    "GPIOT_PN_17",
+    "GPIOT_PN_16",
+    "GPIOT_PN_14",
+    "GPIOT_PN_12"
+  ],
+  "reset": "GPIOR_12",
+  "backlight": "GPIOR_15",
+  "source": "supplied V4 schematic sheet10 and V3.5 second DSI peripheral map"
+}

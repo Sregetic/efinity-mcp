@@ -1,0 +1,25 @@
+{
+  "target": "frame_render_engine",
+  "flow": "map",
+  "video_mode": "camera",
+  "started_utc": "2026-09-08T01:59:58.1023390Z",
+  "finished_utc": "2026-09-08T02:00:14.5943731Z",
+  "exit_code": 0,
+  "unassigned_core_pins": null,
+  "wns_ns": null,
+  "whs_ns": null,
+  "source_sha256": {
+    "rtl/axi_frame_writer.sv": "5134ea697eae5fe39ac174715ae33d6cf80b102a8ce67799be7cc8701481dd63",
+    "rtl/axi_line_reader.sv": "31fe42ee19198a87105a67c66b493319c4900125822669f2562655dbca3a6090",
+    "rtl/frame_engine_timing_probe.sv": "055f13faef5bc90ca51b9f46f4871838c6f8376fa237747b0a23e2fd85ee51cf",
+    "rtl/frame_pool.sv": "f4eea352fd0422f1db03a7f13b6eaccbd1915bf258341935ee47a4608ed38837",
+    "rtl/frame_render_control.sv": "4f09204f2e740532db994bb7edb80e7c22f2ea5120e69bdeae27f9d3585407fb",
+    "rtl/frame_render_engine.sv": "415351e448895ba188786f3f0eaee4ead031677dc9144edacb37f733e314f8f7",
+    "rtl/roi_axi_scaler.sv": "90736b5ca4937e9f3ac7e2ddb4a4a0076a24681c6a0dc7437ef22abfed47d121",
+    "rtl/roi_scaler.sv": "8d9b7e3869a749a38cd25e44115a8ab76ff048a2eeca82c2f36f5e8fe6180de4",
+    "rtl/video_test_pattern.sv": "883b31142cfa2399f4cfd748e12640731c7cff122bcca8dac705c385a9adb96d",
+    "efinity/frame_render_engine.xml": "8f80f1661aef2f3adb9fc29e551b53b0097e19f027e7ca4436946dadb6c3f394",
+    "efinity/core.sdc": "ef1e00e42f02f15169b7f48fc0b4936abd7b614adaf68cfcfdf73cf6723dfb4e"
+  },
+  "hardware_programmed": false
+}
