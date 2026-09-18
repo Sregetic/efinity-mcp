@@ -1,0 +1,97 @@
+name: Efinity SRAM program (local approval required)
+on:
+  workflow_dispatch:
+    inputs:
+      build_run_id:
+        description: Exact successful Efinity build run ID on main
+        required: true
+        type: string
+      mode:
+        description: Bitstream mode (does not change display controls)
+        required: true
+        type: choice
+        options: [camera]
+      usb_url:
+        description: Currently enumerated and locally approved USB URL/interface
+        required: true
+        type: string
+      confirm:
+        description: Type PROGRAM SRAM (also requires a one-use local administrator approval)
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: efinity-ti60-device
+  cancel-in-progress: false
+jobs:
+  program:
+    if: github.repository == 'Sregetic/efinity-mcp' && github.ref == 'refs/heads/main' && inputs.confirm == 'PROGRAM SRAM'
+    runs-on: [self-hosted, Windows, X64, efinity, ti60]
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: pwsh
+    env:
+      GIT_LFS_SKIP_SMUDGE: '1'
+      BUILD_RUN_ID: ${{ inputs.build_run_id }}
+      USB_URL: ${{ inputs.usb_url }}
+      BUILD_MODE: ${{ inputs.mode }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          lfs: false
+      - name: Validate exact build provenance
+        id: source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CURRENT_SHA: ${{ github.sha }}
+        run: |
+          $ErrorActionPreference='Stop'
+          if ($env:BUILD_RUN_ID -notmatch '^\d+$') { throw 'A numeric exact run ID is required.' }
+          $repo='Sregetic/efinity-mcp'
+          $run=gh api "repos/$repo/actions/runs/$env:BUILD_RUN_ID" | ConvertFrom-Json
+          if ($LASTEXITCODE -ne 0) { throw 'Build run lookup failed.' }
+          $workflow=gh api "repos/$repo/actions/workflows/efinity-build.yml" | ConvertFrom-Json
+          if ($LASTEXITCODE -ne 0) { throw 'Build workflow lookup failed.' }
+          if ($run.repository.full_name -ne $repo -or $run.head_repository.full_name -ne $repo -or $run.workflow_id -ne $workflow.id -or $run.conclusion -ne 'success' -or $run.head_branch -ne 'main' -or $run.event -notin @('workflow_dispatch','push')) { throw 'Untrusted or unsuccessful build run.' }
+          $compare=gh api "repos/$repo/compare/$($run.head_sha)...$env:CURRENT_SHA" | ConvertFrom-Json
+          if ($LASTEXITCODE -ne 0 -or $compare.status -notin @('ahead','identical')) { throw 'Build commit is not in trusted main history.' }
+          "commit=$($run.head_sha)" >> $env:GITHUB_OUTPUT
+          "artifact_dir=$env:RUNNER_TEMP/efinity-artifact-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT" >> $env:GITHUB_OUTPUT
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          github-token: ${{ github.token }}
+          repository: Sregetic/efinity-mcp
+          run-id: ${{ inputs.build_run_id }}
+          name: efinity-bitstream-${{ inputs.build_run_id }}
+          path: ${{ steps.source.outputs.artifact_dir }}
+      - name: Consume local approval and program SRAM
+        env:
+          ARTIFACT_DIR: ${{ steps.source.outputs.artifact_dir }}
+          BUILD_SHA: ${{ steps.source.outputs.commit }}
+        run: |
+          $out="$env:RUNNER_TEMP/efinity-program-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT"
+          $log="$env:RUNNER_TEMP/efinity-program-invocation-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT.log"
+          & pwsh -NoProfile -File fpga/vision_base/scripts/program_vision_sram.ps1 -ArtifactDirectory $env:ARTIFACT_DIR -BuildRunId $env:BUILD_RUN_ID -CommitSha $env:BUILD_SHA -Url $env:USB_URL -Mode $env:BUILD_MODE -OutputDirectory $out -ConfirmSram *> $log
+          $code=$LASTEXITCODE
+          New-Item -ItemType Directory $out -Force | Out-Null
+          Copy-Item $log "$out/invocation.log"
+          if (!(Test-Path "$out/program.json")) {
+            @{build_run_id=$env:BUILD_RUN_ID;programmer_completed=$false;failure='Preflight rejected; inspect invocation.log';visual_acceptance='pending user'} | ConvertTo-Json | Set-Content "$out/program.json"
+          }
+          "SRAM programmer exit=$code; build=$env:BUILD_RUN_ID; visual acceptance=pending user; no Flash operation." >> $env:GITHUB_STEP_SUMMARY
+          exit $code
+      - name: Upload programming evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: efinity-program-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/efinity-program-${{ github.run_id }}-${{ github.run_attempt }}/*.json
+            ${{ runner.temp }}/efinity-program-${{ github.run_id }}-${{ github.run_attempt }}/*.log
+          if-no-files-found: warn
+          retention-days: 14
