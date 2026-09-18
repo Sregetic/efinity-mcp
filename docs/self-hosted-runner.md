@@ -20,9 +20,11 @@ job is sent to this computer. Review and merge the deployment PR before dispatch
 - The machine's existing proxy is copied only into Runner `.env` after the
   direct connection test failed. No WinHTTP/TLS settings are changed. Keep that
   file, `.credentials*`, tokens and license files outside Git and artifacts.
-- Runner `.env` references the existing Efinity user configuration. Host smoke
-  and a real compile must pass **under the installed service identity** before
-  claiming license/USB acceptance. Interactive-user success is insufficient.
+- The installer creates a Runner-owned `efinity-profile` from the existing
+  settings (excluding logs), and Runner `.env` points to its dedicated INI.
+  The original personal profile is retained; NETWORK SERVICE cannot read it by
+  default. Host smoke and a real compile must pass **under the installed service
+  identity** before claiming license/USB acceptance.
 
 After installation, dispatch **Efinity FPGA build**, `smoke_only=true`, on main.
 Check the artifact `host.log` for the actual host and service identity. Then
@@ -111,3 +113,10 @@ Tests: `pwsh -NoProfile -File tests/Test-RunnerGates.ps1` covers failure/missing
 vendor status, negative/missing timing, missing pins, stale/empty bitstreams,
 source mutation and missing clocks. Synthetic tests do not establish FPGA
 correctness. Follow repository Python tests separately from real FPGA acceptance.
+
+Service verification: `efinity-ti60-win` is installed as delayed-auto-start under
+NETWORK SERVICE. After restarting only this service, run 35302831027 attempt 2
+passed the host smoke checks (vendor Python, Icarus, USB descriptors, profile
+and F: access). Its final workflow conclusion remained failure because GitHub
+rejected artifact upload for account storage quota exhaustion. Do not equate an
+artifact upload failure with a failed compiler or hide it with continue-on-error.
