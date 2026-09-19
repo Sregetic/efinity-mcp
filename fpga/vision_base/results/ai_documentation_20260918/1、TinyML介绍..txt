@@ -1,0 +1,114 @@
+                           TinyML
+                       易灵思AI加速平台简介
+
+
+
+
+国 产 化 中 高 端 F P G A 领 军 厂 商 —— 加 速 您 的 创 芯 ！
+                                                2025.6
+易灵思(深圳)科技有限公司                                  Herbert
+TinyML方案设计介绍
+
+
+               ➢基于SapphireSoc的
+                RISC-V开发
+               ➢完整的视频处理流程
+Sapphire Soc
+
+               ➢开源RISC-V指令集
+               ➢高可定制性
+                • 指令
+                • Cache
+                • FPU
+                • 存储
+                • 外设
+               ➢高性能32位实现
+                • DMIPS：1.16
+                • Fmax: > 350 MHz
+               ➢单核/多核实现
+TinyML架构简介
+
+
+
+
+             ➢Tensorflow Lite推理框架
+             ➢INT8量化模型加速
+             ➢基于RISCV的软件开发
+             ➢可灵活配置加速模块资源
+             ➢可自定义加速算子
+典型图像处理的网络结构
+
+
+ ➢yolo_person_detect：用于行人检测
+ ➢主要包含计算的层：
+   • Conv2D/Depthwise：占据了超过90%的计算量
+   • 少量算数运算层：Add
+   • 激活函数层：LeakyRelu
+TinyML加速算子
+
+
+
+
+             ➢卷积：Conv2D、Depthwise
+             ➢算数：Add/Mul
+             ➢全连接：FullyConnected
+             ➢激活函数：Relu/LeaklyRelu
+TinyML使用流程
+
+
+
+             ➢模型开发
+             ➢模型量化
+             ➢数据导出
+             ➢硬件部署
+TinyML 数据导出
+
+
+              ➢自动分析加速算子
+              ➢加速器参数配置
+              ➢资源占用预估
+              ➢导出数据文件
+TinyML 部署和运行
+
+
+  ➢ TinyML IP、外设、系统集成   Efinity工程
+
+
+
+
+                        TinyML软件    ➢ TinyML模型加载、推理、结果输出
+
+
+
+
+  ➢ 全工程烧录并运行
+                        FPGA设备
+TinyML示例介绍
+
+                                                                                                    Quality
+Application            Framework    Model format     Model         Input Size   Dataset
+                                                                                                    Target (%)
+Yolo Person                                                                                         20.30
+                       Darknet      .cfg, .weights   Yolo          96x96x3      COCO(person)
+Detection                                                                                           (mAP@0.5)
+Person Detection       Tensorflow   .pb              MobilenetV1   96x96x1      Visual Wake Words   84.0
+Image Classification   Tensorflow   .h5              ResNet        32x32x3      CIFAR10             85.0
+Keyword Spotting       Tensorflow   .pb              DS-CNN        49x10x1      Speech Commands     90.0
+                                                                                                    468(3D
+Face Landmark          Tensorflow   .pb              MediaPipe     192x192x3    Charade
+                                                                                                    Landmark)
+Anomaly Detection      Tensorflow   .h5              AutoEncoder   1x640        ToyADMOS            0.85 (AUC)
+ 感谢您的观看
+             www.elitestek .com
+
+
+
+
+                 关注公众号     关注哔哩哔哩
+
+
+
+免责申明：
+1、任何在本文档上出现的信息仅作为参考，实际可能会有变动，请以实际情况为准。2、本文档内任何一页未经允许禁止传播。
+3、“易灵思”及“Trion”、“钛金系列”等产品均版权归属易灵思（深圳）科技有限公司。
+

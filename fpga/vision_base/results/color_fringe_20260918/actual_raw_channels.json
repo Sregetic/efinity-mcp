@@ -1,0 +1,26 @@
+[
+  {
+    "position": 0,
+    "mean": 27.340217391304346,
+    "max": 213.0,
+    "saturated": 0
+  },
+  {
+    "position": 1,
+    "mean": 34.196739130434786,
+    "max": 255.0,
+    "saturated": 1
+  },
+  {
+    "position": 2,
+    "mean": 34.18152173913043,
+    "max": 255.0,
+    "saturated": 1
+  },
+  {
+    "position": 3,
+    "mean": 33.275,
+    "max": 205.0,
+    "saturated": 0
+  }
+]

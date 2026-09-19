@@ -32,7 +32,7 @@ always @(posedge clk)begin gv<=avalid;gx<=ax;gy<=ay;gdata<=(ax<2||ay<2)?0:sum[11
 wire bvalid;wire[8:0]bx,by;wire[71:0]bw;
 vision_sparse_window #(.W(480),.CW(9)) sobel_window(clk,rst_n,gv,gx,gy,gdata,bvalid,bx,by,bw);
 wire[10:0]mag;wire[1:0]dir;wire[18:0]bm;
-vision_sobel #(.META(19)) grad(clk,bw,{bx,by,bvalid},mag,dir,bm);
+vision_sobel #(.META(19)) grad(clk,bw,{bx,by,bvalid},mag,dir,bm,11'd0,);
 wire nv;wire[8:0]nx,ny;wire[116:0]nw;
 vision_sparse_window #(.W(480),.BPP(13),.CW(9)) nms_window(clk,rst_n,bm[0],bm[18:10],bm[9:1],{mag,dir},nv,nx,ny,nw);
 wire[12:0]center=nw[4*13+:13];wire[10:0]cm=center[12:2];reg[10:0]n1,n2;
@@ -48,6 +48,8 @@ wire[1:0]classification=!kept?0:(cm>=hi?2:(cm>=(hi>>1)?1:0));
 wire cv=nv&&nx>=3&&ny>=3;
 wire last=nv&&nx==479&&ny==269;
 wire[8:0]outx=nx-3,outy=ny-3;
-vision_hysteresis_sweep hyst(.clk(clk),.rst_n(rst_n),.vblank(vblank),.class_valid(cv),.class_x(outx),.class_y(outy),.classification(classification),.class_last(last),
+// cv overwrites the complete 477x267 mutable region each capture.
+// The remaining right/bottom padding is always zero. No per-frame full clear.
+vision_hysteresis_sweep #(.REUSE_CAPTURE_MAP(1)) hyst(.clk(clk),.rst_n(rst_n),.vblank(vblank),.class_valid(cv),.class_x(outx),.class_y(outy),.classification(classification),.class_last(last),
  .display_x(display_x[10:2]),.display_y(display_y[10:2]),.capture_enable(capture),.ready(ready),.busy(busy),.pixel(edge_pixel),.completed(completed),.fault(fault),.debug_state(),.debug_queue());
 endmodule

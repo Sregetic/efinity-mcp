@@ -1,0 +1,24 @@
+{
+  "capture_fps": 29.978345520658856,
+  "raw_fps": 29.861347735607396,
+  "raw_complete": true,
+  "fov_complete": true,
+  "overruns": [
+    0,
+    0
+  ],
+  "write_errors": [
+    1,
+    1
+  ],
+  "canny_fault": false,
+  "mode": 7,
+  "legacy_m7_switch_ok": true,
+  "recognition_switch_ok": true,
+  "wns_ns": 0.334,
+  "whs_ns": 0.026,
+  "unassigned_pins": 0,
+  "bit_sha256": "9cbbf27d2bcd8fe0d775ba7b3b0df9eff451786f1d0d4c77fb4bd6da24ea5832",
+  "physical_shape_acceptance": "pending user circle/rectangle trials",
+  "flash_modified": false
+}

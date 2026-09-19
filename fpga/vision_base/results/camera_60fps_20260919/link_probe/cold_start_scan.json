@@ -1,0 +1,4462 @@
+{
+  "trials": [
+    {
+      "tap": 17,
+      "fps": 59.59676125107782,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794953.652346,
+          "page": 13,
+          "raw": "564953312609190d00600807000004690000000000004ad0",
+          "sensor_frames": 1129,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794953.8686397,
+          "page": 13,
+          "raw": "564953312609190d00600807000004760000000000004ad0",
+          "sensor_frames": 1142,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794954.075474,
+          "page": 13,
+          "raw": "564953312609190d00600807000004830000000000004ad0",
+          "sensor_frames": 1155,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794954.2899644,
+          "page": 13,
+          "raw": "564953312609190d006008070000048f0000000000004ad0",
+          "sensor_frames": 1167,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794954.557671,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794954.7746296,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 8,
+      "fps": 56.91787011190345,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794955.107487,
+          "page": 13,
+          "raw": "564953312609190d00600807000004c00000000000004ad0",
+          "sensor_frames": 1216,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794955.3231244,
+          "page": 13,
+          "raw": "564953312609190d00600807000004cd0000000000004ad0",
+          "sensor_frames": 1229,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794955.5401626,
+          "page": 13,
+          "raw": "564953312609190d00600807000004da0000000000004ad0",
+          "sensor_frames": 1242,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794955.7575464,
+          "page": 13,
+          "raw": "564953312609190d00600807000004e50000000000004ad0",
+          "sensor_frames": 1253,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794956.0257454,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794956.2368994,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 12,
+      "fps": 58.96479542024891,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794956.5574324,
+          "page": 13,
+          "raw": "564953312609190d00600807000005140000000000004ad0",
+          "sensor_frames": 1300,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794956.7740185,
+          "page": 13,
+          "raw": "564953312609190d00600807000005210000000000004ad0",
+          "sensor_frames": 1313,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794956.9851444,
+          "page": 13,
+          "raw": "564953312609190d006008070000052e0000000000004ad0",
+          "sensor_frames": 1326,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794957.2018847,
+          "page": 13,
+          "raw": "564953312609190d006008070000053a0000000000004ad0",
+          "sensor_frames": 1338,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794957.4699438,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794957.6882794,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 4,
+      "fps": 57.86510976862047,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794958.0105057,
+          "page": 13,
+          "raw": "564953312609190d006008070000056a0000000000004ad0",
+          "sensor_frames": 1386,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794958.217035,
+          "page": 13,
+          "raw": "564953312609190d00600807000005770000000000004ad0",
+          "sensor_frames": 1399,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794958.433735,
+          "page": 13,
+          "raw": "564953312609190d00600807000005830000000000004ad0",
+          "sensor_frames": 1411,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794958.6499238,
+          "page": 13,
+          "raw": "564953312609190d006008070000058f0000000000004ad0",
+          "sensor_frames": 1423,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794958.918809,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794959.1360576,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 20,
+      "fps": 58.526404227849106,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794959.4694343,
+          "page": 13,
+          "raw": "564953312609190d00600807000005c00000000000004ad0",
+          "sensor_frames": 1472,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794959.684903,
+          "page": 13,
+          "raw": "564953312609190d00600807000005cd0000000000004ad0",
+          "sensor_frames": 1485,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794959.901309,
+          "page": 13,
+          "raw": "564953312609190d00600807000005d90000000000004ad0",
+          "sensor_frames": 1497,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794960.1187139,
+          "page": 13,
+          "raw": "564953312609190d00600807000005e60000000000004ad0",
+          "sensor_frames": 1510,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794960.3867993,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794960.6030602,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 24,
+      "fps": 53.90221710455295,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794960.9359224,
+          "page": 13,
+          "raw": "564953312609190d00600807000006170000000000004ad0",
+          "sensor_frames": 1559,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794961.1535418,
+          "page": 13,
+          "raw": "564953312609190d00600807000006240000000000004ad0",
+          "sensor_frames": 1572,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794961.3706121,
+          "page": 13,
+          "raw": "564953312609190d006008070000062f0000000000004ad0",
+          "sensor_frames": 1583,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794961.5852463,
+          "page": 13,
+          "raw": "564953312609190d006008070000063a0000000000004ad0",
+          "sensor_frames": 1594,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794961.8529582,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794962.0707538,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 28,
+      "fps": 0.0,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794962.3972065,
+          "page": 13,
+          "raw": "564953312609190d00600807000006640000000000004ad0",
+          "sensor_frames": 1636,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794962.6033957,
+          "page": 13,
+          "raw": "564953312609190d00600807000006640000000000004ad0",
+          "sensor_frames": 1636,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794962.8192294,
+          "page": 13,
+          "raw": "564953312609190d00600807000006640000000000004ad0",
+          "sensor_frames": 1636,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794963.0360632,
+          "page": 13,
+          "raw": "564953312609190d00600807000006640000000000004ad0",
+          "sensor_frames": 1636,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794963.304362,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794963.5213225,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 0,
+      "fps": 59.91693860649352,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794963.852982,
+          "page": 13,
+          "raw": "564953312609190d00600807000006680000000000004ad0",
+          "sensor_frames": 1640,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794964.0700936,
+          "page": 13,
+          "raw": "564953312609190d00600807000006750000000000004ad0",
+          "sensor_frames": 1653,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794964.2875085,
+          "page": 13,
+          "raw": "564953312609190d00600807000006820000000000004ad0",
+          "sensor_frames": 1666,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794964.5038831,
+          "page": 13,
+          "raw": "564953312609190d006008070000068f0000000000004ad0",
+          "sensor_frames": 1679,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794964.773372,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794964.989666,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 32,
+      "fps": 55.41910320079894,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794965.3232174,
+          "page": 13,
+          "raw": "564953312609190d00600807000006c00000000000004ad0",
+          "sensor_frames": 1728,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794965.5390704,
+          "page": 13,
+          "raw": "564953312609190d00600807000006cc0000000000004ad0",
+          "sensor_frames": 1740,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794965.756212,
+          "page": 13,
+          "raw": "564953312609190d00600807000006d80000000000004ad0",
+          "sensor_frames": 1752,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794965.972813,
+          "page": 13,
+          "raw": "564953312609190d00600807000006e40000000000004ad0",
+          "sensor_frames": 1764,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794966.2272947,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794966.4351728,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 36,
+      "fps": 57.84272249373078,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794966.7674787,
+          "page": 13,
+          "raw": "564953312609190d006008070000070e0000000000004ad0",
+          "sensor_frames": 1806,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794966.9745402,
+          "page": 13,
+          "raw": "564953312609190d006008070000071b0000000000004ad0",
+          "sensor_frames": 1819,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794967.191678,
+          "page": 13,
+          "raw": "564953312609190d00600807000007260000000000004ad0",
+          "sensor_frames": 1830,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794967.4071443,
+          "page": 13,
+          "raw": "564953312609190d00600807000007330000000000004ad0",
+          "sensor_frames": 1843,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794967.676631,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794967.8928027,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 40,
+      "fps": 50.504727701834184,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794968.22576,
+          "page": 13,
+          "raw": "564953312609190d00600807000007630000000000004ad0",
+          "sensor_frames": 1891,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794968.4368465,
+          "page": 13,
+          "raw": "564953312609190d006008070000076e0000000000004ad0",
+          "sensor_frames": 1902,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794968.6417222,
+          "page": 13,
+          "raw": "564953312609190d00600807000007790000000000004ad0",
+          "sensor_frames": 1913,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794968.859364,
+          "page": 13,
+          "raw": "564953312609190d00600807000007830000000000004ad0",
+          "sensor_frames": 1923,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794969.1270204,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794969.3446233,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 44,
+      "fps": 48.020959958103724,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794969.677696,
+          "page": 13,
+          "raw": "564953312609190d00600807000007ae0000000000004ad0",
+          "sensor_frames": 1966,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794969.8940914,
+          "page": 13,
+          "raw": "564953312609190d00600807000007b90000000000004ad0",
+          "sensor_frames": 1977,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794970.1115985,
+          "page": 13,
+          "raw": "564953312609190d00600807000007c20000000000004ad0",
+          "sensor_frames": 1986,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794970.3232474,
+          "page": 13,
+          "raw": "564953312609190d00600807000007cd0000000000004ad0",
+          "sensor_frames": 1997,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794970.5913045,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794970.794894,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 48,
+      "fps": 56.874127955130824,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794971.1285474,
+          "page": 13,
+          "raw": "564953312609190d00600807000007fc0000000000004ad0",
+          "sensor_frames": 2044,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794971.3447,
+          "page": 13,
+          "raw": "564953312609190d00600807000008090000000000004ad0",
+          "sensor_frames": 2057,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794971.5623815,
+          "page": 13,
+          "raw": "564953312609190d00600807000008150000000000004ad0",
+          "sensor_frames": 2069,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794971.7791069,
+          "page": 13,
+          "raw": "564953312609190d00600807000008210000000000004ad0",
+          "sensor_frames": 2081,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794972.0466661,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794972.2643566,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 52,
+      "fps": 53.79679485370671,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794972.5794165,
+          "page": 13,
+          "raw": "564953312609190d006008070000084c0000000000004ad0",
+          "sensor_frames": 2124,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794972.794854,
+          "page": 13,
+          "raw": "564953312609190d00600807000008580000000000004ad0",
+          "sensor_frames": 2136,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794973.0127742,
+          "page": 13,
+          "raw": "564953312609190d00600807000008630000000000004ad0",
+          "sensor_frames": 2147,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794973.230013,
+          "page": 13,
+          "raw": "564953312609190d006008070000086f0000000000004ad0",
+          "sensor_frames": 2159,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794973.4978762,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794973.7146277,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 56,
+      "fps": 57.391008883279234,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794974.0466022,
+          "page": 13,
+          "raw": "564953312609190d006008070000089c0000000000004ad0",
+          "sensor_frames": 2204,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794974.263541,
+          "page": 13,
+          "raw": "564953312609190d00600807000008a80000000000004ad0",
+          "sensor_frames": 2216,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794974.4808085,
+          "page": 13,
+          "raw": "564953312609190d00600807000008b40000000000004ad0",
+          "sensor_frames": 2228,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794974.6913025,
+          "page": 13,
+          "raw": "564953312609190d00600807000008c10000000000004ad0",
+          "sensor_frames": 2241,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794974.959507,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794975.1667423,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 60,
+      "fps": 57.9059604734588,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794975.5003405,
+          "page": 13,
+          "raw": "564953312609190d00600807000008ee0000000000004ad0",
+          "sensor_frames": 2286,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794975.7160318,
+          "page": 13,
+          "raw": "564953312609190d00600807000008fb0000000000004ad0",
+          "sensor_frames": 2299,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794975.9224887,
+          "page": 13,
+          "raw": "564953312609190d00600807000009070000000000004ad0",
+          "sensor_frames": 2311,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794976.1393075,
+          "page": 13,
+          "raw": "564953312609190d00600807000009130000000000004ad0",
+          "sensor_frames": 2323,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794976.4071243,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794976.6242743,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 1,
+      "fps": 59.94480227264066,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794976.9557004,
+          "page": 13,
+          "raw": "564953312609190d00600807000009400000000000004ad0",
+          "sensor_frames": 2368,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794977.1726406,
+          "page": 13,
+          "raw": "564953312609190d006008070000094d0000000000004ad0",
+          "sensor_frames": 2381,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794977.3894408,
+          "page": 13,
+          "raw": "564953312609190d006008070000095a0000000000004ad0",
+          "sensor_frames": 2394,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794977.606299,
+          "page": 13,
+          "raw": "564953312609190d00600807000009670000000000004ad0",
+          "sensor_frames": 2407,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794977.8738096,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794978.0910227,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 2,
+      "fps": 59.85760082201905,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794978.42499,
+          "page": 13,
+          "raw": "564953312609190d00600807000009980000000000004ad0",
+          "sensor_frames": 2456,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794978.6413007,
+          "page": 13,
+          "raw": "564953312609190d00600807000009a50000000000004ad0",
+          "sensor_frames": 2469,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794978.8433979,
+          "page": 13,
+          "raw": "564953312609190d00600807000009b20000000000004ad0",
+          "sensor_frames": 2482,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794979.05983,
+          "page": 13,
+          "raw": "564953312609190d00600807000009be0000000000004ad0",
+          "sensor_frames": 2494,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794979.3281991,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794979.5443804,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 3,
+      "fps": 58.51684221695247,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794979.879004,
+          "page": 13,
+          "raw": "564953312609190d00600807000009ee0000000000004ad0",
+          "sensor_frames": 2542,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794980.0950837,
+          "page": 13,
+          "raw": "564953312609190d00600807000009fb0000000000004ad0",
+          "sensor_frames": 2555,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794980.3113163,
+          "page": 13,
+          "raw": "564953312609190d0060080700000a080000000000004ad0",
+          "sensor_frames": 2568,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794980.5283897,
+          "page": 13,
+          "raw": "564953312609190d0060080700000a140000000000004ad0",
+          "sensor_frames": 2580,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794980.7961075,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794981.004227,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 5,
+      "fps": 55.402876422865056,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794981.3389237,
+          "page": 13,
+          "raw": "564953312609190d0060080700000a410000000000004ad0",
+          "sensor_frames": 2625,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794981.5546467,
+          "page": 13,
+          "raw": "564953312609190d0060080700000a4c0000000000004ad0",
+          "sensor_frames": 2636,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794981.7722313,
+          "page": 13,
+          "raw": "564953312609190d0060080700000a580000000000004ad0",
+          "sensor_frames": 2648,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794981.9887094,
+          "page": 13,
+          "raw": "564953312609190d0060080700000a650000000000004ad0",
+          "sensor_frames": 2661,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794982.2574983,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794982.4743767,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 6,
+      "fps": 56.928080033513595,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794982.795109,
+          "page": 13,
+          "raw": "564953312609190d0060080700000a960000000000004ad0",
+          "sensor_frames": 2710,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794983.0112424,
+          "page": 13,
+          "raw": "564953312609190d0060080700000aa20000000000004ad0",
+          "sensor_frames": 2722,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794983.228363,
+          "page": 13,
+          "raw": "564953312609190d0060080700000aae0000000000004ad0",
+          "sensor_frames": 2734,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794983.445052,
+          "page": 13,
+          "raw": "564953312609190d0060080700000abb0000000000004ad0",
+          "sensor_frames": 2747,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794983.7142632,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794983.931097,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 7,
+      "fps": 60.29775345717672,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794984.2638109,
+          "page": 13,
+          "raw": "564953312609190d0060080700000aeb0000000000004ad0",
+          "sensor_frames": 2795,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794984.480903,
+          "page": 13,
+          "raw": "564953312609190d0060080700000af80000000000004ad0",
+          "sensor_frames": 2808,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794984.69791,
+          "page": 13,
+          "raw": "564953312609190d0060080700000b050000000000004ad0",
+          "sensor_frames": 2821,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794984.9106011,
+          "page": 13,
+          "raw": "564953312609190d0060080700000b120000000000004ad0",
+          "sensor_frames": 2834,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794985.1795492,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794985.396842,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 9,
+      "fps": 60.156256803431575,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794985.7306013,
+          "page": 13,
+          "raw": "564953312609190d0060080700000b430000000000004ad0",
+          "sensor_frames": 2883,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794985.9471369,
+          "page": 13,
+          "raw": "564953312609190d0060080700000b500000000000004ad0",
+          "sensor_frames": 2896,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794986.1628766,
+          "page": 13,
+          "raw": "564953312609190d0060080700000b5d0000000000004ad0",
+          "sensor_frames": 2909,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794986.378913,
+          "page": 13,
+          "raw": "564953312609190d0060080700000b6a0000000000004ad0",
+          "sensor_frames": 2922,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794986.6483011,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794986.8646648,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 10,
+      "fps": 58.40749921211366,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794987.1953878,
+          "page": 13,
+          "raw": "564953312609190d0060080700000b9a0000000000004ad0",
+          "sensor_frames": 2970,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794987.412852,
+          "page": 13,
+          "raw": "564953312609190d0060080700000ba60000000000004ad0",
+          "sensor_frames": 2982,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794987.6298656,
+          "page": 13,
+          "raw": "564953312609190d0060080700000bb30000000000004ad0",
+          "sensor_frames": 2995,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794987.8459892,
+          "page": 13,
+          "raw": "564953312609190d0060080700000bc00000000000004ad0",
+          "sensor_frames": 3008,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794988.1154401,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794988.3312888,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 11,
+      "fps": 58.238613224533665,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794988.665891,
+          "page": 13,
+          "raw": "564953312609190d0060080700000bf00000000000004ad0",
+          "sensor_frames": 3056,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794988.8830543,
+          "page": 13,
+          "raw": "564953312609190d0060080700000bfc0000000000004ad0",
+          "sensor_frames": 3068,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794989.0849495,
+          "page": 13,
+          "raw": "564953312609190d0060080700000c090000000000004ad0",
+          "sensor_frames": 3081,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794989.3012083,
+          "page": 13,
+          "raw": "564953312609190d0060080700000c150000000000004ad0",
+          "sensor_frames": 3093,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794989.5687108,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794989.7849286,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 13,
+      "fps": 60.20554216246655,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794990.1211834,
+          "page": 13,
+          "raw": "564953312609190d0060080700000c460000000000004ad0",
+          "sensor_frames": 3142,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794990.3365934,
+          "page": 13,
+          "raw": "564953312609190d0060080700000c530000000000004ad0",
+          "sensor_frames": 3155,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794990.552353,
+          "page": 13,
+          "raw": "564953312609190d0060080700000c600000000000004ad0",
+          "sensor_frames": 3168,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794990.7689643,
+          "page": 13,
+          "raw": "564953312609190d0060080700000c6d0000000000004ad0",
+          "sensor_frames": 3181,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794991.0372667,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794991.2447248,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 14,
+      "fps": 59.95631539825033,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794991.5785377,
+          "page": 13,
+          "raw": "564953312609190d0060080700000c9e0000000000004ad0",
+          "sensor_frames": 3230,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794991.7948155,
+          "page": 13,
+          "raw": "564953312609190d0060080700000cab0000000000004ad0",
+          "sensor_frames": 3243,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794992.0120077,
+          "page": 13,
+          "raw": "564953312609190d0060080700000cb80000000000004ad0",
+          "sensor_frames": 3256,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794992.2290113,
+          "page": 13,
+          "raw": "564953312609190d0060080700000cc50000000000004ad0",
+          "sensor_frames": 3269,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794992.4964864,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794992.713667,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 15,
+      "fps": 58.46268785919382,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794993.0355737,
+          "page": 13,
+          "raw": "564953312609190d0060080700000cf50000000000004ad0",
+          "sensor_frames": 3317,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794993.252705,
+          "page": 13,
+          "raw": "564953312609190d0060080700000d010000000000004ad0",
+          "sensor_frames": 3329,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794993.470087,
+          "page": 13,
+          "raw": "564953312609190d0060080700000d0e0000000000004ad0",
+          "sensor_frames": 3342,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794993.685561,
+          "page": 13,
+          "raw": "564953312609190d0060080700000d1b0000000000004ad0",
+          "sensor_frames": 3355,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794993.9545228,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794994.170451,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 16,
+      "fps": 58.81611388329,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794994.5060863,
+          "page": 13,
+          "raw": "564953312609190d0060080700000d4c0000000000004ad0",
+          "sensor_frames": 3404,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794994.722292,
+          "page": 13,
+          "raw": "564953312609190d0060080700000d590000000000004ad0",
+          "sensor_frames": 3417,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794994.9390016,
+          "page": 13,
+          "raw": "564953312609190d0060080700000d660000000000004ad0",
+          "sensor_frames": 3430,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794995.1521678,
+          "page": 13,
+          "raw": "564953312609190d0060080700000d720000000000004ad0",
+          "sensor_frames": 3442,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794995.4203503,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794995.6391988,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 18,
+      "fps": 60.25850419324822,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794995.9741638,
+          "page": 13,
+          "raw": "564953312609190d0060080700000da30000000000004ad0",
+          "sensor_frames": 3491,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794996.1908278,
+          "page": 13,
+          "raw": "564953312609190d0060080700000db00000000000004ad0",
+          "sensor_frames": 3504,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794996.4037354,
+          "page": 13,
+          "raw": "564953312609190d0060080700000dbd0000000000004ad0",
+          "sensor_frames": 3517,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794996.6213753,
+          "page": 13,
+          "raw": "564953312609190d0060080700000dca0000000000004ad0",
+          "sensor_frames": 3530,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794996.889655,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794997.106465,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 19,
+      "fps": 56.85341719304904,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794997.4368918,
+          "page": 13,
+          "raw": "564953312609190d0060080700000df70000000000004ad0",
+          "sensor_frames": 3575,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794997.6538856,
+          "page": 13,
+          "raw": "564953312609190d0060080700000e020000000000004ad0",
+          "sensor_frames": 3586,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794997.8706105,
+          "page": 13,
+          "raw": "564953312609190d0060080700000e0f0000000000004ad0",
+          "sensor_frames": 3599,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794998.0876882,
+          "page": 13,
+          "raw": "564953312609190d0060080700000e1c0000000000004ad0",
+          "sensor_frames": 3612,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794998.3556845,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789794998.5717628,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 21,
+      "fps": 59.88211398913895,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794998.906087,
+          "page": 13,
+          "raw": "564953312609190d0060080700000e4c0000000000004ad0",
+          "sensor_frames": 3660,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794999.1226895,
+          "page": 13,
+          "raw": "564953312609190d0060080700000e590000000000004ad0",
+          "sensor_frames": 3673,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794999.3250663,
+          "page": 13,
+          "raw": "564953312609190d0060080700000e660000000000004ad0",
+          "sensor_frames": 3686,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794999.540667,
+          "page": 13,
+          "raw": "564953312609190d0060080700000e720000000000004ad0",
+          "sensor_frames": 3698,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789794999.8088324,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795000.0253527,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 22,
+      "fps": 50.71841742978913,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795000.3610334,
+          "page": 13,
+          "raw": "564953312609190d0060080700000ea30000000000004ad0",
+          "sensor_frames": 3747,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795000.5772746,
+          "page": 13,
+          "raw": "564953312609190d0060080700000eae0000000000004ad0",
+          "sensor_frames": 3758,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795000.7942083,
+          "page": 13,
+          "raw": "564953312609190d0060080700000eb80000000000004ad0",
+          "sensor_frames": 3768,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795001.0116847,
+          "page": 13,
+          "raw": "564953312609190d0060080700000ec40000000000004ad0",
+          "sensor_frames": 3780,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795001.28091,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795001.4851649,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 23,
+      "fps": 58.51720744985505,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795001.8210192,
+          "page": 13,
+          "raw": "564953312609190d0060080700000ef30000000000004ad0",
+          "sensor_frames": 3827,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795002.0377088,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f000000000000004ad0",
+          "sensor_frames": 3840,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795002.2547257,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f0c0000000000004ad0",
+          "sensor_frames": 3852,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795002.4704008,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f190000000000004ad0",
+          "sensor_frames": 3865,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795002.7400105,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795002.9568825,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 25,
+      "fps": 10.763488762908064,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795003.2762773,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f460000000000004ad0",
+          "sensor_frames": 3910,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795003.4930642,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f490000000000004ad0",
+          "sensor_frames": 3913,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795003.709674,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f4b0000000000004ad0",
+          "sensor_frames": 3915,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795003.926624,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f4d0000000000004ad0",
+          "sensor_frames": 3917,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795004.1947823,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795004.411826,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 26,
+      "fps": 3.1009013697981973,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795004.7475867,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f580000000000004ad0",
+          "sensor_frames": 3928,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795004.964385,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f580000000000004ad0",
+          "sensor_frames": 3928,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795005.1811144,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f580000000000004ad0",
+          "sensor_frames": 3928,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795005.3925605,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f5a0000000000004ad0",
+          "sensor_frames": 3930,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795005.6605735,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795005.8773878,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 27,
+      "fps": 3.087603478565568,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795006.2135599,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f5d0000000000004ad0",
+          "sensor_frames": 3933,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795006.4303596,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f5d0000000000004ad0",
+          "sensor_frames": 3933,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795006.6447508,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f5e0000000000004ad0",
+          "sensor_frames": 3934,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795006.8613114,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f5f0000000000004ad0",
+          "sensor_frames": 3935,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795007.1311338,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795007.3471558,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 29,
+      "fps": 0.0,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795007.6772015,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f620000000000004ad0",
+          "sensor_frames": 3938,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795007.894271,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f620000000000004ad0",
+          "sensor_frames": 3938,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795008.1120148,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f620000000000004ad0",
+          "sensor_frames": 3938,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795008.328106,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f620000000000004ad0",
+          "sensor_frames": 3938,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795008.5968444,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795008.8140059,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 30,
+      "fps": 0.0,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795009.1506872,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f620000000000004ad0",
+          "sensor_frames": 3938,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795009.3675861,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f620000000000004ad0",
+          "sensor_frames": 3938,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795009.5840955,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f620000000000004ad0",
+          "sensor_frames": 3938,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795009.8008072,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f620000000000004ad0",
+          "sensor_frames": 3938,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795010.0685394,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795010.285213,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 31,
+      "fps": 59.31570450436503,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795010.6199126,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f6a0000000000004ad0",
+          "sensor_frames": 3946,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795010.8370094,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f760000000000004ad0",
+          "sensor_frames": 3958,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795011.053019,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f830000000000004ad0",
+          "sensor_frames": 3971,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795011.2605524,
+          "page": 13,
+          "raw": "564953312609190d0060080700000f900000000000004ad0",
+          "sensor_frames": 3984,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795011.5208168,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795011.725496,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 33,
+      "fps": 55.40570220822968,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795012.0602884,
+          "page": 13,
+          "raw": "564953312609190d0060080700000fbc0000000000004ad0",
+          "sensor_frames": 4028,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795012.2774715,
+          "page": 13,
+          "raw": "564953312609190d0060080700000fc80000000000004ad0",
+          "sensor_frames": 4040,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795012.4930575,
+          "page": 13,
+          "raw": "564953312609190d0060080700000fd40000000000004ad0",
+          "sensor_frames": 4052,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795012.710041,
+          "page": 13,
+          "raw": "564953312609190d0060080700000fe00000000000004ad0",
+          "sensor_frames": 4064,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795012.9780447,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795013.1955156,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 34,
+      "fps": 56.970692201486116,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795013.5177155,
+          "page": 13,
+          "raw": "564953312609190d006008070000100d0000000000004ad0",
+          "sensor_frames": 4109,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795013.7331932,
+          "page": 13,
+          "raw": "564953312609190d00600807000010180000000000004ad0",
+          "sensor_frames": 4120,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795013.9501317,
+          "page": 13,
+          "raw": "564953312609190d00600807000010250000000000004ad0",
+          "sensor_frames": 4133,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795014.1671722,
+          "page": 13,
+          "raw": "564953312609190d00600807000010320000000000004ad0",
+          "sensor_frames": 4146,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795014.4360108,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795014.6538162,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 35,
+      "fps": 60.44445101359778,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795014.988093,
+          "page": 13,
+          "raw": "564953312609190d00600807000010600000000000004ad0",
+          "sensor_frames": 4192,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795015.2054584,
+          "page": 13,
+          "raw": "564953312609190d006008070000106d0000000000004ad0",
+          "sensor_frames": 4205,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795015.4218228,
+          "page": 13,
+          "raw": "564953312609190d006008070000107a0000000000004ad0",
+          "sensor_frames": 4218,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795015.6333134,
+          "page": 13,
+          "raw": "564953312609190d00600807000010870000000000004ad0",
+          "sensor_frames": 4231,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795015.9017973,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795016.1180658,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 37,
+      "fps": 58.76439424580431,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795016.4548585,
+          "page": 13,
+          "raw": "564953312609190d00600807000010b50000000000004ad0",
+          "sensor_frames": 4277,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795016.6716862,
+          "page": 13,
+          "raw": "564953312609190d00600807000010c10000000000004ad0",
+          "sensor_frames": 4289,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795016.8850136,
+          "page": 13,
+          "raw": "564953312609190d00600807000010ce0000000000004ad0",
+          "sensor_frames": 4302,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795017.1015086,
+          "page": 13,
+          "raw": "564953312609190d00600807000010db0000000000004ad0",
+          "sensor_frames": 4315,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795017.37065,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795017.5865846,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 38,
+      "fps": 53.85124209476017,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795017.9183855,
+          "page": 13,
+          "raw": "564953312609190d00600807000011060000000000004ad0",
+          "sensor_frames": 4358,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795018.134583,
+          "page": 13,
+          "raw": "564953312609190d00600807000011120000000000004ad0",
+          "sensor_frames": 4370,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795018.3517585,
+          "page": 13,
+          "raw": "564953312609190d006008070000111d0000000000004ad0",
+          "sensor_frames": 4381,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795018.568324,
+          "page": 13,
+          "raw": "564953312609190d00600807000011290000000000004ad0",
+          "sensor_frames": 4393,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795018.8379369,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795019.0544462,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 39,
+      "fps": 58.41458477567621,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795019.3893445,
+          "page": 13,
+          "raw": "564953312609190d00600807000011570000000000004ad0",
+          "sensor_frames": 4439,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795019.6069245,
+          "page": 13,
+          "raw": "564953312609190d00600807000011630000000000004ad0",
+          "sensor_frames": 4451,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795019.8231635,
+          "page": 13,
+          "raw": "564953312609190d00600807000011700000000000004ad0",
+          "sensor_frames": 4464,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795020.039867,
+          "page": 13,
+          "raw": "564953312609190d006008070000117d0000000000004ad0",
+          "sensor_frames": 4477,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795020.3082688,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795020.5249343,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 41,
+      "fps": 59.69019017444517,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795020.8646245,
+          "page": 13,
+          "raw": "564953312609190d00600807000011a80000000000004ad0",
+          "sensor_frames": 4520,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795021.0816648,
+          "page": 13,
+          "raw": "564953312609190d00600807000011b50000000000004ad0",
+          "sensor_frames": 4533,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795021.2983558,
+          "page": 13,
+          "raw": "564953312609190d00600807000011c10000000000004ad0",
+          "sensor_frames": 4545,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795021.501245,
+          "page": 13,
+          "raw": "564953312609190d00600807000011ce0000000000004ad0",
+          "sensor_frames": 4558,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795021.7611954,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795021.9655316,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 42,
+      "fps": 56.948406379984476,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795022.3026025,
+          "page": 13,
+          "raw": "564953312609190d00600807000011fb0000000000004ad0",
+          "sensor_frames": 4603,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795022.5190778,
+          "page": 13,
+          "raw": "564953312609190d00600807000012080000000000004ad0",
+          "sensor_frames": 4616,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795022.7363412,
+          "page": 13,
+          "raw": "564953312609190d00600807000012130000000000004ad0",
+          "sensor_frames": 4627,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795022.9523134,
+          "page": 13,
+          "raw": "564953312609190d00600807000012200000000000004ad0",
+          "sensor_frames": 4640,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795023.2207286,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795023.436355,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 43,
+      "fps": 59.128024641939895,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795023.7732959,
+          "page": 13,
+          "raw": "564953312609190d006008070000124f0000000000004ad0",
+          "sensor_frames": 4687,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795023.9821417,
+          "page": 13,
+          "raw": "564953312609190d006008070000125b0000000000004ad0",
+          "sensor_frames": 4699,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795024.1991405,
+          "page": 13,
+          "raw": "564953312609190d00600807000012680000000000004ad0",
+          "sensor_frames": 4712,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795024.4159691,
+          "page": 13,
+          "raw": "564953312609190d00600807000012750000000000004ad0",
+          "sensor_frames": 4725,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795024.6846716,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795024.9010694,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 45,
+      "fps": 56.586365302327465,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795025.2374287,
+          "page": 13,
+          "raw": "564953312609190d00600807000012a40000000000004ad0",
+          "sensor_frames": 4772,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795025.4545717,
+          "page": 13,
+          "raw": "564953312609190d00600807000012b10000000000004ad0",
+          "sensor_frames": 4785,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795025.660843,
+          "page": 13,
+          "raw": "564953312609190d00600807000012bd0000000000004ad0",
+          "sensor_frames": 4797,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795025.8736243,
+          "page": 13,
+          "raw": "564953312609190d00600807000012c80000000000004ad0",
+          "sensor_frames": 4808,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795026.141875,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795026.3583012,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 46,
+      "fps": 55.43354855242005,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795026.6939394,
+          "page": 13,
+          "raw": "564953312609190d00600807000012f60000000000004ad0",
+          "sensor_frames": 4854,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795026.9111001,
+          "page": 13,
+          "raw": "564953312609190d00600807000013030000000000004ad0",
+          "sensor_frames": 4867,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795027.1257167,
+          "page": 13,
+          "raw": "564953312609190d006008070000130d0000000000004ad0",
+          "sensor_frames": 4877,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795027.3433657,
+          "page": 13,
+          "raw": "564953312609190d006008070000131a0000000000004ad0",
+          "sensor_frames": 4890,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795027.6110134,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795027.8283732,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 47,
+      "fps": 56.97728093801676,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795028.1590335,
+          "page": 13,
+          "raw": "564953312609190d00600807000013490000000000004ad0",
+          "sensor_frames": 4937,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795028.3753748,
+          "page": 13,
+          "raw": "564953312609190d00600807000013560000000000004ad0",
+          "sensor_frames": 4950,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795028.5923672,
+          "page": 13,
+          "raw": "564953312609190d00600807000013630000000000004ad0",
+          "sensor_frames": 4963,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795028.8084152,
+          "page": 13,
+          "raw": "564953312609190d006008070000136e0000000000004ad0",
+          "sensor_frames": 4974,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795029.077086,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795029.2939532,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 49,
+      "fps": 58.37092139621246,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795029.6302598,
+          "page": 13,
+          "raw": "564953312609190d00600807000013a00000000000004ad0",
+          "sensor_frames": 5024,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795029.8467479,
+          "page": 13,
+          "raw": "564953312609190d00600807000013ad0000000000004ad0",
+          "sensor_frames": 5037,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795030.0646377,
+          "page": 13,
+          "raw": "564953312609190d00600807000013ba0000000000004ad0",
+          "sensor_frames": 5050,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795030.2812688,
+          "page": 13,
+          "raw": "564953312609190d00600807000013c60000000000004ad0",
+          "sensor_frames": 5062,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795030.5504825,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795030.766904,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 50,
+      "fps": 60.976742573604156,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795031.1028433,
+          "page": 13,
+          "raw": "564953312609190d00600807000013f50000000000004ad0",
+          "sensor_frames": 5109,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795031.320395,
+          "page": 13,
+          "raw": "564953312609190d00600807000014020000000000004ad0",
+          "sensor_frames": 5122,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795031.5364337,
+          "page": 13,
+          "raw": "564953312609190d006008070000140f0000000000004ad0",
+          "sensor_frames": 5135,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795031.7424314,
+          "page": 13,
+          "raw": "564953312609190d006008070000141c0000000000004ad0",
+          "sensor_frames": 5148,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795032.002696,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795032.2072046,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 51,
+      "fps": 53.79306907908719,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795032.5280638,
+          "page": 13,
+          "raw": "564953312609190d00600807000014490000000000004ad0",
+          "sensor_frames": 5193,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795032.7455385,
+          "page": 13,
+          "raw": "564953312609190d00600807000014540000000000004ad0",
+          "sensor_frames": 5204,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795032.9611552,
+          "page": 13,
+          "raw": "564953312609190d00600807000014610000000000004ad0",
+          "sensor_frames": 5217,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795033.1787052,
+          "page": 13,
+          "raw": "564953312609190d006008070000146c0000000000004ad0",
+          "sensor_frames": 5228,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795033.4470043,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795033.6641705,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 53,
+      "fps": 54.852312287649056,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795033.9773781,
+          "page": 13,
+          "raw": "564953312609190d006008070000149b0000000000004ad0",
+          "sensor_frames": 5275,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795034.1816816,
+          "page": 13,
+          "raw": "564953312609190d00600807000014a70000000000004ad0",
+          "sensor_frames": 5287,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795034.3987029,
+          "page": 13,
+          "raw": "564953312609190d00600807000014b20000000000004ad0",
+          "sensor_frames": 5298,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795034.6154552,
+          "page": 13,
+          "raw": "564953312609190d00600807000014be0000000000004ad0",
+          "sensor_frames": 5310,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795034.8828714,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795035.1002595,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 54,
+      "fps": 55.03093789853209,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795035.434867,
+          "page": 13,
+          "raw": "564953312609190d00600807000014ed0000000000004ad0",
+          "sensor_frames": 5357,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795035.652113,
+          "page": 13,
+          "raw": "564953312609190d00600807000014fa0000000000004ad0",
+          "sensor_frames": 5370,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795035.8630073,
+          "page": 13,
+          "raw": "564953312609190d00600807000015060000000000004ad0",
+          "sensor_frames": 5382,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795036.0708728,
+          "page": 13,
+          "raw": "564953312609190d00600807000015100000000000004ad0",
+          "sensor_frames": 5392,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795036.3351042,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795036.5521014,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 55,
+      "fps": 58.627414860088926,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795036.88856,
+          "page": 13,
+          "raw": "564953312609190d00600807000015410000000000004ad0",
+          "sensor_frames": 5441,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795037.1042335,
+          "page": 13,
+          "raw": "564953312609190d006008070000154d0000000000004ad0",
+          "sensor_frames": 5453,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795037.3209176,
+          "page": 13,
+          "raw": "564953312609190d006008070000155a0000000000004ad0",
+          "sensor_frames": 5466,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795037.536721,
+          "page": 13,
+          "raw": "564953312609190d00600807000015670000000000004ad0",
+          "sensor_frames": 5479,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795037.8049562,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795038.0215766,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 57,
+      "fps": 56.82412702829869,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795038.34305,
+          "page": 13,
+          "raw": "564953312609190d00600807000015950000000000004ad0",
+          "sensor_frames": 5525,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795038.5598087,
+          "page": 13,
+          "raw": "564953312609190d00600807000015a10000000000004ad0",
+          "sensor_frames": 5537,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795038.777196,
+          "page": 13,
+          "raw": "564953312609190d00600807000015ad0000000000004ad0",
+          "sensor_frames": 5549,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795038.9941819,
+          "page": 13,
+          "raw": "564953312609190d00600807000015ba0000000000004ad0",
+          "sensor_frames": 5562,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795039.2625122,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795039.478838,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 58,
+      "fps": 55.39198256744933,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795039.815253,
+          "page": 13,
+          "raw": "564953312609190d00600807000015ea0000000000004ad0",
+          "sensor_frames": 5610,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795040.0313203,
+          "page": 13,
+          "raw": "564953312609190d00600807000015f60000000000004ad0",
+          "sensor_frames": 5622,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795040.2476811,
+          "page": 13,
+          "raw": "564953312609190d00600807000016010000000000004ad0",
+          "sensor_frames": 5633,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795040.4651666,
+          "page": 13,
+          "raw": "564953312609190d006008070000160e0000000000004ad0",
+          "sensor_frames": 5646,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795040.7331445,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795040.950226,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 59,
+      "fps": 56.94109307321583,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795041.287864,
+          "page": 13,
+          "raw": "564953312609190d006008070000163b0000000000004ad0",
+          "sensor_frames": 5691,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795041.5046782,
+          "page": 13,
+          "raw": "564953312609190d00600807000016470000000000004ad0",
+          "sensor_frames": 5703,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795041.7213528,
+          "page": 13,
+          "raw": "564953312609190d00600807000016530000000000004ad0",
+          "sensor_frames": 5715,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795041.9376583,
+          "page": 13,
+          "raw": "564953312609190d00600807000016600000000000004ad0",
+          "sensor_frames": 5728,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795042.206673,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795042.4156384,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 61,
+      "fps": 59.966140205591465,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795042.7524645,
+          "page": 13,
+          "raw": "564953312609190d006008070000168c0000000000004ad0",
+          "sensor_frames": 5772,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795042.9686773,
+          "page": 13,
+          "raw": "564953312609190d00600807000016990000000000004ad0",
+          "sensor_frames": 5785,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795043.1865833,
+          "page": 13,
+          "raw": "564953312609190d00600807000016a60000000000004ad0",
+          "sensor_frames": 5798,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795043.4028316,
+          "page": 13,
+          "raw": "564953312609190d00600807000016b30000000000004ad0",
+          "sensor_frames": 5811,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795043.670943,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795043.887545,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 62,
+      "fps": 56.51856584764405,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795044.2180376,
+          "page": 13,
+          "raw": "564953312609190d00600807000016e30000000000004ad0",
+          "sensor_frames": 5859,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795044.4228134,
+          "page": 13,
+          "raw": "564953312609190d00600807000016f00000000000004ad0",
+          "sensor_frames": 5872,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795044.6389718,
+          "page": 13,
+          "raw": "564953312609190d00600807000016fc0000000000004ad0",
+          "sensor_frames": 5884,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795044.8549964,
+          "page": 13,
+          "raw": "564953312609190d00600807000017070000000000004ad0",
+          "sensor_frames": 5895,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795045.1236274,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795045.3404362,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    },
+    {
+      "tap": 63,
+      "fps": 61.310374062650745,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789795045.6763105,
+          "page": 13,
+          "raw": "564953312609190d00600807000017340000000000004ad0",
+          "sensor_frames": 5940,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795045.8929179,
+          "page": 13,
+          "raw": "564953312609190d00600807000017410000000000004ad0",
+          "sensor_frames": 5953,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795046.1045976,
+          "page": 13,
+          "raw": "564953312609190d006008070000174e0000000000004ad0",
+          "sensor_frames": 5966,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789795046.3124182,
+          "page": 13,
+          "raw": "564953312609190d006008070000175b0000000000004ad0",
+          "sensor_frames": 5979,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ],
+      "csi": [
+        {
+          "time_s": 1789795046.575584,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        },
+        {
+          "time_s": 1789795046.7914898,
+          "de": 640,
+          "hs": 1,
+          "seen": "0000",
+          "live": "0000"
+        }
+      ]
+    }
+  ],
+  "accepted_rx_candidate": false,
+  "registers": {
+    "0x36eb": 12,
+    "0x36ec": 85,
+    "0x320c": 5,
+    "0x320d": 120,
+    "0x320e": 5,
+    "0x320f": 220
+  },
+  "boot_rx": [
+    {
+      "time_s": 1789794950.2477183,
+      "page": 13,
+      "raw": "564953312609190d00600807000003a40000000000004ad0",
+      "sensor_frames": 932,
+      "words_per_line": 0,
+      "lines": 0,
+      "words": 0,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794950.464818,
+      "page": 13,
+      "raw": "564953312609190d00600807000003b10000000000004ad0",
+      "sensor_frames": 945,
+      "words_per_line": 0,
+      "lines": 0,
+      "words": 0,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794950.681351,
+      "page": 13,
+      "raw": "564953312609190d00600807000003bc0000000000004ad0",
+      "sensor_frames": 956,
+      "words_per_line": 0,
+      "lines": 0,
+      "words": 0,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794950.898335,
+      "page": 13,
+      "raw": "564953312609190d00600807000003c90000000000004ad0",
+      "sensor_frames": 969,
+      "words_per_line": 0,
+      "lines": 0,
+      "words": 0,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794951.1008224,
+      "page": 13,
+      "raw": "564953312609190d00600807000003d60000000000004ad0",
+      "sensor_frames": 982,
+      "words_per_line": 0,
+      "lines": 0,
+      "words": 0,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794951.3173027,
+      "page": 13,
+      "raw": "564953312609190d00600807000003e20000000000004ad0",
+      "sensor_frames": 994,
+      "words_per_line": 0,
+      "lines": 0,
+      "words": 0,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794951.5330093,
+      "page": 13,
+      "raw": "564953312609190d00600807000003ef0000000000004ad0",
+      "sensor_frames": 1007,
+      "words_per_line": 0,
+      "lines": 0,
+      "words": 0,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794951.750602,
+      "page": 13,
+      "raw": "564953312609190d00600807000003fb0000000000004ad0",
+      "sensor_frames": 1019,
+      "words_per_line": 0,
+      "lines": 0,
+      "words": 0,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794951.9672883,
+      "page": 13,
+      "raw": "564953312609190d00600807000004080000000000004ad0",
+      "sensor_frames": 1032,
+      "words_per_line": 0,
+      "lines": 0,
+      "words": 0,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794952.1834426,
+      "page": 13,
+      "raw": "564953312609190d00600807000004150000000000004ad0",
+      "sensor_frames": 1045,
+      "words_per_line": 0,
+      "lines": 0,
+      "words": 0,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794952.4006908,
+      "page": 13,
+      "raw": "564953312609190d00600807000004210000000000004ad0",
+      "sensor_frames": 1057,
+      "words_per_line": 0,
+      "lines": 0,
+      "words": 0,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794952.617244,
+      "page": 13,
+      "raw": "564953312609190d006008070000042e0000000000004ad0",
+      "sensor_frames": 1070,
+      "words_per_line": 0,
+      "lines": 0,
+      "words": 0,
+      "ppc": 4,
+      "data_type": 43
+    }
+  ],
+  "boot_metrics": {
+    "fps": 58.23950408667858,
+    "geometry_ok": false
+  },
+  "boot_csi": [
+    {
+      "time_s": 1789794952.8865793,
+      "de": 640,
+      "hs": 1,
+      "seen": "0000",
+      "live": "0000"
+    },
+    {
+      "time_s": 1789794953.1038795,
+      "de": 640,
+      "hs": 1,
+      "seen": "0000",
+      "live": "0000"
+    },
+    {
+      "time_s": 1789794953.320389,
+      "de": 640,
+      "hs": 1,
+      "seen": "0000",
+      "live": "0000"
+    }
+  ]
+}

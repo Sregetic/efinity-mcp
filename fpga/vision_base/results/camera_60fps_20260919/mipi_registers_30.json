@@ -1,0 +1,146 @@
+[
+  {
+    "sequence": 1,
+    "address": 12312,
+    "value": 122,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 2,
+    "address": 12313,
+    "value": 0,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 3,
+    "address": 12337,
+    "value": 10,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 4,
+    "address": 12832,
+    "value": 0,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 5,
+    "address": 18432,
+    "value": 100,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 6,
+    "address": 18454,
+    "value": 97,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 7,
+    "address": 18457,
+    "value": 5,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 8,
+    "address": 18459,
+    "value": 3,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 9,
+    "address": 18461,
+    "value": 9,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 10,
+    "address": 18463,
+    "value": 2,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 11,
+    "address": 18465,
+    "value": 8,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 12,
+    "address": 18467,
+    "value": 2,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 13,
+    "address": 18469,
+    "value": 2,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 14,
+    "address": 18471,
+    "value": 2,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 15,
+    "address": 18473,
+    "value": 4,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 16,
+    "address": 18487,
+    "value": 0,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  }
+]

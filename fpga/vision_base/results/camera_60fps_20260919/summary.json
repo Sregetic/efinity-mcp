@@ -1,0 +1,64 @@
+{
+  "decision": "User chose to retain full-resolution30fps;60fps trial stopped",
+  "capture_fps": 29.96994535154615,
+  "raw_fps": 30.06247013403058,
+  "raw_geometry_ok": true,
+  "fov_geometry_ok": true,
+  "overruns": [
+    0,
+    0
+  ],
+  "write_errors": [
+    1,
+    1
+  ],
+  "canny_fault": false,
+  "mode": 0,
+  "bit_sha256": "cf5355cd1dbc8736e3d05e69bbc7acfe45393e2e24e46eb54d37bad24a6809aa",
+  "wns_ns": 0.355,
+  "whs_ns": 0.026,
+  "unassigned_pins": 0,
+  "visual_acceptance": "pending user",
+  "flash_modified": false,
+  "clock_registers": {
+    "0x36eb": 13,
+    "0x36ec": 101
+  },
+  "csi_debug": [
+    {
+      "marker": "2609192f",
+      "de": 2935040571,
+      "hs": 4586001,
+      "seen": "8002",
+      "live": "8002"
+    },
+    {
+      "marker": "2609192f",
+      "de": 2940999040,
+      "hs": 4595311,
+      "seen": "8002",
+      "live": "8002"
+    },
+    {
+      "marker": "2609192f",
+      "de": 2946987329,
+      "hs": 4604668,
+      "seen": "8002",
+      "live": "8000"
+    },
+    {
+      "marker": "2609192f",
+      "de": 2952884421,
+      "hs": 4613882,
+      "seen": "8002",
+      "live": "8000"
+    },
+    {
+      "marker": "2609192f",
+      "de": 2958897847,
+      "hs": 4623278,
+      "seen": "8002",
+      "live": "8000"
+    }
+  ]
+}

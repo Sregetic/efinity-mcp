@@ -98,6 +98,10 @@ module ti60f225_oob_top #(
     input	wire		i_cam_ck_CLKOUT,
     
     input	wire	[7:0]			cam_d0_HS_IN,
+    output wire cam_d0_DLY_RST,cam_d0_DLY_ENA,cam_d0_DLY_INC,
+    output wire cam_d1_DLY_RST,cam_d1_DLY_ENA,cam_d1_DLY_INC,
+    output wire cam_d2_DLY_RST,cam_d2_DLY_ENA,cam_d2_DLY_INC,
+    output wire cam_d3_DLY_RST,cam_d3_DLY_ENA,cam_d3_DLY_INC,
     input	  wire		      cam_d0_LP_P_IN,
     input	  wire		      cam_d0_LP_N_IN,
     output	wire		      cam_d0_HS_TERM,
@@ -388,7 +392,72 @@ assign i_mipi_clk = core_clk;
 		assign  cam_d2_RST = 1'b0;
     assign  cam_d3_RST = 1'b0;
 	
-wire [15:0] mipi_debug_out;
+// Ti60 dynamic input-delay controls are synchronous to the MIPI byte clock.
+reg[2:0]phy_cmd_sync=0;reg phy_cmd_seen=0;
+reg[2:0]phy_state=0;reg[5:0]phy_target=17,phy_applied=17,phy_count=0;
+reg[7:0]phy_updates=0;reg phy_dly_rst=0,phy_dly_ena=0;
+wire[31:0]phy_status_byte={8'hd1,phy_updates,2'b0,phy_applied,7'b0,(phy_state!=0)};
+(* async_reg = "true" *) reg[31:0]phy_status_meta=0,phy_status_core=0;
+always @(posedge core_clk)begin phy_status_meta<=phy_status_byte;phy_status_core<=phy_status_meta;end
+assign {cam_d3_DLY_RST,cam_d2_DLY_RST,cam_d1_DLY_RST,cam_d0_DLY_RST}={4{phy_dly_rst}};
+assign {cam_d3_DLY_ENA,cam_d2_DLY_ENA,cam_d1_DLY_ENA,cam_d0_DLY_ENA}={4{phy_dly_ena}};
+assign {cam_d3_DLY_INC,cam_d2_DLY_INC,cam_d1_DLY_INC,cam_d0_DLY_INC}=4'b1111;
+always @(posedge i_cam_ck_CLKOUT)begin
+ phy_cmd_sync<={phy_cmd_sync[1:0],feature_command_toggle};phy_cmd_seen<=phy_cmd_sync[2];
+ case(phy_state)
+ 0:if(phy_cmd_sync[2]!=phy_cmd_seen&&feature_command[31:24]==19)begin
+    phy_target<=feature_command[5:0];phy_count<=0;phy_dly_rst<=1;phy_state<=1;
+   end
+ 1:begin phy_dly_rst<=0;if(phy_target==0)phy_state<=3;else begin phy_dly_ena<=1;phy_state<=2;end end
+ 2:begin phy_count<=phy_count+1'b1;if(phy_count==phy_target-1'b1)begin phy_dly_ena<=0;phy_state<=3;end end
+ 3:begin phy_applied<=phy_target;phy_updates<=phy_updates+1'b1;phy_state<=0;end
+ default:begin phy_dly_rst<=0;phy_dly_ena<=0;phy_state<=0;end
+ endcase
+end
+// Optional observational CSI diagnostics. Opcode20 soft reset was withdrawn:
+// it reproducibly destroys the valid baseline until full FPGA reconfiguration.
+reg[2:0]probe_cmd_sync=0;reg probe_cmd_seen=0,probe_csi_view=0;
+always @(posedge core_clk)begin
+ probe_cmd_sync<={probe_cmd_sync[1:0],feature_command_toggle};probe_cmd_seen<=probe_cmd_sync[2];
+ if(probe_cmd_sync[2]!=probe_cmd_seen&&feature_command[31:24]==21)probe_csi_view<=feature_command[0];
+end
+wire [31:0] mipi_debug_out;
+// Independent physical burst/byte-clock probes distinguish sensor traffic from CSI decoding.
+reg[31:0] cam_byte_ticks=0,cam_byte_gray=0;
+wire[31:0]cam_byte_next=cam_byte_ticks+1'b1;
+always @(posedge i_cam_ck_CLKOUT)begin
+ cam_byte_ticks<=cam_byte_next;cam_byte_gray<=(cam_byte_next>>1)^cam_byte_next;
+end
+(* async_reg = "true" *) reg[31:0]cam_byte_gray_meta=0,cam_byte_gray_sync=0;
+reg[31:0]cam_byte_core=0;
+function[31:0]decode_byte_gray(input[31:0]g);
+ integer j;begin for(j=0;j<32;j=j+1)decode_byte_gray[j]=^(g>>j);end
+endfunction
+always @(posedge core_clk)begin
+ cam_byte_gray_meta<=cam_byte_gray;cam_byte_gray_sync<=cam_byte_gray_meta;
+ cam_byte_core<=decode_byte_gray(cam_byte_gray_sync);
+end
+// Peak byte-clock edges per 100 core cycles (1 us), retained per received frame.
+reg[6:0]cam_clock_window=0;reg[31:0]cam_byte_prev=0;
+reg[15:0]cam_clock_delta=0,cam_clock_peak=0,cam_clock_peak_hold=0;
+reg[2:0]cam_probe_vs=0;
+wire[31:0]cam_tick_delta=cam_byte_core-cam_byte_prev;
+always @(posedge core_clk)begin
+ cam_probe_vs<={cam_probe_vs[1:0],w_mipi_rx_vs};
+ if(cam_clock_window==99)begin
+  cam_clock_window<=0;cam_byte_prev<=cam_byte_core;cam_clock_delta<=cam_tick_delta[15:0];
+  if(cam_tick_delta[15:0]>cam_clock_peak)cam_clock_peak<=cam_tick_delta[15:0];
+ end else cam_clock_window<=cam_clock_window+1'b1;
+ if(cam_probe_vs[1]&&!cam_probe_vs[2])begin cam_clock_peak_hold<=cam_clock_peak;cam_clock_peak<=0;end
+end
+reg[2:0]cam_lp00_sync=0,cam_hsen_sync=0;
+reg[31:0]cam_lp00_entries=0,cam_hsen_entries=0;
+always @(posedge core_clk)begin
+ cam_lp00_sync<={cam_lp00_sync[1:0],!cam_d0_LP_P_IN&&!cam_d0_LP_N_IN};
+ cam_hsen_sync<={cam_hsen_sync[1:0],cam_d0_HS_ENA};
+ if(cam_lp00_sync[1]&&!cam_lp00_sync[2])cam_lp00_entries<=cam_lp00_entries+1'b1;
+ if(cam_hsen_sync[1]&&!cam_hsen_sync[2])cam_hsen_entries<=cam_hsen_entries+1'b1;
+end
 		
 
 		csi_rx_controller inst_efx_csi2_rx
@@ -421,11 +490,11 @@ wire [15:0] mipi_debug_out;
               .fifo_rd_empty		({cam_d3_FIFO_EMPTY,cam_d2_FIFO_EMPTY,cam_d1_FIFO_EMPTY,cam_d0_FIFO_EMPTY}),
               .DLY_enable_D		       (),
               .DLY_inc_D			(),
-              .u_dly_enable_D		(),
-              .u_dly_inc_D		       (),
+              .u_dly_enable_D(4'b0),
+              .u_dly_inc_D(4'b0),
               
-              .axi_clk			(1'b0),
-              .axi_reset_n		       (1'b0),
+              .axi_clk(core_clk),
+              .axi_reset_n(i_arstn),
               .axi_awaddr			(6'b0),
               .axi_awvalid		       (1'b0),
               .axi_awready		       (),
@@ -458,7 +527,7 @@ wire [15:0] mipi_debug_out;
               .pixel_data			(w_mipi_rx_data),
               .pixel_data_valid	       (w_mipi_rx_de),
               .irq				(),
-              .mipi_debug_out(mipi_debug_out)
+              .mipi_debug_in(32'd0),.mipi_debug_out(mipi_debug_out)
 		);
 
 //     wire		       w1_mipi_rx_vs;
@@ -525,7 +594,21 @@ wire i2c_rst_n = i2c_rst_cnt[12];
 
 wire ae_req,ae_ack,ae_fault,ae_busy;wire[15:0]ae_request,ae_applied,ae_updates;wire[23:0]ae_readback;
 wire[31:0]ae_sum;wire[15:0]ae_ncenter,ae_ntotal,ae_nclip;wire[1:0]ae_decision;wire ae_shadow;
+// Diagnostic register requests share the exposure writer's sole I2C owner.
+reg[2:0]sensor_cmd_sync=0;reg sensor_cmd_seen=0,sensor_req=0,sensor_write=0;
+reg[15:0]sensor_addr=0;reg[7:0]sensor_data=0;reg[31:0]sensor_seq=0;
+wire sensor_ack,sensor_fault,sensor_busy;wire[7:0]sensor_readback;
+always @(posedge CLK_5M)begin
+ sensor_cmd_sync<={sensor_cmd_sync[1:0],feature_command_toggle};sensor_cmd_seen<=sensor_cmd_sync[2];
+ if(!i2c_rst_n)begin sensor_req<=0;sensor_seq<=0;sensor_cmd_sync<=0;sensor_cmd_seen<=0;end
+ else if(sensor_cmd_sync[2]!=sensor_cmd_seen && (feature_command[31:24]==16 || feature_command[31:24]==17) && sensor_req==sensor_ack)begin
+  sensor_addr<=feature_command[23:8];sensor_data<=feature_command[7:0];sensor_write<=feature_command[31:24]==17;
+  sensor_req<=~sensor_req;sensor_seq<=sensor_seq+1'b1;
+ end
+end
 i2c_master_ctrl_top u2_i2c_master_ctrl_top(
+ .debug_req(sensor_req),.debug_write(sensor_write),.debug_addr(sensor_addr),.debug_data(sensor_data),
+ .debug_ack(sensor_ack),.debug_fault(sensor_fault),.debug_busy(sensor_busy),.debug_readback(sensor_readback),
  .exposure_req_toggle(ae_req),.exposure_req_value(ae_request),.exposure_ack(ae_ack),.exposure_fault(ae_fault),
  .exposure_busy(ae_busy),.exposure_applied(ae_applied),.exposure_updates(ae_updates),.exposure_readback(ae_readback),
   /*i*/.clk			(CLK_5M		),
@@ -551,10 +634,16 @@ wire [7:0]    ch0_b;
 wire ch0_vs;
 wire ch0_hs;
 wire ch0_de;
-wire fov_vs,fov_hs,fov_valid;wire[31:0]fov_data;
+wire fov_vs,fov_hs,fov_valid,fov_overrun;
+reg[31:0]fov_overruns=0;reg fov_overrun_q=0;
+always @(posedge i_mipi_rx_pclk)begin
+ fov_overrun_q<=fov_overrun;
+ if(!vid_rst_n)fov_overruns<=0;else if(fov_overrun&&!fov_overrun_q)fov_overruns<=fov_overruns+1'b1;
+end
+wire[31:0]fov_data;
 bayer_fov_reduce fov_reduce(.clk(i_mipi_rx_pclk),.rst_n(vid_rst_n),.vs(w_mipi_rx_vs),.hs(w_mipi_rx_hs),.valid(w_mipi_rx_de),
  .data({w_mipi_rx_data[9:2],w_mipi_rx_data[19:12],w_mipi_rx_data[29:22],w_mipi_rx_data[39:32]}),
- .o_vs(fov_vs),.o_hs(fov_hs),.o_valid(fov_valid),.o_data(fov_data));
+ .o_vs(fov_vs),.o_hs(fov_hs),.o_valid(fov_valid),.o_data(fov_data),.overrun(fov_overrun));
 wire[31:0] memory_capture_id,memory_display_id,memory_write_errors;wire[2:0]memory_history_count;
 // IMX219
   frame_buffer #(
@@ -926,10 +1015,10 @@ wire[7:0]                       video_r;
 wire[7:0]                       video_g;
 wire[7:0]                       video_b;
 
-assign tmds_tx_data0_TX_OE = 1'b0; // LCD-only: HDMI output disabled.
-assign tmds_tx_data1_TX_OE = 1'b0; // LCD-only: HDMI output disabled.
-assign tmds_tx_data2_TX_OE = 1'b0; // LCD-only: HDMI output disabled.
-assign tmds_tx_clk_TX_OE   = 1'b0; // LCD-only: HDMI output disabled.
+assign tmds_tx_data0_TX_OE = 1'b1; // HDMI enabled.
+assign tmds_tx_data1_TX_OE = 1'b1; // HDMI enabled.
+assign tmds_tx_data2_TX_OE = 1'b1; // HDMI enabled.
+assign tmds_tx_clk_TX_OE   = 1'b1; // HDMI enabled.
 
 // Hold all TX serializers in reset for 256 pixel clocks after PLL lock.
 reg [8:0] tx_startup_count=0;
@@ -937,10 +1026,10 @@ always @(posedge hdmi_tx_slow_clk or negedge user_pll_locked)
  if(!user_pll_locked)tx_startup_count<=0;
  else if(!tx_startup_count[8])tx_startup_count<=tx_startup_count+1'b1;
 wire tx_serializer_reset=~tx_startup_count[8];
-assign tmds_tx_data0_TX_RST = 1'b1; // Keep HDMI serializers in reset.
-assign tmds_tx_data1_TX_RST = 1'b1; // Keep HDMI serializers in reset.
-assign tmds_tx_data2_TX_RST = 1'b1; // Keep HDMI serializers in reset.
-assign tmds_tx_clk_TX_RST   = 1'b1; // Keep HDMI serializers in reset.
+assign tmds_tx_data0_TX_RST = tx_serializer_reset;
+assign tmds_tx_data1_TX_RST = tx_serializer_reset;
+assign tmds_tx_data2_TX_RST = tx_serializer_reset;
+assign tmds_tx_clk_TX_RST   = tx_serializer_reset;
 
 // 	  color_bar color_bar_m0(
 // 	.clk(hdmi_tx_slow_clk),
@@ -1039,7 +1128,7 @@ video_test_pattern pattern (
 );
 // LED levels only: no multi-bit asynchronous debug bus is introduced.
 reg camera_vs_q=0;
-reg [7:0] camera_frames=0;
+reg [31:0] camera_frames=0;
 always @(posedge i_mipi_rx_pclk) begin
     camera_vs_q<=w_mipi_rx_vs;
     if(w_mipi_rx_vs && !camera_vs_q)camera_frames<=camera_frames+1'b1;
@@ -1069,10 +1158,9 @@ end endgenerate
 // Competition feature controls; command payload held stable across toggle CDC.
 reg[31:0] feature_command=0;reg feature_command_toggle=0;
 reg raw_arm_toggle=0;reg[11:0]raw_read_addr=0;
-// The vendor DSI transmitter requires its native 4096-entry pixel FIFO.
-// Keep the optional raw-snapshot command ABI present, but retire the on-chip
-// snapshot RAM so those blocks can be returned to the display data path.
-wire[31:0]raw_read_data=32'd0,raw_sequence=32'd0;wire raw_busy=1'b0;
+// Read-only RAW snapshot restored for sensor/ISP boundary diagnostics.
+wire[31:0]raw_read_data,raw_sequence;wire raw_busy;
+raw_snapshot raw_probe(.clk(vid_clk_dvi2),.rst_n(vid_rst_n),.vs(ch0_vs),.de(ch0_de),.pixels({ch0_b,ch0_g}),.arm_toggle(raw_arm_toggle),.read_clk(jtag_diag_DRCK),.read_addr(raw_read_addr),.read_data(raw_read_data),.sequence_id(raw_sequence),.busy(raw_busy));
 always @(posedge jtag_diag_UPDATE)begin
  if(diag_shift[63:32]==32'h56495331)begin
  feature_command<=diag_shift[31:0];feature_command_toggle<=~feature_command_toggle;
@@ -1085,6 +1173,18 @@ wire feature_cmd_event=feature_cmd_sync[2]!=feature_cmd_seen;
 always @(posedge hdmi_tx_slow_clk)begin
  feature_cmd_sync<={feature_cmd_sync[1:0],feature_command_toggle};feature_cmd_seen<=feature_cmd_sync[2];
  if(feature_cmd_event&&feature_command[31:24]==8'h7e)feature_diag_page<=feature_command[3:0];
+end
+// Shape commands share the existing CDC mailbox; apply only at frame boundary.
+reg shape_enable=1,shape_pending=1,shape_vq=0;reg[7:0]shape_threshold=32,shape_thr_pending=32;
+wire[63:0]shape_status;
+always @(posedge hdmi_tx_slow_clk)begin
+ shape_vq<=gamma_vs;
+ if(!vid_rst_n)begin shape_enable<=1;shape_pending<=1;shape_threshold<=32;shape_thr_pending<=32;end
+ else begin
+  if(feature_cmd_event&&feature_command[31:24]==22)shape_pending<=feature_command[0];
+  if(feature_cmd_event&&feature_command[31:24]==23)shape_thr_pending<=(feature_command[7:0]==0)?8'd1:feature_command[7:0];
+  if(gamma_vs&&!shape_vq)begin shape_enable<=shape_pending;shape_threshold<=shape_thr_pending;end
+ end
 end
 // RAW red-target measurement confirms BGGR at the framebuffer output.
 reg[2:0]color_order=2,color_pending=2;reg color_vq=0;
@@ -1124,7 +1224,7 @@ vision_canny canny(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n),.de(gamma_valid),.hs
 vision_display feature_display(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n),.de(gamma_valid),.hs(gamma_hs),.vs(gamma_vs),
  .r(color_r),.g(color_g),.b(color_b),.mode(feature_mode),.threshold(feature_threshold),.median_en(feature_median),
  .memory_mode(memory_mode),.history_index(history_index),.canny_pixel(canny_pixel),.canny_ready(canny_ready),.cx(feature_x),.cy(feature_y),
- .ode(feature_de),.ohs(feature_hs),.ovs(feature_vs),.orr(feature_r),.ogg(feature_g),.obb(feature_b),.debug_mag(feature_mag),.debug_edge(feature_edge));
+ .ode(feature_de),.ohs(feature_hs),.ovs(feature_vs),.orr(feature_r),.ogg(feature_g),.obb(feature_b),.debug_mag(feature_mag),.debug_edge(feature_edge),.shape_enable(shape_enable),.shape_threshold(shape_threshold),.shape_status(shape_status));
 reg feature_vs_q=0;reg[31:0] feature_edges=0,feature_edges_hold=0,feature_frames=0;
 always @(posedge hdmi_tx_slow_clk)begin
  feature_vs_q<=feature_vs;
@@ -1163,101 +1263,33 @@ assign tmds_tx_data0_TX_DATA = ~tmds_data0;
 assign tmds_tx_data1_TX_DATA = ~tmds_data1;
 assign tmds_tx_data2_TX_DATA = ~tmds_data2;
 
-// J5 single DSI display. Match the supplied working example exactly at the
-// DSI pixel boundary: 74.25 MHz and two RGB888 pixels on every active cycle.
-// op13 selects native diagnostic bars(1) or the native 2PPC camera stream(0).
-reg lcd_test=0,lcd_test_pending=0;reg lcd_vq=0;
-reg[2:0]lcd_sel_sync=0;reg lcd_sel_seen=0;
-wire lcd_ref_vs,lcd_ref_hs,lcd_ref_de;wire[47:0]lcd_ref_data;
-wire[15:0]lcd_ref_x,lcd_ref_y;
-lcd_ref_color_bar #(.DYN_EN(1'b0),.HS_POLORY(1'b1),.VS_POLORY(1'b1),
- .SYMBOL_WIDTH(8),.SYMBOL_NUM(3),.PAR_PIXEL_NUM(2),
- .HFP(120),.HST(4),.HACT(1920),.HBP(88),.VFP(20),.VST(2),.VACT(1080),.VBP(20),.TEST_MODE(2))
- lcd_reference_pattern(.clk(vid_clk_dvi2),.rst_n(pattern_reset_sync[1]),.i_cfg_vid(48'd0),
- .h_cnt(lcd_ref_x),.v_cnt(lcd_ref_y),.hs(lcd_ref_hs),.vs(lcd_ref_vs),.de(lcd_ref_de),.o_vid_data(lcd_ref_data));
-always @(posedge vid_clk_dvi2)begin
- lcd_sel_sync<={lcd_sel_sync[1:0],feature_command_toggle};
- lcd_sel_seen<=lcd_sel_sync[2];
- lcd_vq<=lcd_ref_vs;
- if(lcd_sel_sync[2]!=lcd_sel_seen&&feature_command[31:24]==8'd13)lcd_test_pending<=feature_command[0];
- if(lcd_ref_vs&&!lcd_vq)lcd_test<=lcd_test_pending;
-end
-wire lcd_config_done,lcd_video_ready,lcd_enable,lcd_2ppc_vs,lcd_2ppc_hs,lcd_2ppc_de;
-wire[3:0]lcd_config_state;wire[47:0]lcd_2ppc_data;
-assign lcd_2ppc_vs=lcd_test?lcd_ref_vs:rgb_vs;
-assign lcd_2ppc_hs=lcd_test?lcd_ref_hs:rgb_hs;
-assign lcd_2ppc_de=lcd_test?lcd_ref_de:rgb_de;
-assign lcd_2ppc_data=lcd_test?lcd_ref_data:rgb_datax2;
-reg lcd_mon_vq=0,lcd_mon_dq=0,lcd_pack_fault=0;
-reg[31:0]lcd_frames=0;reg[15:0]lcd_line_pairs=0,lcd_pairs=0;
-always @(posedge vid_clk_dvi2)begin
- lcd_mon_vq<=lcd_2ppc_vs;lcd_mon_dq<=lcd_2ppc_de;
- if(!pattern_reset_sync[1])begin lcd_frames<=0;lcd_line_pairs<=0;lcd_pairs<=0;lcd_pack_fault<=0;end
- else begin
-  if(lcd_2ppc_vs&&!lcd_mon_vq)lcd_frames<=lcd_frames+1'b1;
-  if(lcd_2ppc_de)lcd_pairs<=lcd_pairs+1'b1;
-  if(lcd_mon_dq&&!lcd_2ppc_de)begin lcd_line_pairs<=lcd_pairs;if(lcd_pairs!=960)lcd_pack_fault<=1;lcd_pairs<=0;end
- end
-end
-// USER2 op14 BIST, op15 backlight. BIST changes restart LCD only.
-reg lcd_bist=0,lcd_backlight=1;reg[2:0]lcd_cmd_sync=0;reg lcd_cmd_seen=0;
-reg[19:0]lcd_restart=0;wire lcd_local_reset=w_arstn&&lcd_restart==0;
-always @(posedge core_clk)begin
- lcd_cmd_sync<={lcd_cmd_sync[1:0],feature_command_toggle};lcd_cmd_seen<=lcd_cmd_sync[2];
- if(lcd_restart!=0)lcd_restart<=lcd_restart-1'b1;
- if(lcd_cmd_sync[2]!=lcd_cmd_seen)begin
-  if(feature_command[31:24]==14&&lcd_bist!=feature_command[0])begin lcd_bist<=feature_command[0];lcd_restart<=20'hfffff;end
-  if(feature_command[31:24]==15)lcd_backlight<=feature_command[0];
- end
-end
-reg[7:0]lcd_phy_seen=0;
-always @(posedge core_clk)begin
- if(!lcd_local_reset)lcd_phy_seen<=0;
- else lcd_phy_seen<=lcd_phy_seen|{LCD_POWER,LCD_RST_P,mipi_dp_data0_LP_P_IN,mipi_dp_data0_LP_N_IN,mipi_dp_clk_HS_OE,mipi_dp_data0_HS_OE,mipi_dp_data0_LP_P_OE,mipi_dp_data0_LP_N_OE};
-end
-lcd_dsi_tx_top lcd_tx(.rst_n(lcd_local_reset),.bist_enable(lcd_bist),.backlight_enable(lcd_backlight),.i_mipi_clk(core_clk),.i_mipi_tx_pclk(i_mipi_tx_pclk),
- .i_sysclk(vid_clk_dvi2),.i_sysclk_div_2(vid_clk_dvi2),
- .pixel_vs_i(lcd_2ppc_vs),.pixel_hs_i(lcd_2ppc_hs),.pixel_de_i(lcd_2ppc_de),.pixel_data_i({16'd0,lcd_2ppc_data}),.pixel_data_en(lcd_enable),
- .config_done(lcd_config_done),.config_state(lcd_config_state),.video_ready(lcd_video_ready),
- .LCD_POWER(LCD_POWER),.LCD_RST_P(LCD_RST_P),
- .mipi_dp_data0_LP_N_IN(mipi_dp_data0_LP_N_IN),
- .mipi_dp_data0_LP_P_IN(mipi_dp_data0_LP_P_IN),
- .mipi_dp_clk_HS_OE(mipi_dp_clk_HS_OE),
- .mipi_dp_clk_HS_OUT(mipi_dp_clk_HS_OUT),
- .mipi_dp_clk_LP_N_OE(mipi_dp_clk_LP_N_OE),
- .mipi_dp_clk_LP_N_OUT(mipi_dp_clk_LP_N_OUT),
- .mipi_dp_clk_LP_P_OE(mipi_dp_clk_LP_P_OE),
- .mipi_dp_clk_LP_P_OUT(mipi_dp_clk_LP_P_OUT),
- .mipi_dp_clk_RST(mipi_dp_clk_RST),
- .mipi_dp_data0_HS_OE(mipi_dp_data0_HS_OE),
- .mipi_dp_data0_HS_OUT(mipi_dp_data0_HS_OUT),
- .mipi_dp_data0_LP_N_OE(mipi_dp_data0_LP_N_OE),
- .mipi_dp_data0_LP_N_OUT(mipi_dp_data0_LP_N_OUT),
- .mipi_dp_data0_LP_P_OE(mipi_dp_data0_LP_P_OE),
- .mipi_dp_data0_LP_P_OUT(mipi_dp_data0_LP_P_OUT),
- .mipi_dp_data0_RST(mipi_dp_data0_RST),
- .mipi_dp_data1_HS_OE(mipi_dp_data1_HS_OE),
- .mipi_dp_data1_HS_OUT(mipi_dp_data1_HS_OUT),
- .mipi_dp_data1_LP_N_OE(mipi_dp_data1_LP_N_OE),
- .mipi_dp_data1_LP_N_OUT(mipi_dp_data1_LP_N_OUT),
- .mipi_dp_data1_LP_P_OE(mipi_dp_data1_LP_P_OE),
- .mipi_dp_data1_LP_P_OUT(mipi_dp_data1_LP_P_OUT),
- .mipi_dp_data1_RST(mipi_dp_data1_RST),
- .mipi_dp_data2_HS_OE(mipi_dp_data2_HS_OE),
- .mipi_dp_data2_HS_OUT(mipi_dp_data2_HS_OUT),
- .mipi_dp_data2_LP_N_OE(mipi_dp_data2_LP_N_OE),
- .mipi_dp_data2_LP_N_OUT(mipi_dp_data2_LP_N_OUT),
- .mipi_dp_data2_LP_P_OE(mipi_dp_data2_LP_P_OE),
- .mipi_dp_data2_LP_P_OUT(mipi_dp_data2_LP_P_OUT),
- .mipi_dp_data2_RST(mipi_dp_data2_RST),
- .mipi_dp_data3_HS_OE(mipi_dp_data3_HS_OE),
- .mipi_dp_data3_HS_OUT(mipi_dp_data3_HS_OUT),
- .mipi_dp_data3_LP_N_OE(mipi_dp_data3_LP_N_OE),
- .mipi_dp_data3_LP_N_OUT(mipi_dp_data3_LP_N_OUT),
- .mipi_dp_data3_LP_P_OE(mipi_dp_data3_LP_P_OE),
- .mipi_dp_data3_LP_P_OUT(mipi_dp_data3_LP_P_OUT),
- .mipi_dp_data3_RST(mipi_dp_data3_RST)
-);
+// HDMI-only build: DSI PHY inactive and LCD backlight off.
+assign LCD_POWER=1'b0; assign LCD_RST_P=1'b1;
+assign mipi_dp_clk_RST=1'b1;
+assign mipi_dp_clk_HS_OUT=8'd0;
+assign mipi_dp_clk_HS_OE=1'b0;
+assign mipi_dp_clk_LP_P_OUT=1'b0; assign mipi_dp_clk_LP_P_OE=1'b0;
+assign mipi_dp_clk_LP_N_OUT=1'b0; assign mipi_dp_clk_LP_N_OE=1'b0;
+assign mipi_dp_data0_RST=1'b1;
+assign mipi_dp_data0_HS_OUT=8'd0;
+assign mipi_dp_data0_HS_OE=1'b0;
+assign mipi_dp_data0_LP_P_OUT=1'b0; assign mipi_dp_data0_LP_P_OE=1'b0;
+assign mipi_dp_data0_LP_N_OUT=1'b0; assign mipi_dp_data0_LP_N_OE=1'b0;
+assign mipi_dp_data1_RST=1'b1;
+assign mipi_dp_data1_HS_OUT=8'd0;
+assign mipi_dp_data1_HS_OE=1'b0;
+assign mipi_dp_data1_LP_P_OUT=1'b0; assign mipi_dp_data1_LP_P_OE=1'b0;
+assign mipi_dp_data1_LP_N_OUT=1'b0; assign mipi_dp_data1_LP_N_OE=1'b0;
+assign mipi_dp_data2_RST=1'b1;
+assign mipi_dp_data2_HS_OUT=8'd0;
+assign mipi_dp_data2_HS_OE=1'b0;
+assign mipi_dp_data2_LP_P_OUT=1'b0; assign mipi_dp_data2_LP_P_OE=1'b0;
+assign mipi_dp_data2_LP_N_OUT=1'b0; assign mipi_dp_data2_LP_N_OE=1'b0;
+assign mipi_dp_data3_RST=1'b1;
+assign mipi_dp_data3_HS_OUT=8'd0;
+assign mipi_dp_data3_HS_OE=1'b0;
+assign mipi_dp_data3_LP_P_OUT=1'b0; assign mipi_dp_data3_LP_P_OE=1'b0;
+assign mipi_dp_data3_LP_N_OUT=1'b0; assign mipi_dp_data3_LP_N_OE=1'b0;
 // Legacy USER1 analyzer removed; USER2 operational diagnostics retained.
 // Keep the USER1 interface pins live with a minimal identification shift register.
 reg[7:0]user1_id=8'h51;
@@ -1329,6 +1361,14 @@ always @(posedge i_mipi_rx_pclk) begin
   end
  end
 end
+// Count DE and HS independently; geometry requires their intersection.
+reg[31:0]probe_de_count=0,probe_hs_count=0;
+reg[15:0]probe_error_seen=0;
+always @(posedge i_mipi_rx_pclk)begin
+ if(w_mipi_rx_de)probe_de_count<=probe_de_count+1'b1;
+ if(w_mipi_rx_hs&&!rx_hs_q)probe_hs_count<=probe_hs_count+1'b1;
+ probe_error_seen<=probe_error_seen|mipi_debug_out[15:0];
+end
 reg out_vs_q=0,out_de_q=0;
 reg [11:0] out_width=0,out_min=12'hfff,out_max=0,out_lines=0;
 reg [23:0] out_total=0;
@@ -1399,20 +1439,23 @@ always @(posedge jtag_diag_DRCK) begin
  diag_meta<={diag_frame_gray,diag_core_gray,i_arstn,i_pll_locked,pll_locked,user_pll_locked,w_arstn,vid_rst_n,pattern_reset_sync[1],1'b0};
  diag_sync<=diag_meta;
  if(jtag_diag_CAPTURE)begin
-  if(feature_diag_page==14)diag_shift<={32'h56495331,32'h260917f5,feature_status,64'b0,16'b0,lcd_phy_seen,4'b0,LCD_RST_P,LCD_POWER,lcd_bist,lcd_backlight};
-  else if(feature_diag_page==13)diag_shift<={32'h56495331,32'h260917f5,feature_status,lcd_frames,lcd_line_pairs,40'b0,lcd_config_state,lcd_pack_fault,lcd_test,lcd_video_ready,lcd_config_done};
+  if(feature_diag_page==15&&probe_csi_view)diag_shift<={32'h56495331,32'h2609192f,feature_status,probe_de_count,probe_hs_count,probe_error_seen,mipi_debug_out[15:0]};
+  else if(feature_diag_page==15)diag_shift<={32'h56495331,32'h2609191f,feature_status,cam_byte_core,cam_lp00_entries,cam_clock_peak_hold,cam_clock_delta};
+  else if(feature_diag_page==9)diag_shift<={32'h56495331,32'h26091909,feature_status,sensor_seq,sensor_addr,sensor_readback,4'b0,sensor_busy,sensor_fault,sensor_ack,sensor_req,phy_status_core};
+  else if(feature_diag_page==13)diag_shift<={32'h56495331,32'h2609190d,feature_status,camera_frames,rx_geometry,4'b0};
+  else if(feature_diag_page==14)diag_shift<={32'h56495331,32'h2609190e,feature_status,fov_overruns,filter_geometry,4'b0};
   else if(feature_diag_page==11)diag_shift<={32'h56495331,32'h260917b5,feature_status,ae_applied,ae_request,ae_updates,ae_readback,20'b0,ae_shadow,ae_enable,ae_busy,ae_fault};
   else if(feature_diag_page==12)diag_shift<={32'h56495331,32'h260917c5,feature_status,ae_sum,ae_ncenter,ae_ntotal,ae_nclip,14'b0,ae_decision};
-  else if(feature_diag_page==10)diag_shift<={32'h56495331,32'h260917a5,feature_status,highlight_hits_hold,64'b0};
+  else if(feature_diag_page==10)diag_shift<={32'h56495331,32'h260919a6,feature_status,highlight_hits_hold,shape_status};
   else if(feature_diag_page==8)diag_shift<={32'h56495331,32'h26091785,feature_status,wb_r,wb_g,wb_b,46'b0,tone_mode};
   else if(feature_diag_page==4)diag_shift<={32'h56495331,32'h26091745,feature_status,pre_gamma_sums};
   else if(feature_diag_page==5)diag_shift<={32'h56495331,32'h26091755,feature_status,post_gamma_sums};
   else if(feature_diag_page==6)diag_shift<={32'h56495331,32'h26091765,feature_status,display_color_sums};
   else if(feature_diag_page==7)diag_shift<={32'h56495331,32'h26091775,feature_status,post_gamma_clips};
-  else if(feature_diag_page==3)diag_shift<={32'h56495331,32'h26091735,feature_status,{raw_busy,16'b0,color_order,raw_read_addr},raw_read_data,raw_sequence};
+  else if(feature_diag_page==3)diag_shift<={32'h56495331,32'h26091737,feature_status,{raw_busy,16'b0,color_order,raw_read_addr},raw_read_data,raw_sequence};
   else if(feature_diag_page==1)diag_shift<={32'h56495331,32'h26091715,feature_status,memory_write_errors,feature_edges_hold,feature_frames};
   else if(feature_diag_page==2)diag_shift<={32'h56495331,32'h26091725,feature_status,source_checksum_hold,memory_display_id,memory_capture_id};
-  else diag_shift<={32'h56495331,32'h26091705,feature_status,memory_capture_id,memory_display_id,canny_completed};
+  else diag_shift<={32'h56495331,32'h26091707,feature_status,memory_capture_id,memory_display_id,canny_completed};
  end
  else if(jtag_diag_SHIFT)diag_shift<={jtag_diag_TDI,diag_shift[191:1]};
 end

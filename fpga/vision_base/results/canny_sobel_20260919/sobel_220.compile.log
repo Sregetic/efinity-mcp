@@ -1,0 +1,8 @@
+Running: efx_run_map.py sobel_220 --family Titanium --device Ti60F225 --project_xml F:\Project\fpga\vision_base\efinity\sobel_220\sobel_220.xml --output_dir outflow --work_dir work_syn --timeout 600 --opt root=sobel_timing_top --opt veri_options=verilog_mode=sv_09,vhdl_mode=vhdl_2008 work-dir=work_syn write_efx_verilog=on
+   map :	PASS 
+Running: efx_run_pt_unified.py sobel_220 Titanium Ti60F225 --output_dir outflow --timing_model I3 --project_xml sobel_220.xml
+   interface :	PASS 
+Running: efx_run_pnr.py sobel_220 --prj F:\Project\fpga\vision_base\efinity\sobel_220\sobel_220.xml --family Titanium --device Ti60F225 --timing_model I3 --output_dir outflow --work_dir work_pnr --timeout 592 --opt sdc_file=sobel_220.sdc
+   pnr :	PASS 
+Running: efx_run_pgm.py sobel_220 --family Titanium --device Ti60F225 --output_dir outflow --work_dir work_pnr --timeout 586 --opt mode=active width=1 enable_roms=on spi_low_power_mode=on io_weak_pullup=on oscillator_clock_divider=DIV8 enable_crc_check=on bitstream_compression=on active_capture_clk_edge=posedge release_tri_then_reset=on enable_external_master_clock=off jtag_usercode=0xFFFFFFFF
+   pgm :	PASS 

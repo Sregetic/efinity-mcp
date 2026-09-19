@@ -1,0 +1,3 @@
+peak at78.74 MHz=   79
+CLOCK PEAK PASS 78.74/140 MHz, measured high=  141
+results/camera_60fps_20260919/tb_clock_peak.sv:40: $finish called at 40400000 (1ps)

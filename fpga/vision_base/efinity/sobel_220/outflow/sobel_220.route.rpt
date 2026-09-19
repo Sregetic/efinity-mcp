@@ -1,0 +1,29 @@
+
+Elitestek FPGA Placement and Routing.
+Version: 2026.1.132.3.9 
+Date: Sat Sep 19 02:47:29 2026
+
+Copyright (C) 2013 - 2026 Efinix, Inc. All rights reserved.
+ 
+Family: Titanium 
+Device: Ti60F225
+Top-level Entity Name: sobel_220
+Elapsed time for routing: 0 hours 0 minutes 1 seconds
+
+
+---------- GBUFCE Assignments (begin) ----------
+
+
++-----------+----------+----------+
+| Clock Net | GBUFCE_X | GBUFCE_Y |
++-----------+----------+----------+
+|  CLK_25M  |    1     |   164    |
+|    clk    |    1     |   162    |
+|    fb     |    1     |   159    |
++-----------+----------+----------+
+
+
+----------- GBUFCE Assignments (end) ----------
+
+
+Elapsed time for Latest PnR Run: 0 hours 0 minutes 5 seconds

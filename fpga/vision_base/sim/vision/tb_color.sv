@@ -2,7 +2,7 @@
 module tb;
 reg clk=0;always #5 clk=~clk;reg rst=0,de=0,hs=0,vs=0;reg[7:0]p=0;reg me=0;
 wire fd,fh,fv,border;wire[11:0]x,y;wire[7:0]r,g,b,gray;wire[10:0]mag;wire[1:0]dir;
-vision_frontend #(.WIDTH(32))dut(clk,rst,de,hs,vs,p,(8'd255-p),8'd37,me,fd,fh,fv,border,x,y,r,g,b,gray,mag,dir);
+vision_frontend #(.WIDTH(32))dut(clk,rst,de,hs,vs,p,(8'd255-p),8'd37,me,fd,fh,fv,border,x,y,r,g,b,gray,mag,dir,11'd64,);
 integer ix,iy,f,errors=0,checked=0,n=0,expected;
 always @(negedge clk)if(fd)begin
  n=n+1;

@@ -325,6 +325,45 @@ route {
 }
 route {
   driver {
+    cell: "cam_d0_DLY_ENA~MIPI~DLY_ENA"
+    port: "inpad"
+  }
+  sink {
+    cell: "cam_d0~MIPI"
+    port: "DLY_ENA"
+  }
+  delay_min: 0
+  delay_max: 0
+  type: FIXED_NET_DELAY
+}
+route {
+  driver {
+    cell: "cam_d0_DLY_INC~MIPI~DLY_INC"
+    port: "inpad"
+  }
+  sink {
+    cell: "cam_d0~MIPI"
+    port: "DLY_INC"
+  }
+  delay_min: 0
+  delay_max: 0
+  type: FIXED_NET_DELAY
+}
+route {
+  driver {
+    cell: "cam_d0_DLY_RST~MIPI~DLY_RST"
+    port: "inpad"
+  }
+  sink {
+    cell: "cam_d0~MIPI"
+    port: "DLY_RST"
+  }
+  delay_min: 0
+  delay_max: 0
+  type: FIXED_NET_DELAY
+}
+route {
+  driver {
     cell: "cam_d0~MIPI"
     port: "FIFO_EMPTY"
   }
@@ -578,6 +617,45 @@ route {
   sink {
     cell: "cam_d0~MIPI"
     port: "FIFOCLK"
+  }
+  delay_min: 0
+  delay_max: 0
+  type: FIXED_NET_DELAY
+}
+route {
+  driver {
+    cell: "cam_d1_DLY_ENA~MIPI~DLY_ENA"
+    port: "inpad"
+  }
+  sink {
+    cell: "cam_d1~MIPI"
+    port: "DLY_ENA"
+  }
+  delay_min: 0
+  delay_max: 0
+  type: FIXED_NET_DELAY
+}
+route {
+  driver {
+    cell: "cam_d1_DLY_INC~MIPI~DLY_INC"
+    port: "inpad"
+  }
+  sink {
+    cell: "cam_d1~MIPI"
+    port: "DLY_INC"
+  }
+  delay_min: 0
+  delay_max: 0
+  type: FIXED_NET_DELAY
+}
+route {
+  driver {
+    cell: "cam_d1_DLY_RST~MIPI~DLY_RST"
+    port: "inpad"
+  }
+  sink {
+    cell: "cam_d1~MIPI"
+    port: "DLY_RST"
   }
   delay_min: 0
   delay_max: 0
@@ -845,6 +923,45 @@ route {
 }
 route {
   driver {
+    cell: "cam_d2_DLY_ENA~MIPI~DLY_ENA"
+    port: "inpad"
+  }
+  sink {
+    cell: "cam_d2~MIPI"
+    port: "DLY_ENA"
+  }
+  delay_min: 0
+  delay_max: 0
+  type: FIXED_NET_DELAY
+}
+route {
+  driver {
+    cell: "cam_d2_DLY_INC~MIPI~DLY_INC"
+    port: "inpad"
+  }
+  sink {
+    cell: "cam_d2~MIPI"
+    port: "DLY_INC"
+  }
+  delay_min: 0
+  delay_max: 0
+  type: FIXED_NET_DELAY
+}
+route {
+  driver {
+    cell: "cam_d2_DLY_RST~MIPI~DLY_RST"
+    port: "inpad"
+  }
+  sink {
+    cell: "cam_d2~MIPI"
+    port: "DLY_RST"
+  }
+  delay_min: 0
+  delay_max: 0
+  type: FIXED_NET_DELAY
+}
+route {
+  driver {
     cell: "cam_d2~MIPI"
     port: "FIFO_EMPTY"
   }
@@ -1098,6 +1215,45 @@ route {
   sink {
     cell: "cam_d2~MIPI"
     port: "FIFOCLK"
+  }
+  delay_min: 0
+  delay_max: 0
+  type: FIXED_NET_DELAY
+}
+route {
+  driver {
+    cell: "cam_d3_DLY_ENA~MIPI~DLY_ENA"
+    port: "inpad"
+  }
+  sink {
+    cell: "cam_d3~MIPI"
+    port: "DLY_ENA"
+  }
+  delay_min: 0
+  delay_max: 0
+  type: FIXED_NET_DELAY
+}
+route {
+  driver {
+    cell: "cam_d3_DLY_INC~MIPI~DLY_INC"
+    port: "inpad"
+  }
+  sink {
+    cell: "cam_d3~MIPI"
+    port: "DLY_INC"
+  }
+  delay_min: 0
+  delay_max: 0
+  type: FIXED_NET_DELAY
+}
+route {
+  driver {
+    cell: "cam_d3_DLY_RST~MIPI~DLY_RST"
+    port: "inpad"
+  }
+  sink {
+    cell: "cam_d3~MIPI"
+    port: "DLY_RST"
   }
   delay_min: 0
   delay_max: 0

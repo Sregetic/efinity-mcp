@@ -1,0 +1,2 @@
+SENSOR DEBUG PASS read/write/readback, boot gate, AE arbitration, mismatch, timeout recovery
+sim/vision/tb_sensor_debug.sv:29: $finish called at 1770000 (1ps)

@@ -1,0 +1,2 @@
+FATAL: sim/vision/tb_chroma_singleclip.sv:13: single-channel clipped neutral highlight uncorrected: plain=e3ad89 corrected=e3ad89
+       Time: 170000  Scope: tb

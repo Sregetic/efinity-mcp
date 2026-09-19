@@ -1,7 +1,7 @@
 
 # Efinity Interface Configuration
 # Version: 2026.1.132.3.9
-# Date: 2026-09-17 00:36
+# Date: 2026-09-19 15:02
 
 # Copyright (C) 2013 - 2026 Efinix Inc. All rights reserved.
 
@@ -102,6 +102,9 @@ clkout, 166, 0, -1, tx_cal_clk_90edge
 clkout, 167, 0, -1, tx_cal_clk_90edge
 clkout, 190, 0, -1, tx_cal_clk_90edge
 clkout, 191, 0, -1, tx_cal_clk_90edge
+output, 88, 323, 0, __bypass__, cam_d0_DLY_ENA
+output, 87, 323, 2, __bypass__, cam_d0_DLY_INC
+output, 88, 323, 2, __bypass__, cam_d0_DLY_RST
 input, 87, 323, 1, __bypass__, cam_d0_FIFO_EMPTY
 output, 89, 323, 2, __bypass__, cam_d0_FIFO_RD
 output, 86, 323, 0, __bypass__, cam_d0_HS_ENA
@@ -117,6 +120,9 @@ output, 87, 323, 0, __bypass__, cam_d0_HS_TERM
 input, 86, 323, 3, __bypass__, cam_d0_LP_N_IN
 input, 86, 323, 1, __bypass__, cam_d0_LP_P_IN
 required output, 89, 323, 0, __bypass__, cam_d0_RST
+output, 137, 323, 2, __bypass__, cam_d1_DLY_ENA
+output, 137, 323, 0, __bypass__, cam_d1_DLY_INC
+output, 138, 323, 0, __bypass__, cam_d1_DLY_RST
 input, 136, 323, 1, __bypass__, cam_d1_FIFO_EMPTY
 output, 139, 323, 0, __bypass__, cam_d1_FIFO_RD
 output, 135, 323, 2, __bypass__, cam_d1_HS_ENA
@@ -132,6 +138,9 @@ output, 136, 323, 2, __bypass__, cam_d1_HS_TERM
 input, 135, 323, 3, __bypass__, cam_d1_LP_N_IN
 input, 135, 323, 1, __bypass__, cam_d1_LP_P_IN
 required output, 138, 323, 2, __bypass__, cam_d1_RST
+output, 77, 323, 0, __bypass__, cam_d2_DLY_ENA
+output, 76, 323, 2, __bypass__, cam_d2_DLY_INC
+output, 77, 323, 2, __bypass__, cam_d2_DLY_RST
 input, 76, 323, 1, __bypass__, cam_d2_FIFO_EMPTY
 output, 78, 323, 2, __bypass__, cam_d2_FIFO_RD
 output, 75, 323, 0, __bypass__, cam_d2_HS_ENA
@@ -147,6 +156,9 @@ output, 76, 323, 0, __bypass__, cam_d2_HS_TERM
 input, 75, 323, 3, __bypass__, cam_d2_LP_N_IN
 input, 75, 323, 1, __bypass__, cam_d2_LP_P_IN
 required output, 78, 323, 0, __bypass__, cam_d2_RST
+output, 148, 323, 0, __bypass__, cam_d3_DLY_ENA
+output, 147, 323, 2, __bypass__, cam_d3_DLY_INC
+output, 148, 323, 2, __bypass__, cam_d3_DLY_RST
 input, 147, 323, 1, __bypass__, cam_d3_FIFO_EMPTY
 output, 149, 323, 2, __bypass__, cam_d3_FIFO_RD
 output, 146, 323, 0, __bypass__, cam_d3_HS_ENA

@@ -1,0 +1,2 @@
+EXPOSURE WRITER PASS: boot arbitration, byte packing, verified ack, mismatch and timeout
+sim/vision/tb_sensor_exposure_writer.sv:22: $finish called at 3560000 (1ps)

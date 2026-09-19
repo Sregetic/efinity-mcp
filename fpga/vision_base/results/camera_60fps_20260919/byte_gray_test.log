@@ -1,0 +1,2 @@
+BYTE GRAY CDC PASS checks=569 count=715
+results/camera_60fps_20260919/tb_byte_gray.sv:28: $finish called at 5700000 (1ps)

@@ -1,0 +1,112 @@
+[
+  {
+    "time_s": 1789789314.2407258,
+    "page": 13,
+    "raw": "564953312609190d78100407000010fb2805a00e10004ad0",
+    "sensor_frames": 4347,
+    "words_per_line": 640,
+    "lines": 1440,
+    "words": 921600,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1789789314.4571238,
+    "page": 13,
+    "raw": "564953312609190d78100407000011012805a00e10004ad0",
+    "sensor_frames": 4353,
+    "words_per_line": 640,
+    "lines": 1440,
+    "words": 921600,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1789789314.6742237,
+    "page": 13,
+    "raw": "564953312609190d78100407000011082805a00e10004ad0",
+    "sensor_frames": 4360,
+    "words_per_line": 640,
+    "lines": 1440,
+    "words": 921600,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1789789314.891317,
+    "page": 13,
+    "raw": "564953312609190d781004070000110e2805a00e10004ad0",
+    "sensor_frames": 4366,
+    "words_per_line": 640,
+    "lines": 1440,
+    "words": 921600,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1789789315.108175,
+    "page": 13,
+    "raw": "564953312609190d78100407000011152805a00e10004ad0",
+    "sensor_frames": 4373,
+    "words_per_line": 640,
+    "lines": 1440,
+    "words": 921600,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1789789315.3258047,
+    "page": 13,
+    "raw": "564953312609190d781004070000111b2805a00e10004ad0",
+    "sensor_frames": 4379,
+    "words_per_line": 640,
+    "lines": 1440,
+    "words": 921600,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1789789315.5308585,
+    "page": 13,
+    "raw": "564953312609190d78100407000011222805a00e10004ad0",
+    "sensor_frames": 4386,
+    "words_per_line": 640,
+    "lines": 1440,
+    "words": 921600,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1789789315.747425,
+    "page": 13,
+    "raw": "564953312609190d78100407000011282805a00e10004ad0",
+    "sensor_frames": 4392,
+    "words_per_line": 640,
+    "lines": 1440,
+    "words": 921600,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1789789315.9643087,
+    "page": 13,
+    "raw": "564953312609190d781004070000112e2805a00e10004ad0",
+    "sensor_frames": 4398,
+    "words_per_line": 640,
+    "lines": 1440,
+    "words": 921600,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1789789316.1813302,
+    "page": 13,
+    "raw": "564953312609190d78100407000011352805a00e10004ad0",
+    "sensor_frames": 4405,
+    "words_per_line": 640,
+    "lines": 1440,
+    "words": 921600,
+    "ppc": 4,
+    "data_type": 43
+  }
+]

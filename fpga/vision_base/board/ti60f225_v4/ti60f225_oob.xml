@@ -6,10 +6,6 @@
     </efx:device_info>
     <efx:design_info def_veri_version="sv_09" def_vhdl_version="vhdl_2008" unified_flow="false" partition_interface_allowed_off_perimeter="true">
         <efx:top_module name="ti60f225_oob_top" />
-        <efx:design_file name="rtl/lcd/dsi_tx.sv" version="default" library="default" />
-        <efx:design_file name="rtl/lcd/lcd_dsi_tx_top.v" version="default" library="default" />
-        <efx:design_file name="rtl/lcd/lcd_rgb_pack.sv" version="default" library="default" />
-        <efx:design_file name="rtl/lcd/lcd_ref_color_bar.v" version="default" library="default" />
         <efx:design_file name="rtl/vision/camera_auto_exposure.sv" version="default" library="default" />
         <efx:design_file name="rtl/vision/sensor_exposure_writer.sv" version="default" library="default" />
         <efx:design_file name="rtl/vision/rgb_chroma_tone.sv" version="default" library="default" />
@@ -26,6 +22,7 @@
         <efx:design_file name="rtl/vision/vision_display.sv" version="default" library="default" />
         <efx:design_file name="rtl/vision/vision_frontend.sv" version="default" library="default" />
         <efx:design_file name="rtl/vision/vision_median9.sv" version="default" library="default" />
+        <efx:design_file name="rtl/vision/vision_shape_classifier.sv" version="default" library="default" />
         <efx:design_file name="rtl/vision/vision_osd.sv" version="default" library="default" />
         <efx:design_file name="rtl/vision/vision_sobel.sv" version="default" library="default" />
         <efx:design_file name="rtl/vision/vision_window3.sv" version="default" library="default" />

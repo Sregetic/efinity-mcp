@@ -21,9 +21,7 @@ initial begin
  @(negedge clk);x=ix;y=iy;cv=1;c=0;last=(ix==15&&iy==11);
  end
  @(negedge clk);cv=0;last=0;wait(state==8);
- // The resource-reduced implementation updates its single display plane in
- // place.  By the end of capture the old edge must already be cleared.
- dx=1;dy=1;@(posedge clk);#1;if(pixel)$fatal(1,"single edge plane did not update during capture");
+ dx=1;dy=1;@(posedge clk);#1;if(!pixel)$fatal(1,"old front changed before publication");
  @(negedge clk);vblank=1;#10;vblank=0;#20;
  for(iy=0;iy<12;iy++)for(ix=0;ix<16;ix++)begin
  @(negedge clk);dx=ix;dy=iy;@(posedge clk);#1;if(pixel!==0)errors++;

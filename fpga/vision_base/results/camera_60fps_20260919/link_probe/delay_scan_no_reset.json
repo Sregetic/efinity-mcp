@@ -1,0 +1,1241 @@
+{
+  "trials": [
+    {
+      "tap": 17,
+      "fps": 56.36575137762607,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794342.0106704,
+          "page": 13,
+          "raw": "564953312609190d78100407000002380000000000004ad0",
+          "sensor_frames": 568,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794342.2263484,
+          "page": 13,
+          "raw": "564953312609190d78100407000002450000000000004ad0",
+          "sensor_frames": 581,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794342.443374,
+          "page": 13,
+          "raw": "564953312609190d78100407000002500000000000004ad0",
+          "sensor_frames": 592,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794342.6602998,
+          "page": 13,
+          "raw": "564953312609190d781004070000025c0000000000004ad0",
+          "sensor_frames": 604,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794342.8766468,
+          "page": 13,
+          "raw": "564953312609190d78100407000002680000000000004ad0",
+          "sensor_frames": 616,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794343.0928879,
+          "page": 13,
+          "raw": "564953312609190d78100407000002750000000000004ad0",
+          "sensor_frames": 629,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ]
+    },
+    {
+      "tap": 8,
+      "fps": 57.04078091028913,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794343.4155474,
+          "page": 13,
+          "raw": "564953312609190d78100407000002860000000000004ad0",
+          "sensor_frames": 646,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794343.6327226,
+          "page": 13,
+          "raw": "564953312609190d78100407000002930000000000004ad0",
+          "sensor_frames": 659,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794343.846953,
+          "page": 13,
+          "raw": "564953312609190d78100407000002a00000000000004ad0",
+          "sensor_frames": 672,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794344.0520577,
+          "page": 13,
+          "raw": "564953312609190d78100407000002ac0000000000004ad0",
+          "sensor_frames": 684,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794344.2681432,
+          "page": 13,
+          "raw": "564953312609190d78100407000002b70000000000004ad0",
+          "sensor_frames": 695,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794344.4849577,
+          "page": 13,
+          "raw": "564953312609190d78100407000002c30000000000004ad0",
+          "sensor_frames": 707,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ]
+    },
+    {
+      "tap": 12,
+      "fps": 56.96654737616941,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794344.80801,
+          "page": 13,
+          "raw": "564953312609190d78100407000002d60000000000004ad0",
+          "sensor_frames": 726,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794345.023826,
+          "page": 13,
+          "raw": "564953312609190d78100407000002e10000000000004ad0",
+          "sensor_frames": 737,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794345.2402244,
+          "page": 13,
+          "raw": "564953312609190d78100407000002ee0000000000004ad0",
+          "sensor_frames": 750,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794345.45613,
+          "page": 13,
+          "raw": "564953312609190d78100407000002fb0000000000004ad0",
+          "sensor_frames": 763,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794345.6732984,
+          "page": 13,
+          "raw": "564953312609190d78100407000003080000000000004ad0",
+          "sensor_frames": 776,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794345.878814,
+          "page": 13,
+          "raw": "564953312609190d78100407000003130000000000004ad0",
+          "sensor_frames": 787,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ]
+    },
+    {
+      "tap": 4,
+      "fps": 54.42815843695619,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794346.1990345,
+          "page": 13,
+          "raw": "564953312609190d78100407000003250000000000004ad0",
+          "sensor_frames": 805,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794346.415807,
+          "page": 13,
+          "raw": "564953312609190d781004070000032f0000000000004ad0",
+          "sensor_frames": 815,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794346.6326914,
+          "page": 13,
+          "raw": "564953312609190d781004070000033c0000000000004ad0",
+          "sensor_frames": 828,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794346.8494837,
+          "page": 13,
+          "raw": "564953312609190d78100407000003470000000000004ad0",
+          "sensor_frames": 839,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794347.0664515,
+          "page": 13,
+          "raw": "564953312609190d78100407000003530000000000004ad0",
+          "sensor_frames": 851,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794347.2830322,
+          "page": 13,
+          "raw": "564953312609190d78100407000003600000000000004ad0",
+          "sensor_frames": 864,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ]
+    },
+    {
+      "tap": 20,
+      "fps": 55.37664900495832,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794347.6054409,
+          "page": 13,
+          "raw": "564953312609190d78100407000003730000000000004ad0",
+          "sensor_frames": 883,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794347.8227835,
+          "page": 13,
+          "raw": "564953312609190d78100407000003800000000000004ad0",
+          "sensor_frames": 896,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794348.0397851,
+          "page": 13,
+          "raw": "564953312609190d781004070000038c0000000000004ad0",
+          "sensor_frames": 908,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794348.2566447,
+          "page": 13,
+          "raw": "564953312609190d78100407000003960000000000004ad0",
+          "sensor_frames": 918,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794348.472841,
+          "page": 13,
+          "raw": "564953312609190d78100407000003a30000000000004ad0",
+          "sensor_frames": 931,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794348.68893,
+          "page": 13,
+          "raw": "564953312609190d78100407000003af0000000000004ad0",
+          "sensor_frames": 943,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ]
+    },
+    {
+      "tap": 24,
+      "fps": 49.92539947718752,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794349.0098026,
+          "page": 13,
+          "raw": "564953312609190d78100407000003c10000000000004ad0",
+          "sensor_frames": 961,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794349.227408,
+          "page": 13,
+          "raw": "564953312609190d78100407000003cb0000000000004ad0",
+          "sensor_frames": 971,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794349.4438622,
+          "page": 13,
+          "raw": "564953312609190d78100407000003d60000000000004ad0",
+          "sensor_frames": 982,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794349.6611304,
+          "page": 13,
+          "raw": "564953312609190d78100407000003e10000000000004ad0",
+          "sensor_frames": 993,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794349.8778799,
+          "page": 13,
+          "raw": "564953312609190d78100407000003ec0000000000004ad0",
+          "sensor_frames": 1004,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794350.0914164,
+          "page": 13,
+          "raw": "564953312609190d78100407000003f70000000000004ad0",
+          "sensor_frames": 1015,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ]
+    },
+    {
+      "tap": 28,
+      "fps": 0.0,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794350.413536,
+          "page": 13,
+          "raw": "564953312609190d78100407000004060000000000004ad0",
+          "sensor_frames": 1030,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794350.630561,
+          "page": 13,
+          "raw": "564953312609190d78100407000004060000000000004ad0",
+          "sensor_frames": 1030,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794350.8473837,
+          "page": 13,
+          "raw": "564953312609190d78100407000004060000000000004ad0",
+          "sensor_frames": 1030,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794351.0637276,
+          "page": 13,
+          "raw": "564953312609190d78100407000004060000000000004ad0",
+          "sensor_frames": 1030,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794351.2807844,
+          "page": 13,
+          "raw": "564953312609190d78100407000004060000000000004ad0",
+          "sensor_frames": 1030,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794351.4975846,
+          "page": 13,
+          "raw": "564953312609190d78100407000004060000000000004ad0",
+          "sensor_frames": 1030,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ]
+    },
+    {
+      "tap": 0,
+      "fps": 50.9595259817912,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794351.8194308,
+          "page": 13,
+          "raw": "564953312609190d781004070000040a0000000000004ad0",
+          "sensor_frames": 1034,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794352.0239506,
+          "page": 13,
+          "raw": "564953312609190d78100407000004150000000000004ad0",
+          "sensor_frames": 1045,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794352.2286663,
+          "page": 13,
+          "raw": "564953312609190d78100407000004200000000000004ad0",
+          "sensor_frames": 1056,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794352.4442732,
+          "page": 13,
+          "raw": "564953312609190d781004070000042a0000000000004ad0",
+          "sensor_frames": 1066,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794352.6614947,
+          "page": 13,
+          "raw": "564953312609190d78100407000004360000000000004ad0",
+          "sensor_frames": 1078,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794352.8790953,
+          "page": 13,
+          "raw": "564953312609190d78100407000004400000000000004ad0",
+          "sensor_frames": 1088,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ]
+    },
+    {
+      "tap": 32,
+      "fps": 57.703121220849084,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794353.2017415,
+          "page": 13,
+          "raw": "564953312609190d78100407000004520000000000004ad0",
+          "sensor_frames": 1106,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794353.4190304,
+          "page": 13,
+          "raw": "564953312609190d781004070000045f0000000000004ad0",
+          "sensor_frames": 1119,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794353.6351109,
+          "page": 13,
+          "raw": "564953312609190d781004070000046b0000000000004ad0",
+          "sensor_frames": 1131,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794353.8529952,
+          "page": 13,
+          "raw": "564953312609190d78100407000004780000000000004ad0",
+          "sensor_frames": 1144,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794354.0692644,
+          "page": 13,
+          "raw": "564953312609190d78100407000004830000000000004ad0",
+          "sensor_frames": 1155,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794354.2762067,
+          "page": 13,
+          "raw": "564953312609190d78100407000004900000000000004ad0",
+          "sensor_frames": 1168,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ]
+    },
+    {
+      "tap": 36,
+      "fps": 51.69177680024719,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794354.5999851,
+          "page": 13,
+          "raw": "564953312609190d78100407000004a10000000000004ad0",
+          "sensor_frames": 1185,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794354.8161838,
+          "page": 13,
+          "raw": "564953312609190d78100407000004ab0000000000004ad0",
+          "sensor_frames": 1195,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794355.0325413,
+          "page": 13,
+          "raw": "564953312609190d78100407000004b60000000000004ad0",
+          "sensor_frames": 1206,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794355.2499294,
+          "page": 13,
+          "raw": "564953312609190d78100407000004c10000000000004ad0",
+          "sensor_frames": 1217,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794355.4668653,
+          "page": 13,
+          "raw": "564953312609190d78100407000004ce0000000000004ad0",
+          "sensor_frames": 1230,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794355.6833296,
+          "page": 13,
+          "raw": "564953312609190d78100407000004d90000000000004ad0",
+          "sensor_frames": 1241,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ]
+    },
+    {
+      "tap": 40,
+      "fps": 46.28768735316977,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794356.0071664,
+          "page": 13,
+          "raw": "564953312609190d78100407000004ea0000000000004ad0",
+          "sensor_frames": 1258,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794356.2127125,
+          "page": 13,
+          "raw": "564953312609190d78100407000004f50000000000004ad0",
+          "sensor_frames": 1269,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794356.4287646,
+          "page": 13,
+          "raw": "564953312609190d78100407000004ff0000000000004ad0",
+          "sensor_frames": 1279,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794356.6316795,
+          "page": 13,
+          "raw": "564953312609190d78100407000005090000000000004ad0",
+          "sensor_frames": 1289,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794356.8485124,
+          "page": 13,
+          "raw": "564953312609190d78100407000005130000000000004ad0",
+          "sensor_frames": 1299,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794357.0657632,
+          "page": 13,
+          "raw": "564953312609190d781004070000051b0000000000004ad0",
+          "sensor_frames": 1307,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ]
+    },
+    {
+      "tap": 44,
+      "fps": 56.242601593989825,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794357.3878887,
+          "page": 13,
+          "raw": "564953312609190d781004070000052e0000000000004ad0",
+          "sensor_frames": 1326,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794357.6042764,
+          "page": 13,
+          "raw": "564953312609190d781004070000053b0000000000004ad0",
+          "sensor_frames": 1339,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794357.821979,
+          "page": 13,
+          "raw": "564953312609190d78100407000005470000000000004ad0",
+          "sensor_frames": 1351,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794358.0386386,
+          "page": 13,
+          "raw": "564953312609190d78100407000005540000000000004ad0",
+          "sensor_frames": 1364,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794358.255559,
+          "page": 13,
+          "raw": "564953312609190d781004070000055f0000000000004ad0",
+          "sensor_frames": 1375,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794358.4724758,
+          "page": 13,
+          "raw": "564953312609190d781004070000056b0000000000004ad0",
+          "sensor_frames": 1387,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ]
+    },
+    {
+      "tap": 48,
+      "fps": 51.213276168893216,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794358.7954834,
+          "page": 13,
+          "raw": "564953312609190d781004070000057d0000000000004ad0",
+          "sensor_frames": 1405,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794359.0130246,
+          "page": 13,
+          "raw": "564953312609190d78100407000005870000000000004ad0",
+          "sensor_frames": 1415,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794359.2295256,
+          "page": 13,
+          "raw": "564953312609190d78100407000005930000000000004ad0",
+          "sensor_frames": 1427,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794359.4361053,
+          "page": 13,
+          "raw": "564953312609190d781004070000059d0000000000004ad0",
+          "sensor_frames": 1437,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794359.6528814,
+          "page": 13,
+          "raw": "564953312609190d78100407000005aa0000000000004ad0",
+          "sensor_frames": 1450,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794359.8694236,
+          "page": 13,
+          "raw": "564953312609190d78100407000005b40000000000004ad0",
+          "sensor_frames": 1460,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ]
+    },
+    {
+      "tap": 52,
+      "fps": 47.98881908641093,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794360.189217,
+          "page": 13,
+          "raw": "564953312609190d78100407000005c50000000000004ad0",
+          "sensor_frames": 1477,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794360.4059668,
+          "page": 13,
+          "raw": "564953312609190d78100407000005d10000000000004ad0",
+          "sensor_frames": 1489,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794360.6231253,
+          "page": 13,
+          "raw": "564953312609190d78100407000005db0000000000004ad0",
+          "sensor_frames": 1499,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794360.8400204,
+          "page": 13,
+          "raw": "564953312609190d78100407000005e60000000000004ad0",
+          "sensor_frames": 1510,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794361.0567756,
+          "page": 13,
+          "raw": "564953312609190d78100407000005ee0000000000004ad0",
+          "sensor_frames": 1518,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794361.2728028,
+          "page": 13,
+          "raw": "564953312609190d78100407000005f90000000000004ad0",
+          "sensor_frames": 1529,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ]
+    },
+    {
+      "tap": 56,
+      "fps": 51.677723020581105,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794361.5817962,
+          "page": 13,
+          "raw": "564953312609190d78100407000006090000000000004ad0",
+          "sensor_frames": 1545,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794361.7981977,
+          "page": 13,
+          "raw": "564953312609190d78100407000006140000000000004ad0",
+          "sensor_frames": 1556,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794362.0048316,
+          "page": 13,
+          "raw": "564953312609190d781004070000061f0000000000004ad0",
+          "sensor_frames": 1567,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794362.2129452,
+          "page": 13,
+          "raw": "564953312609190d78100407000006290000000000004ad0",
+          "sensor_frames": 1577,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794362.4294286,
+          "page": 13,
+          "raw": "564953312609190d78100407000006350000000000004ad0",
+          "sensor_frames": 1589,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794362.6460845,
+          "page": 13,
+          "raw": "564953312609190d78100407000006400000000000004ad0",
+          "sensor_frames": 1600,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ]
+    },
+    {
+      "tap": 60,
+      "fps": 54.50250483766458,
+      "geometry_ok": false,
+      "rx": [
+        {
+          "time_s": 1789794362.9702733,
+          "page": 13,
+          "raw": "564953312609190d78100407000006520000000000004ad0",
+          "sensor_frames": 1618,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794363.1858404,
+          "page": 13,
+          "raw": "564953312609190d781004070000065d0000000000004ad0",
+          "sensor_frames": 1629,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794363.4028444,
+          "page": 13,
+          "raw": "564953312609190d78100407000006680000000000004ad0",
+          "sensor_frames": 1640,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794363.6195261,
+          "page": 13,
+          "raw": "564953312609190d78100407000006750000000000004ad0",
+          "sensor_frames": 1653,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794363.835952,
+          "page": 13,
+          "raw": "564953312609190d78100407000006810000000000004ad0",
+          "sensor_frames": 1665,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        },
+        {
+          "time_s": 1789794364.0527923,
+          "page": 13,
+          "raw": "564953312609190d781004070000068d0000000000004ad0",
+          "sensor_frames": 1677,
+          "words_per_line": 0,
+          "lines": 0,
+          "words": 0,
+          "ppc": 4,
+          "data_type": 43
+        }
+      ]
+    }
+  ],
+  "passed": false,
+  "baseline_rx": [
+    {
+      "time_s": 1789794340.5556698,
+      "page": 13,
+      "raw": "564953312609190d78100407000002082805a00e10004ad0",
+      "sensor_frames": 520,
+      "words_per_line": 640,
+      "lines": 1440,
+      "words": 921600,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794340.7589922,
+      "page": 13,
+      "raw": "564953312609190d781004070000020f2805a00e10004ad0",
+      "sensor_frames": 527,
+      "words_per_line": 640,
+      "lines": 1440,
+      "words": 921600,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794340.975002,
+      "page": 13,
+      "raw": "564953312609190d78100407000002152805a00e10004ad0",
+      "sensor_frames": 533,
+      "words_per_line": 640,
+      "lines": 1440,
+      "words": 921600,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794341.1917312,
+      "page": 13,
+      "raw": "564953312609190d781004070000021b2805a00e10004ad0",
+      "sensor_frames": 539,
+      "words_per_line": 640,
+      "lines": 1440,
+      "words": 921600,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794341.4090514,
+      "page": 13,
+      "raw": "564953312609190d78100407000002222805a00e10004ad0",
+      "sensor_frames": 546,
+      "words_per_line": 640,
+      "lines": 1440,
+      "words": 921600,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794341.6110702,
+      "page": 13,
+      "raw": "564953312609190d78100407000002282805a00e10004ad0",
+      "sensor_frames": 552,
+      "words_per_line": 640,
+      "lines": 1440,
+      "words": 921600,
+      "ppc": 4,
+      "data_type": 43
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 // 2560x1440 -> 1920x1080, separable area filtering on each Bayer sublattice.
 // Per 4 same-color samples, emit (3a+b)/4, (b+c)/2, (c+3d)/4.
 module bayer_fov_reduce(input clk,input rst_n,input vs,input hs,input valid,input [31:0] data,
- output reg o_vs=0,output reg o_hs=0,output reg o_valid=0,output reg [31:0] o_data=0);
+ output reg o_vs=0,output reg o_hs=0,output reg o_valid=0,output reg [31:0] o_data=0,output reg overrun=0);
 function automatic [7:0] blend(input [7:0] a,input [7:0] b,input [1:0] phase);
  reg[9:0] t;
  begin
@@ -21,7 +21,6 @@ reg[31:0] first=0;
 reg[8:0] wr_group=0;
 reg[2:0] wr_row=0;
 reg[7:0] wr_seq=0,rd_seq=0;
-reg overrun=0;
 wire[9:0] wr_addr=(wr_seq[0]?10'd320:10'd0)+wr_group;
 wire[47:0] horizontal={blend(first[31:24],first[15:8],0),blend(first[23:16],first[7:0],0),
  blend(first[15:8],data[31:24],1),blend(first[7:0],data[23:16],1),

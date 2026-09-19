@@ -1,0 +1,385 @@
+Running: efx_run_map.py sobel_220 --family Titanium --device Ti60F225 --project_xml F:\Project\fpga\vision_base\efinity\sobel_220\sobel_220.xml --output_dir outflow --work_dir work_syn --timeout 600 --opt root=sobel_timing_top --opt veri_options=verilog_mode=sv_09,vhdl_mode=vhdl_2008 work-dir=work_syn write_efx_verilog=on
+running synthesis
+Running: F:/Efinity/2026.1\bin\efx_map.exe --project sobel_220 --family Titanium --device Ti60F225 --output-dir outflow --project-xml F:\Project\fpga\vision_base\efinity\sobel_220\sobel_220.xml --binary-db outflow\sobel_220.vdb --peri-syn-instantiation=0 --peri-syn-inference=0 --peri-syn-modify-vdb-module-name=0 --root=sobel_timing_top --veri_options=verilog_mode=sv_09,vhdl_mode=vhdl_2008 --work-dir=work_syn --write-efx-verilog=outflow\sobel_220.map.v
+INFO     : Elitestek FPGA Synthesis.
+INFO     : Version: 2026.1.132.3.9
+INFO     : Compiled: Aug 24 2026.
+INFO     : 
+INFO     : Copyright (C) 2013 - 2026 Efinix, Inc. All rights reserved.
+
+INFO     : Reading project database "F:\Project\fpga\vision_base\efinity\sobel_220\sobel_220.xml" [FlowMsg::ProjectDatabaseReading]
+INFO     : Maximum concurrency has been set to 8 [FlowMsg::MaxThreads]
+INFO     : Reading project database "F:\Project\fpga\vision_base\efinity\sobel_220\sobel_220.xml" [FlowMsg::ProjectDatabaseReading]
+INFO     : ***** Beginning Analysis ... *****
+INFO     : default VHDL library search path is now "F:/Efinity/2026.1/sim_models/vhdl/packages/vhdl_2008" [VHDL-1504]
+INFO     : Restoring all Verilog modules from file 'F:/Efinity/2026.1/sim_models/maplib/perilib_efxlib_parsetree.vdb' [VERI-2484]
+INFO     : Restoring all Verilog modules from file 'F:/Efinity/2026.1/sim_models/maplib/maplib_efxlib_parsetree.vdb' [VERI-2484]
+INFO     : Analyzing Verilog file 'F:/Efinity/2026.1/sim_models/maplib/efinix_maplib.v' [VERI-1482]
+INFO     : Analyzing Verilog file 'F:/Efinity/2026.1/sim_models/maplib/efinix_peri_lib.v' [VERI-1482]
+INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv' [VERI-1482]
+WARNING  : F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv(2): non-net output port 'result' cannot be initialized at declaration in SystemVerilog mode [VERI-2522]
+INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv' [VERI-1482]
+INFO     : Analysis took 0.0094452 seconds [FlowMsg::StageDuration]
+INFO     :     Analysis took 0 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Analysis virtual memory usage: begin = 60.748 MB, end = 60.768 MB, delta = 0.02 MB [FlowMsg::VMUsage]
+INFO     :     Analysis peak virtual memory usage = 60.776 MB [FlowMsg::VMUsage::Peak]
+INFO     : Analysis resident set memory usage: begin = 66.152 MB, end = 69.044 MB, delta = 2.892 MB [FlowMsg::RSSUsage]
+INFO     :     Analysis peak resident set memory usage = 69.044 MB [FlowMsg::RSSUsage::Peak]
+INFO     : ***** Ending Analysis ... *****
+INFO     : ***** Beginning Elaboration ... *****
+INFO     : F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv(2): compiling module 'sobel_timing_top' [VERI-1018]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv(4): compiling module 'vision_sobel(META=60)' [VERI-1018]
+INFO     : Elaboration took 0.0043066 seconds [FlowMsg::StageDuration]
+INFO     :     Elaboration took 0 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Elaboration virtual memory usage: begin = 60.768 MB, end = 60.768 MB, delta = 0 MB [FlowMsg::VMUsage]
+INFO     :     Elaboration peak virtual memory usage = 60.776 MB [FlowMsg::VMUsage::Peak]
+INFO     : Elaboration resident set memory usage: begin = 69.088 MB, end = 70.304 MB, delta = 1.216 MB [FlowMsg::RSSUsage]
+INFO     :     Elaboration peak resident set memory usage = 70.304 MB [FlowMsg::RSSUsage::Peak]
+INFO     : ***** Ending Elaboration ... *****
+INFO     : ... Setting Synthesis Option: mode=speed
+INFO     : ***** Beginning Reading Mapping Library ... *****
+INFO     : Reading Mapping Library took 0.0018914 seconds [FlowMsg::StageDuration]
+INFO     :     Reading Mapping Library took 0.015625 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Reading Mapping Library virtual memory usage: begin = 60.768 MB, end = 60.768 MB, delta = 0 MB [FlowMsg::VMUsage]
+INFO     :     Reading Mapping Library peak virtual memory usage = 60.776 MB [FlowMsg::VMUsage::Peak]
+INFO     : Reading Mapping Library resident set memory usage: begin = 71.452 MB, end = 71.452 MB, delta = 0 MB [FlowMsg::RSSUsage]
+INFO     :     Reading Mapping Library peak resident set memory usage = 71.452 MB [FlowMsg::RSSUsage::Peak]
+INFO     : ***** Ending Reading Mapping Library ... *****
+INFO     : ... Pre-synthesis checks begin
+WARNING  : Removing redundant signal : w[39:32]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv:4) [EFX-0200]
+INFO     : ... Pre-synthesis checks end (Real time : 0s)
+INFO     : ... NameSpace init begin
+INFO     : ... NameSpace init end (Real time : 0s)
+INFO     : ... Mapping design "sobel_timing_top"
+INFO     : ... Hierarchical pre-synthesis "vision_sobel(META=60)" begin
+INFO     : ... Hierarchical pre-synthesis "vision_sobel(META=60)" end (Real time : 0s)
+INFO     : ... Hierarchical pre-synthesis "sobel_timing_top" begin
+INFO     : ... Hierarchical pre-synthesis "sobel_timing_top" end (Real time : 0s)
+INFO     : ... Flat optimizations begin
+INFO     : ... Flat optimizations end (Real time : 0s)
+INFO     : ... Flat synthesis begin
+INFO     : ... Flat synthesis end (Real time : 0s)
+INFO     : ... Flat optimizations begin
+INFO     : ... Flat optimizations end (Real time : 0s)
+INFO     : ... Check and break combinational loops begin
+INFO     : ... Check and break combinational loops end (Real time : 0s)
+INFO     : ... Setup for logic synthesis begin
+INFO     : ... Setup for logic synthesis end (Real time : 0s)
+INFO     : ... LUT mapping begin
+INFO     : ... LS, strategy: 3, nd: 105, ed: 375, lv: 6, pw: 416.26
+INFO     : ... LUT mapping end (Real time : 1s)
+INFO     : ... Post-synthesis Verific netlist creation begin
+INFO     : ... Post-synthesis Verific netlist creation end (Real time : 0s)
+INFO     : ***** Beginning VDB Netlist Checker ... *****
+WARNING  : F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv(2): Input/inout port CLK_25M is unconnected. Place and route may remove this unconnected port. [VDB-8003]
+WARNING  : Found 2 warnings in the post-synthesis netlist.
+INFO     : VDB Netlist Checker took 0.0007001 seconds [FlowMsg::StageDuration]
+INFO     :     VDB Netlist Checker took 0 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : VDB Netlist Checker virtual memory usage: begin = 63.436 MB, end = 63.472 MB, delta = 0.036 MB [FlowMsg::VMUsage]
+INFO     :     VDB Netlist Checker peak virtual memory usage = 108.204 MB [FlowMsg::VMUsage::Peak]
+INFO     : VDB Netlist Checker resident set memory usage: begin = 80.264 MB, end = 80.376 MB, delta = 0.112 MB [FlowMsg::RSSUsage]
+INFO     :     VDB Netlist Checker peak resident set memory usage = 111.988 MB [FlowMsg::RSSUsage::Peak]
+INFO     : ***** Ending VDB Netlist Checker ... *****
+INFO     : Resource Summary 
+INFO     : ======================================= 
+INFO     : EFX_ADD                 : 	111
+INFO     : EFX_LUT4                : 	140
+INFO     : EFX_DSP48               : 	2
+INFO     : EFX_FF                  : 	209
+INFO     : EFX_SRL8                : 	60
+INFO     : ======================================= 
+INFO     : ... Post-Map Verilog Writer begin
+INFO     : Writing netlist 'sobel_timing_top' to Verilog file 'outflow\sobel_220.map.v' [VDB-1030]
+INFO     : ... Post-Map Verilog Writer end (Real time : 0s)
+INFO     : The entire flow of EFX_MAP took 1.3533315 seconds [FlowMsg::StageDuration]
+INFO     :     The entire flow of EFX_MAP took 1.140625 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : The entire flow of EFX_MAP virtual memory usage: begin = 19.168 MB, end = 68.16 MB, delta = 48.992 MB [FlowMsg::VMUsage]
+INFO     :     The entire flow of EFX_MAP peak virtual memory usage = 108.204 MB [FlowMsg::VMUsage::Peak]
+INFO     : The entire flow of EFX_MAP resident set memory usage: begin = 20.496 MB, end = 82.416 MB, delta = 61.92 MB [FlowMsg::RSSUsage]
+INFO     :     The entire flow of EFX_MAP peak resident set memory usage = 111.988 MB [FlowMsg::RSSUsage::Peak]
+Stage completed: map
+Running: efx_run_pt_unified.py sobel_220 Titanium Ti60F225 --output_dir outflow --timing_model I3 --project_xml sobel_220.xml
+Running: F:/Efinity/2026.1\python311\bin\python.exe F:\Efinity\2026.1\scripts\efx_run_pt_unified.py sobel_220 Titanium Ti60F225 --output_dir outflow --timing_model I3 --project_xml sobel_220.xml
+Reuse. Try to create an existing PLL output clock : sobel_pll_CLKOUT0
+Load design file sobel_220.peri.xml
+Writing out summary report file
+Writing out pinout file
+Writing out interface config file
+Writing out timing related file
+Writing out verilog template file
+Writing out option register file
+Writing out routing trace
+Writing out boundary scan description file
+Writing out LPF
+Unified Timing supported
+Periphery PBN generated at outflow\sobel_220.peri.pbn
+Periphery fixed delay file generated at outflow\sobel_220.peri.qdelay
+Periphery csi file generated at outflow\sobel_220.peri.csi
+Periphery cdo file generated at outflow\sobel_220.peri.cdo
+Stage completed: interface
+Running: efx_run_pnr.py sobel_220 --prj F:\Project\fpga\vision_base\efinity\sobel_220\sobel_220.xml --family Titanium --device Ti60F225 --timing_model I3 --output_dir outflow --work_dir work_pnr --timeout 592 --opt sdc_file=sobel_220.sdc
+Running: F:/Efinity/2026.1\bin\efx_pnr.exe --circuit sobel_220 --family Titanium --device Ti60F225 --operating_conditions I3 --vdb_file outflow\sobel_220.vdb --use_vdb_file on --prj F:\Project\fpga\vision_base\efinity\sobel_220\sobel_220.xml --output_dir outflow --work_dir work_pnr --place_file outflow\sobel_220.place --route_file outflow\sobel_220.route --sync_file outflow\sobel_220.interface.csv --generate_prevpr_netlist off --sdc_file=sobel_220.sdc
+INFO     : Reading project database "F:\Project\fpga\vision_base\efinity\sobel_220\sobel_220.xml" [FlowMsg::ProjectDatabaseReading]
+INFO     : Maximum concurrency has been set to 8 [FlowMsg::MaxThreads]
+           
+           Elitestek FPGA Placement and Routing.
+           Version: 2026.1.132.3.9 
+           Compiled: May 29 2026.
+           
+           Copyright (C) 2013 - 2026 Efinix, Inc. All rights reserved.
+
+           
+           The Tool Is Based on VPR of University of Toronto,
+           a free open source code under MIT license.
+           
+WARNING  : Found 2 warnings in the post-synthesis netlist.
+INFO     : Reading core interface constraints file "outflow\sobel_220.interface.csv" [DBMsg::CoreInterfaceConstraintsFileReading]
+INFO     : Successfully read core interface constraints file "outflow\sobel_220.interface.csv" [DBMsg::CoreInterfaceConstraintsFileLoadSuccess]
+INFO     : Reading core interface constraints file "outflow\sobel_220.interface.csv" [DBMsg::CoreInterfaceConstraintsFileReading]
+INFO     : Successfully read core interface constraints file "outflow\sobel_220.interface.csv" [DBMsg::CoreInterfaceConstraintsFileLoadSuccess]
+INFO     : XLR count after merging: 422
+INFO     : Netlist has 142 luts, 209 ffs and 111 adders [PackerMsg::NetlistStatistics]
+INFO     : Packed into 422 clusters with 2.1682465(1.042654) inputs(outputs) per cluster for a total of 915(440) inputs(outputs) [PackerMsg::ClusterPackingStatistics]
+INFO     : Packed into 422 xlrs with 2.1682465(1.042654) inputs(outputs) per xlr for a total of 915(440) inputs(outputs) [PackerMsg::XLRPackingStatistics]
+INFO     : Packed 0 fracturable DSPs into 0 clusters [PackerMsg::DSPPackingStatistics]
+INFO     : Packing took 0.5182998 seconds [FlowMsg::StageDuration]
+INFO     :     Packing took 0.5 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Packing virtual memory usage: begin = 61.768 MB, end = 129.524 MB, delta = 67.756 MB [FlowMsg::VMUsage]
+INFO     :     Packing peak virtual memory usage = 129.532 MB [FlowMsg::VMUsage::Peak]
+INFO     : Packing resident set memory usage: begin = 66.196 MB, end = 135.376 MB, delta = 69.18 MB [FlowMsg::RSSUsage]
+INFO     :     Packing peak resident set memory usage = 135.376 MB [FlowMsg::RSSUsage::Peak]
+INFO     : SDC file 'sobel_220.sdc' parsed successfully.
+INFO     : Reading core interface constraints file "outflow\sobel_220.interface.csv" [DBMsg::CoreInterfaceConstraintsFileReading]
+INFO     : Successfully read core interface constraints file "outflow\sobel_220.interface.csv" [DBMsg::CoreInterfaceConstraintsFileLoadSuccess]
+INFO     : Starting Global Placer with 8 threads ...
+            ----------     -------  --------------     -------
+             Iteration       WHPWL Worst Slack (ps) Convergence
+            ----------     -------  --------------     -------
+INFO     :           1       27189            1576         1.0%
+INFO     :           2       22937            1576         1.4%
+INFO     :           3       14886            1485         2.8%
+INFO     :           4       13793            1100         3.4%
+INFO     :           5       13123            1178         4.3%
+INFO     :           6       11265            1093         5.6%
+INFO     :           7       10553            1098         8.0%
+INFO     :           8        9206            1254        14.6%
+INFO     :           9        7384            1309        33.9%
+INFO     :          10        6803            1253        51.3%
+INFO     :          11        6542            1278        59.2%
+INFO     :          12        6381            1372        62.3%
+INFO     :          13        6405            1278        63.6%
+INFO     :          14        6407            1253        66.3%
+INFO     :          15        6037            1253        66.7%
+INFO     :          16        6383            1253        70.8%
+INFO     :          17        6450            1253        70.8%
+INFO     :          18        6189            1253        75.6%
+INFO     :          19        6330            1253        75.6%
+INFO     :          20        6399            1253        75.9%
+INFO     :          21        6323            1270        78.5%
+INFO     :          22        6314            1300        79.6%
+INFO     :          23        6203            1245        82.9%
+INFO     :          24        6254            1350        82.9%
+INFO     :          25        6294            1376        84.2%
+INFO     :          26        6190            1376        86.3%
+INFO     :          27        6434            1376        86.3%
+INFO     :          28        5663            1376        86.4%
+INFO     :          29        5673            1253        90.5%
+INFO     :          30        5662            1280        94.4%
+INFO     :          31        5707            1316        96.0%
+INFO     :          32        5717            1316        97.1%
+INFO     :          33        5745            1161        97.1%
+INFO     :          34        5727            1229        98.2%
+INFO     : GP: best_placement: wpd: 2012.78
+INFO     : Starting Annealer
+            ----------     -------  --------------     -------
+             Iteration       WHPWL  Delay Max (ps)     R Limit
+            ----------     -------  --------------     -------
+INFO     :           0        2454            3238        30.0
+INFO     :           1        2395            3396        29.4
+INFO     :           2        2351            3102        28.7
+INFO     :           3        2267            3218        27.4
+INFO     :           4        2216            3218        26.0
+INFO     :           5        2373            3218        24.6
+INFO     :           6        2227            3218        23.3
+INFO     :           7        2154            3153        21.8
+INFO     :           8        2137            3222        20.4
+INFO     :           9        2054            3361        18.9
+INFO     :          10        2047            3103        17.5
+INFO     :          11        2035            3097        16.2
+INFO     :          12        1967            3152        15.1
+INFO     :          13        2175            3152        13.9
+INFO     :          14        2115            3152        12.9
+INFO     :          15        2054            3152        11.9
+INFO     :          16        2010            3196        10.9
+INFO     :          17        1990            3196         9.9
+INFO     :          18        1950            3296         9.1
+INFO     :          19        1924            3214         8.3
+INFO     :          20        1919            3266         7.5
+INFO     :          21        1918            3152         6.8
+INFO     :          22        1919            3304         6.2
+INFO     :          23        1899            3304         5.6
+INFO     :          24        1892            3304         5.0
+INFO     : DP: best_placement: wpd: 2227.92
+INFO     : Starting incremental timing annealer
+INFO     : Starting incremental timing quench 1 with temperature 0.1 and 0.2 moves per pass
+            ----------     -------  --------------     -------
+             Iteration       WHPWL  Delay Max (ps)     R Limit
+            ----------     -------  --------------     -------
+INFO     :           0        1892            3304        30.0
+INFO     :           1        2295            3152        27.5
+INFO     :           2        2250            3034        25.1
+INFO     :           3        2246            2991        22.8
+INFO     :           4        2256            2939        20.8
+INFO     :           5        2226            2931        18.8
+INFO     :           6        2223            2931        17.2
+INFO     :           7        2210            2910        15.6
+INFO     :           8        2189            2910        14.0
+INFO     :           9        2113            2910        12.5
+INFO     : DP: best_placement: wpd: -1
+INFO     : Placement successful: 424 cells are placed
+INFO     : Peak congestion smeared over 4x4 of the chip is 0.595445 at 179,33
+INFO     : Peak congestion smeared over 1/16 of the chip is 0.318732 at 181,31
+INFO     : Peak congestion smeared over 1/4 of the chip is 0.092914 at 219,0
+INFO     : Congestion-weighted HPWL per net: 6.15435
+INFO     : Post-placement cluster-level checks is successful
+INFO     : Post-placement primitive-level checks is successful
+INFO     : Placement took 1.8375978 seconds [FlowMsg::StageDuration]
+INFO     :     Placement took 1.796875 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Placement virtual memory usage: begin = 57.444 MB, end = 126.036 MB, delta = 68.592 MB [FlowMsg::VMUsage]
+INFO     :     Placement peak virtual memory usage = 148.476 MB [FlowMsg::VMUsage::Peak]
+INFO     : Placement resident set memory usage: begin = 70.968 MB, end = 136.932 MB, delta = 65.964 MB [FlowMsg::RSSUsage]
+INFO     :     Placement peak resident set memory usage = 160.96 MB [FlowMsg::RSSUsage::Peak]
+INFO     : SDC file 'sobel_220.sdc' parsed successfully.
+Maximum possible analyzed clocks frequency
+ Clock Name  Period (ns)  Frequency (MHz)     Edge
+    clk         3.426        291.886         (R-R)
+
+Geomean max period: 3.426
+
+Setup (Max) Clock Relationship
+  Launch Clock    Capture Clock   Constraint (ns)     Slack (ns)          Edge
+      clk              clk             4.545            1.119            (R-R)
+
+Hold (Min) Clock Relationship
+  Launch Clock    Capture Clock   Constraint (ns)     Slack (ns)          Edge
+      clk              clk             0.000            0.165            (R-R)
+
+INFO     : Write Timing Report to "outflow/sobel_220.place.timing.rpt" ...
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Router Setup
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : [Setup Parallel Routing Scheduler]
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Route Circuit with 8 threads
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Overridding delay budgets for 0 synchronizer-related pins
+INFO     : Iter  1: overlap=538     heapops=73457      (0%) cpd=2576  frr=1.00  msec=28
+INFO     : [Setup Delay Budgets | 5.6 ms]
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Hold Fixing
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Total min wire delay:    101264
+INFO     : Hold fix wire delay:          0
+INFO     : Hold fix delay ratio:     0.00%
+INFO     : Pins requiring hold fix:  0.00%
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : [Rebuild Parallel Routing Scheduler]
+INFO     : Iter  2: overlap=171     heapops=53522      (36%) cpd=2851  frr=1.11  msec=22
+INFO     : Iter  3: overlap=81      heapops=21333      (61%) cpd=2766  frr=1.07  msec=16
+INFO     : Iter  4: overlap=43      heapops=15267      (70%) cpd=2739  frr=1.06  msec=14
+INFO     : Iter  5: overlap=18      heapops=9227       (75%) cpd=2738  frr=1.06  msec=12
+INFO     : Iter  6: overlap=7       heapops=4274       (80%) cpd=2738  frr=1.06  msec=10
+INFO     : Iter  7: overlap=1       heapops=2271       (81%) cpd=2738  frr=1.06  msec=10
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Iter  8: overlap=0       heapops=1405       (82%) cpd=2738  frr=1.06  msec=9
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Routing Result
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Routing Succeeded in 0.33 seconds taking 8 iterations! 
+INFO     : 
+INFO     : First iteration critical path delay = 2.576 ns 
+INFO     : Last iteration critical path delay  = 2.738 ns (ratio = 1.06)
+INFO     : Max Routing Heap Size = 546
+INFO     : Routing trace written to file 'outflow\sobel_220.troutingtraces' 
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Routing took 1.5017414 seconds [FlowMsg::StageDuration]
+INFO     :     Routing took 2.375 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Routing virtual memory usage: begin = 100.476 MB, end = 209.316 MB, delta = 108.84 MB [FlowMsg::VMUsage]
+INFO     :     Routing peak virtual memory usage = 340.028 MB [FlowMsg::VMUsage::Peak]
+INFO     : Routing resident set memory usage: begin = 119.712 MB, end = 224.268 MB, delta = 104.556 MB [FlowMsg::RSSUsage]
+INFO     :     Routing peak resident set memory usage = 341.644 MB [FlowMsg::RSSUsage::Peak]
+           ***** Beginning stage final timing analysis ... *****
+INFO     : SDC file 'sobel_220.sdc' parsed successfully.
+Maximum possible analyzed clocks frequency
+ Clock Name  Period (ns)  Frequency (MHz)     Edge
+    clk         2.864        349.162         (R-R)
+
+Geomean max period: 2.864
+
+Setup (Max) Clock Relationship
+  Launch Clock    Capture Clock   Constraint (ns)     Slack (ns)          Edge
+      clk              clk             4.545            1.681            (R-R)
+
+Hold (Min) Clock Relationship
+  Launch Clock    Capture Clock   Constraint (ns)     Slack (ns)          Edge
+      clk              clk             0.000            0.090            (R-R)
+
+INFO     : Write Timing Report to "outflow\sobel_220.timing.rpt" ...
+INFO     : final timing analysis took 0.0710233 seconds [FlowMsg::StageDuration]
+INFO     :     final timing analysis took 0.0625 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : final timing analysis virtual memory usage: begin = 207.916 MB, end = 208.564 MB, delta = 0.648 MB [FlowMsg::VMUsage]
+INFO     :     final timing analysis peak virtual memory usage = 340.028 MB [FlowMsg::VMUsage::Peak]
+INFO     : final timing analysis resident set memory usage: begin = 223.092 MB, end = 223.668 MB, delta = 0.576 MB [FlowMsg::RSSUsage]
+INFO     :     final timing analysis peak resident set memory usage = 341.644 MB [FlowMsg::RSSUsage::Peak]
+           ***** Ending stage final timing analysis *****
+           
+           ***** Beginning stage bitstream generation ... *****
+INFO     : Reading core interface constraints file "outflow\sobel_220.interface.csv" [DBMsg::CoreInterfaceConstraintsFileReading]
+INFO     : Successfully read core interface constraints file "outflow\sobel_220.interface.csv" [DBMsg::CoreInterfaceConstraintsFileLoadSuccess]
+INFO     : Finished writing bitstream file work_pnr\sobel_220.lbf.
+INFO     : Bitstream generation took 0.8852367 seconds [FlowMsg::StageDuration]
+INFO     :     Bitstream generation took 0.75 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Bitstream generation virtual memory usage: begin = 205.356 MB, end = 289.412 MB, delta = 84.056 MB [FlowMsg::VMUsage]
+INFO     :     Bitstream generation peak virtual memory usage = 340.028 MB [FlowMsg::VMUsage::Peak]
+INFO     : Bitstream generation resident set memory usage: begin = 222.804 MB, end = 308.184 MB, delta = 85.38 MB [FlowMsg::RSSUsage]
+INFO     :     Bitstream generation peak resident set memory usage = 341.644 MB [FlowMsg::RSSUsage::Peak]
+INFO     : The entire flow of EFX_PNR took 5.2653791 seconds [FlowMsg::StageDuration]
+INFO     :     The entire flow of EFX_PNR took 5.796875 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : The entire flow of EFX_PNR virtual memory usage: begin = 20.236 MB, end = 289.412 MB, delta = 269.176 MB [FlowMsg::VMUsage]
+INFO     :     The entire flow of EFX_PNR peak virtual memory usage = 340.028 MB [FlowMsg::VMUsage::Peak]
+INFO     : The entire flow of EFX_PNR resident set memory usage: begin = 23.464 MB, end = 308.224 MB, delta = 284.76 MB [FlowMsg::RSSUsage]
+INFO     :     The entire flow of EFX_PNR peak resident set memory usage = 341.644 MB [FlowMsg::RSSUsage::Peak]
+Stage completed: pnr
+Running: efx_run_pgm.py sobel_220 --family Titanium --device Ti60F225 --output_dir outflow --work_dir work_pnr --timeout 586 --opt mode=active width=1 enable_roms=on spi_low_power_mode=on io_weak_pullup=on oscillator_clock_divider=DIV8 enable_crc_check=on bitstream_compression=on active_capture_clk_edge=posedge release_tri_then_reset=on enable_external_master_clock=off jtag_usercode=0xFFFFFFFF
+F:/Efinity/2026.1\bin\efx_pgm.exe --interface_designer_settings outflow\sobel_220_or.ini --periph outflow\sobel_220.lpf --family Titanium --device Ti60F225 --source F:\Project\fpga\vision_base\efinity\sobel_220\work_pnr\sobel_220.lbf --dest outflow\sobel_220.hex --mode=active --width=1 --enable_roms=on --spi_low_power_mode=on --io_weak_pullup=on --oscillator_clock_divider=DIV8 --enable_crc_check=on --bitstream_compression=on --active_capture_clk_edge=posedge --release_tri_then_reset=on --enable_external_master_clock=off --jtag_usercode=0xFFFFFFFF
+INFO     : Elitestek FPGA Bitstream Generator.
+INFO     : Version: 2026.1.132.3.9 
+INFO     : Copyright (C) 2013 - 2026 Efinix, Inc. All rights reserved.
+INFO     : Compiled: Aug 24 2026.
+INFO     : Using source file "F:\Project\fpga\vision_base\efinity\sobel_220\work_pnr\sobel_220.lbf"
+INFO     : Generating HEX programming file for device "Ti60F225", family "Titanium"
+INFO     : Using periphery source file "outflow\sobel_220.lpf"
+INFO     : Generating bit file: "outflow\sobel_220.bit"
+INFO     : HEX Generation Options Summary:
+INFO     : 	Listing options specified to bitstream generation:
+INFO     : 	enable_crc_check                         = on
+INFO     : 	bitstream_compression                    = on
+INFO     : 	oscillator_clock_divider                 = DIV8
+INFO     : 	enable_external_master_clock             = off
+INFO     : 	spi_low_power_mode                       = on
+INFO     : 	active_capture_clk_edge                  = posedge
+INFO     : 	enable_remote_update                     = off
+INFO     : 	release_tri_then_reset                   = on
+INFO     : 	enable_seu_crc_check                     = off
+INFO     : 	seu_mode                                 = automatic
+INFO     : 	seu_wait_interval                        = 0xFFFFFF
+INFO     : 	jtag_usercode                            = 0xFFFFFFFF
+INFO     : 	io_weak_pullup                           = on
+INFO     : Finished generating "outflow\sobel_220.hex"
+INFO     : Elitestek Bitstream Generator took 1.0529002 seconds [FlowMsg::StageDuration]
+INFO     :     Elitestek Bitstream Generator took 0.84375 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Elitestek Bitstream Generator virtual memory usage: begin = 2.744 MB, end = 11.56 MB, delta = 8.816 MB [FlowMsg::VMUsage]
+INFO     :     Elitestek Bitstream Generator peak virtual memory usage = 151.704 MB [FlowMsg::VMUsage::Peak]
+INFO     : Elitestek Bitstream Generator resident set memory usage: begin = 10.256 MB, end = 22.428 MB, delta = 12.172 MB [FlowMsg::RSSUsage]
+INFO     :     Elitestek Bitstream Generator peak resident set memory usage = 158.848 MB [FlowMsg::RSSUsage::Peak]
+Stage completed: pgm

@@ -1,7 +1,7 @@
 
 Efinity Interface Designer Report
 Version: 2026.1.132.3.9
-Date: 2026-09-17 00:36
+Date: 2026-09-19 15:02
 
 Copyright (C) 2013 - 2026 Efinix Inc. All rights reserved.
 
@@ -874,10 +874,10 @@ No Bidirectional LVDS was configured
 | Instance Name |   Resource  |              Pad Names              | Package Pins | Clock Region | Group |    Mode    | Conn Type | LP Reverse | FIFO Crossing |    Byte Clock   | Delay Mode | Delay |
 +---------------+-------------+-------------------------------------+--------------+--------------+-------+------------+-----------+------------+---------------+-----------------+------------+-------+
 |     cam_ck    | GPIOT_PN_09 | GPIOT_N_09_CLK6_N,GPIOT_P_09_CLK6_P |    D8,E8     |      T1      |   I4  | clock lane |    gclk   |  Disable   |    Disable    | i_cam_ck_CLKOUT |            |   0   |
-|     cam_d0    | GPIOT_PN_07 | GPIOT_N_07_CLK4_N,GPIOT_P_07_CLK4_P |    A8,B8     |      T0      |   I4  | data lane  |           |  Disable   |     Enable    | i_cam_ck_CLKOUT |   static   |   17  |
-|     cam_d1    | GPIOT_PN_10 | GPIOT_N_10_CLK7_N,GPIOT_P_10_CLK7_P |    C9,C8     |      T1      |   I4  | data lane  |           |  Disable   |     Enable    | i_cam_ck_CLKOUT |   static   |   17  |
-|     cam_d2    | GPIOT_PN_06 |        GPIOT_N_06,GPIOT_P_06        |    A7,B7     |      T0      |   I4  | data lane  |           |  Disable   |     Enable    | i_cam_ck_CLKOUT |   static   |   17  |
-|     cam_d3    | GPIOT_PN_11 |        GPIOT_N_11,GPIOT_P_11        |    A9,B9     |      T1      |   I4  | data lane  |           |  Disable   |     Enable    | i_cam_ck_CLKOUT |   static   |   17  |
+|     cam_d0    | GPIOT_PN_07 | GPIOT_N_07_CLK4_N,GPIOT_P_07_CLK4_P |    A8,B8     |      T0      |   I4  | data lane  |           |  Disable   |     Enable    | i_cam_ck_CLKOUT |  dynamic   |       |
+|     cam_d1    | GPIOT_PN_10 | GPIOT_N_10_CLK7_N,GPIOT_P_10_CLK7_P |    C9,C8     |      T1      |   I4  | data lane  |           |  Disable   |     Enable    | i_cam_ck_CLKOUT |  dynamic   |       |
+|     cam_d2    | GPIOT_PN_06 |        GPIOT_N_06,GPIOT_P_06        |    A7,B7     |      T0      |   I4  | data lane  |           |  Disable   |     Enable    | i_cam_ck_CLKOUT |  dynamic   |       |
+|     cam_d3    | GPIOT_PN_11 |        GPIOT_N_11,GPIOT_P_11        |    A9,B9     |      T1      |   I4  | data lane  |           |  Disable   |     Enable    | i_cam_ck_CLKOUT |  dynamic   |       |
 +---------------+-------------+-------------------------------------+--------------+--------------+-------+------------+-----------+------------+---------------+-----------------+------------+-------+
 
 ---------- MIPI RX Lane Usage Summary (end) ----------

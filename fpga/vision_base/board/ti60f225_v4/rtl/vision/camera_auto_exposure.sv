@@ -1,3 +1,5 @@
+// 30fps SC431HAI mode: verified VTS1500, half-line limit2950 < 2*VTS-11.
+// Revalidate this range before changing sensor frame timing.
 // RAW8 metering on 2 pixels/clock, before black correction and white balance.
 // Center-weighted, highlight-constrained, with 1/16 steps and 8 fresh-frame settling.
 module camera_auto_exposure #(
@@ -35,11 +37,11 @@ always @(posedge clk)begin
     else begin
      settle<=SETTLE;decision<=0;
      if(!enable)begin
-      if(manual_value>=112&&manual_value<=1776&&manual_value!=request)begin request<=manual_value;req_toggle<=~req_toggle;end
+      if(manual_value>=112&&manual_value<=2950&&manual_value!=request)begin request<=manual_value;req_toggle<=~req_toggle;end
      end else if((sum>nc*32'd76)||((nh> (nt>>2))&&(sum>nc*32'd44))||(nh>(nt>>1)))begin
       if(request>112)begin request<=down;req_toggle<=~req_toggle;decision<=2;end
      end else if(sum<nc*32'd52&&nh<(nt>>3))begin
-      if(request<1776)begin request<=up>1776?16'd1776:up[15:0];req_toggle<=~req_toggle;decision<=1;end
+      if(request<2950)begin request<=up>2950?16'd2950:up[15:0];req_toggle<=~req_toggle;decision<=1;end
      end
     end
    end

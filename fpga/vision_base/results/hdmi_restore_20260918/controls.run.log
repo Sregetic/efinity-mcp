@@ -1,0 +1,2 @@
+CONTROLS PASS debounce short/long frame commit JTAG path
+sim/vision/tb_controls.sv:23: $finish called at 3420000 (1ps)

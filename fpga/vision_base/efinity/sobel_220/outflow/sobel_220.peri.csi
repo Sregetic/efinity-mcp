@@ -1,0 +1,25 @@
+CellSiteInst {
+  cell: "CLK_25M"
+  block_and_site_inst: "PKG_PIN/PKG_PIN_INOUT"
+  block_inst: "GPIOL_P_08_CLK1_P"
+}
+CellSiteInst {
+  cell: "result"
+  block_and_site_inst: "PKG_PIN/PKG_PIN_INOUT"
+  block_inst: "GPIOR_21"
+}
+CellSiteInst {
+  cell: "CLK_25M~GPIO"
+  block_and_site_inst: "HSIO/HSIO_SLOT0"
+  block_inst: "GPIOL_PN_08"
+}
+CellSiteInst {
+  cell: "result~GPIO"
+  block_and_site_inst: "HVIO/HVIO_SLOT0"
+  block_inst: "GPIOR_21"
+}
+CellSiteInst {
+  cell: "sobel_pll~PLL"
+  block_and_site_inst: "PLL/PLL_SLOT0"
+  block_inst: "PLL_TL0"
+}

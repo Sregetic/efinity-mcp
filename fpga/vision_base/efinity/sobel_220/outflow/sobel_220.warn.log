@@ -1,0 +1,40 @@
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 19, 2026 02:41:38
+///////////////////////////////////
+
+[EFX-0011 VERI-WARNING] non-net output port 'result' cannot be initialized at declaration in SystemVerilog mode (VERI-2522) (F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv:2)
+[EFX-0200 WARNING] Removing redundant signal : w[39:32]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv:4)
+[EFX-0011 VERI-WARNING] Input/inout port CLK_25M is unconnected. Place and route may remove this unconnected port. (VDB-8003) (F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv:2)
+[EFX-0011 VERI-WARNING] Found 2 warnings in the post-synthesis netlist. 
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 19, 2026 02:43:31
+///////////////////////////////////
+
+[EFX-0011 VERI-WARNING] non-net output port 'result' cannot be initialized at declaration in SystemVerilog mode (VERI-2522) (F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv:2)
+[EFX-0200 WARNING] Removing redundant signal : w[39:32]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv:4)
+[EFX-0011 VERI-WARNING] Input/inout port CLK_25M is unconnected. Place and route may remove this unconnected port. (VDB-8003) (F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv:2)
+[EFX-0011 VERI-WARNING] Found 2 warnings in the post-synthesis netlist. 
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 19, 2026 02:44:51
+///////////////////////////////////
+
+[EFX-0011 VERI-WARNING] non-net output port 'result' cannot be initialized at declaration in SystemVerilog mode (VERI-2522) (F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv:2)
+[EFX-0200 WARNING] Removing redundant signal : w[39:32]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv:4)
+[EFX-0011 VERI-WARNING] Input/inout port CLK_25M is unconnected. Place and route may remove this unconnected port. (VDB-8003) (F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv:2)
+[EFX-0011 VERI-WARNING] Found 3 warnings in the post-synthesis netlist. 
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 19, 2026 02:47:19
+///////////////////////////////////
+
+[EFX-0011 VERI-WARNING] non-net output port 'result' cannot be initialized at declaration in SystemVerilog mode (VERI-2522) (F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv:2)
+[EFX-0200 WARNING] Removing redundant signal : w[39:32]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv:4)
+[EFX-0011 VERI-WARNING] Input/inout port CLK_25M is unconnected. Place and route may remove this unconnected port. (VDB-8003) (F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv:2)
+[EFX-0011 VERI-WARNING] Found 2 warnings in the post-synthesis netlist. 

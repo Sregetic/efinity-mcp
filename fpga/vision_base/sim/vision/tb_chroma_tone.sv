@@ -25,7 +25,7 @@ initial begin
    if(rr>255)rr=255;if(gg>255)gg=255;if(bb>255)bb=255;
    plain_expected=syncs[j][2]?{8'(rr),8'(gg),8'(bb)}:0;
    c=rank(ir,256,223);k=rank(ig,161,223);z=rank(ib,162,223);
-   a=c<k?c:k;l=c<z?c:z;if(l>a)a=l;l=k<z?k:z;if(l>a)a=l;c=a;
+   if(k>c)c=k;if(z>c)c=z;
    l=rank(ir,256,144);z=rank(ig,161,144);if(z<l)l=z;z=rank(ib,162,144);if(z<l)l=z;
    a=(c<l)?c:l;peak=rr>gg?rr:gg;if(bb>peak)peak=bb;
    rr=rr+((peak-rr)*a+4)/8;gg=gg+((peak-gg)*a+4)/8;bb=bb+((peak-bb)*a+4)/8;

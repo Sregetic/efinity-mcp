@@ -1,0 +1,167 @@
+[
+  {
+    "time_s": 1789788943.844307,
+    "page": 13,
+    "raw": "564953312609190d7810040700001f180000000000004ad0",
+    "sensor_frames": 7960,
+    "words_per_line": 0,
+    "lines": 0,
+    "words": 0,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1789788944.059866,
+    "page": 13,
+    "raw": "564953312609190d7810040700001f1f0000000000004ad0",
+    "sensor_frames": 7967,
+    "words_per_line": 0,
+    "lines": 0,
+    "words": 0,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1789788944.2773588,
+    "page": 13,
+    "raw": "564953312609190d7810040700001f250000000000004ad0",
+    "sensor_frames": 7973,
+    "words_per_line": 0,
+    "lines": 0,
+    "words": 0,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1789788944.494363,
+    "page": 13,
+    "raw": "564953312609190d7810040700001f2c0000000000004ad0",
+    "sensor_frames": 7980,
+    "words_per_line": 0,
+    "lines": 0,
+    "words": 0,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1789788944.7048247,
+    "page": 13,
+    "raw": "564953312609190d7810040700001f320000000000004ad0",
+    "sensor_frames": 7986,
+    "words_per_line": 0,
+    "lines": 0,
+    "words": 0,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1789788944.9128323,
+    "page": 13,
+    "raw": "564953312609190d7810040700001f390000000000004ad0",
+    "sensor_frames": 7993,
+    "words_per_line": 0,
+    "lines": 0,
+    "words": 0,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1789788945.1297407,
+    "page": 13,
+    "raw": "564953312609190d7810040700001f3f0000000000004ad0",
+    "sensor_frames": 7999,
+    "words_per_line": 0,
+    "lines": 0,
+    "words": 0,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1789788945.3454795,
+    "page": 13,
+    "raw": "564953312609190d7810040700001f460000000000004ad0",
+    "sensor_frames": 8006,
+    "words_per_line": 0,
+    "lines": 0,
+    "words": 0,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1789788945.5624716,
+    "page": 13,
+    "raw": "564953312609190d7810040700001f4c0000000000004ad0",
+    "sensor_frames": 8012,
+    "words_per_line": 0,
+    "lines": 0,
+    "words": 0,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1789788945.7799785,
+    "page": 13,
+    "raw": "564953312609190d7810040700001f530000000000004ad0",
+    "sensor_frames": 8019,
+    "words_per_line": 0,
+    "lines": 0,
+    "words": 0,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1789788945.988817,
+    "page": 13,
+    "raw": "564953312609190d7810040700001f590000000000004ad0",
+    "sensor_frames": 8025,
+    "words_per_line": 0,
+    "lines": 0,
+    "words": 0,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1789788946.2047749,
+    "page": 13,
+    "raw": "564953312609190d7810040700001f5f0000000000004ad0",
+    "sensor_frames": 8031,
+    "words_per_line": 0,
+    "lines": 0,
+    "words": 0,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1789788946.4223197,
+    "page": 13,
+    "raw": "564953312609190d7810040700001f660000000000004ad0",
+    "sensor_frames": 8038,
+    "words_per_line": 0,
+    "lines": 0,
+    "words": 0,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1789788946.639035,
+    "page": 13,
+    "raw": "564953312609190d7810040700001f6c0000000000004ad0",
+    "sensor_frames": 8044,
+    "words_per_line": 0,
+    "lines": 0,
+    "words": 0,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1789788946.855911,
+    "page": 13,
+    "raw": "564953312609190d7810040700001f730000000000004ad0",
+    "sensor_frames": 8051,
+    "words_per_line": 0,
+    "lines": 0,
+    "words": 0,
+    "ppc": 4,
+    "data_type": 43
+  }
+]

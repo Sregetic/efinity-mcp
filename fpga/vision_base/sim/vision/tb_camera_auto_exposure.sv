@@ -25,6 +25,10 @@ initial begin
  if(ex!=old)$fatal(1,"frozen source changed exposure");
  fault=1;for(i=0;i<10;i=i+1)image(255,1);if(ex!=old)$fatal(1,"fault changed exposure");
  fault=0;en=0;manual=600;for(i=0;i<12;i=i+1)image(24,1);if(ex!=600)$fatal(1,"manual override failed");
+ manual=2950;for(i=0;i<12;i=i+1)image(24,1);if(ex!=2950)$fatal(1,"new manual ceiling failed");
+ en=1;for(i=0;i<20;i=i+1)image(24,1);if(ex!=2950)$fatal(1,"AE overflow at ceiling");
+ en=0;manual=2951;for(i=0;i<12;i=i+1)image(24,1);if(ex!=2950)$fatal(1,"invalid manual value accepted");
+ en=1;for(i=0;i<12;i=i+1)image(255,1);if(ex>=2950)$fatal(1,"AE cannot leave ceiling in bright scene");
  $display("AE PASS: dark/bright direction, 64 samples, deadband, freeze, fault and manual");$finish;
 end
 endmodule

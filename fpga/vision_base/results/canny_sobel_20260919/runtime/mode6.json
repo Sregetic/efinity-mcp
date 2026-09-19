@@ -1,0 +1,40 @@
+[
+  {
+    "magic": "56495331",
+    "build": "26091707",
+    "mode": 6,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609170778d00407000005bf000005bf000005c0",
+    "capture_id": 1471,
+    "display_id": 1471,
+    "canny_completed": 1472,
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789757817.0534627
+  },
+  {
+    "magic": "56495331",
+    "build": "26091707",
+    "mode": 6,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609170778d00407000005c6000005c5000005c7",
+    "capture_id": 1478,
+    "display_id": 1477,
+    "canny_completed": 1479,
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789757817.2691333
+  }
+]

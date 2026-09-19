@@ -1,0 +1,84 @@
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Router Setup
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : [Setup Parallel Routing Scheduler]
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Route Circuit with 8 threads
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Overridding delay budgets for 0 synchronizer-related pins
+INFO     : Iter  1: overlap=538     heapops=73457      (0%) cpd=2576  frr=1.00  msec=28
+INFO     : [Setup Delay Budgets | 5.6 ms]
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Hold Fixing
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Total min wire delay:    101264
+INFO     : Hold fix wire delay:          0
+INFO     : Hold fix delay ratio:     0.00%
+INFO     : Pins requiring hold fix:  0.00%
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : [Rebuild Parallel Routing Scheduler]
+INFO     : Iter  2: overlap=171     heapops=53522      (36%) cpd=2851  frr=1.11  msec=22
+INFO     : Iter  3: overlap=81      heapops=21333      (61%) cpd=2766  frr=1.07  msec=16
+INFO     : Iter  4: overlap=43      heapops=15267      (70%) cpd=2739  frr=1.06  msec=14
+INFO     : Iter  5: overlap=18      heapops=9227       (75%) cpd=2738  frr=1.06  msec=12
+INFO     : Iter  6: overlap=7       heapops=4274       (80%) cpd=2738  frr=1.06  msec=10
+INFO     : Iter  7: overlap=1       heapops=2271       (81%) cpd=2738  frr=1.06  msec=10
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Iter  8: overlap=0       heapops=1405       (82%) cpd=2738  frr=1.06  msec=9
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Routing Result
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Routing Succeeded in 0.33 seconds taking 8 iterations! 
+INFO     : 
+INFO     : First iteration critical path delay = 2.576 ns 
+INFO     : Last iteration critical path delay  = 2.738 ns (ratio = 1.06)
+INFO     : Max Routing Heap Size = 546
+INFO     : Routing trace written to file 'outflow\sobel_220.troutingtraces' 
+INFO     : ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO     : Routing took 1.5017414 seconds [FlowMsg::StageDuration]
+INFO     :     Routing took 2.375 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Routing virtual memory usage: begin = 100.476 MB, end = 209.316 MB, delta = 108.84 MB [FlowMsg::VMUsage]
+INFO     :     Routing peak virtual memory usage = 340.028 MB [FlowMsg::VMUsage::Peak]
+INFO     : Routing resident set memory usage: begin = 119.712 MB, end = 224.268 MB, delta = 104.556 MB [FlowMsg::RSSUsage]
+INFO     :     Routing peak resident set memory usage = 341.644 MB [FlowMsg::RSSUsage::Peak]
+           ***** Beginning stage final timing analysis ... *****
+INFO     : SDC file 'sobel_220.sdc' parsed successfully.
+Maximum possible analyzed clocks frequency
+ Clock Name  Period (ns)  Frequency (MHz)     Edge
+    clk         2.864        349.162         (R-R)
+
+Geomean max period: 2.864
+
+Setup (Max) Clock Relationship
+  Launch Clock    Capture Clock   Constraint (ns)     Slack (ns)          Edge
+      clk              clk             4.545            1.681            (R-R)
+
+Hold (Min) Clock Relationship
+  Launch Clock    Capture Clock   Constraint (ns)     Slack (ns)          Edge
+      clk              clk             0.000            0.090            (R-R)
+
+INFO     : Write Timing Report to "outflow\sobel_220.timing.rpt" ...
+INFO     : final timing analysis took 0.0710233 seconds [FlowMsg::StageDuration]
+INFO     :     final timing analysis took 0.0625 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : final timing analysis virtual memory usage: begin = 207.916 MB, end = 208.564 MB, delta = 0.648 MB [FlowMsg::VMUsage]
+INFO     :     final timing analysis peak virtual memory usage = 340.028 MB [FlowMsg::VMUsage::Peak]
+INFO     : final timing analysis resident set memory usage: begin = 223.092 MB, end = 223.668 MB, delta = 0.576 MB [FlowMsg::RSSUsage]
+INFO     :     final timing analysis peak resident set memory usage = 341.644 MB [FlowMsg::RSSUsage::Peak]
+           ***** Ending stage final timing analysis *****
+           
+           ***** Beginning stage bitstream generation ... *****
+INFO     : Reading core interface constraints file "outflow\sobel_220.interface.csv" [DBMsg::CoreInterfaceConstraintsFileReading]
+INFO     : Successfully read core interface constraints file "outflow\sobel_220.interface.csv" [DBMsg::CoreInterfaceConstraintsFileLoadSuccess]
+INFO     : Finished writing bitstream file work_pnr\sobel_220.lbf.
+INFO     : Bitstream generation took 0.8852367 seconds [FlowMsg::StageDuration]
+INFO     :     Bitstream generation took 0.75 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Bitstream generation virtual memory usage: begin = 205.356 MB, end = 289.412 MB, delta = 84.056 MB [FlowMsg::VMUsage]
+INFO     :     Bitstream generation peak virtual memory usage = 340.028 MB [FlowMsg::VMUsage::Peak]
+INFO     : Bitstream generation resident set memory usage: begin = 222.804 MB, end = 308.184 MB, delta = 85.38 MB [FlowMsg::RSSUsage]
+INFO     :     Bitstream generation peak resident set memory usage = 341.644 MB [FlowMsg::RSSUsage::Peak]
+INFO     : The entire flow of EFX_PNR took 5.2653791 seconds [FlowMsg::StageDuration]
+INFO     :     The entire flow of EFX_PNR took 5.796875 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : The entire flow of EFX_PNR virtual memory usage: begin = 20.236 MB, end = 289.412 MB, delta = 269.176 MB [FlowMsg::VMUsage]
+INFO     :     The entire flow of EFX_PNR peak virtual memory usage = 340.028 MB [FlowMsg::VMUsage::Peak]
+INFO     : The entire flow of EFX_PNR resident set memory usage: begin = 23.464 MB, end = 308.224 MB, delta = 284.76 MB [FlowMsg::RSSUsage]
+INFO     :     The entire flow of EFX_PNR peak resident set memory usage = 341.644 MB [FlowMsg::RSSUsage::Peak]

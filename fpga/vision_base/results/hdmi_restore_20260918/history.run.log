@@ -1,0 +1,2 @@
+HISTORY errors=0 capture=60 display=60
+sim/vision/tb_history.sv:32: $finish called at 36620000 (1ps)

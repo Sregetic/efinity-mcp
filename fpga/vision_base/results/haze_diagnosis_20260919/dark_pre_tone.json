@@ -1,0 +1,54 @@
+[
+  {
+    "magic": "56495331",
+    "build": "26091745",
+    "mode": 7,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609174578f00407000000000000000000000000",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789801544.6781776,
+    "rgb_sums_or_clips": [
+      0,
+      0,
+      0
+    ],
+    "rgb_mean": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "magic": "56495331",
+    "build": "26091745",
+    "mode": 7,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312609174578f00407000000000000000000000000",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789801544.8952482,
+    "rgb_sums_or_clips": [
+      0,
+      0,
+      0
+    ],
+    "rgb_mean": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  }
+]

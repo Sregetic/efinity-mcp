@@ -1,0 +1,103 @@
+Connecting to JTAG_TAP: efx_ti
+jtag programming started!
+JTAG Programming on ftdi://0x0403:0x6011:4:3/2
+Programming 'F:\Project\fpga\vision_base\artifacts\camera\ti60f225_oob.bit' via JTAG at freq 1.0 MHz
+Device ID read from JTAG: 0x10660A79
+... finished with JTAG programming
+[
+  {
+    "magic": "56495331",
+    "build": "26091707",
+    "mode": 3,
+    "median": 0,
+    "memory": 0,
+    "index": 0,
+    "threshold": 128,
+    "raw": "564953312609170700600807000000000000000000000000",
+    "capture_id": 0,
+    "display_id": 0,
+    "canny_completed": 0,
+    "canny_fault": 0,
+    "canny_busy": 0,
+    "canny_ready": 0,
+    "history_count": 0,
+    "keys_n": 7,
+    "sample_time_s": 1789794947.8662539
+  },
+  {
+    "magic": "56495331",
+    "build": "26091707",
+    "mode": 3,
+    "median": 0,
+    "memory": 0,
+    "index": 0,
+    "threshold": 128,
+    "raw": "564953312609170700600807000000000000000000000000",
+    "capture_id": 0,
+    "display_id": 0,
+    "canny_completed": 0,
+    "canny_fault": 0,
+    "canny_busy": 0,
+    "canny_ready": 0,
+    "history_count": 0,
+    "keys_n": 7,
+    "sample_time_s": 1789794948.0834913
+  },
+  {
+    "magic": "56495331",
+    "build": "26091707",
+    "mode": 3,
+    "median": 0,
+    "memory": 0,
+    "index": 0,
+    "threshold": 128,
+    "raw": "564953312609170700600807000000000000000000000000",
+    "capture_id": 0,
+    "display_id": 0,
+    "canny_completed": 0,
+    "canny_fault": 0,
+    "canny_busy": 0,
+    "canny_ready": 0,
+    "history_count": 0,
+    "keys_n": 7,
+    "sample_time_s": 1789794948.3009505
+  },
+  {
+    "magic": "56495331",
+    "build": "26091707",
+    "mode": 3,
+    "median": 0,
+    "memory": 0,
+    "index": 0,
+    "threshold": 128,
+    "raw": "564953312609170700600807000000000000000000000000",
+    "capture_id": 0,
+    "display_id": 0,
+    "canny_completed": 0,
+    "canny_fault": 0,
+    "canny_busy": 0,
+    "canny_ready": 0,
+    "history_count": 0,
+    "keys_n": 7,
+    "sample_time_s": 1789794948.516112
+  },
+  {
+    "magic": "56495331",
+    "build": "26091707",
+    "mode": 3,
+    "median": 0,
+    "memory": 0,
+    "index": 0,
+    "threshold": 128,
+    "raw": "564953312609170700600807000000000000000000000000",
+    "capture_id": 0,
+    "display_id": 0,
+    "canny_completed": 0,
+    "canny_fault": 0,
+    "canny_busy": 0,
+    "canny_ready": 0,
+    "history_count": 0,
+    "keys_n": 7,
+    "sample_time_s": 1789794948.7329183
+  }
+]

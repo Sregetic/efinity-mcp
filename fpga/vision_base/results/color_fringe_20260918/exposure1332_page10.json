@@ -1,0 +1,53 @@
+[
+  {
+    "magic": "56495331",
+    "build": "260917a5",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "56495331260917a578100407000018af0000000000000000",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789719187.2370543,
+    "highlight_pixels": 6319
+  },
+  {
+    "magic": "56495331",
+    "build": "260917a5",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "56495331260917a578100407000018ad0000000000000000",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789719187.4545243,
+    "highlight_pixels": 6317
+  },
+  {
+    "magic": "56495331",
+    "build": "260917a5",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "56495331260917a578100407000018aa0000000000000000",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1789719187.6642144,
+    "highlight_pixels": 6314
+  }
+]

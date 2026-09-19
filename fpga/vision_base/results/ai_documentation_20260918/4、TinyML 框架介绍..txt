@@ -1,0 +1,111 @@
+          TinyML开发框架介绍
+                       钛金FPGA Ti60F225
+
+
+
+
+国 产 化 中 高 端 F P G A 领 军 厂 商 —— 加 速 您 的 创 芯 ！
+                                                2025.6
+易灵思(深圳)科技有限公司                                  Herbert
+TinyML 系统设计图
+
+
+               ➢ 乘法、加法、减法、累加、可
+                 变右移操作
+               ➢ 单通道、双通道、四通道
+               ➢ 浮点支持：bfoat16 模式运算，
+                 并能实现FMA晕眩。
+               ➢ 支持符号运算
+               ➢ 支持级联
+               ➢ 多个小块（DSP12/24）会被
+                 合并到同一个DSP48
+               ➢ 接口寄存器参数可配
+               ➢ 超高性能FMax可达1GHz
+TinyML 应用开发流程图
+Tensorflow lite 代码结构
+TensorFlow Lite 软件库
+
+
+             目录                           作用
+                                          •   加速器参数动态配置
+             src/model                    •   神经网络模型
+             src/platform                 Sapphire Soc平台相关
+
+             src/tensorflow/lite/c        Tflite 加速库公共数据类型定义
+
+             src/tensorflow/lite/core     Tflite 加速库C++相关工具实现
+
+             src/tensorflow/lite/kernel   Tflite 加速库核心算子实现
+
+             src/tensorflow/lite/micro    Tflite 加速库 MCU 平台辅助库
+
+             src/tensorflow/lite/schema   Flattbuffer 编译器生成的结构
+                                          第三方库依赖如：
+                                          • Flatbuffer
+             src/third_party              • 低精度GEMM加速库
+                                          • CPU相关SIMD优化等等
+TensorFlow Lite 库结构介绍
+
+
+
+
+            目录(src/tensorflow/lite/kernels/internal)   作用          备注
+            optimized                                  SIMD检查      RISCV可忽略
+                                                       INT8算子加速实
+            reference/integer_ops                      现
+                                                                   TinyML主要加速算子
+
+                                                                   支持多种格式
+                                                       其余算子通用实
+            *.h                                        现
+                                                                   INT8/INT16/INT32/FP3
+                                                                   2等
+TensorFlow Lite 加速算子（Add）
+
+
+
+
+  ➢红色为加速代码
+    • 易灵思统一加速接口
+  ➢绿色为原始代码
+    • binary_func：本体实现为AddFunc
+TensorFlow Lite 加速算子（Add）
+
+
+
+
+  ➢ 原始软件int8 add实现缺点         ➢ CI + RTL计算优点：
+     • 需求多条指令实现（乘法、位移、加减法）      •   大量计算可使用组合逻辑实现快速计算
+
+     • 每一步都需要量化（量化、反量化）         • 分步计算可并行化
+     • 最后需要裁剪输出值                • 可同时输入多组x、y（无依赖性）
+     • 串行执行（两个数运算，需求上百条指令）
+TensorFlow Lite 加速算子（Add）
+
+
+
+
+  ➢ 上图为使用profiler后的性能对比，左图为启用加速、右图为不启用加速。该网络中，add层加速超
+    过500倍。
+TinyML 加速性能
+
+
+  ➢ TinyML提供了卓越的加速性能
+  ➢ 不同加速器通常能提供数十倍的性能提升
+  ➢ 可根据模型，灵活配置可用加速资源
+  ➢ 开发灵活，常规需求通常只需做模型导入和
+    软件开发
+ 感谢您的观看
+             www.elitestek .com
+
+
+
+
+                 关注公众号     关注哔哩哔哩
+
+
+
+免责申明：
+1、任何在本文档上出现的信息仅作为参考，实际可能会有变动，请以实际情况为准。2、本文档内任何一页未经允许禁止传播。
+3、“易灵思”及“Trion”、“钛金系列”等产品均版权归属易灵思（深圳）科技有限公司。
+

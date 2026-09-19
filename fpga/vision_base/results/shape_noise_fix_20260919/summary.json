@@ -1,0 +1,21 @@
+{
+  "capture_fps": 29.90662928241125,
+  "raw_complete": true,
+  "write_errors": [
+    1,
+    1
+  ],
+  "canny_fault": false,
+  "shape_flags": [
+    1
+  ],
+  "shape_valid_count": 0,
+  "shape_background": [
+    58,
+    58
+  ],
+  "wns_ns": 0.367,
+  "whs_ns": 0.026,
+  "bit_sha256": "4807698120d9a34bdc76926cab7d10311198afca8d5efae872f944ea67c9f468",
+  "visual_acceptance": "pending user photo; no claim of measured image-quality improvement"
+}

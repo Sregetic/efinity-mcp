@@ -2,12 +2,12 @@ import argparse,json,time
 from efx_pgm.ftdi_program import acquire_jtag_engine
 from efx_pgm.device_utils import DeviceUtils
 from pyftdi.bits import BitSequence
-p=argparse.ArgumentParser();p.add_argument('--url',default='ftdi://0x0403:0x6011:4:3/2');p.add_argument('--mode',type=int);p.add_argument('--threshold',type=int);p.add_argument('--median',type=int,choices=[0,1]);p.add_argument('--memory',type=int,choices=range(4));p.add_argument('--index',type=int,choices=range(6));p.add_argument('--page',type=int,default=0,choices=range(16));p.add_argument('--color-order',type=int,choices=range(6));p.add_argument('--gamma','--tone',dest='gamma',type=int,choices=[0,1,2,3]);p.add_argument('--gain-r',type=int);p.add_argument('--gain-g',type=int);p.add_argument('--gain-b',type=int);p.add_argument('--samples',type=int,default=5);p.add_argument('--ae',type=int,choices=[0,1]);p.add_argument('--exposure',type=int);p.add_argument('--lcd-test',type=int,choices=[0,1]);p.add_argument('--lcd-bist',type=int,choices=[0,1]);p.add_argument('--lcd-backlight',type=int,choices=[0,1]);a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--url',default='ftdi://0x0403:0x6011:4:3/2');p.add_argument('--mode',type=int);p.add_argument('--threshold',type=int);p.add_argument('--median',type=int,choices=[0,1]);p.add_argument('--memory',type=int,choices=range(4));p.add_argument('--index',type=int,choices=range(6));p.add_argument('--page',type=int,default=0,choices=range(16));p.add_argument('--color-order',type=int,choices=range(6));p.add_argument('--gamma','--tone',dest='gamma',type=int,choices=[0,1,2,3]);p.add_argument('--gain-r',type=int);p.add_argument('--gain-g',type=int);p.add_argument('--gain-b',type=int);p.add_argument('--samples',type=int,default=5);p.add_argument('--ae',type=int,choices=[0,1]);p.add_argument('--exposure',type=int);p.add_argument('--lcd-test',type=int,choices=[0,1]);p.add_argument('--lcd-bist',type=int,choices=[0,1]);p.add_argument('--lcd-backlight',type=int,choices=[0,1]);p.add_argument('--shape',type=int,choices=[0,1]);p.add_argument('--shape-threshold',type=int,choices=range(1,256));a=p.parse_args()
 with acquire_jtag_engine(1e6,a.url) as e:
  e.reset()
- for op,value in [(126,a.page),(1,a.mode),(2,a.threshold),(3,a.median),(4,a.memory),(5,a.index),(6,a.color_order),(7,a.gamma),(8,a.gain_r),(9,a.gain_g),(10,a.gain_b),(11,a.ae),(12,a.exposure),(13,a.lcd_test),(14,a.lcd_bist),(15,a.lcd_backlight)]:
+ for op,value in [(126,a.page),(1,a.mode),(2,a.threshold),(3,a.median),(4,a.memory),(5,a.index),(6,a.color_order),(7,a.gamma),(8,a.gain_r),(9,a.gain_g),(10,a.gain_b),(11,a.ae),(12,a.exposure),(13,a.lcd_test),(14,a.lcd_bist),(15,a.lcd_backlight),(22,a.shape),(23,a.shape_threshold)]:
   if value is None:continue
-  if op==12 and not 112<=value<=1776:raise ValueError("exposure range112..1776")
+  if op==12 and not 112<=value<=2950:raise ValueError("exposure range112..2950")
   if op in [8,9,10] and not 0<=value<=1024:raise ValueError('gain Q8.8 range0..1024')
   if op==1 and not 0<=value<=7:raise ValueError('mode0..7')
   if op==2 and not 0<=value<=2047:raise ValueError('threshold0..2047')
@@ -52,6 +52,9 @@ with acquire_jtag_engine(1e6,a.url) as e:
   if actual_build in [0x260917e4,0x260917e5] or (actual_build==0x260917f5 and a.page==14):
    for key in ['capture_id','display_id','canny_completed']:rec.pop(key,None)
    rec.update(lcd_phy_seen=f'{(v>>8)&255:02x}',lcd_reset_pin=(v>>3)&1,lcd_backlight_pin=(v>>2)&1,lcd_bist=(v>>1)&1,lcd_backlight_enabled=v&1)
+  if actual_build==0x260919a6:
+   for key in ['capture_id','display_id','canny_completed']:rec.pop(key,None)
+   rec.update(highlight_pixels=(v>>64)&0xffffffff,shape_enabled=(v>>63)&1,shape_valid=(v>>62)&1,shape_class=(v>>60)&3,shape_background=(v>>52)&255,shape_reject_flags=(v>>48)&15,shape_box=[(v>>36)&4095,(v>>24)&4095,(v>>12)&4095,v&4095])
   if i:out.append(rec)
   time.sleep(.2)
  print(json.dumps(out,indent=2))

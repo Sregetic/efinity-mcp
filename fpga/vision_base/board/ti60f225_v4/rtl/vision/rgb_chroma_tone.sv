@@ -32,7 +32,9 @@ endfunction
 function automatic[3:0]min3(input[3:0]a,b,c);begin min3=(a<b)?((a<c)?a:c):((b<c)?b:c);end endfunction
 function automatic[3:0]max3(input[3:0]a,b,c);begin max3=(a>b)?((a>c)?a:c):((b>c)?b:c);end endfunction
 wire[3:0]a_clip=score(rgb1[23:16],cr),b_clip=score(rgb1[15:8],cg),c_clip=score(rgb1[7:0],cb);
-wire[3:0]near_clip=max3((a_clip<b_clip?a_clip:b_clip),(a_clip<c_clip?a_clip:c_clip),(b_clip<c_clip?b_clip:c_clip));
+// A neutral highlight may clip only green before R/B. Require all channels
+// to be bright, but do not require two distinct color channels to clip.
+wire[3:0]near_clip=max3(a_clip,b_clip,c_clip);
 wire[3:0]all_bright=min3(score(rgb1[23:16],lr),score(rgb1[15:8],lg),score(rgb1[7:0],lb));
 wire[7:0]peak3a=(toned3[23:16]>toned3[15:8])?toned3[23:16]:toned3[15:8];
 wire[7:0]peak3=(peak3a>toned3[7:0])?peak3a:toned3[7:0];

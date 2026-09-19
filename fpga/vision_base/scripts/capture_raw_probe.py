@@ -26,7 +26,7 @@ with acquire_jtag_engine(1e6, a.url) as e:
         e.write_ir(DeviceUtils.EFX_TI_INSTR['USER2'])
         v = int(e.read_dr(192))
         e.go_idle()
-        if v >> 160 != 0x56495331 or ((v >> 128) & 0xffffffff) not in [0x26091638,0x26091639,0x2609163a,0x2609163b,0x2609163c,0x2609163d,0x2609163e,0x26091730,0x26091731,0x26091732,0x26091733,0x26091734,0x26091735]:
+        if v >> 160 != 0x56495331 or ((v >> 128) & 0xffffffff) not in [0x26091638,0x26091639,0x2609163a,0x2609163b,0x2609163c,0x2609163d,0x2609163e,0x26091730,0x26091731,0x26091732,0x26091733,0x26091734,0x26091735,0x26091737]:
             raise RuntimeError('RAW probe build/page mismatch: %048x' % v)
         return v
     command(126, 3)
@@ -39,7 +39,7 @@ with acquire_jtag_engine(1e6, a.url) as e:
     seq = initial & 0xffffffff
     if not seq or (initial >> 95) & 1:
         raise RuntimeError('RAW snapshot not complete')
-    small=((initial>>128)&0xffffffff) in [0x26091732,0x26091733,0x26091734]
+    small=((initial>>128)&0xffffffff) in [0x26091732,0x26091733,0x26091734,0x26091735,0x26091737]
     cols,rows,spacing=(40,23,48) if small else (80,45,24)
     x0,y0,width,height=a.region or [0,0,cols,rows]
     if min(x0,y0)<0 or min(width,height)<1 or x0+width>cols or y0+height>rows:raise ValueError('Region outside probe grid')

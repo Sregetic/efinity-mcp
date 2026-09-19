@@ -1,0 +1,105 @@
+{
+  "generated_utc": "2026-09-19T06:20:07.6850945Z",
+  "scope": "RTL simulation, not physical display acceptance",
+  "tests": [
+    {
+      "compile_exit": 0,
+      "passed": true,
+      "run_exit": 0,
+      "test": "shape_classifier"
+    },
+    {
+      "compile_exit": 0,
+      "passed": true,
+      "run_exit": 0,
+      "test": "sobel"
+    },
+    {
+      "compile_exit": 0,
+      "passed": true,
+      "run_exit": 0,
+      "test": "hysteresis_random"
+    },
+    {
+      "compile_exit": 0,
+      "passed": true,
+      "run_exit": 0,
+      "test": "frontend"
+    },
+    {
+      "compile_exit": 0,
+      "passed": true,
+      "run_exit": 0,
+      "test": "color"
+    },
+    {
+      "compile_exit": 0,
+      "passed": true,
+      "run_exit": 0,
+      "test": "median9"
+    },
+    {
+      "compile_exit": 0,
+      "passed": true,
+      "run_exit": 0,
+      "test": "chroma_tone"
+    },
+    {
+      "compile_exit": 0,
+      "passed": true,
+      "run_exit": 0,
+      "test": "controls"
+    },
+    {
+      "compile_exit": 0,
+      "passed": true,
+      "run_exit": 0,
+      "test": "hysteresis"
+    },
+    {
+      "compile_exit": 0,
+      "passed": true,
+      "run_exit": 0,
+      "test": "hysteresis_sweep"
+    },
+    {
+      "compile_exit": 0,
+      "passed": true,
+      "run_exit": 0,
+      "test": "history"
+    },
+    {
+      "compile_exit": 0,
+      "passed": true,
+      "run_exit": 0,
+      "test": "commit"
+    },
+    {
+      "compile_exit": 0,
+      "passed": true,
+      "run_exit": 0,
+      "test": "canny"
+    }
+  ],
+  "source_sha256": {
+    "camera_auto_exposure.sv": "A5DF3D9227EC9B26EF3A19FFE766F78388A703F6818B7165AE5B41EB0E3C16FB",
+    "rgb_chroma_tone.sv": "B9B221D03E2AF00687C787714018A6BB2DC2D81DABE766A02AFADBB4ECFD658F",
+    "sensor_exposure_writer.sv": "0A65DC1E4AA66D9E5DCD02ED13D084ABE8507B34B722EEC005DA8D0C3665E1D2",
+    "vision_canny.sv": "318CD06AA95D14BADD9D4C2D0E0AE9A5BD92949DB011A137236C3860B70F3AC9",
+    "vision_controls.sv": "367916E9CDBF28C4776EE6D2B27F5A4396EC716A9F66E20A44CD2B763A25F887",
+    "vision_display.sv": "D4754B283A7B84806D582650F1A54C84DA3C248F0D5E242AAACFE7F202F9466B",
+    "vision_frame_history.sv": "D28B38C17DEF132CB1E90A15498816616DEF8A1812B7E53D76A204170D316F7D",
+    "vision_frontend.sv": "73211B61B17D808CA97CBF5EE59E6220C0B231197886123D763D63A3FE2FD105",
+    "vision_hysteresis_sweep.sv": "9D94EEB763040221D1293F56257757E4D5AACE4C3434141B3393582117E75C0A",
+    "vision_hysteresis.sv": "EAE013A7685126109B4B9DBB625CAE0F1CA1FDDEECAA736349D26960C992A5AD",
+    "vision_median9.sv": "AAAD3136070BB560BA6157D5C2DDF293A8B2E16B52B2DFEC52BC08E40223A32E",
+    "vision_osd.sv": "63FD855F969D697AF55EF0A40124C04AFB74CE4E5983187AAEDC0304BA145942",
+    "vision_shape_classifier.sv": "531D02C5811EA220DB76BBE5D34C279BC43485873F0565D10EA439768A3370AA",
+    "vision_sobel.sv": "AAC9D6E311C54C7EF94F870A00AC1B63E28511CF5D045FF210DDF9119C0FFEAC",
+    "vision_sparse_window.sv": "ADA0102574DFC8628DEB82780255FF5FD5523FB3688E054B2A1D8F8818B1E496",
+    "vision_window3.sv": "80E90D1F363BA74C120ACC27DE311DAF2403AE6DB3EFB4E6232023AF4B624002",
+    "vision_write_commit.sv": "879E47FF41F3CF10B42477D9FBC0EB3F1FD217687B93B06A79C326B7F6F7FED9"
+  },
+  "passed": true,
+  "full": true
+}

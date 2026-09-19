@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
-<efxpt:periphery design="ti60f225_oob" device="Ti60F225" xmlns:efxpt="http://www.efinixinc.com/peri_device_db" xmlns:efxutil="http://www.efinixinc.com/peri_tool" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.efinixinc.com/peri_device_db lpf.xsd" checksum="c032f4b7">
+<efxpt:periphery design="ti60f225_oob" device="Ti60F225" xmlns:efxpt="http://www.efinixinc.com/peri_device_db" xmlns:efxutil="http://www.efinixinc.com/peri_tool" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.efinixinc.com/peri_device_db lpf.xsd" checksum="a5b37a1c">
   <!-- Efinity Logical Peripheral File -->
   <!-- Version: 2026.1.132.3.9 -->
-  <!-- Date: 2026-09-17 00:36 -->
+  <!-- Date: 2026-09-19 15:02 -->
   <!-- Copyright (C) 2013 - 2026 Efinix Inc. All rights reserved. -->
   <efxpt:sequence size="119">
     <efxpt:instance id="BG_1A" index="0" type="hsio_bg"/>
@@ -4016,8 +4016,8 @@
     <efxpt:parameter name="PCR_DLY_CAS" value="0"/>
     <efxpt:parameter name="PCR_DPA_DBGI" value="STATE_MACHINE"/>
     <efxpt:parameter name="PCR_DPA_MODE" value="NON_CONTINUOUS"/>
-    <efxpt:parameter name="PCR_DPA_RST" value="RESET"/>
-    <efxpt:parameter name="PCR_DPA_RST_SEL" value="PCR"/>
+    <efxpt:parameter name="PCR_DPA_RST" value="NO_RESET"/>
+    <efxpt:parameter name="PCR_DPA_RST_SEL" value="CORE"/>
     <efxpt:parameter name="PCR_DPA_STEP0" value="ZERO"/>
     <efxpt:parameter name="PCR_DPA_STEP1" value="ZERO"/>
     <efxpt:parameter name="PCR_FIFO_EN" value="ENABLE"/>
@@ -4036,7 +4036,7 @@
     <efxpt:parameter name="PCR_LVDSOE" value="DISABLE"/>
     <efxpt:parameter name="PCR_LVDSOE_SEL" value="PCR"/>
     <efxpt:parameter name="PCR_LVDSRX_DLY" value="17"/>
-    <efxpt:parameter name="PCR_LVDSRX_MODE" value="PCR"/>
+    <efxpt:parameter name="PCR_LVDSRX_MODE" value="CORE"/>
     <efxpt:parameter name="PCR_LVDSTX_DINSEL" value="SER"/>
     <efxpt:parameter name="PCR_LVDSTX_DLY" value="0"/>
     <efxpt:parameter name="PCR_LVDSTX_EN" value="DISABLE"/>
@@ -4116,8 +4116,8 @@
     <efxpt:parameter name="PCR_DLY_CAS" value="0"/>
     <efxpt:parameter name="PCR_DPA_DBGI" value="STATE_MACHINE"/>
     <efxpt:parameter name="PCR_DPA_MODE" value="NON_CONTINUOUS"/>
-    <efxpt:parameter name="PCR_DPA_RST" value="RESET"/>
-    <efxpt:parameter name="PCR_DPA_RST_SEL" value="PCR"/>
+    <efxpt:parameter name="PCR_DPA_RST" value="NO_RESET"/>
+    <efxpt:parameter name="PCR_DPA_RST_SEL" value="CORE"/>
     <efxpt:parameter name="PCR_DPA_STEP0" value="ZERO"/>
     <efxpt:parameter name="PCR_DPA_STEP1" value="ZERO"/>
     <efxpt:parameter name="PCR_FIFO_EN" value="ENABLE"/>
@@ -4136,7 +4136,7 @@
     <efxpt:parameter name="PCR_LVDSOE" value="DISABLE"/>
     <efxpt:parameter name="PCR_LVDSOE_SEL" value="PCR"/>
     <efxpt:parameter name="PCR_LVDSRX_DLY" value="17"/>
-    <efxpt:parameter name="PCR_LVDSRX_MODE" value="PCR"/>
+    <efxpt:parameter name="PCR_LVDSRX_MODE" value="CORE"/>
     <efxpt:parameter name="PCR_LVDSTX_DINSEL" value="SER"/>
     <efxpt:parameter name="PCR_LVDSTX_DLY" value="0"/>
     <efxpt:parameter name="PCR_LVDSTX_EN" value="DISABLE"/>
@@ -4451,8 +4451,8 @@
     <efxpt:parameter name="PCR_DLY_CAS" value="0"/>
     <efxpt:parameter name="PCR_DPA_DBGI" value="STATE_MACHINE"/>
     <efxpt:parameter name="PCR_DPA_MODE" value="NON_CONTINUOUS"/>
-    <efxpt:parameter name="PCR_DPA_RST" value="RESET"/>
-    <efxpt:parameter name="PCR_DPA_RST_SEL" value="PCR"/>
+    <efxpt:parameter name="PCR_DPA_RST" value="NO_RESET"/>
+    <efxpt:parameter name="PCR_DPA_RST_SEL" value="CORE"/>
     <efxpt:parameter name="PCR_DPA_STEP0" value="ZERO"/>
     <efxpt:parameter name="PCR_DPA_STEP1" value="ZERO"/>
     <efxpt:parameter name="PCR_FIFO_EN" value="ENABLE"/>
@@ -4471,7 +4471,7 @@
     <efxpt:parameter name="PCR_LVDSOE" value="DISABLE"/>
     <efxpt:parameter name="PCR_LVDSOE_SEL" value="PCR"/>
     <efxpt:parameter name="PCR_LVDSRX_DLY" value="17"/>
-    <efxpt:parameter name="PCR_LVDSRX_MODE" value="PCR"/>
+    <efxpt:parameter name="PCR_LVDSRX_MODE" value="CORE"/>
     <efxpt:parameter name="PCR_LVDSTX_DINSEL" value="SER"/>
     <efxpt:parameter name="PCR_LVDSTX_DLY" value="0"/>
     <efxpt:parameter name="PCR_LVDSTX_EN" value="DISABLE"/>
@@ -4551,8 +4551,8 @@
     <efxpt:parameter name="PCR_DLY_CAS" value="0"/>
     <efxpt:parameter name="PCR_DPA_DBGI" value="STATE_MACHINE"/>
     <efxpt:parameter name="PCR_DPA_MODE" value="NON_CONTINUOUS"/>
-    <efxpt:parameter name="PCR_DPA_RST" value="RESET"/>
-    <efxpt:parameter name="PCR_DPA_RST_SEL" value="PCR"/>
+    <efxpt:parameter name="PCR_DPA_RST" value="NO_RESET"/>
+    <efxpt:parameter name="PCR_DPA_RST_SEL" value="CORE"/>
     <efxpt:parameter name="PCR_DPA_STEP0" value="ZERO"/>
     <efxpt:parameter name="PCR_DPA_STEP1" value="ZERO"/>
     <efxpt:parameter name="PCR_FIFO_EN" value="ENABLE"/>
@@ -4571,7 +4571,7 @@
     <efxpt:parameter name="PCR_LVDSOE" value="DISABLE"/>
     <efxpt:parameter name="PCR_LVDSOE_SEL" value="PCR"/>
     <efxpt:parameter name="PCR_LVDSRX_DLY" value="17"/>
-    <efxpt:parameter name="PCR_LVDSRX_MODE" value="PCR"/>
+    <efxpt:parameter name="PCR_LVDSRX_MODE" value="CORE"/>
     <efxpt:parameter name="PCR_LVDSTX_DINSEL" value="SER"/>
     <efxpt:parameter name="PCR_LVDSTX_DLY" value="0"/>
     <efxpt:parameter name="PCR_LVDSTX_EN" value="DISABLE"/>

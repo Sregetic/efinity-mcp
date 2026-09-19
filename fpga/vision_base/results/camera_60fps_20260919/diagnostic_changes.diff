@@ -1,0 +1,158 @@
+--- before/board/ti60f225_v4/rtl/vision/sensor_exposure_writer.sv
++++ after/board/ti60f225_v4/rtl/vision/sensor_exposure_writer.sv
+@@ -5,7 +5,11 @@
+  input wr_done,rd_done,input[7:0]read_data,
+  output reg wr_en,rd_en,output reg[15:0]addr,output reg[7:0]data,
+  output reg ack_toggle,fault,busy,output reg[15:0]applied,
+- output reg[23:0]readback,output reg[15:0]updates=0);
++ output reg[23:0]readback,output reg[15:0]updates=0,
++ input debug_req,input debug_write,input[15:0]debug_addr,input[7:0]debug_data,
++ output reg debug_ack=0,output reg[7:0]debug_readback=0,output reg debug_fault=0,output debug_busy);
++reg[2:0]ds=0;reg dbg_toggle=0,dbg_write=0;reg[7:0]dbg_expected=0;
++assign debug_busy=state>=8;
+ reg[2:0]rs=0;reg[3:0]state=0;reg[1:0]idx=0;
+ reg[15:0]held=444;reg[23:0]timer=0;reg pending_toggle=0;
+ wire[23:0]encoded={4'b0,held,4'b0};
+@@ -13,13 +17,18 @@
+  begin case(i)0:byte_at=v[23:16];1:byte_at=v[15:8];default:byte_at=v[7:0];endcase end
+ endfunction
+ always @(posedge clk)begin
+- rs<={rs[1:0],req_toggle};wr_en<=0;rd_en<=0;
+- if(!rst_n)begin rs<=0;state<=0;idx<=0;ack_toggle<=0;fault<=0;busy<=0;applied<=444;readback<=0;timer<=0;updates<=0;end
+- else if(!fault)begin
++ ds<={ds[1:0],debug_req};rs<={rs[1:0],req_toggle};wr_en<=0;rd_en<=0;
++ if(!rst_n)begin ds<=0;debug_ack<=0;debug_fault<=0;debug_readback<=0;dbg_toggle<=0;dbg_write<=0;dbg_expected<=0;rs<=0;state<=0;idx<=0;ack_toggle<=0;fault<=0;busy<=0;applied<=444;readback<=0;timer<=0;updates<=0;end
++ else begin
+   if(busy)timer<=timer+1'b1;else timer<=0;
+-  if(busy&&timer>=TIMEOUT)begin fault<=1;busy<=0;state<=0;end
++  if(busy&&timer>=TIMEOUT)begin
++   if(state>=8)begin debug_fault<=1;debug_ack<=dbg_toggle;end else fault<=1;
++   busy<=0;state<=0;end
+   else case(state)
+-   0:if(configured&&rs[2]!=ack_toggle)begin
++   0:if(configured&&ds[2]!=debug_ack)begin
++      dbg_toggle<=ds[2];dbg_write<=debug_write;dbg_expected<=debug_data;
++      addr<=debug_addr;data<=debug_data;debug_fault<=0;busy<=1;state<=8;
++     end else if(configured&&!fault&&rs[2]!=ack_toggle)begin
+       held<=req_value;pending_toggle<=rs[2];idx<=0;busy<=1;state<=1;
+       if(req_value<112||req_value>1776)begin fault<=1;busy<=0;state<=0;end
+      end
+@@ -34,6 +43,13 @@
+       else if(idx==2)begin applied<=held;ack_toggle<=pending_toggle;updates<=updates+1'b1;busy<=0;state<=0;end
+       else begin idx<=idx+1'b1;state<=4;end
+      end
++   8:begin if(dbg_write)begin wr_en<=1;state<=9;end else begin rd_en<=1;state<=11;end end
++   9:if(wr_done)state<=10;
++   10:begin rd_en<=1;state<=11;end
++   11:if(rd_done)begin
++       debug_readback<=read_data;debug_fault<=dbg_write&&(read_data!=dbg_expected);
++       debug_ack<=dbg_toggle;busy<=0;state<=0;
++      end
+    default:state<=0;
+   endcase
+  end
+--- before/board/ti60f225_v4/rtl/cam_i2c_ctrl/i2c/i2c_master_ctrl_top.v
++++ after/board/ti60f225_v4/rtl/cam_i2c_ctrl/i2c/i2c_master_ctrl_top.v
+@@ -12,6 +12,8 @@
+ input exposure_req_toggle, input[15:0] exposure_req_value,
+ output exposure_ack,exposure_fault,exposure_busy,
+ output[15:0] exposure_applied,exposure_updates,output[23:0] exposure_readback,
++input debug_req,debug_write,input[15:0]debug_addr,input[7:0]debug_data,
++output debug_ack,debug_fault,debug_busy,output[7:0]debug_readback,
+ input  scl_pad_i,       // SCL-line input
+ output scl_pad_o,       // SCL-line output (always 1'b0)
+ output scl_padoen_o,    // SCL-line output enable (active low)
+@@ -49,7 +51,9 @@
+ sensor_exposure_writer exposure_writer(.clk(clk),.rst_n(rst_n),.configured(configured),
+  .req_toggle(exposure_req_toggle),.req_value(exposure_req_value),.wr_done(wr_done),.rd_done(rd_done),.read_data(get_data),
+  .wr_en(run_wr),.rd_en(run_rd),.addr(run_addr),.data(run_data),.ack_toggle(exposure_ack),.fault(exposure_fault),
+- .busy(exposure_busy),.applied(exposure_applied),.readback(exposure_readback),.updates(exposure_updates));
++ .busy(exposure_busy),.applied(exposure_applied),.readback(exposure_readback),.updates(exposure_updates),
++ .debug_req(debug_req),.debug_write(debug_write),.debug_addr(debug_addr),.debug_data(debug_data),
++ .debug_ack(debug_ack),.debug_fault(debug_fault),.debug_busy(debug_busy),.debug_readback(debug_readback));
+ //==================================================
+ i2c_master_reg_set #(
+ 	.DATA_LENGTH (DATA_LENGTH),
+--- before/board/ti60f225_v4/rtl/ti60f225_oob_top.v
++++ after/board/ti60f225_v4/rtl/ti60f225_oob_top.v
+@@ -525,7 +525,21 @@
+ 
+ wire ae_req,ae_ack,ae_fault,ae_busy;wire[15:0]ae_request,ae_applied,ae_updates;wire[23:0]ae_readback;
+ wire[31:0]ae_sum;wire[15:0]ae_ncenter,ae_ntotal,ae_nclip;wire[1:0]ae_decision;wire ae_shadow;
++// Diagnostic register requests share the exposure writer's sole I2C owner.
++reg[2:0]sensor_cmd_sync=0;reg sensor_cmd_seen=0,sensor_req=0,sensor_write=0;
++reg[15:0]sensor_addr=0;reg[7:0]sensor_data=0;reg[31:0]sensor_seq=0;
++wire sensor_ack,sensor_fault,sensor_busy;wire[7:0]sensor_readback;
++always @(posedge CLK_5M)begin
++ sensor_cmd_sync<={sensor_cmd_sync[1:0],feature_command_toggle};sensor_cmd_seen<=sensor_cmd_sync[2];
++ if(!i2c_rst_n)begin sensor_req<=0;sensor_seq<=0;sensor_cmd_sync<=0;sensor_cmd_seen<=0;end
++ else if(sensor_cmd_sync[2]!=sensor_cmd_seen && (feature_command[31:24]==16 || feature_command[31:24]==17) && sensor_req==sensor_ack)begin
++  sensor_addr<=feature_command[23:8];sensor_data<=feature_command[7:0];sensor_write<=feature_command[31:24]==17;
++  sensor_req<=~sensor_req;sensor_seq<=sensor_seq+1'b1;
++ end
++end
+ i2c_master_ctrl_top u2_i2c_master_ctrl_top(
++ .debug_req(sensor_req),.debug_write(sensor_write),.debug_addr(sensor_addr),.debug_data(sensor_data),
++ .debug_ack(sensor_ack),.debug_fault(sensor_fault),.debug_busy(sensor_busy),.debug_readback(sensor_readback),
+  .exposure_req_toggle(ae_req),.exposure_req_value(ae_request),.exposure_ack(ae_ack),.exposure_fault(ae_fault),
+  .exposure_busy(ae_busy),.exposure_applied(ae_applied),.exposure_updates(ae_updates),.exposure_readback(ae_readback),
+   /*i*/.clk			(CLK_5M		),
+@@ -551,10 +565,16 @@
+ wire ch0_vs;
+ wire ch0_hs;
+ wire ch0_de;
+-wire fov_vs,fov_hs,fov_valid;wire[31:0]fov_data;
++wire fov_vs,fov_hs,fov_valid,fov_overrun;
++reg[31:0]fov_overruns=0;reg fov_overrun_q=0;
++always @(posedge i_mipi_rx_pclk)begin
++ fov_overrun_q<=fov_overrun;
++ if(!vid_rst_n)fov_overruns<=0;else if(fov_overrun&&!fov_overrun_q)fov_overruns<=fov_overruns+1'b1;
++end
++wire[31:0]fov_data;
+ bayer_fov_reduce fov_reduce(.clk(i_mipi_rx_pclk),.rst_n(vid_rst_n),.vs(w_mipi_rx_vs),.hs(w_mipi_rx_hs),.valid(w_mipi_rx_de),
+  .data({w_mipi_rx_data[9:2],w_mipi_rx_data[19:12],w_mipi_rx_data[29:22],w_mipi_rx_data[39:32]}),
+- .o_vs(fov_vs),.o_hs(fov_hs),.o_valid(fov_valid),.o_data(fov_data));
++ .o_vs(fov_vs),.o_hs(fov_hs),.o_valid(fov_valid),.o_data(fov_data),.overrun(fov_overrun));
+ wire[31:0] memory_capture_id,memory_display_id,memory_write_errors;wire[2:0]memory_history_count;
+ // IMX219
+   frame_buffer #(
+@@ -1039,7 +1059,7 @@
+ );
+ // LED levels only: no multi-bit asynchronous debug bus is introduced.
+ reg camera_vs_q=0;
+-reg [7:0] camera_frames=0;
++reg [31:0] camera_frames=0;
+ always @(posedge i_mipi_rx_pclk) begin
+     camera_vs_q<=w_mipi_rx_vs;
+     if(w_mipi_rx_vs && !camera_vs_q)camera_frames<=camera_frames+1'b1;
+@@ -1330,7 +1350,10 @@
+  diag_meta<={diag_frame_gray,diag_core_gray,i_arstn,i_pll_locked,pll_locked,user_pll_locked,w_arstn,vid_rst_n,pattern_reset_sync[1],1'b0};
+  diag_sync<=diag_meta;
+  if(jtag_diag_CAPTURE)begin
+-  if(feature_diag_page==11)diag_shift<={32'h56495331,32'h260917b5,feature_status,ae_applied,ae_request,ae_updates,ae_readback,20'b0,ae_shadow,ae_enable,ae_busy,ae_fault};
++  if(feature_diag_page==9)diag_shift<={32'h56495331,32'h26091909,feature_status,sensor_seq,sensor_addr,sensor_readback,4'b0,sensor_busy,sensor_fault,sensor_ack,sensor_req,32'b0};
++  else if(feature_diag_page==13)diag_shift<={32'h56495331,32'h2609190d,feature_status,camera_frames,rx_geometry,4'b0};
++  else if(feature_diag_page==14)diag_shift<={32'h56495331,32'h2609190e,feature_status,fov_overruns,filter_geometry,4'b0};
++  else if(feature_diag_page==11)diag_shift<={32'h56495331,32'h260917b5,feature_status,ae_applied,ae_request,ae_updates,ae_readback,20'b0,ae_shadow,ae_enable,ae_busy,ae_fault};
+   else if(feature_diag_page==12)diag_shift<={32'h56495331,32'h260917c5,feature_status,ae_sum,ae_ncenter,ae_ntotal,ae_nclip,14'b0,ae_decision};
+   else if(feature_diag_page==10)diag_shift<={32'h56495331,32'h260917a5,feature_status,highlight_hits_hold,64'b0};
+   else if(feature_diag_page==8)diag_shift<={32'h56495331,32'h26091785,feature_status,wb_r,wb_g,wb_b,46'b0,tone_mode};
+--- before/board/ti60f225_v4/rtl/bayer_fov_reduce.sv
++++ after/board/ti60f225_v4/rtl/bayer_fov_reduce.sv
+@@ -1,7 +1,7 @@
+ // 2560x1440 -> 1920x1080, separable area filtering on each Bayer sublattice.
+ // Per 4 same-color samples, emit (3a+b)/4, (b+c)/2, (c+3d)/4.
+ module bayer_fov_reduce(input clk,input rst_n,input vs,input hs,input valid,input [31:0] data,
+- output reg o_vs=0,output reg o_hs=0,output reg o_valid=0,output reg [31:0] o_data=0);
++ output reg o_vs=0,output reg o_hs=0,output reg o_valid=0,output reg [31:0] o_data=0,output reg overrun=0);
+ function automatic [7:0] blend(input [7:0] a,input [7:0] b,input [1:0] phase);
+  reg[9:0] t;
+  begin
+@@ -21,7 +21,6 @@
+ reg[8:0] wr_group=0;
+ reg[2:0] wr_row=0;
+ reg[7:0] wr_seq=0,rd_seq=0;
+-reg overrun=0;
+ wire[9:0] wr_addr=(wr_seq[0]?10'd320:10'd0)+wr_group;
+ wire[47:0] horizontal={blend(first[31:24],first[15:8],0),blend(first[23:16],first[7:0],0),
+  blend(first[15:8],data[31:24],1),blend(first[7:0],data[23:16],1),

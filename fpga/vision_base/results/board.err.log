@@ -544,3 +544,163 @@
 // Sep 17, 2026 00:25:57
 ///////////////////////////////////
 
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 17, 2026 00:35:02
+///////////////////////////////////
+
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 18, 2026 10:01:55
+///////////////////////////////////
+
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 18, 2026 10:11:20
+///////////////////////////////////
+
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 18, 2026 13:13:46
+///////////////////////////////////
+
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 18, 2026 16:23:45
+///////////////////////////////////
+
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 18, 2026 16:36:06
+///////////////////////////////////
+
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 18, 2026 16:56:16
+///////////////////////////////////
+
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 19, 2026 02:40:44
+///////////////////////////////////
+
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 19, 2026 02:50:35
+///////////////////////////////////
+
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 19, 2026 11:20:28
+///////////////////////////////////
+
+[EFX-0010 VERI-ERROR] syntax error near 'fov_data' (VERI-1137) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v:573)
+[EFX-0010 VERI-ERROR] syntax error near 'wire' (VERI-1137) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v:577)
+[EFX-0010 VERI-ERROR] SystemVerilog 2009 keyword 'wire' used in incorrect context (VERI-2344) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v:577)
+[EFX-0010 VERI-ERROR] syntax error near 'checker0' (VERI-1137) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v:593)
+[EFX-0010 VERI-ERROR] syntax error near 'wire' (VERI-1137) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v:769)
+[EFX-0010 VERI-ERROR] SystemVerilog 2009 keyword 'wire' used in incorrect context (VERI-2344) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v:769)
+[EFX-0010 VERI-ERROR] syntax error near '[' (VERI-1137) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v:780)
+[EFX-0010 VERI-ERROR] syntax error near 'ae_enable' (VERI-1137) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v:781)
+[EFX-0010 VERI-ERROR] syntax error near '[' (VERI-1137) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v:782)
+[EFX-0010 VERI-ERROR] syntax error near 'always' (VERI-1137) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v:783)
+[EFX-0010 VERI-ERROR] SystemVerilog 2009 keyword 'always' used in incorrect context (VERI-2344) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v:783)
+[EFX-0010 VERI-ERROR] syntax error near 'rgb_vs_r' (VERI-1137) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v:815)
+[EFX-0010 VERI-ERROR] syntax error near 'always' (VERI-1137) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v:816)
+[EFX-0010 VERI-ERROR] SystemVerilog 2009 keyword 'always' used in incorrect context (VERI-2344) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v:816)
+[EFX-0010 VERI-ERROR] syntax error near 'vid_cnt' (VERI-1137) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v:821)
+[EFX-0010 VERI-ERROR] syntax error near '[' (VERI-1137) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v:822)
+[EFX-0010 VERI-ERROR] syntax error near '[' (VERI-1137) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v:823)
+[EFX-0010 VERI-ERROR] syntax error near '[' (VERI-1137) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v:824)
+[EFX-0010 VERI-ERROR] syntax error near 'hdmi_tx_vs' (VERI-1137) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v:825)
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 19, 2026 11:23:45
+///////////////////////////////////
+
+[EFX-0010 VERI-ERROR] ANSI port 'debug_req' cannot be redeclared (VERI-2285) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\cam_i2c_ctrl\i2c\i2c_master_ctrl_top.v:17)
+[EFX-0010 VERI-ERROR] ANSI port 'debug_ack' cannot be redeclared (VERI-2285) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\cam_i2c_ctrl\i2c\i2c_master_ctrl_top.v:18)
+[EFX-0010 VERI-ERROR] module 'i2c_master_ctrl_top' is ignored due to previous errors (VERI-1072) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\cam_i2c_ctrl\i2c\i2c_master_ctrl_top.v:126)
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 19, 2026 11:25:26
+///////////////////////////////////
+
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 19, 2026 12:07:36
+///////////////////////////////////
+
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 19, 2026 12:15:54
+///////////////////////////////////
+
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 19, 2026 12:25:00
+///////////////////////////////////
+
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 19, 2026 12:48:08
+///////////////////////////////////
+
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 19, 2026 12:54:18
+///////////////////////////////////
+
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 19, 2026 13:08:21
+///////////////////////////////////
+
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 19, 2026 13:09:24
+///////////////////////////////////
+
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 19, 2026 13:18:29
+///////////////////////////////////
+
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 19, 2026 14:18:06
+///////////////////////////////////
+
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 19, 2026 14:36:42
+///////////////////////////////////
+
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 19, 2026 15:01:00
+///////////////////////////////////
+

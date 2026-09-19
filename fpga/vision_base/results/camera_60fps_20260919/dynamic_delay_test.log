@@ -1,0 +1,2 @@
+DYNAMIC DELAY PASS 0/1/8/17/63 taps, exact pulse count, gated-clock resume, bounded reset
+results/camera_60fps_20260919/tb_dynamic_delay.sv:52: $finish called at 2002175000 (1ps)

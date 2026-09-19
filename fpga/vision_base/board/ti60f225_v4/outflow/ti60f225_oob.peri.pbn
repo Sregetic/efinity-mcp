@@ -67,6 +67,18 @@ cell {
   type: "pkg_inout"
 }
 cell {
+  name: "cam_d0_DLY_ENA~MIPI~DLY_ENA"
+  type: "pt_input"
+}
+cell {
+  name: "cam_d0_DLY_INC~MIPI~DLY_INC"
+  type: "pt_input"
+}
+cell {
+  name: "cam_d0_DLY_RST~MIPI~DLY_RST"
+  type: "pt_input"
+}
+cell {
   name: "cam_d0_FIFO_EMPTY~MIPI~FIFO_EMPTY"
   type: "pt_output"
 }
@@ -133,6 +145,18 @@ cell {
 cell {
   name: "cam_d0_RXP"
   type: "pkg_inout"
+}
+cell {
+  name: "cam_d1_DLY_ENA~MIPI~DLY_ENA"
+  type: "pt_input"
+}
+cell {
+  name: "cam_d1_DLY_INC~MIPI~DLY_INC"
+  type: "pt_input"
+}
+cell {
+  name: "cam_d1_DLY_RST~MIPI~DLY_RST"
+  type: "pt_input"
 }
 cell {
   name: "cam_d1_FIFO_EMPTY~MIPI~FIFO_EMPTY"
@@ -203,6 +227,18 @@ cell {
   type: "pkg_inout"
 }
 cell {
+  name: "cam_d2_DLY_ENA~MIPI~DLY_ENA"
+  type: "pt_input"
+}
+cell {
+  name: "cam_d2_DLY_INC~MIPI~DLY_INC"
+  type: "pt_input"
+}
+cell {
+  name: "cam_d2_DLY_RST~MIPI~DLY_RST"
+  type: "pt_input"
+}
+cell {
   name: "cam_d2_FIFO_EMPTY~MIPI~FIFO_EMPTY"
   type: "pt_output"
 }
@@ -269,6 +305,18 @@ cell {
 cell {
   name: "cam_d2_RXP"
   type: "pkg_inout"
+}
+cell {
+  name: "cam_d3_DLY_ENA~MIPI~DLY_ENA"
+  type: "pt_input"
+}
+cell {
+  name: "cam_d3_DLY_INC~MIPI~DLY_INC"
+  type: "pt_input"
+}
+cell {
+  name: "cam_d3_DLY_RST~MIPI~DLY_RST"
+  type: "pt_input"
 }
 cell {
   name: "cam_d3_FIFO_EMPTY~MIPI~FIFO_EMPTY"
@@ -2875,7 +2923,7 @@ cell {
   }
   parameters {
     name: "DELAY_MODE"
-    enum_value: "STATIC"
+    enum_value: "DYNAMIC"
   }
   parameters {
     name: "FIFO_EN"
@@ -2903,7 +2951,7 @@ cell {
   }
   parameters {
     name: "DELAY_MODE"
-    enum_value: "STATIC"
+    enum_value: "DYNAMIC"
   }
   parameters {
     name: "FIFO_EN"
@@ -2931,7 +2979,7 @@ cell {
   }
   parameters {
     name: "DELAY_MODE"
-    enum_value: "STATIC"
+    enum_value: "DYNAMIC"
   }
   parameters {
     name: "FIFO_EN"
@@ -2959,7 +3007,7 @@ cell {
   }
   parameters {
     name: "DELAY_MODE"
-    enum_value: "STATIC"
+    enum_value: "DYNAMIC"
   }
   parameters {
     name: "FIFO_EN"
@@ -8479,6 +8527,42 @@ net {
   }
 }
 net {
+  name: "cam_d0_DLY_ENA~MIPI~DLY_ENA"
+  type: PERIPHERY
+  terminal {
+    cell: "cam_d0_DLY_ENA~MIPI~DLY_ENA"
+    port: "inpad"
+  }
+  terminal {
+    cell: "cam_d0~MIPI"
+    port: "DLY_ENA"
+  }
+}
+net {
+  name: "cam_d0_DLY_INC~MIPI~DLY_INC"
+  type: PERIPHERY
+  terminal {
+    cell: "cam_d0_DLY_INC~MIPI~DLY_INC"
+    port: "inpad"
+  }
+  terminal {
+    cell: "cam_d0~MIPI"
+    port: "DLY_INC"
+  }
+}
+net {
+  name: "cam_d0_DLY_RST~MIPI~DLY_RST"
+  type: PERIPHERY
+  terminal {
+    cell: "cam_d0_DLY_RST~MIPI~DLY_RST"
+    port: "inpad"
+  }
+  terminal {
+    cell: "cam_d0~MIPI"
+    port: "DLY_RST"
+  }
+}
+net {
   name: "cam_d0_FIFO_EMPTY~MIPI~FIFO_EMPTY"
   type: PERIPHERY
   terminal {
@@ -8716,6 +8800,42 @@ net {
   terminal {
     cell: "cam_d0~MIPI"
     port: "FIFOCLK"
+  }
+}
+net {
+  name: "cam_d1_DLY_ENA~MIPI~DLY_ENA"
+  type: PERIPHERY
+  terminal {
+    cell: "cam_d1_DLY_ENA~MIPI~DLY_ENA"
+    port: "inpad"
+  }
+  terminal {
+    cell: "cam_d1~MIPI"
+    port: "DLY_ENA"
+  }
+}
+net {
+  name: "cam_d1_DLY_INC~MIPI~DLY_INC"
+  type: PERIPHERY
+  terminal {
+    cell: "cam_d1_DLY_INC~MIPI~DLY_INC"
+    port: "inpad"
+  }
+  terminal {
+    cell: "cam_d1~MIPI"
+    port: "DLY_INC"
+  }
+}
+net {
+  name: "cam_d1_DLY_RST~MIPI~DLY_RST"
+  type: PERIPHERY
+  terminal {
+    cell: "cam_d1_DLY_RST~MIPI~DLY_RST"
+    port: "inpad"
+  }
+  terminal {
+    cell: "cam_d1~MIPI"
+    port: "DLY_RST"
   }
 }
 net {
@@ -8959,6 +9079,42 @@ net {
   }
 }
 net {
+  name: "cam_d2_DLY_ENA~MIPI~DLY_ENA"
+  type: PERIPHERY
+  terminal {
+    cell: "cam_d2_DLY_ENA~MIPI~DLY_ENA"
+    port: "inpad"
+  }
+  terminal {
+    cell: "cam_d2~MIPI"
+    port: "DLY_ENA"
+  }
+}
+net {
+  name: "cam_d2_DLY_INC~MIPI~DLY_INC"
+  type: PERIPHERY
+  terminal {
+    cell: "cam_d2_DLY_INC~MIPI~DLY_INC"
+    port: "inpad"
+  }
+  terminal {
+    cell: "cam_d2~MIPI"
+    port: "DLY_INC"
+  }
+}
+net {
+  name: "cam_d2_DLY_RST~MIPI~DLY_RST"
+  type: PERIPHERY
+  terminal {
+    cell: "cam_d2_DLY_RST~MIPI~DLY_RST"
+    port: "inpad"
+  }
+  terminal {
+    cell: "cam_d2~MIPI"
+    port: "DLY_RST"
+  }
+}
+net {
   name: "cam_d2_FIFO_EMPTY~MIPI~FIFO_EMPTY"
   type: PERIPHERY
   terminal {
@@ -9196,6 +9352,42 @@ net {
   terminal {
     cell: "cam_d2~MIPI"
     port: "FIFOCLK"
+  }
+}
+net {
+  name: "cam_d3_DLY_ENA~MIPI~DLY_ENA"
+  type: PERIPHERY
+  terminal {
+    cell: "cam_d3_DLY_ENA~MIPI~DLY_ENA"
+    port: "inpad"
+  }
+  terminal {
+    cell: "cam_d3~MIPI"
+    port: "DLY_ENA"
+  }
+}
+net {
+  name: "cam_d3_DLY_INC~MIPI~DLY_INC"
+  type: PERIPHERY
+  terminal {
+    cell: "cam_d3_DLY_INC~MIPI~DLY_INC"
+    port: "inpad"
+  }
+  terminal {
+    cell: "cam_d3~MIPI"
+    port: "DLY_INC"
+  }
+}
+net {
+  name: "cam_d3_DLY_RST~MIPI~DLY_RST"
+  type: PERIPHERY
+  terminal {
+    cell: "cam_d3_DLY_RST~MIPI~DLY_RST"
+    port: "inpad"
+  }
+  terminal {
+    cell: "cam_d3~MIPI"
+    port: "DLY_RST"
   }
 }
 net {
@@ -15253,9 +15445,9 @@ cell_annotations {
     ids: 29
     ids: 30
     ids: 31
+    ids: 32
+    ids: 33
     ids: 34
-    ids: 35
-    ids: 36
     ids: 37
     ids: 38
     ids: 39
@@ -15268,12 +15460,12 @@ cell_annotations {
     ids: 46
     ids: 47
     ids: 48
+    ids: 49
+    ids: 50
     ids: 51
     ids: 52
     ids: 53
     ids: 54
-    ids: 55
-    ids: 56
     ids: 57
     ids: 58
     ids: 59
@@ -15283,6 +15475,8 @@ cell_annotations {
     ids: 63
     ids: 64
     ids: 65
+    ids: 66
+    ids: 67
     ids: 68
     ids: 69
     ids: 70
@@ -15290,20 +15484,24 @@ cell_annotations {
     ids: 72
     ids: 73
     ids: 74
-    ids: 75
-    ids: 76
     ids: 77
     ids: 78
     ids: 79
     ids: 80
     ids: 81
     ids: 82
+    ids: 83
+    ids: 84
+    ids: 85
     ids: 86
+    ids: 87
     ids: 88
+    ids: 89
     ids: 90
+    ids: 91
     ids: 92
+    ids: 93
     ids: 94
-    ids: 96
     ids: 98
     ids: 100
     ids: 102
@@ -15320,26 +15518,20 @@ cell_annotations {
     ids: 124
     ids: 126
     ids: 128
-    ids: 131
+    ids: 130
     ids: 132
     ids: 134
     ids: 136
     ids: 138
     ids: 140
-    ids: 141
-    ids: 142
-    ids: 159
-    ids: 160
-    ids: 161
-    ids: 162
-    ids: 163
-    ids: 164
-    ids: 165
-    ids: 166
-    ids: 167
-    ids: 168
-    ids: 169
-    ids: 170
+    ids: 143
+    ids: 144
+    ids: 146
+    ids: 148
+    ids: 150
+    ids: 152
+    ids: 153
+    ids: 154
     ids: 171
     ids: 172
     ids: 173
@@ -15408,6 +15600,10 @@ cell_annotations {
     ids: 236
     ids: 237
     ids: 238
+    ids: 239
+    ids: 240
+    ids: 241
+    ids: 242
     ids: 243
     ids: 244
     ids: 245
@@ -15416,50 +15612,48 @@ cell_annotations {
     ids: 248
     ids: 249
     ids: 250
-    ids: 251
-    ids: 252
-    ids: 253
-    ids: 254
+    ids: 255
     ids: 256
+    ids: 257
     ids: 258
+    ids: 259
     ids: 260
+    ids: 261
     ids: 262
+    ids: 263
     ids: 264
-    ids: 269
+    ids: 265
+    ids: 266
+    ids: 268
+    ids: 270
+    ids: 272
     ids: 274
     ids: 276
     ids: 281
-    ids: 282
-    ids: 283
-    ids: 284
-    ids: 289
-    ids: 291
-    ids: 297
-    ids: 298
-    ids: 300
+    ids: 286
+    ids: 288
+    ids: 293
+    ids: 294
+    ids: 295
+    ids: 296
     ids: 301
-    ids: 302
-    ids: 304
-    ids: 305
-    ids: 306
-    ids: 308
+    ids: 303
+    ids: 309
     ids: 310
     ids: 312
+    ids: 313
     ids: 314
-    ids: 315
     ids: 316
     ids: 317
     ids: 318
-    ids: 319
     ids: 320
-    ids: 321
     ids: 322
-    ids: 323
     ids: 324
-    ids: 325
     ids: 326
     ids: 327
     ids: 328
+    ids: 329
+    ids: 330
     ids: 331
     ids: 332
     ids: 333
@@ -15470,12 +15664,12 @@ cell_annotations {
     ids: 338
     ids: 339
     ids: 340
-    ids: 341
-    ids: 342
     ids: 343
     ids: 344
     ids: 345
     ids: 346
+    ids: 347
+    ids: 348
     ids: 349
     ids: 350
     ids: 351
@@ -15486,10 +15680,10 @@ cell_annotations {
     ids: 356
     ids: 357
     ids: 358
-    ids: 359
-    ids: 360
     ids: 361
     ids: 362
+    ids: 363
+    ids: 364
     ids: 365
     ids: 366
     ids: 367
@@ -15500,10 +15694,10 @@ cell_annotations {
     ids: 372
     ids: 373
     ids: 374
-    ids: 375
-    ids: 376
     ids: 377
     ids: 378
+    ids: 379
+    ids: 380
     ids: 381
     ids: 382
     ids: 383
@@ -15514,29 +15708,29 @@ cell_annotations {
     ids: 388
     ids: 389
     ids: 390
-    ids: 391
-    ids: 392
     ids: 393
     ids: 394
+    ids: 395
+    ids: 396
     ids: 397
     ids: 398
+    ids: 399
     ids: 400
     ids: 401
     ids: 402
-    ids: 421
-    ids: 449
-    ids: 452
-    ids: 453
-    ids: 454
-    ids: 455
-    ids: 456
-    ids: 457
-    ids: 458
-    ids: 459
-    ids: 460
+    ids: 403
+    ids: 404
+    ids: 405
+    ids: 406
+    ids: 409
+    ids: 410
+    ids: 412
+    ids: 413
+    ids: 414
+    ids: 433
     ids: 461
-    ids: 462
-    ids: 463
+    ids: 464
+    ids: 465
     ids: 466
     ids: 467
     ids: 468
@@ -15547,8 +15741,8 @@ cell_annotations {
     ids: 473
     ids: 474
     ids: 475
-    ids: 476
-    ids: 477
+    ids: 478
+    ids: 479
     ids: 480
     ids: 481
     ids: 482
@@ -15559,8 +15753,8 @@ cell_annotations {
     ids: 487
     ids: 488
     ids: 489
-    ids: 490
-    ids: 491
+    ids: 492
+    ids: 493
     ids: 494
     ids: 495
     ids: 496
@@ -15571,15 +15765,25 @@ cell_annotations {
     ids: 501
     ids: 502
     ids: 503
-    ids: 504
-    ids: 505
-    ids: 524
-    ids: 529
-    ids: 530
-    ids: 531
-    ids: 533
-    ids: 535
-    ids: 537
+    ids: 506
+    ids: 507
+    ids: 508
+    ids: 509
+    ids: 510
+    ids: 511
+    ids: 512
+    ids: 513
+    ids: 514
+    ids: 515
+    ids: 516
+    ids: 517
+    ids: 536
+    ids: 541
+    ids: 542
+    ids: 543
+    ids: 545
+    ids: 547
+    ids: 549
     values: "CLK_25M"
     values: "CLK_27M"
     values: "CLK_5M"
@@ -15587,6 +15791,9 @@ cell_annotations {
     values: "LCD_POWER"
     values: "LCD_RST_P"
     values: "USER_PLL_RSTN"
+    values: "cam_d0_DLY_ENA"
+    values: "cam_d0_DLY_INC"
+    values: "cam_d0_DLY_RST"
     values: "cam_d0_FIFO_EMPTY"
     values: "cam_d0_FIFO_RD"
     values: "cam_d0_HS_ENA"
@@ -15602,6 +15809,9 @@ cell_annotations {
     values: "cam_d0_LP_N_IN"
     values: "cam_d0_LP_P_IN"
     values: "cam_d0_RST"
+    values: "cam_d1_DLY_ENA"
+    values: "cam_d1_DLY_INC"
+    values: "cam_d1_DLY_RST"
     values: "cam_d1_FIFO_EMPTY"
     values: "cam_d1_FIFO_RD"
     values: "cam_d1_HS_ENA"
@@ -15617,6 +15827,9 @@ cell_annotations {
     values: "cam_d1_LP_N_IN"
     values: "cam_d1_LP_P_IN"
     values: "cam_d1_RST"
+    values: "cam_d2_DLY_ENA"
+    values: "cam_d2_DLY_INC"
+    values: "cam_d2_DLY_RST"
     values: "cam_d2_FIFO_EMPTY"
     values: "cam_d2_FIFO_RD"
     values: "cam_d2_HS_ENA"
@@ -15632,6 +15845,9 @@ cell_annotations {
     values: "cam_d2_LP_N_IN"
     values: "cam_d2_LP_P_IN"
     values: "cam_d2_RST"
+    values: "cam_d3_DLY_ENA"
+    values: "cam_d3_DLY_INC"
+    values: "cam_d3_DLY_RST"
     values: "cam_d3_FIFO_EMPTY"
     values: "cam_d3_FIFO_RD"
     values: "cam_d3_HS_ENA"

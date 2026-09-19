@@ -1,0 +1,2 @@
+HYSTERESIS RANDOM PASS 100 maps, 19200 pixels, exact flood reference, scan cycles=179963
+sim/vision/tb_hysteresis_random.sv:41: $finish called at 2187586000 (1ps)

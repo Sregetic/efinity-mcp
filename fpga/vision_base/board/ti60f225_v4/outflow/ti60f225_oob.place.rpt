@@ -1,7 +1,7 @@
 
 Elitestek FPGA Placement and Routing.
 Version: 2026.1.132.3.9 
-Date: Thu Sep 17 00:36:43 2026
+Date: Sat Sep 19 15:02:40 2026
 
 Copyright (C) 2013 - 2026 Efinix, Inc. All rights reserved.
  
@@ -24,6 +24,8 @@ Top-level Entity Name: ti60f225_oob
 |    jtag_diag_RESET     |    Input     |
 |   jtag_diag_RUNTEST    |    Input     |
 |      ddr_addr[15]      |    Output    |
+| mipi_dp_data0_LP_P_IN  |    Input     |
+| mipi_dp_data0_LP_N_IN  |    Input     |
 |      ddr_addr[14]      |    Output    |
 +------------------------+--------------+
 
@@ -36,28 +38,28 @@ Top-level Entity Name: ti60f225_oob
 
 ----------- Module Resource Usage Distribution Estimates (end) ----------
 
-Elapsed time for packing: 0 hours 0 minutes 4 seconds
+Elapsed time for packing: 0 hours 0 minutes 5 seconds
 ---------- Resource Summary (begin) ----------
-Inputs: 122 / 1703 (7.16%)
-Outputs: 343 / 2267 (15.13%)
+Inputs: 120 / 1703 (7.05%)
+Outputs: 355 / 2267 (15.66%)
 Global Clocks (GBUF): 20 / 32 (62.50%)
 Regional Clocks (RBUF): 1 / 32 (3.12%)
 	RBUF: Core: 0 / 16 (0.00%)
 	RBUF: Periphery: 1 / 8 (12.50%)
 	RBUF: Multi-Region: 0 / 8 (0.00%)
-XLRs: 56285 / 60800 (92.57%)
-	XLRs needed for LUT4: 30632 / 60800 (50.38%)
-	XLRs needed for LUT4 + FF: 5643 / 60800 (9.28%)
+XLRs: 58264 / 60800 (95.83%)
+	XLRs needed for LUT4: 32085 / 60800 (52.77%)
+	XLRs needed for LUT4 + FF: 4745 / 60800 (7.80%)
 	XLRs needed for COMB4: 0 / 60800 (0.00%)
 	XLRs needed for COMB4 + FF: 0 / 60800 (0.00%)
-	XLRs needed for Adder: 2557 / 60800 (4.21%)
-	XLRs needed for Adder + FF: 1735 / 60800 (2.85%)
-	XLRs needed for SRL8: 936 / 14720 (6.36%)
+	XLRs needed for Adder: 2448 / 60800 (4.03%)
+	XLRs needed for Adder + FF: 2126 / 60800 (3.50%)
+	XLRs needed for SRL8: 1069 / 14720 (7.26%)
 	XLRs needed for SRL8 + FF: 0 / 14720 (0.00%)
-	XLRs needed for FF: 14782 / 60800 (24.31%)
-	XLRs needed for Routing: 0 / 60800 (0.00%)
-Memory Blocks: 248 / 256 (96.88%)
-DSP Blocks: 67 / 160 (41.88%)
+	XLRs needed for FF: 14883 / 60800 (24.48%)
+	XLRs needed for Routing: 908 / 60800 (1.49%)
+Memory Blocks: 221 / 256 (86.33%)
+DSP Blocks: 68 / 160 (42.50%)
 ---------- Resource Summary (end) ----------
 
-Elapsed time for placement: 0 hours 1 minutes 40 seconds
+Elapsed time for placement: 0 hours 1 minutes 43 seconds

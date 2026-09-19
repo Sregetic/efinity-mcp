@@ -1,0 +1,137 @@
+route {
+  driver {
+    cell: "CLK_25M"
+    port: "inpad"
+  }
+  sink {
+    cell: "CLK_25M~GPIO"
+    port: "IO_inpad"
+  }
+  delay_min: 0
+  delay_max: 0
+  type: FIXED_NET_DELAY
+}
+route {
+  driver {
+    cell: "CLK_25M~GPIO"
+    port: "ALT"
+  }
+  sink {
+    cell: "CLK_25M~GPIO~ALT"
+    port: "outpad"
+  }
+  delay_min: 0
+  delay_max: 0
+  type: FIXED_NET_DELAY
+}
+route {
+  driver {
+    cell: "sobel_pll~PLL"
+    port: "CLKOUT0"
+  }
+  sink {
+    cell: "clk~PLL~CLKOUT0"
+    port: "outpad"
+  }
+  delay_min: 0
+  delay_max: 0
+  type: FIXED_NET_DELAY
+}
+route {
+  driver {
+    cell: "sobel_pll~PLL"
+    port: "CLKOUT1"
+  }
+  sink {
+    cell: "fb~PLL~CLKOUT1"
+    port: "outpad"
+  }
+  delay_min: 0
+  delay_max: 0
+  type: FIXED_NET_DELAY
+}
+route {
+  driver {
+    cell: "pll_rstn~PLL~RSTN"
+    port: "inpad"
+  }
+  sink {
+    cell: "sobel_pll~PLL"
+    port: "RSTN"
+  }
+  delay_min: 0
+  delay_max: 0
+  type: FIXED_NET_DELAY
+}
+route {
+  driver {
+    cell: "result~GPIO"
+    port: "IO_outpad"
+  }
+  sink {
+    cell: "result"
+    port: "outpad"
+  }
+  delay_min: 0
+  delay_max: 0
+  type: FIXED_NET_DELAY
+}
+route {
+  driver {
+    cell: "result~GPIO~O[0]"
+    port: "inpad"
+  }
+  sink {
+    cell: "result~GPIO"
+    port: "O[0]"
+  }
+  delay_min: 0
+  delay_max: 0
+  type: FIXED_NET_DELAY
+}
+route {
+  driver {
+    cell: "CLK_25M~CLKOUT~22~322"
+    port: "inpad"
+  }
+  sink {
+    cell: "sobel_pll~PLL"
+    port: "CLKIN[3]"
+  }
+  delay_min: 0
+  delay_max: 0
+  type: FIXED_NET_DELAY
+}
+route {
+  driver {
+    cell: "fb~CLKOUT~23~322"
+    port: "inpad"
+  }
+  sink {
+    cell: "sobel_pll~PLL"
+    port: "FBK"
+  }
+  delay_min: 0
+  delay_max: 0
+  type: FIXED_NET_DELAY
+}
+placed {
+  cell: "CLK_25M"
+  custom_site: "PKG_PIN/PKG_PIN_INOUT"
+}
+placed {
+  cell: "result"
+  custom_site: "PKG_PIN/PKG_PIN_INOUT"
+}
+placed {
+  cell: "CLK_25M~GPIO"
+  custom_site: "HSIO/HSIO_SLOT0"
+}
+placed {
+  cell: "result~GPIO"
+  custom_site: "HVIO/HVIO_SLOT0"
+}
+placed {
+  cell: "sobel_pll~PLL"
+  custom_site: "PLL/PLL_SLOT0"
+}

@@ -1,0 +1,26 @@
+{
+  "sc431hai_cfg.h": {
+    "sha256": "e2dad32b700cc454243e3702d1014ee1f9c66cf218d612a050d35b27f40891a7",
+    "url": "https://github.com/OpenIPC/openhisilicon/blob/main/libraries/sensor/hi3516cv6xx/smart_sc431hai/sc431hai_cfg.h"
+  },
+  "sc431hai_cmos.c": {
+    "sha256": "6427c113fecd07dc5b267c52c51f7787083fc3611013a837b3d6f2046db8aebe",
+    "url": "https://github.com/OpenIPC/openhisilicon/blob/main/libraries/sensor/hi3516cv6xx/smart_sc431hai/sc431hai_cmos.c"
+  },
+  "sc431hai_cmos.h": {
+    "sha256": "da44ff56310f3501d8f3a2fbe18c5cba99c46d7c9b9288033fa25d35bca7ef89",
+    "url": "https://github.com/OpenIPC/openhisilicon/blob/main/libraries/sensor/hi3516cv6xx/smart_sc431hai/sc431hai_cmos.h"
+  },
+  "sc431hai_cmos_param.h": {
+    "sha256": "f877ee5a906664fa8d05e9e40276ba5ad720b19824c1edb4390da7672ff698c9",
+    "url": "https://github.com/OpenIPC/openhisilicon/blob/main/libraries/sensor/hi3516cv6xx/smart_sc431hai/sc431hai_cmos_param.h"
+  },
+  "sc431hai_sensor_ctrl.c": {
+    "sha256": "86f70191f25888a1207e5b54aabd82d3495dc80fa4242fb1efe94f1a7b6f61d4",
+    "url": "https://github.com/OpenIPC/openhisilicon/blob/main/libraries/sensor/hi3516cv6xx/smart_sc431hai/sc431hai_sensor_ctrl.c"
+  },
+  "sc431hai_sensor_ctrl.h": {
+    "sha256": "24984396177aeda305f79167691abbacf624819a06c635a28750482a1b366d89",
+    "url": "https://github.com/OpenIPC/openhisilicon/blob/main/libraries/sensor/hi3516cv6xx/smart_sc431hai/sc431hai_sensor_ctrl.h"
+  }
+}

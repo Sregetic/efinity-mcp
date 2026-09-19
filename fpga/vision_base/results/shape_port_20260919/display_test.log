@@ -1,0 +1,10 @@
+PASS old display mode0 exact
+PASS old display mode1 exact
+PASS old display mode2 exact
+PASS old display mode3 exact
+PASS old display mode4 exact
+PASS old display mode5 exact
+PASS old display mode6 exact
+PASS old display mode7 exact
+PASS display legacy modes0..7 unchanged with shape disabled
+results/shape_port_20260919/tb_display_legacy.sv:22: $finish called at 718860000 (1ps)

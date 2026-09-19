@@ -1,0 +1,29 @@
+[
+  {
+    "sequence": 19,
+    "address": 15872,
+    "value": 0,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 20,
+    "address": 15873,
+    "value": 184,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 21,
+    "address": 15874,
+    "value": 96,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  }
+]

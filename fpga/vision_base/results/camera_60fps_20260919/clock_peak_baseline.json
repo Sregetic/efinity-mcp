@@ -1,0 +1,110 @@
+[
+  {
+    "time_s": 1789792315.3584683,
+    "page": 15,
+    "raw": "564953312609191f7810040726b38fcf000bbd8900280027",
+    "byte_ticks": 649301967,
+    "lp_entries": 769417,
+    "byte_clock_peak_mhz": 40,
+    "byte_clock_window_edges": 39
+  },
+  {
+    "time_s": 1789792315.5759845,
+    "page": 15,
+    "raw": "564953312609191f78100407272c04c4000be2150028001a",
+    "byte_ticks": 657196228,
+    "lp_entries": 778773,
+    "byte_clock_peak_mhz": 40,
+    "byte_clock_window_edges": 26
+  },
+  {
+    "time_s": 1789792315.79293,
+    "page": 15,
+    "raw": "564953312609191f7810040727a56e38000c06e800280028",
+    "byte_ticks": 665153080,
+    "lp_entries": 788200,
+    "byte_clock_peak_mhz": 40,
+    "byte_clock_window_edges": 40
+  },
+  {
+    "time_s": 1789792316.009731,
+    "page": 15,
+    "raw": "564953312609191f78100407281dd8d0000c2b7100280028",
+    "byte_ticks": 673044688,
+    "lp_entries": 797553,
+    "byte_clock_peak_mhz": 40,
+    "byte_clock_window_edges": 40
+  },
+  {
+    "time_s": 1789792316.2207859,
+    "page": 15,
+    "raw": "564953312609191f7810040728973496000c504000280027",
+    "byte_ticks": 680998038,
+    "lp_entries": 806976,
+    "byte_clock_peak_mhz": 40,
+    "byte_clock_window_edges": 39
+  },
+  {
+    "time_s": 1789792316.4368858,
+    "page": 15,
+    "raw": "564953312609191f78100407290ceb43000c73f500280027",
+    "byte_ticks": 688712515,
+    "lp_entries": 816117,
+    "byte_clock_peak_mhz": 40,
+    "byte_clock_window_edges": 39
+  },
+  {
+    "time_s": 1789792316.6539195,
+    "page": 15,
+    "raw": "564953312609191f781004072984e2c8000c985b00280028",
+    "byte_ticks": 696574664,
+    "lp_entries": 825435,
+    "byte_clock_peak_mhz": 40,
+    "byte_clock_window_edges": 40
+  },
+  {
+    "time_s": 1789792316.8705943,
+    "page": 15,
+    "raw": "564953312609191f7810040729fdfb26000cbd1600280027",
+    "byte_ticks": 704510758,
+    "lp_entries": 834838,
+    "byte_clock_peak_mhz": 40,
+    "byte_clock_window_edges": 39
+  },
+  {
+    "time_s": 1789792317.0864172,
+    "page": 15,
+    "raw": "564953312609191f781004072a765e0b000ce19c00280028",
+    "byte_ticks": 712400395,
+    "lp_entries": 844188,
+    "byte_clock_peak_mhz": 40,
+    "byte_clock_window_edges": 40
+  },
+  {
+    "time_s": 1789792317.3040638,
+    "page": 15,
+    "raw": "564953312609191f781004072aef71d6000d065600280027",
+    "byte_ticks": 720335318,
+    "lp_entries": 853590,
+    "byte_clock_peak_mhz": 40,
+    "byte_clock_window_edges": 39
+  },
+  {
+    "time_s": 1789792317.5209134,
+    "page": 15,
+    "raw": "564953312609191f781004072b67da78000d2ade00280027",
+    "byte_ticks": 728226424,
+    "lp_entries": 862942,
+    "byte_clock_peak_mhz": 40,
+    "byte_clock_window_edges": 39
+  },
+  {
+    "time_s": 1789792317.7375674,
+    "page": 15,
+    "raw": "564953312609191f781004072be1428a000d4fb100280028",
+    "byte_ticks": 736182922,
+    "lp_entries": 872369,
+    "byte_clock_peak_mhz": 40,
+    "byte_clock_window_edges": 40
+  }
+]

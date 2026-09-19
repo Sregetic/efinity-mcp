@@ -6,6 +6,10 @@ try {
  $out='results/vision_features';New-Item -ItemType Directory $out -Force|Out-Null
  $rtl='board/ti60f225_v4/rtl/vision/'
  $tests=@(
+  @{name='shape_classifier';src=@('vision_shape_classifier.sv')},
+  @{name='shadow_chroma';src=@('../rgb_shadow_denoise.sv')},
+  @{name='sobel';src=@('vision_sobel.sv')},
+  @{name='hysteresis_random';src=@('vision_hysteresis_sweep.sv','vision_hysteresis.sv')},
   @{name='frontend';src=@('vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_frontend.sv')},
   @{name='color';src=@('vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_frontend.sv')},
   @{name='median9';src=@('vision_median9.sv')},
@@ -33,3 +37,4 @@ try {
  if(!$ok){throw 'Vision verification failed'}
  Write-Output 'PASS vision feature verification'
 } finally {Pop-Location}
+

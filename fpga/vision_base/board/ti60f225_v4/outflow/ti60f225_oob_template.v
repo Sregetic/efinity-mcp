@@ -1,7 +1,7 @@
 
 // Efinity Top-level template
 // Version: 2026.1.132.3.9
-// Date: 2026-09-17 00:36
+// Date: 2026-09-19 15:02
 
 // Copyright (C) 2013 - 2026 Efinix Inc. All rights reserved.
 
@@ -20,9 +20,9 @@
 module ti60f225_oob
 (
   (* syn_peri_port = 0 *) input i_arstn,
-  (* syn_peri_port = 0 *) input [2:0] vision_keys_n,
   (* syn_peri_port = 0 *) input io_cam_scl_IN,
   (* syn_peri_port = 0 *) input io_cam_sda_IN,
+  (* syn_peri_port = 0 *) input [2:0] vision_keys_n,
   (* syn_peri_port = 0 *) input clk_100m,
   (* syn_peri_port = 0 *) input pll_locked,
   (* syn_peri_port = 0 *) input user_pll_locked,
@@ -173,18 +173,30 @@ module ti60f225_oob
   (* syn_peri_port = 0 *) output mipi_dp_data3_RST,
   (* syn_peri_port = 0 *) output o_cam_ck_HS_ENA,
   (* syn_peri_port = 0 *) output o_cam_ck_HS_TERM,
+  (* syn_peri_port = 0 *) output cam_d2_DLY_ENA,
+  (* syn_peri_port = 0 *) output cam_d2_DLY_INC,
+  (* syn_peri_port = 0 *) output cam_d2_DLY_RST,
   (* syn_peri_port = 0 *) output cam_d2_FIFO_RD,
   (* syn_peri_port = 0 *) output cam_d2_HS_ENA,
   (* syn_peri_port = 0 *) output cam_d2_HS_TERM,
   (* syn_peri_port = 0 *) output cam_d2_RST,
+  (* syn_peri_port = 0 *) output cam_d3_DLY_ENA,
+  (* syn_peri_port = 0 *) output cam_d3_DLY_INC,
+  (* syn_peri_port = 0 *) output cam_d3_DLY_RST,
   (* syn_peri_port = 0 *) output cam_d3_FIFO_RD,
   (* syn_peri_port = 0 *) output cam_d3_HS_ENA,
   (* syn_peri_port = 0 *) output cam_d3_HS_TERM,
   (* syn_peri_port = 0 *) output cam_d3_RST,
+  (* syn_peri_port = 0 *) output cam_d0_DLY_ENA,
+  (* syn_peri_port = 0 *) output cam_d0_DLY_INC,
+  (* syn_peri_port = 0 *) output cam_d0_DLY_RST,
   (* syn_peri_port = 0 *) output cam_d0_FIFO_RD,
   (* syn_peri_port = 0 *) output cam_d0_HS_ENA,
   (* syn_peri_port = 0 *) output cam_d0_HS_TERM,
   (* syn_peri_port = 0 *) output cam_d0_RST,
+  (* syn_peri_port = 0 *) output cam_d1_DLY_ENA,
+  (* syn_peri_port = 0 *) output cam_d1_DLY_INC,
+  (* syn_peri_port = 0 *) output cam_d1_DLY_RST,
   (* syn_peri_port = 0 *) output cam_d1_FIFO_RD,
   (* syn_peri_port = 0 *) output cam_d1_HS_ENA,
   (* syn_peri_port = 0 *) output cam_d1_HS_TERM,

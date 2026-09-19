@@ -1,0 +1,173 @@
+{
+  "boot": [
+    {
+      "time_s": 1789794278.1927016,
+      "page": 13,
+      "raw": "564953312609190d78100407000001d42805a00e10004ad0",
+      "sensor_frames": 468,
+      "words_per_line": 640,
+      "lines": 1440,
+      "words": 921600,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794278.4071505,
+      "page": 13,
+      "raw": "564953312609190d78100407000001db2805a00e10004ad0",
+      "sensor_frames": 475,
+      "words_per_line": 640,
+      "lines": 1440,
+      "words": 921600,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794278.6231792,
+      "page": 13,
+      "raw": "564953312609190d78100407000001e12805a00e10004ad0",
+      "sensor_frames": 481,
+      "words_per_line": 640,
+      "lines": 1440,
+      "words": 921600,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794278.8394256,
+      "page": 13,
+      "raw": "564953312609190d78100407000001e72805a00e10004ad0",
+      "sensor_frames": 487,
+      "words_per_line": 640,
+      "lines": 1440,
+      "words": 921600,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794279.05489,
+      "page": 13,
+      "raw": "564953312609190d78100407000001ee2805a00e10004ad0",
+      "sensor_frames": 494,
+      "words_per_line": 640,
+      "lines": 1440,
+      "words": 921600,
+      "ppc": 4,
+      "data_type": 43
+    }
+  ],
+  "delay_only": [
+    {
+      "time_s": 1789794279.6252575,
+      "page": 13,
+      "raw": "564953312609190d78100407000001ff2805a00e10004ad0",
+      "sensor_frames": 511,
+      "words_per_line": 640,
+      "lines": 1440,
+      "words": 921600,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794279.8267221,
+      "page": 13,
+      "raw": "564953312609190d78100407000002052805a00e10004ad0",
+      "sensor_frames": 517,
+      "words_per_line": 640,
+      "lines": 1440,
+      "words": 921600,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794280.0434637,
+      "page": 13,
+      "raw": "564953312609190d781004070000020c2805a00e10004ad0",
+      "sensor_frames": 524,
+      "words_per_line": 640,
+      "lines": 1440,
+      "words": 921600,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794280.259686,
+      "page": 13,
+      "raw": "564953312609190d78100407000002122805a00e10004ad0",
+      "sensor_frames": 530,
+      "words_per_line": 640,
+      "lines": 1440,
+      "words": 921600,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794280.4706419,
+      "page": 13,
+      "raw": "564953312609190d78100407000002182805a00e10004ad0",
+      "sensor_frames": 536,
+      "words_per_line": 640,
+      "lines": 1440,
+      "words": 921600,
+      "ppc": 4,
+      "data_type": 43
+    }
+  ],
+  "reset_after_delay": [
+    {
+      "time_s": 1789794281.0401003,
+      "page": 13,
+      "raw": "564953312609190d78100407000002290000000000004ad0",
+      "sensor_frames": 553,
+      "words_per_line": 0,
+      "lines": 0,
+      "words": 0,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794281.2572792,
+      "page": 13,
+      "raw": "564953312609190d78100407000002300000000000004ad0",
+      "sensor_frames": 560,
+      "words_per_line": 0,
+      "lines": 0,
+      "words": 0,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794281.4736438,
+      "page": 13,
+      "raw": "564953312609190d78100407000002360000000000004ad0",
+      "sensor_frames": 566,
+      "words_per_line": 0,
+      "lines": 0,
+      "words": 0,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794281.690555,
+      "page": 13,
+      "raw": "564953312609190d781004070000023d0000000000004ad0",
+      "sensor_frames": 573,
+      "words_per_line": 0,
+      "lines": 0,
+      "words": 0,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1789794281.9078293,
+      "page": 13,
+      "raw": "564953312609190d78100407000002430000000000004ad0",
+      "sensor_frames": 579,
+      "words_per_line": 0,
+      "lines": 0,
+      "words": 0,
+      "ppc": 4,
+      "data_type": 43
+    }
+  ]
+}

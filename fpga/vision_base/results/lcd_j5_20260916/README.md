@@ -54,3 +54,19 @@ Build26091705 replaces only this boundary with the supplied native pattern struc
 
 The small 2PPC regression checks paired RGB identity and 960 active pairs for a 1920-pixel line. Fresh Efinity compile passes with WNS +0.266 ns, WHS +0.026 ns and zero unassigned pins. SRAM programming read ID 10660A79 and USER2 build26091705. Page13 shows config/ready=1, 960 pairs/line, sticky fault0 and a rising native-frame counter; page14 shows BIST0, backlight1 and DSI activity. Visible fixed-bar acceptance is pending user observation; internal counters alone are not panel-reception evidence.
 
+
+## 2026-09-18 verification correction
+The user confirmed that the unmodified supplied reference bit displayed camera video on J5. A fixed/faint light ring was still reported. This demonstrates working video transfer in that tested configuration, but does not independently identify the ring as backlight damage or phone flare.
+The 4096-entry FIFO restoration is a candidate fix, not an isolated proven cause. The current LCD source mux selects native 2PPC bars or debayer camera RGB; algorithm mode selection is not yet connected to this mux. Earlier statements claiming LCD M1-M7 acceptance were premature.
+The previous single-plane Canny change removes frame-atomic edge publication. In-place changes may be visible throughout capture and hysteresis sweeps, not merely one display frame. Raw snapshot commands currently return zeros because their diagnostic RAM was retired. These are recorded functional tradeoffs.
+The last build status before this session had exit_code=1 despite an older positive timing report. A new single compile is being run with source identity checks; stale outflow files are not accepted as new build evidence.
+
+## 2026-09-18 fresh build and hardware readback
+Full compile and source hash validation passed at 10:08 local time. WNS +0.472 ns, WHS +0.026 ns; unassigned core pins 0; memory 248/256. Programmed through scripts/program_vision_sram.ps1 with its manifest/source/timing gates and observed ID 0x10660A79.
+LCD page13 decoded as 260917f5: initial camera selection 0, config_done 1, video_ready 1, line_pairs 960, fault 0, advancing frame counter. Commands 0 -> 1 -> 0 all read back correctly, confirming the dedicated toggle synchronizer works. Switching produced sticky line fault 1: the two input rasters have different phase and are switched at the pattern VS only. Source switching still needs frame/line alignment; it is not accepted as glitch-free. Reloading the same verified artifact restores the default camera path for physical observation.
+The host decoder now recognizes 260917f5 by selected diagnostic page. Source identity is the artifact manifest hash, since older page0 build labels were retained.
+Physical camera display on this custom artifact remains pending the user's observation; reference-bit camera display was previously confirmed.
+
+## Reference initialization experiment, 2026-09-18 10:18
+User rejected the FIFO4096 + selector-sync version: only light ring, no picture. FIFO restoration is therefore not a sufficient fix. Restored exactly 169 active command words from vendor Panel_1080p_reg.mem, removed inserted BIST commands and set BIST_INDEX=-1. Other datapath/reset settings unchanged. BIST control is inactive in this experimental build.
+Full build PASS, source hashes checked, final WNS +0.308 ns, WHS +0.026 ns, unassigned pins 0. Programmed with the gated SRAM script, ID 0x10660A79. See reference_init_runtime_20260918.json for post-program status. Visible acceptance pending.

@@ -1,0 +1,96 @@
+INFO     : Elitestek FPGA Synthesis.
+INFO     : Version: 2026.1.132.3.9
+INFO     : Compiled: Aug 24 2026.
+INFO     : 
+INFO     : Copyright (C) 2013 - 2026 Efinix, Inc. All rights reserved.
+
+INFO     : Reading project database "F:\Project\fpga\vision_base\efinity\sobel_220\sobel_220.xml" [FlowMsg::ProjectDatabaseReading]
+INFO     : Maximum concurrency has been set to 8 [FlowMsg::MaxThreads]
+INFO     : Reading project database "F:\Project\fpga\vision_base\efinity\sobel_220\sobel_220.xml" [FlowMsg::ProjectDatabaseReading]
+INFO     : ***** Beginning Analysis ... *****
+INFO     : default VHDL library search path is now "F:/Efinity/2026.1/sim_models/vhdl/packages/vhdl_2008" [VHDL-1504]
+INFO     : Restoring all Verilog modules from file 'F:/Efinity/2026.1/sim_models/maplib/perilib_efxlib_parsetree.vdb' [VERI-2484]
+INFO     : Restoring all Verilog modules from file 'F:/Efinity/2026.1/sim_models/maplib/maplib_efxlib_parsetree.vdb' [VERI-2484]
+INFO     : Analyzing Verilog file 'F:/Efinity/2026.1/sim_models/maplib/efinix_maplib.v' [VERI-1482]
+INFO     : Analyzing Verilog file 'F:/Efinity/2026.1/sim_models/maplib/efinix_peri_lib.v' [VERI-1482]
+INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv' [VERI-1482]
+WARNING  : F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv(2): non-net output port 'result' cannot be initialized at declaration in SystemVerilog mode [VERI-2522]
+INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv' [VERI-1482]
+INFO     : Analysis took 0.0094452 seconds [FlowMsg::StageDuration]
+INFO     :     Analysis took 0 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Analysis virtual memory usage: begin = 60.748 MB, end = 60.768 MB, delta = 0.02 MB [FlowMsg::VMUsage]
+INFO     :     Analysis peak virtual memory usage = 60.776 MB [FlowMsg::VMUsage::Peak]
+INFO     : Analysis resident set memory usage: begin = 66.152 MB, end = 69.044 MB, delta = 2.892 MB [FlowMsg::RSSUsage]
+INFO     :     Analysis peak resident set memory usage = 69.044 MB [FlowMsg::RSSUsage::Peak]
+INFO     : ***** Ending Analysis ... *****
+INFO     : ***** Beginning Elaboration ... *****
+INFO     : F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv(2): compiling module 'sobel_timing_top' [VERI-1018]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv(4): compiling module 'vision_sobel(META=60)' [VERI-1018]
+INFO     : Elaboration took 0.0043066 seconds [FlowMsg::StageDuration]
+INFO     :     Elaboration took 0 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Elaboration virtual memory usage: begin = 60.768 MB, end = 60.768 MB, delta = 0 MB [FlowMsg::VMUsage]
+INFO     :     Elaboration peak virtual memory usage = 60.776 MB [FlowMsg::VMUsage::Peak]
+INFO     : Elaboration resident set memory usage: begin = 69.088 MB, end = 70.304 MB, delta = 1.216 MB [FlowMsg::RSSUsage]
+INFO     :     Elaboration peak resident set memory usage = 70.304 MB [FlowMsg::RSSUsage::Peak]
+INFO     : ***** Ending Elaboration ... *****
+INFO     : ... Setting Synthesis Option: mode=speed
+INFO     : ***** Beginning Reading Mapping Library ... *****
+INFO     : Reading Mapping Library took 0.0018914 seconds [FlowMsg::StageDuration]
+INFO     :     Reading Mapping Library took 0.015625 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Reading Mapping Library virtual memory usage: begin = 60.768 MB, end = 60.768 MB, delta = 0 MB [FlowMsg::VMUsage]
+INFO     :     Reading Mapping Library peak virtual memory usage = 60.776 MB [FlowMsg::VMUsage::Peak]
+INFO     : Reading Mapping Library resident set memory usage: begin = 71.452 MB, end = 71.452 MB, delta = 0 MB [FlowMsg::RSSUsage]
+INFO     :     Reading Mapping Library peak resident set memory usage = 71.452 MB [FlowMsg::RSSUsage::Peak]
+INFO     : ***** Ending Reading Mapping Library ... *****
+INFO     : ... Pre-synthesis checks begin
+WARNING  : Removing redundant signal : w[39:32]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv:4) [EFX-0200]
+INFO     : ... Pre-synthesis checks end (Real time : 0s)
+INFO     : ... NameSpace init begin
+INFO     : ... NameSpace init end (Real time : 0s)
+INFO     : ... Mapping design "sobel_timing_top"
+INFO     : ... Hierarchical pre-synthesis "vision_sobel(META=60)" begin
+INFO     : ... Hierarchical pre-synthesis "vision_sobel(META=60)" end (Real time : 0s)
+INFO     : ... Hierarchical pre-synthesis "sobel_timing_top" begin
+INFO     : ... Hierarchical pre-synthesis "sobel_timing_top" end (Real time : 0s)
+INFO     : ... Flat optimizations begin
+INFO     : ... Flat optimizations end (Real time : 0s)
+INFO     : ... Flat synthesis begin
+INFO     : ... Flat synthesis end (Real time : 0s)
+INFO     : ... Flat optimizations begin
+INFO     : ... Flat optimizations end (Real time : 0s)
+INFO     : ... Check and break combinational loops begin
+INFO     : ... Check and break combinational loops end (Real time : 0s)
+INFO     : ... Setup for logic synthesis begin
+INFO     : ... Setup for logic synthesis end (Real time : 0s)
+INFO     : ... LUT mapping begin
+INFO     : ... LS, strategy: 3, nd: 105, ed: 375, lv: 6, pw: 416.26
+INFO     : ... LUT mapping end (Real time : 1s)
+INFO     : ... Post-synthesis Verific netlist creation begin
+INFO     : ... Post-synthesis Verific netlist creation end (Real time : 0s)
+INFO     : ***** Beginning VDB Netlist Checker ... *****
+WARNING  : F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv(2): Input/inout port CLK_25M is unconnected. Place and route may remove this unconnected port. [VDB-8003]
+WARNING  : Found 2 warnings in the post-synthesis netlist.
+INFO     : VDB Netlist Checker took 0.0007001 seconds [FlowMsg::StageDuration]
+INFO     :     VDB Netlist Checker took 0 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : VDB Netlist Checker virtual memory usage: begin = 63.436 MB, end = 63.472 MB, delta = 0.036 MB [FlowMsg::VMUsage]
+INFO     :     VDB Netlist Checker peak virtual memory usage = 108.204 MB [FlowMsg::VMUsage::Peak]
+INFO     : VDB Netlist Checker resident set memory usage: begin = 80.264 MB, end = 80.376 MB, delta = 0.112 MB [FlowMsg::RSSUsage]
+INFO     :     VDB Netlist Checker peak resident set memory usage = 111.988 MB [FlowMsg::RSSUsage::Peak]
+INFO     : ***** Ending VDB Netlist Checker ... *****
+INFO     : Resource Summary 
+INFO     : ======================================= 
+INFO     : EFX_ADD                 : 	111
+INFO     : EFX_LUT4                : 	140
+INFO     : EFX_DSP48               : 	2
+INFO     : EFX_FF                  : 	209
+INFO     : EFX_SRL8                : 	60
+INFO     : ======================================= 
+INFO     : ... Post-Map Verilog Writer begin
+INFO     : Writing netlist 'sobel_timing_top' to Verilog file 'outflow\sobel_220.map.v' [VDB-1030]
+INFO     : ... Post-Map Verilog Writer end (Real time : 0s)
+INFO     : The entire flow of EFX_MAP took 1.3533315 seconds [FlowMsg::StageDuration]
+INFO     :     The entire flow of EFX_MAP took 1.140625 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : The entire flow of EFX_MAP virtual memory usage: begin = 19.168 MB, end = 68.16 MB, delta = 48.992 MB [FlowMsg::VMUsage]
+INFO     :     The entire flow of EFX_MAP peak virtual memory usage = 108.204 MB [FlowMsg::VMUsage::Peak]
+INFO     : The entire flow of EFX_MAP resident set memory usage: begin = 20.496 MB, end = 82.416 MB, delta = 61.92 MB [FlowMsg::RSSUsage]
+INFO     :     The entire flow of EFX_MAP peak resident set memory usage = 111.988 MB [FlowMsg::RSSUsage::Peak]

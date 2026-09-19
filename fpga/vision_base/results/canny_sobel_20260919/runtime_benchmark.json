@@ -1,0 +1,46 @@
+{
+  "runtime_before": {
+    "samples": 60,
+    "duration_s": 12.721274375915527,
+    "canny_fault_max": 0,
+    "canny_completed_per_s": 20.04516155101388,
+    "capture_id_per_s": 30.028438088185496,
+    "display_id_per_s": 29.949829611514854
+  },
+  "runtime_prefetch_only": {
+    "samples": 60,
+    "duration_s": 12.725400447845459,
+    "canny_fault_max": 0,
+    "canny_completed_per_s": 20.038662126595327,
+    "capture_id_per_s": 29.94011870679537,
+    "display_id_per_s": 30.018701695527117
+  },
+  "runtime_after": {
+    "samples": 60,
+    "duration_s": 12.686383247375488,
+    "canny_fault_max": 0,
+    "canny_completed_per_s": 29.953375409702602,
+    "capture_id_per_s": 29.953375409702602,
+    "display_id_per_s": 30.0322000818334
+  },
+  "runtime_hdmi": {
+    "samples": 30,
+    "duration_s": 6.237113952636719,
+    "canny_fault_max": 0,
+    "frames_per_s": 60.12396163476699,
+    "write_errors_max": 1
+  },
+  "result_fps_gain_percent": 49.42945375357959,
+  "board_bit_sha256": "aaf66a96c3cf25ece21916b50265c3bf4adfc7b1427cd0d629ee1ef0d0edf525",
+  "scope": "Current scene wall-clock result publications, not universal worst-case or physical-image acceptance",
+  "write_stability": {
+    "samples": 150,
+    "first_seen_error_count": 1,
+    "last_seen_error_count": 1,
+    "first_to_last_observation_s": 99.77313590049744,
+    "followup_duration_s": 32.1099796295166,
+    "no_new_errors": true,
+    "counter_zero": false,
+    "note": "One cumulative write-frame error already present at first observation. No claim of zero lifetime errors or proven startup cause."
+  }
+}

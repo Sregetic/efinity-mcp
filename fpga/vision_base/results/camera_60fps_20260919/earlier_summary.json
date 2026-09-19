@@ -1,0 +1,19 @@
+{
+  "achieved_full_1440p60": false,
+  "active_configuration": "original 2560x1440 RAW10 30fps with new register diagnostics",
+  "restored_rx_fps": 29.993299704510022,
+  "restored_capture_fps": 30.013974205050392,
+  "rx_geometry_ok": true,
+  "fov_geometry_ok": true,
+  "fov_overruns_first_last": [
+    0,
+    0
+  ],
+  "write_errors_first_last": [
+    1,
+    1
+  ],
+  "canny_fault_max": 0,
+  "bit_sha256": "79342ba89d485aa8fc8a5866f3f87240f8df8b46d79d5a3637a58ac240f11bd2",
+  "root_cause_scope": "60fps frame sync was achieved, but complete pixel payload was not. Sensor high-speed initialization vs receiver timing remains unresolved."
+}

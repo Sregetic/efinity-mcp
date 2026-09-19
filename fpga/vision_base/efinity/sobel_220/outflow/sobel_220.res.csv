@@ -1,0 +1,9 @@
+sep=\t
+Module Resource Usage Distribution Estimates
+Generated at: Sep 19, 2026 02:47:19
+
+Note: some resources maybe grouped under different hierarchy due to optimization and LUT mapping
+
+Module	       FFs	      SRLs	      ADDs	      LUTs	    COMB4s	      RAMs	 DSP/MULTs
+sobel_timing_top:sobel_timing_top  	  209(84)	    60(0)	   111(0)	  140(27)	     0(0)	     0(0)	     2(0)	
+ +dut:vision_sobel(META=60)        	 125(125)	   60(60)	 111(111)	 113(113)	     0(0)	     0(0)	     2(2)	

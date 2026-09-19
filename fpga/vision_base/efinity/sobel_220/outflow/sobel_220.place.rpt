@@ -1,0 +1,42 @@
+
+Elitestek FPGA Placement and Routing.
+Version: 2026.1.132.3.9 
+Date: Sat Sep 19 02:47:27 2026
+
+Copyright (C) 2013 - 2026 Efinix, Inc. All rights reserved.
+ 
+Family: Titanium 
+Device: Ti60F225
+Top-level Entity Name: sobel_220
+
+---------- Module Resource Usage Distribution Estimates (begin) ----------
+
+'Module Resource Usage Distribution Estimates' table printed in: outflow\sobel_220.hier_util.rpt
+
+----------- Module Resource Usage Distribution Estimates (end) ----------
+
+Elapsed time for packing: 0 hours 0 minutes 0 seconds
+---------- Resource Summary (begin) ----------
+Inputs: 3 / 1703 (0.18%)
+Outputs: 4 / 2267 (0.18%)
+Global Clocks (GBUF): 3 / 32 (9.38%)
+Regional Clocks (RBUF): 0 / 32 (0.00%)
+	RBUF: Core: 0 / 16 (0.00%)
+	RBUF: Periphery: 0 / 8 (0.00%)
+	RBUF: Multi-Region: 0 / 8 (0.00%)
+XLRs: 422 / 60800 (0.69%)
+	XLRs needed for LUT4: 115 / 60800 (0.19%)
+	XLRs needed for LUT4 + FF: 27 / 60800 (0.04%)
+	XLRs needed for COMB4: 0 / 60800 (0.00%)
+	XLRs needed for COMB4 + FF: 0 / 60800 (0.00%)
+	XLRs needed for Adder: 38 / 60800 (0.06%)
+	XLRs needed for Adder + FF: 73 / 60800 (0.12%)
+	XLRs needed for SRL8: 60 / 14720 (0.41%)
+	XLRs needed for SRL8 + FF: 0 / 14720 (0.00%)
+	XLRs needed for FF: 109 / 60800 (0.18%)
+	XLRs needed for Routing: 0 / 60800 (0.00%)
+Memory Blocks: 0 / 256 (0.00%)
+DSP Blocks: 2 / 160 (1.25%)
+---------- Resource Summary (end) ----------
+
+Elapsed time for placement: 0 hours 0 minutes 1 seconds

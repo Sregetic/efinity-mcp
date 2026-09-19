@@ -1,0 +1,2 @@
+PASS dark chroma37 triplets + first-pixel bypass; luma, black, bright edges preserved
+sim/vision/tb_shadow_chroma.sv:31: $finish called at 2306000 (1ps)

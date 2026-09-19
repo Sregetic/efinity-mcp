@@ -1,0 +1,189 @@
+--- before/vision_sobel.sv
++++ after/vision_sobel.sv
+@@ -1,16 +1,36 @@
++// Four registered stages, initiation interval = one pixel/clock.
++// S1 weighted sides; S2 signed gradients; S3 magnitude/direction terms;
++// S4 threshold and quantized direction. Metadata follows the same four stages.
+ module vision_sobel #(parameter META=1)(input clk,input[71:0]w,input[META-1:0]meta,
+- output reg[10:0]mag,output reg[1:0]direction,output reg[META-1:0]out_meta);
+-wire[7:0]p0=w[71:64],p1=w[63:56],p2=w[55:48],p3=w[47:40],p4=w[39:32],p5=w[31:24],p6=w[23:16],p7=w[15:8],p8=w[7:0];
+-wire signed[11:0]gx=$signed({4'b0,p2})+($signed({4'b0,p5})<<<1)+$signed({4'b0,p8})-$signed({4'b0,p0})-($signed({4'b0,p3})<<<1)-$signed({4'b0,p6});
+-wire signed[11:0]gy=$signed({4'b0,p6})+($signed({4'b0,p7})<<<1)+$signed({4'b0,p8})-$signed({4'b0,p0})-($signed({4'b0,p1})<<<1)-$signed({4'b0,p2});
+-wire[11:0]ax=gx[11]?-gx:gx,ay=gy[11]?-gy:gy;
+-reg[11:0]ax1=0,ay1=0;reg signs=0;reg[META-1:0]m1=0;
++ output reg[10:0]mag,output reg[1:0]direction,output reg[META-1:0]out_meta,
++ input[10:0]threshold,output reg edge_pixel);
++wire[7:0]p0=w[71:64],p1=w[63:56],p2=w[55:48],p3=w[47:40],p5=w[31:24],p6=w[23:16],p7=w[15:8],p8=w[7:0];
++reg[9:0]left1=0,right1=0,top1=0,bottom1=0;
++reg signed[10:0]gx2=0,gy2=0;
++wire[10:0]ax2=gx2[10]?-gx2:gx2,ay2=gy2[10]?-gy2:gy2;
++reg[10:0]mag3=0;
++reg[18:0]ax256_3=0,ay256_3=0;
++reg[17:0]ax106_3=0,ay106_3=0;
++reg signs3=0;
++reg[META-1:0]m1=0,m2=0,m3=0;
++reg[10:0]t1=0,t2=0,t3=0;
+ always @(posedge clk)begin
+- ax1<=ax;ay1<=ay;signs<=gx[11]^gy[11];m1<=meta;
+- mag<=ax1+ay1;out_meta<=m1;
+- // tan22.5 approx 106/256, using shift/add constant multipliers.
+- if({ay1,8'b0}<ax1*20'd106)direction<=0;
+- else if({ax1,8'b0}<ay1*20'd106)direction<=2;
+- else direction<=signs?3:1;
++ left1<={2'b0,p0}+{1'b0,p3,1'b0}+{2'b0,p6};
++ right1<={2'b0,p2}+{1'b0,p5,1'b0}+{2'b0,p8};
++ top1<={2'b0,p0}+{1'b0,p1,1'b0}+{2'b0,p2};
++ bottom1<={2'b0,p6}+{1'b0,p7,1'b0}+{2'b0,p8};
++ m1<=meta;t1<=threshold;
++ gx2<=$signed({1'b0,right1})-$signed({1'b0,left1});
++ gy2<=$signed({1'b0,bottom1})-$signed({1'b0,top1});
++ m2<=m1;t2<=t1;
++ mag3<=ax2+ay2;signs3<=gx2[10]^gy2[10];
++ ax256_3<={ax2,8'b0};ay256_3<={ay2,8'b0};
++ ax106_3<=ax2*18'd106;ay106_3<=ay2*18'd106;
++ m3<=m2;t3<=t2;
++ mag<=mag3;edge_pixel<=mag3>=t3;out_meta<=m3;
++ // tan(22.5 degrees) approximated by the existing exact ratio 106/256.
++ if(ay256_3<{1'b0,ax106_3})direction<=0;
++ else if(ax256_3<{1'b0,ay106_3})direction<=2;
++ else direction<=signs3?3:1;
+ end
+ endmodule
+--- before/vision_frontend.sv
++++ after/vision_frontend.sv
+@@ -1,6 +1,6 @@
+ module vision_frontend #(parameter WIDTH=1920)(input clk,rst_n,de,hs,vs,input[7:0]r,g,b,input median_en,
+  output fde,fhs,fvs,output fborder,output[11:0]fx,fy,output[7:0]fr,fg,fb,gray,
+- output[10:0]magnitude,output[1:0]direction);
++ output[10:0]magnitude,output[1:0]direction,input[10:0]threshold,output edge_pixel);
+ reg[15:0]luma_sum=0;reg[23:0]rgb1=0;reg d1=0,h1=0,v1=0;
+ always @(posedge clk)begin
+  luma_sum<=r*16'd77+g*16'd150+b*16'd29+16'd128;rgb1<={r,g,b};d1<=de;h1<=hs;v1<=vs;
+@@ -16,6 +16,6 @@
+ vision_window3 #(.WIDTH(WIDTH),.BPP(32)) win2(clk,rst_n,mm[2],mm[1],mm[0],mp,sd,sh,sv,sb,sx,sy,sw);
+ wire[71:0]sg;generate for(k=0;k<9;k=k+1)begin:extract2 assign sg[k*8+:8]=sw[k*32+:8];end endgenerate
+ wire[59:0]sm;
+-vision_sobel #(.META(60)) sobel(clk,sg,{sx,sy,sb,sw[4*32+:32],sd,sh,sv},magnitude,direction,sm);
++vision_sobel #(.META(60)) sobel(clk,sg,{sx,sy,sb,sw[4*32+:32],sd,sh,sv},magnitude,direction,sm,threshold,edge_pixel);
+ assign {fx,fy,fborder,fr,fg,fb,gray,fde,fhs,fvs}=sm;
+ endmodule
+--- before/vision_display.sv
++++ after/vision_display.sv
+@@ -4,10 +4,12 @@
+  output reg ode,ohs,ovs,output reg[7:0]orr,ogg,obb,
+  output[10:0]debug_mag,output debug_edge);
+ wire fd0,fh0,fv0,border0;wire[11:0]x0,y0;wire[7:0]fr0,fg0,fb0,gray0;wire[10:0]mag0;wire[1:0]dir;
+-vision_frontend front(clk,rst_n,de,hs,vs,r,g,b,median_en,fd0,fh0,fv0,border0,x0,y0,fr0,fg0,fb0,gray0,mag0,dir);
++wire edge0;reg edge1=0;
++vision_frontend front(clk,rst_n,de,hs,vs,r,g,b,median_en,fd0,fh0,fv0,border0,x0,y0,fr0,fg0,fb0,gray0,mag0,dir,threshold,edge0);
+ reg fd=0,fh=0,fv=0,border=1;reg[11:0]x=0,y=0;reg[7:0]fr=0,fg=0,fb=0,gray=0;reg[10:0]mag=0;
+ always @(posedge clk)begin {fd,fh,fv,border,x,y,fr,fg,fb,gray,mag}<={fd0,fh0,fv0,(border0||x0<4||y0<4),x0,y0,fr0,fg0,fb0,gray0,mag0};end
+-wire edge_on=!border && mag>=threshold;wire osd,ink;
++always @(posedge clk)edge1<=edge0;
++wire edge_on=!border && edge1;wire osd,ink;
+ vision_osd osd0(x,y,mode,threshold,median_en,memory_mode,history_index,canny_ready,osd,ink);
+ assign cx=x0;assign cy=y0;reg[10:0]dm=0;reg dedge=0;assign debug_mag=dm;assign debug_edge=dedge;
+ reg[23:0]pixel;
+--- before/vision_canny.sv
++++ after/vision_canny.sv
+@@ -32,7 +32,7 @@
+ wire bvalid;wire[8:0]bx,by;wire[71:0]bw;
+ vision_sparse_window #(.W(480),.CW(9)) sobel_window(clk,rst_n,gv,gx,gy,gdata,bvalid,bx,by,bw);
+ wire[10:0]mag;wire[1:0]dir;wire[18:0]bm;
+-vision_sobel #(.META(19)) grad(clk,bw,{bx,by,bvalid},mag,dir,bm);
++vision_sobel #(.META(19)) grad(clk,bw,{bx,by,bvalid},mag,dir,bm,11'd0,);
+ wire nv;wire[8:0]nx,ny;wire[116:0]nw;
+ vision_sparse_window #(.W(480),.BPP(13),.CW(9)) nms_window(clk,rst_n,bm[0],bm[18:10],bm[9:1],{mag,dir},nv,nx,ny,nw);
+ wire[12:0]center=nw[4*13+:13];wire[10:0]cm=center[12:2];reg[10:0]n1,n2;
+@@ -48,6 +48,8 @@
+ wire cv=nv&&nx>=3&&ny>=3;
+ wire last=nv&&nx==479&&ny==269;
+ wire[8:0]outx=nx-3,outy=ny-3;
+-vision_hysteresis_sweep hyst(.clk(clk),.rst_n(rst_n),.vblank(vblank),.class_valid(cv),.class_x(outx),.class_y(outy),.classification(classification),.class_last(last),
++// cv overwrites the complete 477x267 mutable region each capture.
++// The remaining right/bottom padding is always zero. No per-frame full clear.
++vision_hysteresis_sweep #(.REUSE_CAPTURE_MAP(1)) hyst(.clk(clk),.rst_n(rst_n),.vblank(vblank),.class_valid(cv),.class_x(outx),.class_y(outy),.classification(classification),.class_last(last),
+  .display_x(display_x[10:2]),.display_y(display_y[10:2]),.capture_enable(capture),.ready(ready),.busy(busy),.pixel(edge_pixel),.completed(completed),.fault(fault),.debug_state(),.debug_queue());
+ endmodule
+--- before/vision_hysteresis_sweep.sv
++++ after/vision_hysteresis_sweep.sv
+@@ -1,6 +1,9 @@
+ // Exact 8-connected hysteresis without a full-frame coordinate queue.
+ // Forward/backward in-place sweeps continue until no weak pixel is promoted.
+-module vision_hysteresis_sweep #(parameter W=480,H=270,CW=9,AW=$clog2(W*H))(
++// REUSE_CAPTURE_MAP: every mutable coordinate MUST be written each capture.
++// Coordinates omitted on all frames are static zero padding initialized by CLEAR.
++// Both output planes initialize once; capture overwrites zeros as well as edges.
++module vision_hysteresis_sweep #(parameter W=480,H=270,CW=9,AW=$clog2(W*H),REUSE_CAPTURE_MAP=0)(
+  input clk,rst_n,vblank,class_valid,input[CW-1:0]class_x,class_y,input[1:0]classification,input class_last,
+  input[CW-1:0]display_x,display_y,
+  output capture_enable,output reg ready=0,output busy,output pixel,
+@@ -11,7 +14,22 @@
+ reg front=0,reverse=0,changed=0;reg[CW-1:0]px=0,py=0;reg[2:0]neighbor=0;
+ reg signed[CW+1:0]nx,ny;reg in_bounds;
+ wire[AW-1:0]scan_addr=py*W+px,class_addr=class_y*W+class_x,display_addr=display_y*W+display_x;
+-wire[AW-1:0]neighbor_addr=ny*W+nx;
++reg signed[CW+1:0]fetch_x,fetch_y;
++wire[2:0]fetch_neighbor=(state==NCHECK)?neighbor+3'd1:neighbor;
++always @*begin
++ fetch_x=$signed({2'b0,px});fetch_y=$signed({2'b0,py});
++ case(fetch_neighbor)
++ 0:begin fetch_x=fetch_x-1;fetch_y=fetch_y-1;end
++ 1:fetch_y=fetch_y-1;
++ 2:begin fetch_x=fetch_x+1;fetch_y=fetch_y-1;end
++ 3:fetch_x=fetch_x-1;4:fetch_x=fetch_x+1;
++ 5:begin fetch_x=fetch_x-1;fetch_y=fetch_y+1;end
++ 6:fetch_y=fetch_y+1;
++ 7:begin fetch_x=fetch_x+1;fetch_y=fetch_y+1;end
++ endcase
++end
++wire[AW-1:0]fetch_addr=fetch_y*W+fetch_x;
++wire[AW-1:0]next_scan_addr=reverse?scan_addr-1'b1:scan_addr+1'b1;
+ always @*begin
+  nx=$signed({2'b0,px});ny=$signed({2'b0,py});
+  case(neighbor)
+@@ -25,12 +43,15 @@
+ wire promoting=state==NCHECK&&in_bounds&&map_q==2;
+ wire[AW-1:0]write_addr=clearing?clear_addr:(storing?class_addr:scan_addr);
+ wire[1:0]write_data=clearing?2'd0:(storing?classification:2'd2);
+-wire[AW-1:0]read_addr=(state==NREAD||state==NCHECK)?neighbor_addr:scan_addr;
++// Read the next neighbor while checking the current one; prefetch each center.
++wire[AW-1:0]read_addr=(state==NREAD||state==NCHECK)?fetch_addr:
++                              ((state==ADVANCE)?next_scan_addr:scan_addr);
+ // Write only the back plane; publish the completed plane at vblank.
+-wire edge_we=clearing||(storing&&classification==2)||promoting;
++wire edge_we=clearing||storing||promoting;
++wire edge_data=promoting||(storing&&classification==2);
+ vision_canny_ram #(.BITS(2),.AW(AW)) map_ram(clk,rst_n&&(clearing||storing||promoting),write_addr,write_data,read_addr,map_q);
+-vision_canny_ram #(.BITS(1),.AW(AW)) edge_ram0(clk,rst_n&&edge_we&&front,write_addr,!clearing,display_addr,e0);
+-vision_canny_ram #(.BITS(1),.AW(AW)) edge_ram1(clk,rst_n&&edge_we&&!front,write_addr,!clearing,display_addr,e1);
++vision_canny_ram #(.BITS(1),.AW(AW)) edge_ram0(clk,rst_n&&edge_we&&(front||(clearing&&!ready)),write_addr,edge_data,display_addr,e0);
++vision_canny_ram #(.BITS(1),.AW(AW)) edge_ram1(clk,rst_n&&edge_we&&(!front||(clearing&&!ready)),write_addr,edge_data,display_addr,e1);
+ assign pixel=ready?(front?e1:e0):1'b0;
+ assign capture_enable=state==CAPTURE;assign busy=state!=WAIT_FRAME;assign debug_state=state;assign debug_queue=0;
+ always @(posedge clk)begin
+@@ -45,19 +66,20 @@
+  CUR_READ:state<=CUR_CHECK;
+  CUR_CHECK:if(map_q==1)begin neighbor<=0;state<=NREAD;end else state<=ADVANCE;
+  NREAD:if(in_bounds)state<=NCHECK;else if(neighbor==7)state<=ADVANCE;else neighbor<=neighbor+1'b1;
+- NCHECK:if(map_q==2)begin changed<=1;state<=ADVANCE;end
+-        else if(neighbor==7)state<=ADVANCE;else begin neighbor<=neighbor+1'b1;state<=NREAD;end
++ NCHECK:if(in_bounds&&map_q==2)begin changed<=1;state<=ADVANCE;end
++        else if(neighbor==7)state<=ADVANCE;else begin neighbor<=neighbor+1'b1;state<=NCHECK;end
+  ADVANCE:begin
+   if((!reverse&&px==W-1&&py==H-1)||(reverse&&px==0&&py==0))begin
+    if(changed)begin reverse<=~reverse;changed<=0;state<=CUR_READ;end else state<=PUBLISH;
+   end else begin
+    if(!reverse)begin if(px==W-1)begin px<=0;py<=py+1'b1;end else px<=px+1'b1;end
+    else begin if(px==0)begin px<=W-1;py<=py-1'b1;end else px<=px-1'b1;end
+-   state<=CUR_READ;
++   state<=CUR_CHECK;
+   end
+  end
+- PUBLISH:if(vblank)begin front<=~front;ready<=1;completed<=completed+1'b1;state<=CLEAR;clear_addr<=0;end
++ PUBLISH:if(vblank)begin front<=~front;ready<=1;completed<=completed+1'b1;state<=REUSE_CAPTURE_MAP?CAPTURE:CLEAR;clear_addr<=0;end
+  default:begin fault<=1;state<=CLEAR;end
+  endcase
+ end
+ endmodule
++

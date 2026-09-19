@@ -1,0 +1,2 @@
+MEDIAN9 500 windows errors=          0
+sim/vision/tb_median9.sv:17: $finish called at 5096000 (1ps)

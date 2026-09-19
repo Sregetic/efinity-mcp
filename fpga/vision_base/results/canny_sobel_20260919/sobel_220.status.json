@@ -1,0 +1,24 @@
+{
+  "started_utc": "2026-09-18T18:47:15.1102980Z",
+  "target_mhz": 220,
+  "unassigned_pins": 0,
+  "report_fresh": true,
+  "wns_ns": 1.681,
+  "analyzed_fmax_mhz": 349.162,
+  "source_unchanged": true,
+  "whs_ns": 0.09,
+  "pll_output_mhz": 220.0,
+  "passed": true,
+  "scope": "Isolated Ti60F225 I3 Sobel post-route capacity proof, not 220 MHz full-camera runtime",
+  "sha256": {
+    "board\\ti60f225_v4\\rtl\\vision\\vision_sobel.sv": "AAC9D6E311C54C7EF94F870A00AC1B63E28511CF5D045FF210DDF9119C0FFEAC",
+    "efinity\\sobel_220\\sobel_timing_top.sv": "392C261FBB71D71A7F3A3A12306F74F4AB88BDA1C6816C4AF08082F50159B695",
+    "efinity\\sobel_220\\sobel_220.sdc": "D5CCD79EA9F3009F369863DEA7F32D69C361E939064D0F1392C3E8D712276C85",
+    "efinity\\sobel_220\\sobel_220.xml": "2CFB31412C8527BA60C5BBE5FF54FA90498073122643ACC4DFC43A341CB2EC24",
+    "efinity\\sobel_220\\sobel_220.peri.xml": "A4296A57EC59E2D3533226DF6AC837BA0885459B2EC4553FC3D08F0F66CCDC92",
+    "efinity\\sobel_220\\outflow\\sobel_220.timing.rpt": "A40155DF9B51F60283A86E99F830A415F385C82F5979E89DC532D27F53EDEBEA",
+    "efinity\\sobel_220\\outflow\\sobel_220.route.rpt.xml": "CE718959C24818B9E6F6655815DF7820316AE1F3C776C2B7495CE81E0249288A"
+  },
+  "missing_pins": 0,
+  "vendor_exit": 0
+}

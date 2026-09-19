@@ -13,30 +13,18 @@ INFO     : Restoring all Verilog modules from file 'F:/Efinity/2026.1/sim_models
 INFO     : Restoring all Verilog modules from file 'F:/Efinity/2026.1/sim_models/maplib/maplib_efxlib_parsetree.vdb' [VERI-2484]
 INFO     : Analyzing Verilog file 'F:/Efinity/2026.1/sim_models/maplib/efinix_maplib.v' [VERI-1482]
 INFO     : Analyzing Verilog file 'F:/Efinity/2026.1/sim_models/maplib/efinix_peri_lib.v' [VERI-1482]
-INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv' [VERI-1482]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(6312): undeclared symbol '**', assumed default net type '**' [VERI-2561]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(6312): undeclared symbol '**', assumed default net type '**' [VERI-2561]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(9145): undeclared symbol '**', assumed default net type '**' [VERI-2561]
-INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\lcd_dsi_tx_top.v' [VERI-1482]
-INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\lcd_rgb_pack.sv' [VERI-1482]
-INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\lcd_ref_color_bar.v' [VERI-1482]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\lcd_ref_color_bar.v(25): non-net output port 'h_cnt' cannot be initialized at declaration in SystemVerilog mode [VERI-2522]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\lcd_ref_color_bar.v(26): non-net output port 'v_cnt' cannot be initialized at declaration in SystemVerilog mode [VERI-2522]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\lcd_ref_color_bar.v(27): non-net output port 'hs' cannot be initialized at declaration in SystemVerilog mode [VERI-2522]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\lcd_ref_color_bar.v(28): non-net output port 'vs' cannot be initialized at declaration in SystemVerilog mode [VERI-2522]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\lcd_ref_color_bar.v(29): non-net output port 'de' cannot be initialized at declaration in SystemVerilog mode [VERI-2522]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\lcd_ref_color_bar.v(30): non-net output port 'o_vid_data' cannot be initialized at declaration in SystemVerilog mode [VERI-2522]
 INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\camera_auto_exposure.sv' [VERI-1482]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\camera_auto_exposure.sv(9): non-net output port 'shadow_boost' cannot be initialized at declaration in SystemVerilog mode [VERI-2522]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\camera_auto_exposure.sv(11): non-net output port 'shadow_boost' cannot be initialized at declaration in SystemVerilog mode [VERI-2522]
 INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\sensor_exposure_writer.sv' [VERI-1482]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\sensor_exposure_writer.sv(8): non-net output port 'updates' cannot be initialized at declaration in SystemVerilog mode [VERI-2522]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\sensor_exposure_writer.sv(10): non-net output port 'updates' cannot be initialized at declaration in SystemVerilog mode [VERI-2522]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\sensor_exposure_writer.sv(12): non-net output port 'debug_ack' cannot be initialized at declaration in SystemVerilog mode [VERI-2522]
 INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\rgb_chroma_tone.sv' [VERI-1482]
 INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\rgb_roi_probe.sv' [VERI-1482]
 INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\raw_snapshot.sv' [VERI-1482]
 WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\raw_snapshot.sv(6): non-net output port 'sequence_id' cannot be initialized at declaration in SystemVerilog mode [VERI-2522]
 INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_hysteresis_sweep.sv' [VERI-1482]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_hysteresis_sweep.sv(6): non-net output port 'ready' cannot be initialized at declaration in SystemVerilog mode [VERI-2522]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_hysteresis_sweep.sv(7): non-net output port 'completed' cannot be initialized at declaration in SystemVerilog mode [VERI-2522]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_hysteresis_sweep.sv(9): non-net output port 'ready' cannot be initialized at declaration in SystemVerilog mode [VERI-2522]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_hysteresis_sweep.sv(10): non-net output port 'completed' cannot be initialized at declaration in SystemVerilog mode [VERI-2522]
 INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_canny.sv' [VERI-1482]
 INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_frame_history.sv' [VERI-1482]
 INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_hysteresis.sv' [VERI-1482]
@@ -49,6 +37,7 @@ INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4
 INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_display.sv' [VERI-1482]
 INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_frontend.sv' [VERI-1482]
 INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_median9.sv' [VERI-1482]
+INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_shape_classifier.sv' [VERI-1482]
 INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_osd.sv' [VERI-1482]
 INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv' [VERI-1482]
 INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_window3.sv' [VERI-1482]
@@ -71,22 +60,22 @@ INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(16): back to file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v' [VERI-2320]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(19): analyzing included file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl/vision_board_config.vh' [VERI-1328]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(19): back to file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v' [VERI-2320]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(355): undeclared symbol 'mipi_dsi_tx_pll_RSTN', assumed default net type 'wire' [VERI-2561]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(555): undeclared symbol 'vid_rst_n', assumed default net type 'wire' [VERI-2561]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(575): undeclared symbol 'memory_mode', assumed default net type 'wire' [VERI-2561]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(575): undeclared symbol 'history_index', assumed default net type 'wire' [VERI-2561]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(737): undeclared symbol 'wrlvl_dq_check', assumed default net type 'wire' [VERI-2561]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(738): undeclared symbol 'rd_level_dqs_check', assumed default net type 'wire' [VERI-2561]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(739): undeclared symbol 'init_cur_state', assumed default net type 'wire' [VERI-2561]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(740): undeclared symbol 'idelay_ld', assumed default net type 'wire' [VERI-2561]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(741): undeclared symbol 'mpr_rdlvl_dly', assumed default net type 'wire' [VERI-2561]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(801): undeclared symbol 'pos_vs', assumed default net type 'wire' [VERI-2561]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(974): undeclared symbol 'den_de', assumed default net type 'wire' [VERI-2561]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(974): undeclared symbol 'den_hs', assumed default net type 'wire' [VERI-2561]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(974): undeclared symbol 'den_vs', assumed default net type 'wire' [VERI-2561]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(975): undeclared symbol 'den_r', assumed default net type 'wire' [VERI-2561]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(975): undeclared symbol 'den_g', assumed default net type 'wire' [VERI-2561]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(975): undeclared symbol 'den_b', assumed default net type 'wire' [VERI-2561]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(359): undeclared symbol 'mipi_dsi_tx_pll_RSTN', assumed default net type 'wire' [VERI-2561]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(644): undeclared symbol 'vid_rst_n', assumed default net type 'wire' [VERI-2561]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(664): undeclared symbol 'memory_mode', assumed default net type 'wire' [VERI-2561]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(664): undeclared symbol 'history_index', assumed default net type 'wire' [VERI-2561]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(826): undeclared symbol 'wrlvl_dq_check', assumed default net type 'wire' [VERI-2561]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(827): undeclared symbol 'rd_level_dqs_check', assumed default net type 'wire' [VERI-2561]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(828): undeclared symbol 'init_cur_state', assumed default net type 'wire' [VERI-2561]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(829): undeclared symbol 'idelay_ld', assumed default net type 'wire' [VERI-2561]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(830): undeclared symbol 'mpr_rdlvl_dly', assumed default net type 'wire' [VERI-2561]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(890): undeclared symbol 'pos_vs', assumed default net type 'wire' [VERI-2561]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(1063): undeclared symbol 'den_de', assumed default net type 'wire' [VERI-2561]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(1063): undeclared symbol 'den_hs', assumed default net type 'wire' [VERI-2561]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(1063): undeclared symbol 'den_vs', assumed default net type 'wire' [VERI-2561]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(1064): undeclared symbol 'den_r', assumed default net type 'wire' [VERI-2561]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(1064): undeclared symbol 'den_g', assumed default net type 'wire' [VERI-2561]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(1064): undeclared symbol 'den_b', assumed default net type 'wire' [VERI-2561]
 INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\user_dual_port_ram.v' [VERI-1482]
 INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dual_clock_fifo.v' [VERI-1482]
 INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\true_dual_port_ram.v' [VERI-1482]
@@ -212,7 +201,7 @@ WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\cam_i2c_ctrl\i2c\i2
 WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\cam_i2c_ctrl\i2c\i2c_master_reg_set.v(32): parameter 'S3' becomes localparam in 'i2c_master_reg_set' with formal parameter declaration list [VERI-1199]
 WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\cam_i2c_ctrl\i2c\i2c_master_reg_set.v(33): parameter 'S4' becomes localparam in 'i2c_master_reg_set' with formal parameter declaration list [VERI-1199]
 INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\cam_i2c_ctrl\i2c\i2c_master_ctrl_top.v' [VERI-1482]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\cam_i2c_ctrl\i2c\i2c_master_ctrl_top.v(117): undeclared symbol 'tx_i2c_irq', assumed default net type 'wire' [VERI-2561]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\cam_i2c_ctrl\i2c\i2c_master_ctrl_top.v(121): undeclared symbol 'tx_i2c_irq', assumed default net type 'wire' [VERI-2561]
 INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\ecc_calc_v1.v' [VERI-1482]
 WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\ecc_calc_v1.v(6): non-net output port 'ecc' cannot be initialized at declaration in SystemVerilog mode [VERI-2522]
 INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_tx\audio_clock_regeneration_packet.sv' [VERI-1482]
@@ -265,19 +254,18 @@ INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4
 INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\frame_buffer_V3\DC_FIFO.v' [VERI-1482]
 WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\frame_buffer_V3\DC_FIFO.v(778): parameter 'TCo_C' becomes localparam in 'GrayDecode' with formal parameter declaration list [VERI-1199]
 INFO     : Analyzing Verilog file 'F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\frame_buffer_V3\rst_n_piple.v' [VERI-1482]
-INFO     : Analysis took 0.854213 seconds [FlowMsg::StageDuration]
-INFO     :     Analysis took 0.703125 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
-INFO     : Analysis virtual memory usage: begin = 60.708 MB, end = 74.112 MB, delta = 13.404 MB [FlowMsg::VMUsage]
-INFO     :     Analysis peak virtual memory usage = 74.112 MB [FlowMsg::VMUsage::Peak]
-INFO     : Analysis resident set memory usage: begin = 76.648 MB, end = 93.836 MB, delta = 17.188 MB [FlowMsg::RSSUsage]
-INFO     :     Analysis peak resident set memory usage = 93.836 MB [FlowMsg::RSSUsage::Peak]
+INFO     : Analysis took 0.4685918 seconds [FlowMsg::StageDuration]
+INFO     :     Analysis took 0.40625 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Analysis virtual memory usage: begin = 60.748 MB, end = 70.044 MB, delta = 9.296 MB [FlowMsg::VMUsage]
+INFO     :     Analysis peak virtual memory usage = 70.044 MB [FlowMsg::VMUsage::Peak]
+INFO     : Analysis resident set memory usage: begin = 66.16 MB, end = 79.3 MB, delta = 13.14 MB [FlowMsg::RSSUsage]
+INFO     :     Analysis peak resident set memory usage = 79.3 MB [FlowMsg::RSSUsage::Peak]
 INFO     : ***** Ending Analysis ... *****
 INFO     : ***** Beginning Elaboration ... *****
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(462): port 'vsync_vc15' remains unconnected for this instance [VERI-1927]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(462): port 'mipi_debug_in' is not connected on this instance [VERI-2435]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(641): port 'awcobuf' remains unconnected for this instance [VERI-1927]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(743): port 'rdlvl_shift' remains unconnected for this instance [VERI-1927]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(795): port 'rgb_bout' remains unconnected for this instance [VERI-1927]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(531): port 'vsync_vc15' remains unconnected for this instance [VERI-1927]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(730): port 'awcobuf' remains unconnected for this instance [VERI-1927]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(832): port 'rdlvl_shift' remains unconnected for this instance [VERI-1927]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(884): port 'rgb_bout' remains unconnected for this instance [VERI-1927]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(20): compiling module 'ti60f225_oob_top' [VERI-1018]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\reset.v(13): compiling module 'reset_ctrl(NUM_RST=2,IN_RST_ACTIVE=4'b0,OUT_RST_ACTIVE=4'b010)' [VERI-1018]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\reset.v(102): compiling module 'reset(OUT_RST_ACTIVE="LOW")' [VERI-1018]
@@ -334,9 +322,8 @@ INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\csi_rx_controller.s
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\csi_rx_controller.sv(8127): compiling module 'efx_fifo_gray2bin_816397a398bd4f6e8213b75d000bd820(WIDTH=4)' [VERI-1018]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\csi_rx_controller.sv(8127): compiling module 'efx_fifo_gray2bin_816397a398bd4f6e8213b75d000bd820(WIDTH=3)' [VERI-1018]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\csi_rx_controller.sv(8127): compiling module 'efx_fifo_gray2bin_816397a398bd4f6e8213b75d000bd820(WIDTH=2)' [VERI-1018]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(461): actual bit length 16 differs from formal bit length 32 for port 'mipi_debug_out' [VERI-1330]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\cam_i2c_ctrl\i2c\i2c_master_ctrl_top.v(1): compiling module 'i2c_master_ctrl_top' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\sensor_exposure_writer.sv(3): compiling module 'sensor_exposure_writer' [VERI-1018]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\sensor_exposure_writer.sv(5): compiling module 'sensor_exposure_writer' [VERI-1018]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\cam_i2c_ctrl\i2c\i2c_master_reg_set.v(3): compiling module 'i2c_master_reg_set(DATA_LENGTH=164,I2C_DEVICE_ADDR=8'b01100000)' [VERI-1018]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\cam_i2c_ctrl\i2c\i2c_master_reg_rom.v(1): compiling module 'i2c_master_reg_rom(TOTAL_ROM_DEPTH=164)' [VERI-1018]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\cam_i2c_ctrl\i2c\i2c_master_reg_rom.v(12): extracting RAM for identifier 'ROM' [VERI-2571]
@@ -414,18 +401,18 @@ INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\frame_buffer_V3\DC_
 WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\frame_buffer_V3\data_tx.v(127): actual bit length 10 differs from formal bit length 11 for port 'WrDNum' [VERI-1330]
 WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\frame_buffer_V3\frame_buffer.v(345): actual bit length 24 differs from formal bit length 16 for port 'fifo_wr_data' [VERI-1330]
 WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\frame_buffer_V3\frame_buffer.v(166): input port 'i_hs' remains unconnected for this instance [VDB-1053]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(592): actual bit length 32 differs from formal bit length 13 for port 'H_FRONT_PORCH' [VERI-1330]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(593): actual bit length 32 differs from formal bit length 13 for port 'H_SYNC' [VERI-1330]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(594): actual bit length 32 differs from formal bit length 13 for port 'H_VALID' [VERI-1330]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(595): actual bit length 32 differs from formal bit length 13 for port 'H_BACK_PORCH' [VERI-1330]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(596): actual bit length 32 differs from formal bit length 13 for port 'V_FRONT_PORCH' [VERI-1330]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(597): actual bit length 32 differs from formal bit length 13 for port 'V_SYNC' [VERI-1330]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(598): actual bit length 32 differs from formal bit length 13 for port 'V_VALID' [VERI-1330]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(599): actual bit length 32 differs from formal bit length 13 for port 'V_BACK_PORCH' [VERI-1330]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(601): actual bit length 4 differs from formal bit length 6 for port 'awid' [VERI-1330]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(612): actual bit length 4 differs from formal bit length 6 for port 'arid' [VERI-1330]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(631): actual bit length 4 differs from formal bit length 6 for port 'rid' [VERI-1330]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(638): actual bit length 4 differs from formal bit length 6 for port 'bid' [VERI-1330]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(681): actual bit length 32 differs from formal bit length 13 for port 'H_FRONT_PORCH' [VERI-1330]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(682): actual bit length 32 differs from formal bit length 13 for port 'H_SYNC' [VERI-1330]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(683): actual bit length 32 differs from formal bit length 13 for port 'H_VALID' [VERI-1330]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(684): actual bit length 32 differs from formal bit length 13 for port 'H_BACK_PORCH' [VERI-1330]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(685): actual bit length 32 differs from formal bit length 13 for port 'V_FRONT_PORCH' [VERI-1330]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(686): actual bit length 32 differs from formal bit length 13 for port 'V_SYNC' [VERI-1330]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(687): actual bit length 32 differs from formal bit length 13 for port 'V_VALID' [VERI-1330]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(688): actual bit length 32 differs from formal bit length 13 for port 'V_BACK_PORCH' [VERI-1330]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(690): actual bit length 4 differs from formal bit length 6 for port 'awid' [VERI-1330]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(701): actual bit length 4 differs from formal bit length 6 for port 'arid' [VERI-1330]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(720): actual bit length 4 differs from formal bit length 6 for port 'rid' [VERI-1330]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(727): actual bit length 4 differs from formal bit length 6 for port 'bid' [VERI-1330]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\ddr3_top.v(25): compiling module 'ddr3_top' [VERI-1018]
 WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\phy_ctl\phy_ctl.v(754): port '**' remains unconnected for this instance [VERI-1927]
 WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\phy_ctl\phy_ctl.v(754): port '**' is not connected on this instance [VERI-2435]
@@ -600,10 +587,10 @@ WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\lb2
 WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\lb2_axi_clk.v(297): input port '**' remains unconnected for this instance [VDB-1053]
 WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\ddr3_top.v(935): actual bit length ** differs from formal bit length *** for port '**' [VERI-1330]
 WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\ddr3_top.v(935): net '**' does not have a driver [VDB-1002]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(737): actual bit length 1 differs from formal bit length 8 for port 'wrlvl_dq_check' [VERI-1330]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(738): actual bit length 1 differs from formal bit length 8 for port 'rd_level_dqs_check' [VERI-1330]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(739): actual bit length 1 differs from formal bit length 7 for port 'init_cur_state' [VERI-1330]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\camera_auto_exposure.sv(3): compiling module 'camera_auto_exposure' [VERI-1018]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(826): actual bit length 1 differs from formal bit length 8 for port 'wrlvl_dq_check' [VERI-1330]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(827): actual bit length 1 differs from formal bit length 8 for port 'rd_level_dqs_check' [VERI-1330]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(828): actual bit length 1 differs from formal bit length 7 for port 'init_cur_state' [VERI-1330]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\camera_auto_exposure.sv(5): compiling module 'camera_auto_exposure' [VERI-1018]
 WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\debayer\debayer_top_2to1.v(107): port 'o_x' remains unconnected for this instance [VERI-1927]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\debayer\debayer_top_2to1.v(1): compiling module 'debayer_top_2to1' [VERI-1018]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\debayer\rgb_gain_v1.v(1): compiling module 'rgb_gain_v1' [VERI-1018]
@@ -616,7 +603,7 @@ INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\rgb_chroma_t
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\rgb_chroma_tone.sv(11): extracting RAM for identifier 'shadow_rom' [VERI-2571]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\rgb_chroma_tone.sv(10): readmemh: reading from file './rtl/gamma_conrrection/chroma_tone_gain_q8.mem' [VERI-2855]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\rgb_chroma_tone.sv(11): readmemh: reading from file './rtl/gamma_conrrection/chroma_shadow_gain_q8.mem' [VERI-2855]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\rgb_chroma_tone.sv(40): expression size 10 truncated to fit in target size 8 [VERI-1209]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\rgb_chroma_tone.sv(42): expression size 10 truncated to fit in target size 8 [VERI-1209]
 WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\rgb_chroma_tone.sv(9): net 'gain_rom' does not have a driver [VDB-1002]
 WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\rgb_chroma_tone.sv(11): net 'shadow_rom' does not have a driver [VDB-1002]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\rgb_shadow_denoise.sv(3): compiling module 'rgb_shadow_denoise' [VERI-1018]
@@ -1650,6 +1637,9 @@ WARNING  : ./rtl/gamma_conrrection/display_gamma_2p2.mem(1022): entry size 12 at
 WARNING  : ./rtl/gamma_conrrection/display_gamma_2p2.mem(1023): entry size 12 at ./rtl/gamma_conrrection/display_gamma_2p2.mem:1023 does not match memory width 10 [VERI-2474]
 WARNING  : ./rtl/gamma_conrrection/display_gamma_2p2.mem(1024): entry size 12 at ./rtl/gamma_conrrection/display_gamma_2p2.mem:1024 does not match memory width 10 [VERI-2474]
 INFO     : F:\Project\fpga\vision_base\rtl\video_test_pattern.sv(4): compiling module 'video_test_pattern' [VERI-1018]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\raw_snapshot.sv(3): compiling module 'raw_snapshot' [VERI-1018]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\raw_snapshot.sv(8): extracting RAM for identifier 'mem' [VERI-2571]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\raw_snapshot.sv(8): extracting RAM for identifier 'even_row' [VERI-2571]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\rgb_roi_probe.sv(2): compiling module 'rgb_roi_probe' [VERI-1018]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_controls.sv(1): compiling module 'vision_controls' [VERI-1018]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_controls.sv(5): extracting RAM for identifier 'db' [VERI-2571]
@@ -1663,15 +1653,14 @@ INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_spars
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sparse_window.sv(4): extracting RAM for identifier 'l1' [VERI-2571]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sparse_window.sv(4): extracting RAM for identifier 'l2' [VERI-2571]
 WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_canny.sv(29): expression size 18 truncated to fit in target size 12 [VERI-1209]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv(1): compiling module 'vision_sobel(META=19)' [VERI-1018]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv(10): expression size 12 truncated to fit in target size 11 [VERI-1209]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv(4): compiling module 'vision_sobel(META=19)' [VERI-1018]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sparse_window.sv(2): compiling module 'vision_sparse_window(W=480,BPP=13,CW=9)' [VERI-1018]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sparse_window.sv(4): extracting RAM for identifier 'l1' [VERI-2571]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sparse_window.sv(4): extracting RAM for identifier 'l2' [VERI-2571]
 WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_canny.sv(50): expression size 32 truncated to fit in target size 9 [VERI-1209]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_hysteresis_sweep.sv(3): compiling module 'vision_hysteresis_sweep' [VERI-1018]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_hysteresis_sweep.sv(13): expression size 19 truncated to fit in target size 17 [VERI-1209]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_hysteresis_sweep.sv(14): expression size 32 truncated to fit in target size 17 [VERI-1209]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_hysteresis_sweep.sv(6): compiling module 'vision_hysteresis_sweep(REUSE_CAPTURE_MAP=1)' [VERI-1018]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_hysteresis_sweep.sv(16): expression size 19 truncated to fit in target size 17 [VERI-1209]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_hysteresis_sweep.sv(31): expression size 32 truncated to fit in target size 17 [VERI-1209]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_hysteresis.sv(81): compiling module 'vision_canny_ram(BITS=2,AW=17)' [VERI-1018]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_hysteresis.sv(82): extracting RAM for identifier 'mem' [VERI-2571]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_hysteresis.sv(81): compiling module 'vision_canny_ram(BITS=1,AW=17)' [VERI-1018]
@@ -1682,116 +1671,28 @@ INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_windo
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_window3.sv(7): extracting RAM for identifier 'line1' [VERI-2571]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_window3.sv(7): extracting RAM for identifier 'line2' [VERI-2571]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_median9.sv(2): compiling module 'vision_median9(META=60)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv(1): compiling module 'vision_sobel(META=60)' [VERI-1018]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv(10): expression size 12 truncated to fit in target size 11 [VERI-1209]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv(4): compiling module 'vision_sobel(META=60)' [VERI-1018]
+INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_shape_classifier.sv(6): compiling module 'vision_shape_classifier' [VERI-1018]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_osd.sv(1): compiling module 'vision_osd' [VERI-1018]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_encoder_pure.v(2): compiling module 'dvi_encoder_pure' [VERI-1018]
 INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_encode_pure.v(46): compiling module 'dvi_encode_pure' [VERI-1018]
 WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\dvi_encode_pure.v(167): expression size 9 truncated to fit in target size 8 [VERI-1209]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\lcd_ref_color_bar.v(3): compiling module 'lcd_ref_color_bar(SYMBOL_WIDTH=8,SYMBOL_NUM=3,PAR_PIXEL_NUM=2,HFP=120,HST=4,HACT=1920,HBP=88,VFP=20,VST=2,VACT=1080,VBP=20,TEST_MODE=2)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\lcd_dsi_tx_top.v(2): compiling module 'lcd_dsi_tx_top' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\mipi_config\panel_config.v(1): compiling module 'panel_config(BIST_INDEX=165,INITIAL_CODE="./rtl/lcd/Panel_1080p_reg.mem",REG_DEPTH=9'b010101101)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\true_dual_port_ram.v(14): compiling module 'true_dual_port_ram(DATA_WIDTH=40,WRITE_MODE_1="WRITE_FIRST",WRITE_MODE_2="WRITE_FIRST",OUTPUT_REG_1="TRUE",OUTPUT_REG_2="TRUE",RAM_INIT_FILE="./rtl/lcd/Panel_1080p_reg.mem")' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\true_dual_port_ram.v(35): extracting RAM for identifier 'ram' [VERI-2571]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\true_dual_port_ram.v(52): readmemh: reading from file './rtl/lcd/Panel_1080p_reg.mem' [VERI-2855]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\lcd_dsi_tx_top.v(176): actual bit length 32 differs from formal bit length 1 for port 'i_dbg_we' [VERI-1330]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\lcd_dsi_tx_top.v(177): actual bit length 32 differs from formal bit length 40 for port 'i_dbg_din' [VERI-1330]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\lcd_dsi_tx_top.v(178): actual bit length 32 differs from formal bit length 9 for port 'i_dbg_addr' [VERI-1330]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\lcd_dsi_tx_top.v(180): actual bit length 32 differs from formal bit length 1 for port 'i_dbg_reconfig' [VERI-1330]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(49): compiling module 'dsi_tx' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(6321): compiling module 'efx_dsi_tx_a4c4c8db8afc424cbc374c048c97a2ef_renamed_due_excessive_length_1' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(11178): compiling module 'efx_dphy_bidir_tx_a4c4c8db8afc424cbc374c048c97a2ef(tLPX_NS=60,tCLK_ZERO_NS=280,tCLK_TRAIL_NS=100,tCLK_POST_NS=100,tCLK_PREPARE_NS=50,tHS_PREPARE_NS=50,tHS_EXIT_NS=120,tHS_ZERO_NS=200,tHS_TRAIL_NS=65,HS_BYTECLK_MHZ=125,ENABLE_BIDIR=1'b1)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12229): compiling module 'efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12229): compiling module 'efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=1)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(10121): compiling module '**' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(10625): compiling module '**' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(8782): compiling module '**' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(10781): compiling module '**' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(8198): compiling module '**' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(10481): compiling module '**' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(10781): compiling module '**' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(5695): compiling module 'efx_dsi_tx_top_a4c4c8db8afc424cbc374c048c97a2ef(tINIT_NS=100000,ENABLE_INIT_SKEWCAL=0,ENABLE_EOTP=1'b0,HS_BYTECLK_MHZ=125,PACK_TYPE=1,ENABLE_V_LPM_BTA=1'b1,HS_CMD_WDATAFIFO_DEPTH=512,LP_CMD_WDATAFIFO_DEPTH=512,LP_CMD_RDATAFIFO_DEPTH=2048,HS_DATA_WIDTH=8,MAX_HRES=1920,PIXEL_FIFO_DEPTH=4096)' [VERI-1018]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(5436): port '**' remains unconnected for this instance [VERI-1927]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(5436): compiling module '**' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12229): compiling module 'efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=32)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12229): compiling module 'efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=8)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12229): compiling module 'efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=16)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(2808): compiling module '**' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(4625): compiling module '**' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(2885): compiling module '**' [VERI-1018]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(2885): assignment and/or driver for '**' inside static function '**' is not preserved [VERI-2457]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12824): compiling module 'efx_fifo_top_a4c4c8db8afc424cbc374c048c97a2ef(MODE="FWFT",DEPTH=2048,DATA_WIDTH=8,OPTIONAL_FLAGS=0,PROGRAMMABLE_FULL="NONE",PROG_FULL_ASSERT=16,PROG_FULL_NEGATE=16,PROGRAMMABLE_EMPTY="NONE",PROG_EMPTY_ASSERT=0,PROG_EMPTY_NEGATE=0)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12184): compiling module 'efx_resetsync_a4c4c8db8afc424cbc374c048c97a2ef(ACTIVE_LOW=0)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12229): compiling module 'efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=1,ACTIVE_LOW=0,RST_VALUE=1)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12512): compiling module 'efx_fifo_ram_a4c4c8db8afc424cbc374c048c97a2ef(WR_DEPTH=2048,RD_DEPTH=2048,WADDR_WIDTH=11,RADDR_WIDTH=11,OUTPUT_REG=0,RAM_MUX_RATIO=1)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12549): extracting RAM for identifier 'ram' [VERI-2571]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(11676): compiling module 'efx_fifo_ctl_a4c4c8db8afc424cbc374c048c97a2ef(SYNC_CLK=0,MODE="FWFT",WR_DEPTH=2048,WADDR_WIDTH=11,RADDR_WIDTH=11,ALMOST_FLAG=0,PROG_FULL_ASSERT=16,PROG_FULL_NEGATE=16,HANDSHAKE_FLAG=0,OVERFLOW_PROTECT=1,UNDERFLOW_PROTECT=1)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(11587): compiling module 'efx_fifo_bin2gray_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=12)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12229): compiling module 'efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=12,ACTIVE_LOW=0,OFF_ASSERTION=1)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12428): compiling module 'efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=12)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12428): compiling module 'efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=11)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12428): compiling module 'efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=10)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12428): compiling module 'efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=9)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12428): compiling module 'efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=8)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12428): compiling module 'efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=7)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12428): compiling module 'efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=6)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12428): compiling module 'efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12428): compiling module 'efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=4)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12428): compiling module 'efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=3)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12428): compiling module 'efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=2)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12824): compiling module 'efx_fifo_top_a4c4c8db8afc424cbc374c048c97a2ef(MODE="FWFT",OPTIONAL_FLAGS=0,PROGRAMMABLE_FULL="NONE",PROG_FULL_ASSERT=16,PROG_FULL_NEGATE=16,PROGRAMMABLE_EMPTY="NONE",PROG_EMPTY_ASSERT=0,PROG_EMPTY_NEGATE=0)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12512): compiling module 'efx_fifo_ram_a4c4c8db8afc424cbc374c048c97a2ef(WDATA_WIDTH=32,RDATA_WIDTH=32,OUTPUT_REG=0,RAM_MUX_RATIO=1)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12549): extracting RAM for identifier 'ram' [VERI-2571]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(11676): compiling module 'efx_fifo_ctl_a4c4c8db8afc424cbc374c048c97a2ef(SYNC_CLK=0,MODE="FWFT",ALMOST_FLAG=0,PROG_FULL_ASSERT=16,PROG_FULL_NEGATE=16,HANDSHAKE_FLAG=0,OVERFLOW_PROTECT=1,UNDERFLOW_PROTECT=1)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(11587): compiling module 'efx_fifo_bin2gray_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=10)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12229): compiling module 'efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=10,ACTIVE_LOW=0,OFF_ASSERTION=1)' [VERI-1018]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(5689): port '**' remains unconnected for this instance [VERI-1927]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(5689): compiling module '**' [VERI-1018]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(5689): expression size ** truncated to fit in target size ** [VERI-1209]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(4378): compiling module '**' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12824): compiling module 'efx_fifo_top_a4c4c8db8afc424cbc374c048c97a2ef(MODE="FWFT",DEPTH=4096,DATA_WIDTH=64,OPTIONAL_FLAGS=0,PROG_FULL_ASSERT=719,PROG_FULL_NEGATE=719,PROGRAMMABLE_EMPTY="NONE",PROG_EMPTY_ASSERT=0,PROG_EMPTY_NEGATE=0)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12512): compiling module 'efx_fifo_ram_a4c4c8db8afc424cbc374c048c97a2ef(WR_DEPTH=4096,RD_DEPTH=4096,WDATA_WIDTH=64,RDATA_WIDTH=64,WADDR_WIDTH=12,RADDR_WIDTH=12,OUTPUT_REG=0,RAM_MUX_RATIO=1)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12549): extracting RAM for identifier 'ram' [VERI-2571]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(11676): compiling module 'efx_fifo_ctl_a4c4c8db8afc424cbc374c048c97a2ef(SYNC_CLK=0,MODE="FWFT",WR_DEPTH=4096,WADDR_WIDTH=12,RADDR_WIDTH=12,ALMOST_FLAG=0,PROGRAMMABLE_FULL="STATIC_DUAL",PROG_FULL_ASSERT=719,PROG_FULL_NEGATE=719,HANDSHAKE_FLAG=0,OVERFLOW_PROTECT=1,UNDERFLOW_PROTECT=1)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(11587): compiling module 'efx_fifo_bin2gray_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=13)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12229): compiling module 'efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=13,ACTIVE_LOW=0,OFF_ASSERTION=1)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12428): compiling module 'efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=13)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(7297): compiling module '**' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12229): compiling module 'efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=2)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12229): compiling module 'efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=6)' [VERI-1018]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(7297): expression size ** truncated to fit in target size ** [VERI-1209]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(1596): port '**' remains unconnected for this instance [VERI-1927]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(1596): compiling module '**' [VERI-1018]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(1596): expression size ** truncated to fit in target size ** [VERI-1209]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12824): compiling module 'efx_fifo_top_a4c4c8db8afc424cbc374c048c97a2ef(FAMILY="TITANIUM",SYNC_CLK=1,DEPTH=16384,DATA_WIDTH=4,OPTIONAL_FLAGS=0,PROGRAMMABLE_FULL="NONE",PROG_FULL_ASSERT=128,PROG_FULL_NEGATE=127,PROGRAMMABLE_EMPTY="NONE",PROG_EMPTY_ASSERT=2,PROG_EMPTY_NEGATE=3,ENDIANESS=1)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12512): compiling module 'efx_fifo_ram_a4c4c8db8afc424cbc374c048c97a2ef(FAMILY="TITANIUM",WR_DEPTH=16384,RD_DEPTH=16384,WDATA_WIDTH=4,RDATA_WIDTH=4,WADDR_WIDTH=14,RADDR_WIDTH=14,OUTPUT_REG=0,RAM_MUX_RATIO=1,ENDIANESS=1)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12549): extracting RAM for identifier 'ram' [VERI-2571]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(11676): compiling module 'efx_fifo_ctl_a4c4c8db8afc424cbc374c048c97a2ef(WR_DEPTH=16384,WADDR_WIDTH=14,RADDR_WIDTH=14,ALMOST_FLAG=0,PROG_FULL_ASSERT=128,PROG_FULL_NEGATE=127,PROG_EMPTY_ASSERT=2,PROG_EMPTY_NEGATE=3,HANDSHAKE_FLAG=0,OVERFLOW_PROTECT=1,UNDERFLOW_PROTECT=1)' [VERI-1018]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(2500): port '**' remains unconnected for this instance [VERI-1927]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(2500): compiling module '**' [VERI-1018]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(2500): expression size ** truncated to fit in target size ** [VERI-1209]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(3474): compiling module '**' [VERI-1018]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(3474): assignment and/or driver for '**' inside static function '**' is not preserved [VERI-2457]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12824): compiling module 'efx_fifo_top_a4c4c8db8afc424cbc374c048c97a2ef(MODE="FWFT",DATA_WIDTH=36,OPTIONAL_FLAGS=0,PROGRAMMABLE_FULL="NONE       ",PROG_FULL_ASSERT=16,PROG_FULL_NEGATE=16,PROGRAMMABLE_EMPTY="NONE",PROG_EMPTY_ASSERT=0,PROG_EMPTY_NEGATE=0)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12512): compiling module 'efx_fifo_ram_a4c4c8db8afc424cbc374c048c97a2ef(WDATA_WIDTH=36,RDATA_WIDTH=36,OUTPUT_REG=0,RAM_MUX_RATIO=1)' [VERI-1018]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(12549): extracting RAM for identifier 'ram' [VERI-2571]
-INFO     : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv(11676): compiling module 'efx_fifo_ctl_a4c4c8db8afc424cbc374c048c97a2ef(SYNC_CLK=0,MODE="FWFT",ALMOST_FLAG=0,PROGRAMMABLE_FULL="NONE       ",PROG_FULL_ASSERT=16,PROG_FULL_NEGATE=16,HANDSHAKE_FLAG=0,OVERFLOW_PROTECT=1,UNDERFLOW_PROTECT=1)' [VERI-1018]
-WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(394): input port 'Rx_HS_D_4[7]' remains unconnected for this instance [VDB-1053]
-INFO     : Elaboration took 0.7303093 seconds [FlowMsg::StageDuration]
-INFO     :     Elaboration took 0.640625 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
-INFO     : Elaboration virtual memory usage: begin = 74.112 MB, end = 258.828 MB, delta = 184.716 MB [FlowMsg::VMUsage]
-INFO     :     Elaboration peak virtual memory usage = 258.828 MB [FlowMsg::VMUsage::Peak]
-INFO     : Elaboration resident set memory usage: begin = 93.88 MB, end = 281.084 MB, delta = 187.204 MB [FlowMsg::RSSUsage]
-INFO     :     Elaboration peak resident set memory usage = 281.084 MB [FlowMsg::RSSUsage::Peak]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(463): input port 'Rx_HS_D_4[7]' remains unconnected for this instance [VDB-1053]
+INFO     : Elaboration took 0.5640825 seconds [FlowMsg::StageDuration]
+INFO     :     Elaboration took 0.5625 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Elaboration virtual memory usage: begin = 70.044 MB, end = 243.472 MB, delta = 173.428 MB [FlowMsg::VMUsage]
+INFO     :     Elaboration peak virtual memory usage = 243.472 MB [FlowMsg::VMUsage::Peak]
+INFO     : Elaboration resident set memory usage: begin = 79.344 MB, end = 254.564 MB, delta = 175.22 MB [FlowMsg::RSSUsage]
+INFO     :     Elaboration peak resident set memory usage = 254.564 MB [FlowMsg::RSSUsage::Peak]
 INFO     : ***** Ending Elaboration ... *****
 INFO     : ... Setting Synthesis Option: mode=speed
 INFO     : ***** Beginning Reading Mapping Library ... *****
-INFO     : Reading Mapping Library took 0.0215054 seconds [FlowMsg::StageDuration]
+INFO     : Reading Mapping Library took 0.0114306 seconds [FlowMsg::StageDuration]
 INFO     :     Reading Mapping Library took 0.015625 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
-INFO     : Reading Mapping Library virtual memory usage: begin = 258.828 MB, end = 258.828 MB, delta = 0 MB [FlowMsg::VMUsage]
-INFO     :     Reading Mapping Library peak virtual memory usage = 258.828 MB [FlowMsg::VMUsage::Peak]
-INFO     : Reading Mapping Library resident set memory usage: begin = 281.2 MB, end = 281.2 MB, delta = 0 MB [FlowMsg::RSSUsage]
-INFO     :     Reading Mapping Library peak resident set memory usage = 281.2 MB [FlowMsg::RSSUsage::Peak]
+INFO     : Reading Mapping Library virtual memory usage: begin = 243.472 MB, end = 243.472 MB, delta = 0 MB [FlowMsg::VMUsage]
+INFO     :     Reading Mapping Library peak virtual memory usage = 243.472 MB [FlowMsg::VMUsage::Peak]
+INFO     : Reading Mapping Library resident set memory usage: begin = 255.704 MB, end = 255.704 MB, delta = 0 MB [FlowMsg::RSSUsage]
+INFO     :     Reading Mapping Library peak resident set memory usage = 255.704 MB [FlowMsg::RSSUsage::Peak]
 INFO     : ***** Ending Reading Mapping Library ... *****
 INFO     : ... Pre-synthesis checks begin
 WARNING  : Removing redundant signal : Rx_HS_D_4[7:0]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\csi_rx_controller.sv:6313) [EFX-0200]
@@ -1949,6 +1850,8 @@ INFO     : Module Instance 'u_axi4_bus_ctl' input pin 'mc_user_ecc_err' is tied 
 INFO     : (The above message was generated too many times, subsequent similar messages will be muted.) [EFX-0266]
 INFO     : ... Memory 'ram' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\true_dual_port_ram.v:35) [EFX-0677]
 INFO     : ... Memory 'r_gamma_2P' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\gamma_conrrection\gamma_correction.v:30) [EFX-0677]
+INFO     : ... Memory 'mem' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\raw_snapshot.sv:8) [EFX-0677]
+INFO     : ... Memory 'even_row' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\raw_snapshot.sv:8) [EFX-0677]
 INFO     : ... Memory 'db' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_controls.sv:5) [EFX-0677]
 INFO     : ... Memory 'held' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_controls.sv:5) [EFX-0677]
 INFO     : ... Memory 'l1' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sparse_window.sv:4) [EFX-0677]
@@ -1960,11 +1863,6 @@ INFO     : ... Memory 'mem' is not initialized, assuming empty initial contents.
 INFO     : ... Memory 'vertical' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_canny.sv:12) [EFX-0677]
 INFO     : ... Memory 'line1' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_window3.sv:7) [EFX-0677]
 INFO     : ... Memory 'line2' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_window3.sv:7) [EFX-0677]
-INFO     : ... Memory 'ram' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv:12549) [EFX-0677]
-INFO     : ... Memory 'ram' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv:12549) [EFX-0677]
-INFO     : ... Memory 'ram' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv:12549) [EFX-0677]
-INFO     : ... Memory 'ram' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv:12549) [EFX-0677]
-INFO     : ... Memory 'ram' is not initialized, assuming empty initial contents. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\lcd\dsi_tx.sv:12549) [EFX-0677]
 INFO     : ... Pre-synthesis checks end (Real time : 0s)
 INFO     : ... NameSpace init begin
 INFO     : ... NameSpace init end (Real time : 0s)
@@ -2056,9 +1954,9 @@ INFO     : ... Hierarchical pre-synthesis "efx_csi2_byte2pixel_816397a398bd4f6e8
 INFO     : ... Hierarchical pre-synthesis "efx_csi2_rx_top_816397a398bd4f6e8213b75d000bd820(HS_DATA_WIDTH=8,tINIT_NS=100000,PACK_TYPE=15,ENABLE_VCX=1'b0)" begin
 INFO     : ... Hierarchical pre-synthesis "efx_csi2_rx_top_816397a398bd4f6e8213b75d000bd820(HS_DATA_WIDTH=8,tINIT_NS=100000,PACK_TYPE=15,ENABLE_VCX=1'b0)" end (Real time : 0s)
 INFO     : ... Hierarchical pre-synthesis "efx_csi2_rx_816397a398bd4f6e8213b75d000bd820(tD_TERM_EN_NS=25,HS_BYTECLK_MHZ=70,DPHY_CLOCK_MODE="Discontinuous",ENABLE_USER_DESKEWCAL=1'b0,ENABLE_VCX=1'b0,PACK_TYPE=15)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_csi2_rx_816397a398bd4f6e8213b75d000bd820(tD_TERM_EN_NS=25,HS_BYTECLK_MHZ=70,DPHY_CLOCK_MODE="Discontinuous",ENABLE_USER_DESKEWCAL=1'b0,ENABLE_VCX=1'b0,PACK_TYPE=15)" end (Real time : 1s)
+INFO     : ... Hierarchical pre-synthesis "efx_csi2_rx_816397a398bd4f6e8213b75d000bd820(tD_TERM_EN_NS=25,HS_BYTECLK_MHZ=70,DPHY_CLOCK_MODE="Discontinuous",ENABLE_USER_DESKEWCAL=1'b0,ENABLE_VCX=1'b0,PACK_TYPE=15)" end (Real time : 0s)
 INFO     : ... Hierarchical pre-synthesis "csi_rx_controller" begin
-INFO     : ... Hierarchical pre-synthesis "csi_rx_controller" end (Real time : 0s)
+INFO     : ... Hierarchical pre-synthesis "csi_rx_controller" end (Real time : 1s)
 INFO     : ... Hierarchical pre-synthesis "sensor_exposure_writer" begin
 INFO     : ... Hierarchical pre-synthesis "sensor_exposure_writer" end (Real time : 0s)
 INFO     : ... Hierarchical pre-synthesis "i2c_master_reg_rom(TOTAL_ROM_DEPTH=164)" begin
@@ -2102,7 +2000,7 @@ INFO     : ... Hierarchical pre-synthesis "vision_write_commit" end (Real time :
 INFO     : ... Hierarchical pre-synthesis "vision_frame_history(START_ADDR=32'b0)" begin
 INFO     : ... Hierarchical pre-synthesis "vision_frame_history(START_ADDR=32'b0)" end (Real time : 0s)
 INFO     : ... Hierarchical pre-synthesis "ddr_buffer(AXI_DATA_WIDTH=128,AXI_ADDR_WIDTH=32,FB_NUM=8,MAX_VID_WIDTH=480,START_ADDR=32'b0,BURST_LEN=127,I_VID_WIDTH=32)" begin
-INFO     : ... Hierarchical pre-synthesis "ddr_buffer(AXI_DATA_WIDTH=128,AXI_ADDR_WIDTH=32,FB_NUM=8,MAX_VID_WIDTH=480,START_ADDR=32'b0,BURST_LEN=127,I_VID_WIDTH=32)" end (Real time : 1s)
+INFO     : ... Hierarchical pre-synthesis "ddr_buffer(AXI_DATA_WIDTH=128,AXI_ADDR_WIDTH=32,FB_NUM=8,MAX_VID_WIDTH=480,START_ADDR=32'b0,BURST_LEN=127,I_VID_WIDTH=32)" end (Real time : 0s)
 INFO     : ... Hierarchical pre-synthesis "vid_par2ser(O_VID_WIDTH=16)" begin
 INFO     : ... Hierarchical pre-synthesis "vid_par2ser(O_VID_WIDTH=16)" end (Real time : 0s)
 INFO     : ... Hierarchical pre-synthesis "par2ser_parse(VID_WIDTH=16,AXI_DATA_WIDTH=128)" begin
@@ -2114,7 +2012,7 @@ INFO     : ... Hierarchical pre-synthesis "data_tx(FIFO_DIPTH=1024,FIFO_ALMOST_F
 INFO     : ... Hierarchical pre-synthesis "frame_buffer(I_VID_WIDTH=32,AXI_DATA_WIDTH=128,AXI_ADDR_WIDTH=32,START_ADDR=32'b0,BURST_LEN=127,FB_NUM=8,MAX_VID_WIDTH=480)" begin
 INFO     : ... Hierarchical pre-synthesis "frame_buffer(I_VID_WIDTH=32,AXI_DATA_WIDTH=128,AXI_ADDR_WIDTH=32,START_ADDR=32'b0,BURST_LEN=127,FB_NUM=8,MAX_VID_WIDTH=480)" end (Real time : 0s)
 INFO     : ... Hierarchical pre-synthesis "ddr_calibration_ini(tCK=2500,CLK_PERIOD=10000,DQ_WIDTH=16,DQS_WIDTH=2,nCL=6,tRFC=350000,RTT_WR="120")" begin
-INFO     : ... Hierarchical pre-synthesis "ddr_calibration_ini(tCK=2500,CLK_PERIOD=10000,DQ_WIDTH=16,DQS_WIDTH=2,nCL=6,tRFC=350000,RTT_WR="120")" end (Real time : 0s)
+INFO     : ... Hierarchical pre-synthesis "ddr_calibration_ini(tCK=2500,CLK_PERIOD=10000,DQ_WIDTH=16,DQS_WIDTH=2,nCL=6,tRFC=350000,RTT_WR="120")" end (Real time : 1s)
 INFO     : ... Hierarchical pre-synthesis "ddr_phy_rdlvl_dqs" begin
 INFO     : ... Hierarchical pre-synthesis "ddr_phy_rdlvl_dqs" end (Real time : 0s)
 INFO     : ... Hierarchical pre-synthesis "ddr_phy_wrlvl(DQ_WIDTH=16)" begin
@@ -2164,7 +2062,7 @@ INFO     : ... Hierarchical pre-synthesis "efx_fifo_wrapper(SYNC_CLK=0,MODE="FWF
 INFO     : ... Hierarchical pre-synthesis "ddr_phy_if(tCK=2500,nCL=6,BANK_WIDTH=3,DQ_WIDTH=16,DQS_WIDTH=2,DM_WIDTH=2)" begin
 INFO     : ... Hierarchical pre-synthesis "ddr_phy_if(tCK=2500,nCL=6,BANK_WIDTH=3,DQ_WIDTH=16,DQS_WIDTH=2,DM_WIDTH=2)" end (Real time : 0s)
 INFO     : ... Hierarchical pre-synthesis "phy_ctl(DEBUG_WIDTH=57,CL=6,COL_WIDTH=10,DM_WIDTH=2,DQ_WIDTH=16,DQS_CNT_WIDTH=1,DQS_WIDTH=2,tRFC=350000,RANKS=1,ROW_WIDTH=14)" begin
-INFO     : ... Hierarchical pre-synthesis "phy_ctl(DEBUG_WIDTH=57,CL=6,COL_WIDTH=10,DM_WIDTH=2,DQ_WIDTH=16,DQS_CNT_WIDTH=1,DQS_WIDTH=2,tRFC=350000,RANKS=1,ROW_WIDTH=14)" end (Real time : 1s)
+INFO     : ... Hierarchical pre-synthesis "phy_ctl(DEBUG_WIDTH=57,CL=6,COL_WIDTH=10,DM_WIDTH=2,DQ_WIDTH=16,DQS_CNT_WIDTH=1,DQS_WIDTH=2,tRFC=350000,RANKS=1,ROW_WIDTH=14)" end (Real time : 0s)
 INFO     : ... Hierarchical pre-synthesis "SRLC32" begin
 INFO     : ... Hierarchical pre-synthesis "SRLC32" end (Real time : 0s)
 INFO     : ... Hierarchical pre-synthesis "rank_cntrl(DQRD2DQWR_DLY=4,CL=6,nCK_PER_CLK=4,nFAW=14,nREFRESH_BANK=1,PERIODIC_RD_TIMER_DIV=5,RANK_BM_BV_WIDTH=4,RANK_WIDTH=1,RANKS=1,REFRESH_TIMER_DIV=37)" begin
@@ -2226,7 +2124,7 @@ INFO     : ... Hierarchical pre-synthesis "axi_mc_fifo(C_WIDTH=144,C_AWIDTH=3,C_
 INFO     : ... Hierarchical pre-synthesis "axi_mc_fifo(C_WIDTH=129,C_AWIDTH=3,C_DEPTH=8)" begin
 INFO     : ... Hierarchical pre-synthesis "axi_mc_fifo(C_WIDTH=129,C_AWIDTH=3,C_DEPTH=8)" end (Real time : 0s)
 INFO     : ... Hierarchical pre-synthesis "local_bus_ctl(CK_RATIO=4,USER_DW=128,USER_MW=16,COL_WIDTH=10,RANKS=1,RANK_WIDTH=1,ROW_WIDTH=14)" begin
-INFO     : ... Hierarchical pre-synthesis "local_bus_ctl(CK_RATIO=4,USER_DW=128,USER_MW=16,COL_WIDTH=10,RANKS=1,RANK_WIDTH=1,ROW_WIDTH=14)" end (Real time : 0s)
+INFO     : ... Hierarchical pre-synthesis "local_bus_ctl(CK_RATIO=4,USER_DW=128,USER_MW=16,COL_WIDTH=10,RANKS=1,RANK_WIDTH=1,ROW_WIDTH=14)" end (Real time : 1s)
 INFO     : ... Hierarchical pre-synthesis "ddr_axic_register_slice(C_DATA_WIDTH=66,C_REG_CONFIG=0)" begin
 INFO     : ... Hierarchical pre-synthesis "ddr_axic_register_slice(C_DATA_WIDTH=66,C_REG_CONFIG=0)" end (Real time : 0s)
 INFO     : ... Hierarchical pre-synthesis "ddr_axic_register_slice(C_DATA_WIDTH=149,C_REG_CONFIG=0)" begin
@@ -2268,7 +2166,7 @@ INFO     : ... Hierarchical pre-synthesis "axi_mc_fifo(C_WIDTH=129,C_AWIDTH=5,C_
 INFO     : ... Hierarchical pre-synthesis "axi_mc_fifo(C_WIDTH=7,C_AWIDTH=5,C_DEPTH=30)" begin
 INFO     : ... Hierarchical pre-synthesis "axi_mc_fifo(C_WIDTH=7,C_AWIDTH=5,C_DEPTH=30)" end (Real time : 0s)
 INFO     : ... Hierarchical pre-synthesis "axi_mc_r_channel(C_DATA_WIDTH=128)" begin
-INFO     : ... Hierarchical pre-synthesis "axi_mc_r_channel(C_DATA_WIDTH=128)" end (Real time : 1s)
+INFO     : ... Hierarchical pre-synthesis "axi_mc_r_channel(C_DATA_WIDTH=128)" end (Real time : 0s)
 INFO     : ... Hierarchical pre-synthesis "axi_mc_cmd_arbiter" begin
 INFO     : ... Hierarchical pre-synthesis "axi_mc_cmd_arbiter" end (Real time : 0s)
 INFO     : ... Hierarchical pre-synthesis "axi4_bus_ctl(AXI_AW=32,AXI_DW=128,MC_DW=128,CK_RATIO=4)" begin
@@ -2331,6 +2229,8 @@ INFO     : ... Hierarchical pre-synthesis "gamma_correction(DATA_WIDTH=8,GAMMA_C
 INFO     : ... Hierarchical pre-synthesis "gamma_correction(DATA_WIDTH=8,GAMMA_CURVE="./rtl/gamma_conrrection/display_gamma_2p2.mem")" end (Real time : 0s)
 INFO     : ... Hierarchical pre-synthesis "video_test_pattern" begin
 INFO     : ... Hierarchical pre-synthesis "video_test_pattern" end (Real time : 0s)
+INFO     : ... Hierarchical pre-synthesis "raw_snapshot" begin
+INFO     : ... Hierarchical pre-synthesis "raw_snapshot" end (Real time : 0s)
 INFO     : ... Hierarchical pre-synthesis "rgb_roi_probe" begin
 INFO     : ... Hierarchical pre-synthesis "rgb_roi_probe" end (Real time : 0s)
 INFO     : ... Hierarchical pre-synthesis "vision_controls" begin
@@ -2345,8 +2245,8 @@ INFO     : ... Hierarchical pre-synthesis "vision_canny_ram(BITS=2,AW=17)" begin
 INFO     : ... Hierarchical pre-synthesis "vision_canny_ram(BITS=2,AW=17)" end (Real time : 0s)
 INFO     : ... Hierarchical pre-synthesis "vision_canny_ram(BITS=1,AW=17)" begin
 INFO     : ... Hierarchical pre-synthesis "vision_canny_ram(BITS=1,AW=17)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "vision_hysteresis_sweep" begin
-INFO     : ... Hierarchical pre-synthesis "vision_hysteresis_sweep" end (Real time : 0s)
+INFO     : ... Hierarchical pre-synthesis "vision_hysteresis_sweep(REUSE_CAPTURE_MAP=1)" begin
+INFO     : ... Hierarchical pre-synthesis "vision_hysteresis_sweep(REUSE_CAPTURE_MAP=1)" end (Real time : 0s)
 INFO     : ... Hierarchical pre-synthesis "vision_canny" begin
 INFO     : ... Hierarchical pre-synthesis "vision_canny" end (Real time : 1s)
 INFO     : ... Hierarchical pre-synthesis "vision_window3(BPP=32)" begin
@@ -2357,6 +2257,8 @@ INFO     : ... Hierarchical pre-synthesis "vision_sobel(META=60)" begin
 INFO     : ... Hierarchical pre-synthesis "vision_sobel(META=60)" end (Real time : 0s)
 INFO     : ... Hierarchical pre-synthesis "vision_frontend" begin
 INFO     : ... Hierarchical pre-synthesis "vision_frontend" end (Real time : 0s)
+INFO     : ... Hierarchical pre-synthesis "vision_shape_classifier" begin
+INFO     : ... Hierarchical pre-synthesis "vision_shape_classifier" end (Real time : 0s)
 INFO     : ... Hierarchical pre-synthesis "vision_osd" begin
 INFO     : ... Hierarchical pre-synthesis "vision_osd" end (Real time : 1s)
 INFO     : ... Hierarchical pre-synthesis "vision_display" begin
@@ -2365,118 +2267,73 @@ INFO     : ... Hierarchical pre-synthesis "dvi_encode_pure" begin
 INFO     : ... Hierarchical pre-synthesis "dvi_encode_pure" end (Real time : 0s)
 INFO     : ... Hierarchical pre-synthesis "dvi_encoder_pure" begin
 INFO     : ... Hierarchical pre-synthesis "dvi_encoder_pure" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "lcd_ref_color_bar(SYMBOL_WIDTH=8,SYMBOL_NUM=3,PAR_PIXEL_NUM=2,HFP=120,HST=4,HACT=1920,HBP=88,VFP=20,VST=2,VACT=1080,VBP=20,TEST_MODE=2)" begin
-INFO     : ... Hierarchical pre-synthesis "lcd_ref_color_bar(SYMBOL_WIDTH=8,SYMBOL_NUM=3,PAR_PIXEL_NUM=2,HFP=120,HST=4,HACT=1920,HBP=88,VFP=20,VST=2,VACT=1080,VBP=20,TEST_MODE=2)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "true_dual_port_ram(DATA_WIDTH=40,WRITE_MODE_1="WRITE_FIRST",WRITE_MODE_2="WRITE_FIRST",OUTPUT_REG_1="TRUE",OUTPUT_REG_2="TRUE",RAM_INIT_FILE="./rtl/lcd/Panel_1080p_reg.mem")" begin
-INFO     : ... Hierarchical pre-synthesis "true_dual_port_ram(DATA_WIDTH=40,WRITE_MODE_1="WRITE_FIRST",WRITE_MODE_2="WRITE_FIRST",OUTPUT_REG_1="TRUE",OUTPUT_REG_2="TRUE",RAM_INIT_FILE="./rtl/lcd/Panel_1080p_reg.mem")" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "panel_config(BIST_INDEX=165,INITIAL_CODE="./rtl/lcd/Panel_1080p_reg.mem",REG_DEPTH=9'b010101101)" begin
-INFO     : ... Hierarchical pre-synthesis "panel_config(BIST_INDEX=165,INITIAL_CODE="./rtl/lcd/Panel_1080p_reg.mem",REG_DEPTH=9'b010101101)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef" begin
-INFO     : ... Hierarchical pre-synthesis "efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=1)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=1)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "dphy_tx_hs_c_fsm_a4c4c8db8afc424cbc374c048c97a2ef(tCLK_ZERO_NS=280,tCLK_TRAIL_NS=100,tCLK_POST_NS=100,HS_BYTECLK_MHZ=125)" begin
-INFO     : ... Hierarchical pre-synthesis "dphy_tx_hs_c_fsm_a4c4c8db8afc424cbc374c048c97a2ef(tCLK_ZERO_NS=280,tCLK_TRAIL_NS=100,tCLK_POST_NS=100,HS_BYTECLK_MHZ=125)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "dphy_tx_clane_fsm_a4c4c8db8afc424cbc374c048c97a2ef(tLPX_NS=60,tCLK_ZERO_NS=280,tCLK_TRAIL_NS=100,tCLK_POST_NS=100,tCLK_PREPARE_NS=50,tHS_EXIT_NS=120,HS_BYTECLK_MHZ=125)" begin
-INFO     : ... Hierarchical pre-synthesis "dphy_tx_clane_fsm_a4c4c8db8afc424cbc374c048c97a2ef(tLPX_NS=60,tCLK_ZERO_NS=280,tCLK_TRAIL_NS=100,tCLK_POST_NS=100,tCLK_PREPARE_NS=50,tHS_EXIT_NS=120,HS_BYTECLK_MHZ=125)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "dphy_tx_hs_d_fsm_a4c4c8db8afc424cbc374c048c97a2ef(tHS_ZERO_NS=200,tHS_TRAIL_NS=65,HS_BYTECLK_MHZ=125)" begin
-INFO     : ... Hierarchical pre-synthesis "dphy_tx_hs_d_fsm_a4c4c8db8afc424cbc374c048c97a2ef(tHS_ZERO_NS=200,tHS_TRAIL_NS=65,HS_BYTECLK_MHZ=125)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "dphy_bidir_tx_dlane_fsm_a4c4c8db8afc424cbc374c048c97a2ef(tLPX_NS=60,tHS_PREPARE_NS=50,tHS_EXIT_NS=120,tHS_ZERO_NS=200,tHS_TRAIL_NS=65,HS_BYTECLK_MHZ=125)" begin
-INFO     : ... Hierarchical pre-synthesis "dphy_bidir_tx_dlane_fsm_a4c4c8db8afc424cbc374c048c97a2ef(tLPX_NS=60,tHS_PREPARE_NS=50,tHS_EXIT_NS=120,tHS_ZERO_NS=200,tHS_TRAIL_NS=65,HS_BYTECLK_MHZ=125)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "dphy_bidir_rx_dlane_fsm_a4c4c8db8afc424cbc374c048c97a2ef(tLPX_NS=60,HS_BYTECLK_MHZ=125)" begin
-INFO     : ... Hierarchical pre-synthesis "dphy_bidir_rx_dlane_fsm_a4c4c8db8afc424cbc374c048c97a2ef(tLPX_NS=60,HS_BYTECLK_MHZ=125)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "dphy_tx_hs_d_fsm_a4c4c8db8afc424cbc374c048c97a2ef(tHS_ZERO_NS=200,tHS_EXIT_NS=120,tHS_TRAIL_NS=65,HS_BYTECLK_MHZ=125)" begin
-INFO     : ... Hierarchical pre-synthesis "dphy_tx_hs_d_fsm_a4c4c8db8afc424cbc374c048c97a2ef(tHS_ZERO_NS=200,tHS_EXIT_NS=120,tHS_TRAIL_NS=65,HS_BYTECLK_MHZ=125)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "dphy_tx_dlane_fsm_a4c4c8db8afc424cbc374c048c97a2ef(tLPX_NS=60,tHS_PREPARE_NS=50,tHS_EXIT_NS=120,tHS_ZERO_NS=200,tHS_TRAIL_NS=65,HS_BYTECLK_MHZ=125)" begin
-INFO     : ... Hierarchical pre-synthesis "dphy_tx_dlane_fsm_a4c4c8db8afc424cbc374c048c97a2ef(tLPX_NS=60,tHS_PREPARE_NS=50,tHS_EXIT_NS=120,tHS_ZERO_NS=200,tHS_TRAIL_NS=65,HS_BYTECLK_MHZ=125)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_dphy_bidir_tx_a4c4c8db8afc424cbc374c048c97a2ef(tLPX_NS=60,tCLK_ZERO_NS=280,tCLK_TRAIL_NS=100,tCLK_POST_NS=100,tCLK_PREPARE_NS=50,tHS_PREPARE_NS=50,tHS_EXIT_NS=120,tHS_ZERO_NS=200,tHS_TRAIL_NS=65,HS_BYTECLK_MHZ=125,ENABLE_BIDIR=1'b1)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_dphy_bidir_tx_a4c4c8db8afc424cbc374c048c97a2ef(tLPX_NS=60,tCLK_ZERO_NS=280,tCLK_TRAIL_NS=100,tCLK_POST_NS=100,tCLK_PREPARE_NS=50,tHS_PREPARE_NS=50,tHS_EXIT_NS=120,tHS_ZERO_NS=200,tHS_TRAIL_NS=65,HS_BYTECLK_MHZ=125,ENABLE_BIDIR=1'b1)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=32)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=32)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=8)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=8)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=16)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=16)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_dsi_ecc_gen_a4c4c8db8afc424cbc374c048c97a2ef" begin
-INFO     : ... Hierarchical pre-synthesis "efx_dsi_ecc_gen_a4c4c8db8afc424cbc374c048c97a2ef" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_dsi_crc16_d8_gen_a4c4c8db8afc424cbc374c048c97a2ef" begin
-INFO     : ... Hierarchical pre-synthesis "efx_dsi_crc16_d8_gen_a4c4c8db8afc424cbc374c048c97a2ef" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_dsi_cmd_driver_a4c4c8db8afc424cbc374c048c97a2ef(ENABLE_V_LPM_BTA=1'b1)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_dsi_cmd_driver_a4c4c8db8afc424cbc374c048c97a2ef(ENABLE_V_LPM_BTA=1'b1)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=1,ACTIVE_LOW=0,RST_VALUE=1)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=1,ACTIVE_LOW=0,RST_VALUE=1)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_resetsync_a4c4c8db8afc424cbc374c048c97a2ef(ACTIVE_LOW=0)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_resetsync_a4c4c8db8afc424cbc374c048c97a2ef(ACTIVE_LOW=0)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_ram_a4c4c8db8afc424cbc374c048c97a2ef(WR_DEPTH=2048,RD_DEPTH=2048,WADDR_WIDTH=11,RADDR_WIDTH=11,OUTPUT_REG=0,RAM_MUX_RATIO=1)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_ram_a4c4c8db8afc424cbc374c048c97a2ef(WR_DEPTH=2048,RD_DEPTH=2048,WADDR_WIDTH=11,RADDR_WIDTH=11,OUTPUT_REG=0,RAM_MUX_RATIO=1)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_bin2gray_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=12)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_bin2gray_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=12)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=12,ACTIVE_LOW=0,OFF_ASSERTION=1)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=12,ACTIVE_LOW=0,OFF_ASSERTION=1)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=2)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=2)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=3)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=3)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=4)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=4)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=6)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=6)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=7)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=7)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=8)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=8)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=9)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=9)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=10)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=10)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=11)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=11)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=12)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=12)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_ctl_a4c4c8db8afc424cbc374c048c97a2ef(SYNC_CLK=0,MODE="FWFT",WR_DEPTH=2048,WADDR_WIDTH=11,RADDR_WIDTH=11,ALMOST_FLAG=0,PROG_FULL_ASSERT=16,PROG_FULL_NEGATE=16,HANDSHAKE_FLAG=0,OVERFLOW_PROTECT=1,UNDERFLOW_PROTECT=1)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_ctl_a4c4c8db8afc424cbc374c048c97a2ef(SYNC_CLK=0,MODE="FWFT",WR_DEPTH=2048,WADDR_WIDTH=11,RADDR_WIDTH=11,ALMOST_FLAG=0,PROG_FULL_ASSERT=16,PROG_FULL_NEGATE=16,HANDSHAKE_FLAG=0,OVERFLOW_PROTECT=1,UNDERFLOW_PROTECT=1)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_top_a4c4c8db8afc424cbc374c048c97a2ef(MODE="FWFT",DEPTH=2048,DATA_WIDTH=8,OPTIONAL_FLAGS=0,PROGRAMMABLE_FULL="NONE",PROG_FULL_ASSERT=16,PROG_FULL_NEGATE=16,PROGRAMMABLE_EMPTY="NONE",PROG_EMPTY_ASSERT=0,PROG_EMPTY_NEGATE=0)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_top_a4c4c8db8afc424cbc374c048c97a2ef(MODE="FWFT",DEPTH=2048,DATA_WIDTH=8,OPTIONAL_FLAGS=0,PROGRAMMABLE_FULL="NONE",PROG_FULL_ASSERT=16,PROG_FULL_NEGATE=16,PROGRAMMABLE_EMPTY="NONE",PROG_EMPTY_ASSERT=0,PROG_EMPTY_NEGATE=0)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_ram_a4c4c8db8afc424cbc374c048c97a2ef(WDATA_WIDTH=32,RDATA_WIDTH=32,OUTPUT_REG=0,RAM_MUX_RATIO=1)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_ram_a4c4c8db8afc424cbc374c048c97a2ef(WDATA_WIDTH=32,RDATA_WIDTH=32,OUTPUT_REG=0,RAM_MUX_RATIO=1)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_bin2gray_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=10)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_bin2gray_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=10)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=10,ACTIVE_LOW=0,OFF_ASSERTION=1)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=10,ACTIVE_LOW=0,OFF_ASSERTION=1)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_ctl_a4c4c8db8afc424cbc374c048c97a2ef(SYNC_CLK=0,MODE="FWFT",ALMOST_FLAG=0,PROG_FULL_ASSERT=16,PROG_FULL_NEGATE=16,HANDSHAKE_FLAG=0,OVERFLOW_PROTECT=1,UNDERFLOW_PROTECT=1)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_ctl_a4c4c8db8afc424cbc374c048c97a2ef(SYNC_CLK=0,MODE="FWFT",ALMOST_FLAG=0,PROG_FULL_ASSERT=16,PROG_FULL_NEGATE=16,HANDSHAKE_FLAG=0,OVERFLOW_PROTECT=1,UNDERFLOW_PROTECT=1)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_top_a4c4c8db8afc424cbc374c048c97a2ef(MODE="FWFT",OPTIONAL_FLAGS=0,PROGRAMMABLE_FULL="NONE",PROG_FULL_ASSERT=16,PROG_FULL_NEGATE=16,PROGRAMMABLE_EMPTY="NONE",PROG_EMPTY_ASSERT=0,PROG_EMPTY_NEGATE=0)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_top_a4c4c8db8afc424cbc374c048c97a2ef(MODE="FWFT",OPTIONAL_FLAGS=0,PROGRAMMABLE_FULL="NONE",PROG_FULL_ASSERT=16,PROG_FULL_NEGATE=16,PROGRAMMABLE_EMPTY="NONE",PROG_EMPTY_ASSERT=0,PROG_EMPTY_NEGATE=0)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_dsi_tx_csr_a4c4c8db8afc424cbc374c048c97a2ef(HS_DATA_WIDTH=8,ENABLE_V_LPM_BTA=1'b1)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_dsi_tx_csr_a4c4c8db8afc424cbc374c048c97a2ef(HS_DATA_WIDTH=8,ENABLE_V_LPM_BTA=1'b1)" end (Real time : 1s)
-INFO     : ... Hierarchical pre-synthesis "efx_dsi_pack48bto64b_a4c4c8db8afc424cbc374c048c97a2ef" begin
-INFO     : ... Hierarchical pre-synthesis "efx_dsi_pack48bto64b_a4c4c8db8afc424cbc374c048c97a2ef" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_ram_a4c4c8db8afc424cbc374c048c97a2ef(WR_DEPTH=4096,RD_DEPTH=4096,WDATA_WIDTH=64,RDATA_WIDTH=64,WADDR_WIDTH=12,RADDR_WIDTH=12,OUTPUT_REG=0,RAM_MUX_RATIO=1)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_ram_a4c4c8db8afc424cbc374c048c97a2ef(WR_DEPTH=4096,RD_DEPTH=4096,WDATA_WIDTH=64,RDATA_WIDTH=64,WADDR_WIDTH=12,RADDR_WIDTH=12,OUTPUT_REG=0,RAM_MUX_RATIO=1)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_bin2gray_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=13)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_bin2gray_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=13)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=13,ACTIVE_LOW=0,OFF_ASSERTION=1)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=13,ACTIVE_LOW=0,OFF_ASSERTION=1)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=13)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_gray2bin_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=13)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_ctl_a4c4c8db8afc424cbc374c048c97a2ef(SYNC_CLK=0,MODE="FWFT",WR_DEPTH=4096,WADDR_WIDTH=12,RADDR_WIDTH=12,ALMOST_FLAG=0,PROGRAMMABLE_FULL="STATIC_DUAL",PROG_FULL_ASSERT=719,PROG_FULL_NEGATE=719,HANDSHAKE_FLAG=0,OVERFLOW_PROTECT=1,UNDERFLOW_PROTECT=1)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_ctl_a4c4c8db8afc424cbc374c048c97a2ef(SYNC_CLK=0,MODE="FWFT",WR_DEPTH=4096,WADDR_WIDTH=12,RADDR_WIDTH=12,ALMOST_FLAG=0,PROGRAMMABLE_FULL="STATIC_DUAL",PROG_FULL_ASSERT=719,PROG_FULL_NEGATE=719,HANDSHAKE_FLAG=0,OVERFLOW_PROTECT=1,UNDERFLOW_PROTECT=1)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_top_a4c4c8db8afc424cbc374c048c97a2ef(MODE="FWFT",DEPTH=4096,DATA_WIDTH=64,OPTIONAL_FLAGS=0,PROG_FULL_ASSERT=719,PROG_FULL_NEGATE=719,PROGRAMMABLE_EMPTY="NONE",PROG_EMPTY_ASSERT=0,PROG_EMPTY_NEGATE=0)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_top_a4c4c8db8afc424cbc374c048c97a2ef(MODE="FWFT",DEPTH=4096,DATA_WIDTH=64,OPTIONAL_FLAGS=0,PROG_FULL_ASSERT=719,PROG_FULL_NEGATE=719,PROGRAMMABLE_EMPTY="NONE",PROG_EMPTY_ASSERT=0,PROG_EMPTY_NEGATE=0)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_dsi_pixel2byte_a4c4c8db8afc424cbc374c048c97a2ef(PACK_TYPE=1,PIXEL_FIFO_DEPTH=4096)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_dsi_pixel2byte_a4c4c8db8afc424cbc374c048c97a2ef(PACK_TYPE=1,PIXEL_FIFO_DEPTH=4096)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=2)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=2)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=6)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_asyncreg_a4c4c8db8afc424cbc374c048c97a2ef(WIDTH=6)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_ram_a4c4c8db8afc424cbc374c048c97a2ef(FAMILY="TITANIUM",WR_DEPTH=16384,RD_DEPTH=16384,WDATA_WIDTH=4,RDATA_WIDTH=4,WADDR_WIDTH=14,RADDR_WIDTH=14,OUTPUT_REG=0,RAM_MUX_RATIO=1,ENDIANESS=1)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_ram_a4c4c8db8afc424cbc374c048c97a2ef(FAMILY="TITANIUM",WR_DEPTH=16384,RD_DEPTH=16384,WDATA_WIDTH=4,RDATA_WIDTH=4,WADDR_WIDTH=14,RADDR_WIDTH=14,OUTPUT_REG=0,RAM_MUX_RATIO=1,ENDIANESS=1)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_ctl_a4c4c8db8afc424cbc374c048c97a2ef(WR_DEPTH=16384,WADDR_WIDTH=14,RADDR_WIDTH=14,ALMOST_FLAG=0,PROG_FULL_ASSERT=128,PROG_FULL_NEGATE=127,PROG_EMPTY_ASSERT=2,PROG_EMPTY_NEGATE=3,HANDSHAKE_FLAG=0,OVERFLOW_PROTECT=1,UNDERFLOW_PROTECT=1)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_ctl_a4c4c8db8afc424cbc374c048c97a2ef(WR_DEPTH=16384,WADDR_WIDTH=14,RADDR_WIDTH=14,ALMOST_FLAG=0,PROG_FULL_ASSERT=128,PROG_FULL_NEGATE=127,PROG_EMPTY_ASSERT=2,PROG_EMPTY_NEGATE=3,HANDSHAKE_FLAG=0,OVERFLOW_PROTECT=1,UNDERFLOW_PROTECT=1)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_top_a4c4c8db8afc424cbc374c048c97a2ef(FAMILY="TITANIUM",SYNC_CLK=1,DEPTH=16384,DATA_WIDTH=4,OPTIONAL_FLAGS=0,PROGRAMMABLE_FULL="NONE",PROG_FULL_ASSERT=128,PROG_FULL_NEGATE=127,PROGRAMMABLE_EMPTY="NONE",PROG_EMPTY_ASSERT=2,PROG_EMPTY_NEGATE=3,ENDIANESS=1)" begin
-INFO     : ... Hierarchical pre-synthesis "efx_fifo_top_a4c4c8db8afc424cbc374c048c97a2ef(FAMILY="TITANIUM",SYNC_CLK=1,DEPTH=16384,DATA_WIDTH=4,OPTIONAL_FLAGS=0,PROGRAMMABLE_FULL="NONE",PROG_FULL_ASSERT=128,PROG_FULL_NEGATE=127,PROGRAMMABLE_EMPTY="NONE",PROG_EMPTY_ASSERT=2,PROG_EMPTY_NEGATE=3,ENDIANESS=1)" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_dsi_delay_sync_a4c4c8db8afc424cbc374c048c97a2ef" begin
-INFO     : ... Hierarchical pre-synthesis "efx_dsi_delay_sync_a4c4c8db8afc424cbc374c048c97a2ef" end (Real time : 0s)
-INFO     : ... Hierarchical pre-synthesis "efx_dsi_video_iface_a4c4c8db8afc424cbc374c048c97a2ef(HS_DATA_WIDTH=8,PACKET_SEQUENCES=1)" begin
+INFO     : ... Hierarchical pre-synthesis "ti60f225_oob_top" begin
+WARNING  : Mapping into logic memory block 'u_ddr3_top/u_memory_bus_ctl/col_mach/fifo_ram[1].RAM32M0/memory' (256 bits) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ddr3_controller\memory_bus_ctl\memory_bus_ctl.v:5169) because 'syn_ram_style' directive is 'register' or 'logic'. [EFX-0657]
+WARNING  : Mapping into logic memory block 'checker0/u_ddr_buffer/history_mode.history/tags__D$12' (80 bits) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_frame_history.sv:8) because write and read address port is not compatible for dual-ported ram. [EFX-0657]
+WARNING  : Mapping into logic memory block 'checker0/u_ddr_buffer/history_mode.history/tags__D$21' (80 bits) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_frame_history.sv:8) because write and read address port is not compatible for dual-ported ram. [EFX-0657]
+WARNING  : Mapping into logic memory block 'checker0/u_ddr_buffer/history_mode.history/tags__D$b2' (80 bits) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_frame_history.sv:8) because write and read address port is not compatible for dual-ported ram. [EFX-0657]
+WARNING  : Mapping into logic memory block 'feature_controls/db' (96 bits) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_controls.sv:5) because it has all constant reader/writer. [EFX-0657]
+WARNING  : Mapping into logic memory block 'feature_controls/held' (96 bits) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_controls.sv:5) because it has all constant reader/writer. [EFX-0657]
+WARNING  : Mapping into logic memory block 'inst_gamma_correction/r_gamma_2P' (10240 bits) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\gamma_conrrection\gamma_correction.v:30) because read port is not synchronous. [EFX-0657]
+INFO     : ... Clock Enable Synthesis Performed on 3072 flops.
+INFO     : Cannot infer shift registers from 'checker0/u_ddr_buffer/history_mode.history/history[2][2]' (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_frame_history.sv:8) to 'checker0/u_ddr_buffer/history_mode.history/history[6][2]' (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_frame_history.sv:8). Shift registers with both dynamic address and reset not supported. [EFX-0688]
+INFO     : Cannot infer shift registers from 'checker0/u_ddr_buffer/history_mode.history/history[2][1]' (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_frame_history.sv:8) to 'checker0/u_ddr_buffer/history_mode.history/history[6][1]' (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_frame_history.sv:8). Shift registers with both dynamic address and reset not supported. [EFX-0688]
+INFO     : Cannot infer shift registers from 'checker0/u_ddr_buffer/history_mode.history/history[0][0]' (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_frame_history.sv:8) to 'checker0/u_ddr_buffer/history_mode.history/history[6][0]' (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_frame_history.sv:8). Shift registers with both dynamic address and reset not supported. [EFX-0688]
+INFO     : ... Hierarchical pre-synthesis "ti60f225_oob_top" end (Real time : 12s)
+INFO     : ... Flat optimizations begin
+INFO     : ... Flat optimizations end (Real time : 1s)
+INFO     : ... Flat synthesis begin
+INFO     : ... Flat synthesis end (Real time : 0s)
+INFO     : ... Flat optimizations begin
+INFO     : ... Flat optimizations end (Real time : 0s)
+INFO     : ... Check and break combinational loops begin
+INFO     : ... Check and break combinational loops end (Real time : 0s)
+INFO     : ... Setup for logic synthesis begin
+INFO     : ... Setup for logic synthesis end (Real time : 1s)
+INFO     : ... LUT mapping begin
+INFO     : ... LS, strategy: 3, nd: 36654, ed: 130544, lv: 16, pw: 72153.67
+INFO     : ... LUT mapping end (Real time : 53s)
+INFO     : ... Post-synthesis Verific netlist creation begin
+INFO     : ... Post-synthesis Verific netlist creation end (Real time : 1s)
+INFO     : ***** Beginning VDB Netlist Checker ... *****
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(49): Input/inout port jtag_inst1_RUNTEST is unconnected. Place and route may remove this unconnected port. [VDB-8003]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(52): Input/inout port jtag_inst1_TCK is unconnected. Place and route may remove this unconnected port. [VDB-8003]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(54): Input/inout port jtag_inst1_TMS is unconnected. Place and route may remove this unconnected port. [VDB-8003]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(55): Input/inout port jtag_inst1_UPDATE is unconnected. Place and route may remove this unconnected port. [VDB-8003]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(60): Input/inout port jtag_diag_RESET is unconnected. Place and route may remove this unconnected port. [VDB-8003]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(61): Input/inout port jtag_diag_RUNTEST is unconnected. Place and route may remove this unconnected port. [VDB-8003]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(62): Input/inout port jtag_diag_SEL is unconnected. Place and route may remove this unconnected port. [VDB-8003]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(64): Input/inout port jtag_diag_TCK is unconnected. Place and route may remove this unconnected port. [VDB-8003]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(66): Input/inout port jtag_diag_TMS is unconnected. Place and route may remove this unconnected port. [VDB-8003]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(76): Input/inout port CLK_25M is unconnected. Place and route may remove this unconnected port. [VDB-8003]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(184): Input/inout port i_mipi_tx_pclk is unconnected. Place and route may remove this unconnected port. [VDB-8003]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(222): Input/inout port mipi_dp_data0_LP_P_IN is unconnected. Place and route may remove this unconnected port. [VDB-8003]
+WARNING  : F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\ti60f225_oob_top.v(223): Input/inout port mipi_dp_data0_LP_N_IN is unconnected. Place and route may remove this unconnected port. [VDB-8003]
+WARNING  : Found 13 warnings in the post-synthesis netlist.
+INFO     : VDB Netlist Checker took 0.0859572 seconds [FlowMsg::StageDuration]
+INFO     :     VDB Netlist Checker took 0.15625 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : VDB Netlist Checker virtual memory usage: begin = 472.788 MB, end = 472.868 MB, delta = 0.08 MB [FlowMsg::VMUsage]
+INFO     :     VDB Netlist Checker peak virtual memory usage = 472.936 MB [FlowMsg::VMUsage::Peak]
+INFO     : VDB Netlist Checker resident set memory usage: begin = 493.14 MB, end = 493.308 MB, delta = 0.168 MB [FlowMsg::RSSUsage]
+INFO     :     VDB Netlist Checker peak resident set memory usage = 493.308 MB [FlowMsg::RSSUsage::Peak]
+INFO     : ***** Ending VDB Netlist Checker ... *****
+INFO     : Resource Summary 
+INFO     : ======================================= 
+INFO     : EFX_ADD                 : 	4574
+INFO     : EFX_LUT4                : 	36828
+INFO     : EFX_DSP48               : 	62
+INFO     : EFX_DSP24               : 	6
+INFO     : EFX_FF                  : 	21754
+INFO     : EFX_SRL8                : 	1069
+INFO     : EFX_RAM10               : 	217
+INFO     : EFX_DPRAM10             : 	4
+INFO     : ======================================= 
+INFO     : ... Post-Map Verilog Writer begin
+INFO     : Writing netlist 'ti60f225_oob_top' to Verilog file 'outflow\ti60f225_oob.map.v' [VDB-1030]
+INFO     : ... Post-Map Verilog Writer end (Real time : 1s)
+INFO     : The entire flow of EFX_MAP took 85.6110035 seconds [FlowMsg::StageDuration]
+INFO     :     The entire flow of EFX_MAP took 114.265625 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : The entire flow of EFX_MAP virtual memory usage: begin = 19.164 MB, end = 542.512 MB, delta = 523.348 MB [FlowMsg::VMUsage]
+INFO     :     The entire flow of EFX_MAP peak virtual memory usage = 542.512 MB [FlowMsg::VMUsage::Peak]
+INFO     : The entire flow of EFX_MAP resident set memory usage: begin = 20.504 MB, end = 558.616 MB, delta = 538.112 MB [FlowMsg::RSSUsage]
+INFO     :     The entire flow of EFX_MAP peak resident set memory usage = 558.616 MB [FlowMsg::RSSUsage::Peak]

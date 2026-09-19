@@ -1,2 +1,4 @@
+SCAN_CYCLES=521048
 CANNY pixels129600 edges2061 errors0
-sim/vision/tb_canny.sv:20: $finish called at 31323806000 (1ps)
+CANNY NEXT FRAME PASS zero stale edges, immediate capture at publication
+sim/vision/tb_canny.sv:33: $finish called at 53508366000 (1ps)

@@ -1,0 +1,2 @@
+SOBEL PASS 10001 windows, 512 binary extremes, four stages, II=1, varying threshold + metadata
+sim/vision/tb_sobel.sv:30: $finish called at 45480557 (1ps)

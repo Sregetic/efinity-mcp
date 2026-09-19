@@ -1,0 +1,144 @@
+           
+           Elitestek FPGA Placement and Routing.
+           Version: 2026.1.132.3.9 
+           Compiled: May 29 2026.
+           
+           Copyright (C) 2013 - 2026 Efinix, Inc. All rights reserved.
+
+           
+           The Tool Is Based on VPR of University of Toronto,
+           a free open source code under MIT license.
+           
+WARNING  : Found 2 warnings in the post-synthesis netlist.
+INFO     : Reading core interface constraints file "outflow\sobel_220.interface.csv" [DBMsg::CoreInterfaceConstraintsFileReading]
+INFO     : Successfully read core interface constraints file "outflow\sobel_220.interface.csv" [DBMsg::CoreInterfaceConstraintsFileLoadSuccess]
+INFO     : Reading core interface constraints file "outflow\sobel_220.interface.csv" [DBMsg::CoreInterfaceConstraintsFileReading]
+INFO     : Successfully read core interface constraints file "outflow\sobel_220.interface.csv" [DBMsg::CoreInterfaceConstraintsFileLoadSuccess]
+INFO     : XLR count after merging: 422
+INFO     : Netlist has 142 luts, 209 ffs and 111 adders [PackerMsg::NetlistStatistics]
+INFO     : Packed into 422 clusters with 2.1682465(1.042654) inputs(outputs) per cluster for a total of 915(440) inputs(outputs) [PackerMsg::ClusterPackingStatistics]
+INFO     : Packed into 422 xlrs with 2.1682465(1.042654) inputs(outputs) per xlr for a total of 915(440) inputs(outputs) [PackerMsg::XLRPackingStatistics]
+INFO     : Packed 0 fracturable DSPs into 0 clusters [PackerMsg::DSPPackingStatistics]
+INFO     : Packing took 0.5182998 seconds [FlowMsg::StageDuration]
+INFO     :     Packing took 0.5 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Packing virtual memory usage: begin = 61.768 MB, end = 129.524 MB, delta = 67.756 MB [FlowMsg::VMUsage]
+INFO     :     Packing peak virtual memory usage = 129.532 MB [FlowMsg::VMUsage::Peak]
+INFO     : Packing resident set memory usage: begin = 66.196 MB, end = 135.376 MB, delta = 69.18 MB [FlowMsg::RSSUsage]
+INFO     :     Packing peak resident set memory usage = 135.376 MB [FlowMsg::RSSUsage::Peak]
+INFO     : SDC file 'sobel_220.sdc' parsed successfully.
+INFO     : Reading core interface constraints file "outflow\sobel_220.interface.csv" [DBMsg::CoreInterfaceConstraintsFileReading]
+INFO     : Successfully read core interface constraints file "outflow\sobel_220.interface.csv" [DBMsg::CoreInterfaceConstraintsFileLoadSuccess]
+INFO     : Starting Global Placer with 8 threads ...
+            ----------     -------  --------------     -------
+             Iteration       WHPWL Worst Slack (ps) Convergence
+            ----------     -------  --------------     -------
+INFO     :           1       27189            1576         1.0%
+INFO     :           2       22937            1576         1.4%
+INFO     :           3       14886            1485         2.8%
+INFO     :           4       13793            1100         3.4%
+INFO     :           5       13123            1178         4.3%
+INFO     :           6       11265            1093         5.6%
+INFO     :           7       10553            1098         8.0%
+INFO     :           8        9206            1254        14.6%
+INFO     :           9        7384            1309        33.9%
+INFO     :          10        6803            1253        51.3%
+INFO     :          11        6542            1278        59.2%
+INFO     :          12        6381            1372        62.3%
+INFO     :          13        6405            1278        63.6%
+INFO     :          14        6407            1253        66.3%
+INFO     :          15        6037            1253        66.7%
+INFO     :          16        6383            1253        70.8%
+INFO     :          17        6450            1253        70.8%
+INFO     :          18        6189            1253        75.6%
+INFO     :          19        6330            1253        75.6%
+INFO     :          20        6399            1253        75.9%
+INFO     :          21        6323            1270        78.5%
+INFO     :          22        6314            1300        79.6%
+INFO     :          23        6203            1245        82.9%
+INFO     :          24        6254            1350        82.9%
+INFO     :          25        6294            1376        84.2%
+INFO     :          26        6190            1376        86.3%
+INFO     :          27        6434            1376        86.3%
+INFO     :          28        5663            1376        86.4%
+INFO     :          29        5673            1253        90.5%
+INFO     :          30        5662            1280        94.4%
+INFO     :          31        5707            1316        96.0%
+INFO     :          32        5717            1316        97.1%
+INFO     :          33        5745            1161        97.1%
+INFO     :          34        5727            1229        98.2%
+INFO     : GP: best_placement: wpd: 2012.78
+INFO     : Starting Annealer
+            ----------     -------  --------------     -------
+             Iteration       WHPWL  Delay Max (ps)     R Limit
+            ----------     -------  --------------     -------
+INFO     :           0        2454            3238        30.0
+INFO     :           1        2395            3396        29.4
+INFO     :           2        2351            3102        28.7
+INFO     :           3        2267            3218        27.4
+INFO     :           4        2216            3218        26.0
+INFO     :           5        2373            3218        24.6
+INFO     :           6        2227            3218        23.3
+INFO     :           7        2154            3153        21.8
+INFO     :           8        2137            3222        20.4
+INFO     :           9        2054            3361        18.9
+INFO     :          10        2047            3103        17.5
+INFO     :          11        2035            3097        16.2
+INFO     :          12        1967            3152        15.1
+INFO     :          13        2175            3152        13.9
+INFO     :          14        2115            3152        12.9
+INFO     :          15        2054            3152        11.9
+INFO     :          16        2010            3196        10.9
+INFO     :          17        1990            3196         9.9
+INFO     :          18        1950            3296         9.1
+INFO     :          19        1924            3214         8.3
+INFO     :          20        1919            3266         7.5
+INFO     :          21        1918            3152         6.8
+INFO     :          22        1919            3304         6.2
+INFO     :          23        1899            3304         5.6
+INFO     :          24        1892            3304         5.0
+INFO     : DP: best_placement: wpd: 2227.92
+INFO     : Starting incremental timing annealer
+INFO     : Starting incremental timing quench 1 with temperature 0.1 and 0.2 moves per pass
+            ----------     -------  --------------     -------
+             Iteration       WHPWL  Delay Max (ps)     R Limit
+            ----------     -------  --------------     -------
+INFO     :           0        1892            3304        30.0
+INFO     :           1        2295            3152        27.5
+INFO     :           2        2250            3034        25.1
+INFO     :           3        2246            2991        22.8
+INFO     :           4        2256            2939        20.8
+INFO     :           5        2226            2931        18.8
+INFO     :           6        2223            2931        17.2
+INFO     :           7        2210            2910        15.6
+INFO     :           8        2189            2910        14.0
+INFO     :           9        2113            2910        12.5
+INFO     : DP: best_placement: wpd: -1
+INFO     : Placement successful: 424 cells are placed
+INFO     : Peak congestion smeared over 4x4 of the chip is 0.595445 at 179,33
+INFO     : Peak congestion smeared over 1/16 of the chip is 0.318732 at 181,31
+INFO     : Peak congestion smeared over 1/4 of the chip is 0.092914 at 219,0
+INFO     : Congestion-weighted HPWL per net: 6.15435
+INFO     : Post-placement cluster-level checks is successful
+INFO     : Post-placement primitive-level checks is successful
+INFO     : Placement took 1.8375978 seconds [FlowMsg::StageDuration]
+INFO     :     Placement took 1.796875 seconds (approximately) in total CPU time [FlowMsg::StageDuration::CPUTime]
+INFO     : Placement virtual memory usage: begin = 57.444 MB, end = 126.036 MB, delta = 68.592 MB [FlowMsg::VMUsage]
+INFO     :     Placement peak virtual memory usage = 148.476 MB [FlowMsg::VMUsage::Peak]
+INFO     : Placement resident set memory usage: begin = 70.968 MB, end = 136.932 MB, delta = 65.964 MB [FlowMsg::RSSUsage]
+INFO     :     Placement peak resident set memory usage = 160.96 MB [FlowMsg::RSSUsage::Peak]
+INFO     : SDC file 'sobel_220.sdc' parsed successfully.
+Maximum possible analyzed clocks frequency
+ Clock Name  Period (ns)  Frequency (MHz)     Edge
+    clk         3.426        291.886         (R-R)
+
+Geomean max period: 3.426
+
+Setup (Max) Clock Relationship
+  Launch Clock    Capture Clock   Constraint (ns)     Slack (ns)          Edge
+      clk              clk             4.545            1.119            (R-R)
+
+Hold (Min) Clock Relationship
+  Launch Clock    Capture Clock   Constraint (ns)     Slack (ns)          Edge
+      clk              clk             0.000            0.165            (R-R)
+
+INFO     : Write Timing Report to "outflow/sobel_220.place.timing.rpt" ...

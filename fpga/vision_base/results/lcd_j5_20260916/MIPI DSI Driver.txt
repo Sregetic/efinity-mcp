@@ -1,0 +1,190 @@
+                                     5                                                                                                   4                                                                                    3            T3
+                                                                                                                                                                                                                                            1     VGL
+                                                                                                                                                                                                                                                                        2                                                                             1
+                                                                                                                                                                                                                                       1
+                                                                                                                                                                                                                  VGL                      T4                                              背光最好恒流，40mA设计
+                                                            L3
+                                                                                                                                                                                                  -5V                                       1    5V_IN
+
+
+
+
+                                                                                                                                                                                                                                                                                                                                              32
+                                                                                                                   C18                                                     R16        4.7R/1%                                          1                                                                                             J11
+                                                                                                                                                     1
+                                    SLO0420H4R7MTT                        4.7uH                                                                                                                                                            T5
+          5V_IN                                                                                                                           3                                                                                                                                                                 LEDA               1
+
+
+
+
+                                                                                                                                                                                                                                                                                                                                               GDN9
+                                                                                                                                                                                                                                                                                                                                    LEDA
+
+
+
+
+                                                                                                                                                                                                    2
+                                                                                                                                                     2                                                                                      1    VDD_3V3                                                    LEDK               2
+                                                                                                                                                                                            C20              D6         R17            1                                                                                       3    LEDK
+                                                          U3                                                       0.1uF,16V                  SOT23-3                                                                                                                                                                               GND1
+                                                                 LP3318B5F                                                                                                  C19                                         NC                 T6                                                               D23_P              4
+                                                            5                 1                                                               SDM40E20LS-7-F                                                                                                                                                D23_N              5    D3P
+                                                                                                                         D7                                                 1uF/10V         0.1uF,16V             R0402                     1
+                             R18          10K/1%                 VIN    SW                                                                    D5                                                         SOD323                                                                                                                6    D3N
+                                                                                                                                                                                                                                       1
+                                                                                                                                                                                                         BZT52-B6V8S_R1_00001                                                                                                       GND2
+
+
+
+
+                                                                                                                                                                                                    1
+                                                            4                                                     2                  1                                                                                                                                                                      CK2_P              7
+
+D                                                                                                                                                                                                                                                                                                                                                                                   D
+                                                                 SHDN                                                                                                                                                                                                                                       CK2_N              8    CLKP
+                                              C21                                          R19             510K/1%       CUS10S30,H3F                                                                                                      T7
+                                                                                                                                                                                                                                                                                                                                    CLKN
+                                              0.1uF,16V 2        GND FB
+                                                                              3
+                                                                                                                                                                                                                                            1     VGH
+                                                                                                                                                                                                                                                                                                                               9
+                                                                                                                                                                                                                                                                                                                                    GND3
+                              C22                                                                                                                                                                                                      1                                                                    D22_P             10
+                                                                 SOT23-5                      C23          0.1uF,16V                                                                                                                                                                                        D22_N             11    D2P
+                              10uF,16V                                                                                                                                                                                                     T8                                                                                       D2N
+                                                                                                                                                                                                                                                                                                                              12
+                                                                                                                                                                                                                                            1     LEDA                                                      D21_P             13    GND4
+                                                                                              R20                                                                                                                                      1                                                                    D21_N             14    D1P
+                                                                                                                                                         VGH                                                                                                                                                                        D1N
+                                                                                              120K/1%                                                                                                                                      T9                                                                                 15
+                                                                                                                                                                 5v                                                                                                                                         D20_P             16    GND5
+                                                                                                                                                                                                                                            1     LEDK                                                      D20_N                   D0P
+                                                                                                                                                                                                                                       1                                                                                      17
+                                                                                              VFB=1.3V                                                                                                                                                                                                                        18    D0N
+                                                                                               VOUT = (R1/R2 + 1)*VFB                                                                                                                                                                                                         19    GND6
+                                                                                                                                                C26            C27                                                                                                                                                                  ALCD_CS
+                                                                                                                                                                                                                                                                                                                              20
+                                                                                                                                                4.7uF/25V      0.1uF,16V                                                                                                                                                      21    ALCD_SCL
+                                                                                                                                                                                                                                                                                                                              22    ALCD_SDI
+                                                                                                                                                                                                                                                                  R21         10K/1%   5%                                     23    ALCD_SDO
+                                                                                                                                                                                                                                                        VDD_3V3                         VGL                                         VSN
+                                                                                                                                                                                                                                                                                        VGH                                   24
+                                                                                                                                                                                                                                                LCD_RST_N R22      0R            5%    RST_N                                  25    VSP
+                                                                                                                                                                                                                                       VDD_3V3 VDD_3V3 R32    10K/1%            5%     STBYB                                  26    RESET_N
+                                                                                                                                                                                                                                                                                                                              27    STBYB
+                                                                                                                                                                                                                                                                                                                              28    MTP
+                                                                                                                                                                                                                                                                                                                                    VCC3.3V
+
+
+
+
+                                                                                                                                                                                                                                                                                                                                               GDN8
+                                                                                                                                                                                                                                                                                                                              29
+                                                                                                                                                                                                                                                                        R33                                                   30    NC
+                                                                                                                                                                                                                                                                                        C28                                         GND7
+                                                                                                                                                                                                        H1                                                                                                  C30
+                                                                                      L4                                                                                                                                          H3            C31                                           C29
+                                                                                                                                                                                                                                                                                        1uF/10V
+
+
+
+
+                                                                                                                                                                                                                                                                                                                                              31
+                                                                           10uH                                           D8                                                                                                                    0.1uF,16V
+                                                                                                                                                                                                                                                                        10K/1%/NC                                           AFC01-S30FCA-00
+                                                                                                                                                                                                                                                C0402
+                                  5V_IN                                                                              2                1                   LEDA                                                                                                                                 0.1uF,16V
+                                                                                                                                                                                                                                                X7R               5%                                        0.1uF,16V
+                                                                                                                                                                                                    HD                            HD
+                                                                                     INS14373234                                                                                                                                                10V
+
+C                                                            C33
+                                                             22uF/16V         6
+                                                                                    U4
+                                                                                       SLO0420H100MTT
+
+                                                                                                       1
+                                                                                                                          CUS10S30,H3F R23               C32
+                                                                                                                                                         4.7uF/25V
+                                                                                                                                                                                                        H2
+                                                                                                                                                                                                                              H4                                                MTP空着,厂家烧录用的。                                                                                       C
+                                                                                    VIN       SW       5
+                                                                                              NC                                     4.7R/1%/NC                                                    HD                                                                     STBYB正常显示要拉高，如果I/O够的话，可以控制进去休眠。
+                  [2]                                                         4                                                                                                                                               HD
+                        LCD_BLK_EN                                            2     CTRL               3                                                  LEDK
+                                                                                    GND       FB
+                                                                                     SGM3752                       R24
+                                                                                                                   4.7R/1%
+
+
+
+                                                                                                                          Note：请根据背光升压IC的Vfb电压，调节限流电阻值
+
+
+
+
+                                                                                                    C43           0.1uF,16V
+
+                                                                                                    U7
+                                                            L5     SLO0420H4R7MTT
+                  VDD_3V3                                                                     1                               6
+                                                                                              2     GND        VBST           5                R31          10K/1%   5V_IN
+                                                                                              3     SW           EN           4                R8           33.4K/1% VDD_3V3
+                                                        4.7uH/1A                                    VIN         VFB
+                           C44       C37                                                                                                 R7
+
+B                       47uF/16V 22uF/16V           5V_IN
+                                                                    C15      C16       C17
+                                                                                                    TPP2020
+                                                                                                                                         10K/1%                                                                                                                                                                                                                                     B
+                                                                   10uF,16V 10uF,16V 0.1uF,16V
+
+
+
+
+                                     22            24
+                  D23_P              21
+                  D23_N              20
+                                     19
+                  CK2_P              18
+                  CK2_N              17                                                                            VDD_3V3
+                                     16
+                  D22_P              15
+                  D22_N              14
+                                     13                                                                                       R2
+                  D21_P              12                                                                                       10K/1%
+                  D21_N              11
+                                     10                                                                                        LCD_RST_N
+                  D20_P               9
+                  D20_N               8
+                                      7
+
+A                                     6
+                                      5
+                                      4
+                                                                                                                                                                                                                                                                                                                                                                                    A
+                                                                                                                      3
+
+
+
+
+               LCD_BLK_EN             3
+                                                                                  LCD_RST_P       R1
+                LCD_RST_P             2                                                                       1
+5V_IN                                                                                                                             FHT9014Y-ME
+                                      1            23                                         10K/1%
+         C24      C25
+                                                                                                                      2
+
+
+
+
+                                         J1                                                                       Q1                                                                                                                                                                                Title
+        10uF,16V 0.1uF,16V
+                                 KH-CL0.5-H2.0-22PIN                                                                                                                                                                                                                                                                MIPI LCD Driver
+                                                                                                                                                                                                                                                                                                    Size      Document Number                                              Rev
+                                                                                                                                                                                                                                                                                                       A3     1                                                              V1.0
+
+                                                                                                                                                                                                                                                                                                    Date:         Sunday, June 09, 2024               Sheet   1   of   1
+

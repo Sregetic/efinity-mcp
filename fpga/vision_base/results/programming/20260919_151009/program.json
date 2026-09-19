@@ -1,0 +1,11 @@
+{
+  "bit_sha256": "1C1C85D375A43E952A4A91B56E24B225019213704AF81E6C0315A6BF24201A6C",
+  "frequency_hz": 1000000,
+  "operation": "JTAG SRAM",
+  "visual_acceptance": "pending user",
+  "started_utc": "2026-09-19T07:10:09.2731630Z",
+  "exit_code": 0,
+  "url": "ftdi://0x0403:0x6011:4:3/2",
+  "finished_utc": "2026-09-19T07:10:20.2669152Z",
+  "programmer_completed": true
+}

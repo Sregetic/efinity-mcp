@@ -1,0 +1,121 @@
+                 5                                                                   4                                                                       3                              2                                     1
+
+                                                                                                                           KH-CL0.5-H2.0-22PIN                        KH-CL0.5-H2.0-22PIN
+
+                                                                                                                      22         24                              22         24
+                                  J29                                                              MIPI0_RXDP0        21                          MIPI1_RXDP0    21
+                            01                       02   MIPI1_RXDP0
+    VCC_3V3                          01       02                                                   MIPI0_RXDN0        20                         MIPI1_RXDN0     20
+                            03                       04   MIPI1_RXDN0
+     VCC_5V                          03       04                                                                      19                                         19
+                            05                       06                                            MIPI0_RXDP1                                   MIPI1_RXDP1
+              MIPI0_RXDP0            05       06          MIPI1_RXDP1                                                 18                                         18
+                            07                       08
+D             MIPI0_RXDN0   09
+                            11
+                                     07
+                                     09
+                                     11
+                                              08
+                                              10
+                                              12
+                                                     10
+                                                     12
+                                                          MIPI1_RXDN1
+                                                                                                   MIPI0_RXDN1
+
+                                                                                                   MIPI0_RXDP2
+                                                                                                                      17
+                                                                                                                      16
+                                                                                                                      15
+                                                                                                                                                 MIPI1_RXDN1
+
+                                                                                                                                                 MIPI1_RXDP2
+                                                                                                                                                                 17
+                                                                                                                                                                 16
+                                                                                                                                                                 15
+                                                                                                                                                                                                                                                                D
+              MIPI0_RXDP1   13                       14   MIPI1_RXDP2
+                                     13       14                                                   MIPI0_RXDN2        14                         MIPI1_RXDN2     14
+              MIPI0_RXDN1   15                       16   MIPI1_RXDN2
+                                     15       16                                                                      13                                         13
+                            17                       18                                            MIPI0_RXDP3                                   MIPI1_RXDP3
+              MIPI0_RXDP2            17       18          MIPI1_RXDP3                                                 12                                         12
+                            19                       20                                            MIPI0_RXDN3                                   MIPI1_RXDN3
+              MIPI0_RXDN2            19       20          MIPI1_RXDN3                                                 11                                         11
+                            21                       22
+                                     21       22                                                                      10                                         10
+                            23                       24                                            MIPI0_RXDP4                                   MIPI1_RXDP4
+              MIPI0_RXDP3            23       24          MIPI1_RXDP4                                                  9                                          9
+                            25                       26                                            MIPI0_RXDN4                                   MIPI1_RXDN4
+              MIPI0_RXDN3            25       26          MIPI1_RXDN4                                                  8                                          8
+                            27                       28
+                                     27       28                                                                       7                                          7
+                            29                       30                                             CAM_EN_0                                     CAM_EN_1
+              MIPI0_RXDP4            29       30            SCL_1                                                      6                                          6
+                            31                       32
+              MIPI0_RXDN4            31       32            SDA_1                                                      5                                          5
+                            33                       34
+                                     33       34                                                                       4                                          4
+                            35                       36                                            CAM_SCL_0                                     CAM_SCL_1
+              SCL_0                  35       36                 EN_0                                                  3                                          3
+                            37                       38                                            CAM_SDA_0                                     CAM_SDA_1
+              SDA_0                  37       38                 EN_1                                                  2                                          2
+                            39                       40
+                                     39       40                                                    VCC                1         23              VCC              1         23
+                                                     G1
+                                          GND        G2
+                                          GND                                                                              J34                                        J35
+                                                     G3
+                                          GND        G4
+                                          GND
+                                  QTE-020-01-F-D-A
+
+
+
+
+C                               VCC_3V3
+                                                            VCC_5V
+                                                                                                                                                                                                                                                                C
+                                C1        C4
+                                                            C7          C8
+                                10uF,16V 0.1uF,16V
+                                                            10uF,16V 0.1uF,16V
+
+
+
+
+                                               J36
+                                                                                          J37
+
+                       VCC_5V             1                                  SCL_0                        CAM_SCL_0
+                                                                                      1            2
+                      VCC                 2                                  SDA_0                        CAM_SDA_0
+                                                                                      3            4
+                      VCC_3V3             3                                   EN_0                         CAM_EN_0
+                                                                                      5            6
+                                                                             SCL_1    7            8      CAM_SCL_1
+                                                                             SDA_1    9            10     CAM_SDA_1
+                                               CON3                           EN_1                         CAM_EN_1
+                                                                                     11            12
+
+
+                                                                                          CON12A
+
+
+
+
+B                                                                                                                                                                                                                                                               B
+
+
+
+
+A                                                                                                                                                                                                                                                               A
+
+                                                                                                                                                                                                Title
+                                                                                                                                                                                                        MIPI DSI SUBCARD
+                                                                                                                                                                                                Size    Document Number                                Rev
+                                                                                                                                                                                                   A3   1                                                v1.0
+
+                                                                                                                                                                                                Date:     Sunday, June 09, 2024   Sheet   1   of   1
+

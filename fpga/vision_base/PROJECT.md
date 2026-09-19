@@ -38,7 +38,7 @@
 | A3 | DDR、冻结、回放、多帧对比 | frame_render_engine 已实现锁帧/冻结重渲染/写回/场消隐发布；物理DDR适配/回放/UI后续接入 | 冻结时采集继续且数据不变；回放可定位 |
 | A4 | 完整 Canny | 帧级任务与中间图；待实现 | 包括长路径滞后连接，不以局部近似冒充 |
 | A5 | 彩色边缘叠加 | 输出合成；待实现 | 坐标、帧号及分支延迟一致 |
-| A6 | 圆/矩形等形状识别 | 轮廓/几何任务；待实现 | 独立形状样本与误判记录 |
+| A6 | 圆/矩形等形状识别 | 2026-09-19：单目标几何分类、框/文字叠加已实现并烧录；见docs/SHAPE_RECOGNITION_20260919.md | 仿真及链路回归通过，圆/矩形实物与误判记录待验收 |
 | X1 | 放大、缩小、移动 ROI | roi_scaler + axi_line_reader，当前核心交付 | 精确坐标映射、非整数倍率、独立 stride |
 | X2 | 显示与分析各自固定取帧 | frame_pool，当前元数据交付 | 多读者同帧、并发完成/获取/释放、不覆盖持有帧 |
 | X3 | RISC-V 系统控制 | SoC + 控制寄存器 + job 调度；待集成 | 真正控制参数/任务，不仅显示菜单 |
@@ -114,3 +114,4 @@ SC431HAI -> CSI/解包 -> 去 Bayer/格式处理 -> 采集写入器 -> 源帧 DD
 - 摄像头与屏幕数据手册：用户2026-09-07新增资料，实物版本待核对。
 - [Efinix CSI-2 RX 能力](https://www.efinixinc.com/support/ip/mipi-csi2-rx.php)。
 - [Efinix TinyML Generator](https://github.com/Efinix-Inc/tinyml/blob/main/tools/tinyml_generator/README.md)，2026-09-08核查。
+

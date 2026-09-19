@@ -1,0 +1,192 @@
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 19, 2026 02:41:38
+///////////////////////////////////
+
+[EFX-0012 VERI-INFO] default VHDL library search path is now "F:/Efinity/2026.1/sim_models/vhdl/packages/vhdl_2008" (VHDL-1504) 
+[EFX-0011 VERI-WARNING] non-net output port 'result' cannot be initialized at declaration in SystemVerilog mode (VERI-2522) (F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv:2)
+[EFX-0012 VERI-INFO] compiling module 'sobel_timing_top' (VERI-1018) (F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv:2)
+[EFX-0012 VERI-INFO] compiling module 'vision_sobel(META=60)' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv:4)
+[EFX-0000 INFO] ... Setting Synthesis Option: mode=speed
+[EFX-0000 INFO] ... Pre-synthesis checks begin
+[EFX-0200 WARNING] Removing redundant signal : w[39:32]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv:4)
+[EFX-0000 INFO] ... Pre-synthesis checks end (Real time : 0s)
+[EFX-0000 INFO] ... NameSpace init begin
+[EFX-0000 INFO] ... NameSpace init end (Real time : 0s)
+[EFX-0000 INFO] ... Mapping design "sobel_timing_top"
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "vision_sobel(META=60)" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "vision_sobel(META=60)" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "sobel_timing_top" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "sobel_timing_top" end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Flat synthesis begin
+[EFX-0000 INFO] ... Flat synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Check and break combinational loops begin
+[EFX-0000 INFO] ... Check and break combinational loops end (Real time : 0s)
+[EFX-0000 INFO] ... Setup for logic synthesis begin
+[EFX-0000 INFO] ... Setup for logic synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... LUT mapping begin
+[EFX-0000 INFO] ... LS, strategy: 3, nd: 105, ed: 375, lv: 6, pw: 416.26
+[EFX-0000 INFO] ... LUT mapping end (Real time : 1s)
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation begin
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation end (Real time : 0s)
+[EFX-0011 VERI-WARNING] Input/inout port CLK_25M is unconnected. Place and route may remove this unconnected port. (VDB-8003) (F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv:2)
+[EFX-0011 VERI-WARNING] Found 2 warnings in the post-synthesis netlist. 
+[EFX-0000 INFO] Resource Summary 
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] EFX_ADD                 : 	111
+[EFX-0000 INFO] EFX_LUT4                : 	140
+[EFX-0000 INFO] EFX_DSP48               : 	2
+[EFX-0000 INFO] EFX_FF                  : 	209
+[EFX-0000 INFO] EFX_SRL8                : 	60
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] ... Post-Map Verilog Writer begin
+[EFX-0000 INFO] ... Post-Map Verilog Writer end (Real time : 0s)
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 19, 2026 02:43:31
+///////////////////////////////////
+
+[EFX-0012 VERI-INFO] default VHDL library search path is now "F:/Efinity/2026.1/sim_models/vhdl/packages/vhdl_2008" (VHDL-1504) 
+[EFX-0011 VERI-WARNING] non-net output port 'result' cannot be initialized at declaration in SystemVerilog mode (VERI-2522) (F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv:2)
+[EFX-0012 VERI-INFO] compiling module 'sobel_timing_top' (VERI-1018) (F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv:2)
+[EFX-0012 VERI-INFO] compiling module 'vision_sobel(META=60)' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv:4)
+[EFX-0000 INFO] ... Setting Synthesis Option: mode=speed
+[EFX-0000 INFO] ... Pre-synthesis checks begin
+[EFX-0200 WARNING] Removing redundant signal : w[39:32]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv:4)
+[EFX-0000 INFO] ... Pre-synthesis checks end (Real time : 0s)
+[EFX-0000 INFO] ... NameSpace init begin
+[EFX-0000 INFO] ... NameSpace init end (Real time : 0s)
+[EFX-0000 INFO] ... Mapping design "sobel_timing_top"
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "vision_sobel(META=60)" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "vision_sobel(META=60)" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "sobel_timing_top" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "sobel_timing_top" end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Flat synthesis begin
+[EFX-0000 INFO] ... Flat synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Check and break combinational loops begin
+[EFX-0000 INFO] ... Check and break combinational loops end (Real time : 0s)
+[EFX-0000 INFO] ... Setup for logic synthesis begin
+[EFX-0000 INFO] ... Setup for logic synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... LUT mapping begin
+[EFX-0000 INFO] ... LS, strategy: 3, nd: 105, ed: 375, lv: 6, pw: 416.26
+[EFX-0000 INFO] ... LUT mapping end (Real time : 1s)
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation begin
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation end (Real time : 0s)
+[EFX-0011 VERI-WARNING] Input/inout port CLK_25M is unconnected. Place and route may remove this unconnected port. (VDB-8003) (F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv:2)
+[EFX-0011 VERI-WARNING] Found 2 warnings in the post-synthesis netlist. 
+[EFX-0000 INFO] Resource Summary 
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] EFX_ADD                 : 	111
+[EFX-0000 INFO] EFX_LUT4                : 	140
+[EFX-0000 INFO] EFX_DSP48               : 	2
+[EFX-0000 INFO] EFX_FF                  : 	209
+[EFX-0000 INFO] EFX_SRL8                : 	60
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] ... Post-Map Verilog Writer begin
+[EFX-0000 INFO] ... Post-Map Verilog Writer end (Real time : 0s)
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 19, 2026 02:44:51
+///////////////////////////////////
+
+[EFX-0012 VERI-INFO] default VHDL library search path is now "F:/Efinity/2026.1/sim_models/vhdl/packages/vhdl_2008" (VHDL-1504) 
+[EFX-0011 VERI-WARNING] non-net output port 'result' cannot be initialized at declaration in SystemVerilog mode (VERI-2522) (F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv:2)
+[EFX-0012 VERI-INFO] compiling module 'sobel_timing_top' (VERI-1018) (F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv:2)
+[EFX-0012 VERI-INFO] compiling module 'vision_sobel(META=60)' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv:4)
+[EFX-0000 INFO] ... Setting Synthesis Option: mode=speed
+[EFX-0000 INFO] ... Pre-synthesis checks begin
+[EFX-0200 WARNING] Removing redundant signal : w[39:32]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv:4)
+[EFX-0000 INFO] ... Pre-synthesis checks end (Real time : 0s)
+[EFX-0000 INFO] ... NameSpace init begin
+[EFX-0000 INFO] ... NameSpace init end (Real time : 0s)
+[EFX-0000 INFO] ... Mapping design "sobel_timing_top"
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "vision_sobel(META=60)" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "vision_sobel(META=60)" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "sobel_timing_top" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "sobel_timing_top" end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Flat synthesis begin
+[EFX-0000 INFO] ... Flat synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Check and break combinational loops begin
+[EFX-0000 INFO] ... Check and break combinational loops end (Real time : 0s)
+[EFX-0000 INFO] ... Setup for logic synthesis begin
+[EFX-0000 INFO] ... Setup for logic synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... LUT mapping begin
+[EFX-0000 INFO] ... LS, strategy: 3, nd: 105, ed: 375, lv: 6, pw: 416.43
+[EFX-0000 INFO] ... LUT mapping end (Real time : 1s)
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation begin
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation end (Real time : 0s)
+[EFX-0011 VERI-WARNING] Input/inout port CLK_25M is unconnected. Place and route may remove this unconnected port. (VDB-8003) (F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv:2)
+[EFX-0011 VERI-WARNING] Found 3 warnings in the post-synthesis netlist. 
+[EFX-0000 INFO] Resource Summary 
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] EFX_ADD                 : 	111
+[EFX-0000 INFO] EFX_LUT4                : 	140
+[EFX-0000 INFO] EFX_DSP48               : 	2
+[EFX-0000 INFO] EFX_FF                  : 	209
+[EFX-0000 INFO] EFX_SRL8                : 	60
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] ... Post-Map Verilog Writer begin
+[EFX-0000 INFO] ... Post-Map Verilog Writer end (Real time : 0s)
+
+///////////////////////////////////
+// Efinity Synthesis Started 
+// Sep 19, 2026 02:47:19
+///////////////////////////////////
+
+[EFX-0012 VERI-INFO] default VHDL library search path is now "F:/Efinity/2026.1/sim_models/vhdl/packages/vhdl_2008" (VHDL-1504) 
+[EFX-0011 VERI-WARNING] non-net output port 'result' cannot be initialized at declaration in SystemVerilog mode (VERI-2522) (F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv:2)
+[EFX-0012 VERI-INFO] compiling module 'sobel_timing_top' (VERI-1018) (F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv:2)
+[EFX-0012 VERI-INFO] compiling module 'vision_sobel(META=60)' (VERI-1018) (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv:4)
+[EFX-0000 INFO] ... Setting Synthesis Option: mode=speed
+[EFX-0000 INFO] ... Pre-synthesis checks begin
+[EFX-0200 WARNING] Removing redundant signal : w[39:32]. (F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv:4)
+[EFX-0000 INFO] ... Pre-synthesis checks end (Real time : 0s)
+[EFX-0000 INFO] ... NameSpace init begin
+[EFX-0000 INFO] ... NameSpace init end (Real time : 0s)
+[EFX-0000 INFO] ... Mapping design "sobel_timing_top"
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "vision_sobel(META=60)" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "vision_sobel(META=60)" end (Real time : 0s)
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "sobel_timing_top" begin
+[EFX-0000 INFO] ... Hierarchical pre-synthesis "sobel_timing_top" end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Flat synthesis begin
+[EFX-0000 INFO] ... Flat synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... Flat optimizations begin
+[EFX-0000 INFO] ... Flat optimizations end (Real time : 0s)
+[EFX-0000 INFO] ... Check and break combinational loops begin
+[EFX-0000 INFO] ... Check and break combinational loops end (Real time : 0s)
+[EFX-0000 INFO] ... Setup for logic synthesis begin
+[EFX-0000 INFO] ... Setup for logic synthesis end (Real time : 0s)
+[EFX-0000 INFO] ... LUT mapping begin
+[EFX-0000 INFO] ... LS, strategy: 3, nd: 105, ed: 375, lv: 6, pw: 416.26
+[EFX-0000 INFO] ... LUT mapping end (Real time : 1s)
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation begin
+[EFX-0000 INFO] ... Post-synthesis Verific netlist creation end (Real time : 0s)
+[EFX-0011 VERI-WARNING] Input/inout port CLK_25M is unconnected. Place and route may remove this unconnected port. (VDB-8003) (F:\Project\fpga\vision_base\efinity\sobel_220\sobel_timing_top.sv:2)
+[EFX-0011 VERI-WARNING] Found 2 warnings in the post-synthesis netlist. 
+[EFX-0000 INFO] Resource Summary 
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] EFX_ADD                 : 	111
+[EFX-0000 INFO] EFX_LUT4                : 	140
+[EFX-0000 INFO] EFX_DSP48               : 	2
+[EFX-0000 INFO] EFX_FF                  : 	209
+[EFX-0000 INFO] EFX_SRL8                : 	60
+[EFX-0000 INFO] ======================================= 
+[EFX-0000 INFO] ... Post-Map Verilog Writer begin
+[EFX-0000 INFO] ... Post-Map Verilog Writer end (Real time : 0s)

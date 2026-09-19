@@ -1,0 +1,18 @@
+{
+  "capture_fps": 29.886111577353027,
+  "raw_complete": true,
+  "write_errors": [
+    1,
+    1
+  ],
+  "canny_fault": false,
+  "exposure": 2950,
+  "exposure_readback": "00b860",
+  "ae_enabled": 1,
+  "ae_fault": 0,
+  "wns": 0.243,
+  "whs": 0.026,
+  "bit_sha256": "1c1c85d375a43e952a4a91b56e24b225019213704af81e6c0315a6bf24201a6c",
+  "haze_visual_acceptance": "pending user",
+  "outline_rectangle": "not implemented; filled-area classifier is not acceptance for provided outline"
+}

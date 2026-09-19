@@ -1,0 +1,6 @@
+{
+  "CLKOUT0_FREQ": "220.0",
+  "CLKOUT1_FREQ": "100.0",
+  "VCO_FREQ": "2200.0",
+  "PLL_FREQ": "1100.0"
+}
