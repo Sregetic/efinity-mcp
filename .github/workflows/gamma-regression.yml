@@ -1,0 +1,47 @@
+name: Gamma RTL equivalence (no hardware)
+on:
+  push:
+    paths:
+      - 'fpga/vision_base/board/ti60f225_v4/rtl/gamma_conrrection/**'
+      - 'fpga/vision_base/board/ti60f225_v4/rtl/true_dual_port_ram.v'
+      - 'fpga/vision_base/board/ti60f225_v4/rtl/vision/rgb_chroma_tone.sv'
+      - 'fpga/vision_base/sim/gamma/**'
+      - 'fpga/vision_base/scripts/verify_gamma.py'
+      - '.github/workflows/gamma-regression.yml'
+  pull_request:
+    paths:
+      - 'fpga/vision_base/board/ti60f225_v4/rtl/gamma_conrrection/**'
+      - 'fpga/vision_base/board/ti60f225_v4/rtl/true_dual_port_ram.v'
+      - 'fpga/vision_base/board/ti60f225_v4/rtl/vision/rgb_chroma_tone.sv'
+      - 'fpga/vision_base/sim/gamma/**'
+      - 'fpga/vision_base/scripts/verify_gamma.py'
+      - '.github/workflows/gamma-regression.yml'
+permissions:
+  contents: read
+jobs:
+  gamma:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GIT_LFS_SKIP_SMUDGE: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+          lfs: false
+      - name: Install RTL simulator
+        run: sudo apt-get update -qq && sudo apt-get install -y iverilog
+      - name: Compare initialized legacy, independent oracle and direct ROM
+        run: >-
+          python3 fpga/vision_base/scripts/verify_gamma.py
+          --output "$RUNNER_TEMP/gamma-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+      - name: Publish small result summary (no artifact quota)
+        if: always()
+        run: |
+          file="$RUNNER_TEMP/gamma-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT/summary.json"
+          if [ -f "$file" ]; then
+            echo '### Gamma RTL simulation; not FPGA area/timing acceptance' >> "$GITHUB_STEP_SUMMARY"
+            echo '```json' >> "$GITHUB_STEP_SUMMARY"
+            cat "$file" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          fi
