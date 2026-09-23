@@ -73,7 +73,7 @@ def main() -> int:
                 marker = f"PASS gamma width={width} "
                 lines = [line for line in text.splitlines() if line.startswith(marker)]
                 if len(lines) != 1 or any(word in text for word in ("ERROR:", "FATAL:", "WARNING:")):
-                    raise RuntimeError(f"Missing PASS or simulator diagnostic in {name}; inspect run log")
+                    raise RuntimeError(f"Missing PASS or simulator diagnostic in {name}:\n{text[-6000:]}")
                 case.update(passed=True, result=lines[0])
                 print(lines[0])
                 image.unlink()
