@@ -13,6 +13,7 @@ module tb_gamma_equivalence;
     integer checked = 0, legacy_checked = 0;
     integer i, j, ready_count = 0;
     reg compare_legacy = 0;
+    reg [3:0] tone_seen = 0;
     reg [31:0] rng = 32'h71c2da95;
     reg [DATA_WIDTH-1:0] er, eg, eb;
 
@@ -105,8 +106,11 @@ module tb_gamma_equivalence;
         always @(negedge clk) begin
             if (!compare_legacy || !rst_n) ready_count = 0;
             else ready_count = ready_count + 1;
-            if (ready_count > 8 && new_tone !== old_tone)
-                $fatal(1,"tone mux/delay mismatch mode=%0d",tone);
+            if (ready_count > 8) begin
+                tone_seen[tone] = 1'b1;
+                if (new_tone !== old_tone)
+                    $fatal(1,"tone mux/delay mismatch mode=%0d",tone);
+            end
         end
     end endgenerate
 
@@ -141,6 +145,8 @@ module tb_gamma_equivalence;
         for(i=0;i<40;i=i+1) tick(1,0,i[0],i[1],MASK,1,0);
         compare_legacy=0;
         repeat(4) tick(0,1,1,1,MASK,MASK,MASK);
+        if (DATA_WIDTH == 8 && tone_seen !== 4'b1111)
+            $fatal(1,"not all four tone modes were exercised: %b",tone_seen);
         $display("PASS gamma width=%0d checked=%0d legacy_checked=%0d curve=%s",
                  DATA_WIDTH,checked,legacy_checked,CURVE);
         $finish;

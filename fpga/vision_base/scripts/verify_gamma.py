@@ -32,6 +32,17 @@ def run(command: list[str], cwd: Path, log: Path) -> str:
     return proc.stdout
 
 
+def memory_order_notice(line: str) -> bool:
+    # This exact Icarus 12 notice is emitted by the UNCHANGED vendor wrapper's
+    # descending array declaration. Independent table tests check address order.
+    suffix = ('$readmemh: The behaviour for reg[...] mem[N:0]; $readmemh("...", mem); '
+              'changed in the 1364-2005 standard. To avoid ambiguity, use mem[0:N] '
+              'or explicit range parameters $readmemh("...", mem, start, stop);. '
+              'Defaulting to 1364-2005 behavior.')
+    return (line.startswith("WARNING: ") and "true_dual_port_ram.v:" in line
+            and line.endswith(suffix))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--iverilog")
@@ -72,9 +83,13 @@ def main() -> int:
                 text = run([vvp, str(image)], board, out / f"{name}.run.log")
                 marker = f"PASS gamma width={width} "
                 lines = [line for line in text.splitlines() if line.startswith(marker)]
-                if len(lines) != 1 or any(word in text for word in ("ERROR:", "FATAL:", "WARNING:")):
+                notices = [line for line in text.splitlines() if memory_order_notice(line)]
+                unexpected = [line for line in text.splitlines()
+                              if any(word in line for word in ("ERROR:", "FATAL:", "WARNING:"))
+                              and not memory_order_notice(line)]
+                if len(lines) != 1 or unexpected:
                     raise RuntimeError(f"Missing PASS or simulator diagnostic in {name}:\n{text[-6000:]}")
-                case.update(passed=True, result=lines[0])
+                case.update(passed=True, result=lines[0], memory_order_notices=len(notices))
                 print(lines[0])
                 image.unlink()
         summary["passed"] = True

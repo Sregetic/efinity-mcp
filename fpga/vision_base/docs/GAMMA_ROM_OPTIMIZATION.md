@@ -61,7 +61,10 @@ original 2P2 curve, and a deliberately nonmonotonic address-test table. Checks:
 This is a focused integration harness, not a complete board simulation. The
 legacy fixture is test-only and must never be added to the board XML. Missing
 curves, unknown table values, simulator errors, timeouts or missing PASS markers
-fail the script. Logs go to a new temporary directory or a new --output directory.
+fail the script. The exact Icarus 12 descending-array readmemh standard notice
+from the unchanged vendor wrapper is recorded separately; unknown warnings and
+all errors still fail. The independent oracle checks the actual address order.
+Logs go to a new temporary directory or a new --output directory.
 The cloud workflow prints a small Job Summary and does not upload artifacts.
 
 ## Real Efinity acceptance remains required
