@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "pixels": 4147200,
+  "frames": 2,
+  "scope": "Original/current RTL: every-cycle VS/HS/valid/overrun and valid-pixel bits, full1920x1080 frames, input bubbles and reset",
+  "reference": "F:\\Project\\fpga\\vision_base\\results\\fov_pack_20261006\\bayer_fov_reduce_reference.sv",
+  "rtl": "F:\\Project\\fpga\\vision_base\\board\\ti60f225_v4\\rtl\\bayer_fov_reduce.sv",
+  "hardware_programmed": false
+}

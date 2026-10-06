@@ -2,7 +2,8 @@ module i2c_master_reg_rom #(
 
     parameter ROM_SIZE                     = 25,   
     parameter TOTAL_ROM_DEPTH              = 256, // 6*7
-    parameter ADDR_WIDTH                   = 8   // alt_clogb2(42) 
+    parameter ADDR_WIDTH                   = 8,
+    parameter INIT_FILE                    = ""
 ) (
     input  wire                  clock,
     input  wire [ADDR_WIDTH-1:0] addr_ptr,
@@ -78,6 +79,9 @@ wire [ADDR_WIDTH-1:0] RADDR;
 //     ROM[8'h3c] = {16'hffff, 8'hff,1'b0 };
       
 // end 
+generate if(INIT_FILE != "")begin:external_sensor_rom
+ initial $readmemh(INIT_FILE,ROM);
+end else begin:sc431hai_rom
 initial begin
     
 ROM[8'h00] = {16'h0100,8'h00,1'b0};
@@ -244,7 +248,8 @@ ROM[8'ha0] = {16'h3213,8'h04,1'b0};
 ROM[8'ha1] = {16'h3E08,8'h80,1'b0};
 ROM[8'ha2] = {16'h3E09,8'h2a,1'b0};
 ROM[8'ha3] = {16'h3221,8'h66,1'b0};
-end 
+end
+end endgenerate
 // write is unused
 wire [ADDR_WIDTH-1:0] ADDRA = {ADDR_WIDTH{1'b0}}; 
 wire                  WEA   = 1'b0; 

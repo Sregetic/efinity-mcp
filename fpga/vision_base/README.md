@@ -1,6 +1,12 @@
 # Ti60F225I3 / SC431HAI 视觉工程
 
-固定 1080p60 视频主链，ROI、内部工作图尺寸和后续分析任务独立配置。基础/高阶算法、RISC-V 与局部 AI 按 `PROJECT.md` 分阶段接入。
+> 2026-10-07 当前源码、构建依赖与验收边界见 [GitHub 快照说明](docs/GITHUB_SNAPSHOT_20261007.md)；A6 实物正例和 X3 整机 HDMI 直通仍待完成。下文包含早期记录，当前部署以项目总目标表为准。
+
+> 当前功能与实物验收以[项目总目标表](docs/PROJECT_MASTER_STATUS.md)为准；下文保留早期底座说明。2026-10-01资源优化保留；2026-10-03已按用户要求[恢复原1080p60摄像头设置](results/hdmi_restore_60hz_20261003/REPORT.md)，完成源/制品身份核对及SRAM烧录，板内扫描约59.964fps。采集卡有效图像仍未验收；已完成[接收寄存器B/C复测](results/ugreen_rx_abc_20261003/REPORT.md)，电脑正常输入A待真实接线采集。
+
+2026-10-03追加实际实现：[FOV缓存优化与A6闭合轮廓识别](results/resource_optimization_20261003/REPORT.md)已通过RTL回归和完整Ti60 P&R，RAM224→220、XLR30201→30629、DSP29不变。随后完成[SC2210提前适配](docs/SC2210_PREPARATION_20261003.md)：`artifacts/camera`现为保留SC431HAI默认的0EF81E…候选（RAM220、XLR30587），SC2210 SDK参考单独存到`artifacts/camera_sc2210`（RAM182、XLR28566）。两个候选均**尚未烧录**，实际SC2210模组表仍待匹配；板上原60Hz F6BF…版保留。源码实现、物理构建与实物验收分别记录。
+
+当前视频主链按用户要求恢复为原 **1080p60（148.5MHz，VIC16）**，移除后续同步延迟实验；30Hz修正版及诊断试验源码/制品保留在备份。ROI、内部工作图尺寸和后续分析任务独立配置。基础/高阶算法、RISC-V 与局部 AI 按 `PROJECT.md` 分阶段接入。
 
 ## 工程入口
 
@@ -18,7 +24,7 @@
 | 彩条诊断 | 1920×1080 有效区、2200×1125 总时序、八色条、白边框、移动标记、帧活动 LED | 完整帧仿真及独立板级制品 |
 | RGB565 帧引擎 | 四源 bank、多读者 lease、冻结/实时切换、ROI、2PPC 最近邻缩放、AXI128 读写、结果双缓冲与场消隐发布 | 行为存储逐像素回归；独立物理时序探针 |
 
-新引擎已形成“取帧 → ROI/缩放 → 写回 → 结果描述符发布”的闭环，但摄像头位流仍走供应商 RAW 缓存路径。真实 RAW→RGB565 采集适配、DDR 多客户端仲裁和结果扫描 DMA 尚未接入；不会将片内 AXI 测试服务当作真实 DDR 带宽证据。
+当前源树已包含采集、DDR 仲裁、ROI 写回和结果扫描；`RAW_TO_POOL=1` 候选将供应商 checker0 RAW DDR 缓存并入八 bank RGB 源池。资源与验收证据见 `results/raw_pool_20261006/REPORT.md`；当前在板位流与离线候选分开记录。
 
 ## 编译与制品
 
@@ -41,10 +47,13 @@
 
 ```powershell
 & 'F:/Project/fpga/vision_base/scripts/verify.ps1' -Suite full
+& 'F:/Project/fpga/vision_base/scripts/verify.ps1' -Suite hdmi
 & 'F:/Project/fpga/vision_base/scripts/synthesize.ps1' -Top frame_render_engine -Flow map
 ```
 
 统一入口包含 9 个 testbench：板级三帧切换、帧池、任务控制、完整彩条时序、AXI 写入器、AXI 行读取、缩放器、读缩放串接及完整帧引擎。覆盖奇数 ROI/尾像素、stride、4 KiB、背压、配置锁存、错误不发布、冻结/实时和场消隐边界。
+
+`-Suite hdmi`单独使用已安装ModelSim模拟供应商保护RTL与Efinity原生SRL模型，检查AVI/校验和/BCH、HDMI前导码/保护带/TERC4数据岛及两帧RGB逐像素一致性；日志与源码摘要在`results/hdmi/`和`results/verification.hdmi.json`。它不替代物理接收验收，音频输入目前禁用。
 
 完整帧引擎长案例逐像素验证三种 1920×1080 结果：1080p 1:1、1280×720 放大、960×540 ROI 放大。每个案例均检查 2,073,600 个实际写回像素。结果宽度须为 8 的倍数；底层 scaler 的奇数输出能力另行测试。
 

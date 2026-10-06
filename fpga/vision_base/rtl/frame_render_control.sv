@@ -3,6 +3,7 @@
 // vblank is a one-cycle pulse from the scanout adapter, not an async VS signal.
 module frame_render_control #(
     parameter integer BANKS=4,
+    parameter integer KEEP_HISTORY=0,
     parameter integer BANK_BITS=$clog2(BANKS),
     parameter integer FRAME_BUDGET_CYCLES=1666667
 )(
@@ -17,8 +18,10 @@ module frame_render_control #(
     output wire analysis_hold_valid,
     output wire [BANK_BITS-1:0] analysis_hold_bank,
     output wire [31:0] analysis_hold_frame_id,analysis_hold_config_id,
+    input wire pin_history,display_use_analysis,input wire[2:0]display_age,analysis_age,
+    output wire[2:0]history_count,output wire[31:0]capture_frame_id,
     input wire job_valid,output wire job_ready,
-    input wire job_config_ok,freeze_source,
+    input wire job_config_ok,freeze_source,release_source,
     input wire [31:0] job_config_id,
     output wire run_valid,input wire run_ready,
     output wire [BANK_BITS-1:0] run_source_bank,
@@ -33,7 +36,8 @@ module frame_render_control #(
     output wire busy,output reg pending,
     output reg [31:0] last_cycles,deadline_misses,
     output wire source_hold_valid,
-    output wire [BANK_BITS-1:0] source_hold_bank
+    output wire [BANK_BITS-1:0] source_hold_bank,
+    output wire[31:0]source_hold_frame_id,source_hold_config_id
 );
     localparam IDLE=0, RELEASE=1, ACQUIRE=2, LAUNCH=3, RUN=4;
     reg [2:0] state;
@@ -42,11 +46,13 @@ module frame_render_control #(
     reg pending_bank;
     wire acquire_ready;
     wire [31:0] source_frame;
+    assign source_hold_frame_id=source_frame;
     wire finish = state==RUN && (scale_finished || scaler_done)
                               && (write_finished || writer_done);
-    wire source_release = state==RELEASE || (finish && !freeze_q);
-    frame_pool #(.BANKS(BANKS),.BANK_ID_WIDTH(BANK_BITS)) pool (
-        .clk(clk),.rst_n(rst_n),
+    wire source_release = state==RELEASE || (finish && !freeze_q) || (state==IDLE&&release_source);
+    frame_pool #(.BANKS(BANKS),.BANK_ID_WIDTH(BANK_BITS),.KEEP_HISTORY(KEEP_HISTORY)) pool (
+        .clk(clk),.rst_n(rst_n),.pin_history(pin_history),.display_use_analysis(display_use_analysis),
+        .display_age(display_age),.analysis_age(analysis_age),.history_count(history_count),
         .cap_req_valid(cap_req_valid),.cap_req_ready(cap_req_ready),
         .cap_req_config_id(cap_req_config_id),.cap_req_bank(cap_req_bank),
         .cap_done_valid(cap_done_valid),.cap_done_ready(cap_done_ready),
@@ -54,7 +60,7 @@ module frame_render_control #(
         .display_acquire_valid(state==ACQUIRE),.display_acquire_ready(acquire_ready),
         .display_acquire_bank(),.display_release(source_release),
         .display_hold_valid(source_hold_valid),.display_hold_bank(source_hold_bank),
-        .display_hold_frame_id(source_frame),.display_hold_config_id(),
+        .display_hold_frame_id(source_frame),.display_hold_config_id(source_hold_config_id),
         .analysis_acquire_valid(analysis_acquire_valid),
         .analysis_acquire_ready(analysis_acquire_ready),.analysis_acquire_bank(),
         .analysis_release(analysis_release),.analysis_hold_valid(analysis_hold_valid),
@@ -62,7 +68,7 @@ module frame_render_control #(
         .analysis_hold_frame_id(analysis_hold_frame_id),
         .analysis_hold_config_id(analysis_hold_config_id),
         .ready_bitmap(),.display_held_bitmap(),.analysis_held_bitmap(),
-        .cap_active_valid(),.cap_active_bank(),.cap_active_frame_id(),.cap_active_config_id()
+        .cap_active_valid(),.cap_active_bank(),.cap_active_frame_id(capture_frame_id),.cap_active_config_id()
     );
     assign run_source_bank=source_hold_bank;
     assign run_frame_id=source_frame;

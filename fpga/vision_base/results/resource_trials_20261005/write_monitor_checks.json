@@ -1,0 +1,8 @@
+{
+  "sample_count": 290,
+  "seconds": 62.2710645198822,
+  "write_errors_first": 1,
+  "write_errors_last": 1,
+  "write_errors_delta": 0,
+  "scope": "Live RAW write-commit counter only; not FIFO high-water/overflow telemetry"
+}

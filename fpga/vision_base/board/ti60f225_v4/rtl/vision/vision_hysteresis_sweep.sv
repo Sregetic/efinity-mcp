@@ -1,17 +1,106 @@
 // Exact 8-connected hysteresis without a full-frame coordinate queue.
 // Forward/backward in-place sweeps continue until no weak pixel is promoted.
-module vision_hysteresis_sweep #(parameter W=480,H=270,CW=9,AW=$clog2(W*H))(
+// REUSE_CAPTURE_MAP: every mutable coordinate MUST be written each capture.
+// Coordinates omitted on all frames are static zero padding initialized by CLEAR.
+// Both output planes initialize once; capture overwrites zeros as well as edges.
+module vision_hysteresis_sweep #(parameter W=480,H=270,CW=9,AW=$clog2(W*H),REUSE_CAPTURE_MAP=0,MIN_COMPONENT=1,PROBE=0,ALLOW_DISCARD=0)(
  input clk,rst_n,vblank,class_valid,input[CW-1:0]class_x,class_y,input[1:0]classification,input class_last,
  input[CW-1:0]display_x,display_y,
  output capture_enable,output reg ready=0,output busy,output pixel,
- output reg[31:0]completed=0,output reg fault=0,output[3:0]debug_state,output[AW:0]debug_queue);
+ output reg[31:0]completed=0,output reg fault=0,output[3:0]debug_state,output[AW:0]debug_queue,
+ input display_de,probe_req,input[11:0]probe_address,
+ output reg probe_ack,output reg[31:0]probe_data,output reg[11:0]probe_read_address,output probe_busy,input frame_discard,
+ output reg[31:0]last_cycles,sweep_passes,weak_visits);
 localparam N=W*H;
 localparam CLEAR=0,WAIT_FRAME=1,CAPTURE=2,CUR_READ=3,CUR_CHECK=4,NREAD=5,NCHECK=6,ADVANCE=7,PUBLISH=8;
+localparam PRUNE_READ=9,PRUNE_CHECK=10,PRUNE_NODE=11,PRUNE_NREAD=12,PRUNE_NCHECK=13,PRUNE_COMMIT=14;
 reg[3:0]state=CLEAR;reg[AW-1:0]clear_addr=0;
 reg front=0,reverse=0,changed=0;reg[CW-1:0]px=0,py=0;reg[2:0]neighbor=0;
+// Conservative16x16 weak-presence mask. Promotion only removes weak pixels;
+// a tile captured without any weak pixel can be skipped on every sweep.
+localparam TILE_COLS=(W+15)/16,TILE_ROWS=(H+15)/16;
+(* syn_ramstyle="registers" *)reg[TILE_COLS-1:0]weak_tiles[0:TILE_ROWS-1];
+wire empty_tile=!weak_tiles[py>>4][px>>4];
+wire clear_tiles=!rst_n||(state==WAIT_FRAME&&vblank)||(state==PUBLISH&&vblank);
+genvar tr;
+generate for(tr=0;tr<TILE_ROWS;tr=tr+1)begin:weak_mask_rows
+ // Keep this clear in the data path: an extra510-fanout dedicated SR exceeds
+ // Titanium's two-reset-per-region limit next to the existing camera resets.
+ (* syn_keep="true" *)wire[TILE_COLS-1:0]mask_d=clear_tiles?{TILE_COLS{1'b0}}:
+  ((state==CAPTURE&&class_valid&&classification==1&&(class_y>>4)==tr)?
+   weak_tiles[tr]|(TILE_COLS'(1)<<(class_x>>4)):weak_tiles[tr]);
+ always @(posedge clk)weak_tiles[tr]<=mask_d;
+end endgenerate
+wire[CW-1:0]tile_end=px|CW'(15),tile_start=px&~CW'(15);
+wire scan_row_end=reverse?(empty_tile?tile_start==0:px==0):(empty_tile?tile_end>=W-1:px==W-1);
+wire scan_end=scan_row_end&&(reverse?py==0:py==H-1);
+wire[CW-1:0]scan_next_x=scan_row_end?(reverse?CW'(W-1):CW'(0)):
+                          (reverse?(empty_tile?tile_start-1'b1:px-1'b1):(empty_tile?tile_end+1'b1:px+1'b1));
+wire[CW-1:0]scan_next_y=scan_row_end?(reverse?py-1'b1:py+1'b1):py;
+// Bounded flood search: reaching MIN_COMPONENT proves a component is large.
+// Map3 is a visited edge. Membership distinguishes this search from prior kept
+// components, so a long component's unvisited tails are never erased.
+localparam QW=$clog2(MIN_COMPONENT+1);
+reg[CW-1:0]qx[0:MIN_COMPONENT-1],qy[0:MIN_COMPONENT-1];
+reg[QW-1:0]head=0,tail=0,erase_index=0;
+reg[CW-1:0]bx=0,by=0;reg keep_component=0,own_neighbor=0;
+reg signed[CW+1:0]pnx,pny;reg prune_bounds,own_queue;
+integer qi;
+always @*begin
+ pnx=$signed({2'b0,bx});pny=$signed({2'b0,by});
+ case(neighbor)
+  0:begin pnx=pnx-1;pny=pny-1;end 1:pny=pny-1;
+  2:begin pnx=pnx+1;pny=pny-1;end 3:pnx=pnx-1;4:pnx=pnx+1;
+  5:begin pnx=pnx-1;pny=pny+1;end 6:pny=pny+1;
+  7:begin pnx=pnx+1;pny=pny+1;end
+ endcase
+ prune_bounds=pnx>=0&&pnx<W&&pny>=0&&pny<H;
+ own_queue=0;
+ for(qi=0;qi<MIN_COMPONENT;qi=qi+1)
+  if(qi<tail&&qx[qi]==pnx&&qy[qi]==pny)own_queue=1;
+end
+wire[AW-1:0]prune_neighbor_addr=pny*W+pnx;
+wire[AW-1:0]erase_addr=qy[erase_index]*W+qx[erase_index];
+reg[31:0]work_cycles=0;
+// Only the read-only skip path may consume the prefetched next pixel.
+// Flood erase commits can collide with that address and require a fresh read.
+task prune_next(input prefetched);
+ begin
+  if(px==W-1&&py==H-1)state<=PUBLISH;
+  else begin if(px==W-1)begin px<=0;py<=py+1'b1;end else px<=px+1'b1;state<=prefetched?PRUNE_CHECK:PRUNE_READ;end
+ end
+endtask
+task advance_scan;begin
+  if(scan_end)begin
+   sweep_passes<=sweep_passes+1;
+   if(changed)begin reverse<=~reverse;changed<=0;state<=CUR_READ;end
+   else if(MIN_COMPONENT>1)begin px<=0;py<=0;state<=PRUNE_READ;end else state<=PUBLISH;
+  end else begin
+   px<=scan_next_x;py<=scan_next_y;
+   state<=CUR_CHECK;
+  end
+
+end endtask
 reg signed[CW+1:0]nx,ny;reg in_bounds;
 wire[AW-1:0]scan_addr=py*W+px,class_addr=class_y*W+class_x,display_addr=display_y*W+display_x;
-wire[AW-1:0]neighbor_addr=ny*W+nx;
+reg signed[CW+1:0]fetch_x,fetch_y;
+wire[2:0]fetch_neighbor=(state==NCHECK)?neighbor+3'd1:neighbor;
+always @*begin
+ fetch_x=$signed({2'b0,px});fetch_y=$signed({2'b0,py});
+ case(fetch_neighbor)
+ 0:begin fetch_x=fetch_x-1;fetch_y=fetch_y-1;end
+ 1:fetch_y=fetch_y-1;
+ 2:begin fetch_x=fetch_x+1;fetch_y=fetch_y-1;end
+ 3:fetch_x=fetch_x-1;4:fetch_x=fetch_x+1;
+ 5:begin fetch_x=fetch_x-1;fetch_y=fetch_y+1;end
+ 6:fetch_y=fetch_y+1;
+ 7:begin fetch_x=fetch_x+1;fetch_y=fetch_y+1;end
+ endcase
+end
+wire[AW-1:0]fetch_addr=fetch_y*W+fetch_x;
+wire[CW-1:0]bounded_tile_end=tile_end<W?tile_end:CW'(W-1);
+wire[CW-1:0]scan_step=empty_tile?(reverse?px-tile_start+1'b1:bounded_tile_end-px+1'b1):CW'(1);
+wire[AW-1:0]next_scan_addr=reverse?scan_addr-scan_step:scan_addr+scan_step;
 always @*begin
  nx=$signed({2'b0,px});ny=$signed({2'b0,py});
  case(neighbor)
@@ -20,50 +109,95 @@ always @*begin
  endcase
  in_bounds=nx>=0&&nx<W&&ny>=0&&ny<H;
 end
-wire[1:0]map_q;wire e0;
+wire[1:0]map_q;wire e0,e1;
+// Borrow the existing front-plane read port only inside horizontal blanking.
+// The caller supplies a continuous1920-pixel DE and >=34 blank clocks/line.
+// Freeze publication in the caller while dumping a complete frame over JTAG.
+reg probe_seen=0,probe_dq=0;reg[1:0]probe_state=0;
+reg[AW-1:0]probe_base=0;reg[5:0]probe_index=0;reg[31:0]probe_pack=0;
+wire[AW-1:0]edge_read_addr=(PROBE&&probe_state==2)?probe_base+probe_index:display_addr;
+assign probe_busy=PROBE&&probe_state!=0;
+always @(posedge clk)begin
+ if(!rst_n)begin probe_seen<=0;probe_dq<=0;probe_state<=0;probe_ack<=0;probe_data<=0;probe_read_address<=0;probe_base<=0;probe_index<=0;probe_pack<=0;end
+ else if(PROBE)begin
+  probe_dq<=display_de;
+  if(probe_req!=probe_seen)begin
+   probe_seen<=probe_req;probe_read_address<=probe_address;probe_base<=AW'(probe_address)<<5;probe_state<=1;
+  end
+  case(probe_state)
+   1:if(probe_dq&&!display_de)begin probe_index<=0;probe_pack<=0;probe_state<=2;end
+   2:begin
+    if(probe_index!=0)probe_pack[probe_index-1'b1]<=front?e1:e0;
+    if(probe_index==32)probe_state<=3;else probe_index<=probe_index+1'b1;
+   end
+   3:begin probe_data<=probe_pack;probe_ack<=probe_seen;probe_state<=0;end
+  endcase
+ end
+end
 wire clearing=state==CLEAR,storing=state==CAPTURE&&class_valid;
 wire promoting=state==NCHECK&&in_bounds&&map_q==2;
-wire[AW-1:0]write_addr=clearing?clear_addr:(storing?class_addr:scan_addr);
-wire[1:0]write_data=clearing?2'd0:(storing?classification:2'd2);
-wire[AW-1:0]read_addr=(state==NREAD||state==NCHECK)?neighbor_addr:scan_addr;
-// Clear the complete display plane once at startup so border locations that
-// are outside the filtered capture window have a defined black value.  Later
-// frame clears only affect the 2-bit work map; the display plane updates in
-// place from classification data.
-wire edge_we=storing||promoting||(clearing&&!ready);
-vision_canny_ram #(.BITS(2),.AW(AW)) map_ram(clk,rst_n&&(clearing||storing||promoting),write_addr,write_data,read_addr,map_q);
-// A single published edge plane is sufficient for the live display.  The
-// previous ping-pong copy cost sixteen RAM blocks; those blocks are required
-// by the vendor-sized DSI pixel FIFO.  During the next capture/sweep this plane
-// updates in place, so at most one transitional frame can be visible.
-vision_canny_ram #(.BITS(1),.AW(AW)) edge_ram0(clk,rst_n&&edge_we,write_addr,clearing?1'b0:(promoting?1'b1:(classification==2)),display_addr,e0);
-assign pixel=ready?e0:1'b0;
+wire prune_seed=state==PRUNE_CHECK&&map_q==2;
+wire prune_mark=state==PRUNE_NCHECK&&prune_bounds&&map_q==2;
+wire prune_erase=state==PRUNE_COMMIT&&!keep_component;
+wire[AW-1:0]write_addr=prune_mark?prune_neighbor_addr:(prune_erase?erase_addr:(clearing?clear_addr:(storing?class_addr:scan_addr)));
+wire[1:0]write_data=(prune_seed||prune_mark)?2'd3:(prune_erase?2'd0:(clearing?2'd0:(storing?classification:2'd2)));
+// Read the next neighbor while checking the current one; prefetch each center.
+wire skip_center=state==CUR_CHECK&&(empty_tile||map_q!=1);
+wire skip_prune=state==PRUNE_CHECK&&map_q!=2;
+wire[AW-1:0]read_addr=(state==PRUNE_NREAD||state==PRUNE_NCHECK)?prune_neighbor_addr:((state==NREAD||state==NCHECK)?fetch_addr:
+                              (skip_prune?scan_addr+1'b1:((state==ADVANCE||skip_center)?next_scan_addr:scan_addr)));
+// Write only the back plane; publish the completed plane at vblank.
+wire edge_we=clearing||storing||promoting||prune_erase;
+wire edge_data=promoting||(storing&&classification==2);
+vision_canny_ram #(.BITS(2),.AW(AW)) map_ram(clk,rst_n&&(clearing||storing||promoting||prune_seed||prune_mark||prune_erase),write_addr,write_data,read_addr,map_q);
+vision_canny_ram #(.BITS(1),.AW(AW)) edge_ram0(clk,rst_n&&edge_we&&(front||(clearing&&!ready)),write_addr,edge_data,edge_read_addr,e0);
+vision_canny_ram #(.BITS(1),.AW(AW)) edge_ram1(clk,rst_n&&edge_we&&(!front||(clearing&&!ready)),write_addr,edge_data,edge_read_addr,e1);
+assign pixel=ready?(front?e1:e0):1'b0;
 assign capture_enable=state==CAPTURE;assign busy=state!=WAIT_FRAME;assign debug_state=state;assign debug_queue=0;
 always @(posedge clk)begin
- if(!rst_n)begin state<=CLEAR;clear_addr<=0;front<=0;ready<=0;completed<=0;fault<=0;px<=0;py<=0;reverse<=0;changed<=0;neighbor<=0;end
- else case(state)
+ if(!rst_n)begin work_cycles<=0;last_cycles<=0;sweep_passes<=0;weak_visits<=0;state<=CLEAR;clear_addr<=0;front<=0;ready<=0;completed<=0;fault<=0;px<=0;py<=0;reverse<=0;changed<=0;neighbor<=0;head<=0;tail<=0;erase_index<=0;bx<=0;by<=0;keep_component<=0;own_neighbor<=0;end
+ else begin
+ if(state>=CUR_READ&&state<=PRUNE_COMMIT&&state!=PUBLISH)work_cycles<=work_cycles+1;
+ if(state==CUR_CHECK&&map_q==1)weak_visits<=weak_visits+1;
+ if(state==PUBLISH)last_cycles<=work_cycles;
+ case(state)
  CLEAR:if(clear_addr==N-1)begin clear_addr<=0;state<=WAIT_FRAME;end else clear_addr<=clear_addr+1'b1;
  WAIT_FRAME:if(vblank)state<=CAPTURE;
  CAPTURE:begin
   if(class_valid&&(class_x>=W||class_y>=H))fault<=1;
-  if(class_last)begin px<=0;py<=0;reverse<=0;changed<=0;state<=CUR_READ;end
+  if(class_last)begin work_cycles<=0;sweep_passes<=0;weak_visits<=0;px<=0;py<=0;reverse<=0;changed<=0;state<=CUR_READ;end
  end
  CUR_READ:state<=CUR_CHECK;
- CUR_CHECK:if(map_q==1)begin neighbor<=0;state<=NREAD;end else state<=ADVANCE;
+ CUR_CHECK:if(!empty_tile&&map_q==1)begin neighbor<=0;state<=NREAD;end else advance_scan();
  NREAD:if(in_bounds)state<=NCHECK;else if(neighbor==7)state<=ADVANCE;else neighbor<=neighbor+1'b1;
- NCHECK:if(map_q==2)begin changed<=1;state<=ADVANCE;end
-        else if(neighbor==7)state<=ADVANCE;else begin neighbor<=neighbor+1'b1;state<=NREAD;end
- ADVANCE:begin
-  if((!reverse&&px==W-1&&py==H-1)||(reverse&&px==0&&py==0))begin
-   if(changed)begin reverse<=~reverse;changed<=0;state<=CUR_READ;end else state<=PUBLISH;
-  end else begin
-   if(!reverse)begin if(px==W-1)begin px<=0;py<=py+1'b1;end else px<=px+1'b1;end
-   else begin if(px==0)begin px<=W-1;py<=py-1'b1;end else px<=px-1'b1;end
-   state<=CUR_READ;
-  end
+ NCHECK:if(in_bounds&&map_q==2)begin changed<=1;state<=ADVANCE;end
+        else if(neighbor==7)state<=ADVANCE;else begin neighbor<=neighbor+1'b1;state<=NCHECK;end
+ ADVANCE:advance_scan();
+ PRUNE_READ:state<=PRUNE_CHECK;
+ PRUNE_CHECK:if(map_q==2)begin
+  qx[0]<=px;qy[0]<=py;head<=0;tail<=1;keep_component<=0;erase_index<=0;state<=PRUNE_NODE;
+ end else prune_next(1'b1);
+ PRUNE_NODE:if(head==tail)begin erase_index<=0;state<=PRUNE_COMMIT;end
+ else begin bx<=qx[head];by<=qy[head];neighbor<=0;state<=PRUNE_NREAD;end
+ PRUNE_NREAD:begin own_neighbor<=own_queue;state<=PRUNE_NCHECK;end
+ PRUNE_NCHECK:begin
+  if(prune_bounds&&map_q==2)begin qx[tail]<=pnx[CW-1:0];qy[tail]<=pny[CW-1:0];tail<=tail+1'b1;end
+  if((prune_bounds&&map_q==3&&!own_neighbor)||(prune_bounds&&map_q==2&&tail==MIN_COMPONENT-1))begin
+   keep_component<=1;state<=PRUNE_COMMIT;
+  end else if(neighbor==7)begin head<=head+1'b1;state<=PRUNE_NODE;end
+  else begin neighbor<=neighbor+1'b1;state<=PRUNE_NREAD;end
  end
- PUBLISH:if(vblank)begin ready<=1;completed<=completed+1'b1;state<=CLEAR;clear_addr<=0;end
+ PRUNE_COMMIT:if(keep_component||erase_index==tail-1'b1)prune_next(1'b0);
+ else erase_index<=erase_index+1'b1;
+ PUBLISH:if(vblank)begin
+  // A frame classified below its newly measured noise floor is retried; it
+  // never replaces the last accepted front plane. The next capture uses that floor.
+  if(!ALLOW_DISCARD||!frame_discard)begin front<=~front;ready<=1;completed<=completed+1'b1;end
+  state<=REUSE_CAPTURE_MAP?CAPTURE:CLEAR;clear_addr<=0;
+ end
  default:begin fault<=1;state<=CLEAR;end
  endcase
+ end
 end
 endmodule
+

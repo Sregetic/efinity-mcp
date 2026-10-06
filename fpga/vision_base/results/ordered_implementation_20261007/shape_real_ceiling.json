@@ -1,0 +1,29 @@
+{
+  "image": "F:/Project/fpga/vision_base/results/roi_live_20261004/mode_frames_1791298276936277400/mode_1.png",
+  "roi": [
+    640,
+    300,
+    640,
+    480
+  ],
+  "threshold": 32,
+  "valid": false,
+  "class_id": 0,
+  "label": "NONE",
+  "reject_flags": 6,
+  "background": 140,
+  "corner_means": [
+    136,
+    150,
+    137,
+    137
+  ],
+  "filled_area": 25906,
+  "fill_ratio": 0.08432942708333334,
+  "bbox": [
+    640,
+    300,
+    1279,
+    779
+  ]
+}

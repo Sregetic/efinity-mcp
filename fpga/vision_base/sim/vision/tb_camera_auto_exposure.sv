@@ -1,8 +1,13 @@
 `timescale 1ns/1ps
 module tb;
+`ifdef SC2210_PROFILE
+localparam EXP_MAX=1121;
+`else
+localparam EXP_MAX=2950;
+`endif
 reg clk=0;always #5 clk=~clk;reg rst=0,vs=0,de=0,ack=0,fault=0,en=1;reg[15:0]pix=0,manual=444;reg[31:0]frame=0;
 wire req,boost;wire[15:0]ex,nc,nt,nh;wire[31:0]sum;wire[1:0]decision;
-camera_auto_exposure #(.CX0(0),.CX1(16),.CY0(0),.CY1(16),.SAMPLE_BITS(1),.SETTLE(2))d(clk,rst,vs,de,pix,frame,en,manual,ack,fault,req,ex,sum,nc,nt,nh,decision,boost);
+camera_auto_exposure #(.CX0(0),.CX1(16),.CY0(0),.CY1(16),.SAMPLE_BITS(1),.SETTLE(2),.EXPOSURE_MAX(EXP_MAX))d(clk,rst,vs,de,pix,frame,en,manual,ack,fault,req,ex,sum,nc,nt,nh,decision,boost);
 always @(posedge clk)if(rst)ack<=req;
 task automatic image(input[7:0]v,input fresh);
  integer x,y;begin
@@ -25,6 +30,10 @@ initial begin
  if(ex!=old)$fatal(1,"frozen source changed exposure");
  fault=1;for(i=0;i<10;i=i+1)image(255,1);if(ex!=old)$fatal(1,"fault changed exposure");
  fault=0;en=0;manual=600;for(i=0;i<12;i=i+1)image(24,1);if(ex!=600)$fatal(1,"manual override failed");
+ manual=EXP_MAX;for(i=0;i<12;i=i+1)image(24,1);if(ex!=EXP_MAX)$fatal(1,"manual ceiling failed");
+ en=1;for(i=0;i<20;i=i+1)image(24,1);if(ex!=EXP_MAX)$fatal(1,"AE overflow at ceiling");
+ en=0;manual=EXP_MAX+1;for(i=0;i<12;i=i+1)image(24,1);if(ex!=EXP_MAX)$fatal(1,"invalid manual value accepted");
+ en=1;for(i=0;i<12;i=i+1)image(255,1);if(ex>=EXP_MAX)$fatal(1,"AE remains at ceiling in bright scene");
  $display("AE PASS: dark/bright direction, 64 samples, deadband, freeze, fault and manual");$finish;
 end
 endmodule

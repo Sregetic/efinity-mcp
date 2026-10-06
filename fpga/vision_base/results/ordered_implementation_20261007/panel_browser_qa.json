@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "method": "Hidden in-app browser, native select controls, no apply",
+  "canny_selected_threshold": 128,
+  "sobel_selected_threshold": 96,
+  "minimum": 16,
+  "step": 16,
+  "test_tab_closed": true,
+  "user_tab_preserved": true
+}

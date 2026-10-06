@@ -1,0 +1,248 @@
+{
+  "baseline": {
+    "live_full": {
+      "sample_span_s": 58.01600000006147,
+      "rgb_capture_delta": 3482,
+      "published_source_delta": 3480,
+      "deadline_delta": 1160,
+      "median_render_cycles": 3867005,
+      "scan_bad_delta": 0,
+      "capture_discard_delta": 0
+    },
+    "live_zoom": {
+      "sample_span_s": 59.07800000021234,
+      "rgb_capture_delta": 3543,
+      "published_source_delta": 3544,
+      "deadline_delta": 1771,
+      "median_render_cycles": 1792178,
+      "scan_bad_delta": 0,
+      "capture_discard_delta": 0
+    },
+    "ae_mean_raw": 16.134765625,
+    "strips": {
+      "source": {
+        "size": [
+          1920,
+          64
+        ],
+        "mean": [
+          1.6276041666666666e-05,
+          0.0001953125,
+          0.056966145833333336
+        ],
+        "extrema": [
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            4
+          ]
+        ]
+      },
+      "mode_0": {
+        "size": [
+          1920,
+          64
+        ],
+        "mean": [
+          0.0,
+          0.0,
+          0.006591796875
+        ],
+        "extrema": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            18
+          ]
+        ]
+      },
+      "mode_2": {
+        "size": [
+          1920,
+          64
+        ],
+        "mean": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "extrema": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      "mode_5": {
+        "size": [
+          1920,
+          64
+        ],
+        "mean": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "extrema": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      }
+    }
+  },
+  "debug_512": {
+    "live_full": {
+      "sample_span_s": 57.71899999980815,
+      "rgb_capture_delta": 3462,
+      "published_source_delta": 3462,
+      "deadline_delta": 1154,
+      "median_render_cycles": 3867730,
+      "scan_bad_delta": 0,
+      "capture_discard_delta": 0
+    },
+    "live_zoom": {
+      "sample_span_s": 58.89099999982864,
+      "rgb_capture_delta": 3534,
+      "published_source_delta": 3534,
+      "deadline_delta": 1767,
+      "median_render_cycles": 1791008.0,
+      "scan_bad_delta": 0,
+      "capture_discard_delta": 0
+    },
+    "ae_mean_raw": 16.1259765625,
+    "strips": {
+      "source": {
+        "size": [
+          1920,
+          64
+        ],
+        "mean": [
+          3.255208333333333e-05,
+          0.00029296875,
+          0.070068359375
+        ],
+        "extrema": [
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            4
+          ]
+        ]
+      },
+      "mode_0": {
+        "size": [
+          1920,
+          64
+        ],
+        "mean": [
+          0.0,
+          0.0,
+          0.015234375
+        ],
+        "extrema": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            18
+          ]
+        ]
+      },
+      "mode_2": {
+        "size": [
+          1920,
+          64
+        ],
+        "mean": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "extrema": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      "mode_5": {
+        "size": [
+          1920,
+          64
+        ],
+        "mean": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "extrema": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      }
+    }
+  }
+}

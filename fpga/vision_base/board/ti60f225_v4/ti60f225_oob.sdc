@@ -350,3 +350,35 @@ set_clock_groups -asynchronous -group {jtag_diag_drck} -group {core_clk hdmi_tx_
 # USER2 command update is event-driven; conservative1MHz event clock.
 create_clock -period 1000.000 -name jtag_diag_update [get_ports {jtag_diag_UPDATE}]
 set_clock_groups -asynchronous -group {jtag_diag_update} -group {jtag_diag_drck core_clk hdmi_tx_slow_clk vid_clk_dvi2}
+
+# Dynamic MIPI RX delay controls: generated vendor IO setup/hold constraints.
+set_output_delay -clock i_cam_ck_CLKOUT -reference_pin [get_ports {i_cam_ck_CLKOUT~CLKOUT~82~322}] -max 0.290 [get_ports {cam_d0_DLY_ENA}]
+set_output_delay -clock i_cam_ck_CLKOUT -reference_pin [get_ports {i_cam_ck_CLKOUT~CLKOUT~82~322}] -min -0.140 [get_ports {cam_d0_DLY_ENA}]
+set_output_delay -clock i_cam_ck_CLKOUT -reference_pin [get_ports {i_cam_ck_CLKOUT~CLKOUT~82~322}] -max 0.290 [get_ports {cam_d0_DLY_INC}]
+set_output_delay -clock i_cam_ck_CLKOUT -reference_pin [get_ports {i_cam_ck_CLKOUT~CLKOUT~82~322}] -min -0.140 [get_ports {cam_d0_DLY_INC}]
+set_output_delay -clock i_cam_ck_CLKOUT -reference_pin [get_ports {i_cam_ck_CLKOUT~CLKOUT~82~322}] -max 0.362 [get_ports {cam_d0_DLY_RST}]
+set_output_delay -clock i_cam_ck_CLKOUT -reference_pin [get_ports {i_cam_ck_CLKOUT~CLKOUT~82~322}] -min -0.140 [get_ports {cam_d0_DLY_RST}]
+set_output_delay -clock i_cam_ck_CLKOUT -reference_pin [get_ports {i_cam_ck_CLKOUT~CLKOUT~130~322}] -max 0.290 [get_ports {cam_d1_DLY_ENA}]
+set_output_delay -clock i_cam_ck_CLKOUT -reference_pin [get_ports {i_cam_ck_CLKOUT~CLKOUT~130~322}] -min -0.140 [get_ports {cam_d1_DLY_ENA}]
+set_output_delay -clock i_cam_ck_CLKOUT -reference_pin [get_ports {i_cam_ck_CLKOUT~CLKOUT~130~322}] -max 0.290 [get_ports {cam_d1_DLY_INC}]
+set_output_delay -clock i_cam_ck_CLKOUT -reference_pin [get_ports {i_cam_ck_CLKOUT~CLKOUT~130~322}] -min -0.140 [get_ports {cam_d1_DLY_INC}]
+set_output_delay -clock i_cam_ck_CLKOUT -reference_pin [get_ports {i_cam_ck_CLKOUT~CLKOUT~130~322}] -max 0.362 [get_ports {cam_d1_DLY_RST}]
+set_output_delay -clock i_cam_ck_CLKOUT -reference_pin [get_ports {i_cam_ck_CLKOUT~CLKOUT~130~322}] -min -0.140 [get_ports {cam_d1_DLY_RST}]
+set_output_delay -clock i_cam_ck_CLKOUT -reference_pin [get_ports {i_cam_ck_CLKOUT~CLKOUT~73~322}] -max 0.290 [get_ports {cam_d2_DLY_ENA}]
+set_output_delay -clock i_cam_ck_CLKOUT -reference_pin [get_ports {i_cam_ck_CLKOUT~CLKOUT~73~322}] -min -0.140 [get_ports {cam_d2_DLY_ENA}]
+set_output_delay -clock i_cam_ck_CLKOUT -reference_pin [get_ports {i_cam_ck_CLKOUT~CLKOUT~73~322}] -max 0.290 [get_ports {cam_d2_DLY_INC}]
+set_output_delay -clock i_cam_ck_CLKOUT -reference_pin [get_ports {i_cam_ck_CLKOUT~CLKOUT~73~322}] -min -0.140 [get_ports {cam_d2_DLY_INC}]
+set_output_delay -clock i_cam_ck_CLKOUT -reference_pin [get_ports {i_cam_ck_CLKOUT~CLKOUT~73~322}] -max 0.362 [get_ports {cam_d2_DLY_RST}]
+set_output_delay -clock i_cam_ck_CLKOUT -reference_pin [get_ports {i_cam_ck_CLKOUT~CLKOUT~73~322}] -min -0.140 [get_ports {cam_d2_DLY_RST}]
+set_output_delay -clock i_cam_ck_CLKOUT -reference_pin [get_ports {i_cam_ck_CLKOUT~CLKOUT~141~322}] -max 0.290 [get_ports {cam_d3_DLY_ENA}]
+set_output_delay -clock i_cam_ck_CLKOUT -reference_pin [get_ports {i_cam_ck_CLKOUT~CLKOUT~141~322}] -min -0.140 [get_ports {cam_d3_DLY_ENA}]
+set_output_delay -clock i_cam_ck_CLKOUT -reference_pin [get_ports {i_cam_ck_CLKOUT~CLKOUT~141~322}] -max 0.290 [get_ports {cam_d3_DLY_INC}]
+set_output_delay -clock i_cam_ck_CLKOUT -reference_pin [get_ports {i_cam_ck_CLKOUT~CLKOUT~141~322}] -min -0.140 [get_ports {cam_d3_DLY_INC}]
+set_output_delay -clock i_cam_ck_CLKOUT -reference_pin [get_ports {i_cam_ck_CLKOUT~CLKOUT~141~322}] -max 0.362 [get_ports {cam_d3_DLY_RST}]
+set_output_delay -clock i_cam_ck_CLKOUT -reference_pin [get_ports {i_cam_ck_CLKOUT~CLKOUT~141~322}] -min -0.140 [get_ports {cam_d3_DLY_RST}]
+
+# Sapphire uses the existing USER1 tap; USER2 image readback stays independent.
+create_clock -period 166.667 -name jtag_inst1_TCK [get_ports {jtag_inst1_TCK}]
+set_clock_groups -asynchronous -group {jtag_inst1_TCK} -group {core_clk hdmi_tx_slow_clk vid_clk_dvi2 i_mipi_rx_pclk}
+# SoC/video crossings use held payloads and explicit toggle/Gray synchronizers.
+set_clock_groups -asynchronous -group {core_clk} -group {hdmi_tx_slow_clk}

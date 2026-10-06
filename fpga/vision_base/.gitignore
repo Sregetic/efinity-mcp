@@ -5,3 +5,12 @@ board/ti60f225_v4/outflow/
 board/ti60f225_v4/work_syn/
 board/ti60f225_v4/work_pnr/
 board/ti60f225_v4/work_dbg/
+
+# Regenerated locally using the installed official Sapphire generator/toolchain.
+artifacts/vision_soc/hardware/
+artifacts/vision_soc/bsp/
+artifacts/vision_soc/firmware/*.elf
+artifacts/vision_soc/firmware/*.hex
+artifacts/vision_soc/firmware/*.dis
+artifacts/vision_soc/firmware/*.map
+artifacts/vision_soc/generate.log

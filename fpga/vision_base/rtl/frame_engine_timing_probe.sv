@@ -72,7 +72,7 @@ module frame_engine_timing_probe (
         .cap_done_ready(cap_done_ready),.cap_done_bank(captured_bank),.cap_done_ok(1'b1),
         .analysis_acquire_valid(1'b0),.analysis_acquire_ready(),.analysis_release(1'b0),
         .analysis_hold_valid(),.analysis_hold_bank(),.analysis_hold_frame_id(),.analysis_hold_config_id(),
-        .job_valid(state==2),.job_ready(job_ready),.freeze_source(1'b0),.job_config_id(epoch),
+        .job_valid(state==2),.job_ready(job_ready),.freeze_source(1'b0),.release_source(1'b0),.job_config_id(epoch),
         .src_width(16'd1024+{8'b0,a[7:0]}),.src_height(16'd512+{8'b0,b[7:0]}),
         .roi_x({9'b0,c[6:0]}),.roi_y(16'd0),
         .roi_w(16'd1024+{8'b0,a[7:0]}-{9'b0,c[6:0]}),.roi_h(16'd512+{8'b0,b[7:0]}),

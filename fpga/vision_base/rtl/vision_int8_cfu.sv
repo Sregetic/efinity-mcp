@@ -1,0 +1,16 @@
+// CFU function0: four signed INT8 products, summed into a signed32 result.
+module vision_int8_cfu(input clk,rst_n,cmd_valid,output cmd_ready,
+ input[9:0]function_id,input[31:0]a,b,
+ output reg rsp_valid=0,input rsp_ready,output reg[31:0]result=0);
+ wire signed[15:0]p0=$signed(a[7:0])*$signed(b[7:0]);
+ wire signed[15:0]p1=$signed(a[15:8])*$signed(b[15:8]);
+ wire signed[15:0]p2=$signed(a[23:16])*$signed(b[23:16]);
+ wire signed[15:0]p3=$signed(a[31:24])*$signed(b[31:24]);
+ wire signed[17:0]dot={{2{p0[15]}},p0}+{{2{p1[15]}},p1}+{{2{p2[15]}},p2}+{{2{p3[15]}},p3};
+ assign cmd_ready=function_id==0&&(!rsp_valid||rsp_ready);
+ always @(posedge clk)begin
+  if(!rst_n)begin rsp_valid<=0;result<=0;end
+  else if(cmd_valid&&cmd_ready)begin result<={{14{dot[17]}},dot};rsp_valid<=1;end
+  else if(rsp_ready)rsp_valid<=0;
+ end
+endmodule

@@ -1,0 +1,15 @@
+PASS blank normal NONE
+PASS blank inverted NONE
+PASS filled rectangle normal RECT
+PASS filled rectangle inverted RECT
+PASS outline rectangle normal RECT
+PASS outline rectangle inverted RECT
+PASS filled circle normal CIRCLE
+PASS filled circle inverted CIRCLE
+PASS outline circle normal CIRCLE
+PASS outline circle inverted CIRCLE
+PASS open rectangle normal NONE
+PASS open rectangle inverted NONE
+PASS broken ring normal NONE
+PASS broken ring inverted NONE
+PASS host outline classifier14 cases, noisy positives and exact integer geometry

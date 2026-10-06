@@ -1,0 +1,70 @@
+[
+  {
+    "name": "threshold_native",
+    "xlr": 54395,
+    "ram": 235,
+    "dsp": 45,
+    "wns_ns": 0.028,
+    "whs_ns": 0.026,
+    "unassigned_io": 0,
+    "bit": "F:/Project/fpga/vision_base/results/ordered_implementation_20261007/threshold_native/ti60f225_oob.bit"
+  },
+  {
+    "name": "stream_native",
+    "xlr": 57010,
+    "ram": 243,
+    "dsp": 50,
+    "wns_ns": 0.22,
+    "whs_ns": 0.026,
+    "unassigned_io": 0,
+    "bit": "F:/Project/fpga/vision_base/results/ordered_implementation_20261007/stream_native/ti60f225_oob.bit"
+  },
+  {
+    "name": "release_snapshot",
+    "image_debug": 2,
+    "display_latency_probe": true,
+    "xlr": 58686,
+    "ram": 243,
+    "dsp": 50,
+    "wns_ns": 0.124,
+    "whs_ns": 0.026,
+    "unassigned_io": 0,
+    "bit": "F:/Project/fpga/vision_base/results/ordered_implementation_20261007/release_snapshot/ti60f225_oob.bit"
+  },
+  {
+    "name": "release_competition",
+    "image_debug": 0,
+    "display_latency_probe": false,
+    "xlr": 57062,
+    "ram": 238,
+    "dsp": 50,
+    "wns_ns": 0.188,
+    "whs_ns": 0.026,
+    "unassigned_io": 0,
+    "bit": "F:/Project/fpga/vision_base/results/ordered_implementation_20261007/release_competition/ti60f225_oob.bit"
+  },
+  {
+    "name": "final_snapshot",
+    "image_debug": 2,
+    "display_latency_probe": true,
+    "xlr": 58759,
+    "ram": 243,
+    "dsp": 50,
+    "wns_ns": 0.128,
+    "whs_ns": 0.026,
+    "unassigned_io": 0,
+    "bit": "F:/Project/fpga/vision_base/results/ordered_implementation_20261007/final_snapshot/ti60f225_oob.bit"
+  },
+  {
+    "name": "final_competition",
+    "image_debug": 0,
+    "display_latency_probe": false,
+    "xlr": 56669,
+    "ram": 238,
+    "dsp": 50,
+    "wns_ns": 0.13,
+    "whs_ns": 0.026,
+    "unassigned_io": 0,
+    "bit": "F:/Project/fpga/vision_base/results/ordered_implementation_20261007/final_competition/ti60f225_oob.bit"
+  }
+]

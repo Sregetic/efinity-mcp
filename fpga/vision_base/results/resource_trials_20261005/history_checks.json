@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "memory": 1,
+      "display_ids": [
+        255
+      ],
+      "capture_delta": 45,
+      "samples": 8
+    },
+    {
+      "memory": 2,
+      "display_ids": [
+        250,
+        251,
+        252,
+        253
+      ],
+      "capture_delta": 45,
+      "samples": 8
+    },
+    {
+      "memory": 3,
+      "display_ids": [
+        252,
+        253
+      ],
+      "capture_delta": 45,
+      "samples": 8
+    }
+  ],
+  "write_errors_total": 1,
+  "write_error_sample_span_s": 0.43309736251831055,
+  "write_error_sample_delta": 0,
+  "scope": "Short JTAG history identity check. Write-commit total1 retained, not a zero-error or full FIFO-overflow acceptance.",
+  "live_write_monitor": {
+    "sample_count": 290,
+    "seconds": 62.2710645198822,
+    "write_errors_first": 1,
+    "write_errors_last": 1,
+    "write_errors_delta": 0,
+    "scope": "Live RAW write-commit counter only; not FIFO high-water/overflow telemetry"
+  }
+}

@@ -1,0 +1,17 @@
+field1 good0 cap0 discard0 history0 cfg0 bad0
+field2 good0 cap1 discard0 history1 cfg0 bad0
+field3 good1 cap2 discard0 history2 cfg0 bad0
+field4 good2 cap3 discard0 history3 cfg0 bad0
+field5 good2 cap5 discard0 history5 cfg0 bad0
+ROI cfg1 held5/5 view4 pixels6220800
+field6 good3 cap6 discard0 history6 cfg1 bad0
+field7 good4 cap7 discard0 history6 cfg1 bad0
+field8 good5 cap8 discard0 history6 cfg1 bad0
+field9 good6 cap9 discard0 history6 cfg1 bad0
+field10 good7 cap10 discard0 history6 cfg1 bad0
+ROI cfg2 held6/6 view6 pixels16588800
+field11 good8 cap12 discard0 history6 cfg2 bad0
+field12 good9 cap13 discard0 history6 cfg2 bad0
+ROI cfg3 held6/6 view6 pixels20736000
+PASS pooled RGB1080p full 20736000 pixels, 10 whole frames, native148.5/100MHz CDC + shared DDR, live/frozen zoom/pan
+sim/vision/tb_pooled_live.sv:352: $finish called at 216664652023 (1ps)

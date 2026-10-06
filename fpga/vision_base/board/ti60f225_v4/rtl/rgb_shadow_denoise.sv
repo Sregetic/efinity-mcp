@@ -1,19 +1,32 @@
-// Three-pixel horizontal median, restricted to flat dark neighborhoods.
-// Bright pixels and strong boundaries pass unchanged. No transfer-curve change.
+// Horizontal dark-chroma median. Luma is preserved (integer rounding <=1 level
+// before clipping); bright pixels, luma edges and line boundaries bypass exactly.
 module rgb_shadow_denoise(input clk,input rst_n,input de,input hs,input vs,
- input[7:0] r,g,b,output reg o_de,o_hs,o_vs,output reg[7:0]o_r,o_g,o_b);
-function automatic[7:0] med(input[7:0]a,c,z);
- begin med=(a<c)?((c<z)?c:((a<z)?z:a)):((a<z)?a:((c<z)?z:c));end
+ input[7:0]r,g,b,output reg o_de,o_hs,o_vs,output reg[7:0]o_r,o_g,o_b);
+function automatic signed[8:0]med9(input signed[8:0]a,c,z);
+ begin med9=(a<c)?((c<z)?c:((a<z)?z:a)):((a<z)?a:((c<z)?z:c));end
 endfunction
-function automatic[7:0] delta(input[7:0]a,z);
- begin delta=(a>z)?a-z:z-a;end
-endfunction
-reg[7:0] lr=0,lg=0,lb=0,cr=0,cg=0,cb=0;
+function automatic[7:0]dist8(input[7:0]a,z);begin dist8=a>z?a-z:z-a;end endfunction
+function automatic[7:0]clip(input signed[12:0]v);begin clip=v<0?8'd0:v>255?8'd255:v[7:0];end endfunction
+reg[7:0]lr=0,lg=0,lb=0,cr=0,cg=0,cb=0;
 reg ld=0,cd=0,ch=0,cv=0;
-wire flat_dark=ld && cd && de && (hs==ch) && (vs==cv)
- && cr<=32 && cg<=32 && cb<=32
- && lr<=32 && lg<=32 && lb<=32 && r<=32 && g<=32 && b<=32
- && delta(lr,r)<=4 && delta(lg,g)<=4 && delta(lb,b)<=4;
+wire[9:0]ls={2'b0,lr}+{1'b0,lg,1'b0}+{2'b0,lb};
+wire[9:0]cs={2'b0,cr}+{1'b0,cg,1'b0}+{2'b0,cb};
+wire[9:0]rs={2'b0,r}+{1'b0,g,1'b0}+{2'b0,b};
+wire[7:0]ly=ls[9:2],cy=cs[9:2],ry=rs[9:2];
+wire signed[8:0]lrg=$signed({1'b0,lr})-$signed({1'b0,lg});
+wire signed[8:0]crg=$signed({1'b0,cr})-$signed({1'b0,cg});
+wire signed[8:0]rrg=$signed({1'b0,r})-$signed({1'b0,g});
+wire signed[8:0]lbg=$signed({1'b0,lb})-$signed({1'b0,lg});
+wire signed[8:0]cbg=$signed({1'b0,cb})-$signed({1'b0,cg});
+wire signed[8:0]rbg=$signed({1'b0,b})-$signed({1'b0,g});
+wire signed[8:0]mr=med9(lrg,crg,rrg),mb=med9(lbg,cbg,rbg);
+wire signed[12:0]er={{4{mr[8]}},mr},eb={{4{mb[8]}},mb};
+wire signed[12:0]yy=$signed({3'b0,cy,2'b0});
+wire signed[12:0]nr=(yy+(er<<<1)+er-eb)>>>2;
+wire signed[12:0]ng=(yy-er-eb)>>>2;
+wire signed[12:0]nb=(yy+(eb<<<1)+eb-er)>>>2;
+wire smooth=ld&&cd&&de&&hs==ch&&vs==cv&&cy<=48&&ly<=56&&ry<=56&&
+ dist8(ly,cy)<=8&&dist8(ry,cy)<=8&&(mr!=crg||mb!=cbg);
 always @(posedge clk)begin
  if(!rst_n)begin
   lr<=0;lg<=0;lb<=0;cr<=0;cg<=0;cb<=0;ld<=0;cd<=0;ch<=0;cv<=0;
@@ -21,9 +34,9 @@ always @(posedge clk)begin
  end else begin
   lr<=cr;lg<=cg;lb<=cb;ld<=cd;cr<=r;cg<=g;cb<=b;cd<=de;ch<=hs;cv<=vs;
   o_de<=cd;o_hs<=ch;o_vs<=cv;
-  o_r<=!cd?8'd0:(flat_dark?med(lr,cr,r):cr);
-  o_g<=!cd?8'd0:(flat_dark?med(lg,cg,g):cg);
-  o_b<=!cd?8'd0:(flat_dark?med(lb,cb,b):cb);
+  o_r<=!cd?8'd0:smooth?clip(nr):cr;
+  o_g<=!cd?8'd0:smooth?clip(ng):cg;
+  o_b<=!cd?8'd0:smooth?clip(nb):cb;
  end
 end
 endmodule

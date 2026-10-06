@@ -1,7 +1,7 @@
 // 2560x1440 -> 1920x1080, separable area filtering on each Bayer sublattice.
 // Per 4 same-color samples, emit (3a+b)/4, (b+c)/2, (c+3d)/4.
 module bayer_fov_reduce(input clk,input rst_n,input vs,input hs,input valid,input [31:0] data,
- output reg o_vs=0,output reg o_hs=0,output reg o_valid=0,output reg [31:0] o_data=0);
+ output reg o_vs=0,output reg o_hs=0,output reg o_valid=0,output reg [31:0] o_data=0,output reg overrun=0);
 function automatic [7:0] blend(input [7:0] a,input [7:0] b,input [1:0] phase);
  reg[9:0] t;
  begin
@@ -13,19 +13,45 @@ function automatic [7:0] blend(input [7:0] a,input [7:0] b,input [1:0] phase);
  blend=t[9:2];
  end
 endfunction
-reg[47:0] line0[0:639],line1[0:639],line2[0:639],line3[0:639];
-reg[47:0] line4[0:639],line5[0:639],line6[0:639],line7[0:639];
-reg[47:0] q0,q1,q2,q3,q4,q5,q6,q7;
+// Filter vertically while capturing. Only the preceding even/odd rows are
+// needed; the ping-pong output stores six filtered rows instead of eight raw rows.
+reg[47:0] previous_rows[0:639];
+// 1920x48 maps to ten RAM10s; one3840x48 array rounds to4096x2 lanes (24 RAM10s).
+reg[47:0] lines0[0:1919],lines1[0:1919];
+reg[47:0] previous,horizontal_q;
+reg write_pending=0;
+reg[2:0] write_row=0;
+reg[9:0] write_addr=0;
 reg vs_q=0,hs_q=0,odd=0;
 reg[31:0] first=0;
 reg[8:0] wr_group=0;
 reg[2:0] wr_row=0;
 reg[7:0] wr_seq=0,rd_seq=0;
-reg overrun=0;
 wire[9:0] wr_addr=(wr_seq[0]?10'd320:10'd0)+wr_group;
 wire[47:0] horizontal={blend(first[31:24],first[15:8],0),blend(first[23:16],first[7:0],0),
  blend(first[15:8],data[31:24],1),blend(first[7:0],data[23:16],1),
  blend(data[31:24],data[15:8],2),blend(data[23:16],data[7:0],2)};
+wire[2:0] filter_row=write_row-3'd2;
+wire[1:0] write_bank_row=(filter_row>=3)?filter_row-3'd3:filter_row;
+// Compact row*640 addressing, not a row/addr concatenation with stride1024.
+wire[10:0] write_index={write_bank_row,9'b0}+{write_bank_row,7'b0}+{1'b0,write_addr};
+wire[9:0] previous_index=(wr_row[0]?10'd320:10'd0)+wr_group;
+wire[47:0] vertical;
+genvar k;
+generate for(k=0;k<6;k=k+1)begin:g_filter
+ assign vertical[8*k+:8]=blend(previous[8*k+:8],horizontal_q[8*k+:8],filter_row[2:1]);
+end endgenerate
+always @(posedge clk)begin
+ write_pending<=rst_n && !(vs&&!vs_q) && valid && hs && odd;
+ if(rst_n && !(vs&&!vs_q) && valid && hs && odd)begin
+  previous<=previous_rows[previous_index];previous_rows[previous_index]<=horizontal;
+  horizontal_q<=horizontal;write_row<=wr_row;write_addr<=wr_addr;
+ end
+ if(rst_n && !(vs&&!vs_q) && write_pending && write_row>=2)begin
+  if(filter_row<3)lines0[write_index]<=vertical;
+  else lines1[write_index]<=vertical;
+ end
+end
 always @(posedge clk)begin
  vs_q<=vs;hs_q<=hs;
  if(!rst_n || (vs && !vs_q))begin wr_seq<=0;wr_row<=0;wr_group<=0;odd<=0;overrun<=0;end
@@ -41,12 +67,6 @@ always @(posedge clk)begin
   if(!odd)first<=data;
   else begin
    wr_group<=wr_group+1'b1;
-   case(wr_row)
-    0:line0[wr_addr]<=horizontal;1:line1[wr_addr]<=horizontal;
-    2:line2[wr_addr]<=horizontal;3:line3[wr_addr]<=horizontal;
-    4:line4[wr_addr]<=horizontal;5:line5[wr_addr]<=horizontal;
-    6:line6[wr_addr]<=horizontal;7:line7[wr_addr]<=horizontal;
-   endcase
   end
  end
 end
@@ -56,23 +76,13 @@ reg[15:0] half=0;
 reg half_valid=0,spill_valid=0;
 reg[31:0] spill=0;
 wire[9:0] rd_addr=(rd_seq[0]?10'd320:10'd0)+rd_group;
+wire[1:0] read_bank_row=(out_row>=3)?out_row-3'd3:out_row;
+wire[10:0] read_index={read_bank_row,9'b0}+{read_bank_row,7'b0}+{1'b0,rd_addr};
+reg[47:0] q0,q1;
+wire[47:0] filtered=(out_row<3)?q0:q1;
 always @(posedge clk)begin
- q0<=line0[rd_addr];q1<=line1[rd_addr];q2<=line2[rd_addr];q3<=line3[rd_addr];
- q4<=line4[rd_addr];q5<=line5[rd_addr];q6<=line6[rd_addr];q7<=line7[rd_addr];
+ q0<=lines0[read_index];q1<=lines1[read_index];
 end
-reg[47:0] a,b;
-always @*begin
- case(out_row)
- 0:begin a=q0;b=q2;end 1:begin a=q1;b=q3;end
- 2:begin a=q2;b=q4;end 3:begin a=q3;b=q5;end
- 4:begin a=q4;b=q6;end default:begin a=q5;b=q7;end
- endcase
-end
-wire[47:0] filtered;
-genvar k;
-generate for(k=0;k<6;k=k+1)begin:g_filter
- assign filtered[8*k+:8]=blend(a[8*k+:8],b[8*k+:8],out_row[2:1]);
-end endgenerate
 // Regenerate an active-high output frame. Input VS may be a short pulse;
 // keep the output frame open until all180 eight-line blocks have drained.
 always @(posedge clk)begin

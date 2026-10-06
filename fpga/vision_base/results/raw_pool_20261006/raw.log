@@ -1,0 +1,2 @@
+PASS RAW 4PPC->2PPC async rows 1536 pixels, bubbles/order/frame tags, ISP reference equivalence
+sim/vision/tb_raw_frontend.sv:55: $finish called at 13973050 (1ps)

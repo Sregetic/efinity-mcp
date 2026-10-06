@@ -1,0 +1,68 @@
+[
+  {
+    "t": 1359012.921,
+    "capture_id": 2344,
+    "display_id": 2242,
+    "history_count": 6,
+    "mode": 0,
+    "memory": 2,
+    "raw_overflows": 0,
+    "capture_discarded": 0,
+    "scan_bad_frames": 0
+  },
+  {
+    "t": 1359013.265,
+    "capture_id": 2354,
+    "display_id": 2241,
+    "history_count": 6,
+    "mode": 0,
+    "memory": 2,
+    "raw_overflows": 0,
+    "capture_discarded": 0,
+    "scan_bad_frames": 0
+  },
+  {
+    "t": 1359013.609,
+    "capture_id": 2364,
+    "display_id": 2240,
+    "history_count": 6,
+    "mode": 0,
+    "memory": 2,
+    "raw_overflows": 0,
+    "capture_discarded": 0,
+    "scan_bad_frames": 0
+  },
+  {
+    "t": 1359013.921,
+    "capture_id": 2374,
+    "display_id": 2239,
+    "history_count": 6,
+    "mode": 0,
+    "memory": 2,
+    "raw_overflows": 0,
+    "capture_discarded": 0,
+    "scan_bad_frames": 0
+  },
+  {
+    "t": 1359014.265,
+    "capture_id": 2384,
+    "display_id": 2238,
+    "history_count": 6,
+    "mode": 0,
+    "memory": 2,
+    "raw_overflows": 0,
+    "capture_discarded": 0,
+    "scan_bad_frames": 0
+  },
+  {
+    "t": 1359014.609,
+    "capture_id": 2394,
+    "display_id": 2237,
+    "history_count": 6,
+    "mode": 0,
+    "memory": 2,
+    "raw_overflows": 0,
+    "capture_discarded": 0,
+    "scan_bad_frames": 0
+  }
+]

@@ -1,0 +1,11 @@
+WARNING: cannot find correct IV value
+Creating F:/Project/fpga/vision_base/results/soc_review_20261006/final_snapshot
+Creating F:/Project/fpga/vision_base/results/soc_review_20261006/final_snapshot/work
+Running: efx_run_map.py ti60f225_oob --family Titanium --device Ti60F225 --project_xml F:\Project\fpga\vision_base\board\ti60f225_v4\ti60f225_oob.xml --output_dir F:/Project/fpga/vision_base/results/soc_review_20261006/final_snapshot --work_dir F:/Project/fpga/vision_base/results/soc_review_20261006/final_snapshot/work --timeout 1500 --opt top-params=IMAGE_DEBUG top-params=2 top-params=SAPPHIRE_ENABLE top-params=1 top-params=RAW_FIFO_DEPTH top-params=512 --opt root=ti60f225_oob_top --opt veri_options=verilog_mode=sv_09,vhdl_mode=vhdl_2008 work-dir=F:/Project/fpga/vision_base/results/soc_review_20261006/final_snapshot/work write_efx_verilog=on
+   map :	PASS 
+Running: efx_run_pt_unified.py ti60f225_oob Titanium Ti60F225 --output_dir F:/Project/fpga/vision_base/results/soc_review_20261006/final_snapshot --timing_model I3 --project_xml ti60f225_oob.xml --work_dir F:/Project/fpga/vision_base/results/soc_review_20261006/final_snapshot/work
+   interface :	PASS 
+Running: efx_run_pnr.py ti60f225_oob --prj F:\Project\fpga\vision_base\board\ti60f225_v4\ti60f225_oob.xml --family Titanium --device Ti60F225 --timing_model I3 --output_dir F:/Project/fpga/vision_base/results/soc_review_20261006/final_snapshot --work_dir F:/Project/fpga/vision_base/results/soc_review_20261006/final_snapshot/work --timeout 1386 --opt sdc_file=ti60f225_oob.sdc
+   pnr :	PASS 
+Running: efx_run_pgm.py ti60f225_oob --family Titanium --device Ti60F225 --output_dir F:/Project/fpga/vision_base/results/soc_review_20261006/final_snapshot --work_dir F:/Project/fpga/vision_base/results/soc_review_20261006/final_snapshot/work --timeout 1127 --opt mode=active width=1 enable_roms=on spi_low_power_mode=on io_weak_pullup=on oscillator_clock_divider=DIV8 enable_crc_check=on bitstream_compression=on active_capture_clk_edge=posedge release_tri_then_reset=on enable_external_master_clock=off jtag_usercode=0xFFFFFFFF
+   pgm :	PASS 

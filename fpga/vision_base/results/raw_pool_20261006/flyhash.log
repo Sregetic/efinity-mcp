@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "F:\Project\fpga\vision_base\scripts\flyhash_board.py", line 172, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "F:\Project\fpga\vision_base\scripts\flyhash_board.py", line 151, in main
+    result['hardware']=run(features,a.feature_source)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Project\fpga\vision_base\scripts\flyhash_board.py", line 129, in run
+    if s['fault']:raise RuntimeError(f'Encoder task fault: {s}')
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Encoder task fault: {'valid': 0, 'busy': 0, 'feature_ready': 0, 'fault': 1, 'context_valid': 0, 'loaded': 0, 'sequence': 0, 'backend': 'firmware', 'cycles': None, 'cycle_low13': 0, 'frame_id': 0, 'config_id': 0, 'epoch': 0}

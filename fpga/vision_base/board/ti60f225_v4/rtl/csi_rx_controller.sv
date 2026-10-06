@@ -44,6 +44,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 `define MIPI_CSI2_RX_DEBUG
+`include "vision_sensor_config.vh"
 
 `define IP_UUID _816397a398bd4f6e8213b75d000bd820
 `define IP_NAME_CONCAT(a,b) a``b
@@ -147,9 +148,9 @@ module csi_rx_controller
     .tD_TERM_EN_NS (25),
     .tHS_SETTLE_NS (85),
     .tHS_PREPARE_ZERO_NS (145),
-    .NUM_DATA_LANE (4),
+    .NUM_DATA_LANE (`VISION_SENSOR_LANES),
     .ASYNC_STAGE (2),
-    .HS_BYTECLK_MHZ (70),
+    .HS_BYTECLK_MHZ (`VISION_SENSOR_BYTECLK_MHZ),
     .CLOCK_FREQ_MHZ (100),
     .DPHY_CLOCK_MODE ("Discontinuous"),
     .PIXEL_FIFO_DEPTH (1024),

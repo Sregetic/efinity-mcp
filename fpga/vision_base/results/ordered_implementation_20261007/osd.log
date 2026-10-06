@@ -1,0 +1,2 @@
+PASS mode names, decimal threshold16/96/2047 and OSD extent
+sim/vision/tb_osd.sv:18: $finish called at 32000 (1ps)

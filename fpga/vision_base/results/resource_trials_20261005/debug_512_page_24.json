@@ -1,0 +1,71 @@
+[
+  {
+    "magic": "56495331",
+    "build": "26100418",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 96,
+    "raw": "56495331261004187810060701e0010e0000000000000000",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1791214898.4892416,
+    "canny_analysis_size": [
+      480,
+      270
+    ],
+    "canny_coarse_edges": 0,
+    "canny_display_edges": 0,
+    "canny_render": "1px connected contour"
+  },
+  {
+    "magic": "56495331",
+    "build": "26100418",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 96,
+    "raw": "56495331261004187810060701e0010e0000000000000000",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1791214898.6917567,
+    "canny_analysis_size": [
+      480,
+      270
+    ],
+    "canny_coarse_edges": 0,
+    "canny_display_edges": 0,
+    "canny_render": "1px connected contour"
+  },
+  {
+    "magic": "56495331",
+    "build": "26100418",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 96,
+    "raw": "56495331261004187810060701e0010e0000000000000000",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1791214898.9092436,
+    "canny_analysis_size": [
+      480,
+      270
+    ],
+    "canny_coarse_edges": 0,
+    "canny_display_edges": 0,
+    "canny_render": "1px connected contour"
+  }
+]

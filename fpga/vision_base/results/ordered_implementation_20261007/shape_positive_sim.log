@@ -1,0 +1,4 @@
+PASS three frozen640x480 ROI frames host/RTL class2 flags0 background220
+F:\Project\fpga\vision_base\sim\vision\tb_shape_readback.sv:22: $finish called at 9230720000 (1ps)
+PASS three frozen640x480 ROI frames host/RTL class1 flags0 background220
+F:\Project\fpga\vision_base\sim\vision\tb_shape_readback.sv:22: $finish called at 9230720000 (1ps)

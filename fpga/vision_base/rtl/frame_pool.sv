@@ -6,6 +6,7 @@
 // (display and analysis).  This block does not contain pixel storage.
 module frame_pool #(
     parameter integer BANKS = 4,
+    parameter integer KEEP_HISTORY = 0,
     parameter integer BANK_ID_WIDTH = (BANKS <= 1) ? 1 : $clog2(BANKS)
 ) (
     input  logic                      clk,
@@ -42,6 +43,10 @@ module frame_pool #(
     output logic [BANK_ID_WIDTH-1:0]  analysis_hold_bank,
     output logic [31:0]               analysis_hold_frame_id,
     output logic [31:0]               analysis_hold_config_id,
+
+    input logic pin_history,display_use_analysis,
+    input logic [2:0] display_age,analysis_age,
+    output logic [2:0] history_count,
 
     // State visibility for integration and assertions.
     output logic [BANKS-1:0]           ready_bitmap,
@@ -149,6 +154,7 @@ module frame_pool #(
     integer k;
     integer n;
 
+    generate if(!KEEP_HISTORY)begin:latest_only
     // Reader candidate selection.  The writer exclusion here is the current
     // writer lease, except for a completion accepted with ok=1; that frame is
     // visible as ready_after_done on this edge.
@@ -245,6 +251,83 @@ module frame_pool #(
         cap_req_ready=cap_candidate_valid;
         cap_req_bank=cap_candidate_bank;
     end
+
+    assign history_count=0;
+    end else begin:history_pool
+    // Completion order is chronological with the single writer. Keep a bank
+    // permutation instead of an 8x8 matrix of 32-bit history comparators.
+    logic [BANK_ID_WIDTH-1:0] order_q[0:BANKS-1],order_after[0:BANKS-1];
+    logic [BANKS-1:0] pinned;
+    integer q,rank_count,chosen_display_age,chosen_analysis_age,old_position;
+    always_comb begin
+        old_position=0;
+        for(q=0;q<BANKS;q=q+1)begin
+            order_after[q]=order_q[q];
+            if(order_q[q]==cap_done_bank)old_position=q;
+        end
+        if(cap_done_fire&&cap_done_ok)begin
+            order_after[0]=cap_done_bank;
+            for(q=1;q<BANKS;q=q+1)
+                if(q<=old_position)order_after[q]=order_q[q-1];
+        end
+        ready_after_done=ready_q;
+        for(q=0;q<BANKS;q=q+1)begin
+            frame_id_after_done[q]=frame_id_q[q];config_id_after_done[q]=config_id_q[q];
+        end
+        if(cap_done_fire&&cap_done_ok)begin
+            ready_after_done[cap_done_bank]=1;
+            frame_id_after_done[cap_done_bank]=writer_frame_id_q;
+            config_id_after_done[cap_done_bank]=writer_config_id_q;
+        end
+        for(q=0;q<BANKS;q=q+1)
+            reader_eligible[q]=ready_after_done[q]&&
+                !(writer_active_q&&writer_bank_q==q&&!(cap_done_fire&&cap_done_ok));
+        rank_count=0;
+        for(q=0;q<BANKS;q=q+1)if(reader_eligible[q])rank_count=rank_count+1;
+        history_count=3'(rank_count>6?6:rank_count);
+        chosen_display_age=display_age<history_count?display_age:0;
+        chosen_analysis_age=analysis_age<history_count?analysis_age:0;
+        display_candidate_bank=0;analysis_candidate_bank=0;pinned=0;rank_count=0;
+        for(q=0;q<BANKS;q=q+1)if(reader_eligible[order_after[q]])begin
+            if(rank_count==chosen_display_age)display_candidate_bank=order_after[q];
+            if(rank_count==chosen_analysis_age)analysis_candidate_bank=order_after[q];
+            if(rank_count<6)pinned[order_after[q]]=1;
+            rank_count=rank_count+1;
+        end
+        if(display_use_analysis&&analysis_hold_valid_q)display_candidate_bank=analysis_hold_bank_q;
+        display_candidate_valid=rank_count!=0&&!(display_hold_valid_q&&!display_release);
+        analysis_candidate_valid=rank_count!=0&&!(analysis_hold_valid_q&&!analysis_release);
+        display_candidate_frame_id=frame_id_after_done[display_candidate_bank];
+        display_candidate_config_id=config_id_after_done[display_candidate_bank];
+        analysis_candidate_frame_id=frame_id_after_done[analysis_candidate_bank];
+        analysis_candidate_config_id=config_id_after_done[analysis_candidate_bank];
+        display_acquire_ready=display_candidate_valid;analysis_acquire_ready=analysis_candidate_valid;
+        display_acquire_bank=display_candidate_valid?display_candidate_bank:'0;
+        analysis_acquire_bank=analysis_candidate_valid?analysis_candidate_bank:'0;
+        cap_eligible='0;
+        for(q=0;q<BANKS;q=q+1)begin
+            cap_eligible[q]=!(writer_active_q&&!cap_done_fire)&&
+                !(writer_active_q&&cap_done_fire&&cap_done_ok&&cap_done_bank==q)&&
+                !(display_held_q[q]&&!(display_release&&display_hold_valid_q&&display_hold_bank_q==q))&&
+                !(analysis_held_q[q]&&!(analysis_release&&analysis_hold_valid_q&&analysis_hold_bank_q==q))&&
+                !(display_acquire_fire&&display_candidate_bank==q)&&
+                !(analysis_acquire_fire&&analysis_candidate_bank==q)&&!(pin_history&&pinned[q]);
+        end
+        cap_empty=cap_eligible&~ready_after_done;
+        cap_candidate_valid=|cap_eligible;cap_candidate_bank=0;cap_candidate_frame_id=0;
+        if(|cap_empty)begin
+            // Same deterministic lowest-empty-bank policy as the original pool.
+            for(q=BANKS-1;q>=0;q=q-1)if(cap_empty[q])cap_candidate_bank=BANK_ID_WIDTH'(q);
+        end else begin
+            for(q=0;q<BANKS;q=q+1)if(cap_eligible[order_after[q]])cap_candidate_bank=order_after[q];
+        end
+        cap_req_ready=cap_candidate_valid;cap_req_bank=cap_candidate_bank;
+    end
+    always_ff @(posedge clk)begin
+        if(!rst_n)for(integer n=0;n<BANKS;n=n+1)order_q[n]<=BANK_ID_WIDTH'(n);
+        else if(cap_done_fire&&cap_done_ok)for(integer n=0;n<BANKS;n=n+1)order_q[n]<=order_after[n];
+    end
+    end endgenerate
 
     // Single next-state block.  The order is intentional and is mirrored in
     // docs/frame_pool.md: completion, release, acquire, then new cap request.

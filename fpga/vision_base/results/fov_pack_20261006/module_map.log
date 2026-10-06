@@ -1,0 +1,3 @@
+WARNING: cannot find correct IV value
+Running: efx_run_map.py fov_map --family Titanium --device Ti60F225 --project_xml F:\Project\fpga\vision_base\results\fov_pack_20261006\fov_map.xml --output_dir module_map --work_dir module_work --timeout 180 --opt root=bayer_fov_reduce --opt veri_options=verilog_mode=sv_09,vhdl_mode=vhdl_2008 work-dir=module_work write_efx_verilog=on
+   map :	PASS 

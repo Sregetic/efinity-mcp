@@ -47,9 +47,9 @@ module axi_line_reader #(
     reg [2:0]  first_skip;
     reg        first_word;
 
-    reg [127:0] fifo_mem [0:FIFO_BEATS-1];
-    reg [FIFO_PTR_W-1:0] fifo_wr_ptr;
-    reg [FIFO_PTR_W-1:0] fifo_rd_ptr;
+    // Newest word at zero; count-1 selects the oldest. Push-only shifting
+    // permits SRL inference without spending image block RAM or changing depth.
+    (* syn_ramstyle="registers" *) reg [127:0] fifo_mem [0:FIFO_BEATS-1];
     reg [FIFO_PTR_W:0]   fifo_count;
 
     // Current and one-beat look-ahead word.  The look-ahead word makes a
@@ -88,15 +88,6 @@ module axi_line_reader #(
         end
     end
 
-    function automatic [FIFO_PTR_W-1:0] ptr_inc(input [FIFO_PTR_W-1:0] p);
-        begin
-            if (p == FIFO_BEATS-1)
-                ptr_inc = {FIFO_PTR_W{1'b0}};
-            else
-                ptr_inc = p + 1'b1;
-        end
-    endfunction
-
     wire fifo_push = (state == ST_R) && m_axi_rvalid && m_axi_rready;
     // A single FIFO read is enough: it fills the current word first, then
     // the look-ahead word.  A read and AXI write may occur in the same cycle.
@@ -106,6 +97,12 @@ module axi_line_reader #(
     // pointer would advance for a word that the promote branch intentionally
     // consumes from next_word_data.
     wire fifo_pop = load_cur || load_next;
+    integer fifo_index;
+    always @(posedge clk) if (fifo_push) begin
+        fifo_mem[0] <= m_axi_rdata;
+        for (fifo_index=1; fifo_index<FIFO_BEATS; fifo_index=fifo_index+1)
+            fifo_mem[fifo_index] <= fifo_mem[fifo_index-1];
+    end
 
     wire output_slot = !pixel_valid_r || pixel_ready;
     wire [127:0] cur_shifted = cur_word_data >> (cur_index * 16);
@@ -147,8 +144,6 @@ module axi_line_reader #(
             pixels_remaining  <= 16'd0;
             first_skip        <= 3'd0;
             first_word        <= 1'b0;
-            fifo_wr_ptr       <= {FIFO_PTR_W{1'b0}};
-            fifo_rd_ptr       <= {FIFO_PTR_W{1'b0}};
             fifo_count        <= {(FIFO_PTR_W+1){1'b0}};
             cur_word_valid    <= 1'b0;
             cur_word_data     <= 128'd0;
@@ -165,23 +160,13 @@ module axi_line_reader #(
         end else begin
             done <= 1'b0;
 
-            // FIFO write/read accounting.  FIFO memory has no reset, so it
-            // remains a normal inferred synchronous memory rather than a
-            // reset-expanded register array.
+            // A simultaneous push/pop shifts storage but keeps occupancy.
             case ({fifo_push, fifo_pop})
                 2'b10: begin
-                    fifo_mem[fifo_wr_ptr] <= m_axi_rdata;
-                    fifo_wr_ptr <= ptr_inc(fifo_wr_ptr);
                     fifo_count <= fifo_count + 1'b1;
                 end
                 2'b01: begin
-                    fifo_rd_ptr <= ptr_inc(fifo_rd_ptr);
                     fifo_count <= fifo_count - 1'b1;
-                end
-                2'b11: begin
-                    fifo_mem[fifo_wr_ptr] <= m_axi_rdata;
-                    fifo_wr_ptr <= ptr_inc(fifo_wr_ptr);
-                    fifo_rd_ptr <= ptr_inc(fifo_rd_ptr);
                 end
                 default: begin end
             endcase
@@ -206,8 +191,6 @@ module axi_line_reader #(
                     pixel_valid_r    <= 1'b0;
                     last_beat_r      <= 1'b0;
                     read_finished_r  <= 1'b0;
-                    fifo_wr_ptr      <= {FIFO_PTR_W{1'b0}};
-                    fifo_rd_ptr      <= {FIFO_PTR_W{1'b0}};
                     fifo_count       <= {(FIFO_PTR_W+1){1'b0}};
                     state            <= ST_AR;
                 end
@@ -245,12 +228,12 @@ module axi_line_reader #(
                 cur_index      <= 3'd0;
                 next_word_valid <= 1'b0;
             end else if (load_cur) begin
-                cur_word_data  <= fifo_mem[fifo_rd_ptr];
+                cur_word_data  <= fifo_mem[fifo_count-1'b1];
                 cur_word_valid <= 1'b1;
                 cur_index      <= first_word ? first_skip : 3'd0;
                 first_word     <= 1'b0;
             end else if (load_next) begin
-                next_word_data  <= fifo_mem[fifo_rd_ptr];
+                next_word_data  <= fifo_mem[fifo_count-1'b1];
                 next_word_valid <= 1'b1;
             end
 
@@ -311,8 +294,6 @@ module axi_line_reader #(
                     cur_word_valid <= 1'b0;
                     next_word_valid <= 1'b0;
                     fifo_count <= {(FIFO_PTR_W+1){1'b0}};
-                    fifo_wr_ptr <= {FIFO_PTR_W{1'b0}};
-                    fifo_rd_ptr <= {FIFO_PTR_W{1'b0}};
                 end else if (!emit) begin
                     pixel_valid_r <= 1'b0;
                 end

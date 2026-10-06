@@ -1,0 +1,23 @@
+{
+  "image": "F:/Project/fpga/vision_base/results/raw_order_fix_20261006/images/mode_1.png",
+  "roi": [
+    640,
+    300,
+    640,
+    480
+  ],
+  "threshold": 32,
+  "valid": false,
+  "class_id": 0,
+  "label": "NONE",
+  "reject_flags": 1,
+  "background": 0,
+  "corner_means": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "filled_area": 0,
+  "bbox": null
+}

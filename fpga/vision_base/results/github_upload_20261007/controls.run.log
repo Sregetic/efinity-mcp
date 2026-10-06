@@ -1,0 +1,2 @@
+CONTROLS PASS independent Sobel/Canny, lower16 step16, saturation, debounce and frame commit
+sim/vision/tb_controls.sv:49: $finish called at 36310000 (1ps)

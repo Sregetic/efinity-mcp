@@ -25,7 +25,9 @@ wire din = idata_r[0];
 wire [7:0] parity_next;
 always @( posedge clk or posedge rst_p )
 begin
-if( valid ) begin
+if( rst_p ) begin
+    ecc <= 8'd0;
+end else if( valid ) begin
     // ecc <= 8'h00;//shift;//8'h1a;//
     ecc <= 'd0;
 end else begin

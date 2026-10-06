@@ -2,6 +2,7 @@
 
 module i2c_master_reg_set #(
 	parameter DATA_LENGTH = 61,
+	parameter INIT_FILE = "",
 	parameter I2C_REG_ADDR_WIDTH = 16,
 	parameter I2C_DATA_WIDTH = 8,
 	parameter I2C_DEVICE_ADDR = 8'h20
@@ -20,7 +21,8 @@ module i2c_master_reg_set #(
 	output	reg		[7:0] dev_addr
 	
 );
-localparam ROM_ADDR_WIDTH = $clog2(DATA_LENGTH);
+// Counter must represent the terminal value too (SC2210 tables can exceed 256).
+localparam ROM_ADDR_WIDTH = $clog2(DATA_LENGTH+1);
 
 wire	[ROM_ADDR_WIDTH-1:0] rom_addr;
 wire	[I2C_REG_ADDR_WIDTH+I2C_DATA_WIDTH:0] rom_dout;
@@ -36,7 +38,8 @@ reg	[2:0] state = S0;
 	i2c_master_reg_rom #(
 		.ROM_SIZE              (25 ),   
 		.TOTAL_ROM_DEPTH       (DATA_LENGTH), // 6*7
-		.ADDR_WIDTH            (8  ) // alt_clogb2(42) 
+		.ADDR_WIDTH            (ROM_ADDR_WIDTH),
+		.INIT_FILE             (INIT_FILE)
 	)u_user_rom(
     .clock(clk),
     .addr_ptr(rom_addr),

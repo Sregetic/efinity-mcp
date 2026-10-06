@@ -1,0 +1,29 @@
+{
+  "command": [
+    "F:\\Efinity\\efinity-riscv-ide-2026.1\\toolchain\\bin\\riscv-none-elf-gcc.exe",
+    "-march=rv32i_zicsr_zifencei",
+    "-mabi=ilp32",
+    "-Os",
+    "-ffreestanding",
+    "-fno-builtin",
+    "-fno-pic",
+    "-msmall-data-limit=0",
+    "-mno-relax",
+    "-nostdlib",
+    "-Wl,--gc-sections",
+    "-Wl,-Map=F:\\Project\\fpga\\vision_base\\artifacts\\vision_soc\\firmware\\vision.map",
+    "-T",
+    "F:\\Project\\fpga\\vision_base\\firmware\\vision\\link.ld",
+    "F:\\Project\\fpga\\vision_base\\firmware\\vision\\start.S",
+    "F:\\Project\\fpga\\vision_base\\firmware\\vision\\main.c",
+    "F:\\Project\\fpga\\vision_base\\firmware\\vision\\flyhash.c",
+    "-lgcc",
+    "-o",
+    "F:\\Project\\fpga\\vision_base\\artifacts\\vision_soc\\firmware\\vision.elf"
+  ],
+  "isa": "RV32I_Zicsr_Zifencei",
+  "muldiv": false,
+  "cache_kb": 2,
+  "application_base": "0x07000000",
+  "boot_base": "0xf9000000"
+}

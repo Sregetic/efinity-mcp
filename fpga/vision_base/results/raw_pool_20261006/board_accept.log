@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "F:\Project\fpga\vision_base\results\raw_pool_20261006\board_accept.py", line 56, in <module>
+    assert len(set(ids))==6 and ids[0]==fid and all(ids[i]>ids[i+1] for i in range(5)),ids
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [3798, 3797, 3796, 3794, 3793, 3797]

@@ -1,7 +1,10 @@
+// Default SC431HAI: VTS1500, half-line limit2950. Other sensors supply their
+// register-unit range from the selected initialization profile.
 // RAW8 metering on 2 pixels/clock, before black correction and white balance.
 // Center-weighted, highlight-constrained, with 1/16 steps and 8 fresh-frame settling.
 module camera_auto_exposure #(
- parameter CX0=224,CX1=736,CY0=288,CY1=800,parameter SAMPLE_BITS=4,SETTLE=8)(
+ parameter CX0=224,CX1=736,CY0=288,CY1=800,parameter SAMPLE_BITS=4,SETTLE=8,
+ parameter EXPOSURE_MIN=112,EXPOSURE_MAX=2950,EXPOSURE_INITIAL=444)(
  input clk,rst_n,vs,de,input[15:0]pixels,input[31:0]capture_id,
  input enable,input[15:0]manual_value,input ack_toggle,fault,
  output reg req_toggle,output reg[15:0]request,
@@ -14,10 +17,10 @@ wire[8:0]pair_sum={1'b0,pixels[15:8]}+{1'b0,pixels[7:0]};
 wire sample_point=(x[SAMPLE_BITS-1:0]==0)&&(y[SAMPLE_BITS-1:0]==0);
 wire[15:0]step_size=(request>>4)<4?16'd4:(request>>4);
 wire[16:0]up={1'b0,request}+step_size;
-wire[15:0]down=(request>step_size+112)?request-step_size:16'd112;
+wire[15:0]down=(request>step_size+EXPOSURE_MIN)?request-step_size:EXPOSURE_MIN;
 always @(posedge clk)begin
  vq<=vs;dq<=de;as<={as[1:0],ack_toggle};fs<={fs[1:0],fault};
- if(!rst_n)begin x<=0;y<=0;vq<=0;dq<=0;sum<=0;nc<=0;nt<=0;nh<=0;req_toggle<=0;request<=444;as<=0;fs<=0;started<=0;settle<=SETTLE;last_capture<=0;center_sum<=0;center_count<=0;total_count<=0;clip_count<=0;decision<=0;shadow_boost<=0;end
+ if(!rst_n)begin x<=0;y<=0;vq<=0;dq<=0;sum<=0;nc<=0;nt<=0;nh<=0;req_toggle<=0;request<=EXPOSURE_INITIAL;as<=0;fs<=0;started<=0;settle<=SETTLE;last_capture<=0;center_sum<=0;center_count<=0;total_count<=0;clip_count<=0;decision<=0;shadow_boost<=0;end
  else begin
   if(de)x<=x+1'b1;else x<=0;
   if(vs&&!vq)begin
@@ -35,11 +38,11 @@ always @(posedge clk)begin
     else begin
      settle<=SETTLE;decision<=0;
      if(!enable)begin
-      if(manual_value>=112&&manual_value<=1776&&manual_value!=request)begin request<=manual_value;req_toggle<=~req_toggle;end
+      if(manual_value>=EXPOSURE_MIN&&manual_value<=EXPOSURE_MAX&&manual_value!=request)begin request<=manual_value;req_toggle<=~req_toggle;end
      end else if((sum>nc*32'd76)||((nh> (nt>>2))&&(sum>nc*32'd44))||(nh>(nt>>1)))begin
-      if(request>112)begin request<=down;req_toggle<=~req_toggle;decision<=2;end
+      if(request>EXPOSURE_MIN)begin request<=down;req_toggle<=~req_toggle;decision<=2;end
      end else if(sum<nc*32'd52&&nh<(nt>>3))begin
-      if(request<1776)begin request<=up>1776?16'd1776:up[15:0];req_toggle<=~req_toggle;decision<=1;end
+      if(request<EXPOSURE_MAX)begin request<=up>EXPOSURE_MAX?EXPOSURE_MAX:up[15:0];req_toggle<=~req_toggle;decision<=1;end
      end
     end
    end

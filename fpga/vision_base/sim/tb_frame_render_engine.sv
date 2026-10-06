@@ -2,6 +2,8 @@
 module tb_frame_render_engine;
     reg clk=0;always #5 clk=~clk;
     reg rst_n=0;
+    wire release_source=0;
+    wire source_hold_valid;wire[31:0]source_hold_frame_id,source_hold_config_id;
     reg cap_req_valid=0,cap_done_valid=0,cap_done_ok=1;
     wire cap_req_ready,cap_done_ready;wire [1:0] cap_req_bank;
     reg [1:0] cap_done_bank=0;reg [31:0] cap_req_config_id=1;
@@ -33,6 +35,7 @@ module tb_frame_render_engine;
     reg inject_read=0,inject_write=0;
     integer writes=0,reads=0,bresponses=0;
     integer k,wx,wy,sx,sy,expected_addr;
+    wire pin_history=0,display_use_analysis=0;wire[2:0]display_age=0,analysis_age=0;wire[2:0]history_count;wire[31:0]capture_frame_id;
     frame_render_engine dut(.*);
     function automatic [15:0] source_pixel(input integer address);
         source_pixel=((address>>1) ^ (address>>12) ^ 16'h359a)&16'hffff;
