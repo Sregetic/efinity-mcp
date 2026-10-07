@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "before_canny": 128,
+  "after_canny": 96,
+  "unchanged_sobel": 96,
+  "median": 1,
+  "mode_restored": 0,
+  "memory": 0,
+  "source_frozen": false,
+  "capture_discarded_delta": 0,
+  "scan_bad_delta": 0,
+  "bitstream_reprogrammed": false,
+  "flash_written": false,
+  "live": {
+    "passed": true,
+    "samples": 60,
+    "seconds": 14.75,
+    "row": 480,
+    "bands": [
+      [
+        256,
+        305
+      ],
+      [
+        850,
+        899
+      ],
+      [
+        1454,
+        1503
+      ]
+    ],
+    "missing_samples": [
+      0,
+      0,
+      0
+    ],
+    "minimum_band_pixels": [
+      2,
+      2,
+      2
+    ],
+    "first_display_source": 278659,
+    "last_display_source": 279101,
+    "first_canny_epoch": 24730,
+    "last_canny_epoch": 25173,
+    "scope": "Sampled live display row, not every frame or the full image; source and Canny plane are not held",
+    "canny_result_hz": 30.033898305084747
+  }
+}

@@ -1,6 +1,6 @@
 # AI加载器、分析DMA与INT8联调
 
-2026-10-07。当前SRAM为`dma_final_snapshot`，DDR中运行`ai_firmware_single_gray/vision.elf`和合成联调权重。实时显示已恢复：M1、median1、Sobel96/Canny128、memory0、ROI关闭。Flash保持；断电后AI程序/权重需重新通过USER1加载。真实卡片训练/测试、I1几何引导与I3融合OSD仍待完成。
+2026-10-07。当前SRAM为`dma_final_snapshot`，DDR中运行`ai_firmware_single_gray/vision.elf`和合成联调权重。当前实时显示：M0、median1、Sobel96/Canny96、memory0、ROI关闭；后续Canny弱轮廓复核已单独128→96，见[阈值复核](CANNY_THRESHOLD_FIX_20261007.md)。Flash保持；断电后AI程序/权重需重新通过USER1加载。真实卡片训练/测试、I1几何引导与I3融合OSD仍待完成。
 
 ## 实际完成与证据
 

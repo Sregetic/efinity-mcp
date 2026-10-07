@@ -1,0 +1,52 @@
+[
+  {
+    "magic": "56495331",
+    "build": "26091785",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 96,
+    "raw": "5649533126091785781006070150010001f8000060100203",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1791353317.859519,
+    "physical_gains_rgb": [
+      336,
+      256,
+      504
+    ],
+    "tone_mode": 3,
+    "sobel_threshold": 96,
+    "canny_threshold": 128,
+    "canny_effective_threshold": 128
+  },
+  {
+    "magic": "56495331",
+    "build": "26091785",
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 96,
+    "raw": "5649533126091785781006070150010001f8000060100203",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1791353318.0759628,
+    "physical_gains_rgb": [
+      336,
+      256,
+      504
+    ],
+    "tone_mode": 3,
+    "sobel_threshold": 96,
+    "canny_threshold": 128,
+    "canny_effective_threshold": 128
+  }
+]
