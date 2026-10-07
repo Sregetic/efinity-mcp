@@ -56,6 +56,8 @@ void main(void){
  event(0x33,0);event(0x35,0);control_service_step();accept();check(state.good);
  reg[4]|=1<<11;reg[4]&=~(1<<8);event(0x35,0);control_service_step();check(!state.good&&state.pending==1);
  reg[4]|=1<<8;control_service_step();accept();check(state.good);reg[4]|=1<<11;control_service_step();check(!state.good);event(0x34,0);event(0x35,0);control_service_step();check(!state.enabled&&!(reg[4]&32));
+ reg[4]=(1<<8)|(1<<6);reg[5]=100;event(0x34,1);event(0x35,0);control_service_step();
+ check(state.pending==2&&!state.warming&&(reg[4]&16));accept();check(state.good);
  const char *p="PASS RV32I controls independent thresholds16..2047 step16, keys/history, atomic feature wait, immutable ROI commit, fresh capture, frozen rerender, reject and disable\n";
  while(*p)*(volatile unsigned char *)0x10000000=*p++;finish(1);
 }

@@ -1,0 +1,47 @@
+[
+  {
+    "sequence": 1,
+    "address": 256,
+    "value": 1,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 2,
+    "address": 12337,
+    "value": 10,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 3,
+    "address": 12312,
+    "value": 122,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 4,
+    "address": 12814,
+    "value": 5,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 5,
+    "address": 12815,
+    "value": 220,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  }
+]

@@ -67,7 +67,7 @@
     "--onChipRamSize",
     "0x1000",
     "--ramHex",
-    "F:/Project/fpga/vision_base/artifacts/vision_soc/firmware/vision.hex",
+    "F:/Project/fpga/vision_base/results/xlr_control_20261007/control_firmware_freeze_fix/vision.hex",
     "--uart",
     "name=system_uart_0_io,address=0x010000,interruptId=1,fifoDepth=16",
     "--gpio",

@@ -33,16 +33,17 @@ control('--memory',1)
 deadline=time.monotonic()+10
 while True:
     source=control()
-    if source['source_held'] and source['source_frozen'] and not(source['render_busy'] or source['render_pending'] or source['capture_active']):break
+    if source['source_held'] and source['source_frozen'] and not(source['render_busy'] or source['render_pending']):break
     if time.monotonic()>deadline:raise TimeoutError('Frozen source has not settled')
-held=(source['held_source_frame_id'],source['held_raw_id_sample'],source['rgb_capture_count']);frozen=[]
+# The unified pool keeps acquiring live frames while the leased source stays fixed.
+held=(source['held_source_frame_id'],source['held_raw_id_sample']);frozen=[]
 for name,roi,size,pos in [
     ('frozen_full',[0,0,1920,1080],[1920,1080],[0,0]),
     ('frozen_zoom',[480,270,960,540],[1920,1080],[0,0]),
     ('frozen_pan',[608,334,960,540],[1920,1080],[0,0]),
     ('frozen_small',[0,0,1920,1080],[960,540],[480,270])]:
     state=control('--roi',*roi,'--output-size',*size,'--position',*pos,'--rerender');save(name,state)
-    assert (state['held_source_frame_id'],state['held_raw_id_sample'],state['rgb_capture_count'])==held,'Frozen source changed'
+    assert (state['held_source_frame_id'],state['held_raw_id_sample'])==held,'Frozen source changed'
     assert state['roi_frame_id']==held[0] and state['applied_config_id']==state['requested_config_id'],'Wrong source/config published'
     frozen.append(dict(name=name,**state));time.sleep(2)
     if a.snapshots:

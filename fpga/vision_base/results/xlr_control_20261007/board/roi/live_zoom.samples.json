@@ -1,0 +1,272 @@
+[
+  {
+    "time_s": 1444430.0,
+    "roi_frame_id": 11990,
+    "applied_config_id": 2,
+    "roi_enabled": 1,
+    "roi_frame_ok": 1,
+    "source_held": 1,
+    "source_frozen": 0,
+    "render_busy": 1,
+    "render_pending": 0,
+    "capture_active": 1,
+    "config_busy": 0,
+    "config_error": 0,
+    "render_error": 0,
+    "scan_error": 0,
+    "commit_rejected": 0,
+    "mode": 5,
+    "median": 1,
+    "memory": 0,
+    "threshold": 128,
+    "canny_ready": 1,
+    "canny_fault": 0,
+    "roi": [
+      480,
+      270,
+      960,
+      540
+    ],
+    "output_size": [
+      1920,
+      1080
+    ],
+    "capture_discarded": 0,
+    "scan_bad_frames": 0,
+    "render_cycles": 1526836,
+    "requested_config_id": 2,
+    "accepted_config_id": 2,
+    "rejected_config_id": 0,
+    "held_source_frame_id": 11997,
+    "held_raw_id_sample": 11997,
+    "rgb_capture_count": 11997,
+    "position": [
+      0,
+      0
+    ],
+    "display_size": [
+      1920,
+      1080
+    ],
+    "render_deadline_misses": 326,
+    "sobel_threshold": 96,
+    "canny_threshold": 128,
+    "canny_effective_threshold": 128
+  },
+  {
+    "time_s": 1444432.437,
+    "roi_frame_id": 12063,
+    "applied_config_id": 2,
+    "roi_enabled": 1,
+    "roi_frame_ok": 1,
+    "source_held": 1,
+    "source_frozen": 0,
+    "render_busy": 1,
+    "render_pending": 0,
+    "capture_active": 1,
+    "config_busy": 0,
+    "config_error": 0,
+    "render_error": 0,
+    "scan_error": 0,
+    "commit_rejected": 0,
+    "mode": 5,
+    "median": 1,
+    "memory": 0,
+    "threshold": 128,
+    "canny_ready": 1,
+    "canny_fault": 0,
+    "roi": [
+      480,
+      270,
+      960,
+      540
+    ],
+    "output_size": [
+      1920,
+      1080
+    ],
+    "capture_discarded": 0,
+    "scan_bad_frames": 0,
+    "render_cycles": 1530681,
+    "requested_config_id": 2,
+    "accepted_config_id": 2,
+    "rejected_config_id": 0,
+    "held_source_frame_id": 12070,
+    "held_raw_id_sample": 12070,
+    "rgb_capture_count": 12070,
+    "position": [
+      0,
+      0
+    ],
+    "display_size": [
+      1920,
+      1080
+    ],
+    "render_deadline_misses": 326,
+    "sobel_threshold": 96,
+    "canny_threshold": 128,
+    "canny_effective_threshold": 128
+  },
+  {
+    "time_s": 1444434.843,
+    "roi_frame_id": 12135,
+    "applied_config_id": 2,
+    "roi_enabled": 1,
+    "roi_frame_ok": 1,
+    "source_held": 0,
+    "source_frozen": 0,
+    "render_busy": 1,
+    "render_pending": 1,
+    "capture_active": 1,
+    "config_busy": 0,
+    "config_error": 0,
+    "render_error": 0,
+    "scan_error": 0,
+    "commit_rejected": 0,
+    "mode": 5,
+    "median": 1,
+    "memory": 0,
+    "threshold": 128,
+    "canny_ready": 1,
+    "canny_fault": 0,
+    "roi": [
+      480,
+      270,
+      960,
+      540
+    ],
+    "output_size": [
+      1920,
+      1080
+    ],
+    "capture_discarded": 0,
+    "scan_bad_frames": 0,
+    "render_cycles": 1526205,
+    "requested_config_id": 2,
+    "accepted_config_id": 2,
+    "rejected_config_id": 0,
+    "held_source_frame_id": 12142,
+    "held_raw_id_sample": 12142,
+    "rgb_capture_count": 12142,
+    "position": [
+      0,
+      0
+    ],
+    "display_size": [
+      1920,
+      1080
+    ],
+    "render_deadline_misses": 326,
+    "sobel_threshold": 96,
+    "canny_threshold": 128,
+    "canny_effective_threshold": 128
+  },
+  {
+    "time_s": 1444437.281,
+    "roi_frame_id": 12208,
+    "applied_config_id": 2,
+    "roi_enabled": 1,
+    "roi_frame_ok": 1,
+    "source_held": 1,
+    "source_frozen": 0,
+    "render_busy": 1,
+    "render_pending": 0,
+    "capture_active": 1,
+    "config_busy": 0,
+    "config_error": 0,
+    "render_error": 0,
+    "scan_error": 0,
+    "commit_rejected": 0,
+    "mode": 5,
+    "median": 1,
+    "memory": 0,
+    "threshold": 128,
+    "canny_ready": 1,
+    "canny_fault": 0,
+    "roi": [
+      480,
+      270,
+      960,
+      540
+    ],
+    "output_size": [
+      1920,
+      1080
+    ],
+    "capture_discarded": 0,
+    "scan_bad_frames": 0,
+    "render_cycles": 1529650,
+    "requested_config_id": 2,
+    "accepted_config_id": 2,
+    "rejected_config_id": 0,
+    "held_source_frame_id": 12214,
+    "held_raw_id_sample": 12214,
+    "rgb_capture_count": 12214,
+    "position": [
+      0,
+      0
+    ],
+    "display_size": [
+      1920,
+      1080
+    ],
+    "render_deadline_misses": 326,
+    "sobel_threshold": 96,
+    "canny_threshold": 128,
+    "canny_effective_threshold": 128
+  },
+  {
+    "time_s": 1444439.687,
+    "roi_frame_id": 12281,
+    "applied_config_id": 2,
+    "roi_enabled": 1,
+    "roi_frame_ok": 1,
+    "source_held": 0,
+    "source_frozen": 0,
+    "render_busy": 0,
+    "render_pending": 0,
+    "capture_active": 1,
+    "config_busy": 0,
+    "config_error": 0,
+    "render_error": 0,
+    "scan_error": 0,
+    "commit_rejected": 0,
+    "mode": 5,
+    "median": 1,
+    "memory": 0,
+    "threshold": 128,
+    "canny_ready": 1,
+    "canny_fault": 0,
+    "roi": [
+      480,
+      270,
+      960,
+      540
+    ],
+    "output_size": [
+      1920,
+      1080
+    ],
+    "capture_discarded": 0,
+    "scan_bad_frames": 0,
+    "render_cycles": 1530669,
+    "requested_config_id": 2,
+    "accepted_config_id": 2,
+    "rejected_config_id": 0,
+    "held_source_frame_id": 12287,
+    "held_raw_id_sample": 12287,
+    "rgb_capture_count": 12287,
+    "position": [
+      0,
+      0
+    ],
+    "display_size": [
+      1920,
+      1080
+    ],
+    "render_deadline_misses": 326,
+    "sobel_threshold": 96,
+    "canny_threshold": 128,
+    "canny_effective_threshold": 128
+  }
+]

@@ -69,6 +69,9 @@ static void control_service_step(void){
  uint32_t hw=CTRL_R(0x10),capture=CTRL_R(0x14),freeze=(hw>>6)&1;
  if(capture!=s->capture){s->capture=capture;s->dirty=1;s->warming=0;}
  if(freeze!=s->freeze){s->freeze=freeze;s->dirty=1;}
+ // RAW_TO_POOL keeps a published source before ROI is enabled. Freezing pins
+ // that source; waiting for another capture here would deadlock the commit.
+ if(freeze&&capture!=0)s->warming=0;
  if((hw&(1u<<11))&&(s->good||s->pending==2)){s->good=0;if(s->pending!=1){s->pending=0;CTRL_W(0x38,s->reject<<1);}}
  if(s->pending==2&&!(hw&16)&&CTRL_R(0x18)==s->serial){s->pending=0;s->good=1;CTRL_W(0x38,s->reject<<1);}
  if(hw&16)return; // Engine still owns the latched geometry; no partial overwrite.
@@ -81,7 +84,7 @@ static void control_service_step(void){
    else {CTRL_W(0x30,12);CTRL_W(0x38,0);s->enabled=0;s->warming=0;}
    s->pending=0;s->good=0;return;
   }
-  if(!s->enabled){s->enabled=1;s->warming=1;s->capture=capture;CTRL_W(0x30,5);}
+  if(!s->enabled){s->enabled=1;s->warming=!(freeze&&capture!=0);s->capture=capture;CTRL_W(0x30,5);}
   if(!s->warming&&(hw&(1u<<8))){
    CTRL_W(0x20,s->commit[0]);CTRL_W(0x24,s->commit[1]);CTRL_W(0x28,s->commit[2]);CTRL_W(0x2c,s->commit[3]);
    CTRL_W(0x34,s->serial);CTRL_W(0x30,7);s->pending=2;s->dirty=0;

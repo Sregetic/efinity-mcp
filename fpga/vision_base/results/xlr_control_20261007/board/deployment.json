@@ -1,0 +1,73 @@
+{
+  "operation": "JTAG SRAM",
+  "flash_written": false,
+  "bitstream": "F:\\Project\\fpga\\vision_base\\results\\xlr_control_20261007\\release_freeze_fix\\ti60f225_oob.bit",
+  "firmware": "F:\\Project\\fpga\\vision_base\\results\\xlr_control_20261007\\control_ai_freeze_fix\\vision.elf",
+  "rom_firmware": "F:\\Project\\fpga\\vision_base\\results\\xlr_control_20261007\\control_firmware_freeze_fix\\vision.elf",
+  "url": "ftdi://0x0403:0x6011:4:9/2",
+  "device_id": "0x10660a79",
+  "programmer_completed": true,
+  "xlr": 56818,
+  "ram": 245,
+  "dsp": 58,
+  "wns_ns": 0.074,
+  "whs_ns": 0.026,
+  "unassigned_core_pins": 0,
+  "rom_cold_freeze_verified": true,
+  "ai_loaded": true,
+  "ai_host_exact": true,
+  "current_settings": {
+    "roi_frame_id": 5131,
+    "applied_config_id": 0,
+    "roi_enabled": 0,
+    "roi_frame_ok": 1,
+    "source_held": 0,
+    "source_frozen": 0,
+    "render_busy": 0,
+    "render_pending": 0,
+    "capture_active": 1,
+    "config_busy": 0,
+    "config_error": 0,
+    "render_error": 0,
+    "scan_error": 0,
+    "commit_rejected": 0,
+    "mode": 6,
+    "median": 0,
+    "memory": 0,
+    "threshold": 80,
+    "canny_ready": 1,
+    "canny_fault": 0,
+    "roi": [
+      0,
+      0,
+      1920,
+      1080
+    ],
+    "output_size": [
+      1920,
+      1080
+    ],
+    "capture_discarded": 0,
+    "scan_bad_frames": 0,
+    "render_cycles": 3330641,
+    "requested_config_id": 2,
+    "accepted_config_id": 2,
+    "rejected_config_id": 0,
+    "held_source_frame_id": 492,
+    "held_raw_id_sample": 492,
+    "rgb_capture_count": 5137,
+    "position": [
+      0,
+      0
+    ],
+    "display_size": [
+      1920,
+      1080
+    ],
+    "render_deadline_misses": 4,
+    "sobel_threshold": 128,
+    "canny_threshold": 80,
+    "canny_effective_threshold": 80
+  },
+  "visual_acceptance": "open: reported Canny jitter and intermittent purple; not declared fixed"
+}
