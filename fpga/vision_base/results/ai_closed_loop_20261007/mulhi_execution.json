@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "method": "actual RV32I/dot4/MulHi static inference",
+  "vectors": 32,
+  "hidden_values": 1024,
+  "output_values": 128,
+  "gray_feature_images": 4,
+  "flyhash_images": 4,
+  "results": [
+    1396919601,
+    32,
+    10267342,
+    8624900,
+    282612,
+    4,
+    821037,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "layer0_microseconds": 2695.28125,
+  "layer1_microseconds": 88.31625,
+  "network_microseconds": 2783.5975,
+  "flyhash_microseconds": 2052.5925,
+  "training_kind": "synthetic_bringup_only",
+  "real_card_accuracy_verified": false
+}

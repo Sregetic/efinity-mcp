@@ -53,8 +53,7 @@ module vision_rgb_scanout #(parameter FIFO_AW=10)(
  assign mr=metadata||kind==7||draining||consume;
  wire[15:0]p=phase?upper:md[15:0];
  // Match capture's shared range and equal RGB channel precision.
- wire[23:0]expanded=p[15]?{p[14:10],p[14:12],p[9:5],p[9:7],p[4:0],p[4:2]}:
-  {2'b0,p[14:10],1'b0,2'b0,p[9:5],1'b0,2'b0,p[4:0],1'b0};
+ wire[23:0]expanded;vision_packed_rgb unpack(.pixel(p),.rgb(expanded));
  assign view_rgb=view_enabled?out_rgb:rgb;
  assign view_vs=view_enabled?out_vs:vs,view_hs=view_enabled?out_hs:hs,view_de=view_enabled?out_de:de;
  task fail_frame;begin

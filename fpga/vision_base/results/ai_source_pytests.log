@@ -1,0 +1,4 @@
+........................s............................................... [100%]
+=========================== short test summary info ===========================
+SKIPPED [1] tests\test_core.py:159: Symlink privilege is unavailable on this Windows runner
+71 passed, 1 skipped in 14.78s

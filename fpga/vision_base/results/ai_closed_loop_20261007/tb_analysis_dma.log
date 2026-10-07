@@ -1,0 +1,2 @@
+PASS tb_analysis_dma:1024 nearest gray pixels, nonaligned ROI, tags, backpressure, double buffer, busy rejection, stale/invalid/read/write faults and lease release
+sim/tb_analysis_dma.sv:82: $finish called at 91050000 (1ps)

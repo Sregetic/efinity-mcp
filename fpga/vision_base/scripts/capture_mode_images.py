@@ -67,6 +67,7 @@ def main():
     p.add_argument('--sensor',choices=['sc431hai','sc2210'],default='sc431hai')
     p.add_argument('--modes',nargs='+',choices=list(NAMES),default=list(NAMES))
     p.add_argument('--frequency',type=int,default=6000000)
+    p.add_argument('--source-native-order',action='store_true',help='Keep packed-frame channels for analysis DMA training; display exports stay unchanged')
     p.add_argument('--rows',nargs=2,type=int,default=[0,1080],metavar=('Y','HEIGHT'))
     a=p.parse_args();y0,height=a.rows
     if y0<0 or height<1 or y0+height>1080:raise ValueError('Rows must fit1080-line canvas')
@@ -148,14 +149,14 @@ def main():
                         command(e,126,27)
                         packed=read(e,192+width*24).tobytes(msby=True)
                         check_row(decode_snapshot(int.from_bytes(packed[:24],'little')),expected)
-                        rgb.extend(rgb_bytes(packed[24:],color_order if m=='source' else 0))
+                        rgb.extend(rgb_bytes(packed[24:],color_order if m=='source' and not a.source_native_order else 0))
                         if first_sequence is None:first_sequence=sequence
                         if (y-y0+1)%90==0:print(f'{NAMES[m]} rows{y-y0+1}/{height}',flush=True)
                     filename='source.png' if m=='source' else f'mode_{m}.png'
                     write_png(a.output_dir/filename,width,height,rgb)
                     info=dict(mode=m,name=NAMES[m],file=filename,frame_id=frame,config_id=config,
                               canny_epoch=result['canny_epoch'],threshold=selected_threshold,median=context['median'],
-                              tone=tone,color_order=color_order,sequence_first=first_sequence,sequence_last=sequence,
+                              tone=tone,color_order=0 if m=='source' and a.source_native_order else color_order,sequence_first=first_sequence,sequence_last=sequence,
                               seconds=time.monotonic()-start,width=width,height=height,y=y0)
                     result['images'].append(info)
                     (a.output_dir/'images.json').write_text(json.dumps(result,indent=2),encoding='utf-8')

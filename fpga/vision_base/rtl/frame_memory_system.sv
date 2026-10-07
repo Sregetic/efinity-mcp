@@ -3,7 +3,7 @@
 // Optional legacy client precedes the optional CPU client on the same DDR port.
 module frame_memory_system #(
  parameter MAX_LINE_PIXELS=1920,BANK_SHIFT=22,SCAN_BURST_BEATS=16,CPU_ENABLED=0,LEGACY_ENABLED=1,
- parameter SOURCE_BANKS=4,BANK_BITS=$clog2(SOURCE_BANKS),KEEP_HISTORY=0,DIRECT_SCAN=0,
+ parameter SOURCE_BANKS=4,BANK_BITS=$clog2(SOURCE_BANKS),KEEP_HISTORY=0,COMPUTE_ENABLED=0,DIRECT_SCAN=0,
  parameter[31:0]SOURCE_BASE=32'h02000000,RESULT_BASE=32'h03000000
 )(
  input clk,rst_n,capture_abort,scan_enable,scan_urgent,
@@ -16,6 +16,11 @@ module frame_memory_system #(
  output capture_done,capture_error,
  input job_valid,output job_ready,input freeze_source,release_source,input[31:0]job_config_id,
  input[15:0]roi_x,roi_y,roi_w,roi_h,dst_width,dst_height,input[31:0]dst_stride_bytes,
+    input wire compute_acquire_valid,compute_latest,compute_release,
+    input wire[31:0]compute_request_frame_id,
+    output wire compute_acquire_ready,compute_missing,compute_hold_valid,
+    output wire[BANK_BITS-1:0]compute_hold_bank,
+    output wire[31:0]compute_hold_frame_id,compute_hold_config_id,
  input analysis_acquire_valid,output analysis_acquire_ready,input analysis_release,
  output analysis_hold_valid,output[BANK_BITS-1:0]analysis_hold_bank,
  output[31:0]analysis_hold_frame_id,analysis_hold_config_id,
@@ -58,6 +63,13 @@ module frame_memory_system #(
  output[5:0]legacy_bid,
  output legacy_bvalid,
  input legacy_bready,
+ input[5:0]dma_arid,dma_awid,
+ input[31:0]dma_araddr,dma_awaddr,input[7:0]dma_arlen,dma_awlen,
+ input[2:0]dma_arsize,dma_awsize,input[1:0]dma_arburst,dma_awburst,
+ input dma_arvalid,dma_awvalid,output dma_arready,dma_awready,
+ output[127:0]dma_rdata,output[1:0]dma_rresp,output dma_rlast,dma_rvalid,input dma_rready,
+ input[127:0]dma_wdata,input[15:0]dma_wstrb,input dma_wlast,dma_wvalid,output dma_wready,
+ output[1:0]dma_bresp,output dma_bvalid,input dma_bready,
  input[5:0]cpu_arid,
  input[31:0]cpu_araddr,
  input[7:0]cpu_arlen,
@@ -143,7 +155,7 @@ module frame_memory_system #(
    3:cap_state<=0;
   endcase
  end
- localparam BASE_CLIENTS=LEGACY_ENABLED?4:3,CLIENTS=BASE_CLIENTS+CPU_ENABLED;
+ localparam BASE_CLIENTS=LEGACY_ENABLED?4:3,DMA_CLIENT=BASE_CLIENTS+CPU_ENABLED,CLIENTS=BASE_CLIENTS+CPU_ENABLED+COMPUTE_ENABLED;
  wire[CLIENTS*6-1:0]b_arid;
  wire[CLIENTS*32-1:0]b_araddr;
  wire[CLIENTS*8-1:0]b_arlen;
@@ -215,6 +227,45 @@ module frame_memory_system #(
  assign legacy_bresp=0;
  assign legacy_bid=0;
  assign legacy_bvalid=0;
+ end endgenerate
+ generate if(COMPUTE_ENABLED)begin:compute_client
+ assign b_arid[DMA_CLIENT*6+:6]=dma_arid;
+ assign b_araddr[DMA_CLIENT*32+:32]=dma_araddr;
+ assign b_arlen[DMA_CLIENT*8+:8]=dma_arlen;
+ assign b_arsize[DMA_CLIENT*3+:3]=dma_arsize;
+ assign b_arburst[DMA_CLIENT*2+:2]=dma_arburst;
+ assign b_arvalid[DMA_CLIENT]=dma_arvalid;
+ assign b_rready[DMA_CLIENT]=dma_rready;
+ assign b_awid[DMA_CLIENT*6+:6]=dma_awid;
+ assign b_awaddr[DMA_CLIENT*32+:32]=dma_awaddr;
+ assign b_awlen[DMA_CLIENT*8+:8]=dma_awlen;
+ assign b_awsize[DMA_CLIENT*3+:3]=dma_awsize;
+ assign b_awburst[DMA_CLIENT*2+:2]=dma_awburst;
+ assign b_awvalid[DMA_CLIENT]=dma_awvalid;
+ assign b_wdata[DMA_CLIENT*128+:128]=dma_wdata;
+ assign b_wstrb[DMA_CLIENT*16+:16]=dma_wstrb;
+ assign b_wlast[DMA_CLIENT]=dma_wlast;
+ assign b_wvalid[DMA_CLIENT]=dma_wvalid;
+ assign b_bready[DMA_CLIENT]=dma_bready;
+ assign dma_arready=b_arready[DMA_CLIENT];
+ assign dma_rdata=b_rdata[DMA_CLIENT*128+:128];
+ assign dma_rresp=b_rresp[DMA_CLIENT*2+:2];
+ assign dma_rlast=b_rlast[DMA_CLIENT];
+ assign dma_rvalid=b_rvalid[DMA_CLIENT];
+ assign dma_awready=b_awready[DMA_CLIENT];
+ assign dma_wready=b_wready[DMA_CLIENT];
+ assign dma_bresp=b_bresp[DMA_CLIENT*2+:2];
+ assign dma_bvalid=b_bvalid[DMA_CLIENT];
+ end else begin:no_compute_client
+ assign dma_arready=0;
+ assign dma_rdata=0;
+ assign dma_rresp=0;
+ assign dma_rlast=0;
+ assign dma_rvalid=0;
+ assign dma_awready=0;
+ assign dma_wready=0;
+ assign dma_bresp=0;
+ assign dma_bvalid=0;
  end endgenerate
  generate if(CPU_ENABLED)begin:cpu_client
  assign b_arid[BASE_CLIENTS*6+:6]=cpu_arid;
@@ -333,11 +384,15 @@ module frame_memory_system #(
    if(writer_done&&!writer_error)capture_frame_id<=capture_active_id;
   end
  end
- frame_render_engine #(.SOURCE_BANKS(SOURCE_BANKS),.BANK_BITS(BANK_BITS),.KEEP_HISTORY(KEEP_HISTORY),.MAX_LINE_PIXELS(MAX_LINE_PIXELS),.SOURCE_BASE(SOURCE_BASE),.RESULT_BASE(RESULT_BASE),.BANK_SHIFT(BANK_SHIFT)) engine(
+ frame_render_engine #(.SOURCE_BANKS(SOURCE_BANKS),.BANK_BITS(BANK_BITS),.KEEP_HISTORY(KEEP_HISTORY),.COMPUTE_ENABLED(COMPUTE_ENABLED),.MAX_LINE_PIXELS(MAX_LINE_PIXELS),.SOURCE_BASE(SOURCE_BASE),.RESULT_BASE(RESULT_BASE),.BANK_SHIFT(BANK_SHIFT)) engine(
   .clk(clk),.rst_n(rst_n),.pin_history(pin_history),.display_use_analysis(DIRECT_SCAN&&mode_core==1&&analysis_hold_valid),.display_age(selected_age),.analysis_age(selected_age),.history_count(history_count),.capture_frame_id(capture_active_id),.cap_req_valid(capture_fire&&!cap_bad),.cap_req_ready(cap_req_ready),
   .cap_req_config_id(capture_config_id),.cap_req_bank(cap_bank),
   .cap_done_valid(writer_done),.cap_done_ready(cap_done_ready),.cap_done_bank(held_cap_bank),.cap_done_ok(!writer_error&&!pin_history),
-  .analysis_acquire_valid(DIRECT_SCAN?internal_acquire:analysis_acquire_valid),.analysis_acquire_ready(analysis_acquire_ready),
+          .compute_acquire_valid(compute_acquire_valid),.compute_latest(compute_latest),.compute_release(compute_release),
+        .compute_request_frame_id(compute_request_frame_id),.compute_acquire_ready(compute_acquire_ready),.compute_missing(compute_missing),
+        .compute_hold_valid(compute_hold_valid),.compute_hold_bank(compute_hold_bank),
+        .compute_hold_frame_id(compute_hold_frame_id),.compute_hold_config_id(compute_hold_config_id),
+.analysis_acquire_valid(DIRECT_SCAN?internal_acquire:analysis_acquire_valid),.analysis_acquire_ready(analysis_acquire_ready),
   .analysis_release(DIRECT_SCAN?internal_release:analysis_release),.analysis_hold_valid(analysis_hold_valid),.analysis_hold_bank(analysis_hold_bank),
   .analysis_hold_frame_id(analysis_hold_frame_id),.analysis_hold_config_id(analysis_hold_config_id),
   .job_valid(job_valid),.job_ready(job_ready),.freeze_source(freeze_source),.release_source(release_source),.job_config_id(job_config_id),

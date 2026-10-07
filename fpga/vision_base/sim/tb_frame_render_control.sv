@@ -21,7 +21,7 @@ module tb_frame_render_control;
     wire display_valid,display_bank,done,error,busy,pending;
     wire [31:0] display_frame_id,display_config_id,last_cycles,deadline_misses;
     wire pin_history=0,display_use_analysis=0;wire[2:0]display_age=0,analysis_age=0;wire[2:0]history_count;wire[31:0]capture_frame_id;
-    frame_render_control #(.FRAME_BUDGET_CYCLES(8)) dut(.*);
+    frame_render_control #(.FRAME_BUDGET_CYCLES(8)) dut(.compute_acquire_valid(1'b0),.compute_latest(1'b0),.compute_release(1'b0),.compute_request_frame_id(32'd0),.compute_acquire_ready(),.compute_missing(),.compute_hold_valid(),.compute_hold_bank(),.compute_hold_frame_id(),.compute_hold_config_id(),.*);
     task tick;begin @(posedge clk);#1;end endtask
     task capture;
         begin

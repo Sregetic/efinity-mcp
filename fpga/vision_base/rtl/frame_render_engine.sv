@@ -3,7 +3,7 @@
 // Memory map: four 4 MiB source banks, then two 4 MiB result banks by default.
 module frame_render_engine #(
     parameter integer MAX_LINE_PIXELS=2560,
-    parameter integer SOURCE_BANKS=4,BANK_BITS=$clog2(SOURCE_BANKS),KEEP_HISTORY=0,
+    parameter integer SOURCE_BANKS=4,BANK_BITS=$clog2(SOURCE_BANKS),KEEP_HISTORY=0,COMPUTE_ENABLED=0,
     parameter [31:0] SOURCE_BASE=32'h00000000,
     parameter [31:0] RESULT_BASE=32'h01000000,
     parameter integer BANK_SHIFT=22
@@ -13,6 +13,11 @@ module frame_render_engine #(
     input wire [31:0] cap_req_config_id,output wire [BANK_BITS-1:0] cap_req_bank,
     input wire cap_done_valid,output wire cap_done_ready,
     input wire [BANK_BITS-1:0] cap_done_bank,input wire cap_done_ok,
+    input wire compute_acquire_valid,compute_latest,compute_release,
+    input wire[31:0]compute_request_frame_id,
+    output wire compute_acquire_ready,compute_missing,compute_hold_valid,
+    output wire[BANK_BITS-1:0]compute_hold_bank,
+    output wire[31:0]compute_hold_frame_id,compute_hold_config_id,
     input wire analysis_acquire_valid,output wire analysis_acquire_ready,
     input wire analysis_release,output wire analysis_hold_valid,
     output wire [BANK_BITS-1:0] analysis_hold_bank,
@@ -81,11 +86,15 @@ module frame_render_engine #(
     wire [BANK_BITS-1:0] source_bank;
     wire result_bank,display_bank;
     wire [31:0] frame_id,config_id;
-    frame_render_control #(.BANKS(SOURCE_BANKS),.BANK_BITS(BANK_BITS),.KEEP_HISTORY(KEEP_HISTORY)) control (
+    frame_render_control #(.BANKS(SOURCE_BANKS),.BANK_BITS(BANK_BITS),.KEEP_HISTORY(KEEP_HISTORY),.COMPUTE_ENABLED(COMPUTE_ENABLED)) control (
         .clk(clk),.rst_n(rst_n),.pin_history(pin_history),.display_use_analysis(display_use_analysis),.display_age(display_age),.analysis_age(analysis_age),.history_count(history_count),.capture_frame_id(capture_frame_id),.cap_req_valid(cap_req_valid),.cap_req_ready(cap_req_ready),
         .cap_req_config_id(cap_req_config_id),.cap_req_bank(cap_req_bank),
         .cap_done_valid(cap_done_valid),.cap_done_ready(cap_done_ready),.cap_done_bank(cap_done_bank),.cap_done_ok(cap_done_ok),
-        .analysis_acquire_valid(analysis_acquire_valid),.analysis_acquire_ready(analysis_acquire_ready),
+                .compute_acquire_valid(compute_acquire_valid),.compute_latest(compute_latest),.compute_release(compute_release),
+        .compute_request_frame_id(compute_request_frame_id),.compute_acquire_ready(compute_acquire_ready),.compute_missing(compute_missing),
+        .compute_hold_valid(compute_hold_valid),.compute_hold_bank(compute_hold_bank),
+        .compute_hold_frame_id(compute_hold_frame_id),.compute_hold_config_id(compute_hold_config_id),
+.analysis_acquire_valid(analysis_acquire_valid),.analysis_acquire_ready(analysis_acquire_ready),
         .analysis_release(analysis_release),.analysis_hold_valid(analysis_hold_valid),.analysis_hold_bank(analysis_hold_bank),
         .analysis_hold_frame_id(analysis_hold_frame_id),.analysis_hold_config_id(analysis_hold_config_id),
         .job_valid(job_valid),.job_ready(job_ready),.job_config_ok(config_ok),.freeze_source(freeze_source),.release_source(release_source),.job_config_id(job_config_id),

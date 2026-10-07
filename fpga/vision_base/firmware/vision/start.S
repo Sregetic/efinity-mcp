@@ -17,6 +17,8 @@ _boot:
 .section .text.start,"ax"
 .global _start
 _start:
+    fence rw,rw
+    fence.i
     la sp,__stack_top
     la t0,trap
     csrw mtvec,t0

@@ -29,7 +29,8 @@ module axi_burst_arbiter #(parameter N=4,ID_WIDTH=6,OW=$clog2(N))(
  always @*begin
   rf=0;wf=0;uf=0;rp=0;wp=0;up=0;
   for(k=1;k<=N;k=k+1)begin
-   ri=(int'(rl)+k)%N;wi=(int'(wl)+k)%N;
+   ri=int'(rl)+k;wi=int'(wl)+k;
+   if(ri>=N)ri=ri-N;if(wi>=N)wi=wi-N;
    if(!rf&&s_arvalid[ri])begin rf=1;rp=OW'(ri);end
    if(!uf&&s_arvalid[ri]&&read_urgent[ri])begin uf=1;up=OW'(ri);end
    if(!wf&&s_awvalid[wi])begin wf=1;wp=OW'(wi);end

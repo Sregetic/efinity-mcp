@@ -1,0 +1,2 @@
+PASS tb_compute_lease: exact/latest/stale, independent display+scan and20 concurrent captures without source overwrite
+sim/tb_compute_lease.sv:38: $finish called at 1480000 (1ps)

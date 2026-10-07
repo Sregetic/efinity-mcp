@@ -6,7 +6,7 @@ module tb;
  function automatic integer reference(input[31:0]x,y);
  integer k,v,w,s;begin s=0;for(k=0;k<4;k++)begin
  v=$signed(x[k*8+:8]);w=$signed(y[k*8+:8]);s=s+v*w;end reference=s;end endfunction
- integer i,expected;reg[31:0]held;
+ integer i,expected;reg[31:0]held;reg signed[63:0]wide;
  initial begin
   repeat(3)@(negedge clk);rst=1;
   for(i=0;i<1024;i++)begin
@@ -17,8 +17,17 @@ module tb;
    if(!rv||q!==held||cr)$fatal(1,"response changed under backpressure");
    rr=1;@(negedge clk);rr=0;if(rv)$fatal(1,"response not consumed");
   end
-  fn=1;cv=1;@(negedge clk);if(cr||rv)$fatal(1,"unsupported function accepted");
+  fn=1;
+  for(i=0;i<1024;i++)begin
+   a=i==0?32'h80000000:(i==1?32'h7fffffff:$random);b=i==0?32'h80000000:(i==1?32'h7fffffff:$random);
+   wide=$signed(a)*$signed(b);cv=1;@(negedge clk);cv=0;
+   if(!rv||q!==wide[63:32])$fatal(1,"signed MulHi i%0d got%h expected%h",i,q,wide[63:32]);
+   held=q;a=~a;b=~b;repeat(3)@(negedge clk);
+   if(!rv||q!==held||cr)$fatal(1,"MulHi response changed under backpressure");
+   rr=1;@(negedge clk);rr=0;if(rv)$fatal(1,"MulHi response not consumed");
+  end
+  fn=2;cv=1;@(negedge clk);if(cr||rv)$fatal(1,"unsupported function accepted");
   rst=0;@(negedge clk);if(rv)$fatal(1,"reset");
-  $display("PASS signed INT8 dot41024 vectors incl -128, response hold/backpressure/reset");$finish;
+  $display("PASS signed INT8 dot4 + signed32 MulHi,1024 vectors each, extremes, response hold/backpressure/reset");$finish;
  end
 endmodule

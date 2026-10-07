@@ -2,11 +2,12 @@
 
 // Frame ownership and metadata pool.
 //
-// One synchronous clock domain, one capture writer and two independent readers
-// (display and analysis).  This block does not contain pixel storage.
+// One capture writer, display/scan leases and an optional compute lease.
+// No pixel storage; compute can bind an exact frame without stealing scan.
 module frame_pool #(
     parameter integer BANKS = 4,
     parameter integer KEEP_HISTORY = 0,
+    parameter integer COMPUTE_ENABLED = 0,
     parameter integer BANK_ID_WIDTH = (BANKS <= 1) ? 1 : $clog2(BANKS)
 ) (
     input  logic                      clk,
@@ -44,6 +45,11 @@ module frame_pool #(
     output logic [31:0]               analysis_hold_frame_id,
     output logic [31:0]               analysis_hold_config_id,
 
+    input logic compute_acquire_valid,compute_latest,compute_release,
+    input logic[31:0]compute_request_frame_id,
+    output logic compute_acquire_ready,compute_missing,compute_hold_valid,
+    output logic[BANK_ID_WIDTH-1:0]compute_hold_bank,
+    output logic[31:0]compute_hold_frame_id,compute_hold_config_id,
     input logic pin_history,display_use_analysis,
     input logic [2:0] display_age,analysis_age,
     output logic [2:0] history_count,
@@ -135,6 +141,11 @@ module frame_pool #(
 
     logic display_acquire_fire;
     logic analysis_acquire_fire;
+    logic compute_valid_q;
+    logic[BANK_ID_WIDTH-1:0]compute_bank_q,compute_candidate_bank;
+    logic[31:0]compute_frame_q,compute_config_q;
+    logic compute_candidate_valid;
+    wire compute_fire=COMPUTE_ENABLED&&compute_acquire_valid&&compute_acquire_ready;
     assign display_acquire_fire = display_acquire_valid && display_acquire_ready;
     assign analysis_acquire_fire = analysis_acquire_valid && analysis_acquire_ready;
 
@@ -153,6 +164,22 @@ module frame_pool #(
     integer j;
     integer k;
     integer n;
+
+    task automatic choose_compute(input logic want_latest,input logic[31:0]wanted_frame,input logic slot_free);
+    integer cc;
+    begin
+
+        compute_candidate_valid=0;compute_candidate_bank=0;
+        if(COMPUTE_ENABLED)begin
+            if(want_latest)begin compute_candidate_valid=|reader_eligible;compute_candidate_bank=latest_bank;end
+            else for(cc=0;cc<BANKS;cc=cc+1)
+                if(reader_eligible[cc]&&frame_id_after_done[cc]==wanted_frame)begin
+                    compute_candidate_valid=1;compute_candidate_bank=BANK_ID_WIDTH'(cc);
+                end
+        end
+        compute_acquire_ready=COMPUTE_ENABLED&&compute_candidate_valid&&slot_free;
+        compute_missing=COMPUTE_ENABLED&&!compute_candidate_valid&&slot_free;
+    end endtask
 
     generate if(!KEEP_HISTORY)begin:latest_only
     // Reader candidate selection.  The writer exclusion here is the current
@@ -203,6 +230,7 @@ module frame_pool #(
         analysis_acquire_ready=analysis_candidate_valid;
         display_acquire_bank=display_candidate_valid ? latest_bank : '0;
         analysis_acquire_bank=analysis_candidate_valid ? latest_bank : '0;
+        choose_compute(compute_latest,compute_request_frame_id,!compute_valid_q||compute_release);
     end
 
     // Capture candidate selection.  First use an unpublished bank.  If all
@@ -222,7 +250,9 @@ module frame_pool #(
                   !(analysis_release && analysis_hold_valid_q &&
                     (analysis_hold_bank_q == j))) &&
                 !(display_acquire_fire && (display_candidate_bank == j)) &&
-                !(analysis_acquire_fire && (analysis_candidate_bank == j));
+                !(analysis_acquire_fire && (analysis_candidate_bank == j)) &&
+                !(compute_valid_q && !compute_release && compute_bank_q==j) &&
+                !(compute_fire && compute_candidate_bank==j);
         end
 
         cap_empty=cap_eligible & ~ready_after_done;
@@ -287,8 +317,9 @@ module frame_pool #(
         history_count=3'(rank_count>6?6:rank_count);
         chosen_display_age=display_age<history_count?display_age:0;
         chosen_analysis_age=analysis_age<history_count?analysis_age:0;
-        display_candidate_bank=0;analysis_candidate_bank=0;pinned=0;rank_count=0;
+        display_candidate_bank=0;analysis_candidate_bank=0;pinned=0;rank_count=0;latest_bank=0;
         for(q=0;q<BANKS;q=q+1)if(reader_eligible[order_after[q]])begin
+            if(rank_count==0)latest_bank=order_after[q];
             if(rank_count==chosen_display_age)display_candidate_bank=order_after[q];
             if(rank_count==chosen_analysis_age)analysis_candidate_bank=order_after[q];
             if(rank_count<6)pinned[order_after[q]]=1;
@@ -301,9 +332,11 @@ module frame_pool #(
         display_candidate_config_id=config_id_after_done[display_candidate_bank];
         analysis_candidate_frame_id=frame_id_after_done[analysis_candidate_bank];
         analysis_candidate_config_id=config_id_after_done[analysis_candidate_bank];
+        latest_frame=frame_id_after_done[latest_bank];latest_config=config_id_after_done[latest_bank];
         display_acquire_ready=display_candidate_valid;analysis_acquire_ready=analysis_candidate_valid;
         display_acquire_bank=display_candidate_valid?display_candidate_bank:'0;
         analysis_acquire_bank=analysis_candidate_valid?analysis_candidate_bank:'0;
+        choose_compute(compute_latest,compute_request_frame_id,!compute_valid_q||compute_release);
         cap_eligible='0;
         for(q=0;q<BANKS;q=q+1)begin
             cap_eligible[q]=!(writer_active_q&&!cap_done_fire)&&
@@ -311,7 +344,9 @@ module frame_pool #(
                 !(display_held_q[q]&&!(display_release&&display_hold_valid_q&&display_hold_bank_q==q))&&
                 !(analysis_held_q[q]&&!(analysis_release&&analysis_hold_valid_q&&analysis_hold_bank_q==q))&&
                 !(display_acquire_fire&&display_candidate_bank==q)&&
-                !(analysis_acquire_fire&&analysis_candidate_bank==q)&&!(pin_history&&pinned[q]);
+                !(analysis_acquire_fire&&analysis_candidate_bank==q)&&!(pin_history&&pinned[q])&&
+                !(compute_valid_q&&!compute_release&&compute_bank_q==q)&&
+                !(compute_fire&&compute_candidate_bank==q);
         end
         cap_empty=cap_eligible&~ready_after_done;
         cap_candidate_valid=|cap_eligible;cap_candidate_bank=0;cap_candidate_frame_id=0;
@@ -452,6 +487,19 @@ module frame_pool #(
         end
     end
 
+    always_ff @(posedge clk)begin
+        if(!rst_n)begin compute_valid_q<=0;compute_bank_q<=0;compute_frame_q<=0;compute_config_q<=0;end
+        else if(COMPUTE_ENABLED)begin
+            if(compute_release)compute_valid_q<=0;
+            if(compute_fire)begin
+                compute_valid_q<=1;compute_bank_q<=compute_candidate_bank;
+                compute_frame_q<=frame_id_after_done[compute_candidate_bank];
+                compute_config_q<=config_id_after_done[compute_candidate_bank];
+            end
+        end
+    end
+    assign compute_hold_valid=compute_valid_q,compute_hold_bank=compute_bank_q;
+    assign compute_hold_frame_id=compute_frame_q,compute_hold_config_id=compute_config_q;
     assign ready_bitmap = ready_q;
     assign display_held_bitmap = display_held_q;
     assign analysis_held_bitmap = analysis_held_q;

@@ -1,0 +1,45 @@
+{
+  "application": "four-class shape cards",
+  "classes": [
+    "blank",
+    "circle",
+    "rectangle",
+    "triangle"
+  ],
+  "dims": [
+    128,
+    32,
+    4
+  ],
+  "weight_parameters": 4224,
+  "macs": 4224,
+  "training_kind": "synthetic_bringup_only",
+  "real_accuracy_verified": false,
+  "train_samples": 400,
+  "test_samples": 160,
+  "float_test_accuracy": 1.0,
+  "int8_test_accuracy": 1.0,
+  "tflite_bytes": 6160,
+  "weights_bytes": 4400,
+  "operators": [
+    "FULLY_CONNECTED",
+    "FULLY_CONNECTED"
+  ],
+  "fixed_point_vectors": 192,
+  "tensorflow": "2.21.0",
+  "rounding": "TFLITE_SINGLE_ROUNDING",
+  "quantization": [
+    {
+      "input_zero": 0,
+      "output_zero": -128,
+      "multiplier": 1417805440,
+      "shift": -9
+    },
+    {
+      "input_zero": -128,
+      "output_zero": -17,
+      "multiplier": 1754168599,
+      "shift": -8
+    }
+  ]
+}

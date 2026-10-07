@@ -1,5 +1,7 @@
 # 2026-10-07 当前源码上传
 
+最新增量：USER1 DDR加载器、独立compute lease/32×32分析DMA、dot4/MulHi INT8和相机联调已上板，通过同帧逐像素/逐层核对与实时60秒无新增欠载。当前60015XLR/243RAM/58DSP；真实卡片精度、I1/I3仍待后续。见[AI联调报告](AI_CLOSED_LOOP_20261007.md)。以下非AI快照段落保留为本日较早记录，上传仍在独立worktree进行，Flash和Runner保护保持。
+
 这是 `F:/Project/fpga/vision_base` 的源码与精选验收记录快照。上传在独立 Git worktree 中进行；本地工程、网页服务和当前 SRAM 配置保持。
 
 ## 当前验证范围

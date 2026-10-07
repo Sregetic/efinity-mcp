@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "method": "actual RV32I/dot4 static inference",
+  "vectors": 32,
+  "hidden_values": 1024,
+  "output_values": 128,
+  "gray_feature_images": 4,
+  "flyhash_images": 4,
+  "results": [
+    1396919601,
+    32,
+    12931274,
+    11075831,
+    505669,
+    4,
+    821211,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "layer0_microseconds": 3461.1971875,
+  "layer1_microseconds": 158.0215625,
+  "network_microseconds": 3619.21875,
+  "flyhash_microseconds": 2053.0275,
+  "training_kind": "synthetic_bringup_only",
+  "real_card_accuracy_verified": false,
+  "camera_dma_connected": false
+}

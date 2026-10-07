@@ -36,7 +36,7 @@ module tb_frame_render_engine;
     integer writes=0,reads=0,bresponses=0;
     integer k,wx,wy,sx,sy,expected_addr;
     wire pin_history=0,display_use_analysis=0;wire[2:0]display_age=0,analysis_age=0;wire[2:0]history_count;wire[31:0]capture_frame_id;
-    frame_render_engine dut(.*);
+    frame_render_engine dut(.compute_acquire_valid(1'b0),.compute_latest(1'b0),.compute_release(1'b0),.compute_request_frame_id(32'd0),.compute_acquire_ready(),.compute_missing(),.compute_hold_valid(),.compute_hold_bank(),.compute_hold_frame_id(),.compute_hold_config_id(),.*);
     function automatic [15:0] source_pixel(input integer address);
         source_pixel=((address>>1) ^ (address>>12) ^ 16'h359a)&16'hffff;
     endfunction

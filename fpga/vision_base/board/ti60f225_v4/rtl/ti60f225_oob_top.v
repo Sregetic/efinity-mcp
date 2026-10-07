@@ -24,6 +24,7 @@ module ti60f225_oob_top #(
 	parameter                       RAW_FIFO_DEPTH     = 512,
 	parameter                       SAPPHIRE_ENABLE    = 0,
 	parameter                       RAW_TO_POOL        = 0,
+ parameter ANALYSIS_DMA_ENABLE=0,
  parameter DISPLAY_LATENCY_PROBE = (IMAGE_DEBUG!=0),
 
 	parameter                       RANK_RATIO         = 1,       // # of unique CS outputs per rank
@@ -745,7 +746,99 @@ wire[0:0]cpu_bvalid;
 wire[0:0]cpu_bready;
 wire soc_jtag_tdo;
 wire[31:0]pool_scan_raw_id;
-frame_memory_system #(.SCAN_BURST_BEATS(32),.CPU_ENABLED(SAPPHIRE_ENABLE),.LEGACY_ENABLED(!RAW_TO_POOL),.SOURCE_BANKS(RAW_TO_POOL?8:4),.KEEP_HISTORY(RAW_TO_POOL),.DIRECT_SCAN(RAW_TO_POOL),.SOURCE_BASE(RAW_TO_POOL?32'h00000000:32'h02000000),.RESULT_BASE(RAW_TO_POOL?32'h02000000:32'h03000000)) unified_memory(
+localparam COMPUTE_BANK_BITS=RAW_TO_POOL?3:2;
+wire compute_acquire_valid,compute_latest,compute_release,compute_acquire_ready,compute_missing,compute_hold_valid;
+wire[31:0]compute_request_frame_id,compute_hold_frame_id,compute_hold_config_id;
+wire[COMPUTE_BANK_BITS-1:0]compute_hold_bank;
+wire[3:0]dma_arid;
+wire[3:0]dma_awid;
+wire[31:0]dma_araddr;
+wire[31:0]dma_awaddr;
+wire[7:0]dma_arlen;
+wire[7:0]dma_awlen;
+wire[2:0]dma_arsize;
+wire[2:0]dma_awsize;
+wire[1:0]dma_arburst;
+wire[1:0]dma_awburst;
+wire[0:0]dma_arvalid;
+wire[0:0]dma_awvalid;
+wire[0:0]dma_arready;
+wire[0:0]dma_awready;
+wire[127:0]dma_rdata;
+wire[1:0]dma_rresp;
+wire[0:0]dma_rlast;
+wire[0:0]dma_rvalid;
+wire[0:0]dma_rready;
+wire[127:0]dma_wdata;
+wire[15:0]dma_wstrb;
+wire[0:0]dma_wlast;
+wire[0:0]dma_wvalid;
+wire[0:0]dma_wready;
+wire[1:0]dma_bresp;
+wire[0:0]dma_bvalid;
+wire[0:0]dma_bready;
+generate if(!SAPPHIRE_ENABLE||!ANALYSIS_DMA_ENABLE)begin:no_analysis_dma
+assign dma_arid=0;
+assign dma_araddr=0;
+assign dma_arlen=0;
+assign dma_arsize=0;
+assign dma_arburst=0;
+assign dma_arvalid=0;
+assign dma_rready=0;
+assign dma_awid=0;
+assign dma_awaddr=0;
+assign dma_awlen=0;
+assign dma_awsize=0;
+assign dma_awburst=0;
+assign dma_awvalid=0;
+assign dma_wdata=0;
+assign dma_wstrb=0;
+assign dma_wlast=0;
+assign dma_wvalid=0;
+assign dma_bready=0;
+assign compute_acquire_valid=0;
+assign compute_latest=0;
+assign compute_release=0;
+assign compute_request_frame_id=0;
+end endgenerate
+frame_memory_system #(.SCAN_BURST_BEATS(32),.CPU_ENABLED(SAPPHIRE_ENABLE),.COMPUTE_ENABLED(SAPPHIRE_ENABLE&&ANALYSIS_DMA_ENABLE),.LEGACY_ENABLED(!RAW_TO_POOL),.SOURCE_BANKS(RAW_TO_POOL?8:4),.KEEP_HISTORY(RAW_TO_POOL),.DIRECT_SCAN(RAW_TO_POOL),.SOURCE_BASE(RAW_TO_POOL?32'h00000000:32'h02000000),.RESULT_BASE(RAW_TO_POOL?32'h02000000:32'h03000000)) unified_memory(
+ .dma_arid({2'b0,dma_arid}),
+ .dma_awid({2'b0,dma_awid}),
+ .dma_araddr(dma_araddr),
+ .dma_awaddr(dma_awaddr),
+ .dma_arlen(dma_arlen),
+ .dma_awlen(dma_awlen),
+ .dma_arsize(dma_arsize),
+ .dma_awsize(dma_awsize),
+ .dma_arburst(dma_arburst),
+ .dma_awburst(dma_awburst),
+ .dma_arvalid(dma_arvalid),
+ .dma_awvalid(dma_awvalid),
+ .dma_arready(dma_arready),
+ .dma_awready(dma_awready),
+ .dma_rdata(dma_rdata),
+ .dma_rresp(dma_rresp),
+ .dma_rlast(dma_rlast),
+ .dma_rvalid(dma_rvalid),
+ .dma_rready(dma_rready),
+ .dma_wdata(dma_wdata),
+ .dma_wstrb(dma_wstrb),
+ .dma_wlast(dma_wlast),
+ .dma_wvalid(dma_wvalid),
+ .dma_wready(dma_wready),
+ .dma_bresp(dma_bresp),
+ .dma_bvalid(dma_bvalid),
+ .dma_bready(dma_bready),
+ .compute_acquire_valid(compute_acquire_valid),
+ .compute_latest(compute_latest),
+ .compute_release(compute_release),
+ .compute_request_frame_id(compute_request_frame_id),
+ .compute_acquire_ready(compute_acquire_ready),
+ .compute_missing(compute_missing),
+ .compute_hold_valid(compute_hold_valid),
+ .compute_hold_bank(compute_hold_bank),
+ .compute_hold_frame_id(compute_hold_frame_id),
+ .compute_hold_config_id(compute_hold_config_id),
  .cpu_arid(cpu_arid),
  .cpu_araddr(cpu_araddr),
  .cpu_arlen(cpu_arlen),
@@ -1616,6 +1709,53 @@ always @(posedge hdmi_tx_slow_clk)flyhash_held_sync<=vid_rst_n?{flyhash_held_syn
 wire[31:0]flyhash_full_cycles,flyhash_firmware_state;
 generate if(SAPPHIRE_ENABLE)begin:sapphire
 wire soc_reset;wire[15:0]soc_paddr;wire soc_psel,soc_penable,soc_pready,soc_pwrite,soc_pslverror;wire[31:0]soc_pwdata,soc_prdata;
+wire[31:0]mail_prdata,dma_prdata;wire mail_pready,mail_pslverror,dma_pready,dma_pslverror;
+wire dma_select=ANALYSIS_DMA_ENABLE&&soc_paddr[15:8]==1;
+assign soc_prdata=dma_select?dma_prdata:mail_prdata,soc_pready=dma_select?dma_pready:mail_pready,soc_pslverror=dma_select?dma_pslverror:mail_pslverror;
+if(ANALYSIS_DMA_ENABLE)begin:analysis_input
+ vision_analysis_dma #(.BANK_BITS(COMPUTE_BANK_BITS),.SOURCE_BASE(RAW_TO_POOL?32'h0:32'h02000000)) dma(
+ .clk(core_clk),.rst_n(vid_rst_n),.paddr(soc_paddr[7:0]),.psel(soc_psel&&dma_select),.penable(soc_penable),.pwrite(soc_pwrite),.pwdata(soc_pwdata),.prdata(dma_prdata),.pready(dma_pready),.pslverror(dma_pslverror),
+ .compute_acquire_valid(compute_acquire_valid),
+ .compute_latest(compute_latest),
+ .compute_release(compute_release),
+ .compute_request_frame_id(compute_request_frame_id),
+ .compute_acquire_ready(compute_acquire_ready),
+ .compute_missing(compute_missing),
+ .compute_hold_valid(compute_hold_valid),
+ .compute_hold_bank(compute_hold_bank),
+ .compute_hold_frame_id(compute_hold_frame_id),
+ .compute_hold_config_id(compute_hold_config_id),
+ .m_axi_arid(dma_arid),
+ .m_axi_awid(dma_awid),
+ .m_axi_araddr(dma_araddr),
+ .m_axi_awaddr(dma_awaddr),
+ .m_axi_arlen(dma_arlen),
+ .m_axi_awlen(dma_awlen),
+ .m_axi_arsize(dma_arsize),
+ .m_axi_awsize(dma_awsize),
+ .m_axi_arburst(dma_arburst),
+ .m_axi_awburst(dma_awburst),
+ .m_axi_arvalid(dma_arvalid),
+ .m_axi_awvalid(dma_awvalid),
+ .m_axi_arready(dma_arready),
+ .m_axi_awready(dma_awready),
+ .m_axi_rdata(dma_rdata),
+ .m_axi_rresp(dma_rresp),
+ .m_axi_rlast(dma_rlast),
+ .m_axi_rvalid(dma_rvalid),
+ .m_axi_rready(dma_rready),
+ .m_axi_wdata(dma_wdata),
+ .m_axi_wstrb(dma_wstrb),
+ .m_axi_wlast(dma_wlast),
+ .m_axi_wvalid(dma_wvalid),
+ .m_axi_wready(dma_wready),
+ .m_axi_bresp(dma_bresp),
+ .m_axi_bvalid(dma_bvalid),
+ .m_axi_bready(dma_bready));
+end else begin:no_dma_apb
+ assign dma_prdata=0,dma_pready=1,dma_pslverror=1;
+end
+
 wire cfu_cmd_valid,cfu_cmd_ready,cfu_rsp_valid,cfu_rsp_ready;wire[9:0]cfu_function_id;wire[31:0]cfu_inputs_0,cfu_inputs_1,cfu_outputs_0;
 assign cpu_arid[5:4]=0,cpu_awid[5:4]=0;
 VisionSapphire cpu(
@@ -1682,7 +1822,7 @@ VisionSapphire cpu(
  .vision_apb_PSLVERROR(soc_pslverror));
 vision_int8_cfu int8_cfu(.clk(core_clk),.rst_n(!soc_reset),.cmd_valid(cfu_cmd_valid),.cmd_ready(cfu_cmd_ready),.function_id(cfu_function_id),.a(cfu_inputs_0),.b(cfu_inputs_1),.rsp_valid(cfu_rsp_valid),.rsp_ready(cfu_rsp_ready),.result(cfu_outputs_0));
 vision_flyhash_mailbox flyhash_control(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n),.cpu_clk(core_clk),.cpu_rst_n(!soc_reset),
- .paddr(soc_paddr),.psel(soc_psel),.penable(soc_penable),.pwrite(soc_pwrite),.pwdata(soc_pwdata),.prdata(soc_prdata),.pready(soc_pready),.pslverror(soc_pslverror),
+ .paddr(soc_paddr),.psel(soc_psel&&!dma_select),.penable(soc_penable),.pwrite(soc_pwrite),.pwdata(soc_pwdata),.prdata(mail_prdata),.pready(mail_pready),.pslverror(mail_pslverror),
  .firmware_state(flyhash_firmware_state),.full_cycles(flyhash_full_cycles),
  .cmd_event(feature_cmd_event),.cmd_op(feature_command[31:24]),.cmd_value(feature_command[23:0]),
  // frame_ok clears at every VS; the frozen lease is persistent. Any actual

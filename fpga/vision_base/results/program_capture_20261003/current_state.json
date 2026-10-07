@@ -10,15 +10,15 @@
   "capture_received": false,
   "usb_route": "UGREEN USB-A directly to computer, replugged by user",
   "physical_hdmi_route": "Current receiver readout matches previous HDMI-connected state; cable route not freshly user-confirmed",
-  "latest_report": "F:/Project/fpga/vision_base/results/ordered_implementation_20261007/REPORT.md",
+  "latest_report": "F:/Project/fpga/vision_base/docs/AI_CLOSED_LOOP_20261007.md",
   "display_1080p30_observation": "Previous bitstream had user-confirmed stable image; new sync bitstream not visually checked on monitor",
   "candidate_sync_alignment": "Not active: reverted to original60Hz at user request",
   "candidate_bit_sha256": "CDB64DDD16D61B3BD83E61245E732D2C7908AA287F01D970357D983E8FADC911",
   "candidate_report": "F:/Project/fpga/vision_base/results/hdmi_sync_alignment_20261003/REPORT.md",
   "receiver_abc_report": "F:\\Project\\fpga\\vision_base\\results\\ugreen_rx_abc_20261003\\REPORT.md",
   "capture_note": "Latest20second capture contains blank and receiver No Signal; valid FPGA pixels not received",
-  "current_board_artifact_dir": "F:/Project/fpga/vision_base/results/ordered_implementation_20261007/final_snapshot",
-  "prepared_release": "F:/Project/fpga/vision_base/results/ordered_implementation_20261007/final_snapshot",
+  "current_board_artifact_dir": "F:/Project/fpga/vision_base/results/ai_closed_loop_20261007/dma_final_snapshot",
+  "prepared_release": "F:/Project/fpga/vision_base/results/ai_closed_loop_20261007/dma_final_snapshot",
   "sc2210_preparation": {
     "report": "F:\\Project\\fpga\\vision_base\\results\\sc2210_preparation_20261003\\REPORT.md",
     "artifact_dir": "F:\\Project\\fpga\\vision_base\\artifacts\\camera_sc2210",
@@ -2483,5 +2483,84 @@
     "sram_programmed": true,
     "flash_written": false,
     "cpu_boot_verified": true
+  },
+  "ai_closed_loop_latest": {
+    "report": "F:/Project/fpga/vision_base/docs/AI_CLOSED_LOOP_20261007.md",
+    "board_bit": "F:/Project/fpga/vision_base/results/ai_closed_loop_20261007/dma_final_snapshot/ti60f225_oob.bit",
+    "program_log": "F:/Project/fpga/vision_base/results/ai_closed_loop_20261007/dma_final_program.log",
+    "firmware_elf": "F:/Project/fpga/vision_base/results/ai_closed_loop_20261007/ai_firmware_single_gray/vision.elf",
+    "weights": "F:/Project/fpga/vision_base/results/ai_closed_loop_20261007/shape_bringup/shape_cards_weights.bin",
+    "model_id": 1,
+    "training_kind": "synthetic_bringup_only",
+    "sram_programmed": true,
+    "flash_written": false,
+    "volatile_ddr_program": true,
+    "real_card_accuracy_verified": false,
+    "user_at_hardware": false,
+    "xlr": 60015,
+    "ram": 243,
+    "dsp": 58,
+    "wns_ns": 0.093,
+    "whs_ns": 0.026,
+    "unassigned_core_pins": 0,
+    "image_debug": 2,
+    "display_latency_probe": false,
+    "x3_line_metrics_retained": true,
+    "same_source_pixels": {
+      "passed": true,
+      "source_frame_id": 4694,
+      "roi": [
+        13,
+        7,
+        37,
+        45
+      ],
+      "pixels": 1024,
+      "mismatches": 0,
+      "source": "actual FPGA before-Gamma native-channel RGB snapshot",
+      "method": "same-source lease, floor sampling and fixed-point luma",
+      "capture_card_used": false
+    },
+    "runtime": {
+      "passed": true,
+      "source_fps": 29.989780019140817,
+      "analysis_interval_seconds": 12.58333332,
+      "analysis_sequence_delta": 112,
+      "steady_seconds": 59.686999999918044,
+      "source_frame_delta": 1790,
+      "counter_deltas": {
+        "raw_overflows": 0,
+        "capture_discarded": 0,
+        "scan_bad_frames": 0
+      },
+      "historical_scan_bad_frames": 152,
+      "historical_counter_preserved": true,
+      "model_id": 1,
+      "real_card_accuracy_verified": false,
+      "final_source_frame": 30015,
+      "final_roi": [
+        640,
+        300,
+        640,
+        480
+      ],
+      "dma_microseconds": 1529.88,
+      "network_microseconds": 2796.75,
+      "total_cpu_microseconds": 6130.9,
+      "x3_pipeline_cycles": 17,
+      "display_probe_enabled": false,
+      "live_display_restored": true,
+      "flash_written": false,
+      "analysis_hz_with_debug_halts": 8.900662261086794,
+      "target_analysis_hz": 10,
+      "rate_scope": "112 completed records /12.58333332s APB time; includes USER1 halt/read/resume pauses"
+    },
+    "pending": [
+      "real-card dataset/accuracy",
+      "I1 geometry-guided ROI",
+      "I3 same-frame fusion OSD",
+      "mailbox shrink",
+      "SPI standalone loading"
+    ]
   }
 }
