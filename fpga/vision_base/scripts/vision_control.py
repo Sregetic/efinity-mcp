@@ -143,12 +143,16 @@ with acquire_jtag_engine(1e6,a.url) as e:
   if actual_build in [0x26100603,0x26100604,0x26100605,0x26100606,0x26100607,0x2610061a,0x2610061b]:
    for key in ['capture_id','display_id','canny_completed']:rec.pop(key)
    rec.update(diagnostic_disabled=True,diagnostic_page=actual_build&255)
-  if actual_build in (0x2610051d,0x2610071d):
+  if actual_build in (0x2610051d,0x2610071d,0x2610081d):
    rec=dict(magic=f'{v>>160:08x}',build=f'{actual_build:08x}',raw=f'{v:048x}',sample_time_s=time.time(),
             **{'flyhash_'+k:value for k,value in decode_flyhash_status(v).items()})
   if actual_build in [0x2610051e,0x2610051f]:
    rec=dict(magic=f'{v>>160:08x}',build=f'{actual_build:08x}',raw=f'{v:048x}',sample_time_s=time.time(),
             flyhash_half='low' if actual_build==0x2610051e else 'high',flyhash_bits=f'{v&((1<<128)-1):032x}')
+  if actual_build==0x2610081e:
+   rec=dict(magic=f'{v>>160:08x}',build=f'{actual_build:08x}',raw=f'{v:048x}',sample_time_s=time.time(),
+            flyhash_result_address=(v>>96)&0xffffffff,flyhash_input_address=(v>>64)&0xffffffff,
+            flyhash_firmware_state=(v>>32)&0xffffffff,flyhash_cycles=v&0xffffffff)
   roi_rec=decode_roi(v)
   if roi_rec is not None:
    for key in ['capture_id','display_id','canny_completed']:rec.pop(key)

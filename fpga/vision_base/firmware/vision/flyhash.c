@@ -1,7 +1,7 @@
 #include "flyhash.h"
 #include <stddef.h>
 // Freestanding GCC emits this call for the zero-initialized local arrays.
-void *memset(void *dst,int value,size_t count) {
+__attribute__((used)) void *memset(void *dst,int value,size_t count) {
     unsigned char *p=dst;for(size_t i=0;i<count;i++)p[i]=value;return dst;
 }
 

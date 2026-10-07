@@ -1,4 +1,6 @@
 """Runnable host check; no hardware or vendor Python modules required."""
+from flyhash_ddr import decode_record
+import struct
 from flyhash_board import decode_status,decode_profile,check_result,encode,edge_features
 from capture_mode_images import check_frozen_source
 
@@ -33,4 +35,11 @@ if __name__=='__main__':
         except RuntimeError:pass
         else:raise AssertionError(key)
     assert edge_features(bytes(129600),480,270,(0,0,480,270))==[0]*64
+    ddr=decode_status((v&~(0xffffffff<<128))|(0x2610081d<<128))
+    ddr.update(decode_profile(profile));ddr['hash']=result['hash'];check_result(ddr,context,features)
+    record=struct.pack('<8I',0x464c5932,1,4,28,8,24,0,25000)+bytes(features)+bytes.fromhex(result['hash'])[::-1]
+    decoded=decode_record(record);assert decoded['features']==features and decoded['hash']==result['hash'] and decoded['frame_id']==28
+    try:decode_record(bytes(128))
+    except RuntimeError:pass
+    else:raise AssertionError('unpublished DDR result')
     print('PASS FlyHash host codec,480x270 occupancy,frame/config/epoch binding,hardware result checks')

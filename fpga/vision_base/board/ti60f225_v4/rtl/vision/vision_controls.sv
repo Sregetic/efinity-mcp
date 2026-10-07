@@ -7,28 +7,15 @@ wire pending_canny=pmode==5||pmode==6;
 function automatic[10:0]clamp_threshold(input[10:0]v);begin clamp_threshold=v<THRESHOLD_MIN?THRESHOLD_MIN:v;end endfunction
 function automatic[10:0]increase(input[10:0]v);begin increase=v>2047-THRESHOLD_STEP?2047:v+THRESHOLD_STEP;end endfunction
 function automatic[10:0]decrease(input[10:0]v);begin decrease=v<THRESHOLD_MIN+THRESHOLD_STEP?THRESHOLD_MIN:v-THRESHOLD_STEP;end endfunction
-reg[2:0]sync0=7,sync1=7,stable=7,long_sent=0;reg[31:0]db[0:2],held[0:2];
-reg[2:0]short_p=0,long_p=0;reg[2:0]pmode=3,pindex=0;reg[10:0]psobel=128,pcanny=128;reg pmed=0;reg[1:0]pmem=0;reg vq=0;
-integer i;
+wire[2:0]short_p,long_p;
+vision_keys #(.DEBOUNCE(DEBOUNCE),.LONG_PRESS(LONG_PRESS)) keys(clk,rst_n,keys_n,short_p,long_p);
+reg[2:0]pmode=3,pindex=0;reg[10:0]psobel=128,pcanny=128;reg pmed=0;reg[1:0]pmem=0;reg vq=0;
 always @(posedge clk)begin
- sync0<=keys_n;sync1<=sync0;short_p<=0;long_p<=0;vq<=vs;
+ vq<=vs;
  if(!rst_n)begin
-  sync0<=7;sync1<=7;stable<=7;long_sent<=0;pmode<=3;psobel<=128;pcanny<=128;pmed<=0;pmem<=0;pindex<=0;
+  pmode<=3;psobel<=128;pcanny<=128;pmed<=0;pmem<=0;pindex<=0;
   mode<=3;sobel_threshold<=128;canny_threshold<=128;median_en<=0;memory_mode<=0;history_index<=0;
-  for(i=0;i<3;i=i+1)begin db[i]<=0;held[i]<=0;end
  end else begin
-  for(i=0;i<3;i=i+1)begin
-   if(sync1[i]==stable[i])db[i]<=0;
-   else if(db[i]==DEBOUNCE-1)begin
-    db[i]<=0;stable[i]<=sync1[i];
-    if(sync1[i])begin if(!long_sent[i])short_p[i]<=1;held[i]<=0;long_sent[i]<=0;end
-   end else db[i]<=db[i]+1;
-   // Stop counting on the synchronized release. Otherwise this assignment
-   // overrides held<=0 on the debounced release edge and short presses add up.
-   if(!stable[i]&&!long_sent[i]&&!sync1[i])begin
-    if(held[i]==LONG_PRESS-1)begin long_p[i]<=1;long_sent[i]<=1;end else held[i]<=held[i]+1;
-   end
-  end
   if(short_p[0])pmode<=pmode+1'b1;
   if(long_p[0])pmed<=~pmed;
   if(short_p[1])begin if(pmem>=2)pindex<=(pindex>=5)?0:pindex+1'b1;else if(pending_canny)pcanny<=increase(pcanny);else psobel<=increase(psobel);end

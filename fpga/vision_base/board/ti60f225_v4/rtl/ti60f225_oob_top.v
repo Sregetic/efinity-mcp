@@ -294,7 +294,8 @@ wire                              cal_done;
 // Explicit module-scope reset: both generated sensor branches use this driver.
 wire                              vid_rst_n;
 
-// Shared command/control types precede every module connection.
+// Shared command/control types precede every generated module connection.
+wire gamma_vs;
 reg[31:0] feature_command=0;reg feature_command_toggle=0;
 reg[2:0] feature_cmd_sync=0;reg feature_cmd_seen=0;reg[4:0]feature_diag_page=0;
 wire feature_cmd_event=feature_cmd_sync[2]!=feature_cmd_seen;
@@ -1338,9 +1339,21 @@ end else begin:pool_raster
   hdmi_tx_vs<=pattern_vs;hdmi_tx_hs<=pattern_hs;hdmi_tx_de<=pattern_de;
  end
 end endgenerate
+wire[7:0]control_paddr;wire control_psel,control_penable,control_pwrite,control_pready,control_pslverror;
+wire[31:0]control_pwdata,control_prdata;
+generate if(SAPPHIRE_ENABLE)begin:firmware_control
+vision_control_bridge controls(.clk(core_clk),.rst_n(vid_rst_n),.video_clk(hdmi_tx_slow_clk),.vs(gamma_vs),.keys_n(vision_keys_n),
+ .cmd_event(feature_cmd_event),.cmd_op(feature_command[31:24]),.cmd_value(feature_command[23:0]),
+ .paddr(control_paddr),.psel(control_psel),.penable(control_penable),.pwrite(control_pwrite),.pwdata(control_pwdata),.prdata(control_prdata),.pready(control_pready),.pslverror(control_pslverror),
+ .mode(feature_mode),.threshold(feature_threshold),.sobel_threshold(sobel_threshold),.canny_threshold(canny_threshold),.median_en(feature_median),.memory_mode(memory_mode),.history_index(history_index),
+ .job_ready(roi_job_ready),.capture_done(roi_capture_done),.capture_error(roi_capture_error),.capture_count(roi_capture_count),.source_hold_valid(roi_hold_valid),.render_done(roi_render_done),.render_error(roi_render_error),.render_pending(roi_render_pending),.vblank(roi_vblank),.scan_busy(roi_scan_busy),
+ .job_valid(roi_job_valid),.enable(roi_enable),.freeze_source(roi_freeze),.job_config_id(roi_job_id),.roi_x(roi_x),.roi_y(roi_y),.roi_w(roi_w),.roi_h(roi_h),.dst_w(roi_dw),.dst_h(roi_dh),.display_x(roi_posx),.display_y(roi_posy),.config_busy(roi_config_busy),.commit_rejected(roi_commit_rejected),.requested_id(roi_requested_id),.config_error(roi_config_error),.committed_id(roi_commit_id),.rejected_id(roi_rejected_id));
+end else begin:hardware_roi
+ assign control_prdata=0,control_pready=1,control_pslverror=1;
 vision_roi_control roi_control(.rst_n(vid_rst_n),.video_clk(hdmi_tx_slow_clk),.cmd_event(feature_cmd_event),.cmd_op(feature_command[31:24]),.cmd_value(feature_command[23:0]),.memory_mode(memory_mode),.clk(core_clk),
  .job_ready(roi_job_ready),.capture_done(roi_capture_done),.capture_error(roi_capture_error),.source_hold_valid(roi_hold_valid),.render_done(roi_render_done),.render_error(roi_render_error),.render_pending(roi_render_pending),.vblank(roi_vblank),.scan_busy(roi_scan_busy),
  .job_valid(roi_job_valid),.enable(roi_enable),.freeze_source(roi_freeze),.job_config_id(roi_job_id),.roi_x(roi_x),.roi_y(roi_y),.roi_w(roi_w),.roi_h(roi_h),.dst_w(roi_dw),.dst_h(roi_dh),.display_x(roi_posx),.display_y(roi_posy),.config_busy(roi_config_busy),.commit_rejected(roi_commit_rejected),.requested_id(roi_requested_id),.config_error(roi_config_error),.committed_id(roi_commit_id),.rejected_id(roi_rejected_id));
+end endgenerate
 vision_rgb_capture #(.INPUT_PPC(RAW_TO_POOL?2:1),.FIFO_AW(RAW_TO_POOL?11:10)) roi_capture(.rst_n(vid_rst_n),.video_clk(hdmi_tx_slow_clk),.vs(RAW_TO_POOL?rgb_vs:hdmi_tx_vs),.de(RAW_TO_POOL?(rgb_de&&rgb_valid):hdmi_tx_de),.rgb(RAW_TO_POOL?{rgb_datax2[7:0],rgb_datax2[15:8],rgb_datax2[23:16]}:{hdmi_tx_rdata,hdmi_tx_gdata,hdmi_tx_bdata}),.rgb_upper({rgb_datax2[31:24],rgb_datax2[39:32],rgb_datax2[47:40]}),.source_abort(camera_source_bad),.raw_id(camera_source_frame),.clk(core_clk),.enable(RAW_TO_POOL?1'b1:roi_enable),.freeze_source(!RAW_TO_POOL&&roi_freeze&&roi_hold_valid),
  .capture_valid(roi_capture_valid),.capture_ready(roi_capture_ready),.capture_config_id(roi_capture_id),.capture_pixel_valid(roi_capture_pvalid),.capture_pixel_ready(roi_capture_pready),.capture_pixel_data(roi_capture_data),.capture_pixel_sof(roi_capture_sof),.capture_pixel_eol(roi_capture_eol),.capture_pixel_eof(roi_capture_eof),.capture_abort(roi_capture_abort),.capture_done(roi_capture_done),.capture_error(roi_capture_error),.active(roi_capture_active),.completed(roi_capture_count),.discarded(roi_capture_discard));
 vision_rgb_scanout #(.FIFO_AW(11)) roi_scanout(.rst_n(vid_rst_n),.clk(core_clk),.enable(RAW_TO_POOL?1'b1:roi_enable),.have_result(RAW_TO_POOL?(!roi_enable?(pool_history_count!=0):roi_display_valid):roi_display_valid),.pixel_valid(roi_scan_valid),.pixel_ready(roi_scan_ready),.pixel_data(roi_scan_data),.pixel_eol(roi_scan_eol),.pixel_eof(roi_scan_eof),.pixel_frame_id(roi_scan_frame),.pixel_config_id(roi_scan_config),.width(scan_source_mode?16'd1920:roi_display_width),.height(scan_source_mode?16'd1080:roi_display_height),.pos_x(scan_source_mode?16'd0:roi_posx),.pos_y(scan_source_mode?16'd0:roi_posy),.scan_done(roi_scan_done),.scan_error(roi_scan_error),.vblank(roi_vblank),.scan_enable(roi_scan_enable),.read_urgent(roi_scan_urgent),
@@ -1479,7 +1492,6 @@ wire [7:0] gamma_gdata ;
 wire [7:0] gamma_bdata ;
 wire gamma_valid;
 wire gamma_hs;
-wire gamma_vs;
 wire gamma_sel = 1'b1;
 wire gamma_vio_unused;
 wire[7:0]legacy_rdata,legacy_gdata,legacy_bdata;
@@ -1647,9 +1659,11 @@ rgb_roi_probe display_color_probe(hdmi_tx_slow_clk,vid_rst_n,gamma_vs,gamma_vali
 end else begin
  assign pre_gamma_sums=0,post_gamma_sums=0,display_color_sums=0,post_gamma_clips=0,unused_pre_clips=0,unused_display_clips=0;
 end endgenerate
+generate if(!SAPPHIRE_ENABLE)begin:hardware_controls
 vision_controls feature_controls(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n),.vs(gamma_vs),.keys_n(vision_keys_n),
  .cmd_event(feature_cmd_event),.cmd_op(feature_command[31:24]),.cmd_value(feature_command[23:0]),
  .mode(feature_mode),.threshold(feature_threshold),.sobel_threshold(sobel_threshold),.canny_threshold(canny_threshold),.median_en(feature_median),.memory_mode(memory_mode),.history_index(history_index));
+end endgenerate
 wire[7:0] feature_r,feature_g,feature_b;wire feature_de,feature_hs,feature_vs;
 wire[11:0] feature_x,feature_y;wire[10:0] feature_mag;wire feature_edge;
 reg canny_probe_hold=0,canny_probe_req=0;reg[11:0]canny_probe_address=0;
@@ -1710,8 +1724,9 @@ wire[31:0]flyhash_full_cycles,flyhash_firmware_state;
 generate if(SAPPHIRE_ENABLE)begin:sapphire
 wire soc_reset;wire[15:0]soc_paddr;wire soc_psel,soc_penable,soc_pready,soc_pwrite,soc_pslverror;wire[31:0]soc_pwdata,soc_prdata;
 wire[31:0]mail_prdata,dma_prdata;wire mail_pready,mail_pslverror,dma_pready,dma_pslverror;
-wire dma_select=ANALYSIS_DMA_ENABLE&&soc_paddr[15:8]==1;
-assign soc_prdata=dma_select?dma_prdata:mail_prdata,soc_pready=dma_select?dma_pready:mail_pready,soc_pslverror=dma_select?dma_pslverror:mail_pslverror;
+wire dma_select=ANALYSIS_DMA_ENABLE&&soc_paddr[15:8]==1;wire control_select=soc_paddr[15:8]==2;
+assign control_paddr=soc_paddr[7:0],control_psel=soc_psel&&control_select,control_penable=soc_penable,control_pwrite=soc_pwrite,control_pwdata=soc_pwdata;
+assign soc_prdata=control_select?control_prdata:(dma_select?dma_prdata:mail_prdata),soc_pready=control_select?control_pready:(dma_select?dma_pready:mail_pready),soc_pslverror=control_select?control_pslverror:(dma_select?dma_pslverror:mail_pslverror);
 if(ANALYSIS_DMA_ENABLE)begin:analysis_input
  vision_analysis_dma #(.BANK_BITS(COMPUTE_BANK_BITS),.SOURCE_BASE(RAW_TO_POOL?32'h0:32'h02000000)) dma(
  .clk(core_clk),.rst_n(vid_rst_n),.paddr(soc_paddr[7:0]),.psel(soc_psel&&dma_select),.penable(soc_penable),.pwrite(soc_pwrite),.pwdata(soc_pwdata),.prdata(dma_prdata),.pready(dma_pready),.pslverror(dma_pslverror),
@@ -1822,19 +1837,21 @@ VisionSapphire cpu(
  .vision_apb_PSLVERROR(soc_pslverror));
 vision_int8_cfu int8_cfu(.clk(core_clk),.rst_n(!soc_reset),.cmd_valid(cfu_cmd_valid),.cmd_ready(cfu_cmd_ready),.function_id(cfu_function_id),.a(cfu_inputs_0),.b(cfu_inputs_1),.rsp_valid(cfu_rsp_valid),.rsp_ready(cfu_rsp_ready),.result(cfu_outputs_0));
 vision_flyhash_mailbox flyhash_control(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n),.cpu_clk(core_clk),.cpu_rst_n(!soc_reset),
- .paddr(soc_paddr),.psel(soc_psel&&!dma_select),.penable(soc_penable),.pwrite(soc_pwrite),.pwdata(soc_pwdata),.prdata(mail_prdata),.pready(mail_pready),.pslverror(mail_pslverror),
+ .paddr(soc_paddr),.psel(soc_psel&&!dma_select&&!control_select),.penable(soc_penable),.pwrite(soc_pwrite),.pwdata(soc_pwdata),.prdata(mail_prdata),.pready(mail_pready),.pslverror(mail_pslverror),
  .firmware_state(flyhash_firmware_state),.full_cycles(flyhash_full_cycles),
  .cmd_event(feature_cmd_event),.cmd_op(feature_command[31:24]),.cmd_value(feature_command[23:0]),
  // frame_ok clears at every VS; the frozen lease is persistent. Any actual
  // scan failure increments bad_frames and cancels the tagged analysis job.
  .context_valid(roi_view_enable&&flyhash_held_sync[2]&&memory_mode==1&&canny_probe_hold&&canny_ready),
  .frame_id(roi_view_frame),.config_id(roi_view_config),.epoch(canny_completed),.stream_errors(roi_bad_frames),
- .hash(flyhash_result),.status(flyhash_status),.result_frame_id(flyhash_frame),
+ .status(flyhash_status),.result_frame_id(flyhash_frame),
  .result_config_id(flyhash_config),.result_epoch(flyhash_epoch),
  .bitmap_req(fly_bitmap_req),.bitmap_busy(fly_bitmap_busy),.bitmap_ready(fly_bitmap_ready),
- .bitmap_address(fly_bitmap_address),.bitmap_valid(fly_bitmap_valid),.bitmap_data(canny_probe_data),
- .feature_quarter(fly_feature_quarter),.feature_probe(fly_feature_probe));
+ .bitmap_address(fly_bitmap_address),.bitmap_valid(fly_bitmap_valid),.bitmap_data(canny_probe_data)
+ );
+assign flyhash_result=0,fly_feature_probe=0;
 end else begin:hardware_flyhash
+assign control_paddr=0,control_psel=0,control_penable=0,control_pwrite=0,control_pwdata=0;
 vision_flyhash_control flyhash_control(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n),
  .cmd_event(feature_cmd_event),.cmd_op(feature_command[31:24]),.cmd_value(feature_command[23:0]),
  // frame_ok clears at every VS; the frozen lease is persistent. Any actual
@@ -2088,10 +2105,12 @@ always @(posedge jtag_diag_DRCK) begin
    diag_shift<={32'h56495331,(32'h26100600+{27'b0,feature_diag_page}),feature_status,((IMAGE_DEBUG&&feature_diag_page==3)?{17'b0,color_order,76'b0}:96'b0)};
   else if(feature_diag_page==26||feature_diag_page==27)diag_shift<={32'h56495331,(feature_diag_page==26?32'h2610051a:32'h2610051b),snapshot_frame,snapshot_config,snapshot_sequence,snapshot_status};
   else if(feature_diag_page==28)diag_shift<={32'h56495331,32'h2610051c,feature_status,32'd1920,32'd1080,(IMAGE_DEBUG?32'd24:32'd0)};
-  else if(feature_diag_page==29)diag_shift<={32'h56495331,(SAPPHIRE_ENABLE?32'h2610071d:32'h2610051d),flyhash_epoch,flyhash_frame,flyhash_config,flyhash_status};
+  else if(feature_diag_page==29)diag_shift<={32'h56495331,(SAPPHIRE_ENABLE?32'h2610081d:32'h2610051d),flyhash_epoch,flyhash_frame,flyhash_config,flyhash_status};
   else if(feature_diag_page==30&&fly_profile_view)diag_shift<={32'h56495331,32'h26100720,flyhash_firmware_state,flyhash_full_cycles,32'd100000000,{31'b0,(SAPPHIRE_ENABLE!=0)}};
+  else if(feature_diag_page==30&&SAPPHIRE_ENABLE)diag_shift<={32'h56495331,32'h2610081e,32'h07620000,32'h07620100,flyhash_firmware_state,flyhash_full_cycles};
   else if(feature_diag_page==30&&fly_feature_view)diag_shift<={32'h56495331,(32'h26100520+{30'b0,fly_feature_quarter}),fly_feature_probe};
   else if(feature_diag_page==30)diag_shift<={32'h56495331,32'h2610051e,flyhash_result[127:0]};
+  else if(feature_diag_page==31&&SAPPHIRE_ENABLE)diag_shift<={32'h56495331,32'h2610081f,128'b0};
   else if(feature_diag_page==31)diag_shift<={32'h56495331,32'h2610051f,flyhash_result[255:128]};
   else if(feature_diag_page==23&&x3_profile_view)diag_shift<={32'h56495331,(DISPLAY_LATENCY_PROBE?32'h26100717:32'h26100617),x3_display_min,x3_display_max,x3_display_samples,x3_display_unmatched};
   else if(feature_diag_page==24&&x3_profile_view)diag_shift<={32'h56495331,32'h26100718,feature_status,x3_frame,x3_pixels,x3_edge_count};

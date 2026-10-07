@@ -1,0 +1,2 @@
+PASS RV32I FlyHash 32 vectors and 4 complete 480x270 bitmaps (including board readback)
+qemu-system-riscv32.exe: warning: Setting G will also set IMAFD

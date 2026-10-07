@@ -14,13 +14,14 @@ volatile uint32_t analysis_hash[8];
 volatile uint32_t analysis_control[5]={3,0,640u|(300u<<16),640u|(480u<<16),10000000u};
 void main(void){
  const struct shape_model *m=(const struct shape_model *)__weights_start;
- if(m->magic!=0x53434d31u||DMA(0x2c)!=3){REG(4)=3;for(;;);}
+ if(m->magic!=0x53434d31u||DMA(0x2c)!=3||CTRL_R(0)!=0x26100802u||CONTROL_STATE->magic!=CONTROL_MAGIC){REG(4)=3;for(;;);}
 #ifdef VISION_MULHI_CFU
  if(m->s0>-2||m->s1>-2||m->s0<-30||m->s1<-30){REG(4)=3;for(;;);}
 #endif
  uint32_t last=REG(0x30)-10000000u,sequence=0,failures=0;
  REG(4)=1;
  for(;;){
+  control_service_step();if(CTRL_R(0x0c)>>31){REG(4)=3;for(;;);}
   flyhash_service_step();
   uint32_t status=DMA(4);
   if(status&2){

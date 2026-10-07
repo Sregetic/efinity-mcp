@@ -28,7 +28,7 @@ try {
   @{name='median9';src=@('vision_median9.sv')},
   @{name='chroma_tone';src=@('rgb_chroma_tone.sv')},
   @{name='chroma_thresholds';src=@('rgb_chroma_tone.sv')},
-  @{name='controls';src=@('vision_controls.sv')},
+  @{name='controls';src=@('vision_controls.sv','vision_keys.sv')},
   @{name='hysteresis';src=@('vision_hysteresis.sv')},
   @{name='hysteresis_sweep';src=@('vision_hysteresis_sweep.sv','vision_hysteresis.sv')},
   @{name='history';src=@('vision_frame_history.sv')},

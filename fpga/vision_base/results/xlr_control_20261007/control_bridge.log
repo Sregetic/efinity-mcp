@@ -1,0 +1,2 @@
+PASS tb_vision_control_bridge ordered events, bounce/short/long keys, VS atomic commit, freeze CDC, held render/position, tagged error and overflow
+sim/tb_vision_control_bridge.sv:69: $finish called at 4040000 (1ps)

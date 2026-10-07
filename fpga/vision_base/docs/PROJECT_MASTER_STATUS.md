@@ -128,3 +128,8 @@ Gamma前RGB565的5/6bit台阶差造成紫绿量化色带，最近舍入候选仍
 
 来源：F:/Project/fpga/output/pdf/易灵思赛题四技术方案.pdf（V1.1，尤其第9–14、16–17页）；当前证据按docs/CANNY_SOBEL_220_20260919.md、SHAPE_RECOGNITION_20260919.md、HAZE_EXPOSURE_20260919.md及results原始报告核对。
 原技术路线的具体CPU、模型、加速算子和应用标签是待证据选型项，不等于这些工作方向可被遗漏。
+
+
+## 2026-10-07 XLR优化候选
+
+FlyHash DDR邮箱与固件控制面已完成源码、RTL/RV32I验证和完整原生构建：调试候选56818 XLR/245 RAM/58 DSP，净释放3197 XLR、增加2 RAM；最终WNS +0.074ns/WHS +0.026ns。位图读口、帧绑定、消抖和帧边界发布保持。当前SRAM仍为先前已部署版本，新候选尚未做板上验收；比赛版没有重新构建。详见[XLR优化报告](XLR_CONTROL_OPTIMIZATION_20261007.md)。Canny阶梯/毛刺、真实卡片验收、I1/I3等既有任务范围保持。

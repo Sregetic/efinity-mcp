@@ -13,3 +13,9 @@ SECTIONS {
  ASSERT(SIZEOF(.app)<= 3840,"application exceeds the 4KB boot image")
  ASSERT(__bss_end<0x0700c000,"application and stack overlap")
 }
+
+/* Shared control/result records survive USER1 AI application replacement. */
+__flyhash_result = 0x07620000;
+__flyhash_input = 0x07620100;
+__control_state = 0x07620200;
+__control_limit = 0x07621000;

@@ -36,7 +36,7 @@ void trap(void){puts_uart("FAIL trap\\n");finish(0);}
 (OUT/'test.c').write_text(source)
 (OUT/'start.S').write_text('.section .text.start,"ax"\n.global _start\n_start:\n la sp,__stack_top\n la t0,trap\n csrw mtvec,t0\n call main\n j trap\n')
 (OUT/'link.ld').write_text('OUTPUT_ARCH(riscv)\nENTRY(_start)\nSECTIONS{. = 0x80000000; .text : {*(.text.start) *(.text*)} .rodata : {*(.rodata*)} .data : {*(.data*) *(.sdata*)} .bss : {*(.bss*) *(.sbss*)} __stack_top = 0x80100000;}')
-subprocess.run([str(BIN/'riscv-none-elf-gcc.exe'),'-march=rv32i_zicsr_zifencei','-mabi=ilp32','-Os','-ffreestanding','-fno-builtin',
+subprocess.run([str(BIN/'riscv-none-elf-gcc.exe'),'-march=rv32i_zicsr_zifencei','-mabi=ilp32','-Os','-flto','-ffunction-sections','-fdata-sections','-ffreestanding','-fno-builtin',
  '-msmall-data-limit=0','-mno-relax','-nostdlib','-I'+str(ROOT/'firmware/vision'),'-T',str(OUT/'link.ld'),str(OUT/'start.S'),
  str(OUT/'test.c'),str(ROOT/'firmware/vision/flyhash.c'),'-lgcc','-o',str(OUT/'test.elf')],check=True)
 dis=subprocess.check_output([str(BIN/'riscv-none-elf-objdump.exe'),'-d',str(OUT/'test.elf')],text=True)
