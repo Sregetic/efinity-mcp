@@ -228,7 +228,7 @@ ROM[8'h8c] = {16'h57ac,8'h00,1'b0};
 ROM[8'h8d] = {16'h57ad,8'h00,1'b0};
 ROM[8'h8e] = {16'h36e9,8'h53,1'b0};
 ROM[8'h8f] = {16'h37f9,8'h53,1'b0};
-ROM[8'h90] = {16'h0100,8'h01,1'b0};
+ROM[8'h90] = {16'h3e06,8'h00,1'b0}; // Explicit unity digital gain (SDK cmos_gains_update)
 ROM[8'h91] = {16'h3200,8'h00,1'b0};
 ROM[8'h92] = {16'h3201,8'h00,1'b0};
 ROM[8'h93] = {16'h3202,8'h00,1'b0};
@@ -248,6 +248,8 @@ ROM[8'ha0] = {16'h3213,8'h04,1'b0};
 ROM[8'ha1] = {16'h3E08,8'h80,1'b0};
 ROM[8'ha2] = {16'h3E09,8'h2a,1'b0};
 ROM[8'ha3] = {16'h3221,8'h66,1'b0};
+ROM[8'ha4] = {16'h3e07,8'h80,1'b0}; // 1x digital gain, independent of power-on defaults
+ROM[8'ha5] = {16'h0100,8'h01,1'b0}; // Start after geometry, gain and orientation
 end
 end endgenerate
 // write is unused

@@ -1,9 +1,9 @@
-module vision_display(input clk,rst_n,de,hs,vs,input[7:0]r,g,b,input[2:0]mode,input[10:0]threshold,input median_en,
+module vision_display #(parameter EDGE_STRENGTH=1)(input clk,rst_n,de,hs,vs,input[7:0]r,g,b,input[2:0]mode,input[10:0]threshold,input median_en,
  input[1:0]memory_mode,input[2:0]history_index,
  input canny_pixel,input canny_ready,output[11:0]cx,cy,
  output reg ode,ohs,ovs,output reg[7:0]orr,ogg,obb,
  output[10:0]debug_mag,output debug_edge,
- input shape_enable,input[7:0]shape_threshold,output[63:0]shape_status,output coordinate_de,input[10:0]canny_effective_threshold,canny_requested_threshold);
+ input shape_enable,input[7:0]shape_threshold,output[63:0]shape_status,output coordinate_de,input[10:0]canny_effective_threshold,canny_requested_threshold,input[7:0]canny_coverage);
 wire fd0,fh0,fv0,border0;wire[11:0]x0,y0;wire[7:0]fr0,fg0,fb0,gray0;wire[10:0]mag0;wire[1:0]dir;
 wire edge0;reg edge1=0;
 vision_frontend front(clk,rst_n,de,hs,vs,r,g,b,median_en,fd0,fh0,fv0,border0,x0,y0,fr0,fg0,fb0,gray0,mag0,dir,threshold,edge0);
@@ -26,15 +26,21 @@ vision_osd osd0(x,y,mode,(mode==5||mode==6)?canny_effective_threshold:threshold,
 assign cx=x0>=2?x0-2:0;assign cy=y0>=2?y0-2:0;
 assign coordinate_de=fd0&&x0>=2&&y0>=2;reg[10:0]dm=0;reg dedge=0;assign debug_mag=dm;assign debug_edge=dedge;
 reg[23:0]pixel;
+// Continuous reference-style strength uses the existing full-resolution
+// gradient. Threshold still gates it; classification stays a binary mask.
+wire[7:0]sobel_level=edge_on?(EDGE_STRENGTH?(mag>510?8'd255:mag[8:1]):8'd255):8'd0;
+wire[7:0]canny_level=canny_ready?(EDGE_STRENGTH?canny_coverage:{8{canny_pixel}}):8'd0;
+wire[23:0]canny_overlay=canny_level==255?24'hff3030:
+ canny_level==64?{(fr-(fr>>2)+8'd63),(fg-(fg>>2)+8'd12),(fb-(fb>>2)+8'd12)}:{fr,fg,fb};
 always @*begin
  case(mode)
  0:pixel={fr,fg,fb};
  1:pixel={gray,gray,gray};
- 2:pixel={24{edge_on}};
- 3:pixel=(x<960)?{gray,gray,gray}:{24{edge_on}};
+ 2:pixel={sobel_level,sobel_level,sobel_level};
+ 3:pixel=(x<960)?{gray,gray,gray}:{sobel_level,sobel_level,sobel_level};
  4:pixel=edge_on?24'hff3030:{fr,fg,fb};
- 5:pixel={24{canny_pixel&&canny_ready}};
- 6:pixel=(canny_pixel&&canny_ready)?24'hff3030:{fr,fg,fb};
+ 5:pixel={canny_level,canny_level,canny_level};
+ 6:pixel=canny_overlay;
  default:pixel=shape_enable?(shape_box?((shape_class==1)?24'h20ff40:(shape_class==2)?24'h3090ff:24'hffe020):(shape_guide?24'h808080:{fr,fg,fb})):((x<960)?{fr,fg,fb}:{gray,gray,gray});
  endcase
  if(border)pixel=0;

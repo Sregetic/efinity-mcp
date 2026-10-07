@@ -3,14 +3,15 @@
 // REUSE_CAPTURE_MAP: every mutable coordinate MUST be written each capture.
 // Coordinates omitted on all frames are static zero padding initialized by CLEAR.
 // Both output planes initialize once; capture overwrites zeros as well as edges.
-module vision_hysteresis_sweep #(parameter W=480,H=270,CW=9,AW=$clog2(W*H),REUSE_CAPTURE_MAP=0,MIN_COMPONENT=1,PROBE=0,ALLOW_DISCARD=0)(
+module vision_hysteresis_sweep #(parameter W=480,H=270,CW=9,AW=$clog2(W*H),REUSE_CAPTURE_MAP=0,MIN_COMPONENT=1,PROBE=0,ALLOW_DISCARD=0,HISTORY=0)(
  input clk,rst_n,vblank,class_valid,input[CW-1:0]class_x,class_y,input[1:0]classification,input class_last,
  input[CW-1:0]display_x,display_y,
  output capture_enable,output reg ready=0,output busy,output pixel,
  output reg[31:0]completed=0,output reg fault=0,output[3:0]debug_state,output[AW:0]debug_queue,
  input display_de,probe_req,input[11:0]probe_address,
  output reg probe_ack,output reg[31:0]probe_data,output reg[11:0]probe_read_address,output probe_busy,input frame_discard,
- output reg[31:0]last_cycles,sweep_passes,weak_visits);
+ output reg[31:0]last_cycles,sweep_passes,weak_visits,
+ input[CW-1:0]history_x,history_y,output history_pixel);
 localparam N=W*H;
 localparam CLEAR=0,WAIT_FRAME=1,CAPTURE=2,CUR_READ=3,CUR_CHECK=4,NREAD=5,NCHECK=6,ADVANCE=7,PUBLISH=8;
 localparam PRUNE_READ=9,PRUNE_CHECK=10,PRUNE_NODE=11,PRUNE_NREAD=12,PRUNE_NCHECK=13,PRUNE_COMMIT=14;
@@ -150,8 +151,14 @@ wire[AW-1:0]read_addr=(state==PRUNE_NREAD||state==PRUNE_NCHECK)?prune_neighbor_a
 wire edge_we=clearing||storing||promoting||prune_erase;
 wire edge_data=promoting||(storing&&classification==2);
 vision_canny_ram #(.BITS(2),.AW(AW)) map_ram(clk,rst_n&&(clearing||storing||promoting||prune_seed||prune_mark||prune_erase),write_addr,write_data,read_addr,map_q);
-vision_canny_ram #(.BITS(1),.AW(AW)) edge_ram0(clk,rst_n&&edge_we&&(front||(clearing&&!ready)),write_addr,edge_data,edge_read_addr,e0);
-vision_canny_ram #(.BITS(1),.AW(AW)) edge_ram1(clk,rst_n&&edge_we&&(!front||(clearing&&!ready)),write_addr,edge_data,edge_read_addr,e1);
+// The front plane's write port is idle during CAPTURE. Read history there;
+// display and the blanking-time JTAG probe keep their independent read port.
+wire[AW-1:0]history_addr=history_y*W+history_x;wire h0,h1;
+vision_canny_edge_ram #(.AW(AW)) edge_ram0(clk,rst_n&&edge_we&&(front||(clearing&&!ready)),
+ (HISTORY&&!front&&ready)?history_addr:write_addr,edge_data,h0,edge_read_addr,e0);
+vision_canny_edge_ram #(.AW(AW)) edge_ram1(clk,rst_n&&edge_we&&(!front||(clearing&&!ready)),
+ (HISTORY&&front&&ready)?history_addr:write_addr,edge_data,h1,edge_read_addr,e1);
+assign history_pixel=HISTORY&&ready&&(front?h1:h0);
 assign pixel=ready?(front?e1:e0):1'b0;
 assign capture_enable=state==CAPTURE;assign busy=state!=WAIT_FRAME;assign debug_state=state;assign debug_queue=0;
 always @(posedge clk)begin

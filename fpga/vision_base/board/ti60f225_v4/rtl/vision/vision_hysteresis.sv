@@ -78,6 +78,15 @@ always @(posedge clk)begin
 end
 endmodule
 
+// Port A writes the back plane or reads the published front plane. Port B
+// always serves the HDMI/JTAG reader. No third port and no additional plane.
+module vision_canny_edge_ram #(parameter AW=17)(input clk,we,input[AW-1:0]aa,input wd,
+ output reg qa,input[AW-1:0]ba,output reg qb);
+reg mem[0:(1<<AW)-1];
+always @(posedge clk)begin if(we)mem[aa]<=wd;qa<=mem[aa];end
+always @(posedge clk)qb<=mem[ba];
+endmodule
+
 module vision_canny_ram #(parameter BITS=8,AW=15)(input clk,we,input[AW-1:0]wa,input[BITS-1:0]wd,input[AW-1:0]ra,output reg[BITS-1:0]q);
 reg[BITS-1:0]mem[0:(1<<AW)-1];
 always @(posedge clk)begin if(we)mem[wa]<=wd;q<=mem[ra];end

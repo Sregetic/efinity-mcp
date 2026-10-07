@@ -4,7 +4,7 @@
 module vision_canny_raster #(parameter W=480,H=270,CW=9)(
  input clk,rst_n,vblank,de,input[11:0]x,y,input bitmap,ready,
  output[CW-1:0]fetch_x,fetch_y,output pixel,
- output reg[31:0]coarse_edges,display_edges
+ output reg[31:0]coarse_edges,display_edges,output[7:0]coverage
 );
  wire[CW:0]rx={1'b0,x[10:2]}+2,ry={1'b0,y[10:2]}+1;
  assign fetch_x=rx[CW-1:0],fetch_y=ry[CW-1:0];
@@ -37,8 +37,18 @@ module vision_canny_raster #(parameter W=480,H=270,CW=9)(
  wire ascending={1'b0,ux}+{1'b0,uy}==4&&((ne&&ux>=2)||(sw&&ux<=2));
  // NE/SW neighbor connections also cross the top-left corner of this cell.
  wire bridge=n&&w&&ux==0&&uy==0;
- assign pixel=ready&&vq&&tx>=2&&ty>=2&&tx<W-2&&ty<H-2&&
+ wire in_canvas=ready&&vq&&tx>=2&&ty>=2&&tx<W-2&&ty<H-2;
+ assign pixel=in_canvas&&
               ((center&&(node||horizontal||vertical||descending||ascending))||bridge);
+ // Quarter coverage beside diagonal segments; recognition keeps the binary
+ // graph. Reuse the same nine nodes without another line or frame buffer.
+ wire near_descending=((ux+3'd1==uy)||(uy+3'd1==ux))&&
+   ((nw&&ux<=2&&uy<=2)||(se&&ux>=2&&uy>=2));
+ wire[2:0]sum_xy={1'b0,ux}+{1'b0,uy};
+ wire near_ascending=(sum_xy==3||sum_xy==5)&&
+   ((ne&&ux>=2&&uy<=2)||(sw&&ux<=2&&uy>=2));
+ wire halo=(center&&(near_descending||near_ascending))||(n&&w&&sum_xy==1);
+ assign coverage=pixel?8'd255:((in_canvas&&halo)?8'd64:8'd0);
  reg[31:0]coarse_count=0,display_count=0;
  always @(posedge clk)begin
   if(!rst_n)begin coarse_count<=0;display_count<=0;coarse_edges<=0;display_edges<=0;end

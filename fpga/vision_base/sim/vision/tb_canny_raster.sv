@@ -2,12 +2,12 @@
 module tb;
 localparam W=16,H=12,PW=W*4,PH=H*4;
 reg clk=0,rst=0,vblank=0,de=0,ready=1,bitmap=0;reg[11:0]x=0,y=0;
-wire[8:0]fx,fy;wire pixel;wire[31:0]coarse,shown;
-vision_canny_raster #(.W(W),.H(H)) dut(clk,rst,vblank,de,x,y,bitmap,ready,fx,fy,pixel,coarse,shown);
+wire[8:0]fx,fy;wire[7:0]coverage;wire pixel;wire[31:0]coarse,shown;
+vision_canny_raster #(.W(W),.H(H)) dut(clk,rst,vblank,de,x,y,bitmap,ready,fx,fy,pixel,coarse,shown,coverage);
 always #5 clk=~clk;
 reg map[0:W*H-1],gold[0:PW*PH-1];
 always @(posedge clk)bitmap<=fx<W&&fy<H?map[fy*W+fx]:0;
-integer f,i,xx,yy,a,b,k,nx,ny,gx,gy,checks=0,lit=0;
+integer f,i,xx,yy,a,b,k,nx,ny,gx,gy,checks=0,lit=0,halos=0;
 initial begin
  repeat(4)@(negedge clk);rst=1;
  for(f=0;f<5;f=f+1)begin
@@ -28,11 +28,16 @@ initial begin
    for(xx=0;xx<PW;xx=xx+1)begin
     @(negedge clk);de=1;x=xx;y=yy;@(posedge clk);#1;
     if(pixel!==gold[yy*PW+xx])$fatal(1,"raster mismatch frame%0d x%0d y%0d got%b want%b tile%b",f,xx,yy,pixel,gold[yy*PW+xx],dut.tile);
+    if(pixel&&coverage!==255)$fatal(1,"binary core lost");
+    if(coverage!=0&&coverage!=64&&coverage!=255)$fatal(1,"invalid coverage");
+    if(f==4&&coverage!==0)$fatal(1,"halo ghost on flat frame");
+    if(coverage==64)halos=halos+1;
     checks=checks+1;if(pixel)lit=lit+1;
    end
    @(negedge clk);de=0;x=0;repeat(12)@(negedge clk);
   end
  end
+ if(halos==0)$fatal(1,"no diagonal antialias coverage");
  $display("PASS contour raster %0d pixels, %0d white pixels, diagonal/corner/horizontal/vertical/dense/random/zero next frame, sync bitmap RAM",checks,lit);$finish;
 end
 endmodule

@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "frame": 3899,
+  "config": 1,
+  "canny_epoch": 27,
+  "images": 5,
+  "canny_levels": [
+    0,
+    64,
+    255
+  ],
+  "core_pixels": 16442,
+  "halo_pixels": 1395,
+  "components": 12,
+  "minimum_component_pixels": 365,
+  "background_color_mismatches": 0,
+  "halo_blend_mismatches": 0,
+  "sobel_levels": 119,
+  "scope": "Same frozen source; digital pre-TMDS RGB. Analysis remains480x270, AA changes display only."
+}

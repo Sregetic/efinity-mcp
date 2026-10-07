@@ -4,7 +4,7 @@ localparam W=16,H=12,N=W*H;
 reg clk=0;always #5 clk=~clk;
 reg rst=0,vblank=0,cv=0,last=0;reg[7:0]x=0,y=0,dx=0,dy=0;reg[1:0]c=0;
 wire cap,ready,busy,pixel,fault;wire[31:0]frames;wire[3:0]state;wire[8:0]queued;
-vision_hysteresis_sweep #(.W(W),.H(H),.CW(8),.REUSE_CAPTURE_MAP(1)) dut(clk,rst,vblank,cv,x,y,c,last,dx,dy,cap,ready,busy,pixel,frames,fault,state,queued,1'b0,1'b0,12'd0,,,,,1'b0,,,);
+vision_hysteresis_sweep #(.W(W),.H(H),.CW(8),.REUSE_CAPTURE_MAP(1)) dut(clk,rst,vblank,cv,x,y,c,last,dx,dy,cap,ready,busy,pixel,frames,fault,state,queued,1'b0,1'b0,12'd0,,,,,1'b0,,,,8'd0,8'd0,);
 integer cls[0:N-1],refmap[0:N-1];integer f,i,j,xx,yy,nx,ny,changed,cycles=0;
 always @(posedge clk)if(state>=3&&state<=7)cycles<=cycles+1;
 initial begin

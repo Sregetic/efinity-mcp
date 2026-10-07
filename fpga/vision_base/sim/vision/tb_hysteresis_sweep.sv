@@ -2,7 +2,7 @@
 module tb;
 reg clk=0;always #5 clk=~clk;reg rst=0,vblank=0,cv=0,last=0;reg[7:0]x=0,y=0,dx=0,dy=0;reg[1:0]c=0;
 wire cap,ready,busy,pixel,fault;wire[31:0]frames;wire[3:0]state;wire[8:0]queued;
-vision_hysteresis_sweep #(.W(16),.H(12),.CW(8))dut(clk,rst,vblank,cv,x,y,c,last,dx,dy,cap,ready,busy,pixel,frames,fault,state,queued,1'b0,1'b0,12'd0,,,,,1'b0,,,);
+vision_hysteresis_sweep #(.W(16),.H(12),.CW(8))dut(clk,rst,vblank,cv,x,y,c,last,dx,dy,cap,ready,busy,pixel,frames,fault,state,queued,1'b0,1'b0,12'd0,,,,,1'b0,,,,8'd0,8'd0,);
 function automatic integer path(input integer a,b);begin path=(b==1&&a>=1&&a<=14)||(a==14&&b>=1&&b<=10)||(b==10&&a>=1&&a<=14)||(a==b&&a>=2&&a<=4);end endfunction
 integer ix,iy,errors=0;
 initial begin

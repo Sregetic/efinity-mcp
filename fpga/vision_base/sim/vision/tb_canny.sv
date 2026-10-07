@@ -1,8 +1,8 @@
 `timescale 1ns/1ps
-module tb;
+module tb #(parameter STABLE=1);
 reg clk=0;always #5 clk=~clk;reg rst=0,de=0,hs=0,vs=0;reg[7:0]p=0;reg[11:0]dx=0,dy=0;
 wire edgepix,ready,busy,fault;wire[31:0]done;
-vision_canny dut(clk,rst,de,hs,vs,p,p,p,11'd128,dx,dy,edgepix,ready,busy,fault,done,1'b0,1'b0,1'b0,12'd0,,,,,1'b0,,,,1'b0,,,,,);
+vision_canny #(.STABLE_NMS(STABLE)) dut(clk,rst,de,hs,vs,p,p,p,11'd128,dx,dy,edgepix,ready,busy,fault,done,1'b0,1'b0,1'b0,12'd0,,,,,1'b0,,,,1'b0,,,,,,);
 reg[7:0]mem[0:129599];reg gold[0:129599];integer x,y,n=0,errors=0; integer scan_cycles=0; always @(posedge clk) if(dut.hyst.state>=3 && dut.hyst.state<=7)scan_cycles<=scan_cycles+1;
 initial begin
  $readmemh("sim/vision/canny_input.mem",mem);$readmemh("sim/vision/canny_expected.mem",gold);

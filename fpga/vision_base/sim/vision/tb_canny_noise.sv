@@ -1,10 +1,10 @@
 `timescale 1ns/1ps
-module tb;
+module tb #(parameter STABLE=1);
 localparam W=64,H=48,N=W*H,CASES=10;
 reg clk=0,rst=0,de=0,hs=0,vs=0;always #5 clk=~clk;
 reg[7:0]p=0;reg[11:0]dx=0,dy=0;
 wire edgepix,ready,busy,fault,noise_valid;wire[31:0]done;wire[7:0]mean;wire[10:0]high;
-vision_canny #(.W(W),.H(H))dut(.clk(clk),.rst_n(rst),.de(de),.hs(hs),.vs(vs),.r(p),.g(p),.b(p),
+vision_canny #(.W(W),.H(H),.STABLE_NMS(STABLE))dut(.clk(clk),.rst_n(rst),.de(de),.hs(hs),.vs(vs),.r(p),.g(p),.b(p),
  .high_threshold(11'd16),.display_x(dx),.display_y(dy),.edge_pixel(edgepix),.ready(ready),.busy(busy),.fault(fault),.completed(done),
  .display_de(1'b0),.probe_hold(1'b0),.probe_req(1'b0),.probe_address(12'd0),.median_en(1'b1),
  .noise_mean(mean),.noise_valid(noise_valid),.effective_threshold(high),.raster_de(1'b0));

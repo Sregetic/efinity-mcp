@@ -4,7 +4,7 @@ localparam W=32,H=24,N=W*H,MIN=32;
 reg clk=0,rst=0,vblank=0,cv=0,last=0;reg[7:0]x=0,y=0,dx=0,dy=0;reg[1:0]c=0;
 wire cap,ready,busy,pixel,fault;wire[31:0]frames;wire[3:0]state;
 vision_hysteresis_sweep #(.W(W),.H(H),.CW(8),.REUSE_CAPTURE_MAP(1),.MIN_COMPONENT(MIN))
- dut(clk,rst,vblank,cv,x,y,c,last,dx,dy,cap,ready,busy,pixel,frames,fault,state,,1'b0,1'b0,12'd0,,,,,1'b0,,,);
+ dut(clk,rst,vblank,cv,x,y,c,last,dx,dy,cap,ready,busy,pixel,frames,fault,state,,1'b0,1'b0,12'd0,,,,,1'b0,,,,8'd0,8'd0,);
 always #5 clk=~clk;
 reg[1:0]input_map[0:N-1];reg gold[0:N-1],seen[0:N-1];integer queue[0:N-1];
 integer testno,i,j,xx,yy,a,b,head,tail,idx,ni,nx,ny,kept=0,removed=0,cycles=0,checks=0;

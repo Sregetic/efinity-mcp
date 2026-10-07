@@ -1,0 +1,48 @@
+[
+  {
+    "magic": "56495331",
+    "build": "26100418",
+    "mode": 6,
+    "median": 0,
+    "memory": 0,
+    "index": 0,
+    "threshold": 80,
+    "raw": "564953312610041878c0050701e0010e0000103d00004135",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1791395698.64579,
+    "canny_analysis_size": [
+      480,
+      270
+    ],
+    "canny_coarse_edges": 4157,
+    "canny_display_edges": 16693,
+    "canny_render": "1px connected contour"
+  },
+  {
+    "magic": "56495331",
+    "build": "26100418",
+    "mode": 6,
+    "median": 0,
+    "memory": 0,
+    "index": 0,
+    "threshold": 80,
+    "raw": "564953312610041878c0050701e0010e0000103d00004142",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1791395698.8618293,
+    "canny_analysis_size": [
+      480,
+      270
+    ],
+    "canny_coarse_edges": 4157,
+    "canny_display_edges": 16706,
+    "canny_render": "1px connected contour"
+  }
+]
