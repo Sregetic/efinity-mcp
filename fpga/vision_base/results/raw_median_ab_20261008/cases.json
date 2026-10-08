@@ -1,0 +1,17 @@
+[
+  {
+    "name": "off_a",
+    "frame_id": 635884,
+    "median": 0
+  },
+  {
+    "name": "on",
+    "frame_id": 635884,
+    "median": 1
+  },
+  {
+    "name": "off_b",
+    "frame_id": 635884,
+    "median": 0
+  }
+]

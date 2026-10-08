@@ -1,0 +1,132 @@
+{
+  "operation": "JTAG SRAM",
+  "flash_written": false,
+  "bitstream": "F:\\Project\\fpga\\vision_base\\results\\raw_rgb_denoise_20261008\\release_compact\\ti60f225_oob.bit",
+  "resources": {
+    "XLRs": "59967 / 60800",
+    "Memory Blocks": "247 / 256",
+    "DSP Blocks": "59 / 160",
+    "Unassigned Core Pins": "0"
+  },
+  "timing": {
+    "Worst Negative Slack (WNS)": "0.04 ns",
+    "Worst Hold Slack (WHS)": "0.026 ns",
+    "tx_cal_clk_90edge": "457.247 MHz",
+    "sdram_clk": "448.229 MHz",
+    "rx_cal_clk": "492.368 MHz",
+    "tx_cal_clk": "461.255 MHz",
+    "vid_clk_dvi2": "892.061 MHz",
+    "hdmi_tx_slow_clk": "149.387 MHz",
+    "core_clk": "101.051 MHz",
+    "i_mipi_rx_pclk": "143.123 MHz",
+    "CLK_5M": "152.207 MHz",
+    "i_cam_ck_CLKOUT": "165.700 MHz",
+    "jtag_diag_drck": "278.629 MHz",
+    "jtag_diag_update": "2227.172 MHz",
+    "jtag_inst1_TCK": "460.405 MHz"
+  },
+  "capture": "F:\\Project\\fpga\\vision_base\\results\\roi_live_20261004\\mode_frames_1791463195698",
+  "pixel_validation": {
+    "passed": true,
+    "frame_id": 21489,
+    "roi": [
+      900,
+      450,
+      200,
+      200
+    ],
+    "revision": "new",
+    "pixels_exact": 40000,
+    "old_reference": {
+      "mean": 136.8462,
+      "fine_std": 1.2101216360446736
+    },
+    "new_reference": {
+      "mean": 136.9364,
+      "fine_std": 0.7718065213550932
+    },
+    "actual": {
+      "mean": 136.9364,
+      "fine_std": 0.7718065213550932
+    },
+    "fine_reduction_percent": 36.220748529232914,
+    "comparison": "Same captured source; old-path reference, not a second hardware photograph"
+  },
+  "ai_validation": {
+    "passed": true,
+    "sequence": 2,
+    "frame_id": 21489,
+    "source_config_id": 21489,
+    "model_id": 1,
+    "roi": [
+      700,
+      360,
+      480,
+      320
+    ],
+    "class_name": "blank",
+    "gray_pixels": 1024,
+    "features": 128,
+    "hidden": 32,
+    "logits": 4,
+    "flyhash_bits": 256,
+    "training_kind": "synthetic_bringup_only",
+    "real_card_accuracy_verified": false,
+    "dma_microseconds": 1812.28,
+    "network_microseconds": 2783.93,
+    "total_cpu_microseconds": 6289.37
+  },
+  "final_live": {
+    "roi_frame_id": 53111,
+    "applied_config_id": 0,
+    "roi_enabled": 0,
+    "roi_frame_ok": 1,
+    "source_held": 0,
+    "source_frozen": 0,
+    "render_busy": 0,
+    "render_pending": 0,
+    "capture_active": 1,
+    "config_busy": 0,
+    "config_error": 0,
+    "render_error": 0,
+    "scan_error": 0,
+    "commit_rejected": 0,
+    "mode": 0,
+    "median": 0,
+    "memory": 0,
+    "threshold": 128,
+    "canny_ready": 1,
+    "canny_fault": 0,
+    "roi": [
+      0,
+      0,
+      1920,
+      1080
+    ],
+    "output_size": [
+      1920,
+      1080
+    ],
+    "capture_discarded": 0,
+    "scan_bad_frames": 0,
+    "render_cycles": 3029045,
+    "requested_config_id": 3,
+    "accepted_config_id": 3,
+    "rejected_config_id": 0,
+    "held_source_frame_id": 25869,
+    "held_raw_id_sample": 25869,
+    "rgb_capture_count": 53117,
+    "position": [
+      0,
+      0
+    ],
+    "display_size": [
+      1920,
+      1080
+    ],
+    "render_deadline_misses": 5,
+    "sobel_threshold": 128,
+    "canny_threshold": 80,
+    "canny_effective_threshold": 80
+  }
+}

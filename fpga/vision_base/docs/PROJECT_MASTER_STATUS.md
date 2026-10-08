@@ -1,6 +1,12 @@
 # 项目总目标与状态（统一范围表）
 
-## 2026-10-08最新部署：I1 / I3最小闭环
+## 2026-10-08最新部署：原图普通亮度区去噪
+
+当前SRAM为`results/raw_rgb_denoise_20261008/release_compact/ti60f225_oob.bit`，59967/60800XLR、247/256RAM、59/160DSP，最终WNS+0.040ns/WHS+0.026ns、未分配核心引脚0；相对下方I1/I3部署新增178XLR，RAM/DSP不增，余833XLR/9RAM。保留原暗部色噪滤波，在普通亮度平坦RGB区补横向[1,2,1]/4保边平均，M0/MED0也生效；不是完整二维/时域去噪。新板源21489的40000像素与新参考逐值一致，同源对旧管道参考的细粒度起伏降低36.2%，平均灰度变化0.09级，较大斑点仍有残留。曝光/shadow前后稳定；29项视频回归、65536范围比较、DMA/CPU/FlyHash及融合记录检查通过。同一DDR应用/合成模型1已加载，恢复实时M0/MED0/ROIoff/F0、Sobel128/Canny80、自动策略2；Flash保持。旧版源码/bit与负时序候选都保留，新部署详情见[实测](../results/raw_rgb_denoise_20261008/REPORT.md)。原图更完整去噪、冻结提亮漂移、物理HDMI长时/紫闪、实物识别验收继续单列。
+
+下方I1/I3是本次之前的部署与集成证据，功能保持；当前硬件制品/资源以此摘要为准。
+
+## 2026-10-08部署历史：I1 / I3最小闭环
 
 当前SRAM为`results/fusion_roi_20261008/release_pipeline/ti60f225_oob.bit`，59789/60800XLR、247/256RAM、59/160DSP，最终WNS+0.080ns/WHS+0.026ns，未分配核心引脚0。相对上一canny_clean部署增加1951XLR，RAM/DSP不增，余1011XLR/9RAM。Sapphire、统一帧池/compute lease、Canny、原图/模式回读、X3支路均保留；HDMI1080p60和SC431HAI完整1440p约30fps保持。DDR应用8456B，原合成权重版本1；Flash原样。见[实现、有效证据及排除的数据](../results/fusion_roi_20261008/REPORT.md)。
 

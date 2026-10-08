@@ -89,3 +89,5 @@
 ### TinyML官方路线仍保留
 
 [官方generator](https://github.com/Efinix-Inc/tinyml/blob/main/tools/tinyml_generator/README.md)分析全整数量化TFLite并按实际层配置资源；Lite/Standard为综合选择，同类算子互斥。现有FC-only模型已有固定版本估算：Lite4RAM/8DSP，Standard22RAM/16DSP；LUT/FF/ADD不是实测XLR。当前保留已上板dot4+MulHi，必要算子改变后重新评估官方核，硬件接入以当前1011XLR/9RAM的联合构建为准。真实连接组有状态稀疏核与卷积加速器分别测量，不强行将递归回路包装为卷积。
+
+2026-10-08原图去噪后续部署：59967XLR/247RAM/59DSP，余833XLR/9RAM；原有I1/I3及全范围保留，普通亮度区新增横向保边滤波。完整当前资源与仍待验项读取PROJECT_MASTER_STATUS.md最新摘要。

@@ -10,9 +10,11 @@ task trip(input[23:0]a,c,z,input[23:0]expected);begin
  @(posedge clk);#1;
  if(!od||{rr,gg,bb}!==expected)$fatal(1,"chroma got=%h expected=%h center=%h",{rr,gg,bb},expected,c);
 end endtask
-integer i,y,noise;reg[23:0]center;integer after_y;
+integer i,j,y,noise;reg[23:0]center;integer after_y;
 initial begin
  repeat(3)@(negedge clk);rst=1;
+ for(i=0;i<256;i=i+1)for(j=0;j<256;j=j+1)
+  if(dut.near16(8'(i),8'(j))!==((i>j?i-j:j-i)<=16))$fatal(1,"RGB range %0d %0d",i,j);
  trip(24'h141414,24'h280028,24'h141414,24'h141414); // magenta -> neutral at same Y20
  trip(24'h141414,24'h002800,24'h141414,24'h141414); // green -> neutral at same Y20
  trip(24'h102030,24'h102030,24'h102030,24'h102030); // stable dark color exact
@@ -20,6 +22,15 @@ initial begin
  trip(24'h000000,24'h303030,24'h303030,24'h303030); // luma boundary exact
  trip(24'h141414,24'h282828,24'h141414,24'h282828); // fine luma feature exact
  trip(24'h000000,24'h000000,24'h000000,24'h000000); // black not raised
+ // Original RGB at ordinary brightness also needs noise suppression, before
+ // tone gain. Average only similar RGB neighbors; retain actual boundaries.
+ trip(24'h505050,24'h585858,24'h505050,24'h545454);
+ trip(24'h646e78,24'h706678,24'h646e78,24'h6a6a78);
+ trip(24'h808080,24'h808080,24'h808080,24'h808080);
+ trip(24'hffffff,24'hffffff,24'hffffff,24'hffffff);
+ trip(24'h505050,24'h787878,24'h505050,24'h787878);
+ trip(24'h648064,24'h806480,24'h648064,24'h806480);
+ trip(24'h505050,24'h585858,24'h707070,24'h585858);
  for(i=0;i<30;i=i+1)begin
   y=8+i;noise=y/2;center={(8'(y+noise)),(8'(y-noise)),(8'(y+noise))};
   trip({8'(y),8'(y),8'(y)},center,{8'(y),8'(y),8'(y)},{8'(y),8'(y),8'(y)});
@@ -28,6 +39,6 @@ initial begin
  @(negedge clk);de=0;repeat(3)@(negedge clk);de=1;{r,g,b}=24'h280028;
  @(negedge clk);{r,g,b}=24'h141414;@(posedge clk);#1;
  if({rr,gg,bb}!==24'h280028)$fatal(1,"line boundary smear");
- $display("PASS dark chroma37 triplets + first-pixel bypass; luma, black, bright edges preserved");$finish;
+ $display("PASS dark chroma + ordinary-brightness RGB triplets; black, strong/color edges and line boundary preserved");$finish;
 end
 endmodule

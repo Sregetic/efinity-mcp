@@ -57,3 +57,52 @@ $py='C:/Users/Sregetic/.cache/codex-runtimes/codex-primary-runtime/dependencies/
 ## USER1回读速率修正
 
 本轮100kHz回读出现错误字段与程序字节，其中包含 `0xa107a107`；同一halt状态、同一内存不重写，改25kHz后8456程序字节全部与ELF一致。既有加载器在比较失败时留CPU于halt，没有执行未验证代码。现将 `load_vision_ddr.configuration` 和加载CLI共用的默认速率统一设25kHz，AI/FlyHash/融合读口一起使用；不增加自动重试。reserved flags在结果外部解码边界直接报错。依据是本板实测，尚未声称最高可靠频率；[上游实现](https://github.com/SpinalHDL/openocd_riscv/blob/riscv_spinal/src/target/vexriscv.c)显示其通过JTAG排队注入访存并等待响应，具体本机fork不视为与上游逐行相同。
+
+## 用户操作与验收方法（2026-10-08）
+
+入口：http://127.0.0.1:63438/。先刷新网页并点“读取状态”。当前图像区域是已保存快照，不是实时视频；实时切换看HDMI显示器，远程检查用新的回读数据。只点“显示已保存图像”不会采新图。
+
+### 先验证不依赖形状卡的功能
+
+1. 展开“图像参数”，用“整帧1×”，显示选择M6“彩色+边缘”（或M7“识别/综合”）；分析方式选“当前原帧上的指定ROI”，点“应用分析方式”。当前手动分析区域是独立的analysis_control配置，不会由网页显示ROI字段自动重设；用下面命令可明确指定源ROI。
+2. 勾选“冻结同一原帧”，勾选“启用ROI”，点“应用/重新渲染”。点“读取状态”两次，确认source_held=1、source_frozen=1、held_source_frame_id/roi_frame_id相同且不变。摄像头可以继续采集，但显示被持有的源帧保持不变。
+3. 等分析完成：屏幕显示AI TEST、F源帧、R渲染配置、M模型版本和Q四分数；匹配时显示青色分析框，冻结年龄A应为0。当前TEST只验联调，不以圆/矩形分类正确率作为模型验收。
+4. 保持冻结，依次点“中心2×”、左右平移64、缩小0.5×。源帧号应不变，applied_config_id应更新，画面按参数变化。框应跟随同一个原帧区域变换，而非粘在固定屏幕坐标；超出显示裁剪只画交集。手动原帧分析ROI保持时，同一源图输入/分数应一致，F不变、R更新。
+5. 取消冻结，恢复“整帧1×”、ROI关闭、M6、分析方式“几何自动ROI”。确认held/frozen=0，源帧号持续增加，画面恢复运动；scan_bad_frames、scan_error、render_error不得新增。
+
+### 明确指定手动AI区域并逐值核对
+
+这组命令在上面已冻结的整帧视图上运行；会把分析方式设为手动并设置源ROI，不烧录。运行期间别点其他JTAG回读按钮。PowerShell工作目录为F:/Project/fpga/vision_base。
+
+```powershell
+. F:/Project/fpga/vision_base/scripts/efinity_env.ps1
+$py='F:/Efinity/2026.1/python311/bin/python.exe'
+$url='ftdi://0x0403:0x6011:4:9/2'
+$elf='F:/Project/fpga/vision_base/results/fusion_roi_20261008/firmware/vision.elf'
+$out='F:/Project/fpga/vision_base/results/manual_feature_acceptance'
+& $py F:/Project/fpga/vision_base/scripts/read_ai_result.py --url $url --elf $elf --policy view --roi 700 360 480 320 --output-dir "$out/tensor"
+& 'C:/Users/Sregetic/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe' -E F:/Project/fpga/vision_base/scripts/validate_ai_result.py --directory "$out/tensor" --weights F:/Project/fpga/vision_base/models/shape_cards_bringup/shape_cards_weights.bin
+& $py F:/Project/fpga/vision_base/scripts/read_fusion_result.py --url $url --elf $elf --output-dir "$out/fusion"
+```
+
+合格结果：validation.json的passed=true；1024灰度输入、128特征、32隐藏输出、4分数、256-bit FlyHash逐值一致；融合frame_id与冻结源相同，render_config_id与当前视图配置相同，model_id=1，state=test。融合包display_box与青色框对应。设备URL只对应本次已连接的这块板，重新插拔后先按设备枚举确认。
+
+### 再验证自动ROI及A6实物
+
+- 显示M7，分析选择“几何自动ROI”并应用。浅色背景上放完整深色圆/矩形（包含空心与实心），位于显示中央识别区域：x640..1279/y300..779，目标与区域边界留间距。
+- 稳定后SHAPE应对应实物；自动分析记录automatic_roi=true、geometry_valid=true，roi应围住原帧里的该目标，DMA采样/CPU结果及青色框应绑定同一源帧/配置。TEST标签继续保留，AI类别与几何类别一致不是当前模型保证。
+- 移走目标/换空白背景，预期SHAPE NONE、AI NONE，无残留框；移动目标，框跟随；目标出区域或被裁掉时不分析不完整候选。分别记录空心圆、空心矩形、实心形状、空白和纹理背景的误检漏检，失败即保持待验收。
+
+### 旧结果防错帧
+
+底层方法：只暂停analysis_control的run位而保留融合HUD，换成新的源帧；预期OLD、A>0、旧青色框消失。再恢复run位应产生新匹配结果。网页“关闭AI叠加”会关HUD，不是暂停推理；观察OLD使用run位暂停。本轮既有证据在results/fusion_roi_20261008/stale，年龄49439、match0、旧框位置无青色像素；再次板上重测由JTAG工具完成。
+
+### 图像回读及尚未达标项
+
+- “读取九图”读取同一源的原图/M0–M7，约8分钟，期间HDMI静止；完成后恢复开始前状态。当前缩放视图的严格回读使用capture_mode_images.py --current-view，默认九图会临时回到全幅冻结视图。
+- 原图颗粒、Canny阶梯、实物A6精度、实时紫闪分别验收，不因TEST框出现就通过。
+- 本次发现暗部提亮状态在冻结期间仍变化，导致M7回读亮度分界；source_frame保持只证明源帧持有，而非像素/处理状态完全一致。该项修复并重测前保持失败。
+- 全幅实时ROI有render_deadline_misses增长记录；功能显示通过与吞吐/长时稳定验收分开。
+
+
+2026-10-08后续：普通亮度区原图去噪已写SRAM，当前制品与验收以PROJECT_MASTER_STATUS.md最新摘要及results/raw_rgb_denoise_20261008/REPORT.md为准。较大斑点与冻结提亮漂移继续单列。
