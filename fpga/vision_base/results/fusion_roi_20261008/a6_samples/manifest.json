@@ -1,0 +1,215 @@
+{
+  "scope": "Offline A6 only; excludes real train/test accuracy",
+  "cases": [
+    {
+      "file": "hollow_circle.png",
+      "kind": "synthetic",
+      "expected_class": 1,
+      "valid": true,
+      "class_id": 1,
+      "label": "CIRCLE",
+      "reject_flags": 0,
+      "background": 240,
+      "corner_means": [
+        240,
+        240,
+        240,
+        240
+      ],
+      "filled_area": 31689,
+      "fill_ratio": 0.784361773223435,
+      "bbox": [
+        860,
+        440,
+        1060,
+        640
+      ]
+    },
+    {
+      "file": "hollow_circle_inverse.png",
+      "kind": "synthetic",
+      "expected_class": 1,
+      "valid": true,
+      "class_id": 1,
+      "label": "CIRCLE",
+      "reject_flags": 0,
+      "background": 15,
+      "corner_means": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "filled_area": 31689,
+      "fill_ratio": 0.784361773223435,
+      "bbox": [
+        860,
+        440,
+        1060,
+        640
+      ]
+    },
+    {
+      "file": "filled_circle.png",
+      "kind": "synthetic",
+      "expected_class": 1,
+      "valid": true,
+      "class_id": 1,
+      "label": "CIRCLE",
+      "reject_flags": 0,
+      "background": 240,
+      "corner_means": [
+        240,
+        240,
+        240,
+        240
+      ],
+      "filled_area": 31689,
+      "fill_ratio": 0.784361773223435,
+      "bbox": [
+        860,
+        440,
+        1060,
+        640
+      ]
+    },
+    {
+      "file": "hollow_rect.png",
+      "kind": "synthetic",
+      "expected_class": 2,
+      "valid": true,
+      "class_id": 2,
+      "label": "RECT",
+      "reject_flags": 0,
+      "background": 240,
+      "corner_means": [
+        240,
+        240,
+        240,
+        240
+      ],
+      "filled_area": 77361,
+      "fill_ratio": 1.0,
+      "bbox": [
+        800,
+        420,
+        1120,
+        660
+      ]
+    },
+    {
+      "file": "hollow_rect_inverse.png",
+      "kind": "synthetic",
+      "expected_class": 2,
+      "valid": true,
+      "class_id": 2,
+      "label": "RECT",
+      "reject_flags": 0,
+      "background": 15,
+      "corner_means": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "filled_area": 77361,
+      "fill_ratio": 1.0,
+      "bbox": [
+        800,
+        420,
+        1120,
+        660
+      ]
+    },
+    {
+      "file": "filled_rect.png",
+      "kind": "synthetic",
+      "expected_class": 2,
+      "valid": true,
+      "class_id": 2,
+      "label": "RECT",
+      "reject_flags": 0,
+      "background": 240,
+      "corner_means": [
+        240,
+        240,
+        240,
+        240
+      ],
+      "filled_area": 77361,
+      "fill_ratio": 1.0,
+      "bbox": [
+        800,
+        420,
+        1120,
+        660
+      ]
+    },
+    {
+      "file": "blank.png",
+      "kind": "synthetic",
+      "expected_class": 0,
+      "valid": false,
+      "class_id": 0,
+      "label": "NONE",
+      "reject_flags": 1,
+      "background": 240,
+      "corner_means": [
+        240,
+        240,
+        240,
+        240
+      ],
+      "filled_area": 0,
+      "bbox": null
+    },
+    {
+      "file": "background_stripes.png",
+      "kind": "synthetic",
+      "expected_class": 0,
+      "valid": false,
+      "class_id": 0,
+      "label": "NONE",
+      "reject_flags": 4,
+      "background": 240,
+      "corner_means": [
+        240,
+        240,
+        240,
+        240
+      ],
+      "filled_area": 242109,
+      "fill_ratio": 1.0,
+      "bbox": [
+        680,
+        320,
+        1228,
+        760
+      ]
+    },
+    {
+      "file": "clipped_rect.png",
+      "kind": "synthetic",
+      "expected_class": 0,
+      "valid": false,
+      "class_id": 0,
+      "label": "NONE",
+      "reject_flags": 2,
+      "background": 240,
+      "corner_means": [
+        240,
+        240,
+        240,
+        240
+      ],
+      "filled_area": 5976,
+      "fill_ratio": 0.095006438689369,
+      "bbox": [
+        640,
+        420,
+        900,
+        660
+      ]
+    }
+  ]
+}

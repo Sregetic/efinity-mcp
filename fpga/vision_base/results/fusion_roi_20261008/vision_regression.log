@@ -1,0 +1,151 @@
+PASS pipelined OSD mode/threshold, fusion TEST/OLD, independent IDs and signed score bytes
+sim/vision/tb_osd.sv:27: $finish called at 536000 (1ps)
+PASS2PPC direct 46080 pixels, 30656 interior comparisons, median off/on, full width, six-row gaps, VS latency17 cycles, semantic1950..2974 cycles
+sim/vision/tb_line_direct.sv:58: $finish called at 507300000 (1ps)
+PASS shape=13 invert=0 noise=0 class=2 valid=1 flags=0
+PASS shape=14 invert=0 noise=0 class=1 valid=1 flags=0
+PASS shape=0 invert=0 noise=0 class=0 valid=0 flags=1
+PASS shape=1 invert=0 noise=0 class=1 valid=1 flags=0
+PASS shape=1 invert=1 noise=1 class=1 valid=1 flags=0
+PASS shape=2 invert=0 noise=0 class=2 valid=1 flags=0
+PASS shape=3 invert=0 noise=1 class=2 valid=1 flags=0
+PASS shape=4 invert=1 noise=0 class=2 valid=1 flags=0
+PASS shape=5 invert=0 noise=0 class=3 valid=1 flags=0
+PASS shape=6 invert=0 noise=0 class=0 valid=0 flags=4
+PASS shape=7 invert=0 noise=0 class=0 valid=0 flags=2
+PASS shape=8 invert=0 noise=0 class=0 valid=0 flags=1
+PASS shape=9 invert=0 noise=0 class=1 valid=1 flags=0
+PASS shape=10 invert=0 noise=0 class=0 valid=0 flags=9
+PASS shape=9 invert=1 noise=1 class=1 valid=1 flags=0
+PASS shape=15 invert=0 noise=0 class=2 valid=1 flags=0
+PASS shape=15 invert=1 noise=1 class=2 valid=1 flags=0
+PASS shape=16 invert=0 noise=1 class=2 valid=1 flags=0
+PASS shape=17 invert=0 noise=0 class=1 valid=1 flags=0
+PASS shape=21 invert=1 noise=0 class=2 valid=1 flags=0
+PASS shape=18 invert=0 noise=0 class=0 valid=0 flags=4
+PASS shape=19 invert=0 noise=0 class=0 valid=0 flags=4
+PASS shape=20 invert=0 noise=0 class=0 valid=0 flags=4
+PASS shape=22 invert=0 noise=0 class=3 valid=1 flags=0
+PASS shape=11 invert=0 noise=0 class=2 valid=1 flags=0
+PASS shape=12 invert=0 noise=0 class=3 valid=1 flags=0
+PASS shape=0 invert=0 noise=0 class=0 valid=0 flags=1
+PASS shape classifier 27 cases and reset
+sim/vision/tb_shape_classifier.sv:79: $finish called at 13533330000 (1ps)
+PASS dark chroma37 triplets + first-pixel bypass; luma, black, bright edges preserved
+sim/vision/tb_shadow_chroma.sv:31: $finish called at 2306000 (1ps)
+SOBEL PASS 10001 windows, 512 binary extremes, four stages, II=1, varying threshold + metadata
+sim/vision/tb_sobel.sv:31: $finish called at 45480557 (1ps)
+PASS stable NMS: first frame, +/-2 near-peak noise, immediate motion, flat/weak rejection and sparse gaps
+sim/vision/tb_canny_stability.sv:39: $finish called at 182980000 (1ps)
+PASS fusion display completed-frame tags, source-gray geometry, fresh/stale ROI and no retagging
+sim/vision/tb_fusion_display.sv:30: $finish called at 106000 (1ps)
+PASS Sobel strength saturation/threshold, Canny antialias and binary recognition isolation
+sim/vision/tb_edge_strength.sv:23: $finish called at 140000 (1ps)
+PASS SC431HAI166 writes: explicit unity digital gain, preserved analog gain, geometry before stream
+sim/vision/tb_sensor_init.sv:21: $finish called at 1666000 (1ps)
+PASS contour raster 15360 pixels, 857 white pixels, diagonal/corner/horizontal/vertical/dense/random/zero next frame, sync bitmap RAM
+sim/vision/tb_canny_raster.sv:41: $finish called at 185290000 (1ps)
+PASS line snapshot 192 RGB888 pixels, both taps, all rows,192-bit header, serial order, metadata, bad row/short line rejected
+sim/vision/tb_line_snapshot.sv:43: $finish called at 505726000 (1ps)
+HYSTERESIS RANDOM PASS 100 maps, 19200 pixels, exact flood reference, scan cycles=125036
+sim/vision/tb_hysteresis_random.sv:41: $finish called at 1638316000 (1ps)
+PASS edge probe 1536 bits, 2304 active pixels unaffected, crossed rows, front frame stable
+sim/vision/tb_edge_probe.sv:32: $finish called at 73990000 (1ps)
+PASS Canny denoise median/bypass 6144 pixels, metadata, noise bound, bootstrap calibration
+sim/vision/tb_canny_denoise.sv:28: $finish called at 983480000 (1ps)
+NOISE case0 pixels0 high48 mean4
+NOISE case1 pixels0 high80 mean8
+NOISE case2 pixels0 high88 mean9
+NOISE case3 pixels0 high112 mean12
+NOISE case4 pixels0 high152 mean17
+NOISE case5 pixels0 high168 mean19
+NOISE case6 pixels152 high40 mean3
+PASS sudden noise rise holds front contour and retries with calibrated threshold
+NOISE case7 pixels152 high104 mean11
+NOISE case8 pixels153 high168 mean19
+NOISE case9 pixels164 high24 mean1
+PASS Canny RGB/area/median/adaptive/NMS/hysteresis/component pipeline 36864 pixels, flat noise removed, geometry/thin lines retained
+sim/vision/tb_canny_noise.sv:61: $finish called at 14131486000 (1ps)
+PASS CC frame=0 process_cycles=3348
+PASS CC frame=1 process_cycles=2148
+PASS CC frame=2 process_cycles=2111
+PASS CC frame=3 process_cycles=3152
+PASS CC frame=4 process_cycles=10972
+PASS CC frame=5 process_cycles=9683
+PASS CC frame=6 process_cycles=9751
+PASS CC frame=7 process_cycles=9519
+PASS CC frame=8 process_cycles=8584
+PASS CC frame=9 process_cycles=13587
+PASS CC frame=10 process_cycles=10351
+PASS CC frame=11 process_cycles=9766
+PASS CC frame=12 process_cycles=8795
+PASS CC frame=13 process_cycles=10211
+PASS CC frame=14 process_cycles=9836
+PASS CC frame=15 process_cycles=9706
+PASS CC frame=16 process_cycles=11316
+PASS CC frame=17 process_cycles=8340
+PASS CC frame=18 process_cycles=11595
+PASS CC frame=19 process_cycles=10087
+PASS CC frame=20 process_cycles=11626
+PASS CC frame=21 process_cycles=10015
+PASS CC frame=22 process_cycles=12348
+PASS CC frame=23 process_cycles=10311
+PASS CC frame=24 process_cycles=9582
+PASS CC frame=25 process_cycles=9754
+PASS CC frame=26 process_cycles=9686
+PASS CC frame=27 process_cycles=8169
+PASS CC frame=28 process_cycles=10227
+PASS CC frame=29 process_cycles=10196
+PASS CC frame=30 process_cycles=10230
+PASS CC frame=31 process_cycles=11038
+PASS CC frame=32 process_cycles=10123
+PASS CC frame=33 process_cycles=8591
+PASS CC frame=34 process_cycles=10330
+PASS CC frame=35 process_cycles=11203
+PASS CC frame=36 process_cycles=12439
+PASS CC frame=37 process_cycles=11446
+PASS CC frame=38 process_cycles=8595
+PASS CC frame=39 process_cycles=9750
+PASS CC frame=40 process_cycles=10135
+PASS CC frame=41 process_cycles=12125
+PASS CC frame=42 process_cycles=8414
+PASS CC frame=43 process_cycles=8485
+PASS CC frame=44 process_cycles=8294
+PASS CC frame=45 process_cycles=11457
+PASS CC frame=46 process_cycles=9514
+PASS CC frame=47 process_cycles=11613
+PASS CC frame=48 process_cycles=10164
+PASS CC frame=49 process_cycles=8466
+PASS CC frame=50 process_cycles=9692
+PASS CC frame=51 process_cycles=10116
+PASS CC frame=52 process_cycles=13499
+PASS CC frame=53 process_cycles=1588
+PASS CC 41472 pixels, 54 maps, all components<32 removed, exact boundary/thin/diagonal/tail kept, weak hysteresis exact, next-frame overwrite
+sim/vision/tb_edge_components.sv:69: $finish called at 5543246000 (1ps)
+PASS edge overlay M2..M7, edge-derived recognition, RGB/gray unchanged, shape switch and HUD
+sim/vision/tb_edge_overlay.sv:27: $finish called at 286000 (1ps)
+RESULT pixels=       1024 checked=        450 errors=          0
+sim/vision/tb_frontend.sv:27: $finish called at 16421000 (1ps)
+RESULT pixels=       1024 checked=        450 errors=          0
+sim/vision/tb_color.sv:27: $finish called at 16421000 (1ps)
+RGB denoise checked=450 errors=0
+sim/vision/tb_color_denoise.sv:29: $finish called at 16421000 (1ps)
+Packed RGB checked=262656 errors=0:262144 fine-range colors error<=1, independent bright channels, neutral gray and range boundary
+sim/vision/tb_packed_rgb.sv:33: $finish called at 262656000 (1ps)
+MEDIAN9 500 windows errors=          0
+sim/vision/tb_median9.sv:17: $finish called at 5096000 (1ps)
+HIGHLIGHT TONE PASS 800 samples, clipped window neutral, blue preserved, four-cycle alignment, old tone/bypass
+sim/vision/tb_chroma_tone.sv:39: $finish called at 8056000 (1ps)
+CHROMA THRESHOLDS PASS 65536 gains/channel, 3145728 threshold checks, cycle-exact updates
+sim/vision/tb_chroma_thresholds.sv:35: $finish called at 655366000 (1ps)
+CONTROLS PASS independent Sobel/Canny, lower16 step16, saturation, debounce and frame commit
+sim/vision/tb_controls.sv:49: $finish called at 36310000 (1ps)
+HYSTERESIS PASS long/diagonal chain and disconnected weak rejected
+sim/vision/tb_hysteresis.sv:29: $finish called at 16726000 (1ps)
+HYSTERESIS SWEEP PASS long/diagonal chain and disconnected weak rejected
+sim/vision/tb_hysteresis_sweep.sv:29: $finish called at 19216000 (1ps)
+HISTORY errors=0 capture=60 display=60
+sim/vision/tb_history.sv:32: $finish called at 36620000 (1ps)
+COMMIT PASS
+sim/vision/tb_commit.sv:11: $finish called at 481000 (1ps)
+PASS vision feature verification

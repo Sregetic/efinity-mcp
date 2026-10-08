@@ -11,6 +11,7 @@
         <efx:design_file name="../../rtl/vision_int8_cfu.sv" version="default" library="default" />
         <efx:design_file name="../../rtl/vision_packed_rgb.sv" version="default" library="default" />
         <efx:design_file name="../../rtl/vision_analysis_dma.sv" version="default" library="default" />
+        <efx:design_file name="../../rtl/vision_ai_bridge.sv" version="default" library="default" />
         <efx:design_file name="../../rtl/vision_control_bridge.sv" version="default" library="default" />
         <efx:design_file name="rtl/vision/vision_keys.sv" version="default" library="default" />
         <efx:design_file name="../../rtl/vision_flyhash_mailbox.sv" version="default" library="default" />

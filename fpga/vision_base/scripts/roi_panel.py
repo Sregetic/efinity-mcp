@@ -61,6 +61,10 @@ class Handler(BaseHTTPRequestHandler):
                 if any(type(data[k]) is not bool for k in ['enabled','frozen','median']):raise ValueError('Enable/freeze/median are boolean controls')
                 args=['--roi',*map(str,data['roi']),'--output-size',*map(str,data['size']),'--position',*map(str,data['position']),'--roi-enable',str(int(data['enabled'])),'--memory',str(int(data['frozen'])),'--mode',str(data['mode']),'--threshold',str(data['threshold']),'--median',str(int(data['median']))]
                 result=control(args)
+            elif self.path=='/ai-policy':
+                policy=data['policy']
+                if type(policy) is not int or policy not in [0,1,2]:raise ValueError('AI policy is0/1/2')
+                result=control(['--ai-policy',str(policy)])
             elif self.path=='/modes':
                 directory=out/f'mode_frames_{time.time_ns()}'
                 subprocess.run([sys.executable,str(root/'scripts/capture_mode_images.py'),'--url',a.url,'--sensor',a.sensor,

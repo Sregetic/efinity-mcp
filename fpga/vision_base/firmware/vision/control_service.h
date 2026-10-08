@@ -7,12 +7,12 @@
 struct vision_control_state {
  uint32_t magic,settings,feature_dirty,feature_wait;
  uint32_t serial,pending,enabled,good,warming,dirty,capture,freeze,reject;
- uint32_t roi[4],commit[4],roi_enable,commit_enable;
+ uint32_t roi[4],commit[4],roi_enable,commit_enable,ai_policy;
 };
 #ifndef CONTROL_TEST
 #define CONTROL_STATE ((struct vision_control_state *)0x07620200u)
 #endif
-#define CONTROL_MAGIC 0x434f4e32u
+#define CONTROL_MAGIC 0x434f4e33u
 static uint32_t threshold_up(uint32_t v){return v>2031?2047:v+16;}
 static uint32_t threshold_down(uint32_t v){return v<32?16:v-16;}
 static void control_threshold(struct vision_control_state *s,unsigned shift,uint32_t value){
@@ -44,6 +44,7 @@ static void control_event(uint32_t event){
   case 0x30:s->roi[0]=v;break;case 0x31:s->roi[1]=v;break;
   case 0x32:s->roi[2]=v;break;case 0x33:s->roi[3]=v;break;
   case 0x34:s->roi_enable=v&1;break;
+  case 0x60:if(v<=2)s->ai_policy=v;break;
   case 0x35:
    if(s->pending){s->reject=1;CTRL_W(0x38,3);break;}
    s->serial++;s->pending=1;s->reject=0;s->commit_enable=s->roi_enable;
@@ -55,7 +56,7 @@ static void control_init(void){
  struct vision_control_state *s=CONTROL_STATE;
  for(unsigned i=0;i<sizeof(*s)/4;i++)((volatile uint32_t*)s)[i]=0;
  s->settings=3|(128u<<9)|(128u<<20);s->roi[1]=(1920u<<12)|1080;s->roi[2]=s->roi[1];
- s->capture=CTRL_R(0x14);s->magic=CONTROL_MAGIC;
+ s->capture=CTRL_R(0x14);s->ai_policy=2;s->magic=CONTROL_MAGIC;
 }
 static void control_service_step(void){
  struct vision_control_state *s=CONTROL_STATE;

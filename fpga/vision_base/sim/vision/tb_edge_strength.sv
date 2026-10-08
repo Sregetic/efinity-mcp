@@ -7,7 +7,7 @@ vision_display dut(.clk(clk),.rst_n(1'b1),.de(1'b0),.hs(1'b0),.vs(1'b0),.r(8'd0)
  .shape_enable(1'b0),.shape_threshold(8'd32),.canny_effective_threshold(11'd80),.canny_requested_threshold(11'd80));
 always #5 clk=~clk;
 task check(input[23:0]want);
- begin @(posedge clk);#1;if({r,g,b}!==want)$fatal(1,"mode%0d got%h expected%h",mode,{r,g,b},want);@(negedge clk);end
+ begin repeat(2)@(posedge clk);#1;if({r,g,b}!==want)$fatal(1,"mode%0d got%h expected%h",mode,{r,g,b},want);@(negedge clk);end
 endtask
 initial begin
  force dut.fd=1;force dut.border=0;force dut.x=700;force dut.y=500;

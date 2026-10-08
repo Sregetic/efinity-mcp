@@ -14,6 +14,7 @@ try {
   @{name='shadow_chroma';src=@('../rgb_shadow_denoise.sv')},
   @{name='sobel';src=@('vision_sobel.sv')},
   @{name='canny_stability';src=@('vision_canny.sv','vision_sparse_window.sv')},
+  @{name='fusion_display';src=@('vision_display.sv','vision_frontend.sv','vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_shape_classifier.sv','vision_osd.sv')},
   @{name='edge_strength';src=@('vision_display.sv','vision_frontend.sv','vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_shape_classifier.sv','vision_osd.sv')},
   @{name='sensor_init';src=@('../cam_i2c_ctrl/i2c/i2c_master_reg_rom.v')},
   @{name='canny_raster';src=@('vision_canny_raster.sv','vision_sparse_window.sv')},

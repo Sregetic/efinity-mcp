@@ -17,7 +17,7 @@ module vision_control_bridge #(parameter W=1920,H=1080,DEBOUNCE=2970000,LONG_PRE
 );
  wire[2:0]short_p,long_p;reg[5:0]key_pending=0;
  vision_keys #(.DEBOUNCE(DEBOUNCE),.LONG_PRESS(LONG_PRESS)) keys(video_clk,rst_n,keys_n,short_p,long_p);
- wire control_cmd=cmd_op>=1&&cmd_op<=5||cmd_op==8'h28||cmd_op==8'h29||cmd_op>=8'h30&&cmd_op<=8'h35;
+ wire control_cmd=cmd_op>=1&&cmd_op<=5||cmd_op==8'h28||cmd_op==8'h29||cmd_op==8'h60||cmd_op>=8'h30&&cmd_op<=8'h35;
  wire cmd_valid=cmd_event&&control_cmd;
  wire in_valid=cmd_valid||key_pending!=0;wire in_ready;
  wire[31:0]in_data=cmd_valid?{cmd_op,cmd_value}:{8'hff,18'b0,key_pending};

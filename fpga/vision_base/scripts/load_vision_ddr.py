@@ -8,6 +8,9 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 IDE=Path('F:/Efinity/efinity-riscv-ide-2026.1')
+# Active ROI scan exposed 0xa107a107 words at100kHz; the same halted
+# application bytes read exactly at25kHz, without rewriting memory.
+USER1_KHZ=25
 
 def elf_segments(data):
     if len(data)<52 or data[:7]!=b'\x7fELF\x01\x01\x01':
@@ -56,7 +59,7 @@ def board_location(url):
         # USB address changes after replug; port path comes from this exact URL.
         return str(device.bus)+'-'+'.'.join(map(str,device.port_numbers))
 
-def configuration(location,yaml,sym,jtag_khz=100):
+def configuration(location,yaml,sym,jtag_khz=USER1_KHZ):
     return f'''adapter driver ftdi
 adapter usb location {location}
 ftdi vid_pid 0x0403 0x6011
@@ -78,7 +81,7 @@ def main():
     p=argparse.ArgumentParser();p.add_argument('--url',required=True)
     p.add_argument('--elf',type=Path,required=True);p.add_argument('--weights',type=Path)
     p.add_argument('--cpu-config',type=Path,default=ROOT/'artifacts/vision_soc/cpu0.yaml')
-    p.add_argument('--jtag-khz',type=int,default=100,help='100kHz verified for bulk USER1 reads on this board')
+    p.add_argument('--jtag-khz',type=int,default=USER1_KHZ,help='25kHz verified for USER1 reads while ROI scan remains active')
     p.add_argument('--output-dir',type=Path,required=True);a=p.parse_args()
     if a.jtag_khz<=0:p.error('--jtag-khz must be positive')
     entry,segments,sym=validate_image(a.elf,a.weights)

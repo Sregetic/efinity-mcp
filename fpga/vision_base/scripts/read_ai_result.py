@@ -1,5 +1,5 @@
 """Read a complete same-task CPU record/tensor through USER1; resume afterwards."""
-import argparse,json,re,struct,subprocess
+import argparse,json,re,struct,subprocess,sys
 from pathlib import Path
 from load_vision_ddr import ROOT,IDE,board_location,configuration,symbols,validate_image,tcl_path
 from capture_mode_images import write_png
@@ -7,9 +7,10 @@ from capture_mode_images import write_png
 def main():
     p=argparse.ArgumentParser();p.add_argument('--url',required=True);p.add_argument('--elf',type=Path,required=True)
     p.add_argument('--output-dir',type=Path,required=True)
-    p.add_argument('--roi',nargs=4,type=int,metavar=('X','Y','W','H'))
+    p.add_argument('--policy',choices=['view','geometry']);p.add_argument('--roi',nargs=4,type=int,metavar=('X','Y','W','H'))
     g=p.add_mutually_exclusive_group();g.add_argument('--frame',type=lambda x:int(x,0));g.add_argument('--latest',action='store_true')
     a=p.parse_args()
+    if a.policy=='geometry' and (a.roi is not None or a.frame is not None or a.latest):p.error('Geometry policy owns ROI/frame selection; manual requests use view policy')
     if a.roi:
         x,y,w,h=a.roi
         if min(x,y)<0 or min(w,h)<1 or x+w>1920 or y+h>1080:p.error('ROI must fit1920x1080 source')
@@ -17,8 +18,12 @@ def main():
     _,_,s=validate_image(a.elf,None);sym=symbols(a.elf);a.output_dir.mkdir(parents=True,exist_ok=True)
     location=board_location(a.url);address=sym['analysis_result']
     body='';condition=''
-    if a.roi or a.frame is not None or a.latest:
+    if a.policy or a.roi or a.frame is not None or a.latest:
         ctrl=sym['analysis_control'];body=f'halt\nwait_halt 5000\nset previous [read_memory {address+4:#x} 32 1]\n'
+        policy=2 if a.policy=='geometry' else 1
+        subprocess.run([sys.executable,str(ROOT/'scripts/vision_control.py'),'--url',a.url,'--ai-policy',str(policy),'--samples','0'],check=True,capture_output=True,text=True)
+        body+=f'set nonce [read_memory {ctrl+32:#x} 32 1]\nwrite_memory {ctrl+32:#x} 32 [list [expr {{($nonce+1)&0xffffffff}}]]\n'
+        if a.policy=='view' and a.frame is None and not a.latest:body+=f'write_memory {ctrl:#x} 32 {{5}}\n'
         if a.roi:
             x,y,w,h=a.roi;body+=f'write_memory {ctrl+8:#x} 32 {{{x|(y<<16)} {w|(h<<16)}}}\n'
             condition+=f' && [lindex $record 6] == {x|(y<<16)} && [lindex $record 7] == {w|(h<<16)}'
@@ -48,7 +53,7 @@ echo "AI_RECORD $record"
     record=[int(x,0) for x in re.search(r'^AI_RECORD (.*)$',log,re.M)[1].split()]
     gray=(a.output_dir/'gray.bin').read_bytes();rgb=bytes(v for x in gray for v in (x,x,x));write_png(a.output_dir/'roi.png',32,32,rgb)
     result=dict(sequence=record[1],frame_id=record[2],source_config_id=record[3],model_id=record[4],class_id=record[5],
-        roi=[record[6]&65535,record[6]>>16,record[7]&65535,record[7]>>16],input_base=record[8],
+        render_config_id=record[20],processing_context=record[21],roi=[record[6]&65535,record[6]>>16,record[7]&65535,record[7]>>16],input_base=record[8],
         dma_cycles=record[9],feature_cycles=record[10],layer0_cycles=record[11],layer1_cycles=record[12],flyhash_cycles=record[13],
         total_cpu_cycles=record[14],gray_sum=record[15],dma_errors=record[23],start_tick=record[18],end_tick=record[19],raw_record=record,
         features=list(struct.unpack('<128b',(a.output_dir/'features.bin').read_bytes())),

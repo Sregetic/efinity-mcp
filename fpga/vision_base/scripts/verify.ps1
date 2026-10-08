@@ -52,6 +52,7 @@ if (-not (Test-Path -LiteralPath $Iverilog) -or -not (Test-Path -LiteralPath $Vv
 if($LASTEXITCODE -ne 0){throw 'FlyHash reference verification failed.'}
 $tests = @(
     @{ Name='tb_vision_flyhash_mailbox'; Sources=@('rtl/vision_flyhash_mailbox.sv','sim/tb_vision_flyhash_mailbox.sv') },
+    @{ Name='tb_vision_ai_bridge'; Sources=@('rtl/vision_ai_bridge.sv','sim/tb_vision_ai_bridge.sv') },
     @{ Name='tb_vision_control_bridge'; Sources=@('rtl/vision_control_bridge.sv','rtl/stream_cdc.sv','board/ti60f225_v4/rtl/vision/vision_keys.sv','sim/tb_vision_control_bridge.sv') },
     @{ Name='tb_compute_lease'; Sources=@('rtl/frame_pool.sv','sim/tb_compute_lease.sv') },
     @{ Name='tb_analysis_dma'; Sources=@('rtl/vision_packed_rgb.sv','rtl/vision_analysis_dma.sv','sim/tb_analysis_dma.sv') },

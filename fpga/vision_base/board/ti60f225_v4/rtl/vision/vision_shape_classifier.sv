@@ -10,7 +10,7 @@ module vision_shape_classifier #(
 )(input clk,rst_n,de,vs,input[11:0]x,y,input[7:0]gray,diff_threshold,
  output reg[1:0]shape_class,output reg shape_valid,
  output reg[11:0]box_x0,box_y0,box_x1,box_y1,
- output reg[7:0]background,output reg[3:0]reject_flags);
+ output reg[7:0]background,output reg[3:0]reject_flags,output reg result_done=0);
 reg vq=0,bg_valid=0;reg[7:0]thr=48,bg_min=255,bg_max=0;
 reg[15:0]patch_sum0=0,patch_sum1=0,patch_sum2=0,patch_sum3=0;
 function automatic[7:0]min8(input[7:0]a,b);begin min8=a<b?a:b;end endfunction
@@ -52,7 +52,7 @@ reg[25:0]box_area=0;reg round_aspect=0;reg[3:0]flags=0;
 wire[15:0]w8={3'b0,w}<<3,h8={3'b0,h}<<3;
 wire[15:0]w7=w8-{3'b0,w},h7=h8-{3'b0,h};
 always @(posedge clk)begin
- vq<=vs_q;
+ vq<=vs_q;result_done<=rst_n&&pending[1];
  if(!rst_n)begin
   vq<=0;bg_valid<=0;background<=0;patch_sum0<=0;patch_sum1<=0;patch_sum2<=0;patch_sum3<=0;bg_sum<=0;bg_count<=0;bg_min<=255;bg_max<=0;thr<=48;
   area<=0;xmin<=4095;ymin<=4095;xmax<=0;ymax<=0;touched<=0;

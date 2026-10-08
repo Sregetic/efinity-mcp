@@ -68,6 +68,7 @@ def main():
     p.add_argument('--modes',nargs='+',choices=list(NAMES),default=list(NAMES))
     p.add_argument('--frequency',type=int,default=6000000)
     p.add_argument('--source-native-order',action='store_true',help='Keep packed-frame channels for analysis DMA training; display exports stay unchanged')
+    p.add_argument('--current-view',action='store_true',help='Capture an already frozen view without changing its render configuration')
     p.add_argument('--rows',nargs=2,type=int,default=[0,1080],metavar=('Y','HEIGHT'))
     a=p.parse_args();y0,height=a.rows
     if y0<0 or height<1 or y0+height>1080:raise ValueError('Rows must fit1080-line canvas')
@@ -99,7 +100,7 @@ def main():
              '--position',*map(str,before['position']),'--roi-enable',str(before['roi_enabled']),
              '--memory',str(before['memory']),'--mode',str(before['mode'])]
     try:
-        context=control(['--roi','0','0','1920','1080','--output-size','1920','1080',
+        context=before if a.current_view else control(['--roi','0','0','1920','1080','--output-size','1920','1080',
                          '--position','0','0','--roi-enable','1','--memory','1'])
         check_frozen_source(context)
         frame=context['roi_frame_id'];config=context['applied_config_id']
@@ -173,7 +174,7 @@ def main():
         result['passed']=True
         (a.output_dir/'images.json').write_text(json.dumps(result,indent=2),encoding='utf-8')
     finally:
-        result['restored']=control(restore)
+        result['restored']=control(['--mode',str(before['mode'])] if a.current_view else restore)
         (a.output_dir/'restore.json').write_text(json.dumps(result['restored'],indent=2),encoding='utf-8')
 
 if __name__=='__main__':main()

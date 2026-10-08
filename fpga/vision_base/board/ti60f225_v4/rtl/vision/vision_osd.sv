@@ -1,4 +1,4 @@
-module vision_osd(input[11:0]x,y,input[2:0]mode,input[10:0]threshold,input median_en,input[1:0]memory_mode,input[2:0]history_index,input canny_ready,input[1:0]shape_class,input shape_valid,input shape_enable,output active,output ink,input[10:0]requested_threshold);
+module vision_osd(input[11:0]x,y,input[2:0]mode,input[10:0]threshold,input median_en,input[1:0]memory_mode,input[2:0]history_index,input canny_ready,input[1:0]shape_class,input shape_valid,input shape_enable,output reg active=0,output ink,input[10:0]requested_threshold,input fusion_enabled,input[287:0]fusion_result,input fusion_match,input[15:0]fusion_age,input clk);
 function automatic[34:0]glyph(input[7:0]ch);
  begin case(ch)
 8'd48:glyph=35'b01110100011001110101110011000101110;
@@ -20,6 +20,7 @@ function automatic[34:0]glyph(input[7:0]ch);
 8'd71:glyph=35'b01110100011000010111100011000101110;
 8'd72:glyph=35'b10001100011000111111100011000110001;
 8'd73:glyph=35'b11111001000010000100001000010011111;
+8'd75:glyph=35'b10001100101010011000101001001010001;
 8'd76:glyph=35'b10000100001000010000100001000011111;
 8'd77:glyph=35'b10001110111010110101100011000110001;
 8'd78:glyph=35'b10001110011010110011100011000110001;
@@ -38,10 +39,20 @@ function automatic[34:0]glyph(input[7:0]ch);
  default:glyph=0;endcase end
 endfunction
 function automatic[7:0]hexchar(input[3:0]n);begin hexchar=n<10?8'd48+n:8'd55+n;end endfunction
-reg[7:0]ch;integer idx;reg[34:0]bits;integer bitidx;reg second_line;
+reg[7:0]ch;reg[5:0]idx,bitidx;reg[2:0]row;reg[6:0]origin;reg[31:0]status_text;
+wire[11:0]local_x=x-12'd8,local_y=y-origin;
+wire[3:0]column=local_x%12'd12;
+reg[7:0]ch_q=32;reg[5:0]bitidx_q=0;reg ink_region_q=0;
+wire[34:0]bits=glyph(ch_q);
 always @*begin
- second_line=(y>=22);idx=(x-8)/12;ch=32;
- if(!second_line)begin
+ row=y>=76?4:y>=58?3:y>=40?2:y>=22?1:0;origin=4+18*row;
+ idx=local_x/12'd12;ch=32;status_text=32'h4e4f4e45; // NONE
+ case(fusion_result[10:8])
+  1:status_text=32'h57414954;2:status_text=32'h54455354;3:status_text=32'h4f4b2020;
+  4:status_text=32'h44494646;5:status_text=32'h554e4b4e;6:status_text=32'h45525220;
+ endcase
+ if(fusion_result[0]&&!fusion_match)status_text=32'h4f4c4420; // OLD, never a fresh box
+ if(row==0)begin
   if(idx<8)case(mode)
    0:ch=(64'h43414d4552412020>>(56-idx*8)); // CAMERA
    1:ch=(64'h4752415920202020>>(56-idx*8));
@@ -66,7 +77,7 @@ always @*begin
    default:ch=32;
   endcase
  end
- else if(shape_enable)begin
+ else if(row==1&&shape_enable)begin
   case(idx)
    0:ch="S";1:ch="H";2:ch="A";3:ch="P";4:ch="E";5:ch=":";
    7:ch=!shape_valid?"N":shape_class==1?"C":shape_class==2?"R":"O";
@@ -78,8 +89,32 @@ always @*begin
    default:ch=32;
   endcase
  end
- bits=glyph(ch);bitidx=34-(((second_line?y-22:y-4)/2)*5)-(((x-8)%12)/2);
+ if(fusion_enabled&&row==2)begin
+  if(idx==0)ch="A";else if(idx==1)ch="I";
+  else if(idx>=3&&idx<=6)ch=status_text>>(24-8*(idx-3));
+  else if(idx==8)ch="C";else if(idx==9)ch=hexchar({2'b0,fusion_result[7:6]});
+  else if(idx==11)ch="G";else if(idx==12)ch=hexchar({2'b0,fusion_result[5:4]});
+  else if(idx==14)ch="A";else if(idx>=15&&idx<=18)ch=hexchar(fusion_age>>(16-4*(idx-14)));
+ end
+ if(fusion_enabled&&row==3)begin
+  if(idx==0)ch="F";else if(idx>=1&&idx<=8)ch=hexchar(fusion_result[63:32]>>(32-4*idx));
+  else if(idx==10)ch="R";else if(idx>=11&&idx<=18)ch=hexchar(fusion_result[127:96]>>(32-4*(idx-10)));
+  else if(idx==20)ch="M";else if(idx>=21&&idx<=24)ch=hexchar(fusion_result[159:128]>>(16-4*(idx-20)));
+ end
+ if(fusion_enabled&&row==4)begin
+  if(idx==0)ch="S";else if(idx>=1&&idx<=8)ch=hexchar(fusion_result[95:64]>>(32-4*idx));
+  else if(idx>=10&&idx<=24)case((idx-10)%4)
+   0:ch="Q";1:ch=hexchar(fusion_result[287:256]>>(8*((idx-10)/4)+4));
+   2:ch=hexchar(fusion_result[287:256]>>(8*((idx-10)/4)));default:ch=32;
+  endcase
+ end
+ bitidx=34-((local_y/2)*5)-(column/2);
 end
-assign active=(x>=8&&x<((mode==5||mode==6)?428:356)&&((y>=4&&y<20)||(shape_enable&&y>=22&&y<38)));
-assign ink=active&&((x-8)%12)<10&&(((second_line?y-22:y-4)/2)<7)&&bitidx>=0&&bitidx<35&&bits[bitidx];
+// Split character selection from font decode; RGB/control use the same extra beat.
+always @(posedge clk)begin
+ ch_q<=ch;bitidx_q<=bitidx;
+ active<=(x>=8&&x<((mode==5||mode==6)?428:356)&&((y>=4&&y<20)||(shape_enable&&y>=22&&y<38)||(fusion_enabled&&((y>=40&&y<56)||(y>=58&&y<74)||(y>=76&&y<92)))));
+ ink_region_q<=column<10&&local_y<14&&bitidx<35;
+end
+assign ink=active&&ink_region_q&&bits[bitidx_q];
 endmodule

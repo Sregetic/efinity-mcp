@@ -1621,6 +1621,12 @@ end
 // Shape commands share the existing CDC mailbox; apply only at frame boundary.
 reg shape_enable=1,shape_pending=1,shape_vq=0;reg[7:0]shape_threshold=32,shape_thr_pending=32;
 wire[63:0]shape_status;
+wire ai_enabled,ai_context_changed,ai_match,geometry_done;
+wire[31:0]ai_context,geometry_frame,geometry_config,geometry_context;
+wire[287:0]ai_result;wire[15:0]ai_age;
+wire[7:0]ai_paddr;wire ai_psel,ai_penable,ai_pwrite,ai_pready,ai_pslverror;
+wire[31:0]ai_pwdata,ai_prdata;
+
 always @(posedge hdmi_tx_slow_clk)begin
  shape_vq<=gamma_vs;
  if(!vid_rst_n)begin shape_enable<=1;shape_pending<=1;shape_threshold<=32;shape_thr_pending<=32;end
@@ -1651,6 +1657,16 @@ always @*case(color_order)
  default:color_pixel={base_b,base_r,base_g};
 endcase
 wire[7:0]color_r=color_pixel[23:16],color_g=color_pixel[15:8],color_b=color_pixel[7:0];
+generate if(SAPPHIRE_ENABLE&&ANALYSIS_DMA_ENABLE)begin:ai_link
+ vision_ai_bridge #(.SIG_BITS(87)) bridge(.clk(core_clk),.rst_n(vid_rst_n),.video_clk(hdmi_tx_slow_clk),.vs(gamma_vs),
+  .view_frame(roi_view_frame),.view_config(roi_view_config),.frame_ok(roi_frame_ok),
+  .signature({wb_r,wb_g,wb_b,tone_mode,color_order,feature_mode,feature_median,sobel_threshold,canny_threshold,shape_threshold}),
+  .geometry_done(geometry_done),.geometry_frame(geometry_frame),.geometry_config(geometry_config),.geometry_context(geometry_context),.geometry_status(shape_status),
+  .paddr(ai_paddr),.psel(ai_psel),.penable(ai_penable),.pwrite(ai_pwrite),.pwdata(ai_pwdata),.prdata(ai_prdata),.pready(ai_pready),.pslverror(ai_pslverror),
+  .enabled(ai_enabled),.context_changed(ai_context_changed),.context_id(ai_context),.result(ai_result),.result_match(ai_match),.result_age(ai_age));
+end else begin:no_ai_link
+ assign ai_enabled=0,ai_context_changed=0,ai_context=0,ai_result=0,ai_match=0,ai_age=0,ai_prdata=0,ai_pready=1,ai_pslverror=1;
+end endgenerate
 wire[95:0]pre_gamma_sums,post_gamma_sums,display_color_sums,post_gamma_clips,unused_pre_clips,unused_display_clips;
 generate if(IMAGE_DEBUG==1)begin:color_debug
 rgb_roi_probe before_gamma_probe(hdmi_tx_slow_clk,vid_rst_n,den_vs,den_de,{den_r,den_g,den_b},pre_gamma_sums,unused_pre_clips);
@@ -1692,10 +1708,12 @@ vision_canny #(.CONTOUR_RASTER(1),.STABLE_NMS(1)) canny(.clk(hdmi_tx_slow_clk),.
  .edge_pixel(canny_pixel),.ready(canny_ready),.busy(canny_busy),.fault(canny_fault),.completed(canny_completed),
  .display_de(feature_de),.probe_hold(canny_probe_hold),.probe_req(canny_probe_req),.probe_address(canny_probe_address),
  .probe_ack(canny_probe_ack),.probe_data(canny_probe_data),.probe_read_address(canny_probe_read_address),.probe_busy(canny_probe_busy),.median_en(feature_median),.noise_mean(canny_noise_mean),.noise_valid(canny_noise_valid),.effective_threshold(canny_effective_threshold),.raster_de(feature_coordinate_de),.coarse_edges(canny_coarse_edges),.display_edges(canny_display_edges),.analysis_cycles(canny_analysis_cycles),.analysis_passes(canny_analysis_passes),.analysis_weak(canny_analysis_weak),.edge_coverage(canny_coverage));
-vision_display feature_display(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n&&!roi_config_changed),.de(gamma_valid),.hs(gamma_hs),.vs(gamma_vs),
+vision_display #(.FUSION(SAPPHIRE_ENABLE&&ANALYSIS_DMA_ENABLE)) feature_display(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n&&!roi_config_changed),.de(gamma_valid),.hs(gamma_hs),.vs(gamma_vs),
  .r(color_r),.g(color_g),.b(color_b),.mode(feature_mode),.threshold(sobel_threshold),.canny_effective_threshold(canny_effective_threshold),.canny_requested_threshold(canny_threshold),.median_en(feature_median),
  .memory_mode(memory_mode),.history_index(history_index),.canny_pixel(canny_pixel),.canny_ready(canny_ready),.canny_coverage(canny_coverage),.cx(feature_x),.cy(feature_y),
- .ode(feature_de),.ohs(feature_hs),.ovs(feature_vs),.orr(feature_r),.ogg(feature_g),.obb(feature_b),.debug_mag(feature_mag),.debug_edge(feature_edge),.shape_enable(shape_enable),.shape_threshold(shape_threshold),.shape_status(shape_status),.coordinate_de(feature_coordinate_de));
+ .ode(feature_de),.ohs(feature_hs),.ovs(feature_vs),.orr(feature_r),.ogg(feature_g),.obb(feature_b),.debug_mag(feature_mag),.debug_edge(feature_edge),.shape_enable(shape_enable),.shape_threshold(shape_threshold),.shape_status(shape_status),.coordinate_de(feature_coordinate_de),
+ .analysis_enabled(ai_enabled),.analysis_context_changed(ai_context_changed),.frame_id(roi_view_frame),.render_config_id(roi_view_config),.analysis_context(ai_context),
+ .analysis_result(ai_result),.analysis_match(ai_match),.analysis_age(ai_age),.geometry_done(geometry_done),.geometry_frame(geometry_frame),.geometry_config(geometry_config),.geometry_context(geometry_context));
 // M0 is an ISP bypass only when filtering is off. HDMI and readback share
 // this selection so the displayed camera image obeys the same noise switch.
 wire camera_bypass=feature_mode==0&&!feature_median;
@@ -1726,8 +1744,12 @@ generate if(SAPPHIRE_ENABLE)begin:sapphire
 wire soc_reset;wire[15:0]soc_paddr;wire soc_psel,soc_penable,soc_pready,soc_pwrite,soc_pslverror;wire[31:0]soc_pwdata,soc_prdata;
 wire[31:0]mail_prdata,dma_prdata;wire mail_pready,mail_pslverror,dma_pready,dma_pslverror;
 wire dma_select=ANALYSIS_DMA_ENABLE&&soc_paddr[15:8]==1;wire control_select=soc_paddr[15:8]==2;
+wire ai_select=ANALYSIS_DMA_ENABLE&&soc_paddr[15:8]==3;
+assign ai_paddr=soc_paddr[7:0],ai_psel=soc_psel&&ai_select,ai_penable=soc_penable,ai_pwrite=soc_pwrite,ai_pwdata=soc_pwdata;
 assign control_paddr=soc_paddr[7:0],control_psel=soc_psel&&control_select,control_penable=soc_penable,control_pwrite=soc_pwrite,control_pwdata=soc_pwdata;
-assign soc_prdata=control_select?control_prdata:(dma_select?dma_prdata:mail_prdata),soc_pready=control_select?control_pready:(dma_select?dma_pready:mail_pready),soc_pslverror=control_select?control_pslverror:(dma_select?dma_pslverror:mail_pslverror);
+assign soc_prdata=ai_select?ai_prdata:(control_select?control_prdata:(dma_select?dma_prdata:mail_prdata)),
+ soc_pready=ai_select?ai_pready:(control_select?control_pready:(dma_select?dma_pready:mail_pready)),
+ soc_pslverror=ai_select?ai_pslverror:(control_select?control_pslverror:(dma_select?dma_pslverror:mail_pslverror));
 if(ANALYSIS_DMA_ENABLE)begin:analysis_input
  vision_analysis_dma #(.BANK_BITS(COMPUTE_BANK_BITS),.SOURCE_BASE(RAW_TO_POOL?32'h0:32'h02000000)) dma(
  .clk(core_clk),.rst_n(vid_rst_n),.paddr(soc_paddr[7:0]),.psel(soc_psel&&dma_select),.penable(soc_penable),.pwrite(soc_pwrite),.pwdata(soc_pwdata),.prdata(dma_prdata),.pready(dma_pready),.pslverror(dma_pslverror),
@@ -1865,6 +1887,7 @@ vision_flyhash_control flyhash_control(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n),
  .bitmap_address(fly_bitmap_address),.bitmap_valid(fly_bitmap_valid),.bitmap_data(canny_probe_data),
  .feature_quarter(fly_feature_quarter),.feature_probe(fly_feature_probe));
 assign flyhash_full_cycles={19'b0,flyhash_status[12:0]},flyhash_firmware_state=0,soc_jtag_tdo=0;
+assign ai_paddr=0,ai_psel=0,ai_penable=0,ai_pwrite=0,ai_pwdata=0;
 assign cpu_arid=0;
 assign cpu_araddr=0;
 assign cpu_arlen=0;
@@ -2111,7 +2134,7 @@ always @(posedge jtag_diag_DRCK) begin
   else if(feature_diag_page==30&&SAPPHIRE_ENABLE)diag_shift<={32'h56495331,32'h2610081e,32'h07620000,32'h07620100,flyhash_firmware_state,flyhash_full_cycles};
   else if(feature_diag_page==30&&fly_feature_view)diag_shift<={32'h56495331,(32'h26100520+{30'b0,fly_feature_quarter}),fly_feature_probe};
   else if(feature_diag_page==30)diag_shift<={32'h56495331,32'h2610051e,flyhash_result[127:0]};
-  else if(feature_diag_page==31&&SAPPHIRE_ENABLE)diag_shift<={32'h56495331,32'h2610081f,128'b0};
+  else if(feature_diag_page==31&&SAPPHIRE_ENABLE)diag_shift<={32'h56495331,32'h2610083f,ai_age,ai_enabled,ai_match,ai_result[13:0],ai_result[63:32],ai_result[127:96],ai_context};
   else if(feature_diag_page==31)diag_shift<={32'h56495331,32'h2610051f,flyhash_result[255:128]};
   else if(feature_diag_page==23&&x3_profile_view)diag_shift<={32'h56495331,(DISPLAY_LATENCY_PROBE?32'h26100717:32'h26100617),x3_display_min,x3_display_max,x3_display_samples,x3_display_unmatched};
   else if(feature_diag_page==24&&x3_profile_view)diag_shift<={32'h56495331,32'h26100718,feature_status,x3_frame,x3_pixels,x3_edge_count};

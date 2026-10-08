@@ -1,0 +1,53 @@
+{
+  "roi_frame_id": 51410,
+  "applied_config_id": 8,
+  "roi_enabled": 1,
+  "roi_frame_ok": 1,
+  "source_held": 1,
+  "source_frozen": 1,
+  "render_busy": 0,
+  "render_pending": 0,
+  "capture_active": 1,
+  "config_busy": 0,
+  "config_error": 0,
+  "render_error": 0,
+  "scan_error": 0,
+  "commit_rejected": 0,
+  "mode": 6,
+  "median": 0,
+  "memory": 1,
+  "threshold": 80,
+  "canny_ready": 1,
+  "canny_fault": 0,
+  "roi": [
+    0,
+    0,
+    1920,
+    1080
+  ],
+  "output_size": [
+    1920,
+    1080
+  ],
+  "capture_discarded": 0,
+  "scan_bad_frames": 0,
+  "render_cycles": 4012265,
+  "requested_config_id": 8,
+  "accepted_config_id": 8,
+  "rejected_config_id": 0,
+  "held_source_frame_id": 51410,
+  "held_raw_id_sample": 51410,
+  "rgb_capture_count": 51532,
+  "position": [
+    0,
+    0
+  ],
+  "display_size": [
+    1920,
+    1080
+  ],
+  "render_deadline_misses": 2,
+  "sobel_threshold": 128,
+  "canny_threshold": 80,
+  "canny_effective_threshold": 80
+}

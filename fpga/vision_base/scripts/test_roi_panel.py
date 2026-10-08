@@ -35,7 +35,9 @@ with TemporaryDirectory() as temporary:
         with urlopen(base+path,timeout=3) as response:return response.read()
     entered=threading.Event();requested=threading.Event();finished=threading.Event()
     errors=[]
+    calls=[]
     def fake_run(command,**kwargs):
+        calls.append(command)
         entered.set()
         if '--output-dir' in command:
             target=Path(command[-1]);target.mkdir()
@@ -60,6 +62,17 @@ with TemporaryDirectory() as temporary:
         assert new['context']['held_source_frame_id']==43 and new['image_base']!=published['image_base']
         assert json.loads(get('/mode-gallery'))==new
         assert get(published['image_base']+'source.png')==get(new['image_base']+'source.png')
+        for policy in [0,1,2]:
+            request=Request(base+'/ai-policy',data=json.dumps(dict(policy=policy)).encode(),headers={'Content-Type':'application/json','Origin':base})
+            with urlopen(request,timeout=3) as response:assert json.load(response)==dict(mode=0)
+            assert calls[-1][-2:]==['--ai-policy',str(policy)]
+        for policy in [3,True,'1']:
+            request=Request(base+'/ai-policy',data=json.dumps(dict(policy=policy)).encode(),headers={'Content-Type':'application/json','Origin':base})
+            before=len(calls)
+            try:urlopen(request,timeout=3)
+            except HTTPError as error:assert error.code==400
+            else:raise AssertionError('Invalid policy reached hardware')
+            assert len(calls)==before
         for path in ['/mode_frames_1/../mode_gallery.json','/mode_frames_1/mode_8.png','/mode_frames_99/source.png']:
             try:get(path)
             except HTTPError as error:assert error.code==404
