@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "frame_id": 157380,
+  "render_config_id": 13,
+  "scores": [
+    19,
+    -39,
+    -52,
+    -3
+  ],
+  "synthetic_model": true
+}

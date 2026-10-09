@@ -1,0 +1,3 @@
+Discarded legacy-default candidate: not programmed; current integrated build flags follow PROJECT_MASTER_STATUS.
+Initial UI candidate60278 XLR /251 RAM, not programmed. Add explicit A6 threshold/UI readback before final rebuild.
+First SRAM programming completed, ROM boots firmware_state1. UI diagnostics page32 wrapped to0 because selector was5-bit. Fix selector to6 bits; no video/control rollback.

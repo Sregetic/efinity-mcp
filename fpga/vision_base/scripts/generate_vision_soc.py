@@ -8,7 +8,7 @@ p.add_argument('--output-dir',type=Path,required=True)
 p.add_argument('--cache-kb',type=int,choices=[2,4],default=2)
 p.add_argument('--custom',action='store_true')
 p.add_argument('--boot-hex',type=Path,required=True)
-p.add_argument('--boot-kb',type=int,choices=[1,4],default=4)
+p.add_argument('--boot-kb',type=int,choices=[1,4,8],default=8)
 a=p.parse_args();out=a.output_dir.resolve();out.relative_to(ROOT)
 out.mkdir(parents=True,exist_ok=True)
 java='C:/Program Files (x86)/Common Files/Oracle/Java/java8path/java.exe'

@@ -17,8 +17,8 @@ try:
         mem=a.output_dir/f'readback_{i}.mem'
         mem.write_text(''.join(f'{v:02x}\n' for v in gray[300:780,640:1280].ravel()),encoding='ascii')
         try:
-            r=subprocess.run(['C:/iverilog/bin/vvp.exe',str(exe),f'+image={mem.resolve().as_posix()}',f'+kind={expected["class_id"]}',f'+flags={expected["reject_flags"]}',f'+background={expected["background"]}',f'+threshold={a.threshold}'],check=True,capture_output=True,text=True)
-            (a.output_dir/f'readback_{i}.log').write_text(r.stdout+r.stderr,encoding='utf-8');print(r.stdout.strip())
+            r=subprocess.run(['C:/iverilog/bin/vvp.exe',str(exe),f'+image={mem.resolve().as_posix()}',f'+kind={expected["class_id"]}',f'+flags={expected["reject_flags"]}',f'+background={expected["background"]}',f'+threshold={a.threshold}'],capture_output=True,text=True)
+            (a.output_dir/f'readback_{i}.log').write_text(r.stdout+r.stderr,encoding='utf-8');r.check_returncode();print(r.stdout.strip())
             rows.append(dict(image=path.resolve().as_posix(),input_kind=a.input_kind,threshold=a.threshold,host_rtl_equal=True,**expected))
         finally:
             mem.unlink()

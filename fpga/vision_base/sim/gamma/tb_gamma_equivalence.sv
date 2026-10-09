@@ -94,7 +94,7 @@ module tb_gamma_equivalence;
             .clk(clk),.rst_n(rst_n),.de(de),.hs(hs),.vs(vs),.r(r),.g(g),.b(b),
             .ode(cd),.ohs(ch),.ovs(cv),.rgb(chroma_rgb),.linear_rgb(linear_rgb),
             .gain_r(16'd256),.gain_g(16'd256),.gain_b(16'd256),
-            .plain_rgb(plain_rgb),.highlight_active(highlight),.shadow_boost(1'b1)
+            .plain_rgb(plain_rgb),.highlight_active(highlight),.freeze_tone(1'b0),.shadow_boost(1'b1)
         );
         always @(posedge clk) begin
             n1 <= {nr,ng,nb}; n2 <= n1; n3 <= n2;

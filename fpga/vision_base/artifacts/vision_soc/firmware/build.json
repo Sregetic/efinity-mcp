@@ -4,14 +4,19 @@
     "-march=rv32i_zicsr_zifencei",
     "-mabi=ilp32",
     "-Os",
+    "-flto",
+    "-ffunction-sections",
+    "-fdata-sections",
     "-ffreestanding",
     "-fno-builtin",
     "-fno-pic",
     "-msmall-data-limit=0",
     "-mno-relax",
     "-nostdlib",
+    "-IF:\\Project\\fpga\\vision_base\\firmware\\vision",
     "-Wl,--gc-sections",
-    "-Wl,-Map=F:\\Project\\fpga\\vision_base\\artifacts\\vision_soc\\firmware\\vision.map",
+    "-Wl,--defsym=__boot_bytes=8192",
+    "-Wl,-Map=F:\\Project\\fpga\\vision_base\\results\\a_controls_quality_20261009\\firmware\\vision.map",
     "-T",
     "F:\\Project\\fpga\\vision_base\\firmware\\vision\\link.ld",
     "F:\\Project\\fpga\\vision_base\\firmware\\vision\\start.S",
@@ -19,11 +24,14 @@
     "F:\\Project\\fpga\\vision_base\\firmware\\vision\\flyhash.c",
     "-lgcc",
     "-o",
-    "F:\\Project\\fpga\\vision_base\\artifacts\\vision_soc\\firmware\\vision.elf"
+    "F:\\Project\\fpga\\vision_base\\results\\a_controls_quality_20261009\\firmware\\vision.elf"
   ],
   "isa": "RV32I_Zicsr_Zifencei",
   "muldiv": false,
+  "mulhi_cfu": false,
   "cache_kb": 2,
   "application_base": "0x07000000",
-  "boot_base": "0xf9000000"
+  "load_method": "embedded",
+  "boot_base": "0xf9000000",
+  "boot_kb": 8
 }

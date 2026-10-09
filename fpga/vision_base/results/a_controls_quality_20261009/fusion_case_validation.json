@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "frame": 34328,
+  "render": 14,
+  "context": 24,
+  "scores": [
+    11,
+    -39,
+    -52,
+    0
+  ],
+  "synthetic_model": true
+}

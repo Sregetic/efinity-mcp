@@ -1,6 +1,6 @@
 // Unthrottled 1/2PPC input -> leased 2PPC packed RGB capture. Overflow aborts the
 // writer after its advertised AXI burst; an incomplete source is never published.
-module vision_rgb_capture #(parameter W=1920,H=1080,FIFO_AW=10,INPUT_PPC=1)(
+module vision_rgb_capture #(parameter W=1920,H=1080,FIFO_AW=10,INPUT_PPC=1,PAIR_DENOISE=0)(
  input rst_n,video_clk,vs,de,input[23:0]rgb,input[31:0]raw_id,
  input[23:0]rgb_upper,input source_abort,
  input clk,enable,freeze_source,
@@ -29,7 +29,21 @@ module vision_rgb_capture #(parameter W=1920,H=1080,FIFO_AW=10,INPUT_PPC=1)(
   begin pack_pixel=|{v[23:22],v[15:14],v[7:6]}?{1'b1,quant5(v[23:16]),quant5(v[15:8]),quant5(v[7:0])}:
    {1'b0,v[21:17],v[13:9],v[5:1]};end
  endfunction
- wire[15:0]pixel=pack_pixel(rgb),upper_pixel=pack_pixel(rgb_upper);
+ // Remove flat-field sensor variation before the irreversible RGB555 packing.
+ // Both samples stay distinct (3:1 / 1:3); high-contrast boundaries bypass it.
+ // ponytail: one adjacent 2PPC pair, no line RAM; not spatial/temporal zero noise.
+ function automatic[7:0]mix31(input[7:0]a,input[4:0]delta,input upper);
+  reg signed[5:0]d;reg signed[2:0]q;
+  begin d=upper?$signed({1'b0,delta})-6'sd6:6'sd10-$signed({1'b0,delta});q=d>>>2;mix31=$signed({1'b0,a})+q;end
+ endfunction
+ wire[8:0]dr={1'b0,rgb[23:16]}-{1'b0,rgb_upper[23:16]}+9'd8;
+ wire[8:0]dg={1'b0,rgb[15:8]}-{1'b0,rgb_upper[15:8]}+9'd8;
+ wire[8:0]db={1'b0,rgb[7:0]}-{1'b0,rgb_upper[7:0]}+9'd8;
+ wire flat_pair=PAIR_DENOISE&&INPUT_PPC==2&&dr<=16&&dg<=16&&db<=16;
+ // Gate proves each delta is0..16, so the exact quarter-step needs only3 bits.
+ wire[23:0]lower_clean=flat_pair?{mix31(rgb[23:16],dr[4:0],0),mix31(rgb[15:8],dg[4:0],0),mix31(rgb[7:0],db[4:0],0)}:rgb;
+ wire[23:0]upper_clean=flat_pair?{mix31(rgb_upper[23:16],dr[4:0],1),mix31(rgb_upper[15:8],dg[4:0],1),mix31(rgb_upper[7:0],db[4:0],1)}:rgb_upper;
+ wire[15:0]pixel=pack_pixel(lower_clean),upper_pixel=pack_pixel(upper_clean);
  stream_cdc #(.WIDTH(35),.AW(FIFO_AW)) fifo(rst_n,video_clk,pv,pr,pd,clk,mv,mr,md,,);
  always @(posedge video_clk)begin
   req_sync<={req_sync[1:0],request};vq<=vs;

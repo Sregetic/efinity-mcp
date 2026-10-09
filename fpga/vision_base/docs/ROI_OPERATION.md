@@ -1,5 +1,7 @@
 # 相机 ROI 操作
 
+2026-10-09新增实体 ROI 菜单和独立形状阈值；最新操作见[按键演示](BOARD_BUTTON_DEMO_20261009.md)。以下带旧日期的按键描述只对应当时位流，尤其 KEY0 长按已由直接开关中值改为切换菜单页。当前部署仍以总状态表最新摘要为准。
+
 本机控制面板由 `scripts/roi_panel.py` 提供，地址保存在 `results/roi_live_20261004/panel_server.json`。界面有整帧、中心 2×/4×、缩小 0.5×、方向平移和重新渲染。操作在 FPGA 的16bit共享范围RGB源帧、ROI 渲染 DMA、双缓冲结果和 HDMI 扫描链执行，网页没有代替 FPGA 做裁剪。
 
 先勾选“启用 ROI”和“冻结同一原帧”，点击“应用 / 重新渲染”。随后修改裁剪、输出尺寸、屏幕位置、显示模式或边缘阈值并再次应用。`held_source_frame_id` 与 `held_raw_id_sample` 保持不变，`applied_config_id` 更新。取消冻结恢复实时取最新完整帧；关闭 ROI 回到原相机路径。

@@ -2,7 +2,7 @@
 module tb;
 reg clk=0;always #5 clk=~clk;reg rst=0,de=0;reg[7:0]r=0,g=0,b=0;
 wire od,oh,ov,hit;wire[23:0]rgb,lin,plain;
-rgb_chroma_tone #(.SHADOW_FILE("board/ti60f225_v4/rtl/gamma_conrrection/chroma_shadow_gain_q8.mem"),.GAIN_FILE("board/ti60f225_v4/rtl/gamma_conrrection/chroma_tone_gain_q8.mem"))dut(clk,rst,de,1'b0,1'b0,r,g,b,od,oh,ov,rgb,lin,16'd256,16'd161,16'd162,plain,hit,1'b0);
+rgb_chroma_tone #(.SHADOW_FILE("board/ti60f225_v4/rtl/gamma_conrrection/chroma_shadow_gain_q8.mem"),.GAIN_FILE("board/ti60f225_v4/rtl/gamma_conrrection/chroma_tone_gain_q8.mem"))dut(clk,rst,de,1'b0,1'b0,r,g,b,od,oh,ov,rgb,lin,16'd256,16'd161,16'd162,plain,hit,1'b0,1'b0,);
 task drive(input[23:0]v);begin @(negedge clk);{r,g,b}=v;de=1;repeat(6)@(negedge clk);end endtask
 integer original_span,new_span;
 initial begin

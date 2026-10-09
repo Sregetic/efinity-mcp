@@ -16,9 +16,11 @@ def classify(gray, roi, threshold=32, min_area=256, min_size=16, bg_spread=48):
     patches = [a[:16, :16], a[:16, -16:], a[-16:, :16], a[-16:, -16:]]
     means = [int(p.sum())//256 for p in patches]
     background = sum(int(p.sum()) for p in patches)//1024
-    mask = np.abs(a-background) >= threshold
-    mask[:16, :16] = mask[:16, -16:] = mask[-16:, :16] = mask[-16:, -16:] = False
     flags = 8 if max(means)-min(means) > bg_spread else 0
+    # Production fg is gated by previous-frame bg_valid. A frozen uneven
+    # background never becomes valid, so there are no foreground row spans.
+    mask = (np.abs(a-background) >= threshold) & (flags == 0)
+    mask[:16, :16] = mask[:16, -16:] = mask[-16:, :16] = mask[-16:, -16:] = False
     yy, xx = np.nonzero(mask)
     if not len(xx):
         return dict(valid=False, class_id=0, label='NONE', reject_flags=flags|1,

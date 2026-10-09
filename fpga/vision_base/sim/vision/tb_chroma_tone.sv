@@ -2,7 +2,7 @@
 module tb;
 reg clk=0;always #5 clk=~clk;reg rst=0,de=0,hs=0,vs=0;reg[7:0]r=0,g=0,b=0;
 wire od,oh,ov,hit;wire[23:0]rgb,linear_rgb,plain_rgb;reg[15:0]lut[0:255];
-rgb_chroma_tone #(.SHADOW_FILE("board/ti60f225_v4/rtl/gamma_conrrection/chroma_shadow_gain_q8.mem"),.GAIN_FILE("board/ti60f225_v4/rtl/gamma_conrrection/chroma_tone_gain_q8.mem"))dut(clk,rst,de,hs,vs,r,g,b,od,oh,ov,rgb,linear_rgb,16'd256,16'd161,16'd162,plain_rgb,hit,1'b0);
+rgb_chroma_tone #(.SHADOW_FILE("board/ti60f225_v4/rtl/gamma_conrrection/chroma_shadow_gain_q8.mem"),.GAIN_FILE("board/ti60f225_v4/rtl/gamma_conrrection/chroma_tone_gain_q8.mem"))dut(clk,rst,de,hs,vs,r,g,b,od,oh,ov,rgb,linear_rgb,16'd256,16'd161,16'd162,plain_rgb,hit,1'b0,1'b0,);
 reg[23:0]inputs[0:802];reg[2:0]syncs[0:802];reg[23:0]expected,plain_expected;integer i,j,peak,gain,rr,gg,bb,checked=0,a,c,l,k,z,ir,ig,ib;
 function automatic integer rank(input integer v,gain,base);
  integer n;begin rank=0;for(n=0;n<8;n=n+1)if(v>=((base+((base==223)?2:8)*n)*gain)/256)rank=n+1;end

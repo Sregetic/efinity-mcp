@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "scope": "Production A6 host/RTL parity; input kind explicit; physical card acceptance remains separate",
+  "cases": [
+    {
+      "image": "F:/Project/fpga/vision_base/results/roi_live_20261004/mode_frames_2026100901/mode_1.png",
+      "input_kind": "camera_readback",
+      "threshold": 32,
+      "host_rtl_equal": true,
+      "valid": false,
+      "class_id": 0,
+      "label": "NONE",
+      "reject_flags": 9,
+      "background": 157,
+      "corner_means": [
+        239,
+        130,
+        132,
+        126
+      ],
+      "filled_area": 0,
+      "bbox": null
+    }
+  ]
+}

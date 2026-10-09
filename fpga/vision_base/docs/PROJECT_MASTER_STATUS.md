@@ -1,5 +1,15 @@
 # 项目总目标与状态（统一范围表）
 
+## 2026-10-09最新部署：A四项控制、画质修复、A6与独立启动准备
+
+当前SRAM为`results/a_controls_quality_20261009/release/ti60f225_oob.bit`，59738/60800XLR、251/256RAM、59/160DSP，最终WNS+0.033ns/WHS+0.027ns、未分配引脚0。相对上一原图版−229XLR/+4RAM/0DSP，余1062XLR/5RAM；RAM新增来自控制ROM4KB→8KB，滤波未加行RAM。前DDR近邻保边滤波、冻结提亮保持及I3影子状态签名已接入。KEY0长按选择中值/ROI缩放/源平移/输出尺寸/屏幕位置菜单，独立Sobel/Canny/SHAPE阈值、VS原子提交和在途几何合并保持；ROM首次启动无需USER1应用加载，firmware_state1及17组板上事件策略通过。同一冻结源4050几何变化不换源，此前本轮priority版实际回放六帧125638…125643。32视频回归、ROI/QEMU/host-RTL通过。九幅同源125954完整图已发布原面板；M0的40000像素与管道参考一致，原图颗粒/大色斑仍有残留，画质最终验收另记。
+
+A6合成9组与本次真实背景负例classNONE/flags9一致；修正了主机参考漏掉bg_valid门控的问题，不把背景或合成样本写成实物卡正确率。用户明确不在现场，人工按键、空心卡和物理HDMI长时待验。DDR应用9676B/权重4400B版本1已重载，CPU层/FlyHash及最后case版融合源34328/render14/context24对照通过，仍为TEST。最后case版有效57.094秒源1714帧、错误/坏帧/丢弃/deadline增量0；恢复M0/MED0/F0/ROIoff/Sobel128/Canny80/SHAPE32/自动策略2。Flash保持。见[完整证据](../results/a_controls_quality_20261009/REPORT.md)和[实体操作](BOARD_BUTTON_DEMO_20261009.md)。
+
+第四项独立启动包已生成；BootOnly配置重启后未下发视频配置、未下载USER1程序，ROM启动firmware_state1及M3/MED0/F0/128/128/SHAPE32实读通过。按原分工，实物验收后安排Flash固化；物理断电与完整INT8自主加载未算通过。页地址case等价12288组合通过，逻辑较本轮priority版省389XLR。
+
+以下带旧日期的部署记录保留追踪；当前身份/资源以此摘要为准。
+
 ## 2026-10-08最新部署：原图普通亮度区去噪
 
 当前SRAM为`results/raw_rgb_denoise_20261008/release_compact/ti60f225_oob.bit`，59967/60800XLR、247/256RAM、59/160DSP，最终WNS+0.040ns/WHS+0.026ns、未分配核心引脚0；相对下方I1/I3部署新增178XLR，RAM/DSP不增，余833XLR/9RAM。保留原暗部色噪滤波，在普通亮度平坦RGB区补横向[1,2,1]/4保边平均，M0/MED0也生效；不是完整二维/时域去噪。新板源21489的40000像素与新参考逐值一致，同源对旧管道参考的细粒度起伏降低36.2%，平均灰度变化0.09级，较大斑点仍有残留。曝光/shadow前后稳定；29项视频回归、65536范围比较、DMA/CPU/FlyHash及融合记录检查通过。同一DDR应用/合成模型1已加载，恢复实时M0/MED0/ROIoff/F0、Sobel128/Canny80、自动策略2；Flash保持。旧版源码/bit与负时序候选都保留，新部署详情见[实测](../results/raw_rgb_denoise_20261008/REPORT.md)。原图更完整去噪、冻结提亮漂移、物理HDMI长时/紫闪、实物识别验收继续单列。

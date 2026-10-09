@@ -6,7 +6,7 @@ module vision_display #(parameter EDGE_STRENGTH=1,FUSION=0)(input clk,rst_n,de,h
  input shape_enable,input[7:0]shape_threshold,output[63:0]shape_status,output coordinate_de,input[10:0]canny_effective_threshold,canny_requested_threshold,input[7:0]canny_coverage,
  input analysis_enabled,analysis_context_changed,input[31:0]frame_id,render_config_id,analysis_context,
  input[287:0]analysis_result,input analysis_match,input[15:0]analysis_age,
- output reg geometry_done,output reg[31:0]geometry_frame,geometry_config,geometry_context);
+ output reg geometry_done,output reg[31:0]geometry_frame,geometry_config,geometry_context,input[13:0]ui_state);
 wire fd0,fh0,fv0,border0;wire[11:0]x0,y0;wire[7:0]fr0,fg0,fb0,gray0;wire[10:0]mag0;wire[1:0]dir;
 wire edge0;reg edge1=0;
 vision_frontend front(clk,rst_n,de,hs,vs,r,g,b,median_en,fd0,fh0,fv0,border0,x0,y0,fr0,fg0,fb0,gray0,mag0,dir,threshold,edge0);
@@ -35,8 +35,8 @@ wire shape_current=shape_valid&&(!(FUSION&&analysis_enabled)||
  (geometry_frame==frame_id&&geometry_config==render_config_id&&geometry_context==analysis_context));
 wire shape_box=shape_current&&((x>=sx0&&x<=sx1&&(y==sy0||y==sy1))||(y>=sy0&&y<=sy1&&(x==sx0||x==sx1)));
 wire shape_guide=((x==640||x==1279)&&(y>=300&&y<780)&&y[3])||((y==300||y==779)&&(x>=640&&x<1280)&&x[3]);
-vision_osd osd0(x,y,mode,(mode==5||mode==6)?canny_effective_threshold:threshold,median_en,memory_mode,history_index,canny_ready,shape_class,shape_current,shape_show,osd,ink,canny_requested_threshold,
- (FUSION&&analysis_enabled),analysis_result,analysis_match,analysis_age,clk);
+vision_osd osd0(x,y,mode,mode==7?{3'b0,shape_threshold}:(mode==5||mode==6)?canny_effective_threshold:threshold,median_en,memory_mode,history_index,canny_ready,shape_class,shape_current,shape_show,osd,ink,canny_requested_threshold,
+ (FUSION&&analysis_enabled),analysis_result,analysis_match,analysis_age,clk,ui_state);
 // RGB/gradient metadata represents the center after two 3x3 windows.
 assign cx=x0>=2?x0-2:0;assign cy=y0>=2?y0-2:0;
 assign coordinate_de=fd0&&x0>=2&&y0>=2;reg[10:0]dm=0;reg dedge=0;assign debug_mag=dm;assign debug_edge=dedge;

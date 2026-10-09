@@ -26,7 +26,7 @@ always @(posedge clk)begin
   if(vs&&!vq)begin
    y<=0;center_sum<=sum;center_count<=nc;total_count<=nt;clip_count<=nh;
    sum<=0;nc<=0;nt<=0;nh<=0;
-   if(nc!=0)begin
+   if(fresh&&nc!=0&&!fs[2])begin
     if(sum<nc*32'd48)shadow_boost<=1;
     else if(sum>nc*32'd60)shadow_boost<=0;
    end

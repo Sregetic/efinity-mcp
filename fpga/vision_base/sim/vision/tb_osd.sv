@@ -2,8 +2,9 @@
 module tb;
 reg clk=0;always #5 clk=~clk;
 reg[11:0]x=8,y=4;reg[2:0]mode=2;reg[10:0]threshold=96;wire active,ink;
+reg[13:0]ui=0;
 reg fusion=0,matched=1;reg[287:0]packet=0;reg[15:0]age=0;
-vision_osd dut(x,y,mode,threshold,1'b1,2'd0,3'd0,1'b1,2'd0,1'b0,1'b0,active,ink,11'd16,fusion,packet,matched,age,clk);
+vision_osd dut(x,y,mode,threshold,1'b1,2'd0,3'd0,1'b1,2'd0,1'b0,1'b0,active,ink,11'd16,fusion,packet,matched,age,clk,ui);
 task character(input integer position,input[7:0]wanted);
 begin @(negedge clk);x=8+12*position;@(posedge clk);#1;if(dut.ch_q!==wanted||!active)$fatal(1,"OSD character %0d: %c expected %c",position,dut.ch_q,wanted);end
 endtask
@@ -24,6 +25,9 @@ initial begin
  y=76;packet[95:64]=32'hdeadbeef;packet[287:256]=32'h807f01ff;
  character(1,"D");character(8,"F");character(11,"F");character(12,"F");character(23,"8");character(24,"0");
  @(negedge clk);x=428;@(posedge clk);#1;if(active)$fatal(1,"OSD extent");
+ fusion=0;mode=0;y=4;ui=(3<<11)|1408;
+ character(0,"P");character(1,"A");character(2,"N");character(4,"X");character(9,"V");
+ character(10,"1");character(11,"4");character(12,"0");character(13,"8");
  $display("PASS pipelined OSD mode/threshold, fusion TEST/OLD, independent IDs and signed score bytes");$finish;
 end
 endmodule

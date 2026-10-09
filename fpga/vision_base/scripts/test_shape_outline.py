@@ -22,4 +22,8 @@ for name, mask, wanted in cases:
             noisy = gray.astype(np.int16)+(x*7+y*3)%7-3
             assert classify(noisy, [16, 16, 96, 96], threshold=48, min_area=128)['class_id'] == wanted
         print('PASS', name, 'inverted' if invert else 'normal', got['label'])
-print('PASS host outline classifier14 cases, noisy positives and exact integer geometry')
+uneven = np.where(outline, 20, 220).astype(np.uint8)
+uneven[16:32,16:32]=0
+got=classify(uneven,[16,16,96,96],threshold=48,min_area=128)
+assert got['class_id']==0 and got['reject_flags']==9 and got['filled_area']==0,got
+print('PASS host outline classifier14 polarity cases, noisy positives, invalid-background gating and exact integer geometry')

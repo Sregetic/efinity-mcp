@@ -5,16 +5,16 @@ module rgb_chroma_tone #(
  parameter GAIN_FILE="./rtl/gamma_conrrection/chroma_tone_gain_q8.mem"
 )(input clk,rst_n,de,hs,vs,input[7:0]r,g,b,
  output reg ode,ohs,ovs,output reg[23:0]rgb,linear_rgb,
- input[15:0]gain_r,gain_g,gain_b,output reg[23:0]plain_rgb,output reg highlight_active,input shadow_boost);
+ input[15:0]gain_r,gain_g,gain_b,output reg[23:0]plain_rgb,output reg highlight_active,input shadow_boost,input freeze_tone,output reg shadow_frame=0);
 reg[15:0]gain_rom[0:511];
 initial begin
  $readmemh(GAIN_FILE,gain_rom,0,255);
  $readmemh(SHADOW_FILE,gain_rom,256,511);
 end
-reg[2:0]shadow_sync=0;reg shadow_frame=0,vs_q=0,shadow1=0;
+reg[2:0]shadow_sync=0;reg vs_q=0,shadow1=0;
 always @(posedge clk)begin
  shadow_sync<={shadow_sync[1:0],shadow_boost};vs_q<=vs;
- if(vs&&!vs_q)shadow_frame<=shadow_sync[2];
+ if(vs&&!vs_q&&!freeze_tone)shadow_frame<=shadow_sync[2];
  if(!rst_n)begin shadow_sync<=0;shadow_frame<=0;vs_q<=0;end
 end
 wire[7:0]rgmax=(r>g)?r:g;

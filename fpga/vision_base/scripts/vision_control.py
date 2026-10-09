@@ -22,7 +22,13 @@ def validate_roi(roi,size,pos):
  if min(x,y,dx,dy)<0 or min(w,h,dw,dh)<1:raise ValueError('ROI/size must be positive, origins nonnegative')
  if x+w>1920 or y+h>1080:raise ValueError('ROI exceeds1920x1080 original frame')
  if dw%8 or dx+dw>1920 or dy+dh>1080:raise ValueError('Output width must be a multiple of8; viewport must fit1920x1080 canvas')
-p=argparse.ArgumentParser();p.add_argument('--sensor',choices=['sc431hai','sc2210'],default='sc431hai');p.add_argument('--url',default='ftdi://0x0403:0x6011:4:3/2');p.add_argument('--mode',type=int);p.add_argument('--threshold',type=int);p.add_argument('--sobel-threshold',type=int);p.add_argument('--canny-threshold',type=int);p.add_argument('--median',type=int,choices=[0,1]);p.add_argument('--memory',type=int,choices=range(4));p.add_argument('--index',type=int,choices=range(6));p.add_argument('--page',type=int,default=0,choices=range(32));p.add_argument('--color-order',type=int,choices=range(6));p.add_argument('--gamma','--tone',dest='gamma',type=int,choices=[0,1,2,3]);p.add_argument('--gain-r',type=int);p.add_argument('--gain-g',type=int);p.add_argument('--gain-b',type=int);p.add_argument('--samples',type=int,default=5);p.add_argument('--ae',type=int,choices=[0,1]);p.add_argument('--exposure',type=int);p.add_argument('--lcd-test',type=int,choices=[0,1]);p.add_argument('--lcd-bist',type=int,choices=[0,1]);p.add_argument('--lcd-backlight',type=int,choices=[0,1]);p.add_argument('--shape',type=int,choices=[0,1]);p.add_argument('--shape-threshold',type=int,choices=range(1,256))
+
+def decode_ui(v):
+ if v>>160!=0x56495331 or (v>>128)&0xffffffff!=0x26100940:raise RuntimeError('Key UI diagnostic mismatch')
+ s=(v>>96)&0xffffffff
+ return dict(menu=(v>>75)&7,menu_value=(v>>64)&2047,shape_threshold=(v>>78)&255,index=(s>>15)&7)
+p=argparse.ArgumentParser();p.add_argument('--sensor',choices=['sc431hai','sc2210'],default='sc431hai');p.add_argument('--url',default='ftdi://0x0403:0x6011:4:3/2');p.add_argument('--mode',type=int);p.add_argument('--threshold',type=int);p.add_argument('--sobel-threshold',type=int);p.add_argument('--canny-threshold',type=int);p.add_argument('--median',type=int,choices=[0,1]);p.add_argument('--memory',type=int,choices=range(4));p.add_argument('--index',type=int,choices=range(6));p.add_argument('--page',type=int,default=0,choices=range(33));p.add_argument('--color-order',type=int,choices=range(6));p.add_argument('--gamma','--tone',dest='gamma',type=int,choices=[0,1,2,3]);p.add_argument('--gain-r',type=int);p.add_argument('--gain-g',type=int);p.add_argument('--gain-b',type=int);p.add_argument('--samples',type=int,default=5);p.add_argument('--ae',type=int,choices=[0,1]);p.add_argument('--exposure',type=int);p.add_argument('--lcd-test',type=int,choices=[0,1]);p.add_argument('--lcd-bist',type=int,choices=[0,1]);p.add_argument('--lcd-backlight',type=int,choices=[0,1]);p.add_argument('--shape',type=int,choices=[0,1]);p.add_argument('--shape-threshold',type=int,choices=range(1,256))
+p.add_argument('--menu',type=int,choices=range(8));p.add_argument('--key-event',type=int,choices=range(64),help='Inject the same short/long event bits as hardware keys for automated policy checks');
 p.add_argument('--ai-policy',type=int,choices=[0,1,2],help='0 off,1 configured ROI on displayed frame,2 geometry-guided ROI');p.add_argument('--ai-status',action='store_true');
 p.add_argument('--roi',type=int,nargs=4,metavar=('X','Y','W','H'));p.add_argument('--output-size',type=int,nargs=2,metavar=('W','H'));p.add_argument('--position',type=int,nargs=2,metavar=('X','Y'));p.add_argument('--roi-enable',type=int,choices=[0,1]);p.add_argument('--rerender',action='store_true');p.add_argument('--roi-status',action='store_true');a=p.parse_args()
 exposure_min,exposure_max=112,2950
@@ -56,14 +62,21 @@ with acquire_jtag_engine(1e6,a.url) as e:
   for _ in range(2):e.write_ir(DeviceUtils.EFX_TI_INSTR['USER2']);v=int(e.read_dr(192));e.go_idle()
   if (v>>128)&0xffffffff!=0x26091785:raise RuntimeError('Threshold/color page mismatch')
   status.update(sobel_threshold=(v>>24)&2047,canny_threshold=(v>>13)&2047,canny_effective_threshold=(v>>2)&2047)
+  command(126,32)
+  for _ in range(2):e.write_ir(DeviceUtils.EFX_TI_INSTR['USER2']);v=int(e.read_dr(192));e.go_idle()
+  status.update(decode_ui(v))
   return status
  if a.ai_policy is not None:ai_status()
- commands=[(0x60,a.ai_policy),(126,a.page),(1,a.mode),(2,a.threshold),(0x28,a.sobel_threshold),(0x29,a.canny_threshold),(3,a.median),(4,a.memory),(5,a.index),(6,a.color_order),(7,a.gamma),(8,a.gain_r),(9,a.gain_g),(10,a.gain_b),(11,a.ae),(12,a.exposure),(13,a.lcd_test),(14,a.lcd_bist),(15,a.lcd_backlight),(22,a.shape),(23,a.shape_threshold)]
+ commands=[(0x61,a.menu),(0x62,a.key_event),(0x60,a.ai_policy),(126,a.page),(1,a.mode),(2,a.threshold),(0x28,a.sobel_threshold),(0x29,a.canny_threshold),(3,a.median),(4,a.memory),(5,a.index),(6,a.color_order),(7,a.gamma),(8,a.gain_r),(9,a.gain_g),(10,a.gain_b),(11,a.ae),(12,a.exposure),(13,a.lcd_test),(14,a.lcd_bist),(15,a.lcd_backlight),(22,a.shape),(23,a.shape_threshold)]
  for op,value in commands:
   if value is None:continue
   if op in [8,9,10] and not 0<=value<=1024:raise ValueError('gain Q8.8 range0..1024')
   if op==1 and not 0<=value<=7:raise ValueError('mode0..7')
-  if op in [2,0x28,0x29] and not 16<=value<=2047:raise ValueError('threshold16..2047')
+  if op in [0x28,0x29] and not 16<=value<=2047:raise ValueError('Sobel/Canny threshold16..2047')
+  if op==2:
+   mode=a.mode if a.mode is not None else roi_page(18)['mode']
+   low,high=(1,255) if mode==7 else (16,2047)
+   if not low<=value<=high:raise ValueError(f'Mode{mode} threshold{low}..{high}')
  change_roi=a.roi is not None or a.output_size is not None or a.position is not None or a.roi_enable is not None or a.rerender
  if change_roi:
   deadline=time.monotonic()+10
@@ -171,6 +184,9 @@ with acquire_jtag_engine(1e6,a.url) as e:
    rec=dict(magic=f'{v>>160:08x}',build=f'{actual_build:08x}',raw=f'{v:048x}',sample_time_s=time.time(),
             flyhash_result_address=(v>>96)&0xffffffff,flyhash_input_address=(v>>64)&0xffffffff,
             flyhash_firmware_state=(v>>32)&0xffffffff,flyhash_cycles=v&0xffffffff)
+  if actual_build==0x26100940:
+   for key in ['capture_id','display_id','canny_completed']:rec.pop(key)
+   rec.update(decode_ui(v),requested_config_id=(v>>32)&0xffffffff,accepted_config_id=v&0xffffffff)
   roi_rec=decode_roi(v)
   if roi_rec is not None:
    for key in ['capture_id','display_id','canny_completed']:rec.pop(key)

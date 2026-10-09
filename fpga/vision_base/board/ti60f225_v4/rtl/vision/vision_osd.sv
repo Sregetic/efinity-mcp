@@ -1,4 +1,4 @@
-module vision_osd(input[11:0]x,y,input[2:0]mode,input[10:0]threshold,input median_en,input[1:0]memory_mode,input[2:0]history_index,input canny_ready,input[1:0]shape_class,input shape_valid,input shape_enable,output reg active=0,output ink,input[10:0]requested_threshold,input fusion_enabled,input[287:0]fusion_result,input fusion_match,input[15:0]fusion_age,input clk);
+module vision_osd(input[11:0]x,y,input[2:0]mode,input[10:0]threshold,input median_en,input[1:0]memory_mode,input[2:0]history_index,input canny_ready,input[1:0]shape_class,input shape_valid,input shape_enable,output reg active=0,output ink,input[10:0]requested_threshold,input fusion_enabled,input[287:0]fusion_result,input fusion_match,input[15:0]fusion_age,input clk,input[13:0]ui_state);
 function automatic[34:0]glyph(input[7:0]ch);
  begin case(ch)
 8'd48:glyph=35'b01110100011001110101110011000101110;
@@ -33,6 +33,7 @@ function automatic[34:0]glyph(input[7:0]ch);
 8'd85:glyph=35'b10001100011000110001100011000101110;
 8'd86:glyph=35'b10001100011000110001100010101000100;
 8'd87:glyph=35'b10001100011000110101101011101110001;
+8'd88:glyph=35'b10001100010101000100010101000110001;
 8'd89:glyph=35'b10001100010101000100001000010000100;
 8'd90:glyph=35'b11111000010001000100010001000011111;
 8'd58:glyph=35'b00000001000010000000001000010000000;
@@ -44,7 +45,18 @@ wire[11:0]local_x=x-12'd8,local_y=y-origin;
 wire[3:0]column=local_x%12'd12;
 reg[7:0]ch_q=32;reg[5:0]bitidx_q=0;reg ink_region_q=0;
 wire[34:0]bits=glyph(ch_q);
+wire[2:0]menu=ui_state[13:11];
+wire[10:0]shown=menu!=0?ui_state[10:0]:threshold;
+reg[63:0]menu_text;
 always @*begin
+ case(menu)
+  1:menu_text=64'h4d454449414e2020; // MEDIAN
+  2:menu_text=64'h5a4f4f4d20202020; // ZOOM (source width)
+  3:menu_text=64'h50414e2058202020;4:menu_text=64'h50414e2059202020;
+  5:menu_text=64'h53495a4520202020;
+  6:menu_text=64'h504f532058202020;7:menu_text=64'h504f532059202020;
+  default:menu_text=0;
+ endcase
  row=y>=76?4:y>=58?3:y>=40?2:y>=22?1:0;origin=4+18*row;
  idx=local_x/12'd12;ch=32;status_text=32'h4e4f4e45; // NONE
  case(fusion_result[10:8])
@@ -64,11 +76,11 @@ always @*begin
    7:ch=(64'h5348415045202020>>(56-idx*8));
   endcase
   else case(idx)
-   9:ch="T";10:ch=48+threshold/1000;11:ch=48+(threshold/100)%10;
-   12:ch=48+(threshold/10)%10;13:ch=48+threshold%10;
+   9:ch=menu!=0?"V":"T";10:ch=48+shown/1000;11:ch=48+(shown/100)%10;
+   12:ch=48+(shown/10)%10;13:ch=48+shown%10;
    15:ch="M";16:ch="E";17:ch="D";18:ch=median_en?"1":"0";
    20:ch="F";21:ch=hexchar({2'b0,memory_mode});23:ch="I";24:ch=hexchar({1'b0,history_index});
-   26:ch="C";27:ch=canny_ready?"1":"0";
+   26:ch=menu==0?"C":"M";27:ch=menu==0?(canny_ready?"1":"0"):hexchar({1'b0,mode});
    29:ch=(mode==5||mode==6)?"R":" ";
    30:ch=(mode==5||mode==6)?48+requested_threshold/1000:32;
    31:ch=(mode==5||mode==6)?48+(requested_threshold/100)%10:32;
@@ -76,6 +88,7 @@ always @*begin
    33:ch=(mode==5||mode==6)?48+requested_threshold%10:32;
    default:ch=32;
   endcase
+  if(menu!=0&&idx<8)ch=menu_text>>(56-idx*8);
  end
  else if(row==1&&shape_enable)begin
   case(idx)

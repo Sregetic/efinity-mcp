@@ -1,0 +1,26 @@
+[
+  {
+    "magic": "56495331",
+    "build": "26100940",
+    "mode": 3,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 64,
+    "raw": "564953312610094078700407000800000000000000000000",
+    "capture_id": 524288,
+    "display_id": 0,
+    "canny_completed": 0,
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1791516127.0445075,
+    "menu": 0,
+    "menu_value": 0,
+    "shape_threshold": 32,
+    "requested_config_id": 0,
+    "accepted_config_id": 0
+  }
+]

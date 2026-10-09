@@ -26,7 +26,9 @@ initial begin
  old=ex;for(i=0;i<12;i=i+1)image(255,1);
  if(ex>=old||nh!=nt||nc!=64||nt!=64)$fatal(1,"clipped scene/metering failed");
  for(i=0;i<8;i=i+1)image(60,1);old=ex;
+ if(boost)$fatal(1,"bright scene did not release shadow boost");
  for(i=0;i<10;i=i+1)image(24,0);
+ if(boost)$fatal(1,"frozen source changed shadow boost");
  if(ex!=old)$fatal(1,"frozen source changed exposure");
  fault=1;for(i=0;i<10;i=i+1)image(255,1);if(ex!=old)$fatal(1,"fault changed exposure");
  fault=0;en=0;manual=600;for(i=0;i<12;i=i+1)image(24,1);if(ex!=600)$fatal(1,"manual override failed");

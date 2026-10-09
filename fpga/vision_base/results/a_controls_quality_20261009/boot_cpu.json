@@ -1,0 +1,21 @@
+[
+  {
+    "magic": "56495331",
+    "build": "2610081d",
+    "raw": "564953312610081d00000000000000000000000000000000",
+    "sample_time_s": 1791514061.0894654,
+    "flyhash_valid": 0,
+    "flyhash_busy": 0,
+    "flyhash_feature_ready": 0,
+    "flyhash_fault": 0,
+    "flyhash_context_valid": 0,
+    "flyhash_loaded": 0,
+    "flyhash_sequence": 0,
+    "flyhash_backend": "firmware_ddr",
+    "flyhash_cycles": null,
+    "flyhash_cycle_low13": 0,
+    "flyhash_frame_id": 0,
+    "flyhash_config_id": 0,
+    "flyhash_epoch": 0
+  }
+]

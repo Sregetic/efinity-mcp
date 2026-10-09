@@ -3,7 +3,7 @@ module tb_vision_control_bridge;
 reg clk=0,video_clk=0;always #5 clk=~clk;always #3.367 video_clk=~video_clk;
 reg rst_n=0,vs=0,cmd_event=0;reg[2:0]keys_n=7;reg[7:0]cmd_op=0,paddr=0;reg[23:0]cmd_value=0;
 reg psel=0,penable=0,pwrite=0;reg[31:0]pwdata=0;wire[31:0]prdata;wire pready,pslverror;
-wire[2:0]mode,history_index;wire median_en;wire[1:0]memory_mode;wire[10:0]sobel_threshold,canny_threshold,threshold;
+wire[7:0]shape_threshold;wire[13:0]ui_state;wire[2:0]mode,history_index;wire median_en;wire[1:0]memory_mode;wire[10:0]sobel_threshold,canny_threshold,threshold;
 reg job_ready=0,capture_done=0,capture_error=0,source_hold_valid=0,render_done=0,render_error=0,render_pending=0,vblank=0,scan_busy=0;
 reg[31:0]capture_count=0;wire job_valid,enable,freeze_source;wire[31:0]job_config_id;
 wire[15:0]roi_x,roi_y,roi_w,roi_h,dst_w,dst_h,display_x,display_y;
@@ -42,10 +42,12 @@ initial begin
  end
  @(negedge video_clk);keys_n[0]=0;repeat(30)@(negedge video_clk);keys_n[0]=1;repeat(9)@(negedge clk);
  rd(4,v);if(v!=32'hff000008)$fatal(1,"long key event");rd(4,v);if(v)$fatal(1,"long press also emitted short");
- wr(8,5|(1<<3)|(1<<4)|(96<<9)|(48<<20));repeat(8)@(negedge video_clk);
+ wr('h44,(48<<14)|(3<<11)|1408);wr(8,5|(1<<3)|(1<<4)|(96<<9)|(48<<20));repeat(8)@(negedge video_clk);
+ if(ui_state!=0)$fatal(1,"menu changed before VS");
  if(mode!=3||sobel_threshold!=128)$fatal(1,"feature changed before VS");
  rd('h0c,v);if(!(v&1))$fatal(1,"missing pending atomic commit");frame;
  if(mode!=5||!median_en||threshold!=48||sobel_threshold!=96||memory_mode!=1)$fatal(1,"atomic settings");
+ if(ui_state!=((3<<11)|1408)||shape_threshold!=48)$fatal(1,"menu/settings not atomic");
  repeat(8)@(negedge clk);if(!freeze_source)$fatal(1,"freeze CDC");
  wr('h20,(13<<12)|7);wr('h24,(37<<12)|45);wr('h28,(80<<12)|64);wr('h2c,(8<<12)|12);
  wr('h34,17);wr('h3c,17);wr('h38,1);wr('h30,7);

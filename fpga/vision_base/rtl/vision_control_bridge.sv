@@ -13,11 +13,11 @@ module vision_control_bridge #(parameter W=1920,H=1080,DEBOUNCE=2970000,LONG_PRE
  output[15:0]roi_x,roi_y,roi_w,roi_h,dst_w,dst_h,
  output reg[15:0]display_x,display_y,
  output config_busy,commit_rejected,output[31:0]requested_id,
- output config_error,output reg[31:0]committed_id,output[31:0]rejected_id
+ output config_error,output reg[31:0]committed_id,output[31:0]rejected_id,output reg[13:0]ui_state=0,output reg[7:0]shape_threshold=32
 );
  wire[2:0]short_p,long_p;reg[5:0]key_pending=0;
  vision_keys #(.DEBOUNCE(DEBOUNCE),.LONG_PRESS(LONG_PRESS)) keys(video_clk,rst_n,keys_n,short_p,long_p);
- wire control_cmd=cmd_op>=1&&cmd_op<=5||cmd_op==8'h28||cmd_op==8'h29||cmd_op==8'h60||cmd_op>=8'h30&&cmd_op<=8'h35;
+ wire control_cmd=cmd_op>=1&&cmd_op<=5||cmd_op==23||cmd_op==8'h28||cmd_op==8'h29||cmd_op>=8'h60&&cmd_op<=8'h62||cmd_op>=8'h30&&cmd_op<=8'h35;
  wire cmd_valid=cmd_event&&control_cmd;
  wire in_valid=cmd_valid||key_pending!=0;wire in_ready;
  wire[31:0]in_data=cmd_valid?{cmd_op,cmd_value}:{8'hff,18'b0,key_pending};
@@ -34,17 +34,18 @@ module vision_control_bridge #(parameter W=1920,H=1080,DEBOUNCE=2970000,LONG_PRE
   end
  end
  reg[30:0]settings=31'(3|(128<<9)|(128<<20));reg apply_request=0,apply_ack=0;
+ reg[21:0]ui_pending=22'(32<<14);
  (* async_reg="true" *)reg[2:0]apply_sync=0;(* async_reg="true" *)reg[1:0]ack_sync=0;
  reg[30:0]active=31'(3|(128<<9)|(128<<20));reg vq=0;
  wire apply_busy=apply_request!=ack_sync[1];
  assign mode=active[2:0],median_en=active[3],memory_mode=active[5:4],history_index=active[8:6];
  assign sobel_threshold=active[19:9],canny_threshold=active[30:20];
- assign threshold=(mode==5||mode==6)?canny_threshold:sobel_threshold;
+ assign threshold=mode==7?{3'b0,shape_threshold}:(mode==5||mode==6)?canny_threshold:sobel_threshold;
  always @(posedge video_clk)begin
-  if(!rst_n)begin apply_sync<=0;apply_ack<=0;active<=31'(3|(128<<9)|(128<<20));vq<=0;end
+  if(!rst_n)begin apply_sync<=0;apply_ack<=0;active<=31'(3|(128<<9)|(128<<20));vq<=0;ui_state<=0;shape_threshold<=32;end
   else begin
    apply_sync<={apply_sync[1:0],apply_request};vq<=vs;
-   if(vs&&!vq&&apply_sync[2]!=apply_ack)begin active<=settings;apply_ack<=apply_sync[2];end
+   if(vs&&!vq&&apply_sync[2]!=apply_ack)begin active<=settings;{shape_threshold,ui_state}<=ui_pending;apply_ack<=apply_sync[2];end
   end
  end
  reg[11:0]rx=0,ry=0,rw=W,rh=H,dw=W,dh=H,dx=0,dy=0,jdx=0,jdy=0;
@@ -68,7 +69,7 @@ module vision_control_bridge #(parameter W=1920,H=1080,DEBOUNCE=2970000,LONG_PRE
  end
  always @(posedge clk)begin
   if(!rst_n)begin
-   ack_sync<=0;overflow_sync<=0;settings<=31'(3|(128<<9)|(128<<20));apply_request<=0;
+   ack_sync<=0;overflow_sync<=0;settings<=31'(3|(128<<9)|(128<<20));apply_request<=0;ui_pending<=22'(32<<14);
    rx<=0;ry<=0;rw<=W;rh<=H;dw<=W;dh<=H;dx<=0;dy<=0;jdx<=0;jdy<=0;
    roi_enabled<=0;job_pending<=0;error_latch<=0;config_id<=0;requested<=0;rejected<=0;committed_id<=0;fw_busy<=0;fw_rejected<=0;ms<=0;display_x<=0;display_y<=0;
   end else begin
@@ -87,6 +88,7 @@ module vision_control_bridge #(parameter W=1920,H=1080,DEBOUNCE=2970000,LONG_PRE
     8'h38:begin fw_busy<=pwdata[0];fw_rejected<=pwdata[1];if(pwdata[2])error_latch<=1;end
     8'h3c:requested<=pwdata;
     8'h40:rejected<=pwdata;
+    8'h44:ui_pending<=pwdata[21:0];
    endcase
   end
  end

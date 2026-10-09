@@ -9,7 +9,7 @@ rgb_chroma_tone #(
  .SHADOW_FILE("board/ti60f225_v4/rtl/gamma_conrrection/chroma_shadow_gain_q8.mem"),
  .GAIN_FILE("board/ti60f225_v4/rtl/gamma_conrrection/chroma_tone_gain_q8.mem")
 ) dut(clk,1'b1,1'b0,1'b0,1'b0,8'd0,8'd0,8'd0,
- od,oh,ov,rgb,linear_rgb,gr,gg,gb,plain_rgb,hit,1'b0);
+ od,oh,ov,rgb,linear_rgb,gr,gg,gb,plain_rgb,hit,1'b0,1'b0,);
 
 function automatic[143:0]reference(input[15:0]gain);
  integer k,c,l;
