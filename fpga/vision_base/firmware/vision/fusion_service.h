@@ -8,6 +8,7 @@ enum { FUS_NONE=0,FUS_WAIT=1,FUS_TEST=2,FUS_AGREE=3,FUS_CONFLICT=4,FUS_UNKNOWN=5
 struct fusion_geometry { uint32_t sequence,frame,render,context,hi,lo; };
 struct fusion_job {
  struct fusion_geometry g;uint32_t xy,wh,box0,box1,model,test,minimum_margin,geometry_class,exact,automatic;
+ uint32_t telemetry,timing0,timing1;
 };
 static struct fusion_geometry fusion_geometry_read(void){
  struct fusion_geometry g;
@@ -72,13 +73,13 @@ static uint32_t fusion_flags(const struct fusion_job *j,unsigned label,const int
 }
 extern volatile uint32_t fusion_result[16];
 static void fusion_publish(const struct fusion_job *j,uint32_t source_config,uint32_t flags,uint32_t scores){
- flags|=j->automatic<<3;
- const uint32_t words[9]={flags,j->g.frame,source_config,j->g.render,j->model,j->g.context,j->box0,j->box1,scores};
+ flags|=(j->automatic<<3)|j->telemetry;
+ const uint32_t words[11]={flags,j->g.frame,source_config,j->g.render,j->model,j->g.context,j->box0,j->box1,scores,j->timing0,j->timing1};
  static uint32_t sequence=0;
  fusion_result[15]=1;fusion_result[0]=0x46555331u;
  for(unsigned i=0;i<9;i++)fusion_result[2+i]=words[i];
  fusion_result[11]=j->xy;fusion_result[12]=j->wh;fusion_result[13]=j->g.sequence;
  __asm__ volatile("fence rw,rw":::"memory");fusion_result[1]=++sequence;fusion_result[15]=0;
- for(unsigned i=0;i<9;i++)FUS_W(0x80+4*i,words[i]);
+ for(unsigned i=0;i<11;i++)FUS_W(0x80+4*i,words[i]);
  FUS_W(8,1);
 }

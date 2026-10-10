@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "frame_id": 16833,
+  "sequences": [
+    5,
+    6
+  ],
+  "render_configs": [
+    3,
+    4
+  ],
+  "contexts": [
+    14,
+    14
+  ],
+  "rois": [
+    [
+      736,
+      302,
+      960,
+      540
+    ],
+    [
+      768,
+      302,
+      960,
+      540
+    ]
+  ],
+  "selftest": 2,
+  "image": "osd_release/mode_0.png",
+  "scope": "Actual CPU/DMA/DDR and internal display pixels, not physical HDMI or recognition accuracy"
+}

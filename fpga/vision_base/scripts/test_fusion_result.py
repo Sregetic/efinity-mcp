@@ -4,6 +4,8 @@ r=decode(w)
 assert r['frame_id']==100 and r['source_config_id']==900 and r['render_config_id']==4
 assert r['scores']==[-1,-128,1,127] and r['roi']==[600,250,240,300]
 assert r['state']=='test' and r['automatic_roi'] and r['synthetic_model']
+w[2]|=(2<<11)|(2<<13)|(42<<16)
+r=decode(w);assert r['analysis_state']=='done' and r['selftest']=='pass' and r['completed_sequence_low16']==42
 for v in [w[:-1],w[:15]+[1],[0,*w[1:]],w[:2]+[0xa107a107]+w[3:]]:
  try:decode(v)
  except ValueError:pass

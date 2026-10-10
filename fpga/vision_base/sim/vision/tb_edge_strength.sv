@@ -1,8 +1,8 @@
 `timescale 1ns/1ps
 module tb;
 reg clk=0;reg[2:0]mode=2;reg[7:0]coverage=0;wire[7:0]r,g,b;
-vision_display dut(.ui_state(14'd0),.clk(clk),.rst_n(1'b1),.de(1'b0),.hs(1'b0),.vs(1'b0),.r(8'd0),.g(8'd0),.b(8'd0),
- .mode(mode),.threshold(11'd64),.median_en(1'b0),.memory_mode(2'd0),.history_index(3'd0),
+vision_display dut(.ui_state(15'd0),.clk(clk),.rst_n(1'b1),.de(1'b0),.hs(1'b0),.vs(1'b0),.r(8'd0),.g(8'd0),.b(8'd0),
+ .analysis_identity_match(1'b0),.mode(mode),.threshold(11'd64),.median_en(1'b0),.memory_mode(2'd0),.history_index(3'd0),
  .canny_pixel(1'b0),.canny_ready(1'b1),.canny_coverage(coverage),.orr(r),.ogg(g),.obb(b),
  .shape_enable(1'b0),.shape_threshold(8'd32),.canny_effective_threshold(11'd80),.canny_requested_threshold(11'd80));
 always #5 clk=~clk;

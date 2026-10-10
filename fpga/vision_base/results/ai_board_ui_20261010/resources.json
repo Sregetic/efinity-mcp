@@ -1,0 +1,31 @@
+{
+  "xlr": 60082,
+  "xlr_capacity": 60800,
+  "xlr_free": 718,
+  "ram": 252,
+  "ram_capacity": 256,
+  "ram_free": 4,
+  "dsp": 59,
+  "dsp_capacity": 160,
+  "dsp_free": 101,
+  "wns_ns": 0.077,
+  "whs_ns": 0.026,
+  "unassigned_core_pins": 0,
+  "baseline": {
+    "xlr": 59952,
+    "ram": 251,
+    "dsp": 59
+  },
+  "delta": {
+    "xlr": 130,
+    "ram": 1,
+    "dsp": 0
+  },
+  "optimization_level": "TIMING_3",
+  "seed": 5,
+  "physical_programmed": true,
+  "configuration_flash_written": true,
+  "physical_hdmi_acceptance": false,
+  "physical_power_cycle_verified": false,
+  "neural_hardware_added": false
+}

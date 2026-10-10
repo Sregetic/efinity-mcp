@@ -5,7 +5,7 @@ always #5 clk=~clk;always #7 video_clk=~video_clk;
 reg[31:0]view_frame=11,view_config=4,geometry_frame=11,geometry_config=4,geometry_context=0;
 reg[87:0]signature=1;reg[63:0]geometry_status=64'hc200100120200220;
 reg[7:0]paddr=0;reg psel=0,penable=0,pwrite=0;reg[31:0]pwdata=0;
-wire[31:0]prdata,context_id;wire pready,pslverror,enabled,context_changed,result_match;wire[287:0]result;wire[15:0]result_age;
+wire[31:0]prdata,context_id;wire pready,pslverror,enabled,context_changed,result_match,result_identity_match;wire[351:0]result;wire[15:0]result_age;
 vision_ai_bridge dut(.*);
 task boundary;
  begin @(negedge video_clk);vs=1;repeat(2)@(negedge video_clk);vs=0;repeat(5)@(negedge video_clk);end
@@ -18,6 +18,7 @@ task publish(input[31:0]model);
  begin
  write(8'h80,32'h203);write(8'h84,11);write(8'h88,321);write(8'h8c,4);
  write(8'h90,model);write(8'h94,context_id);write(8'h98,32'h012c0280);write(8'h9c,32'h01c20320);write(8'ha0,32'h12345678);
+ write(8'ha4,32'h00670abc);write(8'ha8,32'h00003c28);
  write(8,1);
  end
 endtask
@@ -32,6 +33,7 @@ initial begin
  paddr=8'h80;psel=1;penable=1;pwrite=1;pwdata=32'hffffffff;#1;
  if(pready)$fatal(1,"producer overwrote held packet");psel=0;penable=0;pwrite=0;
  boundary;if(!result_match||result_age!=0||result[159:128]!=1||result[287:256]!=32'h12345678)$fatal(1,"atomic publication");
+ if(result[351:288]!=64'h00003c2800670abc)$fatal(1,"timings separated from VS packet");
  view_frame=12;#1;if(result_match||result_age!=1)$fatal(1,"stale box accepted");
  view_frame=11;view_config=5;#1;if(result_match)$fatal(1,"render config mismatch accepted");view_config=4;
  signature=2;boundary;if(result_match)$fatal(1,"processing context mismatch accepted");
@@ -42,6 +44,7 @@ initial begin
  geometry_context=context_id;@(negedge video_clk);geometry_done=1;@(negedge video_clk);geometry_done=0;
  repeat(8)@(negedge clk);paddr=8'h10;#1;if(prdata!=2)$fatal(1,"fresh geometry lost");
  frame_ok=0;#1;if(result_match)$fatal(1,"failed scan accepted");
+ if(!result_identity_match)$fatal(1,"ROI top blanking falsely invalidated completed task identity");
  $display("PASS tb_vision_ai_bridge asynchronous geometry, held packet/backpressure, VS commit, source/config/context/model, age and failed scan");$finish;
 end
 initial begin #100000;$fatal(1,"watchdog");end

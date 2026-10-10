@@ -1,0 +1,2 @@
+PASS OSD compact selectors 880000 pixels, all10 menus and outside-HUD aliases
+results/ai_board_ui_20261010/tb_osd_equivalence.sv:21: $finish called at 9096006000 (1ps)

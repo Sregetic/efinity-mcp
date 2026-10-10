@@ -9,7 +9,11 @@ p.add_argument('--main',type=Path,default=SRC/'main.c')
 p.add_argument('--output-dir',type=Path)
 p.add_argument('--boot-kb',type=int,choices=[4,8],default=8)
 p.add_argument('--mulhi-cfu',action='store_true',help='Requires a bitstream with CFU function1; never load this ELF on the old dot4-only build')
+p.add_argument('--weights',type=Path,default=ROOT/'models/shape_cards_bringup/shape_cards_weights.bin')
 a=p.parse_args()
+if a.main.name=='ai_main.c':
+ from build_ai_selftest import generate
+ generate(a.weights,SRC/'ai_selftest_data.h')
 OUT=a.output_dir.resolve() if a.output_dir else ROOT/'artifacts/vision_soc'/('firmware' if a.load_method=='embedded' else 'ddr_firmware')
 BIN=Path('F:/Efinity/efinity-riscv-ide-2026.1/toolchain/bin')
 OUT.mkdir(parents=True,exist_ok=True)

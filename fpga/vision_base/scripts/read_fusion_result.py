@@ -7,7 +7,7 @@ def decode(words):
     if len(words)!=16 or words[0]!=0x46555331 or not words[1] or words[15]:
         raise ValueError('Incomplete fusion producer record')
     flags=words[2];state=(flags>>8)&7
-    if flags&~0x7ff:raise ValueError('Fusion flags contain bits outside ABI')
+    if flags&(1<<15):raise ValueError('Fusion flags contain bits outside ABI')
     if state>=len(STATES):raise ValueError('Fusion state outside ABI')
     def xy(v):return [v&65535,v>>16]
     return dict(sequence=words[1],flags=flags,state=STATES[state],inference_valid=bool(flags&1),
@@ -15,7 +15,7 @@ def decode(words):
         geometry_class=(flags>>4)&3,ai_class=(flags>>6)&3,frame_id=words[3],source_config_id=words[4],
         render_config_id=words[5],model_id=words[6],processing_context=words[7],
         display_box=[*xy(words[8]),*xy(words[9])],scores=[((words[10]>>(8*i))&255)-256 if (words[10]>>(8*i))&128 else (words[10]>>(8*i))&255 for i in range(4)],
-        roi=[*xy(words[11]),*xy(words[12])],geometry_sequence=words[13])
+        roi=[*xy(words[11]),*xy(words[12])],geometry_sequence=words[13],analysis_state=['idle','run','done','error'][(flags>>11)&3],selftest=['none','running','pass','fail'][(flags>>13)&3],completed_sequence_low16=flags>>16)
 def main():
     p=argparse.ArgumentParser();p.add_argument('--url',required=True);p.add_argument('--elf',type=Path,required=True);p.add_argument('--output-dir',type=Path,required=True);a=p.parse_args()
     _,_,s=validate_image(a.elf,None);sym=symbols(a.elf);address=sym['fusion_result'];a.output_dir.mkdir(parents=True,exist_ok=True)

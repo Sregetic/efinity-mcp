@@ -15,7 +15,7 @@ def main():
   cmd+=['--roi-status'] if roi else ['--page','32','--samples','1']
   r=subprocess.run(cmd,check=True,capture_output=True,text=True);v=json.loads(r.stdout)
   if not roi:
-   v=v[0];assert v['build']=='26100940',v
+   v=v[0];assert v['build']=='26101040',v
   return v
  def settled(label,predicate):
   deadline=time.monotonic()+12

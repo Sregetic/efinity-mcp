@@ -1345,7 +1345,7 @@ end else begin:pool_raster
 end endgenerate
 wire[7:0]control_paddr;wire control_psel,control_penable,control_pwrite,control_pready,control_pslverror;
 wire[31:0]control_pwdata,control_prdata;
-wire[13:0]control_ui;wire[7:0]control_shape_threshold;wire tone_shadow_frame;
+wire[14:0]control_ui;wire[7:0]control_shape_threshold;wire tone_shadow_frame;
 wire[3:0]boot_gpio;
 assign flash_sck=boot_gpio[0],flash_cs=boot_gpio[1],flash_mosi=boot_gpio[2];
 assign flash_wp=1'b1,flash_hold=1'b1,{flash_cs_oe,flash_sck_oe,flash_mosi_oe,flash_wp_oe,flash_hold_oe}={5{boot_gpio[3]}};
@@ -1634,7 +1634,7 @@ wire[7:0]shape_threshold=SAPPHIRE_ENABLE?control_shape_threshold:shape_hw_thresh
 wire[63:0]shape_status;
 wire ai_enabled,ai_context_changed,ai_match,geometry_done;
 wire[31:0]ai_context,geometry_frame,geometry_config,geometry_context;
-wire[287:0]ai_result;wire[15:0]ai_age;
+wire ai_identity;wire[351:0]ai_result;wire[15:0]ai_age;
 wire[7:0]ai_paddr;wire ai_psel,ai_penable,ai_pwrite,ai_pready,ai_pslverror;
 wire[31:0]ai_pwdata,ai_prdata;
 
@@ -1674,9 +1674,9 @@ generate if(SAPPHIRE_ENABLE&&ANALYSIS_DMA_ENABLE)begin:ai_link
   .signature({tone_shadow_frame,wb_r,wb_g,wb_b,tone_mode,color_order,feature_mode,feature_median,sobel_threshold,canny_threshold,shape_threshold}),
   .geometry_done(geometry_done),.geometry_frame(geometry_frame),.geometry_config(geometry_config),.geometry_context(geometry_context),.geometry_status(shape_status),
   .paddr(ai_paddr),.psel(ai_psel),.penable(ai_penable),.pwrite(ai_pwrite),.pwdata(ai_pwdata),.prdata(ai_prdata),.pready(ai_pready),.pslverror(ai_pslverror),
-  .enabled(ai_enabled),.context_changed(ai_context_changed),.context_id(ai_context),.result(ai_result),.result_match(ai_match),.result_age(ai_age));
+  .enabled(ai_enabled),.context_changed(ai_context_changed),.context_id(ai_context),.result(ai_result),.result_match(ai_match),.result_identity_match(ai_identity),.result_age(ai_age));
 end else begin:no_ai_link
- assign ai_enabled=0,ai_context_changed=0,ai_context=0,ai_result=0,ai_match=0,ai_age=0,ai_prdata=0,ai_pready=1,ai_pslverror=1;
+ assign ai_enabled=0,ai_context_changed=0,ai_context=0,ai_result=0,ai_match=0,ai_identity=0,ai_age=0,ai_prdata=0,ai_pready=1,ai_pslverror=1;
 end endgenerate
 wire[95:0]pre_gamma_sums,post_gamma_sums,display_color_sums,post_gamma_clips,unused_pre_clips,unused_display_clips;
 generate if(IMAGE_DEBUG==1)begin:color_debug
@@ -1724,10 +1724,10 @@ vision_display #(.FUSION(SAPPHIRE_ENABLE&&ANALYSIS_DMA_ENABLE)) feature_display(
  .memory_mode(memory_mode),.history_index(history_index),.canny_pixel(canny_pixel),.canny_ready(canny_ready),.canny_coverage(canny_coverage),.cx(feature_x),.cy(feature_y),
  .ode(feature_de),.ohs(feature_hs),.ovs(feature_vs),.orr(feature_r),.ogg(feature_g),.obb(feature_b),.debug_mag(feature_mag),.debug_edge(feature_edge),.shape_enable(shape_enable),.shape_threshold(shape_threshold),.shape_status(shape_status),.coordinate_de(feature_coordinate_de),
  .ui_state(control_ui),.analysis_enabled(ai_enabled),.analysis_context_changed(ai_context_changed),.frame_id(roi_view_frame),.render_config_id(roi_view_config),.analysis_context(ai_context),
- .analysis_result(ai_result),.analysis_match(ai_match),.analysis_age(ai_age),.geometry_done(geometry_done),.geometry_frame(geometry_frame),.geometry_config(geometry_config),.geometry_context(geometry_context));
+ .analysis_result(ai_result),.analysis_match(ai_match),.analysis_identity_match(ai_identity),.analysis_age(ai_age),.geometry_done(geometry_done),.geometry_frame(geometry_frame),.geometry_config(geometry_config),.geometry_context(geometry_context));
 // M0 is an ISP bypass only when filtering is off. HDMI and readback share
 // this selection so the displayed camera image obeys the same noise switch.
-wire camera_bypass=feature_mode==0&&!feature_median&&control_ui[13:11]==0;
+wire camera_bypass=feature_mode==0&&!feature_median&&control_ui[14:11]==0;
 assign {video_r,video_g,video_b}=camera_bypass?color_pixel:{feature_r,feature_g,feature_b};
 assign video_de=camera_bypass?gamma_valid:feature_de;
 assign video_hs=camera_bypass?gamma_hs:feature_hs;
@@ -2247,7 +2247,7 @@ always @(posedge jtag_diag_DRCK) begin
     else diag_shift<={32'h56495331,32'h2610051f,flyhash_result[255:128]};
    end
    6'd32: begin
-    if(SAPPHIRE_ENABLE) diag_shift<={32'h56495331,32'h26100940,feature_status,10'b0,shape_threshold,control_ui,roi_requested_id,roi_commit_id};
+    if(SAPPHIRE_ENABLE) diag_shift<={32'h56495331,32'h26101040,feature_status,9'b0,shape_threshold,control_ui,roi_requested_id,roi_commit_id};
     else diag_shift<={32'h56495331,32'h26091707,feature_status,memory_capture_id,memory_display_id,canny_completed};
    end
    default: diag_shift<={32'h56495331,32'h26091707,feature_status,memory_capture_id,memory_display_id,canny_completed};

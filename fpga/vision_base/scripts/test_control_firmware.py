@@ -64,7 +64,7 @@ void main(void){
  event(0x61,0);event(255,8);check(state.menu==1);event(255,2);check(state.settings&8);event(255,4);check(!(state.settings&8));
  event(0x30,0);event(0x31,(1920u<<12)|1080);event(0x32,(1920u<<12)|1080);event(0x33,0);
  event(255,8);check(state.menu==2);event(255,2);check(state.roi[0]==((480u<<12)|270)&&state.roi[1]==((960u<<12)|540));
- apply();check(state.pending==2&&reg[0x44/4]==((32u<<14)|(2u<<11)|960));
+ apply();check(state.pending==2&&reg[0x44/4]==((32u<<15)|(2u<<11)|960));
  event(255,2);check(state.roi[1]==((480u<<12)|270)&&state.key_roi_dirty);accept();accept();check(state.good&&!state.pending);
  event(255,8);check(state.menu==3);unsigned old_x=state.roi[0]>>12;event(255,2);check((state.roi[0]>>12)==old_x+32);
  for(unsigned i=0;i<100;i++)event(255,2);check((state.roi[0]>>12)==1440);event(255,4);check((state.roi[0]>>12)==1408);
@@ -74,8 +74,13 @@ void main(void){
  event(255,8);for(unsigned i=0;i<100;i++)event(255,2);check((state.roi[3]&4095)==540);
  event(0x61,5);event(255,2);check(state.roi[2]==((1920u<<12)|1080)&&state.roi[3]==0);
  event(0x61,2);for(unsigned i=0;i<10;i++)event(255,4);check(state.roi[0]==0&&state.roi[1]==((1920u<<12)|1080)&&!state.roi_enable);
- event(0x61,7);event(255,8);check(state.menu==0);apply();accept();control_service_step();check(!state.enabled&&!state.pending);
- const char *p="PASS RV32I controls independent thresholds16..2047 step16, keys/history,8-page UI, bounded zoom/pan/viewport, coalesced frozen ROI commits, atomic feature wait and disable\n";
+ event(0x61,7);event(255,8);check(state.menu==8);
+ event(255,2);check(state.ai_policy==2&&!state.ai_manual);event(255,2);check(state.ai_policy==0);event(255,4);check(state.ai_request==0);
+ event(255,2);check(state.ai_policy==1&&state.ai_manual);event(255,4);check(state.ai_request==1);
+ event(255,16);check(((state.settings>>4)&3)==0);event(255,16);check(((state.settings>>4)&3)==1);
+ event(255,8);check(state.menu==9);event(255,2);check(state.selftest_request==1);event(255,4);check(state.selftest_request==1);
+ event(255,8);check(state.menu==0);event(0x60,1);check(!state.ai_manual);apply();accept();control_service_step();check(!state.enabled&&!state.pending);
+ const char *p="PASS RV32I controls independent thresholds16..2047 step16, keys/history,10-page UI/AI single-shot/selftest, bounded zoom/pan/viewport, coalesced frozen ROI commits, atomic feature wait and disable\n";
  while(*p)*(volatile unsigned char *)0x10000000=*p++;finish(1);
 }
 void trap(void){finish(0);}

@@ -9,11 +9,12 @@ struct vision_control_state {
  uint32_t serial,pending,enabled,good,warming,dirty,capture,freeze,reject;
  uint32_t roi[4],commit[4],roi_enable,commit_enable,ai_policy;
  uint32_t menu,key_roi_dirty,shape_threshold;
+ uint32_t ai_manual,ai_request,selftest_request;
 };
 #ifndef CONTROL_TEST
 #define CONTROL_STATE ((struct vision_control_state *)0x07620200u)
 #endif
-#define CONTROL_MAGIC 0x434f4e33u
+#define CONTROL_MAGIC 0x434f4e34u
 static uint32_t threshold_up(uint32_t v){return v>2031?2047:v+16;}
 static uint32_t threshold_down(uint32_t v){return v<32?16:v-16;}
 static void control_threshold(struct vision_control_state *s,unsigned shift,uint32_t value){
@@ -51,7 +52,8 @@ static uint32_t control_ui(struct vision_control_state *s){
  else if(m==5)v=s->roi[2]>>12;
  else if(m==6)v=s->roi[3]>>12;
  else if(m==7)v=s->roi[3]&4095;
- return (s->shape_threshold<<14)|(m<<11)|v;
+ else if(m==8)v=s->ai_policy;
+ return (s->shape_threshold<<15)|(m<<11)|v;
 }
 static void control_event(uint32_t event){
  struct vision_control_state *s=CONTROL_STATE;
@@ -59,9 +61,13 @@ static void control_event(uint32_t event){
  unsigned mode=s->settings&7,mem=(s->settings>>4)&3,index=(s->settings>>6)&7;
  if(op==255||op==0x62){
   if(v&1)s->settings=(s->settings&~7u)|((mode+1)&7);
-  if(v&8)s->menu=(s->menu+1)&7;
+  if(v&8)s->menu=s->menu==9?0:s->menu+1;
   for(unsigned key=1;key<=2;key++)if(v&(1u<<key)){
-   if(s->menu==1)s->settings=(s->settings&~8u)|(key==1?8:0);
+   if(s->menu==8){
+    if(key==1){s->ai_policy=(s->ai_policy+1)%3;s->ai_manual=s->ai_policy==1;}
+    else if(s->ai_policy)s->ai_request++;
+   }else if(s->menu==9){if(key==1)s->selftest_request++;}
+   else if(s->menu==1)s->settings=(s->settings&~8u)|(key==1?8:0);
    else if(s->menu>=2)control_roi_key(s,key==1);
    else if(mem>=2){unsigned next=key==1?(index>=5?0:index+1):(index==0||index>5?5:index-1);s->settings=(s->settings&~(7u<<6))|(next<<6);}
    else if(mode==7){unsigned t=s->shape_threshold;s->shape_threshold=key==1?(t>239?255:t+16):(t<=17?1:t-16);}
@@ -83,8 +89,9 @@ static void control_event(uint32_t event){
   case 0x30:s->roi[0]=v;break;case 0x31:s->roi[1]=v;break;
   case 0x32:s->roi[2]=v;break;case 0x33:s->roi[3]=v;break;
   case 0x34:s->roi_enable=v&1;break;
-  case 0x60:if(v<=2)s->ai_policy=v;break;
-  case 0x61:if(v<=7){s->menu=v;s->feature_dirty=1;}break;
+  // Development view policy remains continuous; the board FIX page is single-shot.
+  case 0x60:if(v<=2){s->ai_policy=v;s->ai_manual=0;s->feature_dirty=1;}break;
+  case 0x61:if(v<=9){s->menu=v;s->feature_dirty=1;}break;
   case 0x35:
    if(s->pending){s->reject=1;CTRL_W(0x38,3);break;}
    control_submit(s);break;

@@ -2,6 +2,7 @@
 #include "flyhash_service.h"
 #include "fusion_service.h"
 #include "connectome.h"
+#include "ai_selftest.h"
 #define REG(off) (*(volatile uint32_t *)(0xf8100000u+(off)))
 #define DMA(off) REG(0x100u+(off))
 extern const uint8_t __weights_start[];
@@ -17,25 +18,40 @@ volatile uint32_t analysis_control[9]={5,0,640u|(300u<<16),640u|(480u<<16),0,1,1
 volatile uint32_t fusion_result[16];
 volatile int16_t analysis_connectome[80];
 volatile uint32_t connectome_result[10];
+/* state, selftest, completed sequence, INT8/FlyHash/network us, frame, context. */
+volatile uint32_t ai_runtime[8];
+static uint32_t ai_us(uint32_t cycles){uint32_t us=cycles/100;return us>65535?65535:us;}
+static void ai_publish(struct fusion_job *j,uint32_t config,uint32_t flags,uint32_t scores){
+ j->telemetry=(ai_runtime[0]<<11)|(ai_runtime[1]<<13)|((ai_runtime[2]&65535)<<16);
+ j->timing0=ai_runtime[0]==2?ai_runtime[3]|(ai_runtime[4]<<16):0;
+ j->timing1=ai_runtime[0]==2?ai_runtime[5]:0;
+ fusion_publish(j,config,flags|(j->test<<1),scores);
+}
 void main(void){
  const struct shape_model *m=(const struct shape_model *)__weights_start;
  if(CONTROL_STATE->magic==0)control_init(); // SPI boot clears it; USER1 replacement preserves the live UI.
- if(m->magic!=0x53434d31u||DMA(0x2c)!=3||CTRL_R(0)!=0x26100802u||CONTROL_STATE->magic!=CONTROL_MAGIC||FUS_R(0)!=0x26100803u){REG(4)=3;for(;;);}
+ if(m->magic!=0x53434d31u||DMA(0x2c)!=3||CTRL_R(0)!=0x26101002u||CONTROL_STATE->magic!=CONTROL_MAGIC||FUS_R(0)!=0x26101003u){REG(4)=3;for(;;);}
 #ifdef VISION_MULHI_CFU
  if(m->s0>-2||m->s1>-2||m->s0<-30||m->s1<-30){REG(4)=3;for(;;);}
 #endif
  uint32_t last=REG(0x30)-10000000u,sequence=0,failures=0,seen=0,policy=3,policy_geometry_sequence=0;
- struct fusion_job job={0};uint32_t key[12]={0};
+ struct fusion_job job={.model=1,.test=1},completed={.model=1,.test=1};
+ uint32_t key[12]={0},ui_request=0,selftest_request=0,completed_flags=0,completed_config=0,completed_scores=0;
+ ai_runtime[1]=1;ai_publish(&job,0,0,0);
+ ai_runtime[1]=ai_selftest(m);ai_publish(&job,0,0,0);
  REG(4)=1;
  for(;;){
   control_service_step();if(CTRL_R(0x0c)>>31){REG(4)=3;for(;;);}
   flyhash_service_step();
   unsigned current_policy=CONTROL_STATE->ai_policy;
-  if(policy!=current_policy){policy=current_policy;seen=0;policy_geometry_sequence=FUS_R(0x10);FUS_W(4,policy!=0);}
+  if(policy!=current_policy){
+   policy=current_policy;seen=0;policy_geometry_sequence=FUS_R(0x10);FUS_W(4,policy!=0);
+   if(!policy){ui_request=CONTROL_STATE->ai_request;ai_runtime[0]=0;ai_publish(&job,0,0,0);}
+  }
   uint32_t status=DMA(4);
   if(status&2){
    if(status&4){failures++;analysis_result[22]=DMA(0x24);analysis_result[23]=failures;
-    fusion_publish(&job,0,FUS_ERROR<<8,0);DMA(0)=2;continue;}
+    ai_runtime[0]=3;ai_publish(&job,0,FUS_ERROR<<8,0);DMA(0)=2;continue;}
    if(job.exact&&DMA(0x0c)!=job.g.frame){REG(4)=3;for(;;);}
    const volatile uint16_t *input=(const volatile uint16_t *)DMA(0x1c);
    analysis_result[17]=1;connectome_result[9]=1; // Producer owns arrays until the complete record is published.
@@ -62,27 +78,47 @@ void main(void){
    analysis_result[18]=start;analysis_result[19]=network_end;
    analysis_result[20]=job.g.render;analysis_result[21]=job.g.context;
    if(job.g.frame!=DMA(0x0c))job.geometry_class=0;job.g.frame=DMA(0x0c);
-   fusion_publish(&job,DMA(0x10),fusion_flags(&job,label,o),analysis_result[16]);
+   ai_runtime[0]=2;ai_runtime[2]=sequence+1;ai_runtime[3]=ai_us(t2-t0);
+   ai_runtime[4]=ai_us(end-t2);ai_runtime[5]=ai_us(network_end-end);
+   ai_runtime[6]=job.g.frame;ai_runtime[7]=job.g.context;
+   // Volatile byte copy keeps this freestanding build independent of libc memcpy.
+   for(unsigned i=0;i<sizeof(job);i++)((volatile uint8_t*)&completed)[i]=((const uint8_t*)&job)[i];
+   completed_config=DMA(0x10);completed_flags=fusion_flags(&job,label,o);completed_scores=analysis_result[16];
+   ai_publish(&completed,completed_config,completed_flags,completed_scores);
    __asm__ volatile("fence rw,rw":::"memory");connectome_result[1]=sequence+1;connectome_result[9]=0;analysis_result[1]=++sequence;analysis_result[17]=0;DMA(0)=2;
+  }else if(!(status&1)&&selftest_request!=CONTROL_STATE->selftest_request){
+   selftest_request=CONTROL_STATE->selftest_request;ai_runtime[1]=1;if(sequence)ai_runtime[0]=2;
+   ai_publish(&completed,completed_config,completed_flags,completed_scores);
+   ai_runtime[1]=ai_selftest(m);ai_publish(&completed,completed_config,completed_flags,completed_scores);
   }else if(!(status&1)&&policy&&(analysis_control[0]&1)&&(uint32_t)(REG(0x30)-last)>=analysis_control[4]){
+   unsigned request=ui_request!=CONTROL_STATE->ai_request;
+   if(CONTROL_STATE->ai_manual&&!request)continue;
+   if(CONTROL_STATE->feature_wait||CONTROL_STATE->pending||CONTROL_STATE->key_roi_dirty)continue;
    struct fusion_geometry g=fusion_geometry_read();if(!g.sequence||!g.frame||g.sequence==policy_geometry_sequence)continue;
+   if(request&&policy==1){
+    struct vision_control_state *s=CONTROL_STATE;
+    unsigned x=640,y=300,w=640,h=480;
+    if(s->enabled&&s->good){x=s->commit[0]>>12;y=s->commit[0]&4095;w=s->commit[1]>>12;h=s->commit[1]&4095;}
+    analysis_control[2]=x|(y<<16);analysis_control[3]=w|(h<<16);analysis_control[8]++;
+   }
    // Background calibration can complete on a later scan of the same frozen
    // source/context. Dedup geometry contents, not just frame IDs or sequence.
    uint32_t next[12]={g.frame,g.render,g.context,analysis_control[5],analysis_control[2],analysis_control[3],analysis_control[8],policy,analysis_control[6],analysis_control[7],g.hi,g.lo};
    unsigned changed=!seen;for(unsigned i=0;i<12;i++)if(key[i]!=next[i])changed=1;
-   if(!changed)continue;
-   unsigned announce=!seen||key[3]!=next[3]||key[7]!=next[7]||key[8]!=next[8];
+   if(!changed&&!request)continue;
+   unsigned announce=request||!seen||key[3]!=next[3]||key[7]!=next[7]||key[8]!=next[8];
    seen=1;for(unsigned i=0;i<12;i++)key[i]=next[i];last=REG(0x30);
-   job=(struct fusion_job){.g=g,.model=analysis_control[5],.test=analysis_control[6],.minimum_margin=analysis_control[7],.exact=policy==2||!(analysis_control[0]&2),.automatic=policy==2};
-   if(policy==1&&!(analysis_control[0]&4)&&!(analysis_control[0]&2)){
+   job=(struct fusion_job){.g=g,.model=analysis_control[5],.test=analysis_control[6],.minimum_margin=analysis_control[7],.exact=request||policy==2||!(analysis_control[0]&2),.automatic=policy==2};
+   if(!request&&policy==1&&!(analysis_control[0]&4)&&!(analysis_control[0]&2)){
     if(job.g.frame!=analysis_control[1])job.g.hi&=~(1u<<30);job.g.frame=analysis_control[1];
    }
    if(!fusion_roi(&job,policy==2,analysis_control[2],analysis_control[3])){
-    fusion_publish(&job,0,FUS_NONE<<8,0);continue;
+    ui_request=CONTROL_STATE->ai_request;ai_runtime[0]=0;ai_publish(&job,0,FUS_NONE<<8,0);continue;
    }
-   if(announce)fusion_publish(&job,0,FUS_WAIT<<8,0);
+   ui_request=CONTROL_STATE->ai_request;ai_runtime[0]=1;
+   if(announce)ai_publish(&job,0,FUS_WAIT<<8,0);
    DMA(8)=job.g.frame;DMA(0x14)=job.xy;DMA(0x18)=job.wh;
-   DMA(0)=1|((policy==1&&(analysis_control[0]&2))?4:0);
+   DMA(0)=1|((!request&&policy==1&&(analysis_control[0]&2))?4:0);
   }
  }
 }

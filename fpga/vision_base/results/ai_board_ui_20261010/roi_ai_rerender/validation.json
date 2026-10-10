@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "sequence": 5,
+  "frame_id": 15573,
+  "source_config_id": 15573,
+  "model_id": 1,
+  "roi": [
+    512,
+    270,
+    960,
+    540
+  ],
+  "class_name": "triangle",
+  "gray_pixels": 1024,
+  "features": 128,
+  "hidden": 32,
+  "logits": 4,
+  "flyhash_bits": 256,
+  "training_kind": "synthetic_bringup_only",
+  "real_card_accuracy_verified": false,
+  "dma_microseconds": 3484.77,
+  "network_microseconds": 3149.51,
+  "total_cpu_microseconds": 17566.83
+}
