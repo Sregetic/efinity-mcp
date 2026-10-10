@@ -11,6 +11,9 @@ IDE=Path('F:/Efinity/efinity-riscv-ide-2026.1')
 # Active ROI scan exposed 0xa107a107 words at100kHz; the same halted
 # application bytes read exactly at25kHz, without rewriting memory.
 USER1_KHZ=25
+# Cached ROI tensors produced repeated0x67756b75 at25kHz;5kHz word/dump reads
+# matched the CPU sum. Halted program loading retains its verified25kHz setting.
+USER1_READ_KHZ=5
 
 def elf_segments(data):
     if len(data)<52 or data[:7]!=b'\x7fELF\x01\x01\x01':
@@ -59,7 +62,7 @@ def board_location(url):
         # USB address changes after replug; port path comes from this exact URL.
         return str(device.bus)+'-'+'.'.join(map(str,device.port_numbers))
 
-def configuration(location,yaml,sym,jtag_khz=USER1_KHZ):
+def configuration(location,yaml,sym,jtag_khz=USER1_READ_KHZ):
     return f'''adapter driver ftdi
 adapter usb location {location}
 ftdi vid_pid 0x0403 0x6011

@@ -1,0 +1,9 @@
+{
+  "upstream": "https://github.com/cobanov/flyjump",
+  "commit": "e34c6614e7d13a1018585f705cdeb59b9f38291d",
+  "dataset": "FlyEM MaleCNS v1.0, min confidence 0.5",
+  "graph_url": "https://raw.githubusercontent.com/cobanov/flyjump/e34c6614e7d13a1018585f705cdeb59b9f38291d/public/data/connectome/graph.json",
+  "license": "CC BY 4.0",
+  "derivation": "Published anatomical subset; all node body IDs, edge endpoint indices/contact counts and annotations preserved",
+  "raw_full_dataset_reextracted_locally": false
+}

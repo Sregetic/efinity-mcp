@@ -1,0 +1,14 @@
+Open On-Chip Debugger 0.11.0+dev-04060-g967f8f6f0-dirty (2026-03-24-19:56)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+Info : auto-selecting first available session transport "jtag". To override use 'transport select <transport>'.
+Info : clock speed 25 kHz
+Info : JTAG tap: ti60.bridge tap/device found: 0x10660a79 (mfg: 0x53c (Efinix Inc), part: 0x0660, ver: 0x1)
+[sapphire.cpu0] Target successfully examined.
+Info : gdb port disabled
+AI_RECORD 0x41494d31 0x1 0x890 0x890 0x1 0x0 0x12c0280 0x1e00280 0x7600000 0x52e48 0x2b1d8 0x47250 0x20f1 0x3262a 0xa6b43 0xc837 0xffcbd60f 0x0 0xbf270307 0xbf316e4a 0x1 0x5 0x0 0x0
+Warn : Haven't made progress in mpsse_flush() for 2039ms.
+Warn : Haven't made progress in mpsse_flush() for 2039ms.
+AI_RECORD_COMPLETE
+shutdown command invoked

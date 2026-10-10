@@ -44,6 +44,7 @@ if {{!$complete}} {{resume;echo AI_RECORD_PENDING;shutdown error}}
 echo "AI_RECORD $record"
 '''
     arrays=[('gray','analysis_gray',1024),('features','analysis_features',128),('hidden','analysis_hidden',32),('logits','analysis_logits',4),('hash','analysis_hash',32)]
+    if 'analysis_connectome' in sym:arrays.extend([('connectome','analysis_connectome',160),('connectome_record','connectome_result',40)])
     for name,symbol,size in arrays:body+=f'dump_image {tcl_path(a.output_dir/(name+".bin"))} {sym[symbol]:#x} {size}\n'
     body+='resume\necho AI_RECORD_COMPLETE\nshutdown\n'
     cfg=configuration(location,ROOT/'artifacts/vision_soc/cpu0.yaml',s)+body;path=a.output_dir/'read.cfg';path.write_text(cfg)
@@ -60,6 +61,10 @@ echo "AI_RECORD $record"
         hidden=list(struct.unpack('<32b',(a.output_dir/'hidden.bin').read_bytes())),
         logits=list(struct.unpack('<4b',(a.output_dir/'logits.bin').read_bytes())),
         hash=f'{int.from_bytes((a.output_dir/"hash.bin").read_bytes(),"little"):064x}',clock_hz=100000000)
+    if 'analysis_connectome' in sym:
+        c=list(struct.unpack('<10I',(a.output_dir/'connectome_record.bin').read_bytes()))
+        if c[0]!=0x434f4e31 or c[9] or (c[1],c[2],c[3],c[4],c[5])!=(record[1],record[2],record[3],record[20],record[21]):raise RuntimeError('Connectome and INT8 records are not the same completed task')
+        result.update(connectome_states=list(struct.unpack('<80h',(a.output_dir/'connectome.bin').read_bytes())),connectome_record=c)
     (a.output_dir/'result.json').write_text(json.dumps(result,indent=2));print(json.dumps(result,indent=2))
 
 if __name__=='__main__':main()

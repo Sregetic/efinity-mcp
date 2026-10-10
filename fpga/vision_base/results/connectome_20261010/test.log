@@ -1,0 +1,2 @@
+PASS RV32I connectome33 inputs x80 Q14 states, including verified camera ROI
+qemu-system-riscv32.exe: warning: Setting G will also set IMAFD

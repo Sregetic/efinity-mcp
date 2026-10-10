@@ -165,13 +165,21 @@ module tb_frame_memory_system;
    legacy_ws<=0;legacy_nb<=legacy_nb+1;
   end
  end
- reg cpu_enable=0;integer cpu_rs=0,cpu_ws=0,cpu_nr=0,cpu_nb=0,cpu_beat=0;
+ reg cpu_enable=0;integer cpu_rs=0,cpu_ws=0,cpu_nr=0,cpu_nb=0,cpu_beat=0,cpu_store_mode=0,cpu_lane=0;
  always @*begin
   cpu_arid=6'd13;cpu_araddr=32'h01902000;cpu_arlen=3;cpu_arsize=4;cpu_arburst=1;
   cpu_arvalid=cpu_enable&&cpu_rs==0;cpu_rready=1;
   cpu_awid=6'd13;cpu_awaddr=32'h01903000;cpu_awlen=3;cpu_awsize=4;cpu_awburst=1;
   cpu_awvalid=cpu_enable&&cpu_ws==0;cpu_wvalid=cpu_ws==1;
   cpu_wdata={4{32'h67452301}};cpu_wstrb=16'h000f<<(cpu_beat*4);cpu_wlast=cpu_beat==3;cpu_bready=1;
+  if(cpu_store_mode)begin
+   cpu_arvalid=0;cpu_awaddr=32'h01903100+(cpu_store_mode-1)*32+cpu_lane;cpu_awlen=0;cpu_wlast=1;
+   case(cpu_store_mode)
+    1:begin cpu_wdata={16{8'(48+cpu_lane)}};cpu_wstrb=16'h1<<cpu_lane;end
+    2:begin cpu_wdata={8{16'(16'h1234+cpu_lane)}};cpu_wstrb=16'h3<<cpu_lane;end
+    3:begin cpu_wdata={4{32'h89abcdef}};cpu_wstrb=16'hf<<cpu_lane;end
+   endcase
+  end
  end
  integer cq;
  always @(posedge clk)if(rst_n)begin
@@ -185,7 +193,10 @@ module tb_frame_memory_system;
   if(cpu_wvalid&&cpu_wready)begin cpu_beat<=cpu_beat+1;if(cpu_wlast)cpu_ws<=2;end
   if(cpu_bvalid&&cpu_bready)begin
    if(cpu_bid!=13||cpu_bresp!=0)$fatal(1,"legacy B routing");
-   cpu_ws<=0;cpu_nb<=cpu_nb+1;
+   cpu_nb<=cpu_nb+1;
+   if(!cpu_store_mode)cpu_ws<=0;
+   else if(cpu_lane+(1<<(cpu_store_mode-1))>=16)cpu_ws<=3;
+   else begin cpu_lane<=cpu_lane+(1<<(cpu_store_mode-1));cpu_ws<=0;end
   end
  end
  function automatic[15:0]value(input integer frame,x,y);value=(frame<<12)^(y<<6)^x;endfunction
@@ -260,7 +271,21 @@ module tb_frame_memory_system;
    end else if(mem[32'h01903000+k]!==8'ha5)$fatal(1,"CPU overwrote a masked byte");
   end
   if(dut.engine.control.pool.writer_active_q||dut.engine.control.pool.display_hold_valid_q)$fatal(1,"lease not released");
-  $display("PASS tb_frame_memory_system capture/ROI/freeze/scan %0d pixels, read/write error nonpublication, legacy R=%0d B=%0d CPU R=%0d B=%0d shared AXI",scanned,legacy_nr,legacy_nb,cpu_nr,cpu_nb);$finish;
+  @(negedge clk);cpu_enable=0;legacy_enable=0;
+  wait(cpu_ws==0&&legacy_ws==0);repeat(4)@(negedge clk);
+  for(integer sm=1;sm<=3;sm=sm+1)begin
+   @(negedge clk);cpu_store_mode=sm;cpu_lane=0;cpu_ws=0;cpu_enable=1;
+   wait(cpu_ws==3);@(negedge clk);cpu_enable=0;
+   for(integer bi=0;bi<16;bi=bi+1)begin
+    case(sm)
+     1:if(mem[32'h01903100+bi]!==8'(48+bi))$fatal(1,"CPU byte lane%0d",bi);
+     2:if(mem[32'h01903120+bi]!==8'((16'h1234+(bi&~1))>>(8*(bi%2))))$fatal(1,"CPU halfword lane%0d",bi);
+     3:if(mem[32'h01903140+bi]!==8'(32'h89abcdef>>(8*(bi%4))))$fatal(1,"CPU word lane%0d",bi);
+    endcase
+   end
+   for(integer bi=16;bi<32;bi=bi+1)if(mem[32'h01903100+(sm-1)*32+bi]!==8'ha5)$fatal(1,"CPU store outside strobe");
+  end
+  $display("PASS tb_frame_memory_system capture/ROI/freeze/scan %0d pixels, read/write error nonpublication, legacy R=%0d B=%0d CPU R=%0d B=%0d shared AXI; aligned byte/halfword/word stores in all128-bit lanes",scanned,legacy_nr,legacy_nb,cpu_nr,cpu_nb);$finish;
  end
  initial begin #100000000;$fatal(1,"system watchdog");end
 endmodule

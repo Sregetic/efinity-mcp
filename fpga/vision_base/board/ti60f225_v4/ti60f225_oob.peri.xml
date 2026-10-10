@@ -82,6 +82,34 @@
         </efxpt:clkmux_info>
     </efxpt:device_info>
     <efxpt:gpio_info>
+        <efxpt:comp_gpio name="flash_cs" gpio_def="GPIOL_P_01" mode="inout" bus_name="" io_standard="1.8 V LVCMOS">
+            <efxpt:input_config name="" name_ddio_lo="" conn_type="normal" is_register="true" clock_name="core_clk" is_clock_inverted="false" pull_option="none" is_schmitt_trigger="false" ddio_type="none" is_bus_hold="false" delay="0" is_serial="false" is_dyn_delay="false" fastclk_name="" pullup_ena_name="flash_cs_PULL_UP_ENA" dyn_delay_en_name="flash_cs_DLY_ENA" dyn_delay_reset_name="flash_cs_DLY_RST" dyn_delay_ctrl_name="flash_cs_DLY_CTRL" clkmux_buf_name="" />
+            <efxpt:output_config name="flash_cs" name_ddio_lo="" register_option="register" clock_name="core_clk" is_clock_inverted="false" is_slew_rate="false" tied_option="none" ddio_type="none" delay="0" is_serial="false" drive_strength="4" fastclk_name="" />
+            <efxpt:output_enable_config name="flash_cs_oe" is_register="true" clock_name="core_clk" is_clock_inverted="false" name_oen="flash_cs_OEN" />
+        </efxpt:comp_gpio>
+        <efxpt:comp_gpio name="flash_sck" gpio_def="GPIOL_N_01" mode="inout" bus_name="" io_standard="1.8 V LVCMOS">
+            <efxpt:input_config name="" name_ddio_lo="" conn_type="normal" is_register="true" clock_name="core_clk" is_clock_inverted="false" pull_option="none" is_schmitt_trigger="false" ddio_type="none" is_bus_hold="false" delay="0" is_serial="false" is_dyn_delay="false" fastclk_name="" pullup_ena_name="flash_sck_PULL_UP_ENA" dyn_delay_en_name="flash_sck_DLY_ENA" dyn_delay_reset_name="flash_sck_DLY_RST" dyn_delay_ctrl_name="flash_sck_DLY_CTRL" clkmux_buf_name="" />
+            <efxpt:output_config name="flash_sck" name_ddio_lo="" register_option="register" clock_name="core_clk" is_clock_inverted="false" is_slew_rate="false" tied_option="none" ddio_type="none" delay="0" is_serial="false" drive_strength="4" fastclk_name="" />
+            <efxpt:output_enable_config name="flash_sck_oe" is_register="true" clock_name="core_clk" is_clock_inverted="false" name_oen="flash_sck_OEN" />
+        </efxpt:comp_gpio>
+        <efxpt:comp_gpio name="flash_mosi" gpio_def="GPIOL_P_03" mode="inout" bus_name="" io_standard="1.8 V LVCMOS">
+            <efxpt:input_config name="" name_ddio_lo="" conn_type="normal" is_register="true" clock_name="core_clk" is_clock_inverted="false" pull_option="none" is_schmitt_trigger="false" ddio_type="none" is_bus_hold="false" delay="0" is_serial="false" is_dyn_delay="false" fastclk_name="" pullup_ena_name="flash_mosi_PULL_UP_ENA" dyn_delay_en_name="flash_mosi_DLY_ENA" dyn_delay_reset_name="flash_mosi_DLY_RST" dyn_delay_ctrl_name="flash_mosi_DLY_CTRL" clkmux_buf_name="" />
+            <efxpt:output_config name="flash_mosi" name_ddio_lo="" register_option="register" clock_name="core_clk" is_clock_inverted="false" is_slew_rate="false" tied_option="none" ddio_type="none" delay="0" is_serial="false" drive_strength="4" fastclk_name="" />
+            <efxpt:output_enable_config name="flash_mosi_oe" is_register="true" clock_name="core_clk" is_clock_inverted="false" name_oen="flash_mosi_OEN" />
+        </efxpt:comp_gpio>
+        <efxpt:comp_gpio name="flash_wp" gpio_def="GPIOL_P_04" mode="inout" bus_name="" io_standard="1.8 V LVCMOS">
+            <efxpt:input_config name="" name_ddio_lo="" conn_type="normal" is_register="true" clock_name="core_clk" is_clock_inverted="false" pull_option="none" is_schmitt_trigger="false" ddio_type="none" is_bus_hold="false" delay="0" is_serial="false" is_dyn_delay="false" fastclk_name="" pullup_ena_name="flash_wp_PULL_UP_ENA" dyn_delay_en_name="flash_wp_DLY_ENA" dyn_delay_reset_name="flash_wp_DLY_RST" dyn_delay_ctrl_name="flash_wp_DLY_CTRL" clkmux_buf_name="" />
+            <efxpt:output_config name="flash_wp" name_ddio_lo="" register_option="register" clock_name="core_clk" is_clock_inverted="false" is_slew_rate="false" tied_option="none" ddio_type="none" delay="0" is_serial="false" drive_strength="4" fastclk_name="" />
+            <efxpt:output_enable_config name="flash_wp_oe" is_register="true" clock_name="core_clk" is_clock_inverted="false" name_oen="flash_wp_OEN" />
+        </efxpt:comp_gpio>
+        <efxpt:comp_gpio name="flash_hold" gpio_def="GPIOL_N_04" mode="inout" bus_name="" io_standard="1.8 V LVCMOS">
+            <efxpt:input_config name="" name_ddio_lo="" conn_type="normal" is_register="true" clock_name="core_clk" is_clock_inverted="false" pull_option="none" is_schmitt_trigger="false" ddio_type="none" is_bus_hold="false" delay="0" is_serial="false" is_dyn_delay="false" fastclk_name="" pullup_ena_name="flash_hold_PULL_UP_ENA" dyn_delay_en_name="flash_hold_DLY_ENA" dyn_delay_reset_name="flash_hold_DLY_RST" dyn_delay_ctrl_name="flash_hold_DLY_CTRL" clkmux_buf_name="" />
+            <efxpt:output_config name="flash_hold" name_ddio_lo="" register_option="register" clock_name="core_clk" is_clock_inverted="false" is_slew_rate="false" tied_option="none" ddio_type="none" delay="0" is_serial="false" drive_strength="4" fastclk_name="" />
+            <efxpt:output_enable_config name="flash_hold_oe" is_register="true" clock_name="core_clk" is_clock_inverted="false" name_oen="flash_hold_OEN" />
+        </efxpt:comp_gpio>
+        <efxpt:comp_gpio name="flash_miso" gpio_def="GPIOL_N_03" mode="input" bus_name="" io_standard="1.8 V LVCMOS">
+            <efxpt:input_config name="flash_miso" name_ddio_lo="" conn_type="normal" is_register="false" clock_name="" is_clock_inverted="false" pull_option="none" is_schmitt_trigger="false" ddio_type="none" is_bus_hold="false" delay="0" is_serial="false" is_dyn_delay="false" fastclk_name="" pullup_ena_name="flash_miso_PULL_UP_ENA" dyn_delay_en_name="flash_miso_DLY_ENA" dyn_delay_reset_name="flash_miso_DLY_RST" dyn_delay_ctrl_name="flash_miso_DLY_CTRL" clkmux_buf_name="" />
+            </efxpt:comp_gpio>
         <efxpt:comp_gpio name="CLK_25M" gpio_def="GPIOL_P_08" mode="input" bus_name="" io_standard="1.8 V LVCMOS">
             <efxpt:input_config name="CLK_25M" name_ddio_lo="" conn_type="gclk" is_register="false" clock_name="" is_clock_inverted="false" pull_option="none" is_schmitt_trigger="false" ddio_type="none" is_bus_hold="false" delay="0" is_serial="false" is_dyn_delay="false" fastclk_name="" pullup_ena_name="CLK_25M_PULL_UP_ENA" dyn_delay_en_name="CLK_25M_DLY_ENA" dyn_delay_reset_name="CLK_25M_DLY_RST" dyn_delay_ctrl_name="CLK_25M_DLY_CTRL" clkmux_buf_name=""/>
         </efxpt:comp_gpio>

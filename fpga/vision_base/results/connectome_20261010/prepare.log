@@ -1,0 +1,11 @@
+PASS artifact/source/timing validation: camera sc431hai (no board programming)
+{
+  "address": 7340032,
+  "limit": 8388608,
+  "image_bytes": 19836,
+  "format": "VBO1 version1 header32, flat DDR app, weights; independent CRC32",
+  "elf": "F:\\Project\\fpga\\vision_base\\artifacts\\vision_soc\\ddr_firmware\\vision.elf",
+  "weights": "F:\\Project\\fpga\\vision_base\\models\\shape_cards_bringup\\shape_cards_weights.bin",
+  "configuration_flash_written": false
+}
+Prepared autonomous AI release: F:\Project\fpga\vision_base\results\connectome_20261010\standalone (preparation only)

@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "vectors": 33,
+  "compared_c_q14_states": 2640,
+  "max_float_q14_state_error": 0.0001731665076209754,
+  "max_float_readout_feature_error": 0.0006926660304839016,
+  "camera_frame_id": 2192,
+  "trained_readout": false,
+  "real_accuracy_verified": false
+}

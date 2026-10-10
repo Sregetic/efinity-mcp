@@ -1,16 +1,14 @@
 OUTPUT_ARCH(riscv)
 ENTRY(_boot)
 SECTIONS {
- /* Embedded control/UI only. Large models keep the existing USER1/SPI path. */
- .boot 0xf9000000 : { KEEP(*(.boot)) }
- .app 0x07000000 : AT(0xf9000100) {
+ .boot 0xf9000000 : { KEEP(*(.boot)) *(.boot.text*) }
+ .app 0x07000000 : AT(ALIGN(ADDR(.boot)+SIZEOF(.boot),256)) {
   __app_start = .; KEEP(*(.text.start)) *(.text*) *(.rodata*) *(.sdata*) *(.data*) .  =  ALIGN(4); __app_end = .;
  }
  __app_load = LOADADDR(.app);
  .bss (NOLOAD) : { .  =  ALIGN(4); __bss_start = .; *(.sbss*) *(.bss*) .  =  ALIGN(4); __bss_end = .; }
  __stack_top = 0x07010000;
- ASSERT(SIZEOF(.boot)<= 256,"bootstrap exceeds reserved 256 bytes")
- ASSERT(SIZEOF(.app)<= __boot_bytes-256,"application exceeds the selected boot image")
+ ASSERT(LOADADDR(.app)+SIZEOF(.app)<=0xf9000000+__boot_bytes,"bootstrap and application exceed the selected boot image")
  ASSERT(__bss_end<0x0700c000,"application and stack overlap")
 }
 

@@ -282,7 +282,9 @@ module frame_memory_system #(
  assign cpu_rvalid=b_rvalid[BASE_CLIENTS];
  assign b_rready[BASE_CLIENTS]=cpu_rready;
  assign b_awid[BASE_CLIENTS*6+:6]=cpu_awid;
- assign b_awaddr[BASE_CLIENTS*32+:32]=cpu_awaddr;
+ // Sapphire BMB->AXI already expands data/strobes and SIZE to128bits but keeps
+ // the original byte address. DDR consumes the aligned beat plus its strobe.
+ assign b_awaddr[BASE_CLIENTS*32+:32]={cpu_awaddr[31:4],4'b0};
  assign b_awlen[BASE_CLIENTS*8+:8]=cpu_awlen;
  assign b_awsize[BASE_CLIENTS*3+:3]=cpu_awsize;
  assign b_awburst[BASE_CLIENTS*2+:2]=cpu_awburst;

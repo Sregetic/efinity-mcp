@@ -2,6 +2,7 @@
 // VS-only feature application and render/scan handshakes.
 module vision_control_bridge #(parameter W=1920,H=1080,DEBOUNCE=2970000,LONG_PRESS=148500000)(
  input clk,rst_n,video_clk,vs,input[2:0]keys_n,
+ input flash_miso,output reg[3:0]flash_gpio=4'b0010,
  input cmd_event,input[7:0]cmd_op,input[23:0]cmd_value,
  input[7:0]paddr,input psel,penable,pwrite,input[31:0]pwdata,
  output reg[31:0]prdata,output pready,pslverror,
@@ -24,6 +25,7 @@ module vision_control_bridge #(parameter W=1920,H=1080,DEBOUNCE=2970000,LONG_PRE
  wire event_valid;wire[31:0]event_data;
  wire event_pop=psel&&penable&&!pwrite&&paddr==8'h04&&event_valid;
  reg overflow=0;(* async_reg="true" *)reg[1:0]overflow_sync=0;
+ (* async_reg="true" *)reg[1:0]flash_sync=0;
  stream_cdc #(.WIDTH(32),.AW(4)) events(.arst_n(rst_n),.s_clk(video_clk),.s_valid(in_valid),.s_ready(in_ready),.s_data(in_data),
   .m_clk(clk),.m_valid(event_valid),.m_ready(event_pop),.m_data(event_data),.s_level(),.m_level());
  always @(posedge video_clk)begin
@@ -65,15 +67,16 @@ module vision_control_bridge #(parameter W=1920,H=1080,DEBOUNCE=2970000,LONG_PRE
    8'h10:prdata={20'b0,error_latch,render_pending,scan_busy,job_ready,source_hold_valid,freeze_source,roi_enabled,job_pending,fw_busy,3'b0};
    8'h14:prdata=capture_count;
    8'h18:prdata=committed_id;
+   8'h50:prdata={28'b0,flash_sync[1],3'b0};
   endcase
  end
  always @(posedge clk)begin
   if(!rst_n)begin
-   ack_sync<=0;overflow_sync<=0;settings<=31'(3|(128<<9)|(128<<20));apply_request<=0;ui_pending<=22'(32<<14);
+   ack_sync<=0;overflow_sync<=0;flash_sync<=0;flash_gpio<=4'b0010;settings<=31'(3|(128<<9)|(128<<20));apply_request<=0;ui_pending<=22'(32<<14);
    rx<=0;ry<=0;rw<=W;rh<=H;dw<=W;dh<=H;dx<=0;dy<=0;jdx<=0;jdy<=0;
    roi_enabled<=0;job_pending<=0;error_latch<=0;config_id<=0;requested<=0;rejected<=0;committed_id<=0;fw_busy<=0;fw_rejected<=0;ms<=0;display_x<=0;display_y<=0;
   end else begin
-   ack_sync<={ack_sync[0],apply_ack};overflow_sync<={overflow_sync[0],overflow};ms<={ms[3:0],memory_mode};
+   ack_sync<={ack_sync[0],apply_ack};overflow_sync<={overflow_sync[0],overflow};flash_sync<={flash_sync[0],flash_miso};ms<={ms[3:0],memory_mode};
    if(job_pending&&job_ready)begin job_pending<=0;committed_id<=config_id;jdx<=dx;jdy<=dy;end
    if(render_done&&render_error)begin error_latch<=1;rejected<=config_id;end
    if(render_pending&&vblank&&!scan_busy)begin display_x<={4'b0,jdx};display_y<={4'b0,jdy};end
@@ -89,6 +92,8 @@ module vision_control_bridge #(parameter W=1920,H=1080,DEBOUNCE=2970000,LONG_PRE
     8'h3c:requested<=pwdata;
     8'h40:rejected<=pwdata;
     8'h44:ui_pending<=pwdata[21:0];
+    8'h48:flash_gpio[2:0]<=pwdata[2:0];
+    8'h4c:flash_gpio[3]<=pwdata[0];
    endcase
   end
  end

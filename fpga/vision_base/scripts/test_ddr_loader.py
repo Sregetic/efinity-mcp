@@ -9,7 +9,8 @@ elf=out/'loader_test_build/vision.elf';data=elf.read_bytes()
 entry,segments,sym=validate_image(elf,None)
 assert entry==0x07000000 and sum(s['size'] for s in segments)>3840
 assert sym['__stack_bottom']<sym['__stack_top']<sym['__debug_work_start']
-assert 'adapter speed 25\n' in configuration('4-1.2.1',root/'artifacts/vision_soc/cpu0.yaml',sym)
+assert 'adapter speed 5\n' in configuration('4-1.2.1',root/'artifacts/vision_soc/cpu0.yaml',sym)
+assert 'adapter speed 25\n' in configuration('4-1.2.1',root/'artifacts/vision_soc/cpu0.yaml',sym,25)
 assert 'adapter speed 50\n' in configuration('4-1.2.1',root/'artifacts/vision_soc/cpu0.yaml',sym,50)
 assert sym['__input0']<sym['__input1']<sym['__input_limit']<=sym['__arena_start']<sym['__arena_limit']<sym['__stack_bottom']
 bad=[data[:40],data[:52],b'NOTELF'+data[6:]]

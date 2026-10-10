@@ -2,6 +2,10 @@
 
 当前制品、是否已写入 SRAM 和资源/时序，以 `docs/PROJECT_MASTER_STATUS.md` 最新摘要及 `results/a_controls_quality_20261009/REPORT.md` 为准。本指南描述本轮控制实现；实物卡片识别、人工按键和断电启动的验收分别记录。
 
+## 2026-10-10启动更新
+
+配置Flash和SPI程序/权重已安装，原按键菜单保持。完整AI和连接组描述子无需主机下载即可由ROM启动；连接组未训练读出，实物识别准确率和实际断电验收仍单列。资源、复现与数据来源见[启动与连接组记录](AI_AUTOBOOT_AND_CONNECTOME_20261010.md)。
+
 ## 三个操作键
 
 KEY0=C4、KEY2=N14、KEY3=A3。KEY1=P14 是复位键，不参与菜单。

@@ -2,6 +2,7 @@
 module tb_vision_control_bridge;
 reg clk=0,video_clk=0;always #5 clk=~clk;always #3.367 video_clk=~video_clk;
 reg rst_n=0,vs=0,cmd_event=0;reg[2:0]keys_n=7;reg[7:0]cmd_op=0,paddr=0;reg[23:0]cmd_value=0;
+reg flash_miso=0;wire[3:0]flash_gpio;
 reg psel=0,penable=0,pwrite=0;reg[31:0]pwdata=0;wire[31:0]prdata;wire pready,pslverror;
 wire[7:0]shape_threshold;wire[13:0]ui_state;wire[2:0]mode,history_index;wire median_en;wire[1:0]memory_mode;wire[10:0]sobel_threshold,canny_threshold,threshold;
 reg job_ready=0,capture_done=0,capture_error=0,source_hold_valid=0,render_done=0,render_error=0,render_pending=0,vblank=0,scan_busy=0;
@@ -27,6 +28,10 @@ task frame;begin @(negedge video_clk);vs=1;repeat(3)@(negedge video_clk);vs=0;re
 reg[31:0]v;integer i;
 initial begin
  repeat(6)@(negedge clk);rst_n=1;repeat(8)@(negedge clk);
+ if(flash_gpio!=2)$fatal(1,"Flash pads enabled at reset");
+ wr('h48,5);wr('h4c,1);if(flash_gpio!=13)$fatal(1,"Flash APB outputs/enable");
+ flash_miso=1;repeat(3)@(negedge clk);rd('h50,v);if(v!=8)$fatal(1,"Flash input synchronization");
+ wr('h48,2);wr('h4c,0);if(flash_gpio!=2)$fatal(1,"Flash pad release");
  // Burst retained while CPU is busy; ignored diagnostics do not fill the queue.
  command(1,5);command('h28,96);command('h29,48);command('h7e,20);
  repeat(8)@(negedge clk);

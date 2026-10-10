@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "boot_status": [
+    1447186225,
+    7,
+    15687703,
+    9788,
+    4400
+  ],
+  "cpu_state": 1,
+  "program_bytes": 9788,
+  "weights_bytes": 4400,
+  "actual_ddr_bytes_verified": true,
+  "user1_program_download": true,
+  "physical_power_cycle_verified": false,
+  "autonomous_ROM_boot": false,
+  "verification_scope": "Production aligned SPI copy executed from a USER1-loaded relocated diagnostic; not ROM autonomy evidence"
+}

@@ -1,6 +1,9 @@
 .section .boot,"ax"
 .global _boot
 _boot:
+    li sp,0x07fe0000
+    call boot_spi
+    bnez a0,3f
     la t0,__app_load
     la t1,__app_start
     la t2,__app_end
@@ -14,6 +17,7 @@ _boot:
     fence.i
     la t0,_start
     jr t0
+3:  jr a0
 .section .text.start,"ax"
 .global _start
 _start:

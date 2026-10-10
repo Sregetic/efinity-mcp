@@ -51,6 +51,9 @@ module ti60f225_oob_top #(
 )
 (
 
+ input wire flash_miso,
+ output wire flash_sck,flash_cs,flash_mosi,flash_hold,flash_wp,flash_cs_oe,flash_sck_oe,flash_mosi_oe,flash_wp_oe,flash_hold_oe,
+
   (* syn_peri_port = 0 *) input jtag_inst1_CAPTURE,
   (* syn_peri_port = 0 *) input jtag_inst1_DRCK,
   (* syn_peri_port = 0 *) input jtag_inst1_RESET,
@@ -841,7 +844,8 @@ frame_memory_system #(.SCAN_BURST_BEATS(32),.CPU_ENABLED(SAPPHIRE_ENABLE),.COMPU
  .compute_hold_frame_id(compute_hold_frame_id),
  .compute_hold_config_id(compute_hold_config_id),
  .cpu_arid(cpu_arid),
- .cpu_araddr(cpu_araddr),
+ // Sapphire's configured DDR aperture is128MiB; upper address bits never reach it.
+ .cpu_araddr({5'b0,cpu_araddr[26:0]}),
  .cpu_arlen(cpu_arlen),
  .cpu_arsize(cpu_arsize),
  .cpu_arburst(cpu_arburst),
@@ -854,7 +858,7 @@ frame_memory_system #(.SCAN_BURST_BEATS(32),.CPU_ENABLED(SAPPHIRE_ENABLE),.COMPU
  .cpu_rvalid(cpu_rvalid),
  .cpu_rready(cpu_rready),
  .cpu_awid(cpu_awid),
- .cpu_awaddr(cpu_awaddr),
+ .cpu_awaddr({5'b0,cpu_awaddr[26:0]}),
  .cpu_awlen(cpu_awlen),
  .cpu_awsize(cpu_awsize),
  .cpu_awburst(cpu_awburst),
@@ -1342,14 +1346,19 @@ end endgenerate
 wire[7:0]control_paddr;wire control_psel,control_penable,control_pwrite,control_pready,control_pslverror;
 wire[31:0]control_pwdata,control_prdata;
 wire[13:0]control_ui;wire[7:0]control_shape_threshold;wire tone_shadow_frame;
+wire[3:0]boot_gpio;
+assign flash_sck=boot_gpio[0],flash_cs=boot_gpio[1],flash_mosi=boot_gpio[2];
+assign flash_wp=1'b1,flash_hold=1'b1,{flash_cs_oe,flash_sck_oe,flash_mosi_oe,flash_wp_oe,flash_hold_oe}={5{boot_gpio[3]}};
 generate if(SAPPHIRE_ENABLE)begin:firmware_control
 vision_control_bridge controls(.clk(core_clk),.rst_n(vid_rst_n),.video_clk(hdmi_tx_slow_clk),.vs(gamma_vs),.keys_n(vision_keys_n),
+ .flash_miso(flash_miso),.flash_gpio(boot_gpio),
  .cmd_event(feature_cmd_event),.cmd_op(feature_command[31:24]),.cmd_value(feature_command[23:0]),
  .paddr(control_paddr),.psel(control_psel),.penable(control_penable),.pwrite(control_pwrite),.pwdata(control_pwdata),.prdata(control_prdata),.pready(control_pready),.pslverror(control_pslverror),
  .mode(feature_mode),.threshold(feature_threshold),.sobel_threshold(sobel_threshold),.canny_threshold(canny_threshold),.median_en(feature_median),.memory_mode(memory_mode),.history_index(history_index),.ui_state(control_ui),.shape_threshold(control_shape_threshold),
  .job_ready(roi_job_ready),.capture_done(roi_capture_done),.capture_error(roi_capture_error),.capture_count(roi_capture_count),.source_hold_valid(roi_hold_valid),.render_done(roi_render_done),.render_error(roi_render_error),.render_pending(roi_render_pending),.vblank(roi_vblank),.scan_busy(roi_scan_busy),
  .job_valid(roi_job_valid),.enable(roi_enable),.freeze_source(roi_freeze),.job_config_id(roi_job_id),.roi_x(roi_x),.roi_y(roi_y),.roi_w(roi_w),.roi_h(roi_h),.dst_w(roi_dw),.dst_h(roi_dh),.display_x(roi_posx),.display_y(roi_posy),.config_busy(roi_config_busy),.commit_rejected(roi_commit_rejected),.requested_id(roi_requested_id),.config_error(roi_config_error),.committed_id(roi_commit_id),.rejected_id(roi_rejected_id));
 end else begin:hardware_roi
+ assign boot_gpio=4'b0010;
  assign control_prdata=0,control_pready=1,control_pslverror=1,control_ui=0,control_shape_threshold=32;
 vision_roi_control roi_control(.rst_n(vid_rst_n),.video_clk(hdmi_tx_slow_clk),.cmd_event(feature_cmd_event),.cmd_op(feature_command[31:24]),.cmd_value(feature_command[23:0]),.memory_mode(memory_mode),.clk(core_clk),
  .job_ready(roi_job_ready),.capture_done(roi_capture_done),.capture_error(roi_capture_error),.source_hold_valid(roi_hold_valid),.render_done(roi_render_done),.render_error(roi_render_error),.render_pending(roi_render_pending),.vblank(roi_vblank),.scan_busy(roi_scan_busy),
