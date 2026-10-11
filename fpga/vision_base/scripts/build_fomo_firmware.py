@@ -11,7 +11,7 @@ EXAMPLE = 'tinyml_hello_world/Ti60F225_tinyml_hello_world/embedded_sw/SapphireSo
 LABELS = ['blank', 'circle', 'rectangle', 'triangle']
 
 
-def software_headers(src, overlay):
+def software_headers(src, overlay, cfu=False):
     # The vendor reference kernels call optional accelerator drivers first.
     # Remove only those calls for the existing SoC with no TinyML accelerator.
     for name, driver in [('conv', 'conv'), ('depthwise_conv', 'depthwise'), ('add', 'add')]:
@@ -21,6 +21,30 @@ def software_headers(src, overlay):
         text, calls = re.subn(r'(?:auto|OP_STATUS_T) res = ' + driver + r'_drv\(.*?\);\s*if\(res == OP_OK \|\| res == OP_BYPASS\) \{\s*return;\s*\}',
                               '// Existing SoC: execute the reference software kernel.', text, flags=re.S)
         assert (includes, calls) == (1, 1), (rel, includes, calls)
+        if cfu and name != 'add':
+            start = text.index('int8_t* output_data) {') + len('int8_t* output_data) {')
+            end, depth = start, 1
+            while depth:
+                depth += (text[end] == '{') - (text[end] == '}')
+                end += 1
+            function = 'Conv' if name == 'conv' else 'Depthwise'
+            text = text[:start] + '\n vision_fomo::' + function + '(params, output_multiplier, output_shift, input_shape, input_data, filter_shape, filter_data, bias_data, output_shape, output_data);\n' + text[end-1:]
+            text = text.replace('#include "tensorflow/lite/kernels/internal/common.h"',
+                                '#include "tensorflow/lite/kernels/internal/common.h"\n#include "fomo_kernels.h"', 1)
+        path = overlay / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text)
+    if cfu:
+        rel = Path('fixedpoint/fixedpoint.h')
+        text = (src / 'tensorflow/third_party/gemmlowp' / rel).read_text()
+        text = text.replace('#include <', '#include "fomo_fixedpoint.h"\n#include <', 1)
+        text, count = re.subn(r'(inline std::int32_t SaturatingRoundingDoublingHighMul\(std::int32_t a,\s*std::int32_t b\) \{).*?\n\}',
+                             r'\1\n  return fomo_round_high(a, b);\n}', text, count=1, flags=re.S)
+        assert count == 1
+        text, count = re.subn(r'(inline IntegerType RoundingDivideByPOT\(IntegerType x, int exponent\) \{.*?\n\})',
+                             r'\1\n\ntemplate <>\ninline std::int32_t RoundingDivideByPOT(std::int32_t x, int exponent) {\n  return fomo_round_divide(x, exponent);\n}',
+                             text, count=1, flags=re.S)
+        assert count == 1
         path = overlay / rel
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(text)
@@ -31,6 +55,7 @@ def main():
     p.add_argument('--tinyml-dir', type=Path, default=Path('F:/efinity-ci/deps/tinyml'))
     p.add_argument('--model-dir', type=Path, default=ROOT / 'models/shape_fomo')
     p.add_argument('--output-dir', type=Path, required=True)
+    p.add_argument('--cfu-kernels', action='store_true', help='Requires the installed dot4/MulHi FPGA build; baseline software kernels remain available')
     a = p.parse_args()
     revision = subprocess.check_output(['git', '-C', str(a.tinyml_dir), 'rev-parse', 'HEAD'], text=True).strip()
     if revision != REVISION:
@@ -39,7 +64,7 @@ def main():
     out = a.output_dir.resolve()
     out.mkdir(parents=True, exist_ok=True)
     overlay = out / 'software_headers'
-    software_headers(src, overlay)
+    software_headers(src, overlay, a.cfu_kernels)
     data = '.section .rodata.fomo,"a"\n'
     for symbol, files in [('fomo_model', [a.model_dir / 'shape_fomo_int8.tflite']),
                           ('fomo_inputs', [a.model_dir / 'test_vectors' / (s + '_input.bin') for s in LABELS]),
@@ -100,7 +125,7 @@ def main():
     if re.search(r'\t(?:mul\w*|div\w*|rem\w*|f[a-z]+\.[sd]|c\.[a-z]+)\s', dis):
         raise ValueError('Generated code uses an instruction absent from the installed RV32I core')
     size = subprocess.check_output([str(tools / 'riscv-none-elf-size.exe'), str(elf)], text=True)
-    record = dict(tinyml_revision=revision, isa='RV32I_Zicsr_Zifencei', software_only=True,
+    record = dict(tinyml_revision=revision, isa='RV32I_Zicsr_Zifencei', software_only=True, cfu_kernels=a.cfu_kernels,
                   model_bytes=(a.model_dir / 'shape_fomo_int8.tflite').stat().st_size,
                   load_bytes=sum(s['size'] for s in segments), bss_bytes=symbols['__bss_end']-symbols['__bss_start'],
                   arena_address=symbols['__arena_start'], arena_reserved_bytes=262144,

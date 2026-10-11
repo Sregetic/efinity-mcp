@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "method": "USER1 debug halt/load/verify/resume; no CPU reset",
+  "elf": "F:\\Project\\fpga\\vision_base\\results\\fomo_speed_20261011\\cfu_release\\vision.elf",
+  "entry": 117440512,
+  "segments": [
+    {
+      "address": 117440512,
+      "offset": 4096,
+      "size": 285200,
+      "memory": 285200,
+      "executable": true
+    }
+  ],
+  "payload_bytes": 285200,
+  "weights_bytes": 0,
+  "weights_address": 121634816,
+  "usb_location": "4-1.2.1",
+  "jtag_khz": 500,
+  "byte_readback_verified": true,
+  "fpga_reprogrammed": false,
+  "flash_written": false
+}

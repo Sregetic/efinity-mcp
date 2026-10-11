@@ -1,0 +1,2 @@
+PASS RV32I Q31 50100, signed16 10000, divide32320, requant10000, activation10000, Conv172/DW196 exact cases
+F:\Efinity\efinity-riscv-ide-2026.1\qemu\qemu-system-riscv32.exe: warning: Setting G will also set IMAFD

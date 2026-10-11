@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "rounding_pairs": 50100,
+  "mul16_pairs": 10000,
+  "conv_cases": 172,
+  "divide_pairs": 32320,
+  "requant_pairs": 10000,
+  "activation_cases": 10000,
+  "depthwise_cases": 196,
+  "cfu_emulated": true,
+  "physical_timing_verified": false
+}

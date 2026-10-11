@@ -31,13 +31,14 @@ static uint64_t ticks() {
     do { hi = p[1]; lo = p[0]; again = p[1]; } while (hi != again);
     return (uint64_t(hi) << 32) | lo;
 }
-static void fail(uint32_t code) {
+[[noreturn]] static void fail(uint32_t code) {
     fomo_status[2] = code;
     __asm__ volatile("fence rw,rw" ::: "memory");
     fomo_status[1] = 4;
     *reinterpret_cast<volatile uint32_t*>(0xf8100004u) = 3;
     for (;;) control_service_step();
 }
+extern "C" [[noreturn]] void fomo_kernel_fail() { fail(7); }
 extern "C" void DebugLog(const char* s) {
     uint32_t n = fomo_status[12];
     while (*s && n < sizeof(fomo_log) - 1) fomo_log[n++] = *s++;

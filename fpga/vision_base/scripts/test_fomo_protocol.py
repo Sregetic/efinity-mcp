@@ -51,4 +51,11 @@ with tempfile.TemporaryDirectory() as directory:
         text = file.read_text()
         assert '_drv(' not in text and 'platform/tinyml/ops' not in text
         assert 'MultiplyByQuantizedMultiplier' in text
+    software_headers(Path('F:/efinity-ci/deps/tinyml')/EXAMPLE, overlay, cfu=True)
+    ops = overlay/'tensorflow/lite/kernels/internal/reference/integer_ops'
+    assert 'vision_fomo::Conv(' in (ops/'conv.h').read_text()
+    assert 'vision_fomo::Depthwise(' in (ops/'depthwise_conv.h').read_text()
+    fixed = (overlay/'fixedpoint/fixedpoint.h').read_text()
+    assert fixed.count('return fomo_round_high(a, b);') == 1
+    assert fixed.count('return fomo_round_divide(x, exponent);') == 1
 print('PASS software-only headers, 64-bit timing, signed tensors, exact/1-LSB/2-LSB, truncated/error records')

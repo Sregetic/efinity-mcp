@@ -46,7 +46,7 @@ def decode(directory, model_dir):
                 clock_hz=status[15], arena_used_bytes=status[5], arena_reserved_bytes=262144,
                 allocation_ms=((status[7]<<32)|status[6])/100000, status=list(status), samples=rows,
                 measurement='64-bit CLINT; no CPU halt during Invoke; includes layer-boundary control service',
-                source='physical Ti60 Sapphire RV32I software kernels, USER1 DDR tensor readback')
+                source='physical Ti60 Sapphire RV32I firmware kernels, USER1 DDR tensor readback')
 
 
 def main():
@@ -104,6 +104,7 @@ def main():
         if 'FOMO_RECORD_COMPLETE' not in r.stdout+r.stderr: raise RuntimeError('FOMO DDR dump incomplete')
         (out/'runtime.log').write_text((out/'log.bin').read_bytes().split(b'\0',1)[0].decode())
         result = decode(out, a.model_dir)
+        result['firmware_elf'] = str(a.elf.resolve())
         (out/'result.json').write_text(json.dumps(result, indent=2))
         print(json.dumps(result, indent=2), flush=True)
         if not result['passed']: raise AssertionError('Board output exceeds the supplied one-LSB acceptance')
