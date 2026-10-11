@@ -216,6 +216,7 @@ module tb_unified_history;
   @(negedge clk);inject_r=0;
  end endtask
  integer sx=0,sy=0,scanned=0,expected_frame=1,expected_cfg=100,expected_source=1;
+ reg[5:0]history_seen=0;
  always @(posedge clk)if(scan_pixel_valid&&scan_pixel_ready)begin
   if(scan_pixel_keep!=3||scan_pixel_frame_id!=expected_frame||scan_pixel_config_id!=expected_cfg)$fatal(1,"scan metadata");
   if(scan_pixel_sof!=(sx==0&&sy==0)||scan_pixel_eol!=(sx==dst_width-2)||scan_pixel_eof!=(sx==dst_width-2&&sy==dst_height-1))$fatal(1,"scan markers");
@@ -275,10 +276,25 @@ module tb_unified_history;
   if(analysis_hold_frame_id!=12||capture_frame_id!=17)$fatal(1,"frozen frame/scratch capture");
   memory_mode=2;repeat(6)@(negedge clk);
   for(integer n=0;n<6;n=n+1)begin history_index=n;repeat(6)@(negedge clk);expected_frame=12-n;expected_source=12-n;publish_scan;end
-  memory_mode=0;repeat(6)@(negedge clk);memory_mode=2;history_index=5;repeat(6)@(negedge clk);
+  // A selected history frame stays static across more than two replay rounds.
+  history_index=3;repeat(6)@(negedge clk);
+  expected_frame=9;expected_source=9;
+  for(integer n=0;n<181;n=n+1)publish_scan;
+  // Reserved index6 uses the existing cyclic playback phase.
+  history_index=6;repeat(6)@(negedge clk);
   for(integer n=0;n<181;n=n+1)begin
-   expected_frame=12-((5+n/30)%6);expected_source=expected_frame;publish_scan;
+   expected_frame=12-dut.play;expected_source=expected_frame;history_seen[dut.play]=1;publish_scan;
   end
+  if(history_seen!=63)$fatal(1,"explicit replay did not visit six frames");
+  history_index=4;repeat(6)@(negedge clk);expected_frame=8;expected_source=8;
+  for(integer n=0;n<65;n=n+1)publish_scan;
+  history_index=6;repeat(6)@(negedge clk);expected_frame=12-dut.play;expected_source=expected_frame;publish_scan;
+  // ROI rendering must use the selected historical source, not the latest one.
+  history_index=2;direct_scan=0;repeat(6)@(negedge clk);
+  roi_x=5;roi_y=1;roi_w=11;roi_h=6;expected_cfg=898;expected_frame=10;expected_source=10;
+  render(898,0);publish_scan;
+  roi_x=9;roi_w=17;expected_cfg=899;render(899,0);publish_scan;
+  direct_scan=1;roi_x=0;roi_y=0;roi_w=32;roi_h=8;expected_cfg=0;
   memory_mode=3;history_index=4;repeat(6)@(negedge clk);
   for(integer n=0;n<65;n=n+1)begin expected_frame=(n%60<30)?8:7;expected_source=expected_frame;publish_scan;end
   // Re-render a held direct-display frame without selecting a newer source.
@@ -292,7 +308,7 @@ module tb_unified_history;
   memory_mode=0;freeze_source=0;release_source=1;repeat(6)@(negedge clk);release_source=0;
   capture(22,0);direct_scan=1;roi_x=0;roi_y=0;roi_w=32;roi_h=8;expected_cfg=0;expected_frame=22;expected_source=22;publish_scan;
   if(history_count!=6)$fatal(1,"return-to-live history count");
-  $display("PASS unified 8-bank history: six distinct frames, scratch nonpublication, freeze/replay/comparison, same-source ROI rerender, live recovery; %0d pixels",scanned);$finish;
+  $display("PASS unified 8-bank history: six distinct static frames, index6 replay/restart, scratch nonpublication, freeze/comparison, same-source ROI rerender, live recovery; %0d pixels",scanned);$finish;
  end
  initial begin #100000000;$fatal(1,"system watchdog");end
 endmodule

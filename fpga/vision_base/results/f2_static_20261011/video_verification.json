@@ -1,0 +1,200 @@
+{
+  "scope": "RTL simulation, not physical display acceptance",
+  "tests": [
+    {
+      "test": "osd",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "line_direct",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "shape_classifier",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "shadow_chroma",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "sobel",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "canny_stability",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "fusion_display",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "edge_strength",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "sensor_init",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "canny_raster",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "line_snapshot",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "hysteresis_random",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "edge_probe",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "canny_denoise",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "canny_noise",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "edge_components",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "edge_overlay",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "frontend",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "color",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "color_denoise",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "packed_rgb",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "pair_capture",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "tone_freeze",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "camera_auto_exposure",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "median9",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "chroma_tone",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "chroma_thresholds",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "controls",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "hysteresis",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "hysteresis_sweep",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "history",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    },
+    {
+      "test": "commit",
+      "compile_exit": 0,
+      "run_exit": 0,
+      "passed": true
+    }
+  ],
+  "generated_utc": "2026-10-11T09:38:17.3019902Z",
+  "full": false,
+  "passed": true
+}

@@ -12,17 +12,24 @@ initial begin
  mode=1;cycle(0,1);frozen=rb;scratch=ws;
  for(i=0;i<20;i++)begin cycle(1,1);if(rb!=frozen||ws!=scratch)errors++;end
  mode=2;index=1;cycle(0,1);if(rb==scratch*4096)errors++;
- // Every offset must visit all six distinct pinned slots, not repeat history[0]
- // when the index plus playback phase crosses the ring boundary.
+ // Each selected history frame holds, even with scratch captures continuing.
  for(j=0;j<6;j=j+1)begin
-  index=j;seen=0;
+  index=j;repeat(3)@(negedge clk);
   for(i=0;i<181;i=i+1)begin
-   @(negedge clk);expected_slot=dut.history[(j+dut.play)%6];seen[(j+dut.play)%6]=1;
-   cycle(0,1);
-   if(rs!=expected_slot)$fatal(1,"replay modulo index=%0d",j);
+   expected_slot=dut.history[j];cycle(1,1);
+   if(rs!=expected_slot)$fatal(1,"static history changed index=%0d",j);
   end
-  if(seen!=63)$fatal(1,"replay did not visit all history entries");
  end
+ index=6;repeat(3)@(negedge clk);seen=0;
+ for(i=0;i<181;i=i+1)begin
+  expected_slot=dut.history[dut.play];seen[dut.play]=1;cycle(0,1);
+  if(rs!=expected_slot)$fatal(1,"automatic replay frame");
+ end
+ if(seen!=63)$fatal(1,"replay did not visit all history entries");
+ index=2;repeat(3)@(negedge clk);cycle(0,1);
+ frozen=rb;repeat(65)begin cycle(0,1);if(rb!=frozen)$fatal(1,"replay failed to stop");end
+ index=6;repeat(3)@(negedge clk);expected_slot=dut.history[dut.play];cycle(0,1);
+ if(rs!=expected_slot)$fatal(1,"replay did not resume existing phase");
  mode=3;index=4;repeat(3)@(negedge clk);
  for(i=0;i<65;i++)begin
   @(negedge clk);expected_slot=dut.history[(dut.tick<30)?4:5];cycle(0,1);

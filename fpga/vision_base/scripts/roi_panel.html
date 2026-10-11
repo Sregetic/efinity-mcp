@@ -2,7 +2,7 @@
 <style>body{font:15px system-ui;margin:24px;background:#131920;color:#e3eaf2;max-width:1020px}h1{font-size:22px}fieldset{border:1px solid #384551;margin:14px 0;padding:16px;display:flex;gap:14px;flex-wrap:wrap}label{display:grid;gap:5px}input[type=number]{width:100px}input,select,button{font:inherit;padding:8px;border-radius:5px;border:1px solid #526372;background:#22313d;color:#fff}button{cursor:pointer}button:disabled{opacity:.4}button.primary{background:#146eab}pre{white-space:pre-wrap;background:#0c1117;padding:14px}img{max-width:100%}#result{padding:12px 0;color:#8bd3ff}#modeFrames{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}#modeFrames button{padding:5px;font-size:12px}#modeFrames img{display:block;width:100%;aspect-ratio:16/9}#modeFrames button[aria-pressed=true]{border-color:#8bd3ff;background:#146eab}#frameViewport{overflow:auto;max-height:70vh;background:#000;margin-top:12px}#mainFrame{display:block;width:100%;max-width:none;background:#000}#mainFrame[hidden]{display:none}a{color:#8bd3ff}summary{cursor:pointer}#gallery{margin-bottom:24px}#modeNote,#viewNote{font-size:13px;color:#b6c6d6}</style>
 <h1>Ti60 · 动态 ROI / 缩放 / 平移 / 冻结重渲染</h1>
 <p id="boardState" aria-live="polite">正在读取板上参数…</p>
-<p>实体按键：实时/冻结时短按 KEY2 加阈值、KEY3 减阈值（步长 16）；长按切换存储模式，回放/对比时短按切换历史帧。屏幕与网页均为十进制；Sobel/Canny阈值独立，下限16；Canny T是实际阈值，R是设置值。</p>
+<p>实体按键：实时/冻结时短按 KEY2 加阈值、KEY3 减阈值（步长 16）；长按切换存储模式；F2 的 I0–I5 静态浏览，I6 自动回放，短按 KEY2/KEY3 切换；F3 为相邻帧交替对比。屏幕与网页均为十进制；Sobel/Canny阈值独立，下限16；Canny T是实际阈值，R是设置值。</p>
 <section id="gallery" aria-label="原图与各模式快照">
 <p id="modeNote">正在加载已保存的原图与 M0–M7…</p>
 <label>查看快照<select id="viewMode" hidden onchange="selectImage(this.value)"></select></label>

@@ -1,0 +1,13 @@
+{
+  "xlr": 60400,
+  "ram": 252,
+  "dsp": 59,
+  "free_xlr": 400,
+  "free_ram": 4,
+  "wns_ns": 0.015,
+  "whs_ns": 0.026,
+  "reference_xlr": 60082,
+  "net_xlr_delta": 318,
+  "net_ram_delta": 0,
+  "net_dsp_delta": 0
+}

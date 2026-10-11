@@ -69,7 +69,7 @@ static void control_event(uint32_t event){
    }else if(s->menu==9){if(key==1)s->selftest_request++;}
    else if(s->menu==1)s->settings=(s->settings&~8u)|(key==1?8:0);
    else if(s->menu>=2)control_roi_key(s,key==1);
-   else if(mem>=2){unsigned next=key==1?(index>=5?0:index+1):(index==0||index>5?5:index-1);s->settings=(s->settings&~(7u<<6))|(next<<6);}
+   else if(mem>=2){unsigned last=mem==2?6:5;unsigned next=key==1?(index>=last?0:index+1):(index==0||index>last?last:index-1);s->settings=(s->settings&~(7u<<6))|(next<<6);}
    else if(mode==7){unsigned t=s->shape_threshold;s->shape_threshold=key==1?(t>239?255:t+16):(t<=17?1:t-16);}
    else {unsigned shift=(mode==5||mode==6)?20:9;uint32_t t=(old_settings>>shift)&2047;control_threshold(s,shift,key==1?threshold_up(t):threshold_down(t));}
   }
@@ -85,7 +85,7 @@ static void control_event(uint32_t event){
   case 0x29:control_threshold(s,20,v&2047);break;
   case 3:s->settings=(s->settings&~8u)|((v&1)<<3);s->feature_dirty=1;break;
   case 4:s->settings=(s->settings&~48u)|((v&3)<<4);s->feature_dirty=1;break;
-  case 5:s->settings=(s->settings&~(7u<<6))|(((v&7)>5?0:v&7)<<6);s->feature_dirty=1;break;
+  case 5:s->settings=(s->settings&~(7u<<6))|(((v&7)>(mem==2?6:5)?0:v&7)<<6);s->feature_dirty=1;break;
   case 0x30:s->roi[0]=v;break;case 0x31:s->roi[1]=v;break;
   case 0x32:s->roi[2]=v;break;case 0x33:s->roi[3]=v;break;
   case 0x34:s->roi_enable=v&1;break;

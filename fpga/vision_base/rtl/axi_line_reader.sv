@@ -7,7 +7,7 @@
 // addresses, and req_addr may be any even byte offset.
 module axi_line_reader #(
     parameter integer MAX_BURST_BEATS = 16,
-    parameter integer FIFO_BEATS       = 16
+    parameter integer FIFO_BEATS       = 8
 ) (
     input  wire        clk,
     input  wire        rst_n,

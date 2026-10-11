@@ -34,7 +34,7 @@ module tb_axi_line_reader;
     reg [7:0] previous_arlen=0;
     integer k;
 
-    axi_line_reader #(.MAX_BURST_BEATS(16), .FIFO_BEATS(16)) dut (
+    axi_line_reader #(.MAX_BURST_BEATS(16), .FIFO_BEATS(8)) dut (
       .clk(clk), .rst_n(rst_n), .req_valid(req_valid), .req_ready(req_ready),
       .req_addr(req_addr), .req_pixels(req_pixels), .pixel_valid(pixel_valid),
       .pixel_ready(pixel_ready), .pixel_data(pixel_data), .pixel_keep(pixel_keep),

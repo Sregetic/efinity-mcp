@@ -367,9 +367,10 @@ module frame_memory_system #(
  end
  wire pin_history=KEEP_HISTORY&&mode_core!=0;
  wire[2:0]idx=index_core<history_count?index_core:3'd0;
- wire[3:0]replay_sum={1'b0,idx}+{1'b0,play};
+ wire[3:0]replay_sum={1'b0,idx}+{1'b0,(index_core==6?play:3'd0)};
  wire[2:0]replay_age=replay_sum>=history_count?3'(replay_sum-history_count):replay_sum[2:0];
  wire[2:0]next_age=idx+1>=history_count?3'd0:idx+1'b1;
+ // F2 indices0..5 hold a frame; reserved index6 explicitly starts playback.
  wire[2:0]selected_age=mode_core==2?replay_age:mode_core==3?((history_tick<30||history_count<2)?idx:next_age):3'd0;
  reg start_scan=0,scan_from_source=0;
  assign scan_source_mode=scan_from_source;

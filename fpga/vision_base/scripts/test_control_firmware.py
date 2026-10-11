@@ -40,8 +40,11 @@ void main(void){
  event(1,2);for(unsigned i=0;i<80;i++){event(255,2);check(threshold(9)==112);event(255,4);check(threshold(9)==96);}
  event(1,4);event(255,3);check((state.settings&7)==5&&threshold(9)==112&&threshold(20)==2047);
  event(1,2);event(0x28,96);event(255,6);check(threshold(9)==80);event(0x28,96);
- apply();event(4,2);for(unsigned i=0;i<6;i++)event(255,2);check(((state.settings>>6)&7)==0);
+ apply();event(4,2);for(unsigned i=0;i<6;i++)event(255,2);check(((state.settings>>6)&7)==6);
+ event(255,2);check(((state.settings>>6)&7)==0);event(255,4);check(((state.settings>>6)&7)==6);
  event(255,4);check(((state.settings>>6)&7)==5);event(5,7);check(((state.settings>>6)&7)==0);
+ event(5,6);check(((state.settings>>6)&7)==6);event(255,32);check(((state.settings>>4)&3)==3&&((state.settings>>6)&7)==0);
+ event(255,4);check(((state.settings>>6)&7)==5);event(5,6);check(((state.settings>>6)&7)==0);
  event(4,0);event(255,16);check(((state.settings>>4)&3)==1);event(255,48);check(((state.settings>>4)&3)==2);event(4,1);event(255,32);check(((state.settings>>4)&3)==2);
  apply();event(1,5);control_service_step();uint32_t first=reg[2];event(0x29,80);control_service_step();check(reg[2]==first);
  reg[3]&=~1u;control_service_step();check(((reg[2]>>20)&2047)==80);apply();

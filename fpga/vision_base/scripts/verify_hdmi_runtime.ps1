@@ -33,7 +33,21 @@ try {
  $stable=@($r|Select-Object -Skip 3)
  if(@($stable.display_id|Select-Object -Unique).Count -ne 1){throw 'Frozen frame changed'}
  $checks+='live advances and frozen frame holds'
- foreach($f in 2,3){
+ $r=Read-Control 'history2_static' @('--menu','0','--memory','2','--index','0','--samples','60')
+ if(@(($r|Select-Object -Skip 3).display_id|Select-Object -Unique).Count -ne 1){throw 'F2 static frame changed'}
+ $static=@();$r=Read-Control 'history2_index0' @('--samples','5');$static+=$r[-1].display_id
+ foreach($i in 1..5){
+  $r=Read-Control "history2_index$i" @('--key-event','2','--samples','5')
+  if($r[-1].index -ne $i){throw "F2 key index mismatch $i"}
+  $static+=$r[-1].display_id
+ }
+ if(@($static|Select-Object -Unique).Count -ne 6){throw 'F2 did not select six distinct frames'}
+ $r=Read-Control 'history2_auto' @('--key-event','2','--samples','24')
+ if($r[-1].index -ne 6 -or @($r.display_id|Select-Object -Unique).Count -lt 3){throw 'F2 explicit autoplay stalled'}
+ $r=Read-Control 'history2_stop' @('--key-event','4','--samples','18')
+ if($r[-1].index -ne 5 -or @(($r|Select-Object -Skip 3).display_id|Select-Object -Unique).Count -ne 1){throw 'F2 autoplay failed to stop'}
+ $checks+='F2 static frame, six distinct key-selected frames, explicit index6 autoplay and stop'
+ foreach($f in 3){
   $r=Read-Control "history$f" @('--memory',"$f",'--index','0','--samples','18')
   if(@($r.display_id|Select-Object -Unique).Count -lt 2){throw "History $f did not advance"}
   $checks+="history$f frame IDs change"

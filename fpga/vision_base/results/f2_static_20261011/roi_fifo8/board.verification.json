@@ -1,0 +1,311 @@
+{
+  "passed": true,
+  "scope": "Actual DDR/ROI runtime; current artifact is recorded by the separate programming log",
+  "live": [
+    {
+      "name": "live_full",
+      "seconds": 58.01600000006147,
+      "source_frames": 1741,
+      "scan_bad_delta": 0,
+      "source_discard_delta": 0
+    },
+    {
+      "name": "live_zoom",
+      "seconds": 59.515000000130385,
+      "source_frames": 1784,
+      "scan_bad_delta": 0,
+      "source_discard_delta": 0
+    }
+  ],
+  "frozen": [
+    {
+      "name": "frozen_full",
+      "roi_frame_id": 25213,
+      "applied_config_id": 12,
+      "roi_enabled": 1,
+      "roi_frame_ok": 1,
+      "source_held": 1,
+      "source_frozen": 1,
+      "render_busy": 0,
+      "render_pending": 0,
+      "capture_active": 1,
+      "config_busy": 0,
+      "config_error": 0,
+      "render_error": 0,
+      "scan_error": 0,
+      "commit_rejected": 0,
+      "mode": 5,
+      "median": 1,
+      "memory": 1,
+      "threshold": 128,
+      "canny_ready": 1,
+      "canny_fault": 0,
+      "roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "output_size": [
+        1920,
+        1080
+      ],
+      "capture_discarded": 0,
+      "scan_bad_frames": 0,
+      "render_cycles": 5629277,
+      "requested_config_id": 12,
+      "accepted_config_id": 12,
+      "rejected_config_id": 0,
+      "held_source_frame_id": 25213,
+      "held_raw_id_sample": 25213,
+      "rgb_capture_count": 25347,
+      "position": [
+        0,
+        0
+      ],
+      "display_size": [
+        1920,
+        1080
+      ],
+      "render_deadline_misses": 2952,
+      "sobel_threshold": 128,
+      "canny_threshold": 128,
+      "canny_effective_threshold": 128,
+      "menu": 0,
+      "menu_value": 0,
+      "shape_threshold": 32,
+      "index": 0
+    },
+    {
+      "name": "frozen_zoom",
+      "roi_frame_id": 25213,
+      "applied_config_id": 13,
+      "roi_enabled": 1,
+      "roi_frame_ok": 1,
+      "source_held": 1,
+      "source_frozen": 1,
+      "render_busy": 0,
+      "render_pending": 0,
+      "capture_active": 1,
+      "config_busy": 0,
+      "config_error": 0,
+      "render_error": 0,
+      "scan_error": 0,
+      "commit_rejected": 0,
+      "mode": 5,
+      "median": 1,
+      "memory": 1,
+      "threshold": 128,
+      "canny_ready": 1,
+      "canny_fault": 0,
+      "roi": [
+        480,
+        270,
+        960,
+        540
+      ],
+      "output_size": [
+        1920,
+        1080
+      ],
+      "capture_discarded": 0,
+      "scan_bad_frames": 0,
+      "render_cycles": 2062952,
+      "requested_config_id": 13,
+      "accepted_config_id": 13,
+      "rejected_config_id": 0,
+      "held_source_frame_id": 25213,
+      "held_raw_id_sample": 25213,
+      "rgb_capture_count": 25479,
+      "position": [
+        0,
+        0
+      ],
+      "display_size": [
+        1920,
+        1080
+      ],
+      "render_deadline_misses": 2953,
+      "sobel_threshold": 128,
+      "canny_threshold": 128,
+      "canny_effective_threshold": 128,
+      "menu": 0,
+      "menu_value": 0,
+      "shape_threshold": 32,
+      "index": 0
+    },
+    {
+      "name": "frozen_pan",
+      "roi_frame_id": 25213,
+      "applied_config_id": 14,
+      "roi_enabled": 1,
+      "roi_frame_ok": 1,
+      "source_held": 1,
+      "source_frozen": 1,
+      "render_busy": 0,
+      "render_pending": 0,
+      "capture_active": 1,
+      "config_busy": 0,
+      "config_error": 0,
+      "render_error": 0,
+      "scan_error": 0,
+      "commit_rejected": 0,
+      "mode": 5,
+      "median": 1,
+      "memory": 1,
+      "threshold": 128,
+      "canny_ready": 1,
+      "canny_fault": 0,
+      "roi": [
+        608,
+        334,
+        960,
+        540
+      ],
+      "output_size": [
+        1920,
+        1080
+      ],
+      "capture_discarded": 0,
+      "scan_bad_frames": 0,
+      "render_cycles": 2068268,
+      "requested_config_id": 14,
+      "accepted_config_id": 14,
+      "rejected_config_id": 0,
+      "held_source_frame_id": 25213,
+      "held_raw_id_sample": 25213,
+      "rgb_capture_count": 25610,
+      "position": [
+        0,
+        0
+      ],
+      "display_size": [
+        1920,
+        1080
+      ],
+      "render_deadline_misses": 2954,
+      "sobel_threshold": 128,
+      "canny_threshold": 128,
+      "canny_effective_threshold": 128,
+      "menu": 0,
+      "menu_value": 0,
+      "shape_threshold": 32,
+      "index": 0
+    },
+    {
+      "name": "frozen_small",
+      "roi_frame_id": 25213,
+      "applied_config_id": 15,
+      "roi_enabled": 1,
+      "roi_frame_ok": 1,
+      "source_held": 1,
+      "source_frozen": 1,
+      "render_busy": 0,
+      "render_pending": 0,
+      "capture_active": 1,
+      "config_busy": 0,
+      "config_error": 0,
+      "render_error": 0,
+      "scan_error": 0,
+      "commit_rejected": 0,
+      "mode": 5,
+      "median": 1,
+      "memory": 1,
+      "threshold": 128,
+      "canny_ready": 1,
+      "canny_fault": 0,
+      "roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "output_size": [
+        960,
+        540
+      ],
+      "capture_discarded": 0,
+      "scan_bad_frames": 0,
+      "render_cycles": 2732601,
+      "requested_config_id": 15,
+      "accepted_config_id": 15,
+      "rejected_config_id": 0,
+      "held_source_frame_id": 25213,
+      "held_raw_id_sample": 25213,
+      "rgb_capture_count": 25739,
+      "position": [
+        480,
+        270
+      ],
+      "display_size": [
+        960,
+        540
+      ],
+      "render_deadline_misses": 2955,
+      "sobel_threshold": 128,
+      "canny_threshold": 128,
+      "canny_effective_threshold": 128,
+      "menu": 0,
+      "menu_value": 0,
+      "shape_threshold": 32,
+      "index": 0
+    }
+  ],
+  "final": {
+    "roi_frame_id": 25863,
+    "applied_config_id": 16,
+    "roi_enabled": 1,
+    "roi_frame_ok": 1,
+    "source_held": 1,
+    "source_frozen": 0,
+    "render_busy": 1,
+    "render_pending": 0,
+    "capture_active": 1,
+    "config_busy": 0,
+    "config_error": 0,
+    "render_error": 0,
+    "scan_error": 0,
+    "commit_rejected": 0,
+    "mode": 5,
+    "median": 1,
+    "memory": 0,
+    "threshold": 128,
+    "canny_ready": 1,
+    "canny_fault": 0,
+    "roi": [
+      0,
+      0,
+      1920,
+      1080
+    ],
+    "output_size": [
+      1920,
+      1080
+    ],
+    "capture_discarded": 0,
+    "scan_bad_frames": 0,
+    "render_cycles": 5138708,
+    "requested_config_id": 16,
+    "accepted_config_id": 16,
+    "rejected_config_id": 0,
+    "held_source_frame_id": 25869,
+    "held_raw_id_sample": 25869,
+    "rgb_capture_count": 25871,
+    "position": [
+      0,
+      0
+    ],
+    "display_size": [
+      1920,
+      1080
+    ],
+    "render_deadline_misses": 2965,
+    "sobel_threshold": 128,
+    "canny_threshold": 128,
+    "canny_effective_threshold": 128,
+    "menu": 0,
+    "menu_value": 0,
+    "shape_threshold": 32,
+    "index": 0
+  }
+}

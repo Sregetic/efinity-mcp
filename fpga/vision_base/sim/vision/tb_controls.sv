@@ -16,8 +16,12 @@ initial begin
  press(2,30);frame;if(mem!=2)$fatal;
  press(1,8);frame;if(idx!=1)$fatal;
  repeat(5)begin press(1,8);frame;if(mem!=2)$fatal(1,"short presses accumulated into a long press");end
- if(idx!=0)$fatal(1,"history index must wrap at six frames");
- press(2,8);frame;if(idx!=5)$fatal(1,"history index reverse wrap");
+ if(idx!=6)$fatal(1,"F2 automatic playback index6");
+ press(1,8);frame;if(idx!=0)$fatal(1,"F2 forward wrap");
+ press(2,8);frame;if(idx!=6)$fatal(1,"F2 reverse wrap");
+ press(2,8);frame;if(idx!=5)$fatal(1,"F2 leave autoplay");
+ press(2,30);frame;if(mem!=3||idx!=0)$fatal(1,"F3 resets index");
+ press(2,8);frame;if(idx!=5)$fatal(1,"F3 remains six frames");
  @(negedge clk);cmd=1;op=5;value=7;#10;cmd=0;frame;if(idx!=0)$fatal(1,"invalid history index not normalized");
  @(negedge clk);cmd=1;op=2;value=2047;#10;cmd=0;frame;if(thr!=2047)$fatal;
  @(negedge clk);cmd=1;op=4;value=0;#10;cmd=0;frame;

@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "scope": "Actual FPGA display line RAM, not physical HDMI",
+  "rows": [
+    {
+      "header": {
+        "ready": 1,
+        "busy": 0,
+        "error": 0,
+        "source": 0,
+        "mode": 0,
+        "threshold": 128,
+        "median": 1,
+        "tone": 3,
+        "row": 540,
+        "sequence": 1,
+        "config_id": 0,
+        "frame_id": 13865
+      },
+      "t": 1780788.89
+    },
+    {
+      "header": {
+        "ready": 1,
+        "busy": 0,
+        "error": 0,
+        "source": 0,
+        "mode": 0,
+        "threshold": 128,
+        "median": 1,
+        "tone": 3,
+        "row": 540,
+        "sequence": 2,
+        "config_id": 0,
+        "frame_id": 13865
+      },
+      "t": 1780799.125
+    }
+  ],
+  "elapsed_seconds": 10.235000000102445,
+  "rgb_bytes": 5760,
+  "differing_bytes": 0
+}

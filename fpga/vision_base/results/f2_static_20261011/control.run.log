@@ -1,0 +1,2 @@
+F:/Efinity/efinity-riscv-ide-2026.1/toolchain/bin/../lib/gcc/riscv-none-elf/13.4.0/../../../../riscv-none-elf/bin/ld.exe: warning: F:\Project\fpga\vision_base\results\xlr_control_20261007\control_test\test.elf has a LOAD segment with RWX permissions
+PASS RV32I controls independent thresholds16..2047 step16, keys/history,10-page UI/AI single-shot/selftest, bounded zoom/pan/viewport, coalesced frozen ROI commits, atomic feature wait and disable

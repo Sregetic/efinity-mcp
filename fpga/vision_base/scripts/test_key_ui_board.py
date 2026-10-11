@@ -55,8 +55,9 @@ def main():
   focus(2);key(4);settled('zoom1x_disable',lambda s:not s['roi_enabled'] and not s['config_busy'])
   focus(0);key(32);u=control(roi=False);assert u['memory']==2 and u['index']==0,u
   history=[]
-  for i in range(6):
-   key(2);u=control(roi=False);assert u['index']==(i+1)%6,u;history.append(u)
+  for i in range(7):
+   key(2);u=control(roi=False);assert u['index']==(i+1)%7,u;history.append(u)
+  key(4);assert control(roi=False)['index']==6
   key(4);assert control(roi=False)['index']==5
   key(32);assert control(roi=False)['memory']==3
   key(32);assert control(roi=False)['memory']==1
