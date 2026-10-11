@@ -62,3 +62,7 @@ Invoke计时包括层间原控制服务，逐层计时单独记录算子区间�
 提前激活截断和8通道分块虽然数值通过，但实测没有净收益，最终代码未保留。`cfu_release`相对地址优化候选只明确错误服务的noreturn契约，生成代码变化后重新完整板测，避免复用旧制品计时。
 
 最终arena149388B，加载段285200B；原18740B应用和4400B权重已核对/恢复，CPU状态1。完整证据：F:/Project/fpga/vision_base/results/fomo_speed_20261011/REPORT.md。相机RGB ROI→FOMO→OSD及视频并行DDR竞争仍待接入/测量，原SPI启动和相机计数0问题保持独立。
+
+## 后续视频状态更新
+
+2026-10-11同版SRAM重烧后，用户KEY1完整复位恢复实时画面；相机/帧池/显示帧持续递增，CPU1、BOOT7/EF6017自主加载原18740B应用与4400B权重。上文source/capture=0与SPI错误3为固定图测试当时的历史观察，当前以PROJECT_MASTER_STATUS.md最新摘要及results/black_screen_20261011/REPORT.md为准。此次不是FOMO实时RGB输入接入，也不是断电独立启动验收。

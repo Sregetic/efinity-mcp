@@ -1,0 +1,88 @@
+{
+  "rx": [
+    {
+      "time_s": 1791708782.1747289,
+      "page": 13,
+      "raw": "564953312609190d60600807000005f32805a00e10004ad0",
+      "sensor_frames": 1523,
+      "words_per_line": 640,
+      "lines": 1440,
+      "words": 921600,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1791708782.3915732,
+      "page": 13,
+      "raw": "564953312609190d60600807000005fa2805a00e10004ad0",
+      "sensor_frames": 1530,
+      "words_per_line": 640,
+      "lines": 1440,
+      "words": 921600,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1791708782.607154,
+      "page": 13,
+      "raw": "564953312609190d60600807000006002805a00e10004ad0",
+      "sensor_frames": 1536,
+      "words_per_line": 640,
+      "lines": 1440,
+      "words": 921600,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1791708782.8164334,
+      "page": 13,
+      "raw": "564953312609190d60600807000006072805a00e10004ad0",
+      "sensor_frames": 1543,
+      "words_per_line": 640,
+      "lines": 1440,
+      "words": 921600,
+      "ppc": 4,
+      "data_type": 43
+    },
+    {
+      "time_s": 1791708783.033387,
+      "page": 13,
+      "raw": "564953312609190d606008070000060d2805a00e10004ad0",
+      "sensor_frames": 1549,
+      "words_per_line": 640,
+      "lines": 1440,
+      "words": 921600,
+      "ppc": 4,
+      "data_type": 43
+    }
+  ],
+  "physical": [
+    {
+      "time_s": 1791708783.3016737,
+      "page": 15,
+      "raw": "564953312609191f6060080770e918210022409400280027",
+      "byte_ticks": 1894324257,
+      "lp_entries": 2244756,
+      "byte_clock_peak_mhz": 40,
+      "byte_clock_window_edges": 39
+    },
+    {
+      "time_s": 1791708783.517567,
+      "page": 15,
+      "raw": "564953312609191f60600807716182360022651c00280027",
+      "byte_ticks": 1902215734,
+      "lp_entries": 2254108,
+      "byte_clock_peak_mhz": 40,
+      "byte_clock_window_edges": 39
+    },
+    {
+      "time_s": 1791708783.7282708,
+      "page": 15,
+      "raw": "564953312609191f6060080771da524e002289c200280028",
+      "byte_ticks": 1910133326,
+      "lp_entries": 2263490,
+      "byte_clock_peak_mhz": 40,
+      "byte_clock_window_edges": 40
+    }
+  ]
+}
