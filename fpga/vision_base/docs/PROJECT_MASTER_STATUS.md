@@ -1,5 +1,13 @@
 # 项目总目标与状态（统一范围表）
 
+## 2026-10-11 FOMO固定图板上接入（硬件配置/Flash不变）
+
+用户交接的54640B Shape FOMO INT8已接入现有100MHz RV32I/DDR，以官方TFLM四类软件算子运行96×96 RGB固定输入。最终blank/circle/rectangle/triangle四份576B输出全部逐字节一致，最大差0；Invoke分别25.959/25.961/25.977/25.971秒，arena实用149388B。XLR/RAM/DSP增量均0，当前硬件沿用下方60082/252/59，不新增神经硬件核。此速度是软件参考基线，尚不适合实时识别；后续先优化卷积热循环并复用已有CFU。
+
+APB firmware_state仅2bit，已修正测试发送方和完成检测，最终1→2握手/自动回读/恢复原18740B完整AI程序与4400B权重通过，CPU状态1。静态500kHz整段291328B下载实际回读相等后才执行；原默认25kHz、动态数据5kHz保持。FOMO测试不替代当前MLP/FlyHash/连接组，也未接真实相机RGB ROI/后处理/OSD；四张固定图不作为实物准确率或A6验收。
+
+本轮开始即发现ROM停在SPI JEDEC错误3/IDFFFFFF，早于模型加载；Flash原样，自主启动问题待处理。相机/帧池capture count与source仍0，未验收同时实时视频。完整结果见[板上报告](../results/fomo_fixed_20261011/REPORT.md)，重跑见[接入说明](SHAPE_FOMO_INTEGRATION_20261011.md)。下方“最新部署”是本轮沿用的硬件/Flash制品，原历史证据保持。
+
 ## 2026-10-11最新部署：AI实体菜单、定点自检与结果HUD
 
 当前SRAM和配置Flash为`results/ai_board_ui_20261010/release/ti60f225_oob.bit`：60082/60800XLR、252/256RAM、59/160DSP，最终WNS+0.077ns/WHS+0.026ns、未分配核心引脚0；余718XLR/4RAM/101DSP。相对上一自主加载版净+130XLR/+1RAM/0DSP。静态字形使用1块同步ROM，保留图像回读、完整Canny、ROI/帧池/全部DMA与原时钟；新增AI功能主要是DDR固件，不是新增神经硬件核。负时序/路由失败候选未安装；最终使用TIMING_3/seed5并完成原生构建。

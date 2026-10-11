@@ -85,8 +85,10 @@ def main():
     p.add_argument('--elf',type=Path,required=True);p.add_argument('--weights',type=Path)
     p.add_argument('--cpu-config',type=Path,default=ROOT/'artifacts/vision_soc/cpu0.yaml')
     p.add_argument('--jtag-khz',type=int,default=USER1_KHZ,help='25kHz verified for USER1 reads while ROI scan remains active')
+    p.add_argument('--timeout-seconds',type=int,default=300,help='Load/readback deadline; large TFLM programs need longer than the original small application')
     p.add_argument('--output-dir',type=Path,required=True);a=p.parse_args()
     if a.jtag_khz<=0:p.error('--jtag-khz must be positive')
+    if a.timeout_seconds<=0:p.error('--timeout-seconds must be positive')
     entry,segments,sym=validate_image(a.elf,a.weights)
     location=board_location(a.url);a.output_dir.mkdir(parents=True,exist_ok=True)
     commands=['halt','wait_halt 5000',f'load_image {tcl_path(a.elf)}']
@@ -104,7 +106,7 @@ def main():
     def run(name,commands,marker):
         cfg=configuration(location,a.cpu_config,sym,a.jtag_khz)+'if {[catch {\n'+'\n'.join([*commands,'echo '+marker])+'\n} failure]} {\n echo "VISION_DDR_ERROR: $failure"\n shutdown error\n}\nshutdown\n'
         path=a.output_dir/(name+'.cfg');path.write_text(cfg,encoding='utf-8')
-        result=subprocess.run([str(IDE/'openocd/bin/openocd.exe'),'-f',str(path.resolve())],capture_output=True,text=True,timeout=300)
+        result=subprocess.run([str(IDE/'openocd/bin/openocd.exe'),'-f',str(path.resolve())],capture_output=True,text=True,timeout=a.timeout_seconds)
         log=result.stdout+result.stderr;(a.output_dir/(name+'.log')).write_text(log,encoding='utf-8')
         result.check_returncode()
         if marker not in log:raise RuntimeError('OpenOCD phase did not complete: '+name)
