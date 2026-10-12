@@ -1,0 +1,13 @@
+{
+  "target": "board",
+  "flow": "compile",
+  "video_mode": "camera",
+  "sensor": "sc431hai",
+  "started_utc": "2026-10-12T18:11:51.9887311Z",
+  "finished_utc": "2026-10-12T18:19:02.4202933Z",
+  "exit_code": 0,
+  "unassigned_core_pins": 0,
+  "wns_ns": 0.026,
+  "whs_ns": 0.027,
+  "scope": "Native complete FPGA build; no manual HDMI or power-cycle acceptance"
+}

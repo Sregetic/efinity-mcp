@@ -9,7 +9,7 @@
 // low-address-first ordering.  The writer owns only a small assembled-word
 // FIFO; it does not contain frame-sized storage.
 module axi_frame_writer #(
-    parameter integer MAX_BURST_BEATS = 16,
+    parameter integer MAX_BURST_BEATS = 8,
     parameter integer FIFO_DEPTH = ((MAX_BURST_BEATS < 2) ? 4 : MAX_BURST_BEATS)
 ) (
     input  wire         clk,
@@ -140,7 +140,7 @@ module axi_frame_writer #(
     assign page_beats = (13'd4096 - {1'b0, out_addr[11:0]}) >> 4;
 
     // Rows and 4 KiB boundaries are independent limits.  MAX_BURST_BEATS is
-    // intentionally bounded by the integration contract to 16 or 32.
+    // intentionally bounded by the integration contract to 8, 16 or 32.
     always @* begin
         planned_burst_len = 9'd0;
         if (active && (out_beats_remaining != 0) &&

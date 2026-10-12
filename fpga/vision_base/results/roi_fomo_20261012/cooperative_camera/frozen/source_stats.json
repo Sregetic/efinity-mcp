@@ -1,0 +1,10 @@
+{
+  "min": 0,
+  "max": 2,
+  "nonzero_channel_values": 41,
+  "pixels": [
+    1920,
+    1080
+  ],
+  "scope": "Frozen source image only, not lighting diagnosis or card accuracy"
+}

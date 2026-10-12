@@ -2,12 +2,15 @@
 
 INT8_TEST emulates the existing CFU; only real-board tests measure its speed.
 """
+import argparse
 import json
 import subprocess
 from pathlib import Path
 from build_fomo_firmware import ROOT, IDE, EXAMPLE, software_headers
 
-out = ROOT / 'results/fomo_speed_20261011/unit'
+p = argparse.ArgumentParser()
+p.add_argument('--output-dir', type=Path, default=ROOT/'results/fomo_speed_20261011/unit')
+out = p.parse_args().output_dir
 out.mkdir(parents=True, exist_ok=True)
 src = Path('F:/efinity-ci/deps/tinyml') / EXAMPLE
 software_headers(src, out / 'reference_headers')
@@ -25,6 +28,8 @@ source = r'''
 extern "C" void fomo_kernel_fail() { finish(0); }
 extern "C" void trap() { finish(0); }
 extern "C" void DebugLog(const char*) { finish(0); }
+static unsigned control_polls=0;
+extern "C" void fomo_control_poll() { ++control_polls; }
 static uint32_t random_state=2210;
 static uint32_t next() { uint32_t x=random_state; x^=x<<13; x^=x>>17; x^=x<<5; return random_state=x; }
 static int32_t ref_high(int32_t a,int32_t b) {
@@ -53,7 +58,9 @@ static void conv(int channels,int outputs,int fh,int fw,int stride,int pad,int d
     p.quantized_activation_min=-91;p.quantized_activation_max=104;
     const int8_t* x=input+(unaligned?1:0);
     tflite::reference_integer_ops::RefConvPerChannel(p,multipliers,shifts,in,x,filter,weights,bs,biased?bias:nullptr,outshape,reference);
+    unsigned before=control_polls;
     vision_fomo::Conv(p,multipliers,shifts,in,x,filter,weights,biased?bias:nullptr,outshape,actual);
+    if(control_polls-before!=(unsigned)oh)finish(0);
     compare(oh*ow*outputs);
 }
 static void depthwise(int channels,int stride,int pad,int dilation,int offset,bool biased) {
@@ -66,7 +73,9 @@ static void depthwise(int channels,int stride,int pad,int dilation,int offset,bo
     p.dilation_width_factor=p.dilation_height_factor=dilation;p.input_offset=offset;p.output_offset=-128;
     p.quantized_activation_min=-128;p.quantized_activation_max=127;
     tflite::reference_integer_ops::RefDepthwiseConvPerChannel(p,multipliers,shifts,in,input,filter,weights,bs,biased?bias:nullptr,outshape,reference);
+    unsigned before=control_polls;
     vision_fomo::Depthwise(p,multipliers,shifts,in,input,filter,weights,biased?bias:nullptr,outshape,actual);
+    if(control_polls-before!=(unsigned)oh)finish(0);
     compare(oh*ow*channels);
 }
 extern "C" int main() {
@@ -119,7 +128,7 @@ extern "C" int main() {
 (out/'link.ld').write_text('OUTPUT_ARCH(riscv)\nENTRY(_start)\nSECTIONS{. = 0x80000000; .text : {*(.text.start) *(.text*)} .rodata : {*(.rodata*)} .data : {*(.data*) *(.sdata*)} .bss : {*(.bss*) *(.sbss*)} __stack_top = 0x80100000;}')
 includes=[out/'reference_headers',src,src/'tensorflow/third_party/gemmlowp',ROOT/'firmware/vision']
 cmd=[str(IDE/'toolchain/bin/riscv-none-elf-g++.exe'),'-march=rv32i_zicsr_zifencei','-mabi=ilp32','-O2','-std=c++17',
-     '-DINT8_TEST','-DNDEBUG','-DTF_LITE_STATIC_MEMORY','-DTF_LITE_DISABLE_X86_NEON','-ffunction-sections','-fdata-sections',
+     '-DINT8_TEST','-DVISION_FOMO','-DNDEBUG','-DTF_LITE_STATIC_MEMORY','-DTF_LITE_DISABLE_X86_NEON','-ffunction-sections','-fdata-sections',
      '-fno-exceptions','-fno-rtti','-fno-pic','-mno-relax','-msmall-data-limit=0','-nostartfiles','-specs=nosys.specs',
      *['-I'+str(p) for p in includes],'-Wl,--gc-sections','-T',str(out/'link.ld'),str(out/'start.S'),str(out/'test.cc'),
      '-lc','-lgcc','-o',str(out/'test.elf')]
@@ -133,5 +142,5 @@ if r.returncode or 'PASS RV32I Q31' not in r.stdout: raise AssertionError((r.ret
 (out/'result.json').write_text(json.dumps(dict(passed=True,rounding_pairs=50100,mul16_pairs=10000,conv_cases=172,
                                              divide_pairs=32320,requant_pairs=10000,
                                              activation_cases=10000,
-                                             depthwise_cases=196,cfu_emulated=True,physical_timing_verified=False),indent=2))
+                                             depthwise_cases=196,cooperative_poll_per_output_row=True,cfu_emulated=True,physical_timing_verified=False),indent=2))
 print(r.stdout.strip())

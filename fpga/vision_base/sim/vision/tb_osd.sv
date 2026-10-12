@@ -40,6 +40,9 @@ initial begin
  y=76;packet[303:288]=16'h0abc;packet[319:304]=16'h0067;packet[335:320]=16'h3c28;
  character(0,"U");character(1,"S");character(4,"0");character(7,"C");character(13,"7");character(16,"3");character(19,"8");
  ui=9<<11;y=4;character(0,"S");character(4,"T");character(7,"T");
+ ui=10<<11;character(0,"N");character(1,"N");character(3,"B");character(6,"E");
+ ui=(10<<11)|1;character(3,"F");character(4,"O");character(5,"M");character(6,"O");
+ y=76;packet[159:128]=2;character(0,"M");character(1,"S");
  $display("PASS pipelined OSD mode/threshold, fusion TEST/OLD, independent IDs and signed score bytes");$finish;
 end
 endmodule

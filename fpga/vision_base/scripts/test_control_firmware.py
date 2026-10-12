@@ -7,6 +7,7 @@ BIN=Path('F:/Efinity/efinity-riscv-ide-2026.1/toolchain/bin')
 source=r'''
 #include <stdint.h>
 #define CONTROL_TEST
+#define VISION_FOMO
 static uint32_t reg[32];
 static uint32_t read_reg(unsigned off){return reg[off/4];}
 static void write_reg(unsigned off,uint32_t v){
@@ -82,8 +83,11 @@ void main(void){
  event(255,2);check(state.ai_policy==1&&state.ai_manual);event(255,4);check(state.ai_request==1);
  event(255,16);check(((state.settings>>4)&3)==0);event(255,16);check(((state.settings>>4)&3)==1);
  event(255,8);check(state.menu==9);event(255,2);check(state.selftest_request==1);event(255,4);check(state.selftest_request==1);
- event(255,8);check(state.menu==0);event(0x60,1);check(!state.ai_manual);apply();accept();control_service_step();check(!state.enabled&&!state.pending);
- const char *p="PASS RV32I controls independent thresholds16..2047 step16, keys/history,10-page UI/AI single-shot/selftest, bounded zoom/pan/viewport, coalesced frozen ROI commits, atomic feature wait and disable\n";
+ event(255,8);check(state.menu==10);event(255,2);check(state.ai_manual==3);
+ event(0x60,1);check(state.ai_manual==2);event(0x61,8);event(255,2);check(state.ai_policy==2&&state.ai_manual==2);
+ event(0x61,10);event(255,4);check(state.ai_manual==0);event(255,8);check(state.menu==0);
+ event(0x60,1);check(!state.ai_manual);apply();accept();control_service_step();check(!state.enabled&&!state.pending);
+ const char *p="PASS RV32I controls independent thresholds16..2047 step16, keys/history,11-page UI/AI single-shot/selftest/FOMO selection, bounded zoom/pan/viewport, coalesced frozen ROI commits, atomic feature wait and disable\n";
  while(*p)*(volatile unsigned char *)0x10000000=*p++;finish(1);
 }
 void trap(void){finish(0);}

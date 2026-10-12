@@ -28,7 +28,7 @@ def decode_ui(v):
  s=(v>>96)&0xffffffff
  return dict(menu=(v>>75)&15,menu_value=(v>>64)&2047,shape_threshold=(v>>79)&255,index=(s>>15)&7)
 p=argparse.ArgumentParser();p.add_argument('--sensor',choices=['sc431hai','sc2210'],default='sc431hai');p.add_argument('--url',default='ftdi://0x0403:0x6011:4:3/2');p.add_argument('--mode',type=int);p.add_argument('--threshold',type=int);p.add_argument('--sobel-threshold',type=int);p.add_argument('--canny-threshold',type=int);p.add_argument('--median',type=int,choices=[0,1]);p.add_argument('--memory',type=int,choices=range(4));p.add_argument('--index',type=int,choices=range(7),help='F2:0..5 static history,6 autoplay; F3:0..5 comparison');p.add_argument('--page',type=int,default=0,choices=range(33));p.add_argument('--color-order',type=int,choices=range(6));p.add_argument('--gamma','--tone',dest='gamma',type=int,choices=[0,1,2,3]);p.add_argument('--gain-r',type=int);p.add_argument('--gain-g',type=int);p.add_argument('--gain-b',type=int);p.add_argument('--samples',type=int,default=5);p.add_argument('--ae',type=int,choices=[0,1]);p.add_argument('--exposure',type=int);p.add_argument('--lcd-test',type=int,choices=[0,1]);p.add_argument('--lcd-bist',type=int,choices=[0,1]);p.add_argument('--lcd-backlight',type=int,choices=[0,1]);p.add_argument('--shape',type=int,choices=[0,1]);p.add_argument('--shape-threshold',type=int,choices=range(1,256))
-p.add_argument('--menu',type=int,choices=range(10));p.add_argument('--key-event',type=int,choices=range(64),help='Inject the same short/long event bits as hardware keys for automated policy checks');
+p.add_argument('--menu',type=int,choices=range(11));p.add_argument('--key-event',type=int,choices=range(64),help='Inject the same short/long event bits as hardware keys for automated policy checks');
 p.add_argument('--ai-policy',type=int,choices=[0,1,2],help='0 off,1 configured ROI on displayed frame,2 geometry-guided ROI');p.add_argument('--ai-status',action='store_true');
 p.add_argument('--roi',type=int,nargs=4,metavar=('X','Y','W','H'));p.add_argument('--output-size',type=int,nargs=2,metavar=('W','H'));p.add_argument('--position',type=int,nargs=2,metavar=('X','Y'));p.add_argument('--roi-enable',type=int,choices=[0,1]);p.add_argument('--rerender',action='store_true');p.add_argument('--roi-status',action='store_true');a=p.parse_args()
 exposure_min,exposure_max=112,2950
@@ -97,7 +97,8 @@ with acquire_jtag_engine(1e6,a.url) as e:
    if time.monotonic()>deadline:raise TimeoutError(f'ROI config{expected} not applied: {ids}, {state}')
   command(126,a.page)
  if a.ai_policy is not None:
-  deadline=time.monotonic()+2
+  # The dispatcher acknowledges OFF after the protected in-flight inference.
+  deadline=time.monotonic()+20
   while True:
    ai=ai_status()
    if ai['ai_enabled']==int(a.ai_policy!=0) and (a.ai_policy==0 or ai['ai_geometry_policy']==int(a.ai_policy==2)):break

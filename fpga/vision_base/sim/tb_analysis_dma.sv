@@ -79,6 +79,13 @@ module tb_analysis_dma;
   inject_write_error=1;write_reg(0,5,0);wait_done(4);inject_write_error=0;write_reg(0,2,0);
   write_reg(8'h08,32'hdeadbeef,0);write_reg(0,1,0);wait_done(1);write_reg(0,2,0);
   write_reg(8'h18,0,0);write_reg(0,5,0);wait_done(2);write_reg(0,2,0);
+  write_reg(8'h18,{16'd45,16'd37},0);write_reg(8'h08,119,0);
+  write_reg(0,13,0);paddr=4;
+  wait(prdata[1]);repeat(100)@(negedge clk);
+  if(!compute_hold_valid||!dut.lease||arv||awr)$fatal(1,"RGB lease must hold without tensor DMA");
+  paddr=8'h38;#1;if(prdata!=32'h00100000)$fatal(1,"RGB source base");
+  paddr=8'h0c;#1;if(prdata!=119)$fatal(1,"RGB source frame");
+  write_reg(0,2,0);repeat(2)@(negedge clk);if(compute_hold_valid)$fatal(1,"RGB ACK failed to release");
   $display("PASS tb_analysis_dma:1024 nearest gray pixels, nonaligned ROI, tags, backpressure, double buffer, busy rejection, stale/invalid/read/write faults and lease release");$finish;
  end
  initial begin #5000000;$fatal(1,"global timeout");end

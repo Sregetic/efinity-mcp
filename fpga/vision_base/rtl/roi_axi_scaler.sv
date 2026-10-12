@@ -3,7 +3,7 @@
 // overlaps line prefetch with output; the reader owns AXI4 128-bit INCR.
 module roi_axi_scaler #(
     parameter integer MAX_LINE_PIXELS = 2560,
-    parameter integer MAX_BURST_BEATS = 16,
+    parameter integer MAX_BURST_BEATS = 32,
     parameter integer FIFO_BEATS       = 8
 ) (
     input wire clk, rst_n,

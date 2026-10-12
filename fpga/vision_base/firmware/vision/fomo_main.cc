@@ -2,11 +2,7 @@
 #include <stdint.h>
 #include <string.h>
 #include "control_service.h"
-#include "tensorflow/lite/micro/micro_error_reporter.h"
-#include "tensorflow/lite/micro/micro_interpreter.h"
-#include "tensorflow/lite/micro/micro_mutable_op_resolver.h"
-#include "tensorflow/lite/micro/micro_profiler.h"
-#include "tensorflow/lite/schema/schema_generated.h"
+#include "fomo_runtime.h"
 
 extern "C" const uint8_t fomo_model[];
 extern "C" const int8_t fomo_inputs[4][96 * 96 * 3];
@@ -25,12 +21,6 @@ volatile uint64_t fomo_layer_cycles[4][25];
 volatile char fomo_log[2048];
 }
 
-static uint64_t ticks() {
-    auto p = reinterpret_cast<volatile uint32_t*>(0xf8b0bff8u);
-    uint32_t hi, lo, again;
-    do { hi = p[1]; lo = p[0]; again = p[1]; } while (hi != again);
-    return (uint64_t(hi) << 32) | lo;
-}
 [[noreturn]] static void fail(uint32_t code) {
     fomo_status[2] = code;
     __asm__ volatile("fence rw,rw" ::: "memory");
@@ -39,6 +29,7 @@ static uint64_t ticks() {
     for (;;) control_service_step();
 }
 extern "C" [[noreturn]] void fomo_kernel_fail() { fail(7); }
+extern "C" [[noreturn]] void fomo_runtime_fail(uint32_t code) { fail(code); }
 extern "C" void DebugLog(const char* s) {
     uint32_t n = fomo_status[12];
     while (*s && n < sizeof(fomo_log) - 1) fomo_log[n++] = *s++;
@@ -48,7 +39,7 @@ extern "C" void DebugLog(const char* s) {
 }
 namespace tflite {
 int32_t ticks_per_second() { return 100000000; }
-int32_t GetCurrentTimeTicks() { return static_cast<int32_t>(ticks()); }
+int32_t GetCurrentTimeTicks() { return static_cast<int32_t>(fomo_ticks()); }
 }
 
 class LayerProfiler final : public tflite::MicroProfiler {
@@ -58,11 +49,11 @@ class LayerProfiler final : public tflite::MicroProfiler {
     uint64_t BeginEvent(const char*) override {
         control_service_step();
         fomo_status[11] = index;
-        start = ticks();
+        start = fomo_ticks();
         return index;
     }
     void EndEvent(uint64_t handle) override {
-        fomo_layer_cycles[sample][handle] = ticks() - start;
+        fomo_layer_cycles[sample][handle] = fomo_ticks() - start;
         ++index;
     }
  private:
@@ -77,29 +68,15 @@ extern "C" int main() {
     *reinterpret_cast<volatile uint32_t*>(0xf8100004u) = 1;
     if (CONTROL_STATE->magic == 0) control_init(); // Same cold-boot contract as ai_main.c.
     if (CONTROL_STATE->magic != CONTROL_MAGIC) fail(1);
-    const auto model = tflite::GetModel(fomo_model);
-    if (model->version() != TFLITE_SCHEMA_VERSION) fail(2);
-    static tflite::MicroErrorReporter reporter;
-    static tflite::MicroMutableOpResolver<4> resolver;
-    if (resolver.AddConv2D() != kTfLiteOk ||
-        resolver.AddDepthwiseConv2D() != kTfLiteOk ||
-        resolver.AddAdd() != kTfLiteOk || resolver.AddSoftmax() != kTfLiteOk) fail(3);
     static LayerProfiler profiler;
-    constexpr size_t arena_bytes = 256 * 1024;
-    static tflite::MicroInterpreter interpreter(model, resolver, __arena_start,
-                                               arena_bytes, &reporter, &profiler);
-    uint64_t begin = ticks();
-    if (interpreter.AllocateTensors() != kTfLiteOk) fail(4);
-    uint64_t allocation = ticks() - begin;
+    uint64_t begin = fomo_ticks();
+    auto &interpreter = *fomo_create(&profiler);
+    uint64_t allocation = fomo_ticks() - begin;
     fomo_status[5] = interpreter.arena_used_bytes();
     fomo_status[6] = allocation;
     fomo_status[7] = allocation >> 32;
     auto input = interpreter.input(0);
     auto output = interpreter.output(0);
-    if (input->type != kTfLiteInt8 || input->bytes != sizeof(fomo_inputs[0]) ||
-        output->type != kTfLiteInt8 || output->bytes != sizeof(fomo_outputs[0]) ||
-        input->params.zero_point != -128 || output->params.zero_point != -128 ||
-        output->params.scale != 0.00390625f || interpreter.operators_size() != 25) fail(5);
     fomo_status[8] = input->bytes;
     fomo_status[9] = output->bytes;
     fomo_status[10] = interpreter.operators_size();
@@ -109,9 +86,9 @@ extern "C" int main() {
         profiler.index = 0;
         fomo_status[3] = s;
         fomo_status[1] = 2;
-        begin = ticks();
+        begin = fomo_ticks();
         if (interpreter.Invoke() != kTfLiteOk) fail(6);
-        fomo_results[s].cycles = ticks() - begin;
+        fomo_results[s].cycles = fomo_ticks() - begin;
         fomo_results[s].operators = profiler.index;
         for (unsigned i = 0; i < 576; ++i) {
             int value = output->data.int8[i];

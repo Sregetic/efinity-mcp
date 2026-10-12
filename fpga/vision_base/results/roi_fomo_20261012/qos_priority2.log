@@ -1,0 +1,2 @@
+PASS tb_axi_burst_qos64/32 scan/render quanta, nonurgent RR, scan-only progress, ordinary RR and response ownership
+sim/tb_axi_burst_qos.sv:31: $finish called at 2285000 (1ps)

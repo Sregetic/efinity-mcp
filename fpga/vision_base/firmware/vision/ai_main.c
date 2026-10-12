@@ -3,6 +3,9 @@
 #include "fusion_service.h"
 #include "connectome.h"
 #include "ai_selftest.h"
+#ifdef VISION_FOMO
+#include "fomo_pixels.h"
+#endif
 #define REG(off) (*(volatile uint32_t *)(0xf8100000u+(off)))
 #define DMA(off) REG(0x100u+(off))
 extern const uint8_t __weights_start[];
@@ -25,6 +28,12 @@ static void ai_publish(struct fusion_job *j,uint32_t config,uint32_t flags,uint3
  j->telemetry=(ai_runtime[0]<<11)|(ai_runtime[1]<<13)|((ai_runtime[2]&65535)<<16);
  j->timing0=ai_runtime[0]==2?ai_runtime[3]|(ai_runtime[4]<<16):0;
  j->timing1=ai_runtime[0]==2?ai_runtime[5]:0;
+#ifdef VISION_FOMO
+ if(ai_runtime[0]==2&&j->model==FOMO_MODEL_ID){
+  j->timing0=(fomo_camera_status[8]/100000)|((fomo_camera_status[9]/100000)<<16);
+  j->timing1=fomo_camera_status[10]/100000;
+ }
+#endif
  fusion_publish(j,config,flags|(j->test<<1),scores);
 }
 void main(void){
@@ -36,7 +45,11 @@ void main(void){
 #endif
  uint32_t last=REG(0x30)-10000000u,sequence=0,failures=0,seen=0,policy=3,policy_geometry_sequence=0;
  struct fusion_job job={.model=1,.test=1},completed={.model=1,.test=1};
- uint32_t key[12]={0},ui_request=0,selftest_request=0,completed_flags=0,completed_config=0,completed_scores=0;
+ uint32_t key[13]={0},ui_request=0,selftest_request=0,completed_flags=0,completed_config=0,completed_scores=0;
+#ifdef VISION_FOMO
+ unsigned job_fomo=0;uint32_t legacy_model=1;
+ fomo_camera_init();
+#endif
  ai_runtime[1]=1;ai_publish(&job,0,0,0);
  ai_runtime[1]=ai_selftest(m);ai_publish(&job,0,0,0);
  REG(4)=1;
@@ -53,10 +66,16 @@ void main(void){
    if(status&4){failures++;analysis_result[22]=DMA(0x24);analysis_result[23]=failures;
     ai_runtime[0]=3;ai_publish(&job,0,FUS_ERROR<<8,0);DMA(0)=2;continue;}
    if(job.exact&&DMA(0x0c)!=job.g.frame){REG(4)=3;for(;;);}
-   const volatile uint16_t *input=(const volatile uint16_t *)DMA(0x1c);
+   volatile uint16_t *input=(volatile uint16_t *)DMA(0x1c);
    analysis_result[17]=1;connectome_result[9]=1; // Producer owns arrays until the complete record is published.
    __asm__ volatile("fence rw,rw\n.word 0x500f\nfence rw,rw":::"memory");
    uint8_t f[64];int8_t x[128],h[32],o[4];uint32_t hash[8],start=REG(0x30),sum=0;
+#ifdef VISION_FOMO
+   if(job_fomo){
+    fomo_gray_roi((const volatile uint16_t*)DMA(0x38),job.xy,job.wh,analysis_gray);
+    for(unsigned i=0;i<1024;i++)input[i]=analysis_gray[i]; // Preserve the legacy gray tensor/readback contract.
+   }
+#endif
    for(unsigned i=0;i<1024;i++){uint8_t v=input[i];analysis_gray[i]=v;sum+=v;}
    shape_features((const uint8_t*)analysis_gray,x);uint32_t t0=REG(0x30);
    shape_dense(x,128,m->w0,m->b0,32,m->input_zero,m->hidden_zero,m->m0,m->s0,1,h);uint32_t t1=REG(0x30);
@@ -71,6 +90,9 @@ void main(void){
    for(unsigned i=0;i<128;i++)analysis_features[i]=x[i];for(unsigned i=0;i<32;i++)analysis_hidden[i]=h[i];
    for(unsigned i=0;i<4;i++)analysis_logits[i]=o[i];for(unsigned i=0;i<8;i++)analysis_hash[i]=hash[i];
    analysis_result[0]=0x41494d31;analysis_result[2]=DMA(0x0c);analysis_result[3]=DMA(0x10);analysis_result[4]=job.model;
+#ifdef VISION_FOMO
+   analysis_result[4]=legacy_model;
+#endif
    analysis_result[5]=label;analysis_result[6]=DMA(0x30);analysis_result[7]=DMA(0x34);analysis_result[8]=DMA(0x1c);
    analysis_result[9]=DMA(0x20);analysis_result[10]=t0-start;analysis_result[11]=t1-t0;analysis_result[12]=t2-t1;
    analysis_result[13]=end-t2;analysis_result[14]=network_end-start;analysis_result[15]=sum;
@@ -81,18 +103,44 @@ void main(void){
    ai_runtime[0]=2;ai_runtime[2]=sequence+1;ai_runtime[3]=ai_us(t2-t0);
    ai_runtime[4]=ai_us(end-t2);ai_runtime[5]=ai_us(network_end-end);
    ai_runtime[6]=job.g.frame;ai_runtime[7]=job.g.context;
+#ifdef VISION_FOMO
+   if(job_fomo){
+    fomo_camera_run(DMA(0x38),job.xy,job.wh);
+    unsigned cell=0,count=fomo_camera_status[12];
+    label=fomo_camera_status[14];
+    if(count){
+     const volatile struct fomo_detection *b=&fomo_detections[fomo_camera_status[13]];
+     cell=b->peak_cell;
+     unsigned x=job.xy&65535,y=job.xy>>16,w=job.wh&65535,h=job.wh>>16;
+     unsigned left=x+b->left*w/96,top=y+b->top*h/96;
+     unsigned right=x+(b->right*w+95)/96,bottom=y+(b->bottom*h+95)/96;
+     fusion_map_box(&job,left,top,right-left,bottom-top);
+    }else{
+     for(unsigned i=1;i<144;i++)if(fomo_camera_output[i*4]>fomo_camera_output[cell*4])cell=i;
+     job.box0=0xffffffffu;job.box1=0;
+    }
+    for(unsigned i=0;i<4;i++)o[i]=fomo_camera_output[cell*4+i];
+    fomo_camera_status[3]=job.g.frame;fomo_camera_status[4]=DMA(0x10);
+    fomo_camera_status[5]=job.g.render;fomo_camera_status[6]=job.g.context;
+   }
+#endif
    // Volatile byte copy keeps this freestanding build independent of libc memcpy.
    for(unsigned i=0;i<sizeof(job);i++)((volatile uint8_t*)&completed)[i]=((const uint8_t*)&job)[i];
-   completed_config=DMA(0x10);completed_flags=fusion_flags(&job,label,o);completed_scores=analysis_result[16];
+   completed_config=DMA(0x10);completed_flags=fusion_flags(&job,label,o);
+   completed_scores=(uint8_t)o[0]|((uint32_t)(uint8_t)o[1]<<8)|((uint32_t)(uint8_t)o[2]<<16)|((uint32_t)(uint8_t)o[3]<<24);
    ai_publish(&completed,completed_config,completed_flags,completed_scores);
-   __asm__ volatile("fence rw,rw":::"memory");connectome_result[1]=sequence+1;connectome_result[9]=0;analysis_result[1]=++sequence;analysis_result[17]=0;DMA(0)=2;
+   __asm__ volatile("fence rw,rw":::"memory");connectome_result[1]=sequence+1;connectome_result[9]=0;analysis_result[1]=++sequence;analysis_result[17]=0;
+#ifdef VISION_FOMO
+   if(job_fomo){fomo_camera_status[2]=sequence;__asm__ volatile("fence rw,rw":::"memory");fomo_camera_status[1]=3;}
+#endif
+   DMA(0)=2;
   }else if(!(status&1)&&selftest_request!=CONTROL_STATE->selftest_request){
    selftest_request=CONTROL_STATE->selftest_request;ai_runtime[1]=1;if(sequence)ai_runtime[0]=2;
    ai_publish(&completed,completed_config,completed_flags,completed_scores);
    ai_runtime[1]=ai_selftest(m);ai_publish(&completed,completed_config,completed_flags,completed_scores);
   }else if(!(status&1)&&policy&&(analysis_control[0]&1)&&(uint32_t)(REG(0x30)-last)>=analysis_control[4]){
    unsigned request=ui_request!=CONTROL_STATE->ai_request;
-   if(CONTROL_STATE->ai_manual&&!request)continue;
+   if((CONTROL_STATE->ai_manual&1)&&!request)continue;
    if(CONTROL_STATE->feature_wait||CONTROL_STATE->pending||CONTROL_STATE->key_roi_dirty)continue;
    struct fusion_geometry g=fusion_geometry_read();if(!g.sequence||!g.frame||g.sequence==policy_geometry_sequence)continue;
    if(request&&policy==1){
@@ -103,12 +151,16 @@ void main(void){
    }
    // Background calibration can complete on a later scan of the same frozen
    // source/context. Dedup geometry contents, not just frame IDs or sequence.
-   uint32_t next[12]={g.frame,g.render,g.context,analysis_control[5],analysis_control[2],analysis_control[3],analysis_control[8],policy,analysis_control[6],analysis_control[7],g.hi,g.lo};
-   unsigned changed=!seen;for(unsigned i=0;i<12;i++)if(key[i]!=next[i])changed=1;
+   uint32_t next[13]={g.frame,g.render,g.context,analysis_control[5],analysis_control[2],analysis_control[3],analysis_control[8],policy,analysis_control[6],analysis_control[7],g.hi,g.lo,(CONTROL_STATE->ai_manual>>1)&1};
+   unsigned changed=!seen;for(unsigned i=0;i<13;i++)if(key[i]!=next[i])changed=1;
    if(!changed&&!request)continue;
-   unsigned announce=request||!seen||key[3]!=next[3]||key[7]!=next[7]||key[8]!=next[8];
-   seen=1;for(unsigned i=0;i<12;i++)key[i]=next[i];last=REG(0x30);
+   unsigned announce=request||!seen||key[3]!=next[3]||key[7]!=next[7]||key[8]!=next[8]||key[12]!=next[12];
+   seen=1;for(unsigned i=0;i<13;i++)key[i]=next[i];last=REG(0x30);
    job=(struct fusion_job){.g=g,.model=analysis_control[5],.test=analysis_control[6],.minimum_margin=analysis_control[7],.exact=request||policy==2||!(analysis_control[0]&2),.automatic=policy==2};
+#ifdef VISION_FOMO
+   job_fomo=next[12];legacy_model=job.model;
+   if(job_fomo){job.model=FOMO_MODEL_ID;job.test=0;}
+#endif
    if(!request&&policy==1&&!(analysis_control[0]&4)&&!(analysis_control[0]&2)){
     if(job.g.frame!=analysis_control[1])job.g.hi&=~(1u<<30);job.g.frame=analysis_control[1];
    }
@@ -118,7 +170,11 @@ void main(void){
    ui_request=CONTROL_STATE->ai_request;ai_runtime[0]=1;
    if(announce)ai_publish(&job,0,FUS_WAIT<<8,0);
    DMA(8)=job.g.frame;DMA(0x14)=job.xy;DMA(0x18)=job.wh;
-   DMA(0)=1|((!request&&policy==1&&(analysis_control[0]&2))?4:0);
+   DMA(0)=1|((!request&&policy==1&&(analysis_control[0]&2))?4:0)
+#ifdef VISION_FOMO
+       |(job_fomo?8:0)
+#endif
+       ;
   }
  }
 }

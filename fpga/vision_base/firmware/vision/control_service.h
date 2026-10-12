@@ -15,6 +15,11 @@ struct vision_control_state {
 #define CONTROL_STATE ((struct vision_control_state *)0x07620200u)
 #endif
 #define CONTROL_MAGIC 0x434f4e34u
+#ifdef VISION_FOMO
+#define CONTROL_LAST_MENU 10
+#else
+#define CONTROL_LAST_MENU 9
+#endif
 static uint32_t threshold_up(uint32_t v){return v>2031?2047:v+16;}
 static uint32_t threshold_down(uint32_t v){return v<32?16:v-16;}
 static void control_threshold(struct vision_control_state *s,unsigned shift,uint32_t value){
@@ -53,6 +58,7 @@ static uint32_t control_ui(struct vision_control_state *s){
  else if(m==6)v=s->roi[3]>>12;
  else if(m==7)v=s->roi[3]&4095;
  else if(m==8)v=s->ai_policy;
+ else if(m==10)v=(s->ai_manual>>1)&1;
  return (s->shape_threshold<<15)|(m<<11)|v;
 }
 static void control_event(uint32_t event){
@@ -61,12 +67,13 @@ static void control_event(uint32_t event){
  unsigned mode=s->settings&7,mem=(s->settings>>4)&3,index=(s->settings>>6)&7;
  if(op==255||op==0x62){
   if(v&1)s->settings=(s->settings&~7u)|((mode+1)&7);
-  if(v&8)s->menu=s->menu==9?0:s->menu+1;
+  if(v&8)s->menu=s->menu==CONTROL_LAST_MENU?0:s->menu+1;
   for(unsigned key=1;key<=2;key++)if(v&(1u<<key)){
    if(s->menu==8){
-    if(key==1){s->ai_policy=(s->ai_policy+1)%3;s->ai_manual=s->ai_policy==1;}
+    if(key==1){s->ai_policy=(s->ai_policy+1)%3;s->ai_manual=(s->ai_manual&2)|(s->ai_policy==1);}
     else if(s->ai_policy)s->ai_request++;
    }else if(s->menu==9){if(key==1)s->selftest_request++;}
+   else if(s->menu==10)s->ai_manual^=2; // Reuse bit1; bit0 remains single-shot.
    else if(s->menu==1)s->settings=(s->settings&~8u)|(key==1?8:0);
    else if(s->menu>=2)control_roi_key(s,key==1);
    else if(mem>=2){unsigned last=mem==2?6:5;unsigned next=key==1?(index>=last?0:index+1):(index==0||index>last?last:index-1);s->settings=(s->settings&~(7u<<6))|(next<<6);}
@@ -90,8 +97,8 @@ static void control_event(uint32_t event){
   case 0x32:s->roi[2]=v;break;case 0x33:s->roi[3]=v;break;
   case 0x34:s->roi_enable=v&1;break;
   // Development view policy remains continuous; the board FIX page is single-shot.
-  case 0x60:if(v<=2){s->ai_policy=v;s->ai_manual=0;s->feature_dirty=1;}break;
-  case 0x61:if(v<=9){s->menu=v;s->feature_dirty=1;}break;
+  case 0x60:if(v<=2){s->ai_policy=v;s->ai_manual&=2;s->feature_dirty=1;}break;
+  case 0x61:if(v<=CONTROL_LAST_MENU){s->menu=v;s->feature_dirty=1;}break;
   case 0x35:
    if(s->pending){s->reject=1;CTRL_W(0x38,3);break;}
    control_submit(s);break;

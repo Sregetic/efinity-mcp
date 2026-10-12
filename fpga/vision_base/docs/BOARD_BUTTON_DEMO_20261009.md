@@ -1,6 +1,12 @@
 # 实体按键演示与本轮 A 项验证
 
-当前制品、SRAM/Flash部署和资源/时序，以 `docs/PROJECT_MASTER_STATUS.md` 最新摘要及 `results/f2_static_20261011/REPORT.md` 为准。实物卡片识别、人工按键和断电启动的验收分别记录；下方注明历史的部署段落不代表当前状态。
+当前制品、SRAM/Flash部署和资源/时序，以 `docs/PROJECT_MASTER_STATUS.md` 最新摘要及其对应报告为准。实物卡片识别、人工按键和断电启动的验收分别记录；下方注明历史的部署段落不代表当前状态。
+
+## 2026-10-13 相机 FOMO 应用
+
+相机 FOMO 固件在 SELFTEST 后增加 NN 页，KEY2 或 KEY3 短按切换 NN BASE / NN FOMO；最后一页再长按 KEY0 回正常页。BASE 保留原 INT8 MLP/FlyHash/连接组，FOMO 使用交接的圆/矩形/三角形模型。SHAPE 几何识别不受后端切换影响。
+
+FOMO 的 M 为0002，最后一行改为 MS I/H/N，分别是预处理/Invoke/后处理的十六进制毫秒；BASE 仍是 US I/H/N。冻结、单次请求、同源重渲染与结果年龄规则保持。具体操作、当前 SRAM/Flash 分界和独立实物验收见 [相机 FOMO 与 ROI 说明](CAMERA_FOMO_AND_ROI_20261013.md)。
 
 ## 2026-10-10启动更新
 
@@ -33,7 +39,7 @@ KEY0=C4、KEY2=N14、KEY3=A3。KEY1=P14 是复位键，不参与菜单。
 
 ## 菜单页
 
-KEY0 长按依次选择：正常→MEDIAN→ZOOM→PAN X→PAN Y→SIZE→POS X→POS Y→AI→SELFTEST→正常。
+KEY0 长按依次选择：正常→MEDIAN→ZOOM→PAN X→PAN Y→SIZE→POS X→POS Y→AI→SELFTEST→NN→正常。NN 页属于相机 FOMO 固件；旧 Flash 固件的 SELFTEST 后直接回正常页。
 
 |页|KEY2 / KEY3 短按|OSD 的 V 数值|
 |---|---|---|
@@ -47,6 +53,7 @@ KEY0 长按依次选择：正常→MEDIAN→ZOOM→PAN X→PAN Y→SIZE→POS X�
 |POS Y|输出窗口下移 / 上移16像素|显示位置 y|
 |AI|KEY2循环OFF/FIX/AUTO；KEY3请求一次分析|0关闭、1固定ROI、2几何自动|
 |SELFTEST|KEY2执行定点自检；KEY3不改变状态|0；自检结果见ST状态|
+|NN|KEY2或KEY3切换BASE/FOMO后端|0原模型、1相机FOMO；仅相机FOMO固件|
 
 坐标在原帧和显示画布边界饱和，不回绕。恢复全幅源和全幅输出后自动关闭 ROI。移动全幅窗口时位置保持0，这是边界约束；先把 SIZE 减到960再平移。
 

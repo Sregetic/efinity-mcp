@@ -19,7 +19,7 @@ __debug_work_start = 0x07ff0000;
 __debug_work_limit = 0x07ff1000;
 SECTIONS {
  .app : {
-  __app_start = .; KEEP(*(.text.start)) *(.text*) *(.rodata*) *(.sdata*) *(.data*)
+  __app_start = .; KEEP(*(.text.start)) *(.text*) *(.rodata*) *(.srodata*) *(.sdata*) *(.data*)
   . = ALIGN(4); __app_end = .;
  } > APP
  .bss (NOLOAD) : {

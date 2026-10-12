@@ -4,6 +4,9 @@
 #include "tensorflow/lite/kernels/internal/common.h"
 
 extern "C" [[noreturn]] void fomo_kernel_fail();
+#ifdef VISION_FOMO
+extern "C" void fomo_control_poll();
+#endif
 namespace vision_fomo {
 // shortcut: this FOMO graph has <=96 channels/taps, Conv<=3x3 and DW3x3/multiplier1;
 // extend these checked bounds when replacing the model, not on each pixel.
@@ -72,7 +75,14 @@ static void Conv(const tflite::ConvParams& p, const int32_t* multipliers,
         p.padding_values.width == 0 && p.padding_values.height == 0) {
         const int pixels = in.Dims(0) * oh * ow;
         const PackedWord* pixel = reinterpret_cast<const PackedWord*>(input);
+#ifdef VISION_FOMO
+        int row_left = 0;
+#endif
         for (int n = 0; n < pixels; ++n, pixel += words) {
+#ifdef VISION_FOMO
+            if (!row_left) { fomo_control_poll(); row_left = ow; }
+            --row_left;
+#endif
             const uint32_t* w = packed;
             for (int c = 0; c < oc; ++c) {
                 int32_t acc = base[c];
@@ -90,6 +100,9 @@ static void Conv(const tflite::ConvParams& p, const int32_t* multipliers,
     for (int b = 0; b < in.Dims(0); ++b, input += image_stride) {
         int sy_origin = -p.padding_values.height;
         for (int y = 0; y < oh; ++y, sy_origin += p.stride_height) {
+#ifdef VISION_FOMO
+            fomo_control_poll(); // Keep ROI scheduling live inside long layers.
+#endif
             const int8_t* rows[3];
             int sy = sy_origin;
             for (int fy = 0; fy < fh; ++fy, sy += p.dilation_height_factor)
@@ -152,6 +165,9 @@ static void Depthwise(const tflite::DepthwiseParams& p, const int32_t* multiplie
     for (int b = 0; b < in.Dims(0); ++b, input += image_stride) {
         int sy_origin = -p.padding_values.height;
         for (int y = 0; y < oh; ++y, sy_origin += p.stride_height) {
+#ifdef VISION_FOMO
+            fomo_control_poll();
+#endif
             const uint8_t* rows[3];
             int sy = sy_origin;
             for (int fy = 0; fy < fh; ++fy, sy += p.dilation_height_factor)

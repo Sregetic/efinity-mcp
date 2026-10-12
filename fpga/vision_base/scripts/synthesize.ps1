@@ -74,13 +74,15 @@ New-Item -ItemType Directory -Path (Join-Path $root 'results') -Force | Out-Null
         $exitCode=$vendorExitCode
         foreach($file in $inputFiles) {
             $relative=[IO.Path]::GetRelativePath($root,$file.FullName).Replace('\','/')
-            if((Get-FileHash -LiteralPath $file.FullName).Hash.ToLowerInvariant() -ne $inputHashes[$relative]) {
+            $outputHash=(Get-FileHash -LiteralPath $file.FullName).Hash.ToLowerInvariant()
+            if($outputHash -ne $inputHashes[$relative]) {
                 $normalizationOnly=$false
                 if($xmlSemantics.ContainsKey($relative)) {
                     [xml]$outputXml=Get-Content -LiteralPath $file.FullName -Raw
                     $normalizationOnly=$outputXml.OuterXml -eq $xmlSemantics[$relative]
                 }
                 if(!$normalizationOnly) { $sourceChanges+=$relative; Write-Output "Source changed during compilation: $relative"; $exitCode=1 }
+                else {$inputHashes[$relative]=$outputHash} # Bind accepted XML normalization to the actual saved bytes.
             }
         }
     } finally { Pop-Location }

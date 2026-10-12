@@ -9,6 +9,7 @@ struct fusion_geometry { uint32_t sequence,frame,render,context,hi,lo; };
 struct fusion_job {
  struct fusion_geometry g;uint32_t xy,wh,box0,box1,model,test,minimum_margin,geometry_class,exact,automatic;
  uint32_t telemetry,timing0,timing1;
+ uint32_t map[8]; // Latch the analyzed frame's source/display transform, not the next UI setting.
 };
 static struct fusion_geometry fusion_geometry_read(void){
  struct fusion_geometry g;
@@ -19,6 +20,14 @@ static struct fusion_geometry fusion_geometry_read(void){
 }
 static uint32_t fusion_max(uint32_t a,uint32_t b){return a>b?a:b;}
 static uint32_t fusion_min(uint32_t a,uint32_t b){return a<b?a:b;}
+static void fusion_map_box(struct fusion_job *j,uint32_t x,uint32_t y,uint32_t w,uint32_t h){
+ uint32_t sx=j->map[0],sy=j->map[1],sw=j->map[2],sh=j->map[3],dw=j->map[4],dh=j->map[5],px=j->map[6],py=j->map[7];
+ uint32_t l=fusion_max(x,sx),t=fusion_max(y,sy),r=fusion_min(x+w,sx+sw),b=fusion_min(y+h,sy+sh);
+ if(l<r&&t<b){
+  j->box0=(px+2+(l-sx)*dw/sw)|((py+2+(t-sy)*dh/sh)<<16);
+  j->box1=(px+1+(r-sx)*dw/sw)|((py+1+(b-sy)*dh/sh)<<16);
+ }else {j->box0=0xffffffffu;j->box1=0;} // Empty display intersection; the source ROI remains valid.
+}
 // Classifier coordinates include the two frontend window-center offsets.
 // Convert a padded display rectangle into a half-open source rectangle.
 static unsigned fusion_roi(struct fusion_job *j,unsigned automatic,uint32_t manual_xy,uint32_t manual_wh){
@@ -29,6 +38,8 @@ static unsigned fusion_roi(struct fusion_job *j,unsigned automatic,uint32_t manu
   sx=s->commit[0]>>12;sy=s->commit[0]&4095;sw=s->commit[1]>>12;sh=s->commit[1]&4095;
   dw=s->commit[2]>>12;dh=s->commit[2]&4095;px=s->commit[3]>>12;py=s->commit[3]&4095;
  }
+ const uint32_t map[8]={sx,sy,sw,sh,dw,dh,px,py};
+ for(unsigned i=0;i<8;i++)j->map[i]=map[i];
  unsigned valid=(j->g.hi>>30)&1;
  uint32_t x0=(j->g.hi>>4)&4095,y0=((j->g.hi&15)<<8)|(j->g.lo>>24);
  uint32_t x1=(j->g.lo>>12)&4095,y1=j->g.lo&4095;
@@ -43,11 +54,7 @@ static unsigned fusion_roi(struct fusion_job *j,unsigned automatic,uint32_t manu
    uint32_t gr=sx+((x1-px-1)*sw+dw-1)/dw,gb=sy+((y1-py-1)*sh+dh-1)/dh;
    if(gx<x||gy<y||gr>x+w||gb>y+h)j->geometry_class=0;
   }
-  uint32_t l=fusion_max(x,sx),t=fusion_max(y,sy),r=fusion_min(x+w,sx+sw),b=fusion_min(y+h,sy+sh);
-  if(l<r&&t<b){
-   j->box0=(px+2+(l-sx)*dw/sw)|((py+2+(t-sy)*dh/sh)<<16);
-   j->box1=(px+1+(r-sx)*dw/sw)|((py+1+(b-sy)*dh/sh)<<16);
-  }else {j->box0=0xffffffffu;j->box1=0;} // Explicit empty display intersection; DMA still analyzes the original ROI.
+  fusion_map_box(j,x,y,w,h);
   return 1;
  }
  if(!eligible)return 0;

@@ -86,6 +86,7 @@ always @*begin
      default:menu_text=64'h4149204155544f20;
     endcase
   9:menu_text=64'h53454c4654455354;
+  10:menu_text=ui_state[0]?64'h4e4e20464f4d4f20:64'h4e4e204241534520;
   default:menu_text=0;
  endcase
  row=y>=76?4:y>=58?3:y>=40?2:y>=22?1:0;origin=4+18*row;
@@ -172,7 +173,7 @@ always @*begin
   endcase
   if(ai_page)begin
    ch=32;
-   if(idx==0)ch="U";else if(idx==1)ch="S";
+   if(idx==0)ch=fusion_result[159:128]==2?"M":"U";else if(idx==1)ch="S";
    else if(idx==3)ch="I";else if(idx>=4&&idx<=7)ch=hexchar(nibble(fusion_result[303:288],7-idx));
    else if(idx==9)ch="H";else if(idx>=10&&idx<=13)ch=hexchar(nibble(fusion_result[319:304],13-idx));
    else if(idx==15)ch="N";else if(idx>=16&&idx<=19)ch=hexchar(nibble(fusion_result[335:320],19-idx));

@@ -39,6 +39,10 @@ void main(void){
  state.pending=1;check(!fusion_roi(&j,1,0,0));state.pending=0;
  j.g.hi&=~(1u<<30);check(!fusion_roi(&j,1,0,0));
  check(fusion_roi(&j,0,280u|(185u<<16),200u|(150u<<16)));check(j.geometry_class==0);
+ uint32_t old_box0=j.box0,old_box1=j.box1;
+ state.commit[0]=0;state.commit[2]=(240u<<12)|135;
+ fusion_map_box(&j,280,185,200,150);check(j.box0==old_box0&&j.box1==old_box1);
+ state.commit[0]=(200u<<12)|100;state.commit[2]=(1600u<<12)|900;
  check(fusion_roi(&j,0,10u|(185u<<16),200u|(150u<<16)));check(j.geometry_class==0);
 check(fusion_roi(&j,0,10u|(10u<<16),10u|(10u<<16)));check(j.box0==0xffffffffu&&j.box1==0);
 box(&j,102,52,400,200);check(!fusion_roi(&j,1,0,0));

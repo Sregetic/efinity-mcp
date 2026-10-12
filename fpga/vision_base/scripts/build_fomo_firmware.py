@@ -56,7 +56,13 @@ def main():
     p.add_argument('--model-dir', type=Path, default=ROOT / 'models/shape_fomo')
     p.add_argument('--output-dir', type=Path, required=True)
     p.add_argument('--cfu-kernels', action='store_true', help='Requires the installed dot4/MulHi FPGA build; baseline software kernels remain available')
+    p.add_argument('--camera', action='store_true', help='Complete control/legacy AI application with camera RGB FOMO; no embedded test images')
     a = p.parse_args()
+    if a.camera and not a.cfu_kernels:
+        p.error('The installed camera application requires dot4/MulHi kernels')
+    if a.camera:
+        from build_ai_selftest import generate
+        generate(ROOT/'models/shape_cards_bringup/shape_cards_weights.bin', ROOT/'firmware/vision/ai_selftest_data.h')
     revision = subprocess.check_output(['git', '-C', str(a.tinyml_dir), 'rev-parse', 'HEAD'], text=True).strip()
     if revision != REVISION:
         raise ValueError('Build uses the audited Efinity 2026.1 TFLM revision')
@@ -66,9 +72,11 @@ def main():
     overlay = out / 'software_headers'
     software_headers(src, overlay, a.cfu_kernels)
     data = '.section .rodata.fomo,"a"\n'
-    for symbol, files in [('fomo_model', [a.model_dir / 'shape_fomo_int8.tflite']),
-                          ('fomo_inputs', [a.model_dir / 'test_vectors' / (s + '_input.bin') for s in LABELS]),
-                          ('fomo_expected', [a.model_dir / 'test_vectors' / (s + '_expected_output.bin') for s in LABELS])]:
+    data_files = [('fomo_model', [a.model_dir / 'shape_fomo_int8.tflite'])]
+    if not a.camera:
+        data_files += [('fomo_inputs', [a.model_dir / 'test_vectors' / (s + '_input.bin') for s in LABELS]),
+                       ('fomo_expected', [a.model_dir / 'test_vectors' / (s + '_expected_output.bin') for s in LABELS])]
+    for symbol, files in data_files:
         data += '.balign 16\n.global ' + symbol + '\n' + symbol + ':\n'
         for path in files:
             if symbol != 'fomo_model' and path.stat().st_size != (27648 if symbol == 'fomo_inputs' else 576):
@@ -88,13 +96,17 @@ def main():
     }
     sources = [src / 'tensorflow/lite/c/common.c']
     sources += [src / 'tensorflow/lite' / group / (name + '.cc') for group, names in groups.items() for name in names]
-    sources += [ROOT / 'firmware/vision/fomo_main.cc', ROOT / 'firmware/vision/start.S', out / 'data.S']
+    application = ['ai_main.c', 'flyhash.c', 'fomo_camera.cc'] if a.camera else ['fomo_main.cc']
+    sources += [ROOT / 'firmware/vision' / s for s in application]
+    sources += [ROOT / 'firmware/vision/start.S', out / 'data.S']
     includes = [overlay, src, src / 'tensorflow/third_party/flatbuffers/include',
                 src / 'tensorflow/third_party/gemmlowp', src / 'tensorflow/third_party/ruy', ROOT / 'firmware/vision']
     flags = ['-march=rv32i_zicsr_zifencei', '-mabi=ilp32', '-O2', '-ffunction-sections', '-fdata-sections',
              '-fno-pic', '-msmall-data-limit=0', '-mno-relax', '-DNDEBUG', '-DTF_LITE_STATIC_MEMORY',
              '-DTF_LITE_DISABLE_X86_NEON', '-DTF_LITE_USE_GLOBAL_CMATH_FUNCTIONS',
              '-DTF_LITE_USE_GLOBAL_MIN', '-DTF_LITE_USE_GLOBAL_MAX', *['-I' + str(i) for i in includes]]
+    if a.camera:
+        flags += ['-DVISION_FOMO', '-DVISION_MULHI_CFU']
     tools = IDE / 'toolchain/bin'
     objects = []
     log = []
@@ -105,6 +117,8 @@ def main():
         command = [str(tools / ('riscv-none-elf-g++.exe' if cpp else 'riscv-none-elf-gcc.exe')), *flags]
         if cpp:
             command += ['-std=c++17', '-fno-exceptions', '-fno-rtti', '-fno-threadsafe-statics', '-fno-use-cxa-atexit']
+        elif source.parent == ROOT/'firmware/vision' and source.suffix == '.c':
+            command += ['-ffreestanding', '-fno-builtin']
         command += ['-c', str(source), '-o', str(obj)]
         r = subprocess.run(command, capture_output=True, text=True)
         log.append(' '.join(command) + '\n' + r.stdout + r.stderr)
@@ -124,8 +138,10 @@ def main():
     (out / 'vision.dis').write_text(dis)
     if re.search(r'\t(?:mul\w*|div\w*|rem\w*|f[a-z]+\.[sd]|c\.[a-z]+)\s', dis):
         raise ValueError('Generated code uses an instruction absent from the installed RV32I core')
+    if a.camera and '<memset>' in dis.split('<memset>:\n',1)[1].split('\n\n',1)[0]:
+        raise ValueError('The freestanding memset was optimized into a recursive call')
     size = subprocess.check_output([str(tools / 'riscv-none-elf-size.exe'), str(elf)], text=True)
-    record = dict(tinyml_revision=revision, isa='RV32I_Zicsr_Zifencei', software_only=True, cfu_kernels=a.cfu_kernels,
+    record = dict(tinyml_revision=revision, isa='RV32I_Zicsr_Zifencei', software_only=True, cfu_kernels=a.cfu_kernels, camera=a.camera,
                   model_bytes=(a.model_dir / 'shape_fomo_int8.tflite').stat().st_size,
                   load_bytes=sum(s['size'] for s in segments), bss_bytes=symbols['__bss_end']-symbols['__bss_start'],
                   arena_address=symbols['__arena_start'], arena_reserved_bytes=262144,

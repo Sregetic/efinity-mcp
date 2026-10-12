@@ -1,0 +1,21 @@
+{
+  "xlr": 59635,
+  "ram": 252,
+  "dsp": 59,
+  "wns_ns": 0.026,
+  "whs_ns": 0.027,
+  "unassigned_pins": 0,
+  "baseline": {
+    "xlr": 60400,
+    "ram": 252,
+    "dsp": 59
+  },
+  "scan_burst": 64,
+  "render_burst": 32,
+  "write_burst": 8,
+  "priority_quota": 2,
+  "seed": 5,
+  "net_xlr_saved": 765,
+  "free_xlr": 1165,
+  "free_ram": 4
+}

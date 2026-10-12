@@ -25,16 +25,19 @@ module axi_burst_arbiter #(parameter N=4,ID_WIDTH=6,OW=$clog2(N))(
  localparam IDLE=0,ADDR=1,DATA=2,RESP=3;
  reg[1:0]rs=IDLE,ws=IDLE;reg[OW-1:0]ro=0,wo=0,rl=N-1,wl=N-1;
  reg rf,wf,uf;reg[OW-1:0]rp,wp,up;integer k,ri,wi;
- reg[2:0]urgent_streak=0;reg selected_urgent=0;
+ reg[1:0]urgent_streak=0;reg selected_urgent=0;
  always @*begin
   rf=0;wf=0;uf=0;rp=0;wp=0;up=0;
   for(k=1;k<=N;k=k+1)begin
    ri=int'(rl)+k;wi=int'(wl)+k;
    if(ri>=N)ri=ri-N;if(wi>=N)wi=wi-N;
-   if(!rf&&s_arvalid[ri])begin rf=1;rp=OW'(ri);end
+   if(!rf&&s_arvalid[ri]&&!read_urgent[ri])begin rf=1;rp=OW'(ri);end
    if(!uf&&s_arvalid[ri]&&read_urgent[ri])begin uf=1;up=OW'(ri);end
    if(!wf&&s_awvalid[wi])begin wf=1;wp=OW'(wi);end
   end
+  // A priority client already owns its priority turn; ordinary turns serve
+  // other queued clients. With no ordinary request it still makes progress.
+  if(!rf&&uf)begin rf=1;rp=up;end
   s_arready=0;s_awready=0;s_wready=0;s_rvalid=0;s_rlast=0;s_bvalid=0;
   if(rs==ADDR)s_arready[ro]=m_arready;
   if(rs==DATA)begin s_rvalid[ro]=m_rvalid;s_rlast[ro]=m_rlast;end
@@ -57,7 +60,7 @@ module axi_burst_arbiter #(parameter N=4,ID_WIDTH=6,OW=$clog2(N))(
   else begin
    case(rs)
     IDLE:if(rf)begin
-     selected_urgent<=uf&&urgent_streak<1;ro<=(uf&&urgent_streak<1)?up:rp;rs<=ADDR;
+     selected_urgent<=uf&&urgent_streak<2;ro<=(uf&&urgent_streak<2)?up:rp;rs<=ADDR;
     end
     ADDR:if(m_arvalid&&m_arready)rs<=DATA;
     DATA:if(m_rvalid&&m_rready&&m_rlast)begin

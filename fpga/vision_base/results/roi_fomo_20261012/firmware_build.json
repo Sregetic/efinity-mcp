@@ -1,0 +1,13 @@
+{
+  "tinyml_revision": "96886fa0c73e25e6218db7d0863f84677cf65138",
+  "isa": "RV32I_Zicsr_Zifencei",
+  "camera": true,
+  "cfu_kernels": true,
+  "model_bytes": 54640,
+  "load_bytes": 177728,
+  "bss_bytes": 66048,
+  "arena_reserved_bytes": 262144,
+  "xlr_delta": 0,
+  "block_ram_delta": 0,
+  "dsp_delta": 0
+}

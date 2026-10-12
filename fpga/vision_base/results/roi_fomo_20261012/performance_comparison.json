@@ -1,0 +1,98 @@
+[
+  {
+    "build": "baseline_perf",
+    "test": "live_full",
+    "min_ms": 56.43372,
+    "median_ms": 57.045715,
+    "max_ms": 57.0831,
+    "seconds": 12.733999999938533,
+    "capture_fps": 29.919899481846954,
+    "scan_bad_delta": 0,
+    "discard_delta": 0,
+    "deadline_delta": 191
+  },
+  {
+    "build": "baseline_perf",
+    "test": "live_zoom",
+    "min_ms": 20.94336,
+    "median_ms": 21.013379999999998,
+    "max_ms": 21.10559,
+    "seconds": 12.5,
+    "capture_fps": 30.0,
+    "scan_bad_delta": 0,
+    "discard_delta": 0,
+    "deadline_delta": 375
+  },
+  {
+    "build": "scan64_perf",
+    "test": "live_full",
+    "min_ms": 45.15407,
+    "median_ms": 45.77512,
+    "max_ms": 45.83937,
+    "seconds": 27.57799999997951,
+    "capture_fps": 29.987671332243615,
+    "scan_bad_delta": 0,
+    "discard_delta": 0,
+    "deadline_delta": 552
+  },
+  {
+    "build": "scan64_perf",
+    "test": "live_zoom",
+    "min_ms": 16.89042,
+    "median_ms": 16.942664999999998,
+    "max_ms": 17.48954,
+    "seconds": 27.67200000002049,
+    "capture_fps": 29.994217982053534,
+    "scan_bad_delta": 0,
+    "discard_delta": 0,
+    "deadline_delta": 830
+  },
+  {
+    "build": "priority2_parallel_release/roi",
+    "test": "live_full",
+    "min_ms": 40.72226,
+    "median_ms": 44.93026,
+    "max_ms": 45.49977,
+    "seconds": 59.67200000002049,
+    "capture_fps": 30.014076954004977,
+    "scan_bad_delta": 0,
+    "discard_delta": 0,
+    "deadline_delta": 372
+  },
+  {
+    "build": "priority2_parallel_release/roi",
+    "test": "live_zoom",
+    "min_ms": 16.79055,
+    "median_ms": 16.86703,
+    "max_ms": 17.04138,
+    "seconds": 59.48399999993853,
+    "capture_fps": 30.008069396843595,
+    "scan_bad_delta": 0,
+    "discard_delta": 0,
+    "deadline_delta": 463
+  },
+  {
+    "build": "cooperative_parallel/roi",
+    "test": "live_full",
+    "min_ms": 43.11009,
+    "median_ms": 45.06128,
+    "max_ms": 45.74815,
+    "seconds": 59.60899999993853,
+    "capture_fps": 29.99547048267617,
+    "scan_bad_delta": 0,
+    "discard_delta": 0,
+    "deadline_delta": 1082
+  },
+  {
+    "build": "cooperative_parallel/roi",
+    "test": "live_zoom",
+    "min_ms": 16.82354,
+    "median_ms": 16.88085,
+    "max_ms": 17.01163,
+    "seconds": 59.563000000081956,
+    "capture_fps": 29.985057837878255,
+    "scan_bad_delta": 0,
+    "discard_delta": 0,
+    "deadline_delta": 1756
+  }
+]
