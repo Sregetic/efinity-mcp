@@ -2,7 +2,7 @@
 
 ## 2026-10-13资源优化、相机FOMO与行间ROI调度已上板
 
-当前SRAM为`results/roi_fomo_20261012/priority2_release/ti60f225_oob.bit`，59635/60800XLR、252/256RAM、59/160DSP，最终WNS+0.026ns/WHS+0.027ns、未分配核心引脚0；相对下方F2基线净释放765XLR，余1165XLR/4RAM/101DSP。写FIFO/突发8、扫描读64、ROI读32；扫描低水位优先两轮，普通轮排除优先端并保留普通游标。全部图像模式、完整Canny、六帧历史/F1/F2/F3、ROI/平移/缩放/同源重渲染、Sapphire/dot4/MulHi、MLP/FlyHash/真实连接组、SHAPE和图像回读保留，未降低时钟或Canny检测尺寸。
+当前SRAM及配置Flash为`results/roi_fomo_20261012/priority2_release/ti60f225_oob.bit`，59635/60800XLR、252/256RAM、59/160DSP，最终WNS+0.026ns/WHS+0.027ns、未分配核心引脚0；相对下方F2基线净释放765XLR，余1165XLR/4RAM/101DSP。写FIFO/突发8、扫描读64、ROI读32；扫描低水位优先两轮，普通轮排除优先端并保留普通游标。全部图像模式、完整Canny、六帧历史/F1/F2/F3、ROI/平移/缩放/同源重渲染、Sapphire/dot4/MulHi、MLP/FlyHash/真实连接组、SHAPE和图像回读保留，未降低时钟或Canny检测尺寸。
 
 最终DDR相机应用`camera_cooperative/vision.elf`为177728B/BSS66048B，原4400B权重实际字节核对通过；FOMO模型54640B、arena实用149388B，全部新增模型/数组在DDR，硬件资源无增量。NN BASE/FOMO菜单选择下一次分析后端，原FIX单次、自检、帧/render/context/model绑定保留。FOMO MODEL2采用96×96 RGB、四类25层软件算子、格点连通合并与同帧OSD；SHAPE几何识别单独保留。
 
@@ -10,7 +10,9 @@
 
 最终冻结源122614/render55/context53/sequence73的576个INT8输出与独立原帧采样参考最大差0，同源灰度/原MLP/FlyHash/80连接组状态也相等；修改ROI后源不变、render56/sequence74，自检保留，返回实时新源128933/sequence75。Invoke2668.156ms、预处理40.044ms、后处理0.303ms，FOMO合计2708.503ms；固定四图原0.949s是在无视频条件下，另记。现场源图max2/255，仅41个非零通道值、无目标；这验证链路与数值，不算实物准确率。368组Conv/DW及112420组算术、逐行调用检查、完整1080p共享AXI和视频回归通过。OFF等待由2改20秒，等当前受保护推理结束，恢复通过。
 
-Flash仍为旧F2配置/18768B应用，本轮只写SRAM/DDR；KEY1会从旧Flash重载旧应用，断电也会失去临时版。新182160B启动包已准备，未写Flash。人工按压、真实卡片准确率/光照、HDMI目视紫闪和实际拔电启动仍单列。完整证据和操作见`results/roi_fomo_20261012/REPORT.md`及`docs/CAMERA_FOMO_AND_ROI_20261013.md`。下方日期段落为历史，不代表当前SRAM资源或应用。
+按用户授权，完整8MiB旧Flash已备份，配置区0地址及0x700000的182160B启动包已更新、写后验证通过；应用包额外实际读回逐字节一致。新177728B程序（含FOMO模型）/原4400B权重经ROM从SPI自主加载到DDR，BOOT7/JEDEC EF6017/CPU1及全部实际字节核对通过；USER1仅halt/read/resume，无程序下载。KEY1的SPI程序来源现为新版，不再是旧F2应用。人工按压、真实卡片准确率/光照、HDMI目视紫闪、主SPI配置加载及实际拔电启动仍单列。固化证据见`results/roi_fomo_20261012/flash_20261013/`，完整报告和操作见`results/roi_fomo_20261012/REPORT.md`及`docs/CAMERA_FOMO_AND_ROI_20261013.md`。下方日期段落为历史，不代表当前SRAM/Flash资源或应用。
+
+SPI加载后17项阈值/按键/冻结ROI事件、八模式与实时/F1/F2六静态帧/I6播放停止/F3/Canny发布复测通过；相机FOMO源29875、sequence1、MODEL2单次完成，Invoke2667.750ms、启动自检PASS。该次记录1个候选目标，仅作部署链路证据，未现场确认类别或正确率。最后恢复M0/MED1/F0、菜单0、Sobel128/Canny80、AI OFF/NN BASE、全幅ROI关闭，显示30492→30597、采集30498→30602，丢弃/欠载/错误0。
 
 ## 2026-10-11 F2静态历史浏览已修复并通过板上回读
 

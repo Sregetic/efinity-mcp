@@ -16,7 +16,7 @@
 
 ## 最终结果
 
-原生完整构建、SRAM、DDR实际字节与相机数值验证通过。硬件制品为`priority2_release/`，最终WNS+0.026ns/WHS+0.027ns、未分配核心引脚0；固件为`camera_cooperative/vision.elf`。Flash仍保持旧F2版本。
+原生完整构建、SRAM、DDR实际字节与相机数值验证通过。硬件制品为`priority2_release/`，最终WNS+0.026ns/WHS+0.027ns、未分配核心引脚0；固件为`camera_cooperative/vision.elf`。用户授权后，新配置及应用包已固化Flash，SPI自主加载实际字节核对通过，详见下方固化记录。
 
 |资源|F2基线|本轮最终|净释放/余量|
 |---|---:|---:|---|
@@ -67,7 +67,28 @@
 
 实际操作与重跑命令见 `F:/Project/fpga/vision_base/docs/CAMERA_FOMO_AND_ROI_20261013.md`。TensorFlow主机对照使用`F:/efinity-ci/tinyml-env/Scripts/python.exe`。本地`reload_camera.py`记录本轮快写/慢读验证步骤，`test_parallel.py`复用现有ROI测试并在结束恢复实时原图。
 
-最终SPI应用包 `standalone/vision_boot.bin` 为182160B、保留旧权重；准备不代表写入。配置Flash、应用Flash读回、自主SPI加载、KEY1恢复和实际拔电启动分别记录。当前KEY1会从旧Flash重载旧应用，断电也会失去临时SRAM/DDR版。
+最终SPI应用包为182160B、保留旧权重；`standalone/`记录最初准备阶段，`flash_20261013/app/`记录本次实际写入。配置Flash、应用Flash读回、自主SPI加载、KEY1恢复和实际拔电启动分别记录。当前配置和SPI应用来源均已更新到本轮版本，物理断电验收另列。
+
+## 2026-10-13 Flash固化与SPI自主加载
+
+用户确认不在现场，并授权数字验证通过后固化配置Flash和控制程序。沿用现有脚本与官方JTAG bridge，写前保存完整8MiB旧Flash；保留原权重，未改视频/模型算法或增加硬件资源。
+
+- 应用包182160B在0x700000写入，仅擦除180KiB；实际Flash读回全部字节一致。见`flash_20261013/app/result.json`。
+- 配置1072572B在0地址写入，仅擦除1048KiB，未触及应用区；官方onchipx1最终验证成功，写保护状态恢复。见`flash_20261013/config/result.json`。
+- 两次写入各有首次官方验证失配及programmer内置max-clock重写，日志原样保留；最终均成功。没有自行增加重试或以退出码掩盖失配。
+- JTAG重新配置同版SRAM、BootOnly无主机视频配置后，采集/显示373帧、capture379、frame_ok1、丢弃/欠载/错误0。新程序自主SPI加载：BOOT7/JEDEC EF6017/CPU1、177728B程序和4400B权重实际DDR全部字节一致。USER1仅halt/read/resume，无程序下载。见`flash_20261013/autoload_video.json`及`autoboot/result.json`。
+- `verify_vision_boot.py`原300秒期限短于178KB应用已测12.4分钟回读；改成2400秒上限，25kHz静态读回和实际字节判据保持。当前自主加载验证实际通过，而非只延长等待后假定成功。
+
+完整8MiB备份、位流、ELF、原始DDR/Flash二进制保持本地，不上传Git；上传源码和小型JSON/日志证据。配置内容验证、程序SPI自主加载、人工KEY1和拔电独立启动分别记录。
+
+自主加载后的板上复测通过：
+
+- `flash_20261013/keys/result.json`：17项独立阈值、下限、菜单、冻结同源ROI/缩放/平移/视口及历史事件通过，属于注入实体键事件队列，不是人工电气按压。
+- `history/runtime_checks.json`：八模式、实时推进/F1冻结、F2/I0静止且六帧可选、I6主动播放及停止、F3与Canny持续发布通过；I0静态源28055保持。
+- `post_flash_result.json`：NN BASE→FOMO、FIX冻结源29875、sequence1/MODEL2完成、启动自检PASS；预处理32.658ms、Invoke2667.750ms、后处理0.380ms。此次合并1个候选目标，用户不在现场，不认定类别准确率或有效实物卡。
+- `final_live.json`：恢复M0/MED1/F0/菜单0、Sobel128/Canny80、AI OFF/NN BASE、全幅ROI关闭；显示30492→30597、采集30498→30602，丢弃/欠载/配置/渲染/扫描/Canny错误0。复位默认仍为M3/MED0/F0/128/128，最后主机设置未新增掉电参数保存。
+
+只读实际DDR核对后按上述实体控制链测试，未使用USER1程序下载或补写张量。CPU启动、Flash验证和人工光照/实物/拔电验收继续分开。
 
 ## 验收边界
 

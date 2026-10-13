@@ -1,0 +1,14 @@
+READ completed camera FOMO sequence 1 source 29875 objects 1
+{
+  "passed": true,
+  "source": 29875,
+  "sequence": 1,
+  "model": 2,
+  "invoke_ms": 2667.74967,
+  "preprocess_ms": 32.65766,
+  "postprocess_ms": 0.38041,
+  "objects": 1,
+  "selftest_passed": true,
+  "user1_program_download": false,
+  "scope": "SPI-loaded camera task and key-event policy; not card accuracy or manual pressing"
+}

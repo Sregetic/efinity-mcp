@@ -16,7 +16,8 @@ def main():
  # Program/weights are static, unlike the cached ROI tensors; reuse loader profile.
  cfg=configuration(board_location(a.url),ROOT/'artifacts/vision_soc/cpu0.yaml',sym,USER1_KHZ)+body
  path=a.output_dir/'read.cfg';path.write_text(cfg)
- r=subprocess.run([str(IDE/'openocd/bin/openocd.exe'),'-f',str(path.resolve())],capture_output=True,text=True,timeout=300)
+ # The 178KB camera application took 12.4 minutes with the verified 25kHz read profile.
+ r=subprocess.run([str(IDE/'openocd/bin/openocd.exe'),'-f',str(path.resolve())],capture_output=True,text=True,timeout=2400)
  log=r.stdout+r.stderr;(a.output_dir/'read.log').write_text(log);r.check_returncode()
  if 'BOOT_READ_COMPLETE' not in log:raise RuntimeError('Startup read did not complete')
  status=[int(v,0) for v in re.search(r'^BOOT_STATUS (.*)$',log,re.M)[1].split()]

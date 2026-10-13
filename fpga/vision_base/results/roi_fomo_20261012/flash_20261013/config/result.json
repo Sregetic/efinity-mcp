@@ -1,0 +1,10 @@
+{
+  "onchip_verification": true,
+  "physical_power_cycle_verified": false,
+  "address": 0,
+  "full_old_flash_backup": "results/roi_fomo_20261012/flash_20261013/app/flash_before.bin",
+  "configuration_flash_written": true,
+  "passed": true,
+  "finished_utc": "2026-10-13T00:57:12.6462881Z",
+  "bytes": 1072572
+}
