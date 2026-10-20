@@ -57,9 +57,18 @@ def main():
     p.add_argument('--output-dir', type=Path, required=True)
     p.add_argument('--cfu-kernels', action='store_true', help='Requires the installed dot4/MulHi FPGA build; baseline software kernels remain available')
     p.add_argument('--camera', action='store_true', help='Complete control/legacy AI application with camera RGB FOMO; no embedded test images')
+    p.add_argument('--connectome-readout', type=Path, help='CRD1 trained 80->4 companion readout; preserves the existing NN/SHAPE selection')
     a = p.parse_args()
     if a.camera and not a.cfu_kernels:
         p.error('The installed camera application requires dot4/MulHi kernels')
+    readout = None
+    if a.connectome_readout:
+        if not a.camera:
+            p.error('--connectome-readout requires --camera')
+        import sys
+        sys.path.insert(0, str(ROOT/'models'))
+        from connectome_readout import load
+        readout = load(a.connectome_readout)
     if a.camera:
         from build_ai_selftest import generate
         generate(ROOT/'models/shape_cards_bringup/shape_cards_weights.bin', ROOT/'firmware/vision/ai_selftest_data.h')
@@ -73,13 +82,15 @@ def main():
     software_headers(src, overlay, a.cfu_kernels)
     data = '.section .rodata.fomo,"a"\n'
     data_files = [('fomo_model', [a.model_dir / 'shape_fomo_int8.tflite'])]
+    if readout:
+        data_files += [('connectome_readout_weights', [a.connectome_readout])]
     if not a.camera:
         data_files += [('fomo_inputs', [a.model_dir / 'test_vectors' / (s + '_input.bin') for s in LABELS]),
                        ('fomo_expected', [a.model_dir / 'test_vectors' / (s + '_expected_output.bin') for s in LABELS])]
     for symbol, files in data_files:
         data += '.balign 16\n.global ' + symbol + '\n' + symbol + ':\n'
         for path in files:
-            if symbol != 'fomo_model' and path.stat().st_size != (27648 if symbol == 'fomo_inputs' else 576):
+            if symbol in ('fomo_inputs', 'fomo_expected') and path.stat().st_size != (27648 if symbol == 'fomo_inputs' else 576):
                 raise ValueError('Fixed-vector tensor length mismatch: ' + str(path))
             data += '.incbin "' + path.resolve().as_posix() + '"\n'
     (out / 'data.S').write_text(data)
@@ -107,6 +118,8 @@ def main():
              '-DTF_LITE_USE_GLOBAL_MIN', '-DTF_LITE_USE_GLOBAL_MAX', *['-I' + str(i) for i in includes]]
     if a.camera:
         flags += ['-DVISION_FOMO', '-DVISION_MULHI_CFU']
+    if readout:
+        flags += ['-DVISION_CONNECTOME_READOUT']
     tools = IDE / 'toolchain/bin'
     objects = []
     log = []
@@ -147,6 +160,10 @@ def main():
                   arena_address=symbols['__arena_start'], arena_reserved_bytes=262144,
                   xlr_delta=0, block_ram_delta=0, dsp_delta=0, hardware_rebuild=False,
                   elf=str(elf), size_report=size, source_files=[str(s) for s in sources])
+    if readout:
+        record['connectome_readout'] = dict(path=str(a.connectome_readout.resolve()), bytes=364,
+                                           version=readout['version'], graph_version=readout['graph'],
+                                           training_kind=readout['kind'], companion_only=True)
     (out / 'build.json').write_text(json.dumps(record, indent=2))
     print(size)
     print(json.dumps(record, indent=2))

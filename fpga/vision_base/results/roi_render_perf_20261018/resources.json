@@ -1,0 +1,48 @@
+{
+  "baseline": {
+    "xlr": 56997,
+    "xlr_used_percent": 93.74506578947368,
+    "free_xlr": 3803,
+    "ram": 237,
+    "free_ram": 19,
+    "dsp": 62,
+    "free_dsp": 98,
+    "wns_ns": 0.254,
+    "whs_ns": 0.026,
+    "unassigned_core_pins": 0
+  },
+  "candidate": {
+    "xlr": 57356,
+    "free_xlr": 3444,
+    "xlr_percent": 94.33552631578948,
+    "ram": 244,
+    "free_ram": 12,
+    "dsp": 62,
+    "free_dsp": 98,
+    "wns_ns": 0.254,
+    "whs_ns": 0.026,
+    "unassigned_core_pins": 0
+  },
+  "delta": {
+    "xlr": 359,
+    "ram": 7,
+    "dsp": 0
+  },
+  "all_ram_trial_not_deployed": {
+    "xlr": 56949,
+    "free_xlr": 3851,
+    "xlr_percent": 93.66611842105263,
+    "ram": 251,
+    "free_ram": 5,
+    "dsp": 62,
+    "free_dsp": 98,
+    "wns_ns": 0.246,
+    "whs_ns": 0.026,
+    "unassigned_core_pins": 0
+  },
+  "changed_native_inputs": [
+    "rtl/axi_line_reader.sv",
+    "rtl/roi_axi_scaler.sv"
+  ],
+  "image_snapshot_ram": 5
+}

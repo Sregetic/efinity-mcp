@@ -14,6 +14,7 @@ def main():
     p.add_argument('--url',required=True)
     p.add_argument('--elf',type=Path,required=True)
     p.add_argument('--output-dir',type=Path,required=True)
+    p.add_argument('--connectome-readout',action='store_true',help='Also export the trained circuit companion head')
     a=p.parse_args();out=a.output_dir;out.mkdir(parents=True,exist_ok=True)
     def control(*args,ai=False):
         r=subprocess.run([sys.executable,str(ROOT/'scripts/vision_control.py'),'--url',a.url,*map(str,args),'--ai-status' if ai else '--roi-status'],check=True,capture_output=True,text=True)
@@ -35,10 +36,15 @@ def main():
     def read(name,summary=False):
         directory=out/name
         args=[sys.executable,str(ROOT/'scripts/read_fomo_camera.py'),'--url',a.url,'--elf',str(a.elf),'--output-dir',str(directory)]
+        if a.connectome_readout:args.append('--connectome-readout')
         if summary:args.append('--summary')
         subprocess.run(args,check=True)
         s=struct.unpack('<24I',(directory/'status.bin').read_bytes())
         f=struct.unpack('<16I',(directory/'fusion.bin').read_bytes())
+        if a.connectome_readout:
+            head=struct.unpack('<14I',(directory/'readout_record.bin').read_bytes())
+            assert head[0]==0x43524431 and not head[13] and head[1:6]==s[2:7], 'Readout source/publication binding changed'
+            assert head[9]==int.from_bytes((directory/'readout_scores.bin').read_bytes(),'little')
         return s,f
     before=control();(out/'before.json').write_text(json.dumps(before,indent=2));rows=[]
     try:

@@ -1,0 +1,314 @@
+[
+  {
+    "sequence": 1,
+    "address": 256,
+    "value": 1,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 2,
+    "address": 12551,
+    "value": 205,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 3,
+    "address": 12552,
+    "value": 107,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 4,
+    "address": 12800,
+    "value": 0,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 5,
+    "address": 12801,
+    "value": 0,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 6,
+    "address": 12802,
+    "value": 0,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 7,
+    "address": 12803,
+    "value": 0,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 8,
+    "address": 12804,
+    "value": 10,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 9,
+    "address": 12805,
+    "value": 7,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 10,
+    "address": 12806,
+    "value": 5,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 11,
+    "address": 12807,
+    "value": 167,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 12,
+    "address": 12808,
+    "value": 10,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 13,
+    "address": 12809,
+    "value": 0,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 14,
+    "address": 12810,
+    "value": 5,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 15,
+    "address": 12811,
+    "value": 160,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 16,
+    "address": 12812,
+    "value": 5,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 17,
+    "address": 12813,
+    "value": 120,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 18,
+    "address": 12814,
+    "value": 5,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 19,
+    "address": 12815,
+    "value": 220,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 20,
+    "address": 12816,
+    "value": 0,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 21,
+    "address": 12817,
+    "value": 4,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 22,
+    "address": 12818,
+    "value": 0,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 23,
+    "address": 12819,
+    "value": 4,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 24,
+    "address": 12833,
+    "value": 102,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 25,
+    "address": 15872,
+    "value": 0,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 26,
+    "address": 15873,
+    "value": 44,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 27,
+    "address": 15874,
+    "value": 208,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 28,
+    "address": 15878,
+    "value": 0,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 29,
+    "address": 15879,
+    "value": 128,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 30,
+    "address": 15880,
+    "value": 128,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 31,
+    "address": 15881,
+    "value": 42,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "time_s": 1792216337.8630245,
+    "page": 13,
+    "raw": "564953312609190d7860080700001c342805a00e10004ad0",
+    "sensor_frames": 7220,
+    "words_per_line": 640,
+    "lines": 1440,
+    "words": 921600,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1792216338.0798402,
+    "page": 13,
+    "raw": "564953312609190d7860080700001c3b2805a00e10004ad0",
+    "sensor_frames": 7227,
+    "words_per_line": 640,
+    "lines": 1440,
+    "words": 921600,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1792216338.2973137,
+    "page": 13,
+    "raw": "564953312609190d7860080700001c412805a00e10004ad0",
+    "sensor_frames": 7233,
+    "words_per_line": 640,
+    "lines": 1440,
+    "words": 921600,
+    "ppc": 4,
+    "data_type": 43
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "operation": "JTAG SRAM",
+  "exit_code": 0,
+  "sensor": "sc431hai",
+  "started_utc": "2026-10-18T03:23:35.5051822Z",
+  "url": "ftdi://0x0403:0x6011:4:a/2",
+  "bit_sha256": "879286339C476F712A142FBFE1748864BE1586D5EF560A019749D185629224B5",
+  "programmer_completed": true,
+  "flash_written": false,
+  "frequency_hz": 1000000,
+  "video_mode": "camera",
+  "boot_only": true,
+  "visual_acceptance": "pending user",
+  "finished_utc": "2026-10-18T03:23:46.8808792Z"
+}

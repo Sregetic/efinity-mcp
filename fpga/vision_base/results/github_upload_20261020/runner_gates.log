@@ -1,0 +1,10 @@
+PASS blocks vendor failure
+PASS blocks missing vendor result
+PASS blocks negative timing
+PASS blocks missing final timing
+PASS blocks missing pins
+PASS blocks stale bitstream
+PASS blocks empty bitstream
+PASS blocks source mutation
+PASS blocks missing constraints
+PASS 9 negative build gates; synthetic tests only, no hardware acceptance.

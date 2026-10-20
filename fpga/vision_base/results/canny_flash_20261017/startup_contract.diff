@@ -1,0 +1,11 @@
+--- before_prepare_standalone_release.ps1
++++ scripts/prepare_standalone_release.ps1
+@@ -17,7 +17,7 @@
+ [ordered]@{
+  device='Ti60F225';sensor='SC431HAI';hdmi='1920x1080@60Hz'
+  control_boot='8KB ROM reads validated AI program/weights from Flash0x700000; erased application header boots embedded control/FlyHash for USER1 development'
+- boot_defaults=@{mode=3;median=0;sobel=128;canny=128;shape=32;memory=0;menu=0;roi_enabled=0}
++ boot_defaults=@{mode=5;median=1;sobel=128;canny=80;shape=32;memory=0;menu=0;roi_enabled=0;ai_policy=0}
+  functions=@('camera','median','Sobel','Canny','overlay','A6 geometry','six-frame history','freeze','ROI zoom/pan/place','physical-key menu')
+  requires_host_configuration=$false;full_int8_autoload=$true
+  flash_application_address='0x700000';preparation_only=$true

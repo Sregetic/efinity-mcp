@@ -1,0 +1,12 @@
+[
+  {
+    "magic": "56495331",
+    "build": "2610081e",
+    "raw": "564953312610081e07620000076201000000000100000000",
+    "sample_time_s": 1792217211.5851266,
+    "flyhash_result_address": 123863040,
+    "flyhash_input_address": 123863296,
+    "flyhash_firmware_state": 1,
+    "flyhash_cycles": 0
+  }
+]

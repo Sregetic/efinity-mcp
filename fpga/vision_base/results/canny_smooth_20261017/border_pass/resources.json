@@ -1,0 +1,21 @@
+{
+  "xlr": 59935,
+  "ram": 235,
+  "dsp": 62,
+  "wns_ns": 0.088,
+  "whs_ns": 0.026,
+  "free_xlr": 865,
+  "free_ram": 21,
+  "free_dsp": 98,
+  "flash_written": false,
+  "delta_vs_haze": {
+    "xlr": 1360,
+    "ram": 8,
+    "dsp": 4
+  },
+  "delta_vs_first_canny": {
+    "xlr": -575,
+    "ram": 2,
+    "dsp": 0
+  }
+}

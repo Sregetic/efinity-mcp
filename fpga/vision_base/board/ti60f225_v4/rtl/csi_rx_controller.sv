@@ -141,7 +141,7 @@ module csi_rx_controller
 );
 `IP_MODULE_NAME(efx_csi2_rx)
 #(
-    .PACK_TYPE (15),
+    .PACK_TYPE (1), // All supported sensor profiles output RAW10 (Pack40).
     .tLPX_NS (50),
     .tINIT_NS (100000),
     .tCLK_TERM_EN_NS (38),
@@ -152,8 +152,8 @@ module csi_rx_controller
     .ASYNC_STAGE (2),
     .HS_BYTECLK_MHZ (`VISION_SENSOR_BYTECLK_MHZ),
     .CLOCK_FREQ_MHZ (100),
-    .DPHY_CLOCK_MODE ("Discontinuous"),
-    .PIXEL_FIFO_DEPTH (1024),
+    .DPHY_CLOCK_MODE (`VISION_SENSOR_DPHY_CLOCK_MODE),
+    .PIXEL_FIFO_DEPTH (512), // >2560*10/64; includes the retained full-FOV profile.
     .AREGISTER (8),
     .ENABLE_USER_DESKEWCAL (1'b0),
     .FRAME_MODE ("GENERIC"),

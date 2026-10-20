@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "reader_stall_regression_old_failed": true,
+  "reader_variants": [
+    8,
+    32,
+    64
+  ],
+  "read_response_backpressure_in_new_tests": 0,
+  "full_render_reference_pixels": 6220800,
+  "tests": [
+    "reader_8",
+    "reader_32",
+    "reader_64",
+    "engine",
+    "tb_frame_memory_system",
+    "tb_unified_history",
+    "pooled_live"
+  ],
+  "negative_cases": "RRESP/BRESP error nonpublication, illegal jobs, downstream pause, capture overflow, scan starvation and recovery",
+  "scope": "RTL behavioral memory; native and board evidence stored separately"
+}

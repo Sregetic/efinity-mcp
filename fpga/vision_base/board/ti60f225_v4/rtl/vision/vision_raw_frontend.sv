@@ -1,7 +1,7 @@
 // Sensor 4PPC RAW8 -> continuous 2PPC ISP rows, no DDR RAW frame store.
 // FOV word {x0,x1,x2,x3}: emit MSB16 then LSB16, matching legacy vid_par2ser.
-// Half-row prefill absorbs FOV's bubbles; the sensor cannot be backpressured.
-module vision_raw_frontend #(parameter W=1920,H=1080,FIFO_AW=9)(
+// FOV needs half-row prefill; slower native CSI rows need a complete row.
+module vision_raw_frontend #(parameter W=1920,H=1080,FIFO_AW=9,PREFILL_WORDS=W/8)(
  input rst_n,input_clk,vs,valid,input[31:0]data,
  input isp_clk,output reg out_vs,out_de,output reg[15:0]out_data,
  output reg[31:0]frame_id,output reg frame_bad,
@@ -31,7 +31,7 @@ module vision_raw_frontend #(parameter W=1920,H=1080,FIFO_AW=9)(
  localparam WAIT_LINE=0,FIRST=1,SECOND=2,GAP=3;
  reg[1:0]state=WAIT_LINE,gap=0;reg have_frame=0;reg[15:0]second_pair=0;reg[2:0]kind=0;
  wire metadata=md[34:32]>=HEADER;
- wire start_line=state==WAIT_LINE&&have_frame&&level>=W/8;
+ wire start_line=state==WAIT_LINE&&have_frame&&level>=PREFILL_WORDS;
  assign mr=state!=SECOND&&(metadata||frame_bad||(!have_frame&&mv)||(state==FIRST)||start_line);
  always @(posedge isp_clk)begin
   out_vs<=0;out_de<=0;

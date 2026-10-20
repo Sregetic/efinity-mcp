@@ -1,0 +1,44 @@
+{
+  "tone3": {
+    "ceiling": {
+      "mean_rgb": [
+        101.297,
+        134.221,
+        129.583
+      ],
+      "luma": 126.886,
+      "luma_std": 5.675
+    },
+    "dark_fixture": {
+      "mean_rgb": [
+        42.649,
+        60.186,
+        58.114
+      ],
+      "luma": 56.308,
+      "luma_std": 6.229
+    },
+    "region_contrast": 0.38526370951013683
+  },
+  "tone0": {
+    "ceiling": {
+      "mean_rgb": [
+        47.269,
+        62.426,
+        60.113
+      ],
+      "luma": 59.036,
+      "luma_std": 4.897
+    },
+    "dark_fixture": {
+      "mean_rgb": [
+        10.77,
+        15.193,
+        14.668
+      ],
+      "luma": 14.215,
+      "luma_std": 2.405
+    },
+    "region_contrast": 0.6118824316391585
+  }
+}

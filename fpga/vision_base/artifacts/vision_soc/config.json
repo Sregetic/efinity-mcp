@@ -67,7 +67,7 @@
     "--onChipRamSize",
     "0x2000",
     "--ramHex",
-    "F:/Project/fpga/vision_base/results/a_controls_quality_20261009/firmware/vision.hex",
+    "F:/Project/fpga/vision_base/results/roi_fomo_20261012/boot_firmware/vision.hex",
     "--uart",
     "name=system_uart_0_io,address=0x010000,interruptId=1,fifoDepth=16",
     "--gpio",

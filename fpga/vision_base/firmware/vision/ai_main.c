@@ -3,6 +3,13 @@
 #include "fusion_service.h"
 #include "connectome.h"
 #include "ai_selftest.h"
+#ifdef VISION_CONNECTOME_READOUT
+#include "connectome_readout.h"
+extern const struct connectome_readout_model connectome_readout_weights;
+volatile int8_t analysis_connectome_scores[4];
+/* CRD1: sequence/frame/source-config/render/context/graph/model/kind/scores/label/times/busy. */
+volatile uint32_t connectome_readout_result[14];
+#endif
 #ifdef VISION_FOMO
 #include "fomo_pixels.h"
 #endif
@@ -40,6 +47,9 @@ void main(void){
  const struct shape_model *m=(const struct shape_model *)__weights_start;
  if(CONTROL_STATE->magic==0)control_init(); // SPI boot clears it; USER1 replacement preserves the live UI.
  if(m->magic!=0x53434d31u||DMA(0x2c)!=3||CTRL_R(0)!=0x26101002u||CONTROL_STATE->magic!=CONTROL_MAGIC||FUS_R(0)!=0x26101003u){REG(4)=3;for(;;);}
+#ifdef VISION_CONNECTOME_READOUT
+ if(!connectome_readout_valid(&connectome_readout_weights)){REG(4)=3;for(;;);}
+#endif
 #ifdef VISION_MULHI_CFU
  if(m->s0>-2||m->s1>-2||m->s0<-30||m->s1<-30){REG(4)=3;for(;;);}
 #endif
@@ -68,6 +78,9 @@ void main(void){
    if(job.exact&&DMA(0x0c)!=job.g.frame){REG(4)=3;for(;;);}
    volatile uint16_t *input=(volatile uint16_t *)DMA(0x1c);
    analysis_result[17]=1;connectome_result[9]=1; // Producer owns arrays until the complete record is published.
+#ifdef VISION_CONNECTOME_READOUT
+   connectome_readout_result[13]=1;
+#endif
    __asm__ volatile("fence rw,rw\n.word 0x500f\nfence rw,rw":::"memory");
    uint8_t f[64];int8_t x[128],h[32],o[4];uint32_t hash[8],start=REG(0x30),sum=0;
 #ifdef VISION_FOMO
@@ -86,6 +99,20 @@ void main(void){
    connectome_result[0]=0x434f4e31;connectome_result[2]=DMA(0x0c);connectome_result[3]=DMA(0x10);
    connectome_result[4]=job.g.render;connectome_result[5]=job.g.context;connectome_result[6]=CONNECTOME_VERSION;
    connectome_result[7]=3;connectome_result[8]=network_end-end;
+#ifdef VISION_CONNECTOME_READOUT
+   int8_t circuit_scores[4];uint32_t head_start=REG(0x30);
+   connectome_readout(&connectome_readout_weights,neurons,circuit_scores);
+   uint32_t head_cycles=REG(0x30)-head_start;unsigned circuit_label=0;uint32_t packed_scores=0;
+   for(unsigned i=0;i<4;i++){
+    analysis_connectome_scores[i]=circuit_scores[i];packed_scores|=(uint32_t)(uint8_t)circuit_scores[i]<<(8*i);
+    if(circuit_scores[i]>circuit_scores[circuit_label])circuit_label=i;
+   }
+   const uint32_t head_record[11]={DMA(0x0c),DMA(0x10),job.g.render,job.g.context,CONNECTOME_VERSION,
+       connectome_readout_weights.version,connectome_readout_weights.training_kind,packed_scores,
+       circuit_label,head_cycles,network_end-end};
+   connectome_readout_result[0]=0x43524431;
+   for(unsigned i=0;i<11;i++)connectome_readout_result[2+i]=head_record[i];
+#endif
    unsigned label=0;for(unsigned i=1;i<4;i++)if(o[i]>o[label])label=i;
    for(unsigned i=0;i<128;i++)analysis_features[i]=x[i];for(unsigned i=0;i<32;i++)analysis_hidden[i]=h[i];
    for(unsigned i=0;i<4;i++)analysis_logits[i]=o[i];for(unsigned i=0;i<8;i++)analysis_hash[i]=hash[i];
@@ -130,6 +157,9 @@ void main(void){
    completed_scores=(uint8_t)o[0]|((uint32_t)(uint8_t)o[1]<<8)|((uint32_t)(uint8_t)o[2]<<16)|((uint32_t)(uint8_t)o[3]<<24);
    ai_publish(&completed,completed_config,completed_flags,completed_scores);
    __asm__ volatile("fence rw,rw":::"memory");connectome_result[1]=sequence+1;connectome_result[9]=0;analysis_result[1]=++sequence;analysis_result[17]=0;
+#ifdef VISION_CONNECTOME_READOUT
+   connectome_readout_result[1]=sequence;connectome_readout_result[13]=0;
+#endif
 #ifdef VISION_FOMO
    if(job_fomo){fomo_camera_status[2]=sequence;__asm__ volatile("fence rw,rw":::"memory");fomo_camera_status[1]=3;}
 #endif

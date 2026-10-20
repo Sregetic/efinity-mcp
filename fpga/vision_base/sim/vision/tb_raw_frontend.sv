@@ -1,10 +1,10 @@
 `timescale 1ns/1ps
 module tb_raw_frontend;
- parameter W=64,H=12;
+ parameter W=64,H=12,SLOW_SOURCE=0,PREFILL_WORDS=W/8;
  reg input_clk=0,isp_clk=0;always #5 input_clk=~input_clk;always #3.367 isp_clk=~isp_clk;
  reg rst_n=0,vs=0,valid=0;reg[31:0]data=0;
  wire out_vs,out_de,frame_bad;wire[15:0]out_data;wire[31:0]frame_id,overflow_count;
- vision_raw_frontend #(.W(W),.H(H),.FIFO_AW(W>64?9:6)) dut(.*);
+ vision_raw_frontend #(.W(W),.H(H),.FIFO_AW(W>64?9:6),.PREFILL_WORDS(PREFILL_WORDS)) dut(.*);
  reg rv=0,rd=0;reg[15:0]rp=0;
  wire av,ad,aval;wire[47:0]rgb;
  wire bv,bd,bval;wire[47:0]reference_rgb;
@@ -15,6 +15,7 @@ module tb_raw_frontend;
  function automatic[7:0]raw(input integer f,y,x);raw=16+((f*9+y*5+x*3)%96);endfunction
  reg[47:0]expected[0:2*W*H/2-1];integer written=0,checked=0,pairs=0,frames=0,expected_id=1,rx=0,ry=0;
  always @(posedge isp_clk)begin
+  if(SLOW_SOURCE&&rst_n&&frame_bad)$fatal(1,"native RAW row underrun after %0d pairs",pairs);
   if(bval&&bd)begin expected[written]<=reference_rgb;written<=written+1;end
   if(out_vs)begin frames<=frames+1;rx=0;ry=0;if(frame_id!=expected_id)$fatal(1,"RAW source tag");end
   if(out_de)begin
@@ -47,7 +48,8 @@ module tb_raw_frontend;
    for(y=0;y<H;y=y+1)begin
     for(x=0;x<W;x=x+4)begin
      valid=1;data={raw(f,y,x),raw(f,y,x+1),raw(f,y,x+2),raw(f,y,x+3)};@(negedge input_clk);
-     if(x%12==0)begin valid=0;@(negedge input_clk);end
+     if(SLOW_SOURCE)begin valid=0;repeat(2+(x%16==0))@(negedge input_clk);end
+     else if(x%12==0)begin valid=0;@(negedge input_clk);end
     end
     valid=0;repeat(2)@(negedge input_clk);
     if(y%6==5)repeat(W>64?W*2:W*4)@(negedge input_clk);

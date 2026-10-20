@@ -1,0 +1,16 @@
+--- before_vision_canny_raster.sv
++++ board/ti60f225_v4/rtl/vision/vision_canny_raster.sv
+@@ -266,5 +266,12 @@
+  endcase
+  wire signed[10:0]error=$signed({5'b0,minor,4'b0})-$signed(position);
+  wire[10:0]absolute_error=error<0?-error:error;
+- assign coverage=absolute_error<16?8'd255-{absolute_error[3:0],4'b0}:8'd0;
++ // Average two within-pixel samples instead of point-sampling the fitted line.
++ wire[5:0]slope_magnitude=active[5]?-active[5:0]:active[5:0];
++ wire[3:0]sample_offset=slope_magnitude[5:2];
++ wire[4:0]outer_limit=5'd16+sample_offset,inner_limit=5'd16-sample_offset;
++ wire[4:0]ramp=outer_limit-absolute_error[4:0];
++ wire[3:0]core_distance=absolute_error<sample_offset?sample_offset:absolute_error[3:0];
++ assign coverage=absolute_error>=outer_limit?8'd0:
++                 absolute_error>inner_limit?{ramp,3'b0}-8'd1:8'd255-{core_distance,4'b0};
+ endmodule

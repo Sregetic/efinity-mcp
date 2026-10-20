@@ -9,6 +9,7 @@
   "mclk_hz": 24000000,
   "fps": 30,
   "hs_byteclk_mhz": 47,
+  "mipi_clock_mode": "Discontinuous",
   "vts": 1125,
   "exposure_min": 112,
   "exposure_max": 1121,

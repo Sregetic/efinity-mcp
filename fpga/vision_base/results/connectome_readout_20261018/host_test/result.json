@@ -1,0 +1,58 @@
+{
+  "passed": true,
+  "readout_vectors": 227,
+  "compared_int8_outputs": 908,
+  "independent_full_circuit_vectors": 4,
+  "malformed_models_rejected": 4,
+  "max_integer_difference": 0,
+  "model_bytes": 364,
+  "real_accuracy_verified": false,
+  "external_fixed_images": [
+    {
+      "input_class": "blank",
+      "predicted_class": "blank",
+      "scores": [
+        74,
+        60,
+        -50,
+        -3
+      ],
+      "correct": true
+    },
+    {
+      "input_class": "circle",
+      "predicted_class": "triangle",
+      "scores": [
+        2,
+        0,
+        17,
+        64
+      ],
+      "correct": false
+    },
+    {
+      "input_class": "rectangle",
+      "predicted_class": "circle",
+      "scores": [
+        21,
+        36,
+        33,
+        -6
+      ],
+      "correct": false
+    },
+    {
+      "input_class": "triangle",
+      "predicted_class": "triangle",
+      "scores": [
+        28,
+        6,
+        -31,
+        80
+      ],
+      "correct": true
+    }
+  ],
+  "external_fixed_correct": 2,
+  "scope": "PASS means integer equivalence, not recognition acceptance; external images never train the model"
+}

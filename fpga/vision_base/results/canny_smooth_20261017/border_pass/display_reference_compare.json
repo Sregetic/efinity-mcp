@@ -1,0 +1,36 @@
+{
+  "same_binary_plane": true,
+  "shift_x": 2,
+  "shift_y": 2,
+  "pixels": 2051264,
+  "different": 0,
+  "max_abs_error": 0,
+  "regions": {
+    "left": {
+      "pixels": 54080,
+      "visible_pixels": 706,
+      "different": 0
+    },
+    "top": {
+      "pixels": 60380,
+      "visible_pixels": 344,
+      "different": 0
+    },
+    "right": {
+      "pixels": 19404,
+      "visible_pixels": 0,
+      "different": 0
+    },
+    "bottom": {
+      "pixels": 34524,
+      "visible_pixels": 0,
+      "different": 0
+    }
+  },
+  "overlay": {
+    "pixels": 2051264,
+    "different_channels": 0,
+    "max_abs_error": 0
+  },
+  "scope": "Actual full-frame readback versus same frozen bitplane reference, including four outer bands; existing+2/+2 center offset; only OSD rectangle and colored overlays excluded"
+}

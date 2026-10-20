@@ -1,0 +1,173 @@
+{
+  "slopes": [
+    {
+      "slope": 0.16666666666666666,
+      "transposed": false,
+      "old_roughness": 0.2540074479654305,
+      "new_roughness": 0.1586973818982961,
+      "old_peak_deviation_pixels": 1.5265151515151465,
+      "new_peak_deviation_pixels": 0.37620312083316315
+    },
+    {
+      "slope": 0.16666666666666666,
+      "transposed": true,
+      "old_roughness": 0.2540074479654305,
+      "new_roughness": 0.1586973818982961,
+      "old_peak_deviation_pixels": 1.5265151515151465,
+      "new_peak_deviation_pixels": 0.37620312083316315
+    },
+    {
+      "slope": 0.3333333333333333,
+      "transposed": false,
+      "old_roughness": 0.3608071627528036,
+      "new_roughness": 0.06583951703207788,
+      "old_peak_deviation_pixels": 1.1497518286311534,
+      "new_peak_deviation_pixels": 0.09327278692436765
+    },
+    {
+      "slope": 0.3333333333333333,
+      "transposed": true,
+      "old_roughness": 0.3608071627528036,
+      "new_roughness": 0.06583951703207788,
+      "old_peak_deviation_pixels": 1.1497518286311534,
+      "new_peak_deviation_pixels": 0.09327278692436765
+    },
+    {
+      "slope": 0.5,
+      "transposed": false,
+      "old_roughness": 0.45005014632766616,
+      "new_roughness": 0.17448572373431412,
+      "old_peak_deviation_pixels": 0.7993730407523572,
+      "new_peak_deviation_pixels": 0.1259842519685037
+    },
+    {
+      "slope": 0.5,
+      "transposed": true,
+      "old_roughness": 0.45005014632766616,
+      "new_roughness": 0.17448572373431412,
+      "old_peak_deviation_pixels": 0.7993730407523572,
+      "new_peak_deviation_pixels": 0.1259842519685037
+    },
+    {
+      "slope": 0.6666666666666666,
+      "transposed": false,
+      "old_roughness": 0.4477511267881406,
+      "new_roughness": 0.065817715144981,
+      "old_peak_deviation_pixels": 1.2189196421744821,
+      "new_peak_deviation_pixels": 0.09325587350361964
+    },
+    {
+      "slope": 0.6666666666666666,
+      "transposed": true,
+      "old_roughness": 0.4477511267881406,
+      "new_roughness": 0.065817715144981,
+      "old_peak_deviation_pixels": 1.2189196421744821,
+      "new_peak_deviation_pixels": 0.09325587350361964
+    },
+    {
+      "slope": 1.0,
+      "transposed": false,
+      "old_roughness": 0.44534090938709664,
+      "new_roughness": 0.0,
+      "old_peak_deviation_pixels": 0.20062695924764995,
+      "new_peak_deviation_pixels": 0.0
+    },
+    {
+      "slope": 1.0,
+      "transposed": true,
+      "old_roughness": 0.44534090938709664,
+      "new_roughness": 0.0,
+      "old_peak_deviation_pixels": 0.20062695924764995,
+      "new_peak_deviation_pixels": 0.0
+    },
+    {
+      "slope": -0.16666666666666666,
+      "transposed": false,
+      "old_roughness": 0.18794088596476238,
+      "new_roughness": 0.14399400594635126,
+      "old_peak_deviation_pixels": 1.5037878787878742,
+      "new_peak_deviation_pixels": 0.39907338203713894
+    },
+    {
+      "slope": -0.16666666666666666,
+      "transposed": true,
+      "old_roughness": 0.18794088596476238,
+      "new_roughness": 0.14399400594635126,
+      "old_peak_deviation_pixels": 1.5037878787878742,
+      "new_peak_deviation_pixels": 0.39907338203713894
+    },
+    {
+      "slope": -0.3333333333333333,
+      "transposed": false,
+      "old_roughness": 0.270065193381821,
+      "new_roughness": 0.06583951703207863,
+      "old_peak_deviation_pixels": 1.1486119027263377,
+      "new_peak_deviation_pixels": 0.09327278692436725
+    },
+    {
+      "slope": -0.3333333333333333,
+      "transposed": true,
+      "old_roughness": 0.270065193381821,
+      "new_roughness": 0.06583951703207863,
+      "old_peak_deviation_pixels": 1.1486119027263377,
+      "new_peak_deviation_pixels": 0.09327278692436725
+    },
+    {
+      "slope": -0.5,
+      "transposed": false,
+      "old_roughness": 0.33232522665225717,
+      "new_roughness": 0.17438317349655422,
+      "old_peak_deviation_pixels": 0.7993730407523572,
+      "new_peak_deviation_pixels": 0.1259842519685037
+    },
+    {
+      "slope": -0.5,
+      "transposed": true,
+      "old_roughness": 0.33232522665225717,
+      "new_roughness": 0.17438317349655422,
+      "old_peak_deviation_pixels": 0.7993730407523572,
+      "new_peak_deviation_pixels": 0.1259842519685037
+    },
+    {
+      "slope": -0.6666666666666666,
+      "transposed": false,
+      "old_roughness": 0.267470772661038,
+      "new_roughness": 0.0655922963879079,
+      "old_peak_deviation_pixels": 1.1327063740857015,
+      "new_peak_deviation_pixels": 0.09341533038297918
+    },
+    {
+      "slope": -0.6666666666666666,
+      "transposed": true,
+      "old_roughness": 0.267470772661038,
+      "new_roughness": 0.0655922963879079,
+      "old_peak_deviation_pixels": 1.1327063740857015,
+      "new_peak_deviation_pixels": 0.09341533038297918
+    },
+    {
+      "slope": -1.0,
+      "transposed": false,
+      "old_roughness": 0.0,
+      "new_roughness": 0.0,
+      "old_peak_deviation_pixels": 0.0,
+      "new_peak_deviation_pixels": 0.0
+    },
+    {
+      "slope": -1.0,
+      "transposed": true,
+      "old_roughness": 0.0,
+      "new_roughness": 0.0,
+      "old_peak_deviation_pixels": 0.0,
+      "new_peak_deviation_pixels": 0.0
+    }
+  ],
+  "finite_endpoint_cases": 48,
+  "closed_and_junction_shapes": [
+    "rectangle",
+    "circle",
+    "T"
+  ],
+  "corner_maximum_full_white_flat": 1,
+  "corner_spur_sum": 0,
+  "passed": true
+}

@@ -1,0 +1,62 @@
+{
+  "previous_candidate": {
+    "xlr": 57380,
+    "ram": 237,
+    "dsp": 62,
+    "wns_ns": 0.211,
+    "whs_ns": 0.026
+  },
+  "candidate": {
+    "xlr": 56997,
+    "xlr_used_percent": 93.74506578947368,
+    "free_xlr": 3803,
+    "ram": 237,
+    "free_ram": 19,
+    "dsp": 62,
+    "free_dsp": 98,
+    "wns_ns": 0.254,
+    "whs_ns": 0.026,
+    "unassigned_core_pins": 0
+  },
+  "released_this_round": {
+    "xlr": 383,
+    "ram": 0,
+    "dsp": 0
+  },
+  "released_vs_flash_baseline": {
+    "xlr": 3053,
+    "ram": -2,
+    "dsp": 0
+  },
+  "tone": {
+    "before": {
+      "xlr": 1823.0,
+      "self_xlr": 1823.0,
+      "ram": 1.0,
+      "self_ram": 1.0,
+      "dsp": 6.0,
+      "self_dsp": 6.0,
+      "lut_only_xlr": 794.0,
+      "lut_ff_xlr": 38.0,
+      "adder_xlr": 393.0,
+      "adder_ff_xlr": 456.0
+    },
+    "after": {
+      "xlr": 1443.0,
+      "self_xlr": 1443.0,
+      "ram": 1.0,
+      "self_ram": 1.0,
+      "dsp": 6.0,
+      "self_dsp": 6.0,
+      "lut_only_xlr": 582.0,
+      "lut_ff_xlr": 86.0,
+      "adder_xlr": 225.0,
+      "adder_ff_xlr": 408.0
+    },
+    "net_released_xlr": 380.0
+  },
+  "other_packing_net_released_xlr": 3.0,
+  "ram_dsp_unchanged_in_all_hierarchy_nodes": true,
+  "image_snapshot_ram": 5,
+  "canny_hysteresis_ram": 66
+}

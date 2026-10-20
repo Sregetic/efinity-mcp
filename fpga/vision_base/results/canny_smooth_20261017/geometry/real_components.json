@@ -1,0 +1,10 @@
+{
+  "before": {
+    "components": 20,
+    "covered_pixels": 42734
+  },
+  "after": {
+    "components": 30,
+    "covered_pixels": 24834
+  }
+}

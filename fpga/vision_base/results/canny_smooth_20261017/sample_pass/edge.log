@@ -1,0 +1,9 @@
+EDGE words500/4050
+EDGE words1000/4050
+EDGE words1500/4050
+EDGE words2000/4050
+EDGE words2500/4050
+EDGE words3000/4050
+EDGE words3500/4050
+EDGE words4000/4050
+Saved results\canny_smooth_20261017\sample_pass\edge.pgm, epoch112, edge_pixels4322

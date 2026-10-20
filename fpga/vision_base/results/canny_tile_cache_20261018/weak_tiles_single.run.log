@@ -1,0 +1,6 @@
+PASS tile frame=0 8x4 processing=458 last_cycles=0 passes=2 weak_visits=14
+PASS tile frame=1 8x4 processing=38 last_cycles=458 passes=1 weak_visits=0
+PASS tile frame=2 8x4 processing=458 last_cycles=38 passes=2 weak_visits=14
+PASS tile frame=3 8x4 processing=458 last_cycles=458 passes=2 weak_visits=14
+PASS weak tile cycle equivalence: 2087 clocks, 238 tile decisions, 264 display pixels, 128 probe bits, clear/consecutive/column-major/gaps/last-sample/discard/history
+sim/vision/tb_weak_tiles.sv:86: $finish called at 20910000 (1ps)

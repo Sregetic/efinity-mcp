@@ -1,7 +1,5 @@
 # Ti60F225I3 / SC431HAI 视觉工程
 
-> 2026-10-07 当前源码、构建依赖与验收边界见 [GitHub 快照说明](docs/GITHUB_SNAPSHOT_20261007.md)；A6 实物正例和 X3 整机 HDMI 直通仍待完成。下文包含早期记录，当前部署以项目总目标表为准。
-
 > 当前功能与实物验收以[项目总目标表](docs/PROJECT_MASTER_STATUS.md)为准；下文保留早期底座说明。2026-10-01资源优化保留；2026-10-03已按用户要求[恢复原1080p60摄像头设置](results/hdmi_restore_60hz_20261003/REPORT.md)，完成源/制品身份核对及SRAM烧录，板内扫描约59.964fps。采集卡有效图像仍未验收；已完成[接收寄存器B/C复测](results/ugreen_rx_abc_20261003/REPORT.md)，电脑正常输入A待真实接线采集。
 
 2026-10-03追加实际实现：[FOV缓存优化与A6闭合轮廓识别](results/resource_optimization_20261003/REPORT.md)已通过RTL回归和完整Ti60 P&R，RAM224→220、XLR30201→30629、DSP29不变。随后完成[SC2210提前适配](docs/SC2210_PREPARATION_20261003.md)：`artifacts/camera`现为保留SC431HAI默认的0EF81E…候选（RAM220、XLR30587），SC2210 SDK参考单独存到`artifacts/camera_sc2210`（RAM182、XLR28566）。两个候选均**尚未烧录**，实际SC2210模组表仍待匹配；板上原60Hz F6BF…版保留。源码实现、物理构建与实物验收分别记录。

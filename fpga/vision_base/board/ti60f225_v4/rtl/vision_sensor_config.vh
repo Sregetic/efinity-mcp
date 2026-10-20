@@ -1,7 +1,9 @@
 // Default SC431HAI mode. synthesize.ps1 replaces this only during a sensor build.
 `define VISION_SENSOR_SC2210 0
+`define VISION_SENSOR_NATIVE_1080 0
 `define VISION_SENSOR_LANES 4
 `define VISION_SENSOR_BYTECLK_MHZ 70
+`define VISION_SENSOR_DPHY_CLOCK_MODE "Discontinuous"
 `define VISION_SENSOR_INIT_LENGTH 166
 `define VISION_SENSOR_INIT_FILE ""
 `define VISION_SENSOR_EXPOSURE_MIN 112

@@ -1,0 +1,17 @@
+{
+  "xlr": 59091,
+  "ram": 227,
+  "dsp": 59,
+  "wns_ns": 0.102,
+  "whs_ns": 0.026,
+  "baseline": {
+    "xlr": 59635,
+    "ram": 252,
+    "dsp": 59
+  },
+  "free_xlr": 1709,
+  "free_ram": 29,
+  "net_xlr_saved": 544,
+  "net_ram_saved": 25,
+  "flash_written": false
+}

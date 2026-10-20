@@ -1,0 +1,27 @@
+{
+  "hardware_unchanged": true,
+  "fpga_rebuilt": false,
+  "flash_written": false,
+  "hardware": {
+    "xlr": 57356,
+    "free_xlr": 3444,
+    "xlr_percent": 94.33552631578948,
+    "ram": 244,
+    "free_ram": 12,
+    "dsp": 62,
+    "free_dsp": 98,
+    "wns_ns": 0.254,
+    "whs_ns": 0.026,
+    "unassigned_core_pins": 0
+  },
+  "xlr_delta": 0,
+  "ram_delta": 0,
+  "dsp_delta": 0,
+  "ddr_load_before": 177728,
+  "ddr_load_after": 178896,
+  "ddr_bss_before": 66048,
+  "ddr_bss_after": 66104,
+  "static_ddr_delta": 1224,
+  "readout_model_bytes": 364,
+  "scope": "Same deployed FPGA bitstream, DDR application only"
+}

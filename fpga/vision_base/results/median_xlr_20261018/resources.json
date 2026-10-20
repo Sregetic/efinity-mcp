@@ -1,0 +1,71 @@
+{
+  "baseline": {
+    "xlr": 60050,
+    "ram": 235,
+    "dsp": 62,
+    "wns_ns": 0.071,
+    "whs_ns": 0.029
+  },
+  "candidate": {
+    "xlr": 58436,
+    "xlr_capacity": 60800,
+    "xlr_used_percent": 96.11184210526315,
+    "free_xlr": 2364,
+    "ram": 235,
+    "free_ram": 21,
+    "dsp": 62,
+    "free_dsp": 98,
+    "wns_ns": 0.249,
+    "whs_ns": 0.026,
+    "unassigned_core_pins": 0
+  },
+  "released": {
+    "xlr": 1614,
+    "ram": 0,
+    "dsp": 0
+  },
+  "median_instances": [
+    {
+      "instance": "feature_display/front/med9",
+      "before_xlr": 738.0,
+      "after_xlr": 549.0
+    },
+    {
+      "instance": "feature_display/front/med_r",
+      "before_xlr": 666.0,
+      "after_xlr": 477.0
+    },
+    {
+      "instance": "feature_display/front/med_g",
+      "before_xlr": 666.0,
+      "after_xlr": 477.0
+    },
+    {
+      "instance": "feature_display/front/med_b",
+      "before_xlr": 666.0,
+      "after_xlr": 477.0
+    },
+    {
+      "instance": "canny/denoise/filter",
+      "before_xlr": 754.0,
+      "after_xlr": 565.0
+    },
+    {
+      "instance": "line_direct.x3_direct/med0",
+      "before_xlr": 688.0,
+      "after_xlr": 499.0
+    },
+    {
+      "instance": "line_direct.x3_direct/med1",
+      "before_xlr": 682.0,
+      "after_xlr": 493.0
+    }
+  ],
+  "median_combined_before_xlr": 4860,
+  "median_combined_after_xlr": 3537,
+  "median_released_xlr": 1323,
+  "other_packing_net_reduction_xlr": 291,
+  "further_reduction_to_95_percent": 676,
+  "board_programmed": false,
+  "flash_written": false
+}

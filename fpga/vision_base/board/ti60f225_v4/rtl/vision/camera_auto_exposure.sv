@@ -22,9 +22,10 @@ wire[15:0]down=(request>step_size+EXPOSURE_MIN)?request-step_size:EXPOSURE_MIN;
 always @(posedge clk)begin
  // Snapshot at VS, register comparisons, then update the I2C request two clocks later.
  evaluate<={evaluate[0],1'b0};
+ // AE may settle at52; a higher shadow-release threshold leaves startup lift latched.
  limits<={(center_sum<center_count*32'd52&&clip_count<(total_count>>3)),
           ((center_sum>center_count*32'd76)||((clip_count>(total_count>>2))&&(center_sum>center_count*32'd44))||(clip_count>(total_count>>1))),
-          (center_sum>center_count*32'd60),(center_sum<center_count*32'd48)};
+          (center_sum>=center_count*32'd52),(center_sum<center_count*32'd48)};
  vq<=vs;dq<=de;as<={as[1:0],ack_toggle};fs<={fs[1:0],fault};
  if(!rst_n)begin x<=0;y<=0;vq<=0;dq<=0;sum<=0;nc<=0;nt<=0;nh<=0;req_toggle<=0;request<=EXPOSURE_INITIAL;as<=0;fs<=0;started<=0;settle<=SETTLE;last_capture<=0;center_sum<=0;center_count<=0;total_count<=0;clip_count<=0;decision<=0;shadow_boost<=0;evaluate<=0;limits<=0;eval_total<=0;eval_started<=0;eval_ready<=0;eval_enable<=0;eval_manual<=0;end
  else begin

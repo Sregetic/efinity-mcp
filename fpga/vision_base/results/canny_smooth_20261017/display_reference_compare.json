@@ -1,0 +1,14 @@
+{
+  "same_binary_plane": true,
+  "epoch_before": 127,
+  "epoch_after": 448,
+  "comparison": {
+    "dx": 2,
+    "dy": 2,
+    "pixels": 1678080,
+    "different": 0,
+    "mean_abs_error": 0.0,
+    "max_abs_error": 0
+  },
+  "scope": "Same frozen plane; OSD top128 and20/40-pixel scan margins excluded; colored geometry overlays excluded; coordinate shift explicitly measured"
+}

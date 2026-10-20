@@ -1,0 +1,11 @@
+{
+  "full_camera_application": true,
+  "published_to": "artifacts/vision_soc/ddr_firmware",
+  "previous_artifacts": "F:\\Project\\fpga\\vision_base\\results\\canny_flash_20261017\\previous_default_firmware",
+  "app_bytes": 177728,
+  "model_bytes": 54640,
+  "hardware_rebuild": false,
+  "xlr_delta": 0,
+  "ram_delta": 0,
+  "dsp_delta": 0
+}

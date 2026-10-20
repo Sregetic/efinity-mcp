@@ -1,0 +1,75 @@
+{
+  "stage": "border_pass",
+  "sram_programmed": true,
+  "flash_written": false,
+  "resources": {
+    "xlr": 59935,
+    "ram": 235,
+    "dsp": 62,
+    "wns_ns": 0.088,
+    "whs_ns": 0.026,
+    "free_xlr": 865,
+    "free_ram": 21,
+    "free_dsp": 98,
+    "flash_written": false,
+    "delta_vs_haze": {
+      "xlr": 1360,
+      "ram": 8,
+      "dsp": 4
+    },
+    "delta_vs_first_canny": {
+      "xlr": -575,
+      "ram": 2,
+      "dsp": 0
+    }
+  },
+  "live": {
+    "seconds": 10.539969205856323,
+    "samples": 50,
+    "camera_hz": 30.075989199652053,
+    "canny_hz": 29.98111226211372,
+    "all_ready": true,
+    "all_fault_zero": true
+  },
+  "full_image_reference": {
+    "same_binary_plane": true,
+    "shift_x": 2,
+    "shift_y": 2,
+    "pixels": 2051264,
+    "different": 0,
+    "max_abs_error": 0,
+    "regions": {
+      "left": {
+        "pixels": 54080,
+        "visible_pixels": 706,
+        "different": 0
+      },
+      "top": {
+        "pixels": 60380,
+        "visible_pixels": 344,
+        "different": 0
+      },
+      "right": {
+        "pixels": 19404,
+        "visible_pixels": 0,
+        "different": 0
+      },
+      "bottom": {
+        "pixels": 34524,
+        "visible_pixels": 0,
+        "different": 0
+      }
+    },
+    "overlay": {
+      "pixels": 2051264,
+      "different_channels": 0,
+      "max_abs_error": 0
+    },
+    "scope": "Actual full-frame readback versus same frozen bitplane reference, including four outer bands; existing+2/+2 center offset; only OSD rectangle and colored overlays excluded"
+  },
+  "source_frame": 1312,
+  "render_config": 1,
+  "user_observation": "两处都明显改善",
+  "remaining_user_observation": "但还有一点点",
+  "scope": "Display reconstruction of unchanged480x270 Canny binary plane; M0/M5/M6 actual1920x1080 readback; right/bottom physical bands empty, paths covered in RTL simulation; not full1440p/SC2210 P&R or long-run purple-flicker acceptance"
+}

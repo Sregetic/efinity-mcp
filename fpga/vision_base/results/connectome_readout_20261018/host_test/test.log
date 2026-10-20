@@ -1,0 +1,2 @@
+PASS RV32I CRD1 quantization, signed dense and four independent fixed-image pipelines
+F:\Efinity\efinity-riscv-ide-2026.1\qemu\qemu-system-riscv32.exe: warning: Setting G will also set IMAFD

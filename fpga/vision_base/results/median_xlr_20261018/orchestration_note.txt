@@ -1,0 +1,1 @@
+Outer Tee-Object used a relative path while synthesize.ps1 temporarily changed location. Vendor compile completed; source/timing and artifact finalization resumed through the existing pgm flow.

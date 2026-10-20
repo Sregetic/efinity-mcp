@@ -18,6 +18,7 @@ from connectome import fixed
 def main():
     p = argparse.ArgumentParser()
     p.add_argument('--directory', type=Path, required=True)
+    p.add_argument('--connectome-readout', type=Path, help='CRD1 model used by the companion readout in this task')
     a = p.parse_args()
     out = a.directory
     s = struct.unpack('<24I', (out/'status.bin').read_bytes())
@@ -85,6 +86,18 @@ def main():
     n=struct.unpack('<10I',(out/'network_record.bin').read_bytes())
     assert n[9]==0 and n[1:6]==(s[2],s[3],s[4],s[5],s[6])
     result.update(legacy_int8_exact=True,flyhash_exact=True,connectome_states_exact=80)
+    if a.connectome_readout:
+        from connectome_readout import load, predict, MAGIC, GRAPH_VERSION
+        head = load(a.connectome_readout)
+        r = struct.unpack('<14I', (out/'readout_record.bin').read_bytes())
+        scores = np.frombuffer((out/'readout_scores.bin').read_bytes(), dtype=np.int8)
+        assert r[0] == MAGIC and not r[13] and r[1:6] == n[1:6], 'Readout lost the source/model publication binding'
+        assert r[6:9] == (GRAPH_VERSION, head['version'], head['kind'])
+        assert np.array_equal(predict(fixed(x), head), scores), 'Circuit readout differs from the exact integer reference'
+        assert r[9] == int.from_bytes(scores.tobytes(), 'little') and r[10] == int(np.argmax(scores))
+        result['connectome_readout'] = dict(exact=True, scores=scores.tolist(), label=r[10],
+                                           version=r[7], training_kind=r[8], readout_ms=r[11]/100000,
+                                           circuit_ms=r[12]/100000, real_accuracy_verified=False)
     (out/'verification.json').write_text(json.dumps(result, indent=2))
     print(json.dumps(result, indent=2))
 

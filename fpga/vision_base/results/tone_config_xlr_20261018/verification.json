@@ -1,0 +1,88 @@
+{
+  "passed": true,
+  "tests": [
+    {
+      "name": "chroma_thresholds",
+      "passed": true
+    },
+    {
+      "name": "tone_equivalence",
+      "passed": true
+    },
+    {
+      "name": "chroma_tone",
+      "passed": true
+    },
+    {
+      "name": "chroma_shadow",
+      "passed": true
+    },
+    {
+      "name": "chroma_singleclip",
+      "passed": true
+    },
+    {
+      "name": "tone_freeze",
+      "passed": true
+    }
+  ],
+  "thresholds": {
+    "gains_per_channel": 65536,
+    "channels": 3,
+    "thresholds_per_gain": 16,
+    "checks": 3145728,
+    "differences": 0,
+    "one_clock_update_preserved": true
+  },
+  "cycle_equivalence": {
+    "clocks": 181768,
+    "active_pixels": 172369,
+    "reset_clocks": 20,
+    "gain_pixel_pairs_per_channel": 116224,
+    "full_range_gain_steps_per_channel": 65536,
+    "differences": 0,
+    "normal_and_shadow_curves": true,
+    "freeze_and_resume": true,
+    "sync_and_latency": true
+  },
+  "gamma_cases": [
+    {
+      "name": "display_gamma_2p2-8",
+      "passed": true,
+      "result": "PASS gamma width=8 checked=25185 legacy_checked=21064 curve=F:/Project/fpga/vision_base/board/ti60f225_v4/rtl/gamma_conrrection/display_gamma_2p2.mem",
+      "memory_order_notices": 3
+    },
+    {
+      "name": "display_gamma_2p2-10",
+      "passed": true,
+      "result": "PASS gamma width=10 checked=28257 legacy_checked=24136 curve=F:/Project/fpga/vision_base/board/ti60f225_v4/rtl/gamma_conrrection/display_gamma_2p2.mem",
+      "memory_order_notices": 3
+    },
+    {
+      "name": "2P2-8",
+      "passed": true,
+      "result": "PASS gamma width=8 checked=25185 legacy_checked=21064 curve=F:/Project/fpga/vision_base/board/ti60f225_v4/rtl/gamma_conrrection/2P2.mem",
+      "memory_order_notices": 3
+    },
+    {
+      "name": "2P2-10",
+      "passed": true,
+      "result": "PASS gamma width=10 checked=28257 legacy_checked=24136 curve=F:/Project/fpga/vision_base/board/ti60f225_v4/rtl/gamma_conrrection/2P2.mem",
+      "memory_order_notices": 3
+    },
+    {
+      "name": "address_probe-8",
+      "passed": true,
+      "result": "PASS gamma width=8 checked=25185 legacy_checked=21064 curve=F:/Project/fpga/vision_base/results/tone_config_xlr_20261018/gamma/address_probe.mem",
+      "memory_order_notices": 3
+    },
+    {
+      "name": "address_probe-10",
+      "passed": true,
+      "result": "PASS gamma width=10 checked=28257 legacy_checked=24136 curve=F:/Project/fpga/vision_base/results/tone_config_xlr_20261018/gamma/address_probe.mem",
+      "memory_order_notices": 3
+    }
+  ],
+  "fixture_matches_before_rtl": true,
+  "physical_board_test": false
+}

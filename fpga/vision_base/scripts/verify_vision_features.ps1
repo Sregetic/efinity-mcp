@@ -6,6 +6,10 @@ try {
  $out='results/vision_features';New-Item -ItemType Directory $out -Force|Out-Null
  & C:/Users/Sregetic/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe -E scripts/reference_noise.py > "$out/noise_reference.log"
  if($LASTEXITCODE -ne 0){throw 'Noise reference checks failed'}
+ & C:/Users/Sregetic/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe -E scripts/generate_canny_coverage.py --check > "$out/canny_coverage.log"
+ if($LASTEXITCODE -ne 0){throw 'Canny coverage ROM differs from generator'}
+ & C:/Users/Sregetic/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe -E scripts/test_canny_smooth.py > "$out/canny_geometry.log"
+ if($LASTEXITCODE -ne 0){throw 'Canny geometry checks failed'}
  $rtl='board/ti60f225_v4/rtl/vision/'
  $tests=@(
   @{name='osd';src=@('vision_osd.sv')},
@@ -18,8 +22,10 @@ try {
   @{name='edge_strength';src=@('vision_display.sv','vision_frontend.sv','vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_shape_classifier.sv','vision_osd.sv')},
   @{name='sensor_init';src=@('../cam_i2c_ctrl/i2c/i2c_master_reg_rom.v')},
   @{name='canny_raster';src=@('vision_canny_raster.sv','vision_sparse_window.sv')},
+  @{name='canny_fit';src=@('vision_canny_raster.sv','vision_sparse_window.sv')},
   @{name='line_snapshot';src=@('vision_line_snapshot.sv')},
   @{name='hysteresis_random';src=@('vision_hysteresis_sweep.sv','vision_hysteresis.sv')},
+  @{name='weak_tiles';src=@('vision_hysteresis_sweep.sv','vision_hysteresis.sv')},
   @{name='edge_probe';src=@('vision_hysteresis_sweep.sv','vision_hysteresis.sv')},
   @{name='canny_denoise';src=@('vision_canny_denoise.sv','vision_sparse_window.sv','vision_median9.sv')},
   @{name='canny_noise';src=@('vision_canny.sv','vision_canny_denoise.sv','vision_median9.sv','vision_hysteresis_sweep.sv','vision_hysteresis.sv','vision_sparse_window.sv','vision_sobel.sv')},
@@ -35,6 +41,7 @@ try {
   @{name='median9';src=@('vision_median9.sv')},
   @{name='chroma_tone';src=@('rgb_chroma_tone.sv')},
   @{name='chroma_thresholds';src=@('rgb_chroma_tone.sv')},
+  @{name='tone_equivalence';src=@('rgb_chroma_tone.sv')},
   @{name='controls';src=@('vision_controls.sv','vision_keys.sv')},
   @{name='hysteresis';src=@('vision_hysteresis.sv')},
   @{name='hysteresis_sweep';src=@('vision_hysteresis_sweep.sv','vision_hysteresis.sv')},

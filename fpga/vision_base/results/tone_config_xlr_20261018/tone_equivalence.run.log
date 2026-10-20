@@ -1,0 +1,2 @@
+PASS tone cycle equivalence 181768 clocks, 172369 active pixels, 20 reset clocks, 116224 valid gain/pixel pairs per channel, 65536 full-range gains per channel, both curves/freeze/sync/config updates, zero differences
+sim/vision/tb_tone_equivalence.sv:42: $finish called at 1817686000 (1ps)

@@ -1,0 +1,2 @@
+PASS sensor 1: 25000 cycles, polarity, saturation, repeated reset
+C:\Users\Sregetic\AppData\Local\Temp\tmpa0zm4d6x\reset.sv:33: $finish called at 10040400000 (1ps)

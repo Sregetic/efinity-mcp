@@ -1,0 +1,10 @@
+{
+  "samples": 60,
+  "seconds": 12.694544553756714,
+  "camera_rate_hz": 29.934118423141545,
+  "canny_rate_hz": 29.934118423141545,
+  "all_canny_ready": true,
+  "canny_faults": 0,
+  "mode": 5,
+  "memory": 0
+}

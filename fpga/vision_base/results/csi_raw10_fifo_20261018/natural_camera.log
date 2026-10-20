@@ -1,0 +1,12 @@
+HIGHLIGHT TONE PASS 800 samples, clipped window neutral, blue preserved, four-cycle alignment, old tone/bypass
+sim/vision/tb_chroma_tone.sv:39: $finish called at 8056000 (1ps)
+HIGHLIGHT TONE PASS 800 samples, clipped window neutral, blue preserved, four-cycle alignment, old tone/bypass
+sim/vision/tb_chroma_shadow.sv:39: $finish called at 8166000 (1ps)
+SINGLE CLIP PASS measured highlight chroma reduced; saturated colors/midtone/black preserved
+sim/vision/tb_chroma_singleclip.sv:18: $finish called at 450000 (1ps)
+AE PASS: dark/bright direction, 64 samples, deadband, freeze, fault and manual
+sim/vision/tb_camera_auto_exposure.sv:43: $finish called at 397340000 (1ps)
+EXPOSURE WRITER PASS: boot arbitration, byte packing, verified ack, mismatch and timeout
+sim/vision/tb_sensor_exposure_writer.sv:27: $finish called at 3560000 (1ps)
+I2C READBACK PASS: synchronous RX timing
+sim/vision/tb_i2c_readback.sv:8: $finish called at 706000 (1ps)

@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "boot_status": [
+    1447186225,
+    7,
+    15687703,
+    177728,
+    4400
+  ],
+  "cpu_state": 1,
+  "user1_program_download": false,
+  "flash_written": false,
+  "note": "Only static startup status read; unchanged program/weights not downloaded or exhaustively re-read."
+}

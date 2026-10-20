@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "address": 0,
+  "bytes": 1082168,
+  "configuration_flash_written": true,
+  "onchip_verification": true,
+  "byte_readback_verified": true,
+  "full_old_flash_backup": "results/canny_flash_20261017/app_flash/flash_before.bin",
+  "physical_power_cycle_verified": false
+}

@@ -1,0 +1,62 @@
+{
+  "passed": true,
+  "source_frame": 55318,
+  "render_config": 16,
+  "images": 9,
+  "size": [
+    1920,
+    1080
+  ],
+  "canny_edges": 4458,
+  "canny_plane_unchanged": true,
+  "comparisons": {
+    "canny": {
+      "pixels": 2056320,
+      "different_channels": 0,
+      "maximum_error": 0
+    },
+    "canny_overlay": {
+      "pixels": 2056320,
+      "different_channels": 0,
+      "maximum_error": 0
+    },
+    "split": {
+      "pixels": 2056320,
+      "different_channels": 0,
+      "maximum_error": 0
+    },
+    "sobel_overlay": {
+      "pixels": 2056320,
+      "different_channels": 0,
+      "maximum_error": 0
+    }
+  },
+  "camera_statistics": {
+    "mean_rgb": [
+      94.84090760030864,
+      123.70996576003087,
+      122.46199701003087
+    ],
+    "std_rgb": [
+      39.73302116463222,
+      36.702784518568215,
+      41.085328071059564
+    ],
+    "minimum": 0,
+    "maximum": 255,
+    "different_time_strip_comparison": {
+      "before_mean_rgb": [
+        97.10130208333334,
+        131.79520399305557,
+        129.3791449652778
+      ],
+      "after_mean_rgb": [
+        86.31807725694445,
+        116.70208333333333,
+        114.15321180555556
+      ],
+      "scope": "Different capture times, not identical-frame equivalence"
+    }
+  },
+  "scope": "Actual same-frame images vs unchanged reference, not old/new sensors sharing a frame"
+}

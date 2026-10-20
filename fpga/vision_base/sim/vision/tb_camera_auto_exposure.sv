@@ -23,6 +23,10 @@ integer i;reg[15:0]old;
 initial begin
  #21;rst=1;for(i=0;i<12;i=i+1)image(24,1);
  if(ex<=444||!boost)$fatal(1,"dark scene did not increase exposure");
+ for(i=0;i<8;i=i+1)image(54,1);
+ if(boost)$fatal(1,"normal AE deadband kept startup shadow boost latched");
+ old=ex;for(i=0;i<4;i=i+1)image(54,1);
+ if(ex!=old)$fatal(1,"normal AE deadband changed exposure");
  old=ex;for(i=0;i<12;i=i+1)image(255,1);
  if(ex>=old||nh!=nt||nc!=64||nt!=64)$fatal(1,"clipped scene/metering failed");
  for(i=0;i<8;i=i+1)image(60,1);old=ex;

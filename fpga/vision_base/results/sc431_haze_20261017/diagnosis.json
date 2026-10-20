@@ -1,0 +1,108 @@
+{
+  "same_source_frame": 34814,
+  "same_render_config": 12,
+  "tone3_vs_tone2_strip": {
+    "y": 400,
+    "height": 192,
+    "differing_channels": 0,
+    "max_abs_difference": 0
+  },
+  "normal_curve_changed_inputs": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31
+  ],
+  "inputs32_to255_identical": true,
+  "curve_points": [
+    {
+      "input": 0,
+      "old": 0,
+      "new": 0
+    },
+    {
+      "input": 4,
+      "old": 16,
+      "new": 5
+    },
+    {
+      "input": 8,
+      "old": 32,
+      "new": 15
+    },
+    {
+      "input": 12,
+      "old": 48,
+      "new": 28
+    },
+    {
+      "input": 16,
+      "old": 64,
+      "new": 44
+    },
+    {
+      "input": 24,
+      "old": 87,
+      "new": 77
+    },
+    {
+      "input": 32,
+      "old": 99,
+      "new": 99
+    },
+    {
+      "input": 64,
+      "old": 136,
+      "new": 136
+    },
+    {
+      "input": 128,
+      "old": 187,
+      "new": 187
+    },
+    {
+      "input": 255,
+      "old": 255,
+      "new": 255
+    }
+  ],
+  "source_based_prediction_without_spatial_filter": {
+    "old": {
+      "ceiling": 126.63195080999999,
+      "dark_fixture": 56.92655731578946,
+      "region_contrast": 0.37974482472064247
+    },
+    "new": {
+      "ceiling": 126.58037155,
+      "dark_fixture": 39.081003894736845,
+      "region_contrast": 0.5281820667030025
+    }
+  }
+}

@@ -107,8 +107,8 @@ static void control_event(uint32_t event){
 static void control_init(void){
  struct vision_control_state *s=CONTROL_STATE;
  for(unsigned i=0;i<sizeof(*s)/4;i++)((volatile uint32_t*)s)[i]=0;
- s->settings=3|(128u<<9)|(128u<<20);s->roi[1]=(1920u<<12)|1080;s->roi[2]=s->roi[1];
- s->capture=CTRL_R(0x14);s->ai_policy=2;s->shape_threshold=32;s->magic=CONTROL_MAGIC;
+ s->settings=5|8u|(128u<<9)|(80u<<20);s->roi[1]=(1920u<<12)|1080;s->roi[2]=s->roi[1];
+ s->capture=CTRL_R(0x14);s->feature_dirty=1;s->shape_threshold=32;s->magic=CONTROL_MAGIC;
 }
 static void control_service_step(void){
  struct vision_control_state *s=CONTROL_STATE;

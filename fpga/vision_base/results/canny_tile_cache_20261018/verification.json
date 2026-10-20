@@ -1,0 +1,106 @@
+{
+  "passed": true,
+  "tests": [
+    {
+      "passed": true,
+      "name": "weak_tiles_single"
+    },
+    {
+      "passed": true,
+      "name": "weak_tiles_full"
+    },
+    {
+      "passed": true,
+      "name": "hysteresis_sweep"
+    },
+    {
+      "passed": true,
+      "name": "edge_components"
+    },
+    {
+      "passed": true,
+      "name": "edge_probe"
+    },
+    {
+      "passed": true,
+      "name": "canny_noise"
+    },
+    {
+      "passed": true,
+      "name": "hysteresis_scene"
+    },
+    {
+      "name": "weak_tiles",
+      "passed": true
+    },
+    {
+      "name": "weak_tiles_partial",
+      "passed": true
+    },
+    {
+      "name": "hysteresis_random",
+      "passed": true
+    }
+  ],
+  "cycle_equivalence": [
+    {
+      "name": "weak_tiles_single",
+      "width": 8,
+      "height": 4,
+      "clocks": 2087,
+      "tile_decisions": 238,
+      "display_pixels": 264,
+      "probe_bits": 128,
+      "differences": 0
+    },
+    {
+      "name": "weak_tiles",
+      "width": 48,
+      "height": 32,
+      "clocks": 39895,
+      "tile_decisions": 10092,
+      "display_pixels": 15875,
+      "probe_bits": 256,
+      "differences": 0
+    },
+    {
+      "name": "weak_tiles_partial",
+      "width": 37,
+      "height": 19,
+      "clocks": 20175,
+      "tile_decisions": 4704,
+      "display_pixels": 7072,
+      "probe_bits": 256,
+      "differences": 0
+    },
+    {
+      "name": "weak_tiles_full",
+      "width": 480,
+      "height": 270,
+      "clocks": 2987511,
+      "tile_decisions": 836265,
+      "display_pixels": 2007905,
+      "probe_bits": 256,
+      "differences": 0
+    }
+  ],
+  "cycle_equivalence_totals": {
+    "clocks": 3049668,
+    "tile_decisions": 851299,
+    "display_pixels": 2031116,
+    "probe_bits": 896,
+    "differences": 0
+  },
+  "independent_reference": {
+    "random_maps": 100,
+    "random_pixels": 19200,
+    "component_maps": 54,
+    "component_pixels": 41472,
+    "scene_pixels": 259200,
+    "canny_pipeline_pixels": 36864,
+    "edge_probe_bits": 1536,
+    "edge_probe_active_pixels": 2304
+  },
+  "fixture_matches_before_rtl": true,
+  "board_test": false
+}

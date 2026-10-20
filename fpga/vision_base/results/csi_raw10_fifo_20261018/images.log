@@ -1,0 +1,145 @@
+EDGE words500/4050
+EDGE words1000/4050
+EDGE words1500/4050
+EDGE words2000/4050
+EDGE words2500/4050
+EDGE words3000/4050
+EDGE words3500/4050
+EDGE words4000/4050
+Saved results\csi_raw10_fifo_20261018\edge_before, epoch86, edge_pixels4458
+Source before Gamma rows90/1080
+Source before Gamma rows180/1080
+Source before Gamma rows270/1080
+Source before Gamma rows360/1080
+Source before Gamma rows450/1080
+Source before Gamma rows540/1080
+Source before Gamma rows630/1080
+Source before Gamma rows720/1080
+Source before Gamma rows810/1080
+Source before Gamma rows900/1080
+Source before Gamma rows990/1080
+Source before Gamma rows1080/1080
+Saved source.png: 1920x1080, source55318, 54.38s
+Camera color rows90/1080
+Camera color rows180/1080
+Camera color rows270/1080
+Camera color rows360/1080
+Camera color rows450/1080
+Camera color rows540/1080
+Camera color rows630/1080
+Camera color rows720/1080
+Camera color rows810/1080
+Camera color rows900/1080
+Camera color rows990/1080
+Camera color rows1080/1080
+Saved mode_0.png: 1920x1080, source55318, 54.22s
+Grayscale rows90/1080
+Grayscale rows180/1080
+Grayscale rows270/1080
+Grayscale rows360/1080
+Grayscale rows450/1080
+Grayscale rows540/1080
+Grayscale rows630/1080
+Grayscale rows720/1080
+Grayscale rows810/1080
+Grayscale rows900/1080
+Grayscale rows990/1080
+Grayscale rows1080/1080
+Saved mode_1.png: 1920x1080, source55318, 54.20s
+Sobel rows90/1080
+Sobel rows180/1080
+Sobel rows270/1080
+Sobel rows360/1080
+Sobel rows450/1080
+Sobel rows540/1080
+Sobel rows630/1080
+Sobel rows720/1080
+Sobel rows810/1080
+Sobel rows900/1080
+Sobel rows990/1080
+Sobel rows1080/1080
+Saved mode_2.png: 1920x1080, source55318, 53.89s
+Gray / Sobel rows90/1080
+Gray / Sobel rows180/1080
+Gray / Sobel rows270/1080
+Gray / Sobel rows360/1080
+Gray / Sobel rows450/1080
+Gray / Sobel rows540/1080
+Gray / Sobel rows630/1080
+Gray / Sobel rows720/1080
+Gray / Sobel rows810/1080
+Gray / Sobel rows900/1080
+Gray / Sobel rows990/1080
+Gray / Sobel rows1080/1080
+Saved mode_3.png: 1920x1080, source55318, 54.05s
+Sobel overlay rows90/1080
+Sobel overlay rows180/1080
+Sobel overlay rows270/1080
+Sobel overlay rows360/1080
+Sobel overlay rows450/1080
+Sobel overlay rows540/1080
+Sobel overlay rows630/1080
+Sobel overlay rows720/1080
+Sobel overlay rows810/1080
+Sobel overlay rows900/1080
+Sobel overlay rows990/1080
+Sobel overlay rows1080/1080
+Saved mode_4.png: 1920x1080, source55318, 54.20s
+Canny rows90/1080
+Canny rows180/1080
+Canny rows270/1080
+Canny rows360/1080
+Canny rows450/1080
+Canny rows540/1080
+Canny rows630/1080
+Canny rows720/1080
+Canny rows810/1080
+Canny rows900/1080
+Canny rows990/1080
+Canny rows1080/1080
+Saved mode_5.png: 1920x1080, source55318, 53.72s
+Canny overlay rows90/1080
+Canny overlay rows180/1080
+Canny overlay rows270/1080
+Canny overlay rows360/1080
+Canny overlay rows450/1080
+Canny overlay rows540/1080
+Canny overlay rows630/1080
+Canny overlay rows720/1080
+Canny overlay rows810/1080
+Canny overlay rows900/1080
+Canny overlay rows990/1080
+Canny overlay rows1080/1080
+Saved mode_6.png: 1920x1080, source55318, 54.16s
+Recognition rows90/1080
+Recognition rows180/1080
+Recognition rows270/1080
+Recognition rows360/1080
+Recognition rows450/1080
+Recognition rows540/1080
+Recognition rows630/1080
+Recognition rows720/1080
+Recognition rows810/1080
+Recognition rows900/1080
+Recognition rows990/1080
+Recognition rows1080/1080
+Saved mode_7.png: 1920x1080, source55318, 54.17s
+EDGE words500/4050
+EDGE words1000/4050
+EDGE words1500/4050
+EDGE words2000/4050
+EDGE words2500/4050
+EDGE words3000/4050
+EDGE words3500/4050
+EDGE words4000/4050
+Saved results\csi_raw10_fifo_20261018\edge_after, epoch224, edge_pixels4458
+Traceback (most recent call last):
+  File "F:\Project\fpga\vision_base\results\csi_raw10_fifo_20261018\check_images.py", line 29, in <module>
+    assert set(np.unique(sobel[mask])).issubset({0,255})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+Exception: F:\Project\fpga\vision_base\results\csi_raw10_fifo_20261018\capture_all.ps1:22
+Line |
+  22 |  if($LASTEXITCODE -ne 0){throw 'Same-frame image comparison failed'}
+     |                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Same-frame image comparison failed

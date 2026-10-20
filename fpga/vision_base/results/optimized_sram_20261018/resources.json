@@ -1,0 +1,12 @@
+{
+  "xlr": 56997,
+  "xlr_used_percent": 93.74506578947368,
+  "free_xlr": 3803,
+  "ram": 237,
+  "free_ram": 19,
+  "dsp": 62,
+  "free_dsp": 98,
+  "wns_ns": 0.254,
+  "whs_ns": 0.026,
+  "unassigned_core_pins": 0
+}

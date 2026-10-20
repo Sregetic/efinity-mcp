@@ -1,0 +1,26 @@
+[
+  {
+    "magic": "56495331",
+    "build": "260917b5",
+    "mode": 5,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 80,
+    "raw": "56495331260917b578b0050703280328000b003280000004",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1792248955.4399831,
+    "exposure_applied": 808,
+    "exposure_request": 808,
+    "exposure_updates": 11,
+    "exposure_readback": "003280",
+    "ae_fault": 0,
+    "ae_busy": 0,
+    "ae_enabled": 1,
+    "shadow_boost": 0
+  }
+]

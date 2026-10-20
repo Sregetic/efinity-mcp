@@ -1,0 +1,2 @@
+FATAL: results/canny_smooth_20261017/before/tb_raster_reproducer.sv:40: coverage mismatch frame0 x14 y14 got255 want222
+       Time: 11066000  Scope: tb

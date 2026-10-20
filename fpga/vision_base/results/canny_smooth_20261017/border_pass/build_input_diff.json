@@ -1,0 +1,6 @@
+[
+  "board/ti60f225_v4/rtl/vision/canny_coverage_q5.mem",
+  "board/ti60f225_v4/rtl/vision/canny_fit_q4.mem",
+  "board/ti60f225_v4/rtl/vision/vision_canny_raster.sv",
+  "board/ti60f225_v4/rtl/vision/vision_display.sv"
+]

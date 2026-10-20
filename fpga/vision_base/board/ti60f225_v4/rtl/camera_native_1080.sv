@@ -1,4 +1,4 @@
-// CSI-2 RAW10, four packed pixels/valid clock, native 1920x1080 BGGR.
+// CSI-2 RAW10, four packed pixels/valid clock, native 1920x1080.
 // Regenerate active-frame VS even when the receiver presents a short FS pulse.
 module camera_native_1080(input clk,rst_n,vs,hs,valid,input[39:0]data,
  output reg o_vs=0,output o_hs,o_valid,output[31:0]o_data);

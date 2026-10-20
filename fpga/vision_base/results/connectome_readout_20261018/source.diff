@@ -1,0 +1,466 @@
+--- before/firmware/vision/ai_main.c
++++ firmware/vision/ai_main.c
+@@ -3,6 +3,13 @@
+ #include "fusion_service.h"
+ #include "connectome.h"
+ #include "ai_selftest.h"
++#ifdef VISION_CONNECTOME_READOUT
++#include "connectome_readout.h"
++extern const struct connectome_readout_model connectome_readout_weights;
++volatile int8_t analysis_connectome_scores[4];
++/* CRD1: sequence/frame/source-config/render/context/graph/model/kind/scores/label/times/busy. */
++volatile uint32_t connectome_readout_result[14];
++#endif
+ #ifdef VISION_FOMO
+ #include "fomo_pixels.h"
+ #endif
+@@ -40,6 +47,9 @@
+  const struct shape_model *m=(const struct shape_model *)__weights_start;
+  if(CONTROL_STATE->magic==0)control_init(); // SPI boot clears it; USER1 replacement preserves the live UI.
+  if(m->magic!=0x53434d31u||DMA(0x2c)!=3||CTRL_R(0)!=0x26101002u||CONTROL_STATE->magic!=CONTROL_MAGIC||FUS_R(0)!=0x26101003u){REG(4)=3;for(;;);}
++#ifdef VISION_CONNECTOME_READOUT
++ if(!connectome_readout_valid(&connectome_readout_weights)){REG(4)=3;for(;;);}
++#endif
+ #ifdef VISION_MULHI_CFU
+  if(m->s0>-2||m->s1>-2||m->s0<-30||m->s1<-30){REG(4)=3;for(;;);}
+ #endif
+@@ -68,6 +78,9 @@
+    if(job.exact&&DMA(0x0c)!=job.g.frame){REG(4)=3;for(;;);}
+    volatile uint16_t *input=(volatile uint16_t *)DMA(0x1c);
+    analysis_result[17]=1;connectome_result[9]=1; // Producer owns arrays until the complete record is published.
++#ifdef VISION_CONNECTOME_READOUT
++   connectome_readout_result[13]=1;
++#endif
+    __asm__ volatile("fence rw,rw\n.word 0x500f\nfence rw,rw":::"memory");
+    uint8_t f[64];int8_t x[128],h[32],o[4];uint32_t hash[8],start=REG(0x30),sum=0;
+ #ifdef VISION_FOMO
+@@ -86,6 +99,20 @@
+    connectome_result[0]=0x434f4e31;connectome_result[2]=DMA(0x0c);connectome_result[3]=DMA(0x10);
+    connectome_result[4]=job.g.render;connectome_result[5]=job.g.context;connectome_result[6]=CONNECTOME_VERSION;
+    connectome_result[7]=3;connectome_result[8]=network_end-end;
++#ifdef VISION_CONNECTOME_READOUT
++   int8_t circuit_scores[4];uint32_t head_start=REG(0x30);
++   connectome_readout(&connectome_readout_weights,neurons,circuit_scores);
++   uint32_t head_cycles=REG(0x30)-head_start;unsigned circuit_label=0;uint32_t packed_scores=0;
++   for(unsigned i=0;i<4;i++){
++    analysis_connectome_scores[i]=circuit_scores[i];packed_scores|=(uint32_t)(uint8_t)circuit_scores[i]<<(8*i);
++    if(circuit_scores[i]>circuit_scores[circuit_label])circuit_label=i;
++   }
++   const uint32_t head_record[11]={DMA(0x0c),DMA(0x10),job.g.render,job.g.context,CONNECTOME_VERSION,
++       connectome_readout_weights.version,connectome_readout_weights.training_kind,packed_scores,
++       circuit_label,head_cycles,network_end-end};
++   connectome_readout_result[0]=0x43524431;
++   for(unsigned i=0;i<11;i++)connectome_readout_result[2+i]=head_record[i];
++#endif
+    unsigned label=0;for(unsigned i=1;i<4;i++)if(o[i]>o[label])label=i;
+    for(unsigned i=0;i<128;i++)analysis_features[i]=x[i];for(unsigned i=0;i<32;i++)analysis_hidden[i]=h[i];
+    for(unsigned i=0;i<4;i++)analysis_logits[i]=o[i];for(unsigned i=0;i<8;i++)analysis_hash[i]=hash[i];
+@@ -130,6 +157,9 @@
+    completed_scores=(uint8_t)o[0]|((uint32_t)(uint8_t)o[1]<<8)|((uint32_t)(uint8_t)o[2]<<16)|((uint32_t)(uint8_t)o[3]<<24);
+    ai_publish(&completed,completed_config,completed_flags,completed_scores);
+    __asm__ volatile("fence rw,rw":::"memory");connectome_result[1]=sequence+1;connectome_result[9]=0;analysis_result[1]=++sequence;analysis_result[17]=0;
++#ifdef VISION_CONNECTOME_READOUT
++   connectome_readout_result[1]=sequence;connectome_readout_result[13]=0;
++#endif
+ #ifdef VISION_FOMO
+    if(job_fomo){fomo_camera_status[2]=sequence;__asm__ volatile("fence rw,rw":::"memory");fomo_camera_status[1]=3;}
+ #endif
+--- before/scripts/build_fomo_firmware.py
++++ scripts/build_fomo_firmware.py
+@@ -57,9 +57,18 @@
+     p.add_argument('--output-dir', type=Path, required=True)
+     p.add_argument('--cfu-kernels', action='store_true', help='Requires the installed dot4/MulHi FPGA build; baseline software kernels remain available')
+     p.add_argument('--camera', action='store_true', help='Complete control/legacy AI application with camera RGB FOMO; no embedded test images')
++    p.add_argument('--connectome-readout', type=Path, help='CRD1 trained 80->4 companion readout; preserves the existing NN/SHAPE selection')
+     a = p.parse_args()
+     if a.camera and not a.cfu_kernels:
+         p.error('The installed camera application requires dot4/MulHi kernels')
++    readout = None
++    if a.connectome_readout:
++        if not a.camera:
++            p.error('--connectome-readout requires --camera')
++        import sys
++        sys.path.insert(0, str(ROOT/'models'))
++        from connectome_readout import load
++        readout = load(a.connectome_readout)
+     if a.camera:
+         from build_ai_selftest import generate
+         generate(ROOT/'models/shape_cards_bringup/shape_cards_weights.bin', ROOT/'firmware/vision/ai_selftest_data.h')
+@@ -73,13 +82,15 @@
+     software_headers(src, overlay, a.cfu_kernels)
+     data = '.section .rodata.fomo,"a"\n'
+     data_files = [('fomo_model', [a.model_dir / 'shape_fomo_int8.tflite'])]
++    if readout:
++        data_files += [('connectome_readout_weights', [a.connectome_readout])]
+     if not a.camera:
+         data_files += [('fomo_inputs', [a.model_dir / 'test_vectors' / (s + '_input.bin') for s in LABELS]),
+                        ('fomo_expected', [a.model_dir / 'test_vectors' / (s + '_expected_output.bin') for s in LABELS])]
+     for symbol, files in data_files:
+         data += '.balign 16\n.global ' + symbol + '\n' + symbol + ':\n'
+         for path in files:
+-            if symbol != 'fomo_model' and path.stat().st_size != (27648 if symbol == 'fomo_inputs' else 576):
++            if symbol in ('fomo_inputs', 'fomo_expected') and path.stat().st_size != (27648 if symbol == 'fomo_inputs' else 576):
+                 raise ValueError('Fixed-vector tensor length mismatch: ' + str(path))
+             data += '.incbin "' + path.resolve().as_posix() + '"\n'
+     (out / 'data.S').write_text(data)
+@@ -107,6 +118,8 @@
+              '-DTF_LITE_USE_GLOBAL_MIN', '-DTF_LITE_USE_GLOBAL_MAX', *['-I' + str(i) for i in includes]]
+     if a.camera:
+         flags += ['-DVISION_FOMO', '-DVISION_MULHI_CFU']
++    if readout:
++        flags += ['-DVISION_CONNECTOME_READOUT']
+     tools = IDE / 'toolchain/bin'
+     objects = []
+     log = []
+@@ -147,6 +160,10 @@
+                   arena_address=symbols['__arena_start'], arena_reserved_bytes=262144,
+                   xlr_delta=0, block_ram_delta=0, dsp_delta=0, hardware_rebuild=False,
+                   elf=str(elf), size_report=size, source_files=[str(s) for s in sources])
++    if readout:
++        record['connectome_readout'] = dict(path=str(a.connectome_readout.resolve()), bytes=364,
++                                           version=readout['version'], graph_version=readout['graph'],
++                                           training_kind=readout['kind'], companion_only=True)
+     (out / 'build.json').write_text(json.dumps(record, indent=2))
+     print(size)
+     print(json.dumps(record, indent=2))
+--- before/scripts/read_fomo_camera.py
++++ scripts/read_fomo_camera.py
+@@ -13,6 +13,7 @@
+     p.add_argument('--output-dir', type=Path, required=True)
+     p.add_argument('--summary', action='store_true', help='Read task identities only; keep large RGB arrays for the first numeric comparison')
+     p.add_argument('--full-input', action='store_true', help='Slow USER1 export of all preserved RGB/packed samples; source image normally uses existing bulk USER2')
++    p.add_argument('--connectome-readout', action='store_true', help='Read the CRD1 companion head from an ELF built with --connectome-readout')
+     a = p.parse_args()
+     _, _, sym = validate_image(a.elf, None)
+     out = a.output_dir.resolve()
+@@ -20,6 +21,9 @@
+     body = 'halt\nwait_halt 5000\n'
+     fields = [('status', 'fomo_camera_status', 96), ('fusion', 'fusion_result', 64), ('legacy', 'analysis_result', 96),
+               ('control', '__control_state', 120)]
++    if a.connectome_readout:
++        fields += [('readout_record', 'connectome_readout_result', 56),
++                   ('readout_scores', 'analysis_connectome_scores', 4)]
+     if not a.summary:
+         fields += [('output', 'fomo_camera_output', 576),
+               ('targets', 'fomo_detections', 144*14), ('layers', 'fomo_camera_layer_cycles', 200),
+--- before/scripts/verify_fomo_camera.py
++++ scripts/verify_fomo_camera.py
+@@ -18,6 +18,7 @@
+ def main():
+     p = argparse.ArgumentParser()
+     p.add_argument('--directory', type=Path, required=True)
++    p.add_argument('--connectome-readout', type=Path, help='CRD1 model used by the companion readout in this task')
+     a = p.parse_args()
+     out = a.directory
+     s = struct.unpack('<24I', (out/'status.bin').read_bytes())
+@@ -85,6 +86,18 @@
+     n=struct.unpack('<10I',(out/'network_record.bin').read_bytes())
+     assert n[9]==0 and n[1:6]==(s[2],s[3],s[4],s[5],s[6])
+     result.update(legacy_int8_exact=True,flyhash_exact=True,connectome_states_exact=80)
++    if a.connectome_readout:
++        from connectome_readout import load, predict, MAGIC, GRAPH_VERSION
++        head = load(a.connectome_readout)
++        r = struct.unpack('<14I', (out/'readout_record.bin').read_bytes())
++        scores = np.frombuffer((out/'readout_scores.bin').read_bytes(), dtype=np.int8)
++        assert r[0] == MAGIC and not r[13] and r[1:6] == n[1:6], 'Readout lost the source/model publication binding'
++        assert r[6:9] == (GRAPH_VERSION, head['version'], head['kind'])
++        assert np.array_equal(predict(fixed(x), head), scores), 'Circuit readout differs from the exact integer reference'
++        assert r[9] == int.from_bytes(scores.tobytes(), 'little') and r[10] == int(np.argmax(scores))
++        result['connectome_readout'] = dict(exact=True, scores=scores.tolist(), label=r[10],
++                                           version=r[7], training_kind=r[8], readout_ms=r[11]/100000,
++                                           circuit_ms=r[12]/100000, real_accuracy_verified=False)
+     (out/'verification.json').write_text(json.dumps(result, indent=2))
+     print(json.dumps(result, indent=2))
+ 
+--- before/scripts/test_camera_fomo_board.py
++++ scripts/test_camera_fomo_board.py
+@@ -14,6 +14,7 @@
+     p.add_argument('--url',required=True)
+     p.add_argument('--elf',type=Path,required=True)
+     p.add_argument('--output-dir',type=Path,required=True)
++    p.add_argument('--connectome-readout',action='store_true',help='Also export the trained circuit companion head')
+     a=p.parse_args();out=a.output_dir;out.mkdir(parents=True,exist_ok=True)
+     def control(*args,ai=False):
+         r=subprocess.run([sys.executable,str(ROOT/'scripts/vision_control.py'),'--url',a.url,*map(str,args),'--ai-status' if ai else '--roi-status'],check=True,capture_output=True,text=True)
+@@ -35,10 +36,15 @@
+     def read(name,summary=False):
+         directory=out/name
+         args=[sys.executable,str(ROOT/'scripts/read_fomo_camera.py'),'--url',a.url,'--elf',str(a.elf),'--output-dir',str(directory)]
++        if a.connectome_readout:args.append('--connectome-readout')
+         if summary:args.append('--summary')
+         subprocess.run(args,check=True)
+         s=struct.unpack('<24I',(directory/'status.bin').read_bytes())
+         f=struct.unpack('<16I',(directory/'fusion.bin').read_bytes())
++        if a.connectome_readout:
++            head=struct.unpack('<14I',(directory/'readout_record.bin').read_bytes())
++            assert head[0]==0x43524431 and not head[13] and head[1:6]==s[2:7], 'Readout source/publication binding changed'
++            assert head[9]==int.from_bytes((directory/'readout_scores.bin').read_bytes(),'little')
+         return s,f
+     before=control();(out/'before.json').write_text(json.dumps(before,indent=2));rows=[]
+     try:
+--- /dev/null
++++ firmware/vision/connectome_readout.h
+@@ -0,0 +1,19 @@
++#pragma once
++#include "shape_model.h"
++#include "connectome_data.h"
++/* CRD1: fixed 80->4 readout; the circuit and its frame-reset rule stay fixed. */
++struct connectome_readout_model {
++ uint32_t magic,version,graph_version,training_kind;
++ int32_t output_zero,multiplier,shift,bias[4];
++ int8_t weights[320];
++};
++static unsigned connectome_readout_valid(const struct connectome_readout_model *m){
++ return m->magic==0x43524431u&&m->version&&m->graph_version==CONNECTOME_VERSION&&
++        (m->training_kind==1||m->training_kind==2)&&m->output_zero>=-128&&m->output_zero<=127&&
++        m->multiplier>0&&m->shift>=-30&&m->shift<=-2;
++}
++static void connectome_readout(const struct connectome_readout_model *m,const int16_t states[80],int8_t scores[4]){
++ int8_t x[80];
++ for(unsigned i=0;i<80;i++){int q=((int)states[i]+64)>>7;x[i]=q<-128?-128:q>127?127:q;}
++ shape_dense(x,80,m->weights,m->bias,4,0,m->output_zero,m->multiplier,m->shift,0,scores);
++}
+--- /dev/null
++++ models/connectome_readout.py
+@@ -0,0 +1,37 @@
++"""80 Q14 circuit states -> signed INT8 linear readout, not probabilities."""
++import struct
++import numpy as np
++from shape_cards import dense
++
++MAGIC = 0x43524431
++GRAPH_VERSION = 0x00010001
++MODEL_BYTES = 364
++
++
++def inputs(states):
++    q = np.asarray(states)
++    if q.shape != (80,) or q.dtype != np.int16:
++        raise ValueError('Expected int16[80] Q14 circuit state')
++    return np.clip((q.astype(np.int32) + 64) >> 7, -128, 127).astype(np.int8)
++
++
++def load(path):
++    blob = path.read_bytes()
++    if len(blob) != MODEL_BYTES:
++        raise ValueError('CRD1 readout must contain exactly 364 bytes')
++    magic, version, graph, kind, zero, mult, shift = struct.unpack_from('<4I3i', blob)
++    if magic != MAGIC or not version or graph != GRAPH_VERSION or kind not in (1, 2):
++        raise ValueError('Readout magic/version/graph/training kind mismatch')
++    if not -128 <= zero <= 127 or not 0 < mult < 2**31 or not -30 <= shift <= -2:
++        raise ValueError('Readout quantization exceeds the installed MulHi contract')
++    bias = np.frombuffer(blob, '<i4', 4, 28)
++    weights = np.frombuffer(blob, np.int8, 320, 44).reshape(4, 80)
++    if np.any(np.abs(bias.astype(np.int64))+128*np.abs(weights.astype(np.int32)).sum(axis=1) >= 2**31):
++        raise ValueError('Readout accumulator exceeds signed 32 bits')
++    return dict(version=version, graph=graph, kind=kind, zero=zero, multiplier=mult, shift=shift,
++                bias=bias, weights=weights)
++
++
++def predict(states, model):
++    return dense(inputs(states), model['weights'], model['bias'], 0, model['zero'],
++                 model['multiplier'], model['shift'])
+--- /dev/null
++++ scripts/train_connectome_readout.py
+@@ -0,0 +1,90 @@
++"""Train only a 320-weight readout of the fixed biological circuit, in DDR."""
++import argparse
++import json
++import struct
++import sys
++from pathlib import Path
++import numpy as np
++from train_shape_cards import ROOT, samples, synthetic, multiplier
++
++sys.path.insert(0, str(ROOT/'models'))
++from connectome import fixed
++from connectome_readout import MAGIC, GRAPH_VERSION, inputs, load, predict
++from shape_cards import CLASSES, features
++
++
++def fit(x, labels):
++    design = np.column_stack([x.astype(np.float64)/128, np.ones(len(x))])
++    penalty = np.diag([.01]*x.shape[1]+[0.])
++    target = np.eye(4)[labels]
++    return np.linalg.solve(design.T@design+penalty, design.T@target)
++
++
++def main():
++    p = argparse.ArgumentParser()
++    g = p.add_mutually_exclusive_group(required=True)
++    g.add_argument('--manifest', type=Path)
++    g.add_argument('--synthetic-bringup', action='store_true')
++    p.add_argument('--model-version', type=lambda s: int(s, 0), required=True)
++    p.add_argument('--output-dir', type=Path, required=True)
++    a = p.parse_args()
++    if not 0 < a.model_version <= 0xffffffff:
++        p.error('--model-version must be a nonzero uint32')
++    data = samples(a.manifest) if a.manifest else {'train': synthetic(2210, 100), 'test': synthetic(107, 40)}
++    arrays = {}
++    for split, (gray, labels) in data.items():
++        f = np.array([features(g) for g in gray])
++        states = np.array([fixed(row) for row in f])
++        arrays[split] = (f, states, np.array([inputs(s) for s in states]), labels)
++    _, _, x, y = arrays['train']
++    ftest, stest, xtest, yt = arrays['test']
++    theta = fit(x, y)
++    weight_scale = float(np.max(np.abs(theta[:-1]))/127)
++    scores = np.column_stack([x.astype(np.float64)/128, np.ones(len(x))])@theta
++    output_scale = float(np.max(np.abs(scores))/120)
++    if not weight_scale or not output_scale:
++        raise ValueError('Training data provides no learnable readout')
++    weights = np.clip(np.rint(theta[:-1].T/weight_scale), -127, 127).astype(np.int8)
++    bias = np.rint(theta[-1]/(weight_scale/128)).astype(np.int64)
++    if np.any(np.abs(bias)+128*np.abs(weights.astype(np.int32)).sum(axis=1) >= 2**31):
++        raise ValueError('Readout accumulator exceeds signed 32 bits')
++    mult, shift = multiplier(weight_scale/128/output_scale)
++    kind = 1 if a.synthetic_bringup else 2
++    blob = struct.pack('<4I3i', MAGIC, a.model_version, GRAPH_VERSION, kind, 0, mult, shift)
++    blob += bias.astype('<i4').tobytes()+weights.tobytes()
++    a.output_dir.mkdir(parents=True, exist_ok=True)
++    model_path = a.output_dir/'connectome_readout.bin'
++    model_path.write_bytes(blob)
++    model = load(model_path)
++    actual = np.array([predict(s, model) for s in stest])
++    predicted = np.argmax(actual, axis=1)
++    confusion = np.zeros((4, 4), np.int32)
++    np.add.at(confusion, (yt, predicted), 1)
++    # Equal trained head and SAME eight-bin information, with no recurrent graph.
++    from connectome import channels
++    direct_train = np.array([channels(row)*2/2040-1 for row in arrays['train'][0]])*128
++    direct_test = np.array([channels(row)*2/2040-1 for row in ftest])*128
++    direct = fit(direct_train, y)
++    direct_scores = np.column_stack([direct_test/128, np.ones(len(direct_test))])@direct
++    report = dict(model='fixed MaleCNS 80-state circuit + trained linear INT8 readout',
++                  model_version=a.model_version, graph_version=GRAPH_VERSION, classes=CLASSES,
++                  training_kind='synthetic_bringup_only' if kind == 1 else 'real_camera',
++                  real_accuracy_verified=False, train_samples=len(x), test_samples=len(xtest),
++                  manifest=str(a.manifest.resolve()) if a.manifest else None,
++                  train_seed=2210 if kind == 1 else None, test_seed=107 if kind == 1 else None,
++                  readout_weights=320, readout_biases=4, model_bytes=len(blob),
++                  int8_test_accuracy=float(np.mean(predicted == yt)), confusion_matrix=confusion.tolist(),
++                  float_test_accuracy=float(np.mean(np.argmax(np.column_stack([xtest/128, np.ones(len(xtest))])@theta, axis=1) == yt)),
++                  direct_same_bins_float_accuracy=float(np.mean(np.argmax(direct_scores, axis=1) == yt)),
++                  topology_advantage_verified=False, score_kind='signed quantized logits, not probabilities',
++                  quantization=dict(input_scale=1/128, input_zero=0, weight_scale=weight_scale,
++                                    output_scale=output_scale, multiplier=mult, shift=shift),
++                  source='Independent train/test card and session IDs are enforced by the existing collector loader',
++                  note='The test split selects neither weights nor quantization; synthetic success is not real-camera acceptance')
++    np.savez(a.output_dir/'heldout.npz', features=ftest, states=stest, scores=actual, labels=yt)
++    (a.output_dir/'training.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
++    print(json.dumps(report, indent=2))
++
++
++if __name__ == '__main__':
++    main()
+--- /dev/null
++++ scripts/test_connectome_readout.py
+@@ -0,0 +1,108 @@
++"""Production RV32I readout vs exact host reference, with model-boundary failures."""
++import argparse
++import json
++import struct
++import subprocess
++import sys
++import tempfile
++from pathlib import Path
++import numpy as np
++from train_shape_cards import ROOT, array
++
++sys.path.insert(0, str(ROOT/'models'))
++from connectome import fixed
++from connectome_readout import inputs, load, predict
++from shape_cards import CLASSES, gray_roi, features
++from PIL import Image
++
++
++def main():
++    p = argparse.ArgumentParser()
++    p.add_argument('--model-dir', type=Path, required=True)
++    p.add_argument('--output-dir', type=Path, required=True)
++    a = p.parse_args()
++    model_path = a.model_dir/'connectome_readout.bin'
++    model = load(model_path)
++    blob = model_path.read_bytes()
++    # A wrong graph, illegal MulHi shift, overflowing bias and truncated blob are rejected before build.
++    invalid = [blob[:-1]]
++    for offset, value in [(8, 0x1234), (24, -1), (28, 0x7fffffff)]:
++        data = bytearray(blob)
++        struct.pack_into('<i', data, offset, value)
++        invalid.append(bytes(data))
++    with tempfile.TemporaryDirectory() as tmp:
++        path = Path(tmp)/'invalid.bin'
++        for data in invalid:
++            path.write_bytes(data)
++            try:
++                load(path)
++            except ValueError:
++                pass
++            else:
++                raise AssertionError('Malformed readout was accepted')
++    heldout = np.load(a.model_dir/'heldout.npz')
++    states = np.vstack([heldout['states'], np.full((1, 80), -16384, np.int16),
++                        np.full((1, 80), 16384, np.int16), np.zeros((1, 80), np.int16),
++                        np.random.default_rng(2210).integers(-16384, 16385, (64, 80), dtype=np.int16)])
++    expected = np.array([predict(s, model) for s in states])
++    assert np.array_equal(expected[:len(heldout['scores'])], heldout['scores'])
++    assert np.all(inputs(np.full(80, 16384, np.int16)) == 127)
++    assert np.all(inputs(np.full(80, -16384, np.int16)) == -128)
++    fixture_features = []
++    for name in CLASSES:
++        with Image.open(ROOT/'models/shape_fomo/test_vectors'/(name+'_96.png')) as image:
++            fixture_features.append(features(gray_roi(image, (0, 0, image.width, image.height))))
++    fixture_scores = [predict(fixed(f), model) for f in fixture_features]
++    external = [dict(input_class=name, predicted_class=CLASSES[int(np.argmax(scores))],
++                     scores=scores.tolist(), correct=int(np.argmax(scores)) == i)
++                for i, (name, scores) in enumerate(zip(CLASSES, fixture_scores))]
++    out = a.output_dir.resolve()
++    out.mkdir(parents=True, exist_ok=True)
++    source = '#define INT8_TEST\n#define VISION_MULHI_CFU\n#include "connectome.h"\n#include "connectome_readout.h"\n'
++    source += 'static const uint8_t blob[] __attribute__((aligned(4)))={'+','.join(map(str, blob))+'};\n'
++    source += array('states', 'int16_t', states)+array('expected', 'int8_t', expected)
++    source += array('features', 'int8_t', fixture_features)+array('expected_fixture', 'int8_t', fixture_scores)
++    source += '''
++static void finish(unsigned ok){*(volatile unsigned *)0x100000=ok?0x5555:0x3333;for(;;);}
++void main(void){
++ const struct connectome_readout_model *m=(const struct connectome_readout_model*)blob;
++ if(sizeof(*m)!=364||!connectome_readout_valid(m))finish(0);
++ int8_t scores[4];int16_t neurons[80];
++ for(unsigned i=0;i<sizeof(states)/sizeof(states[0]);i++){
++  connectome_readout(m,states[i],scores);
++  for(unsigned j=0;j<4;j++)if(scores[j]!=expected[i][j])finish(0);
++ }
++ for(unsigned i=0;i<4;i++){
++  connectome_snapshot(features[i],neurons);connectome_readout(m,neurons,scores);
++  for(unsigned j=0;j<4;j++)if(scores[j]!=expected_fixture[i][j])finish(0);
++ }
++ const char*p="PASS RV32I CRD1 quantization, signed dense and four independent fixed-image pipelines\\n";
++ while(*p)*(volatile unsigned char*)0x10000000=*p++;finish(1);
++}
++void trap(void){finish(0);}
++'''
++    (out/'test.c').write_text(source)
++    (out/'start.S').write_text('.section .text.start,"ax"\n.global _start\n_start:\n la sp,__stack_top\n la t0,trap\n csrw mtvec,t0\n call main\n j trap\n')
++    (out/'link.ld').write_text('OUTPUT_ARCH(riscv)\nENTRY(_start)\nSECTIONS{. = 0x80000000; .text : {*(.text.start) *(.text*)} .rodata : {*(.rodata*)} .data : {*(.data*) *(.sdata*)} .bss : {*(.bss*) *(.sbss*)} __stack_top = 0x80100000;}')
++    ide = Path('F:/Efinity/efinity-riscv-ide-2026.1')
++    subprocess.run([str(ide/'toolchain/bin/riscv-none-elf-gcc.exe'), '-march=rv32i_zicsr_zifencei', '-mabi=ilp32',
++                    '-Os', '-ffreestanding', '-fno-builtin', '-mno-relax', '-msmall-data-limit=0', '-nostdlib',
++                    '-I'+str(ROOT/'firmware/vision'), '-T', str(out/'link.ld'), str(out/'start.S'),
++                    str(out/'test.c'), '-lgcc', '-o', str(out/'test.elf')], check=True)
++    r = subprocess.run([str(ide/'qemu/qemu-system-riscv32.exe'), '-M', 'virt', '-cpu',
++                        'rv32,m=false,a=false,c=false,f=false,d=false', '-nographic', '-bios', 'none',
++                        '-kernel', str(out/'test.elf')], capture_output=True, text=True, timeout=90)
++    (out/'test.log').write_text(r.stdout+r.stderr)
++    assert r.returncode == 0 and 'PASS RV32I CRD1' in r.stdout, (r.returncode, r.stdout, r.stderr)
++    result = dict(passed=True, readout_vectors=len(states), compared_int8_outputs=len(states)*4,
++                  independent_full_circuit_vectors=4, malformed_models_rejected=len(invalid),
++                  max_integer_difference=0, model_bytes=len(blob), real_accuracy_verified=False,
++                  external_fixed_images=external, external_fixed_correct=sum(r['correct'] for r in external),
++                  scope='PASS means integer equivalence, not recognition acceptance; external images never train the model')
++    (out/'result.json').write_text(json.dumps(result, indent=2))
++    print(r.stdout.strip())
++    print(json.dumps(result, indent=2))
++
++
++if __name__ == '__main__':
++    main()

@@ -36,12 +36,12 @@ def main():
                 check_row(h,dict(source=0,row=a.row,sequence=sequence,mode=5))
                 command(126,27);packed=read(192+width*24).tobytes(msby=True)
                 check_row(decode_snapshot(int.from_bytes(packed[:24],'little')),h)
-                rgb=rgb_bytes(packed[24:],0);white=[v>200 for v in rgb[::3]]
+                rgb=rgb_bytes(packed[24:],0);visible=[v>0 for v in rgb[::3]]
                 probe=page(16)
                 if probe>>160!=0x56495331 or (probe>>128)&0xffffffff!=0x26100410:raise RuntimeError('Canny completion page mismatch')
                 if (probe>>94)&1:raise RuntimeError('Canny plane is held; release the owning frame task first')
                 rows.append(dict(t=time.monotonic(),display_source_frame=h['frame_id'],threshold=h['threshold'],canny_epoch=probe&0xffffffff,
-                    white_pixels=sum(white),band_counts=[sum(white[x0:x1]) for x0,x1 in bands]))
+                    visible_pixels=sum(visible),band_counts=[sum(visible[x0:x1]) for x0,x1 in bands]))
                 time.sleep(.2)
         finally:command(126,0);ftdi.set_latency_timer(latency)
     missing=[sum(r['band_counts'][i]==0 for r in rows) for i in range(len(bands))]

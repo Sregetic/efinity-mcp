@@ -2,6 +2,10 @@
 
 当前制品、SRAM/Flash部署和资源/时序，以 `docs/PROJECT_MASTER_STATUS.md` 最新摘要及其对应报告为准。实物卡片识别、人工按键和断电启动的验收分别记录；下方注明历史的部署段落不代表当前状态。
 
+## 2026-10-17 当前固化设置
+
+当前Canny抗锯齿位流及完整相机FOMO/原AI应用均已写入Flash。控制固件上电主动提交M5/MED1/F0、Sobel128/Canny80、SHAPE32、ROI关闭、正常菜单、AI OFF；Tone3、颜色顺序2、白平衡与自动曝光保持。配置重启后的自主SPI加载和默认值已只读核对，实际断电验收状态见总状态。后续临时按键调整不自动保存到Flash，重新启动回到本次固化的默认值。原模式、冻结/六帧历史、ROI、AI菜单和图像回读保留；具体证据见`results/canny_flash_20261017/REPORT.md`。
+
 ## 2026-10-13 相机 FOMO 应用
 
 相机 FOMO 固件在 SELFTEST 后增加 NN 页，KEY2 或 KEY3 短按切换 NN BASE / NN FOMO；最后一页再长按 KEY0 回正常页。BASE 保留原 INT8 MLP/FlyHash/连接组，FOMO 使用交接的圆/矩形/三角形模型。SHAPE 几何识别不受后端切换影响。

@@ -1,0 +1,12 @@
+{
+  "changed_files_at_verification": 1126,
+  "native_input_and_artifact_blobs_exact": 178,
+  "python_ast_files": 81,
+  "latest_full_mode_images": 9,
+  "credential_signature_matches": 0,
+  "sensor_profiles_passed": true,
+  "runner_negative_gates": 9,
+  "hardware_access_this_upload": false,
+  "flash_written_this_upload": false,
+  "generated_reports_original_whitespace_preserved": true
+}

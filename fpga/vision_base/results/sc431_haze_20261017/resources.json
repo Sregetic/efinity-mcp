@@ -1,0 +1,15 @@
+{
+  "xlr": 58575,
+  "ram": 227,
+  "dsp": 58,
+  "wns_ns": 0.17,
+  "whs_ns": 0.026,
+  "free_xlr": 2225,
+  "free_ram": 29,
+  "flash_written": false,
+  "delta_vs_native_window": {
+    "xlr": -516,
+    "ram": 0,
+    "dsp": -1
+  }
+}

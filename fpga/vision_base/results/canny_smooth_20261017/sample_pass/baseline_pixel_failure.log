@@ -1,0 +1,2 @@
+FATAL: sim/vision/tb_canny_fit.sv:37: pixel samples slope-32 error-23 got0 expected7
+       Time: 82000  Scope: tb

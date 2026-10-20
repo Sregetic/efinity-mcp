@@ -1,0 +1,8 @@
+WARNING: F:\Project\fpga\vision_base\results\ram_audit_20261018\probes.sv:38: $readmemh(F:/Project/fpga/vision_base/board/ti60f225_v4/sensors/sc431hai_1080p30_center_4lane.mem): Not enough words in the file for the requested range [0:255].
+WARNING: F:\Project\fpga\vision_base\results\ram_audit_20261018\probes.sv:43: $readmemh(F:/Project/fpga/vision_base/results/ram_audit_20261018/sensor_packed.mem): Not enough words in the file for the requested range [0:255].
+PASS coverage8192 one-clock outputs, exact 5-bit levels
+PASS fit65536 signed input pairs, truncation and one-clock alignment
+PASS sensor166 boot words unchanged
+PASS tags10000 random write/read/hold and same-address old-data checks
+PASS ram audit all cases=83894
+F:\Project\fpga\vision_base\results\ram_audit_20261018\tb.sv:46: $finish called at 839276000 (1ps)

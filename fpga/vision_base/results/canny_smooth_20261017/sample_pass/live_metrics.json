@@ -1,0 +1,12 @@
+{
+  "seconds": 10.538421869277954,
+  "samples": 50,
+  "camera_hz": 30.08040520033949,
+  "canny_hz": 29.98551433219962,
+  "all_ready": true,
+  "all_fault_zero": true,
+  "cpu_state": 1,
+  "exposure": 761,
+  "shadow_boost": 0,
+  "render_deadline_misses": 4
+}

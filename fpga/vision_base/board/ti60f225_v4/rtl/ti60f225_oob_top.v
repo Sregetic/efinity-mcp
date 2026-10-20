@@ -605,16 +605,18 @@ wire scl_padoen_o;
 wire sda_padoen_o;
 
 
-reg [12:0] i2c_rst_cnt = '0;
+// SC2210 requires >2ms after XSHUTDN release; CLK_5M gives 5ms here.
+localparam I2C_RESET_CYCLES = `VISION_SENSOR_SC2210 ? 25000 : 4096;
+reg [$clog2(I2C_RESET_CYCLES+1)-1:0] i2c_rst_cnt = '0;
 
 always @( posedge CLK_5M or negedge w_arstn )
 begin
     if( !w_arstn )
        i2c_rst_cnt <= 'd0;
     else 
-       i2c_rst_cnt <= i2c_rst_cnt[12] ? i2c_rst_cnt : i2c_rst_cnt + 1'b1;
+       i2c_rst_cnt <= i2c_rst_n ? i2c_rst_cnt : i2c_rst_cnt + 1'b1;
 end
-wire i2c_rst_n = i2c_rst_cnt[12];
+wire i2c_rst_n = `VISION_SENSOR_SC2210 ? i2c_rst_cnt == I2C_RESET_CYCLES : i2c_rst_cnt[12];
 
 wire ae_req,ae_ack,ae_fault,ae_busy;wire[15:0]ae_request,ae_applied,ae_updates;wire[23:0]ae_readback;
 wire[31:0]ae_sum;wire[15:0]ae_ncenter,ae_ntotal,ae_nclip;wire[1:0]ae_decision;wire ae_shadow;
@@ -647,7 +649,7 @@ i2c_master_ctrl_top #(.DATA_LENGTH(`VISION_SENSOR_INIT_LENGTH),
   /*o*/.sda_padoen_o  (sda_padoen_o)
   
   );
-assign o_cam_rst_p = ~w_arstn;
+assign o_cam_rst_p = `VISION_SENSOR_SC2210 ? w_arstn : ~w_arstn;
 assign io_cam_scl_OE = ~scl_padoen_o;
 assign io_cam_sda_OE = ~sda_padoen_o;
 
@@ -667,7 +669,7 @@ always @(posedge i_mipi_rx_pclk)begin
  if(!vid_rst_n)fov_overruns<=0;else if(fov_overrun&&!fov_overrun_q)fov_overruns<=fov_overruns+1'b1;
 end
 wire[31:0]fov_data;
-generate if(`VISION_SENSOR_SC2210)begin:sc2210_input
+generate if(`VISION_SENSOR_NATIVE_1080)begin:native_input
  camera_native_1080 native_1080(.clk(i_mipi_rx_pclk),.rst_n(vid_rst_n),.vs(w_mipi_rx_vs),.hs(w_mipi_rx_hs),.valid(w_mipi_rx_de),
   .data(w_mipi_rx_data[39:0]),.o_vs(fov_vs),.o_hs(fov_hs),.o_valid(fov_valid),.o_data(fov_data));
  assign fov_overrun=1'b0;
@@ -1087,7 +1089,7 @@ assign camera_source_frame=memory_display_id,camera_source_bad=0;
 );
 end else begin:pooled_raw
  wire raw_vs,raw_de,raw_bad;wire[15:0]raw_data;wire[31:0]sensor_frame,raw_overflows;
- vision_raw_frontend raw_front(.rst_n(vid_rst_n),.input_clk(i_mipi_rx_pclk),.vs(fov_vs),.valid(fov_valid&&fov_hs),.data(fov_data),
+ vision_raw_frontend #(.PREFILL_WORDS(`VISION_SENSOR_NATIVE_1080?1920/4:1920/8)) raw_front(.rst_n(vid_rst_n),.input_clk(i_mipi_rx_pclk),.vs(fov_vs),.valid(fov_valid&&fov_hs),.data(fov_data),
   .isp_clk(hdmi_tx_slow_clk),.out_vs(raw_vs),.out_de(raw_de),.out_data(raw_data),.frame_id(sensor_frame),.frame_bad(raw_bad),.overflow_count(raw_overflows));
  assign ch0_vs=raw_vs,ch0_hs=raw_de,ch0_de=raw_de,{ch0_g,ch0_b}=raw_data;
  assign camera_source_frame=sensor_frame,camera_source_bad=raw_bad;

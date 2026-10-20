@@ -1,2 +1,14 @@
+# Preserve the exact input/artifact bytes bound by native build manifests.
+board/ti60f225_v4/rtl/** -text
+board/ti60f225_v4/sensors/** -text
+board/ti60f225_v4/*.xml -text
+board/ti60f225_v4/*.sdc -text
+rtl/** -text
+artifacts/camera/** -text
+artifacts/camera/*.bit binary
+artifacts/camera/*.hex binary
+*.mem -text
+artifacts/vision_soc/firmware/*.hex -text
+*.elf binary
 *.bin binary
 *.tflite binary

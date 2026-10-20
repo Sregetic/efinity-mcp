@@ -1,0 +1,40 @@
+{
+  "same_binary_plane": true,
+  "source_frame": 1393,
+  "render_config": 1,
+  "canny_epoch": 112,
+  "binary_edges": 4322,
+  "shift_x": 2,
+  "shift_y": 2,
+  "pixels": 2056320,
+  "different": 0,
+  "max_abs_error": 0,
+  "excluded": "OSD bounding rectangle only: x0..431,y0..39; no edge-margin or color exclusions",
+  "regions": {
+    "left": {
+      "pixels": 66560,
+      "visible_pixels": 951,
+      "different": 0
+    },
+    "top": {
+      "pixels": 105600,
+      "visible_pixels": 877,
+      "different": 0
+    },
+    "right": {
+      "pixels": 34560,
+      "visible_pixels": 381,
+      "different": 0
+    },
+    "bottom": {
+      "pixels": 61440,
+      "visible_pixels": 206,
+      "different": 0
+    }
+  },
+  "overlay": {
+    "pixels": 2056320,
+    "different_channels": 0,
+    "max_abs_error": 0
+  }
+}

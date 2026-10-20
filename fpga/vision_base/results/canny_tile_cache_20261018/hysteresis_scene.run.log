@@ -1,0 +1,4 @@
+SCENE frame0 analysis_cycles=1900641 passes=34 weak_visits=35084
+SCENE frame1 analysis_cycles=137702 passes=1 weak_visits=0
+PASS scene exact259200 pixels: actual image classification,8-connected hysteresis,MIN32 and next-frame mask clear
+sim/vision/tb_hysteresis_scene.sv:29: $finish called at 26863546000 (1ps)

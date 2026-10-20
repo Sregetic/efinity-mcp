@@ -1,0 +1,1 @@
+此次导出在曝光717、shadow_boost1状态中止，无完整图。它不用于常规曲线验收。随后已释放Canny probe hold并恢复F0；最终证据位于after_images。

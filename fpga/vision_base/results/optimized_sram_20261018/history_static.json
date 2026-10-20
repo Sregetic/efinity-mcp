@@ -1,0 +1,776 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "index": 0,
+      "display_ids": [
+        11314
+      ],
+      "seconds": 2.062999999994645,
+      "samples": [
+        {
+          "t": 169437.937,
+          "mode": 5,
+          "memory": 2,
+          "index": 0,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11328,
+          "display": 11314,
+          "canny": 2457
+        },
+        {
+          "t": 169438.203,
+          "mode": 5,
+          "memory": 2,
+          "index": 0,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11336,
+          "display": 11314,
+          "canny": 2465
+        },
+        {
+          "t": 169438.453,
+          "mode": 5,
+          "memory": 2,
+          "index": 0,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11344,
+          "display": 11314,
+          "canny": 2472
+        },
+        {
+          "t": 169438.703,
+          "mode": 5,
+          "memory": 2,
+          "index": 0,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11351,
+          "display": 11314,
+          "canny": 2480
+        },
+        {
+          "t": 169438.968,
+          "mode": 5,
+          "memory": 2,
+          "index": 0,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11359,
+          "display": 11314,
+          "canny": 2487
+        },
+        {
+          "t": 169439.218,
+          "mode": 5,
+          "memory": 2,
+          "index": 0,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11367,
+          "display": 11314,
+          "canny": 2495
+        },
+        {
+          "t": 169439.484,
+          "mode": 5,
+          "memory": 2,
+          "index": 0,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11375,
+          "display": 11314,
+          "canny": 2503
+        },
+        {
+          "t": 169439.734,
+          "mode": 5,
+          "memory": 2,
+          "index": 0,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11382,
+          "display": 11314,
+          "canny": 2511
+        },
+        {
+          "t": 169440.0,
+          "mode": 5,
+          "memory": 2,
+          "index": 0,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11390,
+          "display": 11314,
+          "canny": 2519
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "display_ids": [
+        11313
+      ],
+      "seconds": 2.0469999999913853,
+      "samples": [
+        {
+          "t": 169440.484,
+          "mode": 5,
+          "memory": 2,
+          "index": 1,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11405,
+          "display": 11313,
+          "canny": 2533
+        },
+        {
+          "t": 169440.734,
+          "mode": 5,
+          "memory": 2,
+          "index": 1,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11412,
+          "display": 11313,
+          "canny": 2541
+        },
+        {
+          "t": 169440.984,
+          "mode": 5,
+          "memory": 2,
+          "index": 1,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11420,
+          "display": 11313,
+          "canny": 2548
+        },
+        {
+          "t": 169441.25,
+          "mode": 5,
+          "memory": 2,
+          "index": 1,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11428,
+          "display": 11313,
+          "canny": 2556
+        },
+        {
+          "t": 169441.515,
+          "mode": 5,
+          "memory": 2,
+          "index": 1,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11436,
+          "display": 11313,
+          "canny": 2564
+        },
+        {
+          "t": 169441.765,
+          "mode": 5,
+          "memory": 2,
+          "index": 1,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11443,
+          "display": 11313,
+          "canny": 2572
+        },
+        {
+          "t": 169442.031,
+          "mode": 5,
+          "memory": 2,
+          "index": 1,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11451,
+          "display": 11313,
+          "canny": 2579
+        },
+        {
+          "t": 169442.281,
+          "mode": 5,
+          "memory": 2,
+          "index": 1,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11459,
+          "display": 11313,
+          "canny": 2587
+        },
+        {
+          "t": 169442.531,
+          "mode": 5,
+          "memory": 2,
+          "index": 1,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11466,
+          "display": 11313,
+          "canny": 2595
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "display_ids": [
+        11312
+      ],
+      "seconds": 2.062999999994645,
+      "samples": [
+        {
+          "t": 169443.015,
+          "mode": 5,
+          "memory": 2,
+          "index": 2,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11481,
+          "display": 11312,
+          "canny": 2609
+        },
+        {
+          "t": 169443.281,
+          "mode": 5,
+          "memory": 2,
+          "index": 2,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11489,
+          "display": 11312,
+          "canny": 2617
+        },
+        {
+          "t": 169443.546,
+          "mode": 5,
+          "memory": 2,
+          "index": 2,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11496,
+          "display": 11312,
+          "canny": 2625
+        },
+        {
+          "t": 169443.796,
+          "mode": 5,
+          "memory": 2,
+          "index": 2,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11504,
+          "display": 11312,
+          "canny": 2633
+        },
+        {
+          "t": 169444.062,
+          "mode": 5,
+          "memory": 2,
+          "index": 2,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11512,
+          "display": 11312,
+          "canny": 2640
+        },
+        {
+          "t": 169444.312,
+          "mode": 5,
+          "memory": 2,
+          "index": 2,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11520,
+          "display": 11312,
+          "canny": 2648
+        },
+        {
+          "t": 169444.578,
+          "mode": 5,
+          "memory": 2,
+          "index": 2,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11528,
+          "display": 11312,
+          "canny": 2656
+        },
+        {
+          "t": 169444.828,
+          "mode": 5,
+          "memory": 2,
+          "index": 2,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11535,
+          "display": 11312,
+          "canny": 2663
+        },
+        {
+          "t": 169445.078,
+          "mode": 5,
+          "memory": 2,
+          "index": 2,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11543,
+          "display": 11312,
+          "canny": 2671
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "display_ids": [
+        11311
+      ],
+      "seconds": 2.062000000005355,
+      "samples": [
+        {
+          "t": 169445.578,
+          "mode": 5,
+          "memory": 2,
+          "index": 3,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11557,
+          "display": 11311,
+          "canny": 2686
+        },
+        {
+          "t": 169445.828,
+          "mode": 5,
+          "memory": 2,
+          "index": 3,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11565,
+          "display": 11311,
+          "canny": 2693
+        },
+        {
+          "t": 169446.093,
+          "mode": 5,
+          "memory": 2,
+          "index": 3,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11573,
+          "display": 11311,
+          "canny": 2701
+        },
+        {
+          "t": 169446.343,
+          "mode": 5,
+          "memory": 2,
+          "index": 3,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11581,
+          "display": 11311,
+          "canny": 2709
+        },
+        {
+          "t": 169446.593,
+          "mode": 5,
+          "memory": 2,
+          "index": 3,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11588,
+          "display": 11311,
+          "canny": 2717
+        },
+        {
+          "t": 169446.859,
+          "mode": 5,
+          "memory": 2,
+          "index": 3,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11596,
+          "display": 11311,
+          "canny": 2724
+        },
+        {
+          "t": 169447.109,
+          "mode": 5,
+          "memory": 2,
+          "index": 3,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11604,
+          "display": 11311,
+          "canny": 2732
+        },
+        {
+          "t": 169447.375,
+          "mode": 5,
+          "memory": 2,
+          "index": 3,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11611,
+          "display": 11311,
+          "canny": 2740
+        },
+        {
+          "t": 169447.64,
+          "mode": 5,
+          "memory": 2,
+          "index": 3,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11619,
+          "display": 11311,
+          "canny": 2748
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "display_ids": [
+        11310
+      ],
+      "seconds": 2.062000000005355,
+      "samples": [
+        {
+          "t": 169448.125,
+          "mode": 5,
+          "memory": 2,
+          "index": 4,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11634,
+          "display": 11310,
+          "canny": 2762
+        },
+        {
+          "t": 169448.375,
+          "mode": 5,
+          "memory": 2,
+          "index": 4,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11642,
+          "display": 11310,
+          "canny": 2770
+        },
+        {
+          "t": 169448.64,
+          "mode": 5,
+          "memory": 2,
+          "index": 4,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11649,
+          "display": 11310,
+          "canny": 2778
+        },
+        {
+          "t": 169448.89,
+          "mode": 5,
+          "memory": 2,
+          "index": 4,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11657,
+          "display": 11310,
+          "canny": 2785
+        },
+        {
+          "t": 169449.156,
+          "mode": 5,
+          "memory": 2,
+          "index": 4,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11665,
+          "display": 11310,
+          "canny": 2793
+        },
+        {
+          "t": 169449.406,
+          "mode": 5,
+          "memory": 2,
+          "index": 4,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11673,
+          "display": 11310,
+          "canny": 2801
+        },
+        {
+          "t": 169449.671,
+          "mode": 5,
+          "memory": 2,
+          "index": 4,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11680,
+          "display": 11310,
+          "canny": 2809
+        },
+        {
+          "t": 169449.921,
+          "mode": 5,
+          "memory": 2,
+          "index": 4,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11688,
+          "display": 11310,
+          "canny": 2816
+        },
+        {
+          "t": 169450.187,
+          "mode": 5,
+          "memory": 2,
+          "index": 4,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11696,
+          "display": 11310,
+          "canny": 2824
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "display_ids": [
+        11309
+      ],
+      "seconds": 2.062999999994645,
+      "samples": [
+        {
+          "t": 169450.671,
+          "mode": 5,
+          "memory": 2,
+          "index": 5,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11710,
+          "display": 11309,
+          "canny": 2839
+        },
+        {
+          "t": 169450.937,
+          "mode": 5,
+          "memory": 2,
+          "index": 5,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11718,
+          "display": 11309,
+          "canny": 2847
+        },
+        {
+          "t": 169451.187,
+          "mode": 5,
+          "memory": 2,
+          "index": 5,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11726,
+          "display": 11309,
+          "canny": 2854
+        },
+        {
+          "t": 169451.453,
+          "mode": 5,
+          "memory": 2,
+          "index": 5,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11734,
+          "display": 11309,
+          "canny": 2862
+        },
+        {
+          "t": 169451.703,
+          "mode": 5,
+          "memory": 2,
+          "index": 5,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11742,
+          "display": 11309,
+          "canny": 2870
+        },
+        {
+          "t": 169451.968,
+          "mode": 5,
+          "memory": 2,
+          "index": 5,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11749,
+          "display": 11309,
+          "canny": 2878
+        },
+        {
+          "t": 169452.234,
+          "mode": 5,
+          "memory": 2,
+          "index": 5,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11757,
+          "display": 11309,
+          "canny": 2885
+        },
+        {
+          "t": 169452.484,
+          "mode": 5,
+          "memory": 2,
+          "index": 5,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11765,
+          "display": 11309,
+          "canny": 2893
+        },
+        {
+          "t": 169452.734,
+          "mode": 5,
+          "memory": 2,
+          "index": 5,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11772,
+          "display": 11309,
+          "canny": 2901
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "display_ids": [
+        11309,
+        11310,
+        11311,
+        11312,
+        11313
+      ],
+      "seconds": 2.0780000000086147,
+      "samples": [
+        {
+          "t": 169453.218,
+          "mode": 5,
+          "memory": 2,
+          "index": 6,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11787,
+          "display": 11313,
+          "canny": 2915
+        },
+        {
+          "t": 169453.484,
+          "mode": 5,
+          "memory": 2,
+          "index": 6,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11795,
+          "display": 11312,
+          "canny": 2923
+        },
+        {
+          "t": 169453.75,
+          "mode": 5,
+          "memory": 2,
+          "index": 6,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11803,
+          "display": 11312,
+          "canny": 2931
+        },
+        {
+          "t": 169454.0,
+          "mode": 5,
+          "memory": 2,
+          "index": 6,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11810,
+          "display": 11311,
+          "canny": 2939
+        },
+        {
+          "t": 169454.265,
+          "mode": 5,
+          "memory": 2,
+          "index": 6,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11818,
+          "display": 11311,
+          "canny": 2946
+        },
+        {
+          "t": 169454.515,
+          "mode": 5,
+          "memory": 2,
+          "index": 6,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11826,
+          "display": 11310,
+          "canny": 2954
+        },
+        {
+          "t": 169454.781,
+          "mode": 5,
+          "memory": 2,
+          "index": 6,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11834,
+          "display": 11310,
+          "canny": 2962
+        },
+        {
+          "t": 169455.031,
+          "mode": 5,
+          "memory": 2,
+          "index": 6,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11841,
+          "display": 11309,
+          "canny": 2970
+        },
+        {
+          "t": 169455.296,
+          "mode": 5,
+          "memory": 2,
+          "index": 6,
+          "history_count": 6,
+          "fault": 0,
+          "capture": 11849,
+          "display": 11309,
+          "canny": 2977
+        }
+      ]
+    }
+  ],
+  "before": {
+    "t": 169437.421,
+    "mode": 5,
+    "memory": 0,
+    "index": 0,
+    "history_count": 6,
+    "fault": 0,
+    "capture": 11313,
+    "display": 11313,
+    "canny": 2441
+  }
+}

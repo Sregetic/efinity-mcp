@@ -18,8 +18,17 @@ initial begin
  mode=5;coverage=64;check(24'h404040);
  if(dut.shape_gray!==0)$fatal(1,"display halo entered binary classifier");
  coverage=255;check(24'hffffff);
- mode=6;coverage=64;check({8'd138,8'd72,8'd57});
+ mode=6;coverage=64;check({8'd139,8'd72,8'd57});
+ coverage=128;check({8'd178,8'd64,8'd54});
+ coverage=255;check(24'hff3030);
  coverage=0;check({8'd100,8'd80,8'd60});
+ // Background and coverage must refer to the same pixel without another delay.
+ force dut.fr=8'h20;force dut.fg=8'h40;force dut.fb=8'h60;coverage=0;@(posedge clk);#1;
+ @(negedge clk);force dut.fr=8'h80;force dut.fg=8'h60;force dut.fb=8'h40;coverage=128;@(posedge clk);#1;
+ if({r,g,b}!==24'h204060)$fatal(1,"background/coverage phase0");
+ @(negedge clk);force dut.fr=8'h10;force dut.fg=8'h20;force dut.fb=8'h30;coverage=255;@(posedge clk);#1;
+ if({r,g,b}!==24'hc04838)$fatal(1,"background/coverage phase1 %h",{r,g,b});
+ @(posedge clk);#1;if({r,g,b}!==24'hff3030)$fatal(1,"background/coverage phase2");
  $display("PASS Sobel strength saturation/threshold, Canny antialias and binary recognition isolation");$finish;
 end
 endmodule

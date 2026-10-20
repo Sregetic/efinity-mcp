@@ -1,0 +1,177 @@
+{
+  "stage": "sample_pass",
+  "sram_programmed": true,
+  "flash_written": false,
+  "resources": {
+    "xlr": 60050,
+    "free_xlr": 750,
+    "ram": 235,
+    "free_ram": 21,
+    "dsp": 62,
+    "free_dsp": 98,
+    "wns_ns": 0.071,
+    "whs_ns": 0.029,
+    "flash_written": false,
+    "delta_vs_border": {
+      "xlr": 115,
+      "ram": 0,
+      "dsp": 0
+    }
+  },
+  "narrow_checks": {
+    "fit_raster_pixels": 138240,
+    "fitted_pixels": 6528,
+    "pixel_area_cases": 8256,
+    "trace_priority_cases": 22528,
+    "unchanged_binary_curve_pixels": 15360,
+    "host_geometry": true,
+    "baseline_new_pixel_area_contract": "failed as expected"
+  },
+  "full_image_reference": {
+    "same_binary_plane": true,
+    "source_frame": 1393,
+    "render_config": 1,
+    "canny_epoch": 112,
+    "binary_edges": 4322,
+    "shift_x": 2,
+    "shift_y": 2,
+    "pixels": 2056320,
+    "different": 0,
+    "max_abs_error": 0,
+    "excluded": "OSD bounding rectangle only: x0..431,y0..39; no edge-margin or color exclusions",
+    "regions": {
+      "left": {
+        "pixels": 66560,
+        "visible_pixels": 951,
+        "different": 0
+      },
+      "top": {
+        "pixels": 105600,
+        "visible_pixels": 877,
+        "different": 0
+      },
+      "right": {
+        "pixels": 34560,
+        "visible_pixels": 381,
+        "different": 0
+      },
+      "bottom": {
+        "pixels": 61440,
+        "visible_pixels": 206,
+        "different": 0
+      }
+    },
+    "overlay": {
+      "pixels": 2056320,
+      "different_channels": 0,
+      "max_abs_error": 0
+    }
+  },
+  "live": {
+    "seconds": 10.538421869277954,
+    "samples": 50,
+    "camera_hz": 30.08040520033949,
+    "canny_hz": 29.98551433219962,
+    "all_ready": true,
+    "all_fault_zero": true,
+    "cpu_state": 1,
+    "exposure": 761,
+    "shadow_boost": 0,
+    "render_deadline_misses": 4
+  },
+  "live_contours": {
+    "passed": true,
+    "samples": 47,
+    "seconds": 11.860000000000582,
+    "row": 500,
+    "bands": [
+      [
+        380,
+        450
+      ],
+      [
+        730,
+        790
+      ],
+      [
+        1650,
+        1710
+      ]
+    ],
+    "missing_samples": [
+      0,
+      0,
+      0
+    ],
+    "minimum_band_pixels": [
+      9,
+      4,
+      5
+    ],
+    "first_display_source": 10718,
+    "last_display_source": 11073,
+    "first_canny_epoch": 3257,
+    "last_canny_epoch": 3613,
+    "scope": "Sampled live display row, not every frame or the full image; source and Canny plane are not held"
+  },
+  "final_controls": {
+    "roi_frame_id": 11798,
+    "applied_config_id": 0,
+    "roi_enabled": 0,
+    "roi_frame_ok": 1,
+    "source_held": 0,
+    "source_frozen": 0,
+    "render_busy": 0,
+    "render_pending": 0,
+    "capture_active": 1,
+    "config_busy": 0,
+    "config_error": 0,
+    "render_error": 0,
+    "scan_error": 0,
+    "commit_rejected": 0,
+    "mode": 5,
+    "median": 1,
+    "memory": 0,
+    "threshold": 80,
+    "canny_ready": 1,
+    "canny_fault": 0,
+    "roi": [
+      0,
+      0,
+      1920,
+      1080
+    ],
+    "output_size": [
+      1920,
+      1080
+    ],
+    "capture_discarded": 0,
+    "scan_bad_frames": 0,
+    "render_cycles": 4564588,
+    "requested_config_id": 2,
+    "accepted_config_id": 2,
+    "rejected_config_id": 0,
+    "held_source_frame_id": 7460,
+    "held_raw_id_sample": 7460,
+    "rgb_capture_count": 11804,
+    "position": [
+      0,
+      0
+    ],
+    "display_size": [
+      1920,
+      1080
+    ],
+    "render_deadline_misses": 4,
+    "sobel_threshold": 128,
+    "canny_threshold": 80,
+    "canny_effective_threshold": 80,
+    "menu": 0,
+    "menu_value": 0,
+    "shape_threshold": 32,
+    "index": 0
+  },
+  "user_observation": "进一步减轻",
+  "user_observation_context": "After new SRAM deployment and restoration to F0 live Canny; remaining raster steps reduced, not an assertion of vector-perfect edges",
+  "scope": "Display coverage only, original480x270 binary Canny/recognition retained; actual M0/M5/M6 full1920x1080 readback; no new full1440p or SC2210 P&R, long-run purple-flicker or independent power-cycle acceptance"
+}

@@ -1,0 +1,19 @@
+{
+  "coverage_words": 512,
+  "coverage_unique": 55,
+  "sensor_words": 166,
+  "sensor_high_bytes": [
+    1,
+    48,
+    50,
+    51,
+    52,
+    54,
+    55,
+    57,
+    62,
+    69,
+    87
+  ],
+  "scope": "Isolated same-device map, not whole-system P&R or deployment"
+}

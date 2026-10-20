@@ -1,0 +1,2 @@
+FATAL: sim/vision/tb_camera_auto_exposure.sv:27: normal AE deadband kept startup shadow boost latched
+       Time: 60220000  Scope: tb

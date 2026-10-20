@@ -1,0 +1,899 @@
+{
+  "source_frame": 137307,
+  "sequence": 1,
+  "invoke_ms": 1159.4916,
+  "layer_ms": 1158.90494,
+  "operator_ms": {
+    "CONV_2D": 602.17905,
+    "DEPTHWISE_CONV_2D": 520.08162,
+    "ADD": 17.77441,
+    "SOFTMAX": 18.86986
+  },
+  "top_layers": [
+    {
+      "layer": 3,
+      "operator": "CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          48,
+          48,
+          8
+        ],
+        [
+          48,
+          1,
+          1,
+          8
+        ],
+        [
+          48
+        ]
+      ],
+      "output_shape": [
+        1,
+        48,
+        48,
+        48
+      ],
+      "macs": 884736,
+      "ms": 163.28164,
+      "invoke_fraction": 0.14082175325806587
+    },
+    {
+      "layer": 1,
+      "operator": "DEPTHWISE_CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          48,
+          48,
+          16
+        ],
+        [
+          1,
+          3,
+          3,
+          16
+        ],
+        [
+          16
+        ]
+      ],
+      "output_shape": [
+        1,
+        48,
+        48,
+        16
+      ],
+      "macs": 331776,
+      "ms": 139.63085,
+      "invoke_fraction": 0.12042420143449077
+    },
+    {
+      "layer": 4,
+      "operator": "DEPTHWISE_CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          48,
+          48,
+          48
+        ],
+        [
+          1,
+          3,
+          3,
+          48
+        ],
+        [
+          48
+        ]
+      ],
+      "output_shape": [
+        1,
+        24,
+        24,
+        48
+      ],
+      "macs": 248832,
+      "ms": 113.69149,
+      "invoke_fraction": 0.09805287938265357
+    },
+    {
+      "layer": 7,
+      "operator": "DEPTHWISE_CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          24,
+          24,
+          48
+        ],
+        [
+          1,
+          3,
+          3,
+          48
+        ],
+        [
+          48
+        ]
+      ],
+      "output_shape": [
+        1,
+        24,
+        24,
+        48
+      ],
+      "macs": 248832,
+      "ms": 113.5845,
+      "invoke_fraction": 0.09796060618291672
+    },
+    {
+      "layer": 0,
+      "operator": "CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          96,
+          96,
+          3
+        ],
+        [
+          16,
+          3,
+          3,
+          3
+        ],
+        [
+          16
+        ]
+      ],
+      "output_shape": [
+        1,
+        48,
+        48,
+        16
+      ],
+      "macs": 995328,
+      "ms": 103.99854,
+      "invoke_fraction": 0.08969322416824753
+    }
+  ],
+  "layers": [
+    {
+      "layer": 0,
+      "operator": "CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          96,
+          96,
+          3
+        ],
+        [
+          16,
+          3,
+          3,
+          3
+        ],
+        [
+          16
+        ]
+      ],
+      "output_shape": [
+        1,
+        48,
+        48,
+        16
+      ],
+      "macs": 995328,
+      "ms": 103.99854,
+      "invoke_fraction": 0.08969322416824753
+    },
+    {
+      "layer": 1,
+      "operator": "DEPTHWISE_CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          48,
+          48,
+          16
+        ],
+        [
+          1,
+          3,
+          3,
+          16
+        ],
+        [
+          16
+        ]
+      ],
+      "output_shape": [
+        1,
+        48,
+        48,
+        16
+      ],
+      "macs": 331776,
+      "ms": 139.63085,
+      "invoke_fraction": 0.12042420143449077
+    },
+    {
+      "layer": 2,
+      "operator": "CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          48,
+          48,
+          16
+        ],
+        [
+          8,
+          1,
+          1,
+          16
+        ],
+        [
+          8
+        ]
+      ],
+      "output_shape": [
+        1,
+        48,
+        48,
+        8
+      ],
+      "macs": 294912,
+      "ms": 29.75732,
+      "invoke_fraction": 0.02566411002891267
+    },
+    {
+      "layer": 3,
+      "operator": "CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          48,
+          48,
+          8
+        ],
+        [
+          48,
+          1,
+          1,
+          8
+        ],
+        [
+          48
+        ]
+      ],
+      "output_shape": [
+        1,
+        48,
+        48,
+        48
+      ],
+      "macs": 884736,
+      "ms": 163.28164,
+      "invoke_fraction": 0.14082175325806587
+    },
+    {
+      "layer": 4,
+      "operator": "DEPTHWISE_CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          48,
+          48,
+          48
+        ],
+        [
+          1,
+          3,
+          3,
+          48
+        ],
+        [
+          48
+        ]
+      ],
+      "output_shape": [
+        1,
+        24,
+        24,
+        48
+      ],
+      "macs": 248832,
+      "ms": 113.69149,
+      "invoke_fraction": 0.09805287938265357
+    },
+    {
+      "layer": 5,
+      "operator": "CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          24,
+          24,
+          48
+        ],
+        [
+          8,
+          1,
+          1,
+          48
+        ],
+        [
+          8
+        ]
+      ],
+      "output_shape": [
+        1,
+        24,
+        24,
+        8
+      ],
+      "macs": 221184,
+      "ms": 15.98813,
+      "invoke_fraction": 0.013788914037842102
+    },
+    {
+      "layer": 6,
+      "operator": "CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          24,
+          24,
+          8
+        ],
+        [
+          48,
+          1,
+          1,
+          8
+        ],
+        [
+          48
+        ]
+      ],
+      "output_shape": [
+        1,
+        24,
+        24,
+        48
+      ],
+      "macs": 221184,
+      "ms": 41.42828,
+      "invoke_fraction": 0.035729693945173904
+    },
+    {
+      "layer": 7,
+      "operator": "DEPTHWISE_CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          24,
+          24,
+          48
+        ],
+        [
+          1,
+          3,
+          3,
+          48
+        ],
+        [
+          48
+        ]
+      ],
+      "output_shape": [
+        1,
+        24,
+        24,
+        48
+      ],
+      "macs": 248832,
+      "ms": 113.5845,
+      "invoke_fraction": 0.09796060618291672
+    },
+    {
+      "layer": 8,
+      "operator": "CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          24,
+          24,
+          48
+        ],
+        [
+          8,
+          1,
+          1,
+          48
+        ],
+        [
+          8
+        ]
+      ],
+      "output_shape": [
+        1,
+        24,
+        24,
+        8
+      ],
+      "macs": 221184,
+      "ms": 15.94466,
+      "invoke_fraction": 0.013751423468699557
+    },
+    {
+      "layer": 9,
+      "operator": "ADD",
+      "input_shapes": [
+        [
+          1,
+          24,
+          24,
+          8
+        ],
+        [
+          1,
+          24,
+          24,
+          8
+        ]
+      ],
+      "output_shape": [
+        1,
+        24,
+        24,
+        8
+      ],
+      "macs": 0,
+      "ms": 8.79574,
+      "invoke_fraction": 0.007585859181731027
+    },
+    {
+      "layer": 10,
+      "operator": "CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          24,
+          24,
+          8
+        ],
+        [
+          48,
+          1,
+          1,
+          8
+        ],
+        [
+          48
+        ]
+      ],
+      "output_shape": [
+        1,
+        24,
+        24,
+        48
+      ],
+      "macs": 221184,
+      "ms": 41.09655,
+      "invoke_fraction": 0.0354435944167254
+    },
+    {
+      "layer": 11,
+      "operator": "DEPTHWISE_CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          24,
+          24,
+          48
+        ],
+        [
+          1,
+          3,
+          3,
+          48
+        ],
+        [
+          48
+        ]
+      ],
+      "output_shape": [
+        1,
+        12,
+        12,
+        48
+      ],
+      "macs": 62208,
+      "ms": 29.29079,
+      "invoke_fraction": 0.025261752650903205
+    },
+    {
+      "layer": 12,
+      "operator": "CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          12,
+          12,
+          48
+        ],
+        [
+          16,
+          1,
+          1,
+          48
+        ],
+        [
+          16
+        ]
+      ],
+      "output_shape": [
+        1,
+        12,
+        12,
+        16
+      ],
+      "macs": 110592,
+      "ms": 8.82044,
+      "invoke_fraction": 0.0076071616215244685
+    },
+    {
+      "layer": 13,
+      "operator": "CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          12,
+          12,
+          16
+        ],
+        [
+          96,
+          1,
+          1,
+          16
+        ],
+        [
+          96
+        ]
+      ],
+      "output_shape": [
+        1,
+        12,
+        12,
+        96
+      ],
+      "macs": 221184,
+      "ms": 38.15718,
+      "invoke_fraction": 0.03290854371001912
+    },
+    {
+      "layer": 14,
+      "operator": "DEPTHWISE_CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          12,
+          12,
+          96
+        ],
+        [
+          1,
+          3,
+          3,
+          96
+        ],
+        [
+          96
+        ]
+      ],
+      "output_shape": [
+        1,
+        12,
+        12,
+        96
+      ],
+      "macs": 124416,
+      "ms": 61.94441,
+      "invoke_fraction": 0.053423767796161696
+    },
+    {
+      "layer": 15,
+      "operator": "CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          12,
+          12,
+          96
+        ],
+        [
+          16,
+          1,
+          1,
+          96
+        ],
+        [
+          16
+        ]
+      ],
+      "output_shape": [
+        1,
+        12,
+        12,
+        16
+      ],
+      "macs": 221184,
+      "ms": 15.73949,
+      "invoke_fraction": 0.013574475226901169
+    },
+    {
+      "layer": 16,
+      "operator": "ADD",
+      "input_shapes": [
+        [
+          1,
+          12,
+          12,
+          16
+        ],
+        [
+          1,
+          12,
+          12,
+          16
+        ]
+      ],
+      "output_shape": [
+        1,
+        12,
+        12,
+        16
+      ],
+      "macs": 0,
+      "ms": 4.5078,
+      "invoke_fraction": 0.003887738384650652
+    },
+    {
+      "layer": 17,
+      "operator": "CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          12,
+          12,
+          16
+        ],
+        [
+          96,
+          1,
+          1,
+          16
+        ],
+        [
+          96
+        ]
+      ],
+      "output_shape": [
+        1,
+        12,
+        12,
+        96
+      ],
+      "macs": 221184,
+      "ms": 37.64316,
+      "invoke_fraction": 0.0324652287261072
+    },
+    {
+      "layer": 18,
+      "operator": "DEPTHWISE_CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          12,
+          12,
+          96
+        ],
+        [
+          1,
+          3,
+          3,
+          96
+        ],
+        [
+          96
+        ]
+      ],
+      "output_shape": [
+        1,
+        12,
+        12,
+        96
+      ],
+      "macs": 124416,
+      "ms": 61.93958,
+      "invoke_fraction": 0.05341960217736808
+    },
+    {
+      "layer": 19,
+      "operator": "CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          12,
+          12,
+          96
+        ],
+        [
+          16,
+          1,
+          1,
+          96
+        ],
+        [
+          16
+        ]
+      ],
+      "output_shape": [
+        1,
+        12,
+        12,
+        16
+      ],
+      "macs": 221184,
+      "ms": 15.89846,
+      "invoke_fraction": 0.013711578419369317
+    },
+    {
+      "layer": 20,
+      "operator": "ADD",
+      "input_shapes": [
+        [
+          1,
+          12,
+          12,
+          16
+        ],
+        [
+          1,
+          12,
+          12,
+          16
+        ]
+      ],
+      "output_shape": [
+        1,
+        12,
+        12,
+        16
+      ],
+      "macs": 0,
+      "ms": 4.47087,
+      "invoke_fraction": 0.003855888218595115
+    },
+    {
+      "layer": 21,
+      "operator": "CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          12,
+          12,
+          16
+        ],
+        [
+          96,
+          1,
+          1,
+          16
+        ],
+        [
+          96
+        ]
+      ],
+      "output_shape": [
+        1,
+        12,
+        12,
+        96
+      ],
+      "macs": 221184,
+      "ms": 37.60566,
+      "invoke_fraction": 0.0324328869652872
+    },
+    {
+      "layer": 22,
+      "operator": "CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          12,
+          12,
+          96
+        ],
+        [
+          32,
+          1,
+          1,
+          96
+        ],
+        [
+          32
+        ]
+      ],
+      "output_shape": [
+        1,
+        12,
+        12,
+        32
+      ],
+      "macs": 442368,
+      "ms": 35.19589,
+      "invoke_fraction": 0.030354588166054845
+    },
+    {
+      "layer": 23,
+      "operator": "CONV_2D",
+      "input_shapes": [
+        [
+          1,
+          12,
+          12,
+          32
+        ],
+        [
+          4,
+          1,
+          1,
+          32
+        ],
+        [
+          4
+        ]
+      ],
+      "output_shape": [
+        1,
+        12,
+        12,
+        4
+      ],
+      "macs": 18432,
+      "ms": 1.62365,
+      "invoke_fraction": 0.0014003119988105133
+    },
+    {
+      "layer": 24,
+      "operator": "SOFTMAX",
+      "input_shapes": [
+        [
+          1,
+          12,
+          12,
+          4
+        ]
+      ],
+      "output_shape": [
+        1,
+        12,
+        12,
+        4
+      ],
+      "macs": 0,
+      "ms": 18.86986,
+      "invoke_fraction": 0.016274253302050658
+    }
+  ],
+  "scope": "Measured fixed-shape camera inference; no new accelerator or speedup claim"
+}

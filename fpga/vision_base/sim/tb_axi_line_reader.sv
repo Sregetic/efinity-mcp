@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
 `default_nettype none
 
-module tb_axi_line_reader;
+module tb_axi_line_reader #(parameter FIFO_BEATS=64, MAX_BURST_BEATS=64);
     reg clk=0, rst_n=0;
     always #5 clk=~clk;
     reg req_valid=0;
@@ -21,7 +21,7 @@ module tb_axi_line_reader;
     reg arready=0, rvalid=0, rlast=0;
     reg [127:0] rdata=0;
     reg [1:0] rresp=0;
-    reg pending=0, inject_error=0;
+    reg pending=0, inject_error=0, pause_output=0;
     integer response_left=0, cycle=0, commands=0, received=0, tests=0;
     integer expected_base=0, expected_pixels=0, expected_index=0;
     integer bad_cases=0, cycle_start=0;
@@ -34,7 +34,7 @@ module tb_axi_line_reader;
     reg [7:0] previous_arlen=0;
     integer k;
 
-    axi_line_reader #(.MAX_BURST_BEATS(16), .FIFO_BEATS(8)) dut (
+    axi_line_reader #(.MAX_BURST_BEATS(MAX_BURST_BEATS), .FIFO_BEATS(FIFO_BEATS)) dut (
       .clk(clk), .rst_n(rst_n), .req_valid(req_valid), .req_ready(req_ready),
       .req_addr(req_addr), .req_pixels(req_pixels), .pixel_valid(pixel_valid),
       .pixel_ready(pixel_ready), .pixel_data(pixel_data), .pixel_keep(pixel_keep),
@@ -62,6 +62,8 @@ module tb_axi_line_reader;
             previous_stall <= pixel_valid && !pixel_ready;
             if (ar_stalled && (araddr !== previous_araddr || arlen !== previous_arlen))
                 $fatal(1,"AR payload changed while ARREADY=0");
+            if (rvalid && !rready)
+                $fatal(1,"Accepted burst stalled behind pixel unpacking");
             ar_stalled <= arvalid && !arready;
             previous_araddr <= araddr;
             previous_arlen <= arlen;
@@ -74,7 +76,7 @@ module tb_axi_line_reader;
                     $fatal(1,"Invalid AXI command");
                 if (({1'b0,araddr[11:0]} + (({1'b0,arlen}+1)*16)) > 4096)
                     $fatal(1,"Burst crossed 4 KiB");
-                if (arlen > 15) $fatal(1,"Burst cap exceeded");
+                if (arlen >= MAX_BURST_BEATS) $fatal(1,"Burst cap exceeded");
                 pending <= 1;
                 response_left <= arlen+1;
                 response_addr <= araddr;
@@ -119,7 +121,7 @@ module tb_axi_line_reader;
     always @(negedge clk) begin
         cycle = cycle+1;
         arready = !pending && !rvalid && (cycle%3 != 0);
-        pixel_ready = (cycle%5 != 2) && (cycle%7 != 3);
+        pixel_ready = !pause_output && (cycle%5 != 2) && (cycle%7 != 3);
     end
 
     task automatic run_line(input [31:0] a, input [15:0] n,
@@ -169,6 +171,17 @@ module tb_axi_line_reader;
         run_line(32'h1001,8,1,0);
         run_line(32'h1000,0,1,0);
         run_line(32'hffff_fffe,2,1,0);
+        // A paused pixel sink must not pin the shared bus inside an accepted R burst.
+        pause_output=1;
+        fork
+            run_line(32'h8000,MAX_BURST_BEATS*24,0,0);
+            begin
+                wait(pending);
+                repeat(200) @(negedge clk);
+                if(pending || rvalid) $fatal(1,"Pixel sink stall retained shared AXI burst");
+                pause_output=0;
+            end
+        join
         $display("PASS tb_axi_line_reader cases=%0d invalid=%0d",tests,bad_cases);
         $finish;
     end

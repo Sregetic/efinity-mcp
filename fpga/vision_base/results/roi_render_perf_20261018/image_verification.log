@@ -1,0 +1,38 @@
+{
+  "passed": true,
+  "source_frame": 13010,
+  "render_config": 20,
+  "full_images": 3,
+  "full_size": [
+    1920,
+    1080
+  ],
+  "strip_images": 6,
+  "strip_y": 500,
+  "strip_height": 24,
+  "canny_edges": 4385,
+  "canny_plane_unchanged": true,
+  "comparisons": {
+    "canny": {
+      "pixels": 2056320,
+      "different_channels": 0,
+      "maximum_error": 0
+    },
+    "canny_overlay": {
+      "pixels": 2056320,
+      "different_channels": 0,
+      "maximum_error": 0
+    },
+    "split_strip": {
+      "pixels": 46080,
+      "different_channels": 0,
+      "maximum_error": 0
+    },
+    "sobel_overlay_strip": {
+      "pixels": 46080,
+      "different_channels": 0,
+      "maximum_error": 0
+    }
+  },
+  "scope": "Real same-frame exports vs unchanged display reference; not old/new bitstreams sharing one DDR frame"
+}

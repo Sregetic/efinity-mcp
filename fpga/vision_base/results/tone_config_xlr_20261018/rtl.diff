@@ -1,0 +1,38 @@
+--- before/rgb_chroma_tone.sv
++++ after/rgb_chroma_tone.sv
+@@ -26,22 +26,23 @@
+ // pre-debayer gains. Register config arithmetic separately from pixel checks.
+ reg[71:0]cr=0,cg=0,cb=0,lr=0,lg=0,lb=0;
+ function automatic[143:0]thresholds(input[15:0]gain);
+- reg[16:0]gwide,clip_base,light_base,offset[0:7],c,l;
++ reg[15:0]gwide,g3,g5,g7,g9,g11,g13,clip_base,c[0:7],l[0:7];
+  reg disabled;integer n;
+  begin
+   // 144 is the smallest coefficient: above gain 453 every threshold is 256.
+-  // Keep exact 16-bit gain behavior while doing the shared arithmetic in 17 bits.
+-  disabled=(gain==0||gain>16'd453);gwide={8'd0,gain[8:0]};
+-  clip_base=(gwide<<8)-(gwide<<5)-gwide; // 223 * gain
+-  light_base=(gwide<<7)+(gwide<<4);     // 144 * gain
+-  offset[0]=0;offset[1]=gwide;offset[2]=gwide<<1;
+-  offset[3]=gwide+(gwide<<1);offset[4]=gwide<<2;
+-  offset[5]=gwide+(gwide<<2);offset[6]=(gwide<<1)+(gwide<<2);
+-  offset[7]=(gwide<<3)-gwide;
++  disabled=(gain==0||gain>16'd453);gwide={7'd0,gain[8:0]};
++  g3=(gwide<<1)+gwide;g5=(gwide<<2)+gwide;g7=(gwide<<3)-gwide;
++  g9=(gwide<<3)+gwide;g11=(gwide<<3)+g3;g13=(gwide<<3)+g5;
++  // Share odd multiples between the 223..237 and 144..200 coefficient sets.
++  clip_base=g7<<5;
++  c[0]=clip_base-gwide;c[1]=clip_base+gwide;c[2]=clip_base+g3;c[3]=clip_base+g5;
++  c[4]=clip_base+g7;c[5]=clip_base+g9;c[6]=clip_base+g11;c[7]=clip_base+g13;
++  l[0]=g9<<4;l[1]=((gwide<<4)+g3)<<3;l[2]=g5<<5;l[3]=((gwide<<4)+g5)<<3;
++  l[4]=g11<<4;l[5]=((gwide<<4)+g7)<<3;l[6]=g3<<6;l[7]=((gwide<<4)+g9)<<3;
+   for(n=0;n<8;n=n+1)begin
+-   c=clip_base+(offset[n]<<1);l=light_base+(offset[n]<<3);
+-   thresholds[n*9+:9]=(disabled||c>17'd65280)?9'd256:c[16:8];
+-   thresholds[72+n*9+:9]=(disabled||l>17'd65280)?9'd256:l[16:8];
++   // Exact gain limits make overflowed products irrelevant; only bits 15:8 remain.
++   thresholds[n*9+:9]=(disabled||gwide>16'(65280/(223+2*n)))?9'd256:{1'b0,c[n][15:8]};
++   thresholds[72+n*9+:9]=(disabled||gwide>16'(65280/(144+8*n)))?9'd256:{1'b0,l[n][15:8]};
+   end
+  end
+ endfunction

@@ -40,14 +40,20 @@ vision_osd osd0(x,y,mode,mode==7?{3'b0,shape_threshold}:(mode==5||mode==6)?canny
 // RGB/gradient metadata represents the center after two 3x3 windows.
 assign cx=x0>=2?x0-2:0;assign cy=y0>=2?y0-2:0;
 assign coordinate_de=fd0&&x0>=2&&y0>=2;reg[10:0]dm=0;reg dedge=0;assign debug_mag=dm;assign debug_edge=dedge;
-reg[23:0]pixel;
+reg[23:0]pixel;reg blend;
 // Continuous reference-style strength uses the existing full-resolution
 // gradient. Threshold still gates it; classification stays a binary mask.
 wire[7:0]sobel_level=edge_on?(EDGE_STRENGTH?(mag>510?8'd255:mag[8:1]):8'd255):8'd0;
 wire[7:0]canny_level=canny_ready?(EDGE_STRENGTH?canny_coverage:{8{canny_pixel}}):8'd0;
-wire[23:0]canny_overlay=canny_level==255?24'hff3030:
- canny_level==64?{(fr-(fr>>2)+8'd63),(fg-(fg>>2)+8'd12),(fb-(fb>>2)+8'd12)}:{fr,fg,fb};
+wire[8:0]coverage_rounded={1'b0,canny_level}+9'd4;
+wire[5:0]coverage_alpha=coverage_rounded[8:3];
+function automatic[7:0]blend_edge(input[7:0]background,foreground,input[5:0]alpha);
+ reg[13:0]sum;begin
+  sum=background*(6'd32-alpha)+foreground*alpha+14'd16;blend_edge=sum[12:5];
+ end
+endfunction
 always @*begin
+ blend=0;
  case(mode)
  0:pixel={fr,fg,fb};
  1:pixel={gray,gray,gray};
@@ -55,21 +61,27 @@ always @*begin
  3:pixel=(x<960)?{gray,gray,gray}:{sobel_level,sobel_level,sobel_level};
  4:pixel=edge_on?24'hff3030:{fr,fg,fb};
  5:pixel={canny_level,canny_level,canny_level};
- 6:pixel=canny_overlay;
+ 6:begin pixel={fr,fg,fb};blend=1;end
  default:pixel=shape_enable?(shape_box?((shape_class==1)?24'h20ff40:(shape_class==2)?24'h3090ff:24'hffe020):(shape_guide?24'h808080:{fr,fg,fb})):((x<960)?{fr,fg,fb}:{gray,gray,gray});
  endcase
- if(border)pixel=0;
+ if(border)begin pixel=0;blend=0;end
  if(mode==3&&x>=958&&x<=961)pixel=24'h00ff80;
- if(shape_show&&shape_box)pixel=(shape_class==1)?24'h20ff40:(shape_class==2)?24'h3090ff:24'hffe020;
+ if(shape_show&&shape_box)begin pixel=(shape_class==1)?24'h20ff40:(shape_class==2)?24'h3090ff:24'hffe020;blend=0;end
  if(FUSION&&analysis_enabled&&analysis_match&&analysis_result[0]&&
  ((x>=analysis_result[203:192]&&x<=analysis_result[235:224]&&(y==analysis_result[219:208]||y==analysis_result[251:240]))||
-  (y>=analysis_result[219:208]&&y<=analysis_result[251:240]&&(x==analysis_result[203:192]||x==analysis_result[235:224]))))pixel=24'h00ffff;
+  (y>=analysis_result[219:208]&&y<=analysis_result[251:240]&&(x==analysis_result[203:192]||x==analysis_result[235:224]))))begin pixel=24'h00ffff;blend=0;end
 end
 reg[23:0]pixel_q=0;reg fd_q=0,fh_q=0,fv_q=0,edge_q=0;reg[10:0]mag_q=0;
+reg[5:0]alpha_q=0;reg blend_q=0;
+// Use the existing pixel register to separate contour arithmetic from blending.
+wire[23:0]canny_overlay={blend_edge(pixel_q[23:16],8'd255,alpha_q),
+ blend_edge(pixel_q[15:8],8'd48,alpha_q),blend_edge(pixel_q[7:0],8'd48,alpha_q)};
+wire[23:0]shown_pixel=blend_q?canny_overlay:pixel_q;
 always @(posedge clk)begin
  {fd_q,fh_q,fv_q,mag_q,edge_q,pixel_q}<={fd,fh,fv,mag,edge_on,pixel};
+ {alpha_q,blend_q}<={coverage_alpha,blend};
  ode<=fd_q;ohs<=fh_q;ovs<=fv_q;dm<=mag_q;dedge<=edge_q;
- {orr,ogg,obb}<=fd_q?(osd?(ink?24'hffff80:24'h101010):pixel_q):24'd0;
+ {orr,ogg,obb}<=fd_q?(osd?(ink?24'hffff80:24'h101010):shown_pixel):24'd0;
  if(!rst_n)begin fd_q<=0;fh_q<=0;fv_q<=0;ode<=0;ohs<=0;ovs<=0;{orr,ogg,obb}<=0;end
 end
 endmodule

@@ -13,6 +13,7 @@ def main():
     p.add_argument('--output-dir', type=Path, required=True)
     p.add_argument('--summary', action='store_true', help='Read task identities only; keep large RGB arrays for the first numeric comparison')
     p.add_argument('--full-input', action='store_true', help='Slow USER1 export of all preserved RGB/packed samples; source image normally uses existing bulk USER2')
+    p.add_argument('--connectome-readout', action='store_true', help='Read the CRD1 companion head from an ELF built with --connectome-readout')
     a = p.parse_args()
     _, _, sym = validate_image(a.elf, None)
     out = a.output_dir.resolve()
@@ -20,6 +21,9 @@ def main():
     body = 'halt\nwait_halt 5000\n'
     fields = [('status', 'fomo_camera_status', 96), ('fusion', 'fusion_result', 64), ('legacy', 'analysis_result', 96),
               ('control', '__control_state', 120)]
+    if a.connectome_readout:
+        fields += [('readout_record', 'connectome_readout_result', 56),
+                   ('readout_scores', 'analysis_connectome_scores', 4)]
     if not a.summary:
         fields += [('output', 'fomo_camera_output', 576),
               ('targets', 'fomo_detections', 144*14), ('layers', 'fomo_camera_layer_cycles', 200),

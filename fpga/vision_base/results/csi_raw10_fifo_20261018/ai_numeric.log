@@ -1,0 +1,91 @@
+F:\efinity-ci\tinyml-env\Lib\site-packages\tensorflow\lite\python\interpreter.py:457: UserWarning:     Warning: tf.lite.Interpreter is deprecated and is scheduled for deletion in
+    TF 2.20. Please use the LiteRT interpreter from the ai_edge_litert package.
+    See the [migration guide](https://ai.google.dev/edge/litert/migration)
+    for details.
+    
+  warnings.warn(_INTERPRETER_DELETION_WARNING)
+{
+  "passed": true,
+  "sequence": 1,
+  "source_frame": 43417,
+  "source_config": 43417,
+  "render_config": 10,
+  "context": 21,
+  "model": 2,
+  "preprocessing_ms": 25.61738,
+  "invoke_ms": 1159.57356,
+  "postprocessing_ms": 0.22324,
+  "fomo_total_ms": 1185.41418,
+  "arena_used_bytes": 149388,
+  "max_lsb_diff": 0,
+  "mismatched_output_bytes": 0,
+  "objects": [],
+  "layer_ms": [
+    103.96632,
+    139.67683,
+    29.69282,
+    163.26836,
+    113.99893,
+    15.88097,
+    41.59363,
+    113.74173,
+    15.8632,
+    8.82257,
+    41.07224,
+    29.25115,
+    8.73658,
+    38.00278,
+    62.05884,
+    15.78359,
+    4.51746,
+    37.6154,
+    61.91475,
+    15.78158,
+    4.48052,
+    37.60483,
+    35.1551,
+    1.64808,
+    18.8535
+  ],
+  "gray_same_source": true,
+  "legacy_model": 1,
+  "legacy_gray_sum": 60157,
+  "fusion_record": [
+    1179996977,
+    5,
+    87297,
+    43417,
+    43417,
+    10,
+    2,
+    21,
+    4294967295,
+    0,
+    2155905151,
+    0,
+    70780800,
+    445,
+    0,
+    0
+  ],
+  "input_reference": "Independent same-frame pre-Gamma RGB bulk snapshot sampled by the RV32I contract",
+  "scope": "Actual camera source/board output; optional full CPU input dump is separate; not real-card accuracy acceptance",
+  "legacy_int8_exact": true,
+  "flyhash_exact": true,
+  "connectome_states_exact": 80,
+  "connectome_readout": {
+    "exact": true,
+    "scores": [
+      56,
+      59,
+      4,
+      -38
+    ],
+    "label": 1,
+    "version": 65537,
+    "training_kind": 1,
+    "readout_ms": 0.17073,
+    "circuit_ms": 4.14939,
+    "real_accuracy_verified": false
+  }
+}

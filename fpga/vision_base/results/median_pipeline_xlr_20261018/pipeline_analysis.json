@@ -1,0 +1,145 @@
+{
+  "before": {
+    "register_byte_values": 45,
+    "live_per_stage": [
+      9,
+      9,
+      8,
+      6,
+      4,
+      3,
+      3,
+      2,
+      1
+    ],
+    "comparators": 19,
+    "min_max_outputs": 30
+  },
+  "candidate": {
+    "register_byte_values": 37,
+    "live_per_stage": [
+      9,
+      9,
+      5,
+      5,
+      4,
+      2,
+      1,
+      1,
+      1
+    ],
+    "comparators": 19,
+    "min_max_outputs": 30
+  },
+  "candidate_layers": [
+    [
+      [
+        0,
+        7
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        3,
+        5
+      ],
+      [
+        4,
+        8
+      ]
+    ],
+    [
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        5
+      ],
+      [
+        3,
+        8
+      ],
+      [
+        4,
+        7
+      ]
+    ],
+    [
+      [
+        0,
+        3
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        2,
+        8
+      ],
+      [
+        5,
+        7
+      ]
+    ],
+    [
+      [
+        3,
+        4
+      ],
+      [
+        5,
+        6
+      ]
+    ],
+    [
+      [
+        2,
+        5
+      ],
+      [
+        4,
+        6
+      ]
+    ],
+    [
+      [
+        2,
+        3
+      ],
+      [
+        4,
+        5
+      ]
+    ],
+    [
+      [
+        3,
+        4
+      ]
+    ],
+    [],
+    []
+  ],
+  "total_stages": 9,
+  "comparison_stages": 7,
+  "output_delay_stages": 2,
+  "binary_maps": 512,
+  "different": 0,
+  "physical_resources": {
+    "xlr": 58268,
+    "xlr_used_percent": 95.83552631578948,
+    "free_xlr": 2532,
+    "ram": 235,
+    "free_ram": 21,
+    "dsp": 62,
+    "free_dsp": 98,
+    "wns_ns": 0.152,
+    "whs_ns": 0.026,
+    "unassigned_core_pins": 0
+  }
+}

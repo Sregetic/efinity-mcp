@@ -1,0 +1,2 @@
+PASS edge overlay M2..M7, edge-derived recognition, RGB/gray unchanged, shape switch and HUD
+sim/vision/tb_edge_overlay.sv:27: $finish called at 286000 (1ps)

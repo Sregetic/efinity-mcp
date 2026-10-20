@@ -1,0 +1,2 @@
+PASS MEDIAN9 26912 windows: 2048 binary/boundary, 256 uniform, 4608 impulses, 20000 random; exact old pipeline, sorted reference, META64/META1, nine stages
+sim/vision/tb_median9.sv:60: $finish called at 269206000 (1ps)

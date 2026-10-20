@@ -1,0 +1,73 @@
+{
+  "previous_candidate": {
+    "xlr": 58436,
+    "ram": 235,
+    "dsp": 62,
+    "wns_ns": 0.249,
+    "whs_ns": 0.026
+  },
+  "candidate": {
+    "xlr": 58268,
+    "xlr_used_percent": 95.83552631578948,
+    "free_xlr": 2532,
+    "ram": 235,
+    "free_ram": 21,
+    "dsp": 62,
+    "free_dsp": 98,
+    "wns_ns": 0.152,
+    "whs_ns": 0.026,
+    "unassigned_core_pins": 0
+  },
+  "released_this_round": {
+    "xlr": 168,
+    "ram": 0,
+    "dsp": 0
+  },
+  "released_vs_flash_baseline": {
+    "xlr": 1782,
+    "ram": 0,
+    "dsp": 0
+  },
+  "median_instances": [
+    {
+      "instance": "feature_display/front/med9",
+      "before_xlr": 549.0,
+      "after_xlr": 501.0
+    },
+    {
+      "instance": "feature_display/front/med_r",
+      "before_xlr": 477.0,
+      "after_xlr": 429.0
+    },
+    {
+      "instance": "feature_display/front/med_g",
+      "before_xlr": 477.0,
+      "after_xlr": 429.0
+    },
+    {
+      "instance": "feature_display/front/med_b",
+      "before_xlr": 477.0,
+      "after_xlr": 429.0
+    },
+    {
+      "instance": "canny/denoise/filter",
+      "before_xlr": 565.0,
+      "after_xlr": 517.0
+    },
+    {
+      "instance": "line_direct.x3_direct/med0",
+      "before_xlr": 499.0,
+      "after_xlr": 451.0
+    },
+    {
+      "instance": "line_direct.x3_direct/med1",
+      "before_xlr": 493.0,
+      "after_xlr": 445.0
+    }
+  ],
+  "median_before": 3537,
+  "median_after": 3201,
+  "median_released_this_round": 336,
+  "other_packing_increase_xlr": 168,
+  "further_reduction_to_95_percent": 508
+}
