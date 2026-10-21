@@ -926,10 +926,10 @@ wire[7:0]                       video_r;
 wire[7:0]                       video_g;
 wire[7:0]                       video_b;
 
-assign tmds_tx_data0_TX_OE = 1'b0; // LCD-only: HDMI output disabled.
-assign tmds_tx_data1_TX_OE = 1'b0; // LCD-only: HDMI output disabled.
-assign tmds_tx_data2_TX_OE = 1'b0; // LCD-only: HDMI output disabled.
-assign tmds_tx_clk_TX_OE   = 1'b0; // LCD-only: HDMI output disabled.
+assign tmds_tx_data0_TX_OE = 1'b1; // HDMI enabled, matching upstream.
+assign tmds_tx_data1_TX_OE = 1'b1; // HDMI enabled, matching upstream.
+assign tmds_tx_data2_TX_OE = 1'b1; // HDMI enabled, matching upstream.
+assign tmds_tx_clk_TX_OE   = 1'b1; // HDMI enabled, matching upstream.
 
 // Hold all TX serializers in reset for 256 pixel clocks after PLL lock.
 reg [8:0] tx_startup_count=0;
@@ -937,10 +937,10 @@ always @(posedge hdmi_tx_slow_clk or negedge user_pll_locked)
  if(!user_pll_locked)tx_startup_count<=0;
  else if(!tx_startup_count[8])tx_startup_count<=tx_startup_count+1'b1;
 wire tx_serializer_reset=~tx_startup_count[8];
-assign tmds_tx_data0_TX_RST = 1'b1; // Keep HDMI serializers in reset.
-assign tmds_tx_data1_TX_RST = 1'b1; // Keep HDMI serializers in reset.
-assign tmds_tx_data2_TX_RST = 1'b1; // Keep HDMI serializers in reset.
-assign tmds_tx_clk_TX_RST   = 1'b1; // Keep HDMI serializers in reset.
+assign tmds_tx_data0_TX_RST = tx_serializer_reset; // Existing PLL-lock startup reset.
+assign tmds_tx_data1_TX_RST = tx_serializer_reset; // Existing PLL-lock startup reset.
+assign tmds_tx_data2_TX_RST = tx_serializer_reset; // Existing PLL-lock startup reset.
+assign tmds_tx_clk_TX_RST   = tx_serializer_reset; // Existing PLL-lock startup reset.
 
 // 	  color_bar color_bar_m0(
 // 	.clk(hdmi_tx_slow_clk),
@@ -1118,13 +1118,24 @@ vision_controls feature_controls(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n),.vs(ga
 wire[7:0] feature_r,feature_g,feature_b;wire feature_de,feature_hs,feature_vs;
 wire[11:0] feature_x,feature_y;wire[10:0] feature_mag;wire feature_edge;
 wire canny_pixel,canny_ready,canny_busy,canny_fault;wire[31:0]canny_completed;
+// Local ON/OFF detector only; no whole-brain model and no capture/display gating.
+wire[31:0]motion_observation,motion_status,motion_h,motion_v,motion_dropped;
+wire[47:0]motion_box;wire[15:0]motion_active;
+wire[223:0]motion_diag_snapshot;wire motion_diag_valid;
+vision_motion_snapshot_cdc motion_snapshot(
+ .src_clk(hdmi_tx_slow_clk),.src_rst_n(vid_rst_n),
+ .src_data({motion_status,motion_observation,motion_h,motion_v,motion_box,motion_active,motion_dropped}),
+ .dst_clk(jtag_diag_DRCK),.dst_rst_n(vid_rst_n),.dst_request(jtag_diag_CAPTURE),
+ .dst_data(motion_diag_snapshot),.dst_valid(motion_diag_valid));
 vision_canny canny(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n),.de(gamma_valid),.hs(gamma_hs),.vs(gamma_vs),
  .r(color_r),.g(color_g),.b(color_b),.high_threshold(feature_threshold),.display_x(feature_x),.display_y(feature_y),
  .edge_pixel(canny_pixel),.ready(canny_ready),.busy(canny_busy),.fault(canny_fault),.completed(canny_completed));
-vision_display feature_display(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n),.de(gamma_valid),.hs(gamma_hs),.vs(gamma_vs),
+vision_display #(.LOCAL_MOTION_ENABLE(1))feature_display(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n),.de(gamma_valid),.hs(gamma_hs),.vs(gamma_vs),
  .r(color_r),.g(color_g),.b(color_b),.mode(feature_mode),.threshold(feature_threshold),.median_en(feature_median),
  .memory_mode(memory_mode),.history_index(history_index),.canny_pixel(canny_pixel),.canny_ready(canny_ready),.cx(feature_x),.cy(feature_y),
- .ode(feature_de),.ohs(feature_hs),.ovs(feature_vs),.orr(feature_r),.ogg(feature_g),.obb(feature_b),.debug_mag(feature_mag),.debug_edge(feature_edge));
+ .ode(feature_de),.ohs(feature_hs),.ovs(feature_vs),.orr(feature_r),.ogg(feature_g),.obb(feature_b),.debug_mag(feature_mag),.debug_edge(feature_edge),
+ .motion_observation(motion_observation),.motion_status(motion_status),.motion_h(motion_h),.motion_v(motion_v),
+ .motion_dropped(motion_dropped),.motion_box(motion_box),.motion_active(motion_active));
 reg feature_vs_q=0;reg[31:0] feature_edges=0,feature_edges_hold=0,feature_frames=0;
 always @(posedge hdmi_tx_slow_clk)begin
  feature_vs_q<=feature_vs;
@@ -1399,7 +1410,9 @@ always @(posedge jtag_diag_DRCK) begin
  diag_meta<={diag_frame_gray,diag_core_gray,i_arstn,i_pll_locked,pll_locked,user_pll_locked,w_arstn,vid_rst_n,pattern_reset_sync[1],1'b0};
  diag_sync<=diag_meta;
  if(jtag_diag_CAPTURE)begin
-  if(feature_diag_page==14)diag_shift<={32'h56495331,32'h260917f5,feature_status,64'b0,16'b0,lcd_phy_seen,4'b0,LCD_RST_P,LCD_POWER,lcd_bist,lcd_backlight};
+  if(feature_diag_page==15)diag_shift<={32'h56495331,32'h26101415,(motion_diag_snapshot[223:192]|{motion_diag_valid,31'd0}),motion_diag_snapshot[191:160],motion_diag_snapshot[159:128],motion_diag_snapshot[127:96]};
+  else if(feature_diag_page==9)diag_shift<={32'h56495331,32'h26101409,motion_diag_snapshot[95:48],motion_diag_snapshot[47:32],motion_diag_snapshot[191:160],motion_diag_snapshot[31:0]};
+  else if(feature_diag_page==14)diag_shift<={32'h56495331,32'h260917f5,feature_status,64'b0,16'b0,lcd_phy_seen,4'b0,LCD_RST_P,LCD_POWER,lcd_bist,lcd_backlight};
   else if(feature_diag_page==13)diag_shift<={32'h56495331,32'h260917f5,feature_status,lcd_frames,lcd_line_pairs,40'b0,lcd_config_state,lcd_pack_fault,lcd_test,lcd_video_ready,lcd_config_done};
   else if(feature_diag_page==11)diag_shift<={32'h56495331,32'h260917b5,feature_status,ae_applied,ae_request,ae_updates,ae_readback,20'b0,ae_shadow,ae_enable,ae_busy,ae_fault};
   else if(feature_diag_page==12)diag_shift<={32'h56495331,32'h260917c5,feature_status,ae_sum,ae_ncenter,ae_ntotal,ae_nclip,14'b0,ae_decision};

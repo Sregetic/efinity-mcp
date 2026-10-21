@@ -1,0 +1,117 @@
+{
+  "passed": true,
+  "tests": [
+    {
+      "test": "core",
+      "fixture": {
+        "core_frames": 62,
+        "pixel_frames": 6,
+        "kind": "generated_synthetic_only",
+        "seed": 2214
+      },
+      "compile_exit": 0,
+      "simulation_exit": 0
+    },
+    {
+      "test": "tap",
+      "fixture": {
+        "core_frames": 62,
+        "pixel_frames": 6,
+        "kind": "generated_synthetic_only",
+        "seed": 2214
+      },
+      "compile_exit": 0,
+      "simulation_exit": 0
+    },
+    {
+      "test": "policy",
+      "fixture": {
+        "core_frames": 62,
+        "pixel_frames": 6,
+        "kind": "generated_synthetic_only",
+        "seed": 2214
+      },
+      "compile_exit": 0,
+      "simulation_exit": 0
+    },
+    {
+      "test": "snapshot",
+      "fixture": {
+        "core_frames": 62,
+        "pixel_frames": 6,
+        "kind": "generated_synthetic_only",
+        "seed": 2214
+      },
+      "compile_exit": 0,
+      "simulation_exit": 0
+    },
+    {
+      "test": "readout",
+      "fixture": {
+        "core_frames": 62,
+        "pixel_frames": 6,
+        "kind": "generated_synthetic_only",
+        "seed": 2214
+      },
+      "compile_exit": 0,
+      "simulation_exit": 0
+    },
+    {
+      "test": "hud_snapshot",
+      "fixture": {
+        "core_frames": 62,
+        "pixel_frames": 6,
+        "kind": "generated_synthetic_only",
+        "seed": 2214
+      },
+      "compile_exit": 0,
+      "simulation_exit": 0
+    },
+    {
+      "test": "hud",
+      "fixture": {
+        "core_frames": 62,
+        "pixel_frames": 6,
+        "kind": "generated_synthetic_only",
+        "seed": 2214
+      },
+      "compile_exit": 0,
+      "simulation_exit": 0
+    },
+    {
+      "test": "display",
+      "fixture": {
+        "core_frames": 62,
+        "pixel_frames": 6,
+        "kind": "generated_synthetic_only",
+        "seed": 2214
+      },
+      "compile_exit": 0,
+      "simulation_exit": 0
+    }
+  ],
+  "sources": {
+    "sim/motion_direction/tb_local_motion_core.sv": "b474a31ec512f92b057579c0dacbba782ce0a1e8fa49b4698b1dfbe746433226",
+    "board/ti60f225_v4/rtl/vision/vision_local_motion_core.sv": "0312f65b558c95459cc19ab2113bfb9ebd99ee726e15a2434cb1be7743818c4a",
+    "sim/motion_direction/tb_local_motion_tap.sv": "cd443ab99fdecb3550fa95251baeb79f4d55fcdc1e00683b48527d684468ae45",
+    "board/ti60f225_v4/rtl/vision/vision_local_motion_tap.sv": "6ec98f9971837e1957c0471cf6ecfdc980f962a2e467fca3afc7f1975a3adac1",
+    "board/ti60f225_v4/rtl/vision/vision_motion_policy.sv": "1a76e2c9afe54c6e91f88adc105ef7c8edb521c5a1f7f57be7fac6257791d1bd",
+    "sim/motion_direction/tb_motion_policy.sv": "fec3dc0f83c2a00e64baa39b7aa97adeec938bd7d5344495400838d19aea6da7",
+    "sim/motion_direction/tb_motion_snapshot.sv": "0929b7933b0ba3a8fa979236db438d1871e752801098edede8c68f5675eb3e53",
+    "board/ti60f225_v4/rtl/vision/vision_motion_snapshot_cdc.sv": "565291936faf4c9426e7389563403e0404a33f3287093cb20b7db73e2619bd88",
+    "sim/motion_direction/tb_motion_readout.sv": "e20a50c390f5f7a1b0d6e3cca97214231359b82a91bad874ed9a2e734d6d8f84",
+    "board/ti60f225_v4/rtl/vision/vision_motion_readout.sv": "ce38be96000ca970b72cf47786b9c72caae3edbc27a2eb76b92ad1344c213f32",
+    "sim/motion_direction/tb_motion_hud_snapshot.sv": "41094f1c833fc776f54154f29047291454f40ccceaef1a70c1274e16bb9fc734",
+    "board/ti60f225_v4/rtl/vision/vision_window3.sv": "80e90d1f363ba74c120acc27de311daf2403ae6db3efb4e6232023af4b624002",
+    "board/ti60f225_v4/rtl/vision/vision_median9.sv": "aaad3136070bb560ba6157d5c2ddf293a8b2e16b52b2dfec52bc08e40223a32e",
+    "board/ti60f225_v4/rtl/vision/vision_sobel.sv": "82283e72e92242b9e5f0d8f462ad2d35c6f5825fe0c14cbb0a06bd1de36a5986",
+    "board/ti60f225_v4/rtl/vision/vision_frontend.sv": "02af8c8e3daf951fd416a5e320175ae61c111a361e49bb4ffeecb5317272898a",
+    "board/ti60f225_v4/rtl/vision/vision_osd.sv": "bec789b6ce699eadb50b39c214557b2efd166eddc44cc648970d0cba01c35a31",
+    "board/ti60f225_v4/rtl/vision/vision_motion_osd.sv": "caba2cc44253e3424ca2381023efbc00f1c47ff87b39605876bd15a500fb00ff",
+    "board/ti60f225_v4/rtl/vision/vision_display.sv": "a5882ba9bd3d4ef0b5c73e3e677cf800e9b8312380cd1171ae1030dafed12fa3",
+    "sim/motion_direction/tb_motion_hud.sv": "6c1abb52eb2d271e83ac392e9f44c1ce4bf3d33652fa9d4634d1e66153fa0214",
+    "sim/motion_direction/tb_motion_display.sv": "d7198c50b251a42ea16a3ca17cc02027e67e82a38faf423477727a65899ccc11"
+  },
+  "scope": "Actual Icarus event simulation with generated synthetic fixtures only; not board compile or camera accuracy",
+  "hardware_programmed": false
+}

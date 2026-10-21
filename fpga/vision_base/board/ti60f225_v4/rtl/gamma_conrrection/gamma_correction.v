@@ -1,115 +1,66 @@
 module gamma_correction
-#(
-	parameter	DATA_WIDTH	= 10,
-	parameter 	GAMMA_CURVE	= "2P2.mem"
-)
+#(parameter DATA_WIDTH = 10, parameter GAMMA_CURVE = "2P2.mem")
 (
-	input						i_pclk,
-	input						i_rstn,
-			
-	input 						i_valid,
-	input 						i_hs,
-	input 						i_vs,
-	input 	[DATA_WIDTH-1:0]	i_red,
-	input 	[DATA_WIDTH-1:0]	i_green,
-	input 	[DATA_WIDTH-1:0]	i_blue,
-		
-	output	reg[DATA_WIDTH-1:0]	o_red,
-	output	reg[DATA_WIDTH-1:0]	o_green,
-	output	reg[DATA_WIDTH-1:0]	o_blue,
-	output	reg					o_valid,
-	output  reg  				o_hs,
-	output 	reg 				o_vs
+    input i_pclk, i_rstn, i_valid, i_hs, i_vs,
+    input [DATA_WIDTH-1:0] i_red, i_green, i_blue,
+    output reg [DATA_WIDTH-1:0] o_red, o_green, o_blue,
+    output reg o_valid, o_hs, o_vs
 );
-
-wire	[9:0]w_gamma;
-
-reg		[9:0]r_addr;
-reg		[9:0]r_addr_1P;
-reg		[9:0]r_addr_2P;
-reg		[9:0]r_gamma_2P	[0:1023];
-
-true_dual_port_ram
-#(
-	.DATA_WIDTH(10),
-	.ADDR_WIDTH(10),
-	.WRITE_MODE_1("WRITE_FIRST"),
-	.WRITE_MODE_2("WRITE_FIRST"),
-	.OUTPUT_REG_1("TRUE"),
-	.OUTPUT_REG_2("TRUE"),
-	.RAM_INIT_FILE(GAMMA_CURVE)		// Initial code file
-)
-inst_gamma
-(
-	.we1(1'b0),
-	.we2(1'b0),
-	.clka(i_pclk),
-	.clkb(1'b0),
-	.din1({10{1'b0}}),
-	.din2({10{1'b0}}),
-	.addr1(r_addr[9:0]),
-	.addr2({10{1'b0}}),
-	.dout1(w_gamma),
-	.dout2()
-);
-
-always @(posedge i_pclk)
-begin
-	if (~i_rstn) 
-	begin
-		r_addr		<= 10'b0;
-		r_addr_1P	<= 10'b0;
-		r_addr_2P	<= 10'b0;
-	end
-	else 
-	begin
-		r_addr		<= r_addr + 1'b1;
-		r_addr_1P	<= r_addr;
-		r_addr_2P	<= r_addr_1P;
-		
-		r_gamma_2P[r_addr_2P]	<= w_gamma;
-	end
+// Immutable curve: synchronous ROM reads replace the continuously rewritten,
+// three-read-port register array. Independent arrays permit ROM replication.
+reg [9:0] red_lut [0:1023];
+reg [9:0] green_lut [0:1023];
+reg [9:0] blue_lut [0:1023];
+initial begin
+    $readmemh(GAMMA_CURVE, red_lut);
+    $readmemh(GAMMA_CURVE, green_lut);
+    $readmemh(GAMMA_CURVE, blue_lut);
 end
-
-//Curve Fitting
-always @(posedge i_pclk)
-begin
-	if (~i_rstn) 
-	begin
-		o_red	<= {DATA_WIDTH{1'b0}};
-		o_green	<= {DATA_WIDTH{1'b0}};
-		o_blue	<= {DATA_WIDTH{1'b0}};
-		o_valid	<= 1'b0;
-		o_hs <= 'd0;
-		o_vs <= 'd0;
-	end
-	else 
-	begin
-		o_valid	<= i_valid;
-		o_hs <= i_hs;
-		o_vs <= i_vs;
-		
-		if (i_valid)
-		begin
-			if (DATA_WIDTH == 10)
-			begin
-				o_red	<= r_gamma_2P[i_red];
-				o_green	<= r_gamma_2P[i_green];		
-				o_blue	<= r_gamma_2P[i_blue];
-			end
-			else
-			begin
-				o_red	<= r_gamma_2P[{i_red, i_red[7:6]}][9:2];
-				o_green	<= r_gamma_2P[{i_green, i_green[7:6]}][9:2];		
-				o_blue	<= r_gamma_2P[{i_blue, i_blue[7:6]}][9:2];
-			end	
-		end
-		else
-		begin
-			o_red	<= {DATA_WIDTH{1'b0}};
-			o_green	<= {DATA_WIDTH{1'b0}};
-			o_blue	<= {DATA_WIDTH{1'b0}};
-		end
-	end
+wire [9:0] red_addr, green_addr, blue_addr;
+generate
+    if (DATA_WIDTH == 10) begin : ten_bit
+        assign red_addr = i_red;
+        assign green_addr = i_green;
+        assign blue_addr = i_blue;
+    end else begin : eight_bit
+        // Preserve the original address expansion and output truncation.
+        assign red_addr = {i_red, i_red[7:6]};
+        assign green_addr = {i_green, i_green[7:6]};
+        assign blue_addr = {i_blue, i_blue[7:6]};
+    end
+endgenerate
+reg [9:0] red_q, green_q, blue_q;
+// No data reset on ROM read registers, so block RAM inference stays possible.
+// The delayed valid flag masks data during reset and blanking.
+always @(posedge i_pclk) begin
+    red_q <= red_lut[red_addr];
+    green_q <= green_lut[green_addr];
+    blue_q <= blue_lut[blue_addr];
+    if (!i_rstn) begin
+        o_valid <= 1'b0;
+        o_hs <= 1'b0;
+        o_vs <= 1'b0;
+    end else begin
+        o_valid <= i_valid;
+        o_hs <= i_hs;
+        o_vs <= i_vs;
+    end
+end
+// Retain one-clock latency and zero RGB during blanking.
+always @* begin
+    o_red = {DATA_WIDTH{1'b0}};
+    o_green = {DATA_WIDTH{1'b0}};
+    o_blue = {DATA_WIDTH{1'b0}};
+    if (o_valid) begin
+        if (DATA_WIDTH == 10) begin
+            o_red = red_q;
+            o_green = green_q;
+            o_blue = blue_q;
+        end else begin
+            o_red = red_q[9:2];
+            o_green = green_q[9:2];
+            o_blue = blue_q[9:2];
+        end
+    end
 end
 endmodule

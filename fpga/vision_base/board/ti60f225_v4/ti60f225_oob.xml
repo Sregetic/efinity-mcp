@@ -24,9 +24,15 @@
 
         <efx:design_file name="rtl/vision/vision_controls.sv" version="default" library="default" />
         <efx:design_file name="rtl/vision/vision_display.sv" version="default" library="default" />
+        <efx:design_file name="rtl/vision/vision_local_motion_core.sv" version="default" library="default" />
+        <efx:design_file name="rtl/vision/vision_local_motion_tap.sv" version="default" library="default" />
+        <efx:design_file name="rtl/vision/vision_motion_policy.sv" version="default" library="default" />
+        <efx:design_file name="rtl/vision/vision_motion_snapshot_cdc.sv" version="default" library="default" />
         <efx:design_file name="rtl/vision/vision_frontend.sv" version="default" library="default" />
         <efx:design_file name="rtl/vision/vision_median9.sv" version="default" library="default" />
         <efx:design_file name="rtl/vision/vision_osd.sv" version="default" library="default" />
+        <efx:design_file name="rtl/vision/vision_motion_osd.sv" version="default" library="default" />
+        <efx:design_file name="rtl/vision/vision_motion_readout.sv" version="default" library="default" />
         <efx:design_file name="rtl/vision/vision_sobel.sv" version="default" library="default" />
         <efx:design_file name="rtl/vision/vision_window3.sv" version="default" library="default" />
 
