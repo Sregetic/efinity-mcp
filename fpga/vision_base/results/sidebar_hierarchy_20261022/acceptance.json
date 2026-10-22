@@ -1,0 +1,102 @@
+{
+  "offline_passed": true,
+  "native_passed": true,
+  "resources": {
+    "before": {
+      "xlr": 57821,
+      "ram": 242,
+      "dsp": 62,
+      "wns_ns": 0.275,
+      "whs_ns": 0.026
+    },
+    "after": {
+      "xlr": 57906,
+      "ram": 242,
+      "dsp": 62,
+      "wns_ns": 0.188,
+      "whs_ns": 0.026,
+      "unassigned_core_pins": 0,
+      "missing_interface_pins": 14
+    },
+    "capacity": {
+      "xlr": 60800,
+      "ram": 256,
+      "dsp": 160
+    },
+    "increased": {
+      "xlr": 85,
+      "ram": 0,
+      "dsp": 0
+    },
+    "free": {
+      "xlr": 2894,
+      "ram": 14,
+      "dsp": 98
+    },
+    "snapshot_ram": 5,
+    "sidebar_font_ram": 1,
+    "changed_native_inputs": [
+      "board/ti60f225_v4/rtl/vision/vision_osd.sv"
+    ],
+    "unchanged_native_inputs": 172
+  },
+  "layout": {
+    "root_width": 144,
+    "child_width": 160,
+    "expanded_width": 304,
+    "previous_width": 448,
+    "row_height": 64,
+    "previous_row_height": 32,
+    "origin_y": 128,
+    "root_height": 448,
+    "child_max_height": 576,
+    "levels": 2,
+    "groups": [
+      "IMAGE",
+      "VIEW",
+      "TARGET",
+      "AI"
+    ]
+  },
+  "control_assertions": 2591,
+  "geometry_cases": 407,
+  "diagnostic_vectors": 8,
+  "strict_qemu_misa_checked": true,
+  "core_tests_passed": 19,
+  "osd_8_names_and_symbolic_values_passed": true,
+  "full_video_suite_rerun": false,
+  "preview_frames": 3,
+  "preview_source": "actual RTL synthetic scene; not camera capture",
+  "preview_ui_words_match_firmware": true,
+  "unchanged_outside_pixels": 5936988,
+  "extra_pipeline_clocks_vs_previous": 0,
+  "snapshot_rgb_bits": 24,
+  "image_readback_retained": true,
+  "legacy_top_hud_retained": true,
+  "firmware": {
+    "ddr_load_bytes": 185472,
+    "increased_bytes": 704,
+    "bss_bytes": 66104,
+    "bootstrap_bytes": 6784,
+    "bootstrap_capacity": 8192,
+    "base_ddr_bytes": 8968,
+    "fixed_vector_build_bytes": 270880,
+    "offline_boot_package_bytes": 189904
+  },
+  "hardware_access": false,
+  "sram_written": false,
+  "flash_written": false,
+  "physical_acceptance": false,
+  "unverified": [
+    "physical keys",
+    "real camera/HDMI appearance",
+    "real target recognition/centering",
+    "long-run and power-cycle"
+  ],
+  "candidate": {
+    "bit": "F:\\Project\\fpga\\vision_base\\results\\sidebar_hierarchy_20261022\\release\\ti60f225_oob.bit",
+    "camera_elf": "F:\\Project\\fpga\\vision_base\\results\\sidebar_hierarchy_20261022\\firmware\\vision.elf",
+    "weights": "F:\\Project\\fpga\\vision_base\\models\\shape_cards_bringup\\shape_cards_weights.bin",
+    "boot_package": "F:\\Project\\fpga\\vision_base\\results\\sidebar_hierarchy_20261022\\release\\vision_boot.bin"
+  }
+}

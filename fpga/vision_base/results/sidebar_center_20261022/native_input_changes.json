@@ -1,0 +1,14 @@
+{
+  "changed": [
+    "rtl/vision_ai_bridge.sv",
+    "rtl/vision_control_bridge.sv",
+    "board/ti60f225_v4/rtl/ti60f225_oob_top.v",
+    "board/ti60f225_v4/rtl/vision/vision_display.sv",
+    "board/ti60f225_v4/rtl/vision/vision_osd.sv",
+    "board/ti60f225_v4/rtl/vision/vision_sidebar_overlay.sv",
+    "board/ti60f225_v4/ti60f225_oob.xml"
+  ],
+  "unchanged_count": 166,
+  "baseline": "before_manifest.json",
+  "candidate": "release/manifest.json"
+}

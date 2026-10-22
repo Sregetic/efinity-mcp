@@ -1,0 +1,491 @@
+--- before/board/ti60f225_v4/rtl/vision/vision_osd.sv
++++ board/ti60f225_v4/rtl/vision/vision_osd.sv
+@@ -71,21 +71,35 @@
+ end
+ wire sidebar=ui_state[23],editing=ui_state[22];
+ wire[3:0]selected=ui_state[21:18];wire[2:0]center_status=ui_state[17:15];
+-wire[5:0]side_row=y[10:5];wire[4:0]side_slot=(x[8:0]-9'd16)>>4;
+-wire[4:0]side_py=y[4:0]-5'd8;reg marker_q=0;
++wire root_only=center_status==7,side_left=x<144;
++wire[1:0]side_group=root_only?selected[1:0]:selected<3?0:selected<9?1:selected<13?3:2;
++wire[3:0]side_first=side_group==0?0:side_group==1?3:side_group==2?13:9;
++wire[3:0]side_count=side_group==1?6:side_group==3?4:3;
++wire[3:0]side_index=selected-side_first,side_lines=side_count+4'd3;
++// Keep the original status HUD above the menu, including its right-hand fields.
++wire[5:0]side_row=y[11:6]-6'd2;wire[8:0]side_x=side_left?x[8:0]:x[8:0]-9'd144;
++wire[4:0]side_slot=(side_x-9'd16)>>4;reg[5:0]side_py;reg marker_q=0;
++wire side_selected=side_row=={2'b0,side_index}+6'd1;
++wire side_active=y>=128&&((x<144&&y<576)||(!root_only&&x>=144&&x<304&&side_row<{2'b0,side_lines}));
++function automatic[63:0]group_label(input[1:0]group);
++ begin case(group)
++ 0:group_label="IMAGE   ";1:group_label="VIEW    ";2:group_label="TARGET  ";3:group_label="AI      ";
++ endcase end
++endfunction
++wire[63:0]side_title=group_label(side_left?side_row[1:0]-1'b1:side_group);
+ function automatic[63:0]side_label(input[3:0]item);
+  begin case(item)
+- 0:side_label="MODE    ";1:side_label="THRESH  ";2:side_label="MEDIAN  ";3:side_label="ZOOM    ";
+- 4:side_label="PAN X   ";5:side_label="PAN Y   ";6:side_label="SIZE    ";7:side_label="POS X   ";
++ 0:side_label="MODE    ";1:side_label="THRESH  ";2:side_label="MEDIAN  ";3:side_label="SRC ZOOM";
++ 4:side_label="PAN X   ";5:side_label="PAN Y   ";6:side_label="OUT SIZE";7:side_label="POS X   ";
+  8:side_label="POS Y   ";9:side_label="AI      ";10:side_label="RUN AI  ";11:side_label="SELFTEST";
+  12:side_label="MODEL   ";13:side_label="CENTER  ";14:side_label="TARGET Z";15:side_label="FULLVIEW";
+  endcase end
+ endfunction
+-reg[63:0]side_text;
+-wire side_action=selected==10||selected==11||selected==13||selected==15;
++reg[63:0]side_text,side_value;
+ wire[3:0]menu=ui_state[14:11];
+ wire[10:0]shown=(menu!=0||sidebar)?ui_state[10:0]:threshold;
+ wire[15:0]shown_decimal=decimal(shown),requested_decimal=decimal(requested_threshold);
++wire[31:0]side_number={8'd48+shown_decimal[15:12],8'd48+shown_decimal[11:8],8'd48+shown_decimal[7:4],8'd48+shown_decimal[3:0]};
+ reg[63:0]menu_text;reg[31:0]run_text,test_text;
+ wire ai_page=menu>=8;
+ wire hud=fusion_enabled||ai_page;
+@@ -196,40 +210,59 @@
+   end
+  end
+  bitidx=34-((local_y/2)*5)-(column/2);
+- side_text=0;
++ side_text=0;side_value={side_number,"    "};side_py=y[5:0]-6'd24;
++ case(selected)
++  0:case(shown[2:0])
++   0:side_value="CAMERA  ";1:side_value="GRAY    ";2:side_value="SOBEL   ";3:side_value="SPLIT   ";
++   4:side_value="SOBEL OV";5:side_value="CANNY   ";6:side_value="CANNY OV";7:side_value="SHAPE   ";
++  endcase
++  2:side_value=shown[0]?"ON      ":"OFF     ";
++  3,6:side_value={"W ",side_number,"  "};
++  4,5,7,8:side_value={side_number," PX "};
++  9:case(shown[1:0])
++   0:side_value="OFF     ";1:side_value="FIXED   ";2:side_value="AUTO    ";default:side_value=0;
++  endcase
++  12:side_value=shown[0]?"FOMO    ":"BASE    ";
++  14:case(shown[3:0])
++   0:side_value="AUTO    ";1:side_value="1X      ";2:side_value="2X      ";4:side_value="4X      ";8:side_value="8X      ";default:side_value=0;
++  endcase
++  10,11,13,15:side_value=editing?"K0 APPLY":"K0 EDIT ";
++ endcase
+  if(sidebar)begin
+   ch=32;
+-  if(side_row==0)side_text=editing?"EDIT    ":"MENU    ";
+-   else if((!editing&&side_row>=1&&side_row<=16)||(editing&&side_row==1))
+-    side_text=side_label(editing?selected:side_row[3:0]-1'b1);
+-  else if(editing&&side_row==3)side_text=side_action?"CONFIRM ":"VALUE   ";
+-  else if(editing&&side_row==5)side_text="K2 MORE ";
+-  else if(editing&&side_row==6)side_text="K3 LESS ";
+-  else if(editing&&side_row==8)side_text="K0 APPLY";
+-   else if(side_row==18&&selected==11)side_text={"ST ",test_text," "};
+-   else if(side_row==18&&(selected==9||selected==10||selected==12))side_text={"AI ",run_text," "};
+-   else if(side_row==18)case(center_status)
+-   0:side_text="READY   ";1:side_text="WAIT    ";2:side_text="DONE    ";3:side_text="NO OBJ  ";
+-   4:side_text="BUSY    ";5:side_text="STALE   ";default:side_text="ERROR   ";
+-  endcase
+-  else if(side_row==19)side_text="K0 OK   ";
+-  else if(side_row==20)side_text="HOLD K0 ";
++  if(side_left)begin
++   if(side_row==0)side_text="MENU    ";
++   else if(side_row<=4)side_text=side_title;
++   else if(side_row==5)begin side_text=y[5]?"K3 DOWN ":"K2 UP   ";side_py=y[5:0]-(y[5]?6'd36:6'd12);end
++   else if(side_row==6)begin side_text=y[5]?"HOLD K0 ":root_only?"K0 OPEN ":"SUBMENU ";side_py=y[5:0]-(y[5]?6'd36:6'd12);end
++  end else if(!root_only)begin
++   if(side_row==0)side_text=editing?"EDIT    ":side_title;
++   else if(side_row<=side_count)begin
++    if(y[5])begin if(side_selected)side_text=side_value;end
++    else side_text=side_label(side_first+side_row[3:0]-1'b1);
++    side_py=y[5:0]-(y[5]?6'd36:6'd12);
++   end else if(side_row==side_count+1'b1)begin
++    if(selected==11)side_text={"ST ",test_text," "};
++    else if(selected==9||selected==10||selected==12)side_text={"AI ",run_text," "};
++    else case(center_status)
++     0:side_text="READY   ";1:side_text="WAIT    ";2:side_text="DONE    ";3:side_text="NO OBJ  ";
++     4:side_text="BUSY    ";5:side_text="STALE   ";6:side_text="ERROR   ";default:side_text=0;
++    endcase
++   end else if(side_row==side_count+2'd2)begin
++    side_text=y[5]?"HOLD K0 ":editing?"K0 APPLY":"K0 EDIT ";side_py=y[5:0]-(y[5]?6'd36:6'd12);
++   end
++  end
+   if(side_slot<8)ch=char8(side_text,side_slot[2:0]);
+-  if(((!editing&&side_row=={2'b0,selected}+1'b1)||(editing&&side_row==3&&!side_action))&&side_slot>=12&&side_slot<=15)
+-   case(side_slot[1:0])
+-    0:ch=48+shown_decimal[15:12];1:ch=48+shown_decimal[11:8];
+-    2:ch=48+shown_decimal[7:4];3:ch=48+shown_decimal[3:0];
+-   endcase
+-  bitidx=34-(side_py>>1)*5-(x[3:0]>>1);
++  bitidx=34-(side_py>>1)*5-(side_x[3:0]>>1);
+  end
+ end
+ // Split character selection from font decode; RGB/control use the same extra beat.
+ always @(posedge clk)begin
+  ch_q<=ch;bitidx_q<=bitidx;
+  font_ink<=font[{ch[6:0],bitidx}];
+- active<=sidebar?(x<448&&y<672):(x>=8&&x<((mode==5||mode==6||ai_page)?428:356)&&((y>=4&&y<20)||(shape_enable&&y>=22&&y<38)||(hud&&((y>=40&&y<56)||(y>=58&&y<74)||(y>=76&&y<92)))));
+- ink_region_q<=sidebar?(x>=16&&x<432&&x[3:0]<10&&side_py<14&&bitidx<35):(column<10&&local_y<14&&bitidx<35);
+- marker_q<=sidebar&&!editing&&side_row=={2'b0,selected}+1'b1&&(x<6||(x<448&&(y[4:0]==0||y[4:0]==31)));
++ active<=sidebar?side_active:(x>=8&&x<((mode==5||mode==6||ai_page)?428:356)&&((y>=4&&y<20)||(shape_enable&&y>=22&&y<38)||(hud&&((y>=40&&y<56)||(y>=58&&y<74)||(y>=76&&y<92)))));
++ ink_region_q<=sidebar?(side_x>=16&&side_slot<8&&side_x[3:0]<10&&side_py<14&&bitidx<35):(column<10&&local_y<14&&bitidx<35);
++ marker_q<=sidebar&&side_active&&((side_left&&side_row=={4'b0,side_group}+6'd1&&(side_x<4||(root_only&&(y[5:0]==0||y[5:0]==63))))||(!side_left&&side_selected&&(side_x<4||y[5:0]==0||y[5:0]==63)));
+ end
+ assign ink=active&&((ink_region_q&&font_ink)||marker_q);
+ endmodule
+--- before/docs/BOARD_BUTTON_DEMO_20261009.md
++++ docs/BOARD_BUTTON_DEMO_20261009.md
+@@ -3,6 +3,8 @@
+ 当前制品、SRAM/Flash部署和资源/时序，以 `docs/PROJECT_MASTER_STATUS.md` 最新摘要及其对应报告为准。实物卡片识别、人工按键和断电启动的验收分别记录；下方注明历史的部署段落不代表当前状态。
+ 
+ ## 2026-10-22 新侧栏操作（离线候选，尚未上板）
++
++本日后续已改为两层窄菜单：KEY0长按打开IMAGE/VIEW/TARGET/AI一级，短按确认分类后才展开二级；在二级再进入编辑、调节和确认。一级144像素、两层总宽304像素，行高64像素，MODE直接显示名称。长按KEY0逐级取消/返回/关闭；冻结/历史保持。当前操作和制品见 [两层菜单说明](SIDEBAR_HIERARCHY_20261022.md)，下面单层描述为较早候选。
+ 
+ 新位流与配套完整DDR应用下，KEY0长按打开/收起侧栏，KEY2/KEY3短按上下选择；KEY0短按进入编辑，KEY2/KEY3增减草稿，再按KEY0确认，长按KEY0取消并返回。菜单关闭时保留原模式/阈值/历史索引短按，KEY2/KEY3长按冻结/历史不变。CENTER确认后自动将一个新有效目标居中并等比放大一次，TARGET Z设倍率上限，FULLVIEW恢复全幅；F0/F1支持，F2/F3显示BUSY。无目标、旧结果不移动构图。
+ 
+--- before/docs/PROJECT_MASTER_STATUS.md
++++ docs/PROJECT_MASTER_STATUS.md
+@@ -1,4 +1,14 @@
+ # 项目总目标与状态（统一范围表）
++
++## 2026-10-22 两层窄菜单与模式文字（离线候选，未烧录）
++
++根据用户反馈，一级收至144px，确认分类后再向右展开160px二级，两层共304px（原448px）；行高32→64px。IMAGE/VIEW/TARGET/AI四组覆盖原16项，MODE直接显示8种名称，AI/模型/开关/倍率显示文字或单位，逐级取消/返回，确认前参数保持。菜单从y128开始，原顶部状态栏完整保留，原居中/放大、所有算法、冻结历史与RGB24回读保持。
++
++最终57906/60800XLR（95.24%）、242/256RAM、62/160DSP，较上一单层版仅+85XLR、RAM/DSP不变，余2894XLR/14RAM/98DSP；WNS+0.188ns/WHS+0.026ns、未分配核心引脚0。菜单仍1RAM字库，image_snapshot仍5RAM；UI字和CDC宽度保持。完整相机DDR应用185472B（本轮+704B），BSS66104B不变，紧凑救援6784B仍在8KiB内。原生输入仅vision_osd.sv变化，其他算法/相机/CPU参数保持。
++
++严格RV32I2591断言/407组几何、四分类/16子项及8诊断向量通过；19核心、OSD文字/边界、三幅完整1080p菜单合成、原控制与RGB888回读定向回归通过。菜单外5936988像素及同步一致，图像/同步无新增流水拍。上一轮38完整视频回归不作为本轮新执行记录。预览是RTL合成场景，不是相机新照片。
++
++源码/artifacts/camera为该候选；配套位流、DDR应用和189904B离线启动包在results/sidebar_hierarchy_20261022/。本轮未访问板卡、未写SRAM或Flash，最近现场记录仍为下方10-18/10-17版本，未刷新实物状态。操作、资源与边界见docs/SIDEBAR_HIERARCHY_20261022.md和本轮REPORT.md/acceptance.json；新菜单需本轮位流与DDR应用配套。
+ 
+ ## 2026-10-22 侧栏菜单与单目标居中（离线候选，未烧录）
+ 
+--- before/docs/SIDEBAR_CENTER_20261022.md
++++ docs/SIDEBAR_CENTER_20261022.md
+@@ -1,4 +1,6 @@
+ # 侧栏菜单与单目标居中、放大
++
++本日后续UI已修订为两层窄菜单，最新操作及制品见[两层侧栏说明](SIDEBAR_HIERARCHY_20261022.md)。本文件保留首次单层候选的操作与验证记录；居中、帧身份和构图算法保持。
+ 
+ 日期：2026-10-22。**离线候选，已生成配套位流和完整 DDR 应用；本轮未连接板卡、未写 SRAM 或 Flash。** 当前现场部署记录仍见总状态中 10-18 的 SRAM 与 10-17 的 Flash 段落。
+ 
+--- before/docs/SYSTEM_SCOPE_AND_ROADMAP.md
++++ docs/SYSTEM_SCOPE_AND_ROADMAP.md
+@@ -1,4 +1,8 @@
+ # 完整视觉系统：长期范围与实施路线
++
++## 2026-10-22 两层窄菜单修订
++
++一级144px、确认后展开二级，总宽304px；行高64px，MODE/AI/模型/开关/倍率改文字显示，原顶部HUD和单目标构图保持。最终57906XLR/242RAM/62DSP，较单层+85XLR，余2894XLR/14RAM，WNS+0.188ns/WHS+0.026ns；UI无新增RAM/流水，原RGB24回读仍5RAM。2591固件断言/407几何、19核心及文字/合成/回读定向验证通过；5936988个菜单外像素一致。本轮仅离线，未写SRAM/Flash，原38视频回归未重复计本轮结果，实物状态仍按总状态历史硬件记录。操作/制品见docs/SIDEBAR_HIERARCHY_20261022.md、results/sidebar_hierarchy_20261022/REPORT.md与总状态最新摘要，完整范围保持。
+ 
+ ## 2026-10-22 侧栏与单目标构图离线候选
+ 
+--- before/firmware/vision/control_service.h
++++ firmware/vision/control_service.h
+@@ -67,6 +67,15 @@
+  SIDE_SIZE,SIDE_POS_X,SIDE_POS_Y,SIDE_AI,SIDE_RUN,SIDE_SELFTEST,SIDE_MODEL,
+  SIDE_CENTER,SIDE_TARGET_ZOOM,SIDE_FULL_VIEW,SIDE_COUNT };
+ enum { CENTER_READY,CENTER_WAIT,CENTER_DONE,CENTER_NONE,CENTER_BUSY,CENTER_STALE,CENTER_ERROR };
++static unsigned control_sidebar_group(unsigned item){return item<3?0:item<9?1:item<13?3:2;}
++static unsigned control_sidebar_first(unsigned group){return group==0?SIDE_MODE:group==1?SIDE_ZOOM:group==2?SIDE_CENTER:SIDE_AI;}
++static unsigned control_sidebar_count(unsigned group){
++#ifdef VISION_FOMO
++ return group==1?6:group==3?4:3;
++#else
++ return group==1?6:3;
++#endif
++}
+ static unsigned control_sidebar_value(struct vision_control_state *s){
+  if(s->sidebar_edit)return s->edit_value;
+  unsigned i=s->sidebar_item;
+@@ -127,9 +136,10 @@
+  if(keys&8){
+   if(!s->sidebar_open)s->sidebar_open=1;
+   else if(s->sidebar_edit)s->sidebar_edit=0;
+-  else s->sidebar_open=0;
++  else s->sidebar_open--;
+  }else if(keys&1){
+-  if(s->sidebar_edit)control_sidebar_confirm(s);
++  if(s->sidebar_open==1)s->sidebar_open=2;
++  else if(s->sidebar_edit)control_sidebar_confirm(s);
+   else{
+    s->edit_value=control_sidebar_value(s);s->edit_mode=s->settings&7;
+    for(unsigned k=0;k<4;k++)s->edit_roi[k]=s->roi[k];
+@@ -138,12 +148,14 @@
+  }else for(unsigned key=1;key<=2;key++)if(keys&(1u<<key)){
+   if(s->sidebar_edit)control_sidebar_adjust(s,key==1);
+   else{
+-   unsigned i=s->sidebar_item;
+-   i=key==1?(i?i-1:SIDE_COUNT-1):(i+1==SIDE_COUNT?0:i+1);
+-#ifndef VISION_FOMO
+-   if(i==SIDE_MODEL)i=key==1?SIDE_SELFTEST:SIDE_CENTER;
+-#endif
+-   s->sidebar_item=i;
++   unsigned group=control_sidebar_group(s->sidebar_item);
++   if(s->sidebar_open==1){
++    group=key==1?(group?group-1:3):(group==3?0:group+1);
++    s->sidebar_item=control_sidebar_first(group);
++   }else{
++    unsigned first=control_sidebar_first(group),count=control_sidebar_count(group),i=s->sidebar_item-first;
++    s->sidebar_item=first+(key==1?(i?i-1:count-1):(i+1==count?0:i+1));
++   }
+   }
+  }
+  s->feature_dirty=1;
+@@ -160,7 +172,10 @@
+  else if(m==8)v=s->ai_policy;
+  else if(m==10)v=(s->ai_manual>>1)&1;
+  if(s->sidebar_open)v=control_sidebar_value(s);
+- return (s->sidebar_open<<31)|(s->sidebar_edit<<30)|(s->sidebar_item<<26)|(s->center_status<<23)|
++ // Status7 is the category-list tag; a child page carries the real center status0..6.
++ unsigned item=s->sidebar_open==1?control_sidebar_group(s->sidebar_item):s->sidebar_item;
++ unsigned status=s->sidebar_open==1?7:s->center_status;
++ return ((uint32_t)(s->sidebar_open!=0)<<31)|(s->sidebar_edit<<30)|(item<<26)|(status<<23)|
+         (s->shape_threshold<<15)|(m<<11)|v;
+ }
+ static void control_event(uint32_t event){
+--- before/scripts/test_sidebar_center.py
++++ scripts/test_sidebar_center.py
+@@ -2,7 +2,7 @@
+ import argparse,ast,json,subprocess
+ from pathlib import Path
+ ROOT=Path(__file__).resolve().parents[1]
+-p=argparse.ArgumentParser();p.add_argument('--output-dir',type=Path,default=ROOT/'results/sidebar_center_20261022/control')
++p=argparse.ArgumentParser();p.add_argument('--output-dir',type=Path,default=ROOT/'results/sidebar_hierarchy_20261022/control')
+ out=p.parse_args().output_dir;out.mkdir(parents=True,exist_ok=True)
+ source=r'''
+ #include <stdint.h>
+@@ -31,7 +31,13 @@
+ static void reset(void){for(unsigned i=0;i<32;i++)c[i]=0;for(unsigned i=0;i<64;i++)f[i]=0;c[4]=(1<<8)|(1<<6);c[5]=100;f[0]=0x26101003;f[4]=10;f[5]=100;f[7]=5;control_init();state.settings=(state.settings&~48u)|16;}
+ static void apply(void){control_service_step();c[3]&=~1u;control_service_step();}
+ static void accept(void){c[4]&=~16u;c[4]|=1u<<7;c[6]=c[0x34/4];control_service_step();}
+-static void select(unsigned item){if(!state.sidebar_open)key(8);while(state.sidebar_item!=item)key(4);}
++static void select(unsigned item){
++ if(state.sidebar_edit)key(8);
++ if(state.sidebar_open==2&&control_sidebar_group(state.sidebar_item)!=control_sidebar_group(item))key(8);
++ if(!state.sidebar_open)key(8);
++ if(state.sidebar_open==1){while(control_sidebar_group(state.sidebar_item)!=control_sidebar_group(item))key(4);key(1);}
++ while(state.sidebar_item!=item)key(4);check(state.sidebar_open==2);
++}
+ static void action(unsigned item){select(item);key(1);check(state.sidebar_edit);key(1);check(!state.sidebar_edit);}
+ static void geometry(unsigned x,unsigned y,unsigned w,unsigned h,unsigned render,unsigned valid){
+  uint64_t box=(1ull<<63)|((uint64_t)valid<<62)|(2ull<<60)|((uint64_t)(x+2)<<36)|((uint64_t)(y+2)<<24)|((uint64_t)(x+w+1)<<12)|(y+h+1);
+@@ -53,15 +59,28 @@
+  uint32_t isa;__asm__ volatile("csrr %0,misa":"=r"(isa));check((isa&(1u<<8))&&!(isa&0x102du));
+  reset();check(offsetof(struct vision_control_state,sidebar_open)==120);
+  state.roi[0]=123;state.ai_policy=2;state.sidebar_open=1;state.center_stage=3;control_sidebar_reset();check(state.roi[0]==123&&state.ai_policy==2&&!state.sidebar_open&&!state.center_stage);reset();
+- unsigned original=state.settings;key(8);check(state.sidebar_open&&!state.sidebar_edit);trace("root");
+- key(2);check(state.sidebar_item==15);key(4);check(state.sidebar_item==0);
++ unsigned original=state.settings;key(8);check(state.sidebar_open==1&&!state.sidebar_edit);trace("root");
++ key(2);check(state.sidebar_item==SIDE_AI&&state.sidebar_open==1);key(4);check(state.sidebar_item==SIDE_MODE);
++ key(1);check(state.sidebar_open==2&&!state.sidebar_edit&&state.settings==original);trace("image");
++ key(2);check(state.sidebar_item==SIDE_MEDIAN);key(4);check(state.sidebar_item==SIDE_MODE);
+  key(1);key(2);check(state.edit_value==6&&state.settings==original);trace("edit_mode");
+- key(8);check(!state.sidebar_edit&&state.sidebar_open&&state.settings==original);trace("cancel");key(8);check(!state.sidebar_open);
++ key(8);check(!state.sidebar_edit&&state.sidebar_open==2&&state.settings==original);trace("cancel");
++ key(8);check(state.sidebar_open==1&&!state.sidebar_edit);key(8);check(!state.sidebar_open);
++ for(unsigned group=0;group<4;group++){
++  reset();unsigned saved=state.settings;key(8);for(unsigned j=0;j<group;j++)key(4);
++  check(control_sidebar_group(state.sidebar_item)==group&&state.sidebar_open==1&&((control_ui(&state)>>23)&7)==7);
++  key(1);check(state.sidebar_open==2&&!state.sidebar_edit&&state.settings==saved&&!state.pending);
++  unsigned first=control_sidebar_first(group),count=control_sidebar_count(group);
++  for(unsigned j=0;j<count;j++){check(state.sidebar_item==first+j&&!state.pending&&state.settings==saved);key(4);}
++  check(state.sidebar_item==first);key(2);check(state.sidebar_item==first+count-1);
++  key(8);check(state.sidebar_open==1&&!state.sidebar_edit);key(8);check(!state.sidebar_open);
++ }
++ reset();
+  select(SIDE_MODE);key(1);key(2);check(state.sidebar_edit&&state.settings==original);key(1);check((state.settings&7)==6);
+  select(SIDE_THRESHOLD);key(1);for(unsigned i=0;i<200;i++)key(4);check(state.edit_value==16&&((state.settings>>20)&2047)==80);key(1);check(((state.settings>>20)&2047)==16&&((state.settings>>9)&2047)==128);
+  key(1);for(unsigned i=0;i<200;i++)key(2);check(state.edit_value==2047);key(8);check(((state.settings>>20)&2047)==16);
+  select(SIDE_MEDIAN);key(1);key(4);check(state.settings&8);key(1);check(!(state.settings&8));
+- select(SIDE_ZOOM);key(1);key(2);check(state.edit_value==960&&state.roi[1]==((1920u<<12)|1080)&&!state.pending);trace("edit_zoom");
++ select(SIDE_ZOOM);trace("view");key(1);key(2);check(state.edit_value==960&&state.roi[1]==((1920u<<12)|1080)&&!state.pending);trace("edit_zoom");
+  key(8);check(state.roi[1]==((1920u<<12)|1080));key(1);key(2);key(1);check(state.key_roi_dirty&&state.roi[1]==((960u<<12)|540));
+  apply();check(state.pending==2);accept();check(state.good&&!state.pending);
+  select(SIDE_PAN_X);key(1);key(2);check((state.edit_roi[0]>>12)==512&&(state.roi[0]>>12)==480);key(8);check((state.roi[0]>>12)==480);
+@@ -118,15 +137,18 @@
+ for line in r.stdout.splitlines():
+  if line.startswith('UI '):
+   _,name,word,settings=line.split();ui.append(dict(name=name,word=int(word,16),ui=((int(word,16)>>23)<<15)|(int(word,16)&32767),settings=int(settings,16)))
+-assert ui[0]['ui']==0x800005 and ui[3]['ui']==0xcc03c0,ui
++by_name={v['name']:v['ui'] for v in ui}
++assert by_name['root']==0x838005 and by_name['image']==0x800005 and by_name['edit_mode']==0xc00006 and by_name['edit_zoom']==0xcc03c0,ui
+ # Exercise the diagnostic decoder without importing its hardware-only CLI.
+ tree=ast.parse((ROOT/'scripts/vision_control.py').read_text())
+ decode=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='decode_ui')
+ namespace={};exec(compile(ast.Module(body=[decode],type_ignores=[]),'decode_ui','exec'),namespace)
+ for v in ui:
+  word=v['word'];record=namespace['decode_ui']((0x56495331<<160)|(0x26101040<<128)|(v['settings']<<96)|(word<<64))
++ item=(word>>26)&15;status=(word>>23)&7;level=0 if not word>>31 else 1 if status==7 else 2
++ group=item if level==1 else (0 if item<3 else 1 if item<9 else 3 if item<13 else 2)
+  assert record==dict(menu=(word>>11)&15,menu_value=word&2047,shape_threshold=(word>>15)&255,index=(v['settings']>>15)&7,
+-                     sidebar_open=(word>>31)&1,sidebar_edit=(word>>30)&1,sidebar_item=(word>>26)&15,center_status=(word>>23)&7),record
++                     sidebar_open=(word>>31)&1,sidebar_edit=(word>>30)&1,sidebar_item=item,center_status=status,sidebar_level=level,sidebar_group=group),record
+ (out/'ui_vectors.json').write_text(json.dumps(ui,indent=2));(out/'ui_vectors.mem').write_text(''.join(f'{v["ui"]:06x}\n' for v in ui))
+ checks=int(r.stdout.split('checks=')[1].split()[0],16)
+ (out/'result.json').write_text(json.dumps(dict(passed=True,isa='RV32I',checks=checks,geometry_cases=407,diagnostic_decode_vectors=len(ui),scope='Production control/MMIO/geometry/FOMO result logic on QEMU; no board timing or real recognition acceptance',ui_vectors=ui),indent=2))
+--- before/scripts/vision_control.py
++++ scripts/vision_control.py
+@@ -26,8 +26,10 @@
+ def decode_ui(v):
+  if v>>160!=0x56495331 or (v>>128)&0xffffffff!=0x26101040:raise RuntimeError('Key UI diagnostic mismatch')
+  s=(v>>96)&0xffffffff
++ item=(v>>90)&15;status=(v>>87)&7;level=0 if not((v>>95)&1) else 1 if status==7 else 2
++ group=item if level==1 else (0 if item<3 else 1 if item<9 else 3 if item<13 else 2)
+  return dict(menu=(v>>75)&15,menu_value=(v>>64)&2047,shape_threshold=(v>>79)&255,index=(s>>15)&7,
+-             sidebar_open=(v>>95)&1,sidebar_edit=(v>>94)&1,sidebar_item=(v>>90)&15,center_status=(v>>87)&7)
++             sidebar_open=(v>>95)&1,sidebar_edit=(v>>94)&1,sidebar_item=item,center_status=status,sidebar_level=level,sidebar_group=group)
+ p=argparse.ArgumentParser();p.add_argument('--sensor',choices=['sc431hai','sc2210'],default='sc431hai');p.add_argument('--url',default='ftdi://0x0403:0x6011:4:3/2');p.add_argument('--mode',type=int);p.add_argument('--threshold',type=int);p.add_argument('--sobel-threshold',type=int);p.add_argument('--canny-threshold',type=int);p.add_argument('--median',type=int,choices=[0,1]);p.add_argument('--memory',type=int,choices=range(4));p.add_argument('--index',type=int,choices=range(7),help='F2:0..5 static history,6 autoplay; F3:0..5 comparison');p.add_argument('--page',type=int,default=0,choices=range(33));p.add_argument('--color-order',type=int,choices=range(6));p.add_argument('--gamma','--tone',dest='gamma',type=int,choices=[0,1,2,3]);p.add_argument('--gain-r',type=int);p.add_argument('--gain-g',type=int);p.add_argument('--gain-b',type=int);p.add_argument('--samples',type=int,default=5);p.add_argument('--ae',type=int,choices=[0,1]);p.add_argument('--exposure',type=int);p.add_argument('--lcd-test',type=int,choices=[0,1]);p.add_argument('--lcd-bist',type=int,choices=[0,1]);p.add_argument('--lcd-backlight',type=int,choices=[0,1]);p.add_argument('--shape',type=int,choices=[0,1]);p.add_argument('--shape-threshold',type=int,choices=range(1,256))
+ p.add_argument('--menu',type=int,choices=range(11));p.add_argument('--key-event',type=int,choices=range(64),help='Inject the same short/long event bits as hardware keys for automated policy checks');
+ p.add_argument('--ai-policy',type=int,choices=[0,1,2],help='0 off,1 configured ROI on displayed frame,2 geometry-guided ROI');p.add_argument('--ai-status',action='store_true');
+--- before/sim/vision/tb_osd.sv
++++ sim/vision/tb_osd.sv
+@@ -8,10 +8,10 @@
+ task character(input integer position,input[7:0]wanted);
+ begin @(negedge clk);x=8+12*position;@(posedge clk);#1;if(dut.ch_q!==wanted||!active)$fatal(1,"OSD character %0d: %c expected %c",position,dut.ch_q,wanted);end
+ endtask
+-task side_character(input integer position,input[7:0]wanted);
+-begin @(negedge clk);y=18*32+8;x=16+16*position;@(posedge clk);#1;if(dut.ch_q!==wanted||!active)$fatal(1,"sidebar status %0d: %c expected %c",position,dut.ch_q,wanted);end
++task side_character(input integer line,input integer offset,input integer position,input[7:0]wanted);
++begin @(negedge clk);y=128+line*64+offset;x=144+16+16*position;@(posedge clk);#1;if(dut.ch_q!==wanted||!active)$fatal(1,"sidebar character %0d: %c expected %c",position,dut.ch_q,wanted);end
+ endtask
+-integer j,expected;
++integer j,expected,m,k;reg[63:0]mode_names[0:7];
+ initial begin
+  for(j=0;j<2048;j=j+1)begin expected=((j/1000)<<12)|(((j/100)%10)<<8)|(((j/10)%10)<<4)|(j%10);if(dut.decimal(j)!==expected[15:0])$fatal(1,"decimal %0d",j);end
+  character(0,"S");character(1,"O");character(2,"B");character(3,"E");character(4,"L");
+@@ -47,10 +47,28 @@
+  ui=(10<<11)|1;character(3,"F");character(4,"O");character(5,"M");character(6,"O");
+  y=76;packet[159:128]=2;character(0,"M");character(1,"S");
+  fusion=0;packet[0]=0;ui=24'h800000|(11<<18);packet[14:13]=2;
+- side_character(0,"S");side_character(1,"T");side_character(3,"P");side_character(6,"S");
+- packet[14:13]=3;side_character(3,"F");side_character(6,"L");
+- ui=24'h800000|(9<<18);packet[12:11]=1;side_character(0,"A");side_character(1,"I");side_character(3,"R");side_character(5,"N");
+- packet[12:11]=2;side_character(3,"D");side_character(6,"E");
+- $display("PASS pipelined OSD mode/threshold, fusion TEST/OLD, independent IDs, signed scores, sidebar AI/selftest visible with AI OFF");$finish;
++ side_character(5,24,0,"S");side_character(5,24,1,"T");side_character(5,24,3,"P");side_character(5,24,6,"S");
++ packet[14:13]=3;side_character(5,24,3,"F");side_character(5,24,6,"L");
++ ui=24'h800000|(9<<18);packet[12:11]=1;side_character(5,24,0,"A");side_character(5,24,1,"I");side_character(5,24,3,"R");side_character(5,24,5,"N");
++ packet[12:11]=2;side_character(5,24,3,"D");side_character(5,24,6,"E");
++ mode_names[0]="CAMERA  ";mode_names[1]="GRAY    ";mode_names[2]="SOBEL   ";mode_names[3]="SPLIT   ";
++ mode_names[4]="SOBEL OV";mode_names[5]="CANNY   ";mode_names[6]="CANNY OV";mode_names[7]="SHAPE   ";
++ for(m=0;m<8;m=m+1)begin
++  ui=24'hc00000|m;
++  for(k=0;k<8;k=k+1)side_character(1,36,k,mode_names[m][63-8*k-:8]);
++ end
++ ui=24'h800000|(2<<18)|1;side_character(3,36,0,"O");side_character(3,36,1,"N");
++ ui=24'h800000|(9<<18)|2;side_character(1,36,0,"A");side_character(1,36,3,"O");
++ ui=24'h800000|(12<<18)|1;side_character(4,36,0,"F");side_character(4,36,3,"O");
++ ui=24'h800000|(14<<18);side_character(2,36,0,"A");side_character(2,36,3,"O");
++ ui=24'h800000|(3<<18)|960;side_character(1,36,0,"W");side_character(1,36,2,"0");side_character(1,36,3,"9");
++ @(negedge clk);ui=24'h838005;x=16;y=100;@(posedge clk);#1;if(active)$fatal(1,"sidebar covered original status HUD");
++ @(negedge clk);x=144;y=228;@(posedge clk);#1;if(active)$fatal(1,"root opened child without confirm");
++ @(negedge clk);x=143;@(posedge clk);#1;if(!active)$fatal(1,"root width");
++ @(negedge clk);ui=24'h800005;x=303;y=511;@(posedge clk);#1;if(!active)$fatal(1,"child extent");
++ @(negedge clk);x=304;@(posedge clk);#1;if(active)$fatal(1,"child width");
++ @(negedge clk);x=160;y=512;@(posedge clk);#1;if(active)$fatal(1,"image group height");
++ @(negedge clk);ui=24'h8c0780;y=703;@(posedge clk);#1;if(!active)$fatal(1,"view group height");
++ $display("PASS OSD legacy HUD, two-level widths144/304 row64, all8 named modes, symbolic AI/model/median/zoom, selftest with AI OFF");$finish;
+ end
+ endmodule
+--- before/sim/vision/tb_sidebar_video.sv
++++ sim/vision/tb_sidebar_video.sv
+@@ -5,25 +5,29 @@
+ reg[3:0]ai_status=0;
+ wire ode,ohs,ovs;wire[23:0]orgb;
+ vision_sidebar_overlay dut(.*);
+-reg[23:0]words[0:5];integer pix,frame,row,col,file,good=0,outside=0;reg[23:0]expected;reg[31:0]rng=32'h4312210;
++reg[23:0]words[0:2];integer pix,frame,row,col,file,good=0,outside=0;reg[23:0]expected;reg[31:0]rng=32'h4312210;
++function inside_panel(input integer xx,yy,input[23:0]ui);
++ begin inside_panel=ui[23]&&yy>=128&&((xx<144&&yy<576)||(ui[17:15]!=7&&xx>=144&&xx<304&&yy<512));end
++endfunction
+ task tick;
+  begin @(posedge clk);#1;
+   if(ode!==de||ohs!==hs||ovs!==vs)$fatal(1,"RGB/sync alignment");
+-  if(ode&&(!ui_state[23]||col>=448||row>=672))begin
++  if(ode&&!inside_panel(col,row,ui_state))begin
+    if(orgb!==rgb)$fatal(1,"pixel changed outside sidebar at %0d,%0d",col,row);outside=outside+1;
+   end
+   @(negedge clk);
+  end
+ endtask
+ initial begin
+- words[0]=24'h800005;words[3]=24'hcc03c0; // Golden RV32I root/edit-zoom UI words.
++ words[0]=24'h838005;words[1]=24'h800005;words[2]=24'hc00006; // Golden RV32I root/IMAGE/edit-mode words.
+  for(pix=65;pix<=90;pix=pix+1)if(dut.sidebar_font.glyph(pix)==0)$fatal(1,"missing uppercase UI glyph %0d",pix);
+  repeat(2)@(negedge clk);rst_n=1;col=1000;row=1000;
+  for(pix=0;pix<65536;pix=pix+1)begin rng=rng^(rng<<13);rng=rng^(rng>>17);rng=rng^(rng<<5);rgb=rng[23:0];de=rng[0];hs=rng[1];vs=rng[2];tick;end
+  // Preview comes from the production font/compositor, on a synthetic test scene.
+- for(frame=0;frame<2;frame=frame+1)begin
+-  ui_state=words[frame==0?0:3];de=0;hs=0;vs=1;tick;vs=0;tick;
++ for(frame=0;frame<3;frame=frame+1)begin
++  ui_state=words[frame];de=0;hs=0;vs=0;tick;vs=1;tick;vs=0;tick;
+   if(frame==0)file=$fopen("results/vision_features/sidebar_menu.ppm","wb");
++  else if(frame==1)file=$fopen("results/vision_features/sidebar_submenu.ppm","wb");
+   else file=$fopen("results/vision_features/sidebar_edit.ppm","wb");
+   $fwrite(file,"P6\n1920 1080\n255\n");
+   for(row=0;row<1080;row=row+1)begin
+@@ -31,9 +35,9 @@
+     de=1;rgb=(col>=850&&col<1070&&row>=430&&row<650)?24'h30a0e0:((col%120==0||row%120==0)?24'h606060:24'h303c44);
+     @(posedge clk);#1;
+     if(!ode)$fatal(1,"DE lost");
+-    if(col>=448||row>=672)begin if(orgb!==rgb)$fatal(1,"sidebar leaked outside rectangle");outside=outside+1;end
+-    if(col==0&&row==0&&orgb!=24'h101010)$fatal(1,"sidebar background absent");
+-    if(col>=16&&col<400&&row<672&&orgb==24'hffff80)good=good+1;
++    if(!inside_panel(col,row,ui_state))begin if(orgb!==rgb)$fatal(1,"sidebar leaked outside panels x=%0d y=%0d scan=%0d,%0d rgb=%h expected=%h",col,row,dut.x,dut.y,orgb,rgb);outside=outside+1;end
++    if(col==0&&row==128&&orgb!=24'h101010)$fatal(1,"sidebar background absent");
++    if(col>=16&&col<304&&inside_panel(col,row,ui_state)&&orgb==24'hffff80)good=good+1;
+     $fwrite(file,"%c%c%c",orgb[23:16],orgb[15:8],orgb[7:0]);@(negedge clk);
+    end
+    de=0;hs=1;tick;hs=0;tick;
+--- /dev/null
++++ docs/SIDEBAR_HIERARCHY_20261022.md
+@@ -0,0 +1,53 @@
++# 两层侧栏菜单与文字模式名
++
++2026-10-22 离线修订。替代上一轮单层16项菜单；本轮未连接板卡、未写SRAM或Flash。现场状态仍以总状态的硬件记录为准。
++
++## 布局
++
++- 一级菜单宽144像素；确认分类后向右展开160像素的二级菜单，总宽304像素。原单层宽448像素。
++- 每项行高64像素，原来为32像素。二级选中项上方是名称，下方是文字状态或带单位的数值。
++- 菜单从y=128开始，完整保留上方原状态栏；原图ISP旁路和菜单外像素保持。
++- 编辑仍在二级菜单内完成，不再增加第三列。二级高度按选项数变化，最长VIEW组为576像素。
++
++## 分类与选项
++
++| 一级 | 二级 | 显示含义 |
++|---|---|---|
++| IMAGE 图像 | MODE | 直接显示CAMERA / GRAY / SOBEL / SPLIT / SOBEL OV / CANNY / CANNY OV / SHAPE |
++| IMAGE 图像 | THRESH | 当前模式阈值；Sobel、Canny、SHAPE仍独立保存 |
++| IMAGE 图像 | MEDIAN | ON / OFF，中值滤波开关 |
++| VIEW 视图 | SRC ZOOM | 源裁剪缩放；W表示源窗口宽度，例如W 0960 |
++| VIEW 视图 | PAN X / PAN Y | 源窗口位置，数值后带PX，单位为源像素 |
++| VIEW 视图 | OUT SIZE | 输出窗口尺寸；W表示输出宽度 |
++| VIEW 视图 | POS X / POS Y | 输出窗口位置，PX为显示像素 |
++| TARGET 目标 | CENTER | 对一个新的有效目标执行一次居中、等比放大 |
++| TARGET 目标 | TARGET Z | AUTO / 1X / 2X / 4X / 8X，居中放大的倍率上限 |
++| TARGET 目标 | FULLVIEW | 恢复当前1920×1080整幅、零偏移并退出ROI |
++| AI 智能 | AI | OFF关闭、FIXED固定ROI单次、AUTO几何引导自动分析 |
++| AI 智能 | RUN AI | 请求一次分析 |
++| AI 智能 | SELFTEST | 定点自检；页脚显示ST NONE/WAIT/PASS/FAIL |
++| AI 智能 | MODEL | BASE原分析支路 / FOMO相机模型 |
++
++MODE对应：CAMERA原图，GRAY灰度，SOBEL为Sobel边缘，SPLIT为分屏，SOBEL OV为Sobel彩色叠加，CANNY为Canny边缘，CANNY OV为Canny彩色叠加，SHAPE为几何识别。OV表示overlay，不再用005、006代替模式名。
++
++当前文字继续使用原ASCII字库，未新增大字库或UI帧缓存。几何识别、模型精度、FOMO分析范围和耗时保持原状态，本轮只调整交互与显示。
++
++## 按键顺序
++
++1. 长按KEY0，只打开一级分类。
++2. KEY2/KEY3上下选分类，短按KEY0确认后才展开二级菜单。
++3. KEY2/KEY3选二级项目，短按KEY0进入编辑或动作确认。
++4. 编辑时KEY2/KEY3调节，MODE等项目直接显示草稿文字名称；再次短按KEY0提交，返回二级列表。
++5. 长按KEY0逐级返回：取消编辑→二级列表→一级分类→关闭。取消时实际参数保持原值。
++
++KEY2/KEY3的原长按冻结/历史功能、KEY1复位保持。关闭菜单后，原模式切换、阈值和历史索引短按规则继续工作。CENTER、FULLVIEW及原帧持有/提交机制见上一轮说明；新位置为TARGET组，功能保持。
++
++## 接口与验证
++
++复用原32bit UI字和24bit视频域状态，无新增跨时钟域总线或片上RAM端口。原低23bit语义保持；高位状态码7仅表示一级分类，其余0–6仍为原居中状态。一级时条目域表示分类，二级时表示原16项条目ID。诊断增加sidebar_level和sidebar_group，原命令0x61/0x62保持。
++
++固件sidebar_open字段为0关闭、1一级、2二级；结构地址、CON4魔数和字段布局保持。完整DDR应用进入时仍清除侧栏扩展区并保留原视频设置，8KiB紧凑救援程序仍用旧紧凑菜单。
++
++本轮离线证据与最终资源：`F:/Project/fpga/vision_base/results/sidebar_hierarchy_20261022/REPORT.md`、`resources.json`、`acceptance.json`。预览sidebar_menu.png / sidebar_submenu.png / sidebar_edit.png来自实际RTL输出的合成场景，不是相机实拍。
++
++新菜单需本轮位流与完整DDR程序配套；仅运行原Flash应用仍为原菜单。板上按键、实际画面和长时验收待硬件返回后进行，Flash保持现状。

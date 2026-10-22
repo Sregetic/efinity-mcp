@@ -1,0 +1,88 @@
+{
+  "offline_passed": true,
+  "native_compile_passed": true,
+  "native_log": "native_release.log",
+  "resources": {
+    "before": {
+      "xlr": 56916,
+      "ram": 241,
+      "dsp": 62,
+      "wns_ns": 0.285,
+      "whs_ns": 0.026
+    },
+    "after": {
+      "xlr": 57821,
+      "ram": 242,
+      "dsp": 62,
+      "wns_ns": 0.275,
+      "whs_ns": 0.026,
+      "unassigned_core_pins": 0,
+      "missing_interface_pins": 14,
+      "xlr_percent": 95.1
+    },
+    "capacity": {
+      "xlr": 60800,
+      "ram": 256,
+      "dsp": 160
+    },
+    "increased": {
+      "xlr": 905,
+      "ram": 1,
+      "dsp": 0
+    },
+    "free": {
+      "xlr": 2979,
+      "ram": 14,
+      "dsp": 98
+    },
+    "image_snapshot_ram": 5,
+    "sidebar_font_ram": 1,
+    "first_pass": {
+      "xlr": 57617,
+      "ram": 245
+    },
+    "note": "Whole-system native route values, final AI/selftest footer included; no board programming."
+  },
+  "control_checks": 2525,
+  "geometry_cases": 407,
+  "strict_qemu_misa_checked": true,
+  "core_tests": 19,
+  "video_tests": 38,
+  "final_osd_status_regression": true,
+  "ui_outside_pixels_equal": 3577692,
+  "lookup_equivalence_clocks": 262144,
+  "readback_rgb_bits": 24,
+  "image_readback_retained": true,
+  "camera_bypass_unchanged": true,
+  "extra_video_clocks": 1,
+  "video_clock_mhz": 148.5,
+  "continuous_tracking": false,
+  "hardware_access": false,
+  "sram_written": false,
+  "configuration_flash_written": false,
+  "application_flash_written": false,
+  "physical_acceptance": false,
+  "physical_skipped": [
+    "physical key operation",
+    "real target detection/centering",
+    "camera/HDMI display and temporal behavior",
+    "long-run and power-cycle"
+  ],
+  "firmware": {
+    "full_ddr_load_bytes": 184768,
+    "full_ddr_increase_bytes": 5872,
+    "bss_bytes": 66104,
+    "bootstrap_bytes": 6656,
+    "boot_rom_capacity_bytes": 8192,
+    "fixed_vector_build_bytes": 270528,
+    "unchanged_shape_weights_bytes": 4400,
+    "offline_spi_package_bytes": 189200
+  },
+  "candidate": {
+    "bit": "F:\\Project\\fpga\\vision_base\\results\\sidebar_center_20261022\\release\\ti60f225_oob.bit",
+    "camera_elf": "F:\\Project\\fpga\\vision_base\\results\\sidebar_center_20261022\\firmware\\vision.elf",
+    "weights": "F:\\Project\\fpga\\vision_base\\models\\shape_cards_bringup\\shape_cards_weights.bin",
+    "boot_package": "F:\\Project\\fpga\\vision_base\\results\\sidebar_center_20261022\\release\\vision_boot.bin"
+  },
+  "deployment_note": "New bitstream and full DDR application required together; existing board/Flash not changed or re-observed this turn."
+}

@@ -19,7 +19,7 @@ BIN=Path('F:/Efinity/efinity-riscv-ide-2026.1/toolchain/bin')
 OUT.mkdir(parents=True,exist_ok=True)
 cmd=[str(BIN/'riscv-none-elf-gcc.exe'),'-march=rv32i_zicsr_zifencei','-mabi=ilp32',
  '-Os','-flto','-ffunction-sections','-fdata-sections','-ffreestanding','-fno-builtin','-fno-pic','-msmall-data-limit=0','-mno-relax',
- '-nostdlib','-I'+str(SRC),*(['-DVISION_MULHI_CFU'] if a.mulhi_cfu else []),'-Wl,--gc-sections','-Wl,--defsym=__boot_bytes='+str(a.boot_kb*1024),'-Wl,-Map='+str(OUT/'vision.map'),
+ '-nostdlib',*(['-DVISION_BOOTSTRAP'] if a.load_method=='embedded' else []),'-I'+str(SRC),*(['-DVISION_MULHI_CFU'] if a.mulhi_cfu else []),'-Wl,--gc-sections','-Wl,--defsym=__boot_bytes='+str(a.boot_kb*1024),'-Wl,-Map='+str(OUT/'vision.map'),
  '-T',str(SRC/('link.ld' if a.load_method=='embedded' else 'link_ddr.ld')),
  str(SRC/'start.S'),*([str(SRC/'boot_spi.c')] if a.load_method=='embedded' else []),str(a.main.resolve()),str(SRC/'flyhash.c'),'-lgcc','-o',str(OUT/'vision.elf')]
 subprocess.run(cmd,check=True)

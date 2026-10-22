@@ -1,0 +1,20 @@
+{
+  "staged_files": 350,
+  "staged_native_and_artifact_bytes_exact": 188,
+  "excluded_vendor_generated_inputs": [],
+  "python_ast_files": 9,
+  "credential_signature_matches": 0,
+  "protected_scripts_and_workflows_unchanged": true,
+  "source_tree_not_modified": true,
+  "hardware_access_this_upload": false,
+  "sram_written_this_upload": false,
+  "flash_written_this_upload": false,
+  "byte_check_reason": "Prevent the previously observed Git newline conversion from invalidating native input and bitstream/boot package bytes",
+  "software_tests_passed": 71,
+  "software_tests_skipped": 1,
+  "skip_reason": "Windows symlink privilege",
+  "compileall_src_passed": true,
+  "new_source_whitespace_findings": 0,
+  "preserved_existing_whitespace_lines": 69,
+  "source_diff_check": "Line-ending independent comparison confirms warning lines are unchanged source; native bytes kept"
+}

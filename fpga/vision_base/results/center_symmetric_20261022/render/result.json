@@ -1,0 +1,187 @@
+{
+  "passed": true,
+  "rtl_pixels": 9465856,
+  "cases": [
+    {
+      "name": "geometry",
+      "pixels": 2073600,
+      "scale": 4,
+      "source": [
+        540,
+        325,
+        480,
+        270
+      ],
+      "destination": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "center_error": [
+        0.0,
+        0.0
+      ],
+      "margins": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "exact_pixels": true,
+      "source_frame": 100,
+      "render_config": 1
+    },
+    {
+      "name": "inverse_view",
+      "pixels": 2073600,
+      "scale": 4,
+      "source": [
+        620,
+        395,
+        480,
+        270
+      ],
+      "destination": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "center_error": [
+        0.0,
+        0.0
+      ],
+      "margins": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "exact_pixels": true,
+      "source_frame": 100,
+      "render_config": 8
+    },
+    {
+      "name": "top_left",
+      "pixels": 548864,
+      "scale": 8,
+      "source": [
+        0,
+        13,
+        64,
+        134
+      ],
+      "destination": [
+        704,
+        4,
+        512,
+        1072
+      ],
+      "center_error": [
+        0.0,
+        0.0
+      ],
+      "margins": [
+        704,
+        704,
+        4,
+        4
+      ],
+      "exact_pixels": true,
+      "source_frame": 100,
+      "render_config": 1
+    },
+    {
+      "name": "bottom_right",
+      "pixels": 622592,
+      "scale": 8,
+      "source": [
+        1844,
+        952,
+        76,
+        128
+      ],
+      "destination": [
+        656,
+        28,
+        608,
+        1024
+      ],
+      "center_error": [
+        0.0,
+        0.0
+      ],
+      "margins": [
+        656,
+        656,
+        28,
+        28
+      ],
+      "exact_pixels": true,
+      "source_frame": 100,
+      "render_config": 1
+    },
+    {
+      "name": "tall_target",
+      "pixels": 2073600,
+      "scale": 2,
+      "source": [
+        450,
+        250,
+        960,
+        540
+      ],
+      "destination": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "center_error": [
+        0.0,
+        0.0
+      ],
+      "margins": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "exact_pixels": true,
+      "source_frame": 100,
+      "render_config": 1
+    },
+    {
+      "name": "manual_2x",
+      "pixels": 2073600,
+      "scale": 2,
+      "source": [
+        880,
+        470,
+        960,
+        540
+      ],
+      "destination": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "center_error": [
+        0.0,
+        0.0
+      ],
+      "margins": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "exact_pixels": true,
+      "source_frame": 100,
+      "render_config": 1
+    }
+  ],
+  "scope": "RV32I descriptor -> production AXI reader/scaler pixel replay; host canvas placement, synthetic targets, not camera recognition or HDMI acceptance"
+}

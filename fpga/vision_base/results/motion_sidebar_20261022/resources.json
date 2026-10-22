@@ -1,0 +1,54 @@
+{
+  "before": {
+    "xlr": 57745,
+    "ram": 246,
+    "dsp": 62
+  },
+  "initial": {
+    "xlr": 60648,
+    "ram": 247,
+    "dsp": 63
+  },
+  "after": {
+    "xlr": 59878,
+    "ram": 249,
+    "dsp": 63
+  },
+  "capacity": {
+    "xlr": 60800,
+    "ram": 256,
+    "dsp": 160
+  },
+  "delta": {
+    "xlr": 2133,
+    "ram": 3,
+    "dsp": 1
+  },
+  "free": {
+    "xlr": 922,
+    "ram": 7,
+    "dsp": 97
+  },
+  "xlr_recovered_from_initial": 770,
+  "wns_ns": 0.237,
+  "whs_ns": 0.027,
+  "unassigned_core_pins": 0,
+  "snapshot_rgb_bits": 24,
+  "snapshot_ram": 5,
+  "sidebar_font_ram": 5,
+  "chinese_font_ram": 4,
+  "chinese_glyphs": 121,
+  "changed_native_inputs": [
+    "rtl/vision_control_bridge.sv",
+    "board/ti60f225_v4/rtl/ti60f225_oob_top.v",
+    "board/ti60f225_v4/rtl/vision/vision_display.sv",
+    "board/ti60f225_v4/rtl/vision/vision_local_motion_core.sv",
+    "board/ti60f225_v4/rtl/vision/vision_local_motion_tap.sv",
+    "board/ti60f225_v4/rtl/vision/vision_motion_policy.sv",
+    "board/ti60f225_v4/rtl/vision/vision_motion_readout.sv",
+    "board/ti60f225_v4/rtl/vision/vision_osd.sv",
+    "board/ti60f225_v4/rtl/vision/vision_sidebar_overlay.sv",
+    "board/ti60f225_v4/ti60f225_oob.xml"
+  ],
+  "unchanged_native_inputs": 167
+}

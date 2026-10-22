@@ -12,3 +12,7 @@ artifacts/vision_soc/firmware/*.hex -text
 *.elf binary
 *.bin binary
 *.tflite binary
+
+# Current offline release keeps native bitstream/boot-image bytes unchanged.
+results/*/release/*.bit binary
+results/*/release/*.hex -text

@@ -1,0 +1,2 @@
+PASS local motion core frames=62 synthetic-only stalled_cycles=88596
+F:\Project\fpga\vision_base\sim\motion_direction\tb_local_motion_core.sv:47: $finish called at 1096570000 (1ps)

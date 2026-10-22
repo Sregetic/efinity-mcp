@@ -90,3 +90,81 @@ static void fusion_publish(const struct fusion_job *j,uint32_t source_config,uin
  for(unsigned i=0;i<11;i++)FUS_W(0x80+4*i,words[i]);
  FUS_W(8,1);
 }
+
+/* One-shot display crop. No frame copying and no continuous target tracking. */
+static void control_center_finish(unsigned status){
+ struct vision_control_state *s=CONTROL_STATE;
+ s->center_status=status;s->center_stage=0;s->feature_dirty=1;
+}
+static unsigned control_center_box(uint32_t x,uint32_t y,uint32_t w,uint32_t h,
+                                  uint32_t frame,uint32_t render,uint32_t context){
+ struct vision_control_state *s=CONTROL_STATE;
+ if(!w||!h||x+w>1920||y+h>1080)return 0;
+ if(s->pending||s->key_roi_dirty||s->serial!=s->center_serial||s->settings!=s->center_settings||s->shape_threshold!=s->center_shape){control_center_finish(CENTER_STALE);return 0;}
+ unsigned z=s->center_zoom?s->center_zoom:8;
+ // Fit the entire object plus25% breathing room; manual zoom is an upper bound.
+ while(z>1&&((w+(w+3)/4)*z>1920||(h+(h+3)/4)*z>1080))z>>=1;
+ unsigned cx2=2*x+w,cy2=2*y+h,step=8/z;
+ // Trim both sides about the target, then center the output with equal margins.
+ unsigned cw=fusion_min(1920/z,fusion_min(cx2,3840-cx2));
+ unsigned ch=fusion_min(1080/z,fusion_min(cy2,2160-cy2));
+ // Round width up for the8-pixel writer contract without cutting odd-size targets.
+ cw=(cw+step-1)&-step;
+ if(step==1&&((cw^w)&1))cw--;
+ if(z==1)ch=(ch+1)&~1u;else if((ch^h)&1)ch--;
+ unsigned left=control_bound(((int)cx2-(int)cw)/2,1920-cw);
+ unsigned top=control_bound(((int)cy2-(int)ch)/2,1080-ch);
+ s->roi[0]=(left<<12)|top;s->roi[1]=(cw<<12)|ch;
+ s->roi[2]=((cw*z)<<12)|(ch*z);s->roi[3]=(((1920-cw*z)/2)<<12)|((1080-ch*z)/2);
+ s->roi_enable=1;s->center_frame=frame;s->center_render=render;s->center_context=context;
+ control_submit(s);s->center_serial=s->serial;s->center_stage=2;
+ return 1;
+}
+static void control_center_step(void){
+ struct vision_control_state *s=CONTROL_STATE;
+ if(s->center_seen!=s->center_request){
+  s->center_seen=s->center_request;s->center_serial=s->serial;s->center_settings=s->settings;s->center_shape=s->shape_threshold;
+  if(s->pending||s->key_roi_dirty||((s->settings>>4)&3)>=2){control_center_finish(CENTER_BUSY);return;}
+  if(FUS_R(0)!=0x26101003u){control_center_finish(CENTER_ERROR);return;}
+  s->center_stage=1;
+ }
+ if(!s->center_stage)return;
+ if(s->center_stage==2){
+  if(!s->pending){control_center_finish(s->good&&s->serial==s->center_serial?CENTER_DONE:CENTER_ERROR);}
+  return;
+ }
+ if(s->pending||s->key_roi_dirty||s->serial!=s->center_serial||s->settings!=s->center_settings||s->shape_threshold!=s->center_shape||((s->settings>>4)&3)>=2){control_center_finish(CENTER_STALE);return;}
+#ifdef VISION_FOMO
+ if(s->center_stage==3){if(!s->ai_policy||!(s->ai_manual&2))control_center_finish(CENTER_STALE);return;}
+#endif
+ if(s->feature_dirty||s->feature_wait)return;
+ if(s->center_stage==1){
+  s->center_sequence=FUS_R(0x10);s->center_stage=4;
+#ifdef VISION_FOMO
+  if((s->ai_manual&2)&&s->ai_policy){s->center_stage=3;s->ai_request++;}
+#endif
+  return;
+ }
+ struct fusion_job j;struct fusion_geometry g=fusion_geometry_read();
+ for(unsigned i=0;i<sizeof(g)/4;i++)((volatile uint32_t*)&j.g)[i]=((const uint32_t*)&g)[i];
+ if(j.g.sequence==s->center_sequence||!j.g.frame)return;
+ if(j.g.render!=(s->enabled?s->serial:0)){control_center_finish(CENTER_STALE);return;}
+ if(!fusion_roi(&j,1,0,0)||!j.geometry_class){control_center_finish(CENTER_NONE);return;}
+ if(!control_center_box(j.xy&65535,j.xy>>16,j.wh&65535,j.wh>>16,j.g.frame,j.g.render,j.g.context)&&s->center_stage)
+  control_center_finish(CENTER_NONE);
+}
+#ifdef VISION_FOMO
+static void control_center_fomo(uint32_t nonce,const struct fusion_job *j,
+                                unsigned valid,uint32_t x,uint32_t y,uint32_t w,uint32_t h){
+ // Invoke polls key events before returning; honor cancellation/new requests first.
+ control_center_step();
+ struct vision_control_state *s=CONTROL_STATE;
+ if(!nonce||nonce!=s->center_seen||s->center_stage!=3)return;
+ struct fusion_geometry latest=fusion_geometry_read();
+ if(j->g.render!=(s->enabled?s->serial:0)||j->g.context!=latest.context||
+    (((s->settings>>4)&3)==1&&j->g.frame!=latest.frame)){control_center_finish(CENTER_STALE);return;}
+ if(!valid){control_center_finish(CENTER_NONE);return;}
+ if(!control_center_box(x,y,w,h,j->g.frame,j->g.render,j->g.context)&&s->center_stage)
+  control_center_finish(CENTER_NONE);
+}
+#endif

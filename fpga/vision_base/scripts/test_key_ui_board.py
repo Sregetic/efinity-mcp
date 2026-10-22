@@ -37,12 +37,12 @@ def main():
   key(2);settled('Canny64_to80',lambda s:s['canny_threshold']==80)
   control('--mode',7,'--shape-threshold',32);key(2);assert control(roi=False)['shape_threshold']==48
   key(4);assert control(roi=False)['shape_threshold']==32
-  key(8);assert control(roi=False)['menu']==1
+  focus(1);assert control(roi=False)['menu']==1
   key(2);settled('median_on',lambda s:s['median']==1)
   key(4);settled('median_off',lambda s:s['median']==0)
   # Freeze before changing any crop; the displayed original must stay identical.
   key(16);s=settled('freeze_direct',lambda s:s['memory']==1 and s['source_frozen'] and s['roi_frame_ok'])
-  held=s['roi_frame_id'];key(8);assert control(roi=False)['menu']==2
+  held=s['roi_frame_id'];focus(2);assert control(roi=False)['menu']==2
   key(2)
   ready=lambda s:s['roi_frame_ok'] and not(s['config_busy'] or s['render_busy'] or s['render_pending']) and s['applied_config_id']==s['requested_config_id']
   s=settled('frozen_zoom2x',lambda s:ready(s) and s['roi']==[480,270,960,540]);assert s['roi_frame_id']==held,(held,s)

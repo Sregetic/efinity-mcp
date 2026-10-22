@@ -53,11 +53,12 @@ void main(void){
 #ifdef VISION_MULHI_CFU
  if(m->s0>-2||m->s1>-2||m->s0<-30||m->s1<-30){REG(4)=3;for(;;);}
 #endif
+ control_sidebar_reset();
  uint32_t last=REG(0x30)-10000000u,sequence=0,failures=0,seen=0,policy=3,policy_geometry_sequence=0;
  struct fusion_job job={.model=1,.test=1},completed={.model=1,.test=1};
  uint32_t key[13]={0},ui_request=0,selftest_request=0,completed_flags=0,completed_config=0,completed_scores=0;
 #ifdef VISION_FOMO
- unsigned job_fomo=0;uint32_t legacy_model=1;
+ unsigned job_fomo=0;uint32_t legacy_model=1,center_job=0;
  fomo_camera_init();
 #endif
  ai_runtime[1]=1;ai_publish(&job,0,0,0);
@@ -65,7 +66,7 @@ void main(void){
  REG(4)=1;
  for(;;){
   control_service_step();if(CTRL_R(0x0c)>>31){REG(4)=3;for(;;);}
-  flyhash_service_step();
+  flyhash_service_step();control_center_step();
   unsigned current_policy=CONTROL_STATE->ai_policy;
   if(policy!=current_policy){
    policy=current_policy;seen=0;policy_geometry_sequence=FUS_R(0x10);FUS_W(4,policy!=0);
@@ -73,7 +74,7 @@ void main(void){
   }
   uint32_t status=DMA(4);
   if(status&2){
-   if(status&4){failures++;analysis_result[22]=DMA(0x24);analysis_result[23]=failures;
+   if(status&4){if(CONTROL_STATE->center_stage==3)control_center_finish(CENTER_ERROR);failures++;analysis_result[22]=DMA(0x24);analysis_result[23]=failures;
     ai_runtime[0]=3;ai_publish(&job,0,FUS_ERROR<<8,0);DMA(0)=2;continue;}
    if(job.exact&&DMA(0x0c)!=job.g.frame){REG(4)=3;for(;;);}
    volatile uint16_t *input=(volatile uint16_t *)DMA(0x1c);
@@ -142,9 +143,11 @@ void main(void){
      unsigned left=x+b->left*w/96,top=y+b->top*h/96;
      unsigned right=x+(b->right*w+95)/96,bottom=y+(b->bottom*h+95)/96;
      fusion_map_box(&job,left,top,right-left,bottom-top);
+     control_center_fomo(center_job,&job,1,left,top,right-left,bottom-top);
     }else{
      for(unsigned i=1;i<144;i++)if(fomo_camera_output[i*4]>fomo_camera_output[cell*4])cell=i;
      job.box0=0xffffffffu;job.box1=0;
+     control_center_fomo(center_job,&job,0,0,0,0,0);
     }
     for(unsigned i=0;i<4;i++)o[i]=fomo_camera_output[cell*4+i];
     fomo_camera_status[3]=job.g.frame;fomo_camera_status[4]=DMA(0x10);
@@ -195,10 +198,16 @@ void main(void){
     if(job.g.frame!=analysis_control[1])job.g.hi&=~(1u<<30);job.g.frame=analysis_control[1];
    }
    if(!fusion_roi(&job,policy==2,analysis_control[2],analysis_control[3])){
+#ifdef VISION_FOMO
+     if(job_fomo&&CONTROL_STATE->center_stage==3)control_center_finish(CENTER_NONE);
+#endif
     ui_request=CONTROL_STATE->ai_request;ai_runtime[0]=0;ai_publish(&job,0,FUS_NONE<<8,0);continue;
    }
    ui_request=CONTROL_STATE->ai_request;ai_runtime[0]=1;
    if(announce)ai_publish(&job,0,FUS_WAIT<<8,0);
+#ifdef VISION_FOMO
+   center_job=job_fomo&&CONTROL_STATE->center_stage==3?CONTROL_STATE->center_seen:0;
+#endif
    DMA(8)=job.g.frame;DMA(0x14)=job.xy;DMA(0x18)=job.wh;
    DMA(0)=1|((!request&&policy==1&&(analysis_control[0]&2))?4:0)
 #ifdef VISION_FOMO

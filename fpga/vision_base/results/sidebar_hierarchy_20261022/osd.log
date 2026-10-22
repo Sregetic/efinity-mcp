@@ -1,0 +1,2 @@
+PASS OSD legacy HUD, two-level widths144/304 row64, all8 named modes, symbolic AI/model/median/zoom, selftest with AI OFF
+sim/vision/tb_osd.sv:72: $finish called at 2006000 (1ps)

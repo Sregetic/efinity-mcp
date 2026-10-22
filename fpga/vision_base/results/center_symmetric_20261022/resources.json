@@ -1,0 +1,31 @@
+{
+  "native_pnr_rerun": false,
+  "basis": "Production RTL and Chinese bitstream unchanged; only DDR firmware geometry",
+  "usage": {
+    "xlr": 57745,
+    "ram": 246,
+    "dsp": 62,
+    "wns_ns": 0.108,
+    "whs_ns": 0.027,
+    "unassigned_core_pins": 0,
+    "missing_interface_pins": 14
+  },
+  "free": {
+    "xlr": 3055,
+    "ram": 10,
+    "dsp": 98
+  },
+  "increment": {
+    "xlr": 0,
+    "ram": 0,
+    "dsp": 0
+  },
+  "ddr_program_before": 185568,
+  "ddr_program_after": 185728,
+  "ddr_program_increase": 160,
+  "bss_bytes": 66104,
+  "bootstrap_bytes": 6784,
+  "bootstrap_limit": 8192,
+  "base_program_bytes": 9064,
+  "snapshot_ram": 5
+}

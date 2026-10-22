@@ -1,5 +1,6 @@
 #pragma once
 #include <stdint.h>
+#include <stddef.h>
 #ifndef CONTROL_TEST
 #define CTRL_R(off) (*(volatile uint32_t *)(0xf8100200u+(off)))
 #define CTRL_W(off,value) (CTRL_R(off)=(value))
@@ -10,6 +11,10 @@ struct vision_control_state {
  uint32_t roi[4],commit[4],roi_enable,commit_enable,ai_policy;
  uint32_t menu,key_roi_dirty,shape_threshold;
  uint32_t ai_manual,ai_request,selftest_request;
+ uint32_t sidebar_open,sidebar_item,sidebar_edit,edit_value,edit_mode,edit_roi[4],edit_enable;
+ uint32_t center_zoom,center_request,center_seen,center_stage,center_sequence,center_serial,center_status;
+ uint32_t center_frame,center_render,center_context,center_settings,center_shape;
+
 };
 #ifndef CONTROL_TEST
 #define CONTROL_STATE ((struct vision_control_state *)0x07620200u)
@@ -31,22 +36,131 @@ static void control_submit(struct vision_control_state *s){
  for(unsigned i=0;i<4;i++)s->commit[i]=s->roi[i];
  CTRL_W(0x3c,s->serial);CTRL_W(0x38,1);
 }
-static void control_roi_key(struct vision_control_state *s,unsigned up){
- unsigned x=s->roi[0]>>12,y=s->roi[0]&4095,w=s->roi[1]>>12,h=s->roi[1]&4095;
- unsigned dw=s->roi[2]>>12,dh=s->roi[2]&4095,dx=s->roi[3]>>12,dy=s->roi[3]&4095;
+static void control_roi_change(uint32_t roi[4],uint32_t *enabled,unsigned menu,unsigned up){
+ unsigned x=roi[0]>>12,y=roi[0]&4095,w=roi[1]>>12,h=roi[1]&4095;
+ unsigned dw=roi[2]>>12,dh=roi[2]&4095,dx=roi[3]>>12,dy=roi[3]&4095;
  int step=up?32:-32;
- if(s->menu==2){
+ if(menu==2){
   unsigned nw=up?(w>240?(w+1)/2:w):(w<960?w*2:1920);
   unsigned nh=up?(h>135?(h+1)/2:h):(h<540?h*2:1080);
   x=control_bound((int)x+((int)w-(int)nw)/2,1920-nw);y=control_bound((int)y+((int)h-(int)nh)/2,1080-nh);w=nw;h=nh;
- }else if(s->menu==3)x=control_bound((int)x+step,1920-w);
- else if(s->menu==4)y=control_bound((int)y+step/2,1080-h);
- else if(s->menu==5){dw=up?(dw<960?dw*2:1920):(dw>240?(dw/2)&~7u:dw);dh=up?(dh<540?dh*2:1080):(dh>135?dh/2:dh);}
- else if(s->menu==6)dx=control_bound((int)dx+step,1920-dw);
- else if(s->menu==7)dy=control_bound((int)dy+step/2,1080-dh);
+ }else if(menu==3)x=control_bound((int)x+step,1920-w);
+ else if(menu==4)y=control_bound((int)y+step/2,1080-h);
+ else if(menu==5){dw=up?(dw<960?dw*2:1920):(dw>240?(dw/2)&~7u:dw);dh=up?(dh<540?dh*2:1080):(dh>135?dh/2:dh);}
+ else if(menu==6)dx=control_bound((int)dx+step,1920-dw);
+ else if(menu==7)dy=control_bound((int)dy+step/2,1080-dh);
  dx=control_bound(dx,1920-dw);dy=control_bound(dy,1080-dh);
- s->roi[0]=(x<<12)|y;s->roi[1]=(w<<12)|h;s->roi[2]=(dw<<12)|dh;s->roi[3]=(dx<<12)|dy;
- s->roi_enable=w!=1920||h!=1080||dw!=1920||dh!=1080;s->key_roi_dirty=1;
+ roi[0]=(x<<12)|y;roi[1]=(w<<12)|h;roi[2]=(dw<<12)|dh;roi[3]=(dx<<12)|dy;
+ *enabled=w!=1920||h!=1080||dw!=1920||dh!=1080;
+}
+static void control_roi_key(struct vision_control_state *s,unsigned up){
+ control_roi_change(s->roi,&s->roi_enable,s->menu,up);s->key_roi_dirty=1;
+}
+// The existing shared control-state prefix stays CON4; the sidebar extension is
+// application-owned and reset on DDR application entry, preserving live ROI/UI policy.
+static void control_sidebar_reset(void){
+ struct vision_control_state *s=CONTROL_STATE;
+ for(unsigned i=offsetof(struct vision_control_state,sidebar_open)/4;i<sizeof(*s)/4;i++)((volatile uint32_t*)s)[i]=0;
+ s->feature_dirty=1;
+}
+enum { SIDE_MODE,SIDE_THRESHOLD,SIDE_MEDIAN,SIDE_ZOOM,SIDE_PAN_X,SIDE_PAN_Y,
+ SIDE_SIZE,SIDE_POS_X,SIDE_POS_Y,SIDE_AI,SIDE_RUN,SIDE_SELFTEST,SIDE_MODEL,
+ SIDE_CENTER,SIDE_TARGET_ZOOM,SIDE_FULL_VIEW,SIDE_MOTION,SIDE_COUNT };
+enum { CENTER_READY,CENTER_WAIT,CENTER_DONE,CENTER_NONE,CENTER_BUSY,CENTER_STALE,CENTER_ERROR };
+static unsigned control_sidebar_group(unsigned item){return item<3?0:item<9?1:item<13?3:2;}
+static unsigned control_sidebar_first(unsigned group){return group==0?SIDE_MODE:group==1?SIDE_ZOOM:group==2?SIDE_CENTER:SIDE_AI;}
+static unsigned control_sidebar_count(unsigned group){
+#ifdef VISION_FOMO
+ return group==1?6:group==2||group==3?4:3;
+#else
+ return group==1?6:group==2?4:3;
+#endif
+}
+static unsigned control_sidebar_value(struct vision_control_state *s){
+ if(s->sidebar_edit)return s->edit_value;
+ unsigned i=s->sidebar_item;
+ if(i==SIDE_MODE)return s->settings&7;
+ if(i==SIDE_THRESHOLD)return (s->settings&7)==7?s->shape_threshold:(s->settings>>(((s->settings&7)==5||(s->settings&7)==6)?20:9))&2047;
+ if(i==SIDE_MEDIAN)return (s->settings>>3)&1;
+ if(i==SIDE_MOTION)return s->settings>>31;
+ if(i==SIDE_ZOOM)return s->roi[1]>>12;
+ if(i==SIDE_PAN_X)return s->roi[0]>>12;
+ if(i==SIDE_PAN_Y)return s->roi[0]&4095;
+ if(i==SIDE_SIZE)return s->roi[2]>>12;
+ if(i==SIDE_POS_X)return s->roi[3]>>12;
+ if(i==SIDE_POS_Y)return s->roi[3]&4095;
+ if(i==SIDE_AI)return s->ai_policy;
+ if(i==SIDE_MODEL)return (s->ai_manual>>1)&1;
+ if(i==SIDE_TARGET_ZOOM)return s->center_zoom;
+ return 0;
+}
+static void control_sidebar_adjust(struct vision_control_state *s,unsigned up){
+ unsigned i=s->sidebar_item,v=s->edit_value;
+ if(i==SIDE_MODE)s->edit_value=up?(v==7?0:v+1):(v?v-1:7);
+ else if(i==SIDE_THRESHOLD){
+  if(s->edit_mode==7)s->edit_value=up?(v>239?255:v+16):(v<=17?1:v-16);
+  else s->edit_value=up?threshold_up(v):threshold_down(v);
+ }else if(i==SIDE_MEDIAN||i==SIDE_MODEL||i==SIDE_MOTION)s->edit_value=up?1:0;
+ else if(i>=SIDE_ZOOM&&i<=SIDE_POS_Y){
+  control_roi_change(s->edit_roi,&s->edit_enable,i-1,up);
+  if(i==SIDE_ZOOM)s->edit_value=s->edit_roi[1]>>12;
+  else if(i==SIDE_PAN_X)s->edit_value=s->edit_roi[0]>>12;
+  else if(i==SIDE_PAN_Y)s->edit_value=s->edit_roi[0]&4095;
+  else if(i==SIDE_SIZE)s->edit_value=s->edit_roi[2]>>12;
+  else if(i==SIDE_POS_X)s->edit_value=s->edit_roi[3]>>12;
+  else s->edit_value=s->edit_roi[3]&4095;
+ }else if(i==SIDE_AI)s->edit_value=up?(v==2?0:v+1):(v?v-1:2);
+ else if(i==SIDE_TARGET_ZOOM)s->edit_value=up?(v==0?1:v==8?8:v*2):(v<=1?0:v/2);
+}
+static void control_sidebar_confirm(struct vision_control_state *s){
+ unsigned i=s->sidebar_item,v=s->edit_value;
+ if(i==SIDE_MODE)s->settings=(s->settings&~7u)|v;
+ else if(i==SIDE_THRESHOLD){
+  if(s->edit_mode==7)s->shape_threshold=v;
+  else control_threshold(s,s->edit_mode==5||s->edit_mode==6?20:9,v);
+ }else if(i==SIDE_MEDIAN)s->settings=(s->settings&~8u)|(v<<3);
+ else if(i==SIDE_MOTION)s->settings=(s->settings&0x7fffffffu)|(v<<31);
+ else if(i>=SIDE_ZOOM&&i<=SIDE_POS_Y){
+  for(unsigned k=0;k<4;k++)s->roi[k]=s->edit_roi[k];
+  s->roi_enable=s->edit_enable;s->key_roi_dirty=1;
+ }else if(i==SIDE_AI){s->ai_policy=v;s->ai_manual=(s->ai_manual&2)|(v==1);}
+ else if(i==SIDE_RUN){if(!s->ai_policy){s->ai_policy=1;s->ai_manual|=1;}s->ai_request++;}
+ else if(i==SIDE_SELFTEST)s->selftest_request++;
+#ifdef VISION_FOMO
+ else if(i==SIDE_MODEL)s->ai_manual=(s->ai_manual&1)|(v<<1);
+#endif
+ else if(i==SIDE_CENTER){s->center_request++;s->center_status=CENTER_WAIT;}
+ else if(i==SIDE_TARGET_ZOOM)s->center_zoom=v;
+ else if(i==SIDE_FULL_VIEW){s->roi[0]=s->roi[3]=0;s->roi[1]=s->roi[2]=(1920u<<12)|1080;s->roi_enable=0;s->key_roi_dirty=1;s->center_status=CENTER_READY;s->center_stage=0;s->center_seen=s->center_request;}
+ s->sidebar_edit=0;s->feature_dirty=1;
+}
+static void control_sidebar_keys(struct vision_control_state *s,unsigned keys){
+ if(keys&8){
+  if(!s->sidebar_open)s->sidebar_open=1;
+  else if(s->sidebar_edit)s->sidebar_edit=0;
+  else s->sidebar_open--;
+ }else if(keys&1){
+  if(s->sidebar_open==1)s->sidebar_open=2;
+  else if(s->sidebar_edit)control_sidebar_confirm(s);
+  else{
+   s->edit_value=control_sidebar_value(s);s->edit_mode=s->settings&7;
+   for(unsigned k=0;k<4;k++)s->edit_roi[k]=s->roi[k];
+   s->edit_enable=s->roi_enable;s->sidebar_edit=1;
+  }
+ }else for(unsigned key=1;key<=2;key++)if(keys&(1u<<key)){
+  if(s->sidebar_edit)control_sidebar_adjust(s,key==1);
+  else{
+   unsigned group=control_sidebar_group(s->sidebar_item);
+   if(s->sidebar_open==1){
+    group=key==1?(group?group-1:3):(group==3?0:group+1);
+    s->sidebar_item=control_sidebar_first(group);
+   }else{
+    unsigned first=control_sidebar_first(group),count=control_sidebar_count(group),i=s->sidebar_item-first;
+    s->sidebar_item=first+(key==1?(i?i-1:count-1):(i+1==count?0:i+1));
+   }
+  }
+ }
+ s->feature_dirty=1;
 }
 static uint32_t control_ui(struct vision_control_state *s){
  unsigned m=s->menu,v=0;
@@ -59,15 +173,31 @@ static uint32_t control_ui(struct vision_control_state *s){
  else if(m==7)v=s->roi[3]&4095;
  else if(m==8)v=s->ai_policy;
  else if(m==10)v=(s->ai_manual>>1)&1;
- return (s->shape_threshold<<15)|(m<<11)|v;
+ if(s->sidebar_open)v=control_sidebar_value(s);
+ // Status7 is the category-list tag; a child page carries the real center status0..6.
+ unsigned item=s->sidebar_open==1?control_sidebar_group(s->sidebar_item):s->sidebar_item;
+ unsigned status=s->sidebar_open==1?7:s->center_status;
+ // Compact-menu bits are unused on an open sidebar; bit14 carries item bit4.
+ unsigned menu=s->sidebar_open?(item>>4)<<3:m;
+ return ((uint32_t)(s->sidebar_open!=0)<<31)|(s->sidebar_edit<<30)|((item&15)<<26)|(status<<23)|
+        (s->shape_threshold<<15)|(menu<<11)|v;
 }
 static void control_event(uint32_t event){
  struct vision_control_state *s=CONTROL_STATE;
  unsigned op=event>>24;uint32_t v=event&0xffffff,old_settings=s->settings;
  unsigned mode=s->settings&7,mem=(s->settings>>4)&3,index=(s->settings>>6)&7;
  if(op==255||op==0x62){
-  if(v&1)s->settings=(s->settings&~7u)|((mode+1)&7);
+#ifdef VISION_BOOTSTRAP
+  // The8KiB rescue image retains the existing compact menu; the full app lives in DDR.
   if(v&8)s->menu=s->menu==CONTROL_LAST_MENU?0:s->menu+1;
+#else
+  if((v&8)||s->sidebar_open){
+   control_sidebar_keys(s,v&15);
+   // Long freeze/history keep their existing meaning; short menu keys stop here.
+   v&=48;
+  }
+#endif
+  if(v&1)s->settings=(s->settings&~7u)|((mode+1)&7);
   for(unsigned key=1;key<=2;key++)if(v&(1u<<key)){
    if(s->menu==8){
     if(key==1){s->ai_policy=(s->ai_policy+1)%3;s->ai_manual=(s->ai_manual&2)|(s->ai_policy==1);}
@@ -98,7 +228,7 @@ static void control_event(uint32_t event){
   case 0x34:s->roi_enable=v&1;break;
   // Development view policy remains continuous; the board FIX page is single-shot.
   case 0x60:if(v<=2){s->ai_policy=v;s->ai_manual&=2;s->feature_dirty=1;}break;
-  case 0x61:if(v<=CONTROL_LAST_MENU){s->menu=v;s->feature_dirty=1;}break;
+  case 0x61:if(v<=CONTROL_LAST_MENU){s->menu=v;s->sidebar_open=s->sidebar_edit=0;s->feature_dirty=1;}break;
   case 0x35:
    if(s->pending){s->reject=1;CTRL_W(0x38,3);break;}
    control_submit(s);break;

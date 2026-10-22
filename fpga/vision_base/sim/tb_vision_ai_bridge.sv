@@ -43,6 +43,12 @@ initial begin
  repeat(8)@(negedge clk);paddr=8'h10;#1;if(prdata!=1)$fatal(1,"old processing geometry accepted");
  geometry_context=context_id;@(negedge video_clk);geometry_done=1;@(negedge video_clk);geometry_done=0;
  repeat(8)@(negedge clk);paddr=8'h10;#1;if(prdata!=2)$fatal(1,"fresh geometry lost");
+ write(4,0);repeat(3)@(negedge video_clk);boundary;
+ if(enabled)$fatal(1,"AI OFF did not persist");
+ geometry_context=context_id;@(negedge video_clk);geometry_done=1;@(negedge video_clk);geometry_done=0;
+ repeat(8)@(negedge clk);paddr=8'h10;#1;if(prdata!=3)$fatal(1,"centering geometry missing with AI OFF");
+ write(4,1);repeat(3)@(negedge video_clk);boundary;
+ publish(2);repeat(6)@(negedge video_clk);boundary;
  frame_ok=0;#1;if(result_match)$fatal(1,"failed scan accepted");
  if(!result_identity_match)$fatal(1,"ROI top blanking falsely invalidated completed task identity");
  $display("PASS tb_vision_ai_bridge asynchronous geometry, held packet/backpressure, VS commit, source/config/context/model, age and failed scan");$finish;

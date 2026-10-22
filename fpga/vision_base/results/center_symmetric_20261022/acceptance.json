@@ -1,0 +1,66 @@
+{
+  "offline_passed": true,
+  "user_contract": "Preserve centered whole target and aspect ratio; equal left/right margins and equal top/bottom margins, black allowed",
+  "old_regression_failed": true,
+  "old_evidence": "F:\\Project\\fpga\\vision_base\\results\\center_symmetric_20261022\\control_before\\test.log",
+  "rv32i_assertions": 4655,
+  "geometry_cases": 636,
+  "diagnostic_vectors": 8,
+  "rtl_replay_cases": 6,
+  "rtl_pixels": 9465856,
+  "all_margin_pairs_equal": true,
+  "replay_center_error_pixels": 0,
+  "geometry_center_error_bound_pixels": 4,
+  "async_scanout_pixels": 73728,
+  "async_scanout_full_frames": 24,
+  "scanout_x_mod8": 4,
+  "scanout_y_odd": true,
+  "preview_kind": "Same synthetic source, actual RTL scaled pixels, host canvas composition; not physical camera/HDMI",
+  "model_inference_rerun": false,
+  "prior_cancellation_fix_retained": true,
+  "core19_rerun": false,
+  "full_video_suite_rerun": false,
+  "image_readback_retained": true,
+  "snapshot_rgb_bits": 24,
+  "resources": {
+    "native_pnr_rerun": false,
+    "basis": "Production RTL and Chinese bitstream unchanged; only DDR firmware geometry",
+    "usage": {
+      "xlr": 57745,
+      "ram": 246,
+      "dsp": 62,
+      "wns_ns": 0.108,
+      "whs_ns": 0.027,
+      "unassigned_core_pins": 0,
+      "missing_interface_pins": 14
+    },
+    "free": {
+      "xlr": 3055,
+      "ram": 10,
+      "dsp": 98
+    },
+    "increment": {
+      "xlr": 0,
+      "ram": 0,
+      "dsp": 0
+    },
+    "ddr_program_before": 185568,
+    "ddr_program_after": 185728,
+    "ddr_program_increase": 160,
+    "bss_bytes": 66104,
+    "bootstrap_bytes": 6784,
+    "bootstrap_limit": 8192,
+    "base_program_bytes": 9064,
+    "snapshot_ram": 5
+  },
+  "hardware_access": false,
+  "sram_written": false,
+  "flash_written": false,
+  "physical_acceptance": false,
+  "candidate": {
+    "bit": "F:\\Project\\fpga\\vision_base\\results\\sidebar_chinese_20261022\\release\\ti60f225_oob.bit",
+    "camera_elf": "F:\\Project\\fpga\\vision_base\\results\\center_symmetric_20261022\\firmware\\vision.elf",
+    "weights": "F:\\Project\\fpga\\vision_base\\models\\shape_cards_bringup\\shape_cards_weights.bin",
+    "boot_package": "F:\\Project\\fpga\\vision_base\\results\\center_symmetric_20261022\\release\\vision_boot.bin"
+  }
+}

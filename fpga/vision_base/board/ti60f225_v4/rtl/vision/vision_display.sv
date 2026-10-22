@@ -1,4 +1,4 @@
-module vision_display #(parameter EDGE_STRENGTH=1,FUSION=0)(input clk,rst_n,de,hs,vs,input[7:0]r,g,b,input[2:0]mode,input[10:0]threshold,input median_en,
+module vision_display #(parameter EDGE_STRENGTH=1,FUSION=0,LOCAL_MOTION_ENABLE=0,WIDTH=1920,HEIGHT=1080)(input clk,rst_n,de,hs,vs,input[7:0]r,g,b,input[2:0]mode,input[10:0]threshold,input median_en,
  input[1:0]memory_mode,input[2:0]history_index,
  input canny_pixel,input canny_ready,output[11:0]cx,cy,
  output reg ode,ohs,ovs,output reg[7:0]orr,ogg,obb,
@@ -6,10 +6,26 @@ module vision_display #(parameter EDGE_STRENGTH=1,FUSION=0)(input clk,rst_n,de,h
  input shape_enable,input[7:0]shape_threshold,output[63:0]shape_status,output coordinate_de,input[10:0]canny_effective_threshold,canny_requested_threshold,input[7:0]canny_coverage,
  input analysis_enabled,analysis_context_changed,input[31:0]frame_id,render_config_id,analysis_context,
  input[351:0]analysis_result,input analysis_match,analysis_identity_match,input[15:0]analysis_age,
- output reg geometry_done,output reg[31:0]geometry_frame,geometry_config,geometry_context,input[14:0]ui_state);
+ output reg geometry_done,output reg[31:0]geometry_frame,geometry_config,geometry_context,input[23:0]ui_state,
+ input motion_enable,output[2:0]motion_direction,output motion_held);
 wire fd0,fh0,fv0,border0;wire[11:0]x0,y0;wire[7:0]fr0,fg0,fb0,gray0;wire[10:0]mag0;wire[1:0]dir;
 wire edge0;reg edge1=0;
-vision_frontend front(clk,rst_n,de,hs,vs,r,g,b,median_en,fd0,fh0,fv0,border0,x0,y0,fr0,fg0,fb0,gray0,mag0,dir,threshold,edge0);
+vision_frontend #(.WIDTH(WIDTH)) front(clk,rst_n,de,hs,vs,r,g,b,median_en,fd0,fh0,fv0,border0,x0,y0,fr0,fg0,fb0,gray0,mag0,dir,threshold,edge0);
+generate if(LOCAL_MOTION_ENABLE)begin:motion
+ wire[31:0]observation,status,horizontal,vertical;wire[15:0]sites;
+ wire live_reset=rst_n&&motion_enable&&memory_mode==0;reg vq=0;
+ always @(posedge clk)vq<=live_reset?fv0:1'b0;
+ // Observe pre-edge grayscale only; never gate video, DDR or ROI tasks.
+ vision_local_motion_tap #(.WIDTH(WIDTH),.HEIGHT(HEIGHT)) tap(
+  .clk(clk),.rst_n(live_reset),.de(fd0),.vs(fv0),.x(x0),.y(y0),.gray(gray0),.config_bit(median_en),
+  .observation_id(observation),.status(status),.horizontal_response(horizontal),.vertical_response(vertical),
+  .active_sites(sites),.roi_x0(),.roi_y0(),.roi_x1(),.roi_y1(),.dropped_frames());
+ vision_motion_readout readout(.clk(clk),.rst_n(live_reset),.frame_tick(fv0&&!vq),
+  .status(status),.observation(observation),.horizontal(horizontal),.vertical(vertical),.active_sites(sites),
+  .show_direction(motion_direction),.held(motion_held));
+end else begin:no_motion
+ assign motion_direction=0,motion_held=0;
+end endgenerate
 reg fd=0,fh=0,fv=0,border=1;reg[11:0]x=0,y=0;reg[7:0]fr=0,fg=0,fb=0,gray=0;reg[10:0]mag=0;
 always @(posedge clk)begin {fd,fh,fv,border,x,y,fr,fg,fb,gray,mag}<={fd0,fh0,fv0,(border0||x0<4||y0<4),x0,y0,fr0,fg0,fb0,gray0,mag0};end
 always @(posedge clk)edge1<=edge0;

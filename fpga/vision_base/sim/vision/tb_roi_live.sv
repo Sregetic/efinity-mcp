@@ -287,7 +287,7 @@ always @(negedge video_clk)begin
    if(field_cfg!=roi_view_config)$fatal(1,"config changed in active frame");
    case(field_cfg)
     1:begin rx=0;ry=0;rw=W;rh=H;dw=W;dh=H;dx=0;dy=0;end
-    2:begin if(W>64)begin rx=480;ry=270;rw=960;rh=540;dw=W;dh=H;dx=0;dy=0;end else begin rx=5;ry=7;rw=21;rh=15;dw=40;dh=24;dx=8;dy=12;end end
+    2:begin if(W>64)begin rx=480;ry=270;rw=960;rh=540;dw=W;dh=H;dx=0;dy=0;end else begin rx=5;ry=7;rw=21;rh=15;dw=40;dh=26;dx=12;dy=11;end end
     3:begin if(W>64)begin rx=608;ry=334;rw=960;rh=540;dw=W;dh=H;dx=0;dy=0;end else begin rx=24;ry=15;rw=24;rh=20;dw=16;dh=16;dx=40;dy=2;end end
     4:begin rx=3;ry=4;rw=49;rh=37;dw=W;dh=H;dx=0;dy=0;end
     6,8:begin rx=0;ry=0;rw=W;rh=H;dw=W;dh=H;dx=0;dy=0;end
@@ -328,7 +328,8 @@ initial begin
  end
  configure(0,0,W,H,W,H,0,0);wait_frames(1);
  @(negedge video_clk);memory_mode=1;wait(roi_hold_valid&&roi_freeze&&!roi_render_busy&&!roi_render_pending);frozen_id=roi_hold_frame;
- configure(5,7,21,15,40,24,8,12);wait_frames(2);if(roi_view_frame!=frozen_id)$fatal(1,"freeze changed source");
+ // Equal margins with4-mod8 X and odd Y exercise centered scanout placement.
+ configure(5,7,21,15,40,26,12,11);wait_frames(2);if(roi_view_frame!=frozen_id)$fatal(1,"freeze changed source");
  configure(24,15,24,20,16,16,40,2);wait_frames(3);if(roi_view_frame!=frozen_id)$fatal(1,"pan changed frozen source");
  configure(3,4,49,37,W,H,0,0);wait_frames(4);if(roi_view_frame!=frozen_id)$fatal(1,"scale changed frozen source");
  configure(0,0,W,H,W,H,1,0);wait(roi_rejected_id==5);repeat(200)@(negedge clk);

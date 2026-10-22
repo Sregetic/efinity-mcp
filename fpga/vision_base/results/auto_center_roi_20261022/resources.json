@@ -1,0 +1,34 @@
+{
+  "native_rerun": false,
+  "basis": "Unchanged Chinese bitstream and production RTL; DDR firmware only",
+  "native_manifest": "F:\\Project\\fpga\\vision_base\\results\\sidebar_chinese_20261022\\release\\manifest.json",
+  "usage": {
+    "xlr": 57745,
+    "ram": 246,
+    "dsp": 62,
+    "wns_ns": 0.108,
+    "whs_ns": 0.027,
+    "unassigned_core_pins": 0,
+    "missing_interface_pins": 14
+  },
+  "capacity": {
+    "xlr": 60800,
+    "ram": 256,
+    "dsp": 160
+  },
+  "free": {
+    "xlr": 3055,
+    "ram": 10,
+    "dsp": 98
+  },
+  "increment": {
+    "xlr": 0,
+    "ram": 0,
+    "dsp": 0
+  },
+  "ddr_program_before": 185472,
+  "ddr_program_after": 185568,
+  "ddr_program_increase": 96,
+  "bss_bytes": 66104,
+  "snapshot_ram": 5
+}

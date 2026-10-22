@@ -1,0 +1,2 @@
+sim/vision/tb_fusion_display.sv:6: warning: Port 46 (ui_state) of vision_display expects 24 bits, got 15.
+sim/vision/tb_fusion_display.sv:6:        : Padding 9 high bits of the port.

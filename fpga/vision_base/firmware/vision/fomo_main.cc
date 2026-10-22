@@ -1,7 +1,7 @@
 // Fixed-vector FOMO bring-up on the existing RV32I/DDR system; no camera AI.
 #include <stdint.h>
 #include <string.h>
-#include "control_service.h"
+#include "fusion_service.h"
 #include "fomo_runtime.h"
 
 extern "C" const uint8_t fomo_model[];
@@ -26,7 +26,7 @@ volatile char fomo_log[2048];
     __asm__ volatile("fence rw,rw" ::: "memory");
     fomo_status[1] = 4;
     *reinterpret_cast<volatile uint32_t*>(0xf8100004u) = 3;
-    for (;;) control_service_step();
+    for (;;) {control_service_step();control_center_step();}
 }
 extern "C" [[noreturn]] void fomo_kernel_fail() { fail(7); }
 extern "C" [[noreturn]] void fomo_runtime_fail(uint32_t code) { fail(code); }
@@ -68,6 +68,7 @@ extern "C" int main() {
     *reinterpret_cast<volatile uint32_t*>(0xf8100004u) = 1;
     if (CONTROL_STATE->magic == 0) control_init(); // Same cold-boot contract as ai_main.c.
     if (CONTROL_STATE->magic != CONTROL_MAGIC) fail(1);
+    control_sidebar_reset();
     static LayerProfiler profiler;
     uint64_t begin = fomo_ticks();
     auto &interpreter = *fomo_create(&profiler);
@@ -109,7 +110,7 @@ extern "C" int main() {
     }
     fomo_status[1] = 3;
     *reinterpret_cast<volatile uint32_t*>(0xf8100004u) = 2;
-    for (;;) control_service_step();
+    for (;;) {control_service_step();control_center_step();}
 }
 extern "C" void trap() {
     uint32_t cause, pc, value;

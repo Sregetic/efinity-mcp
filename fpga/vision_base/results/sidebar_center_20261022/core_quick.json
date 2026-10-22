@@ -1,0 +1,141 @@
+{
+  "generated_utc": "2026-10-21T17:08:36.7880306Z",
+  "suite": "quick",
+  "passed": true,
+  "verification_scope": "RTL simulation with behavioral memory; no Efinity P&R or hardware acceptance",
+  "tests": [
+    {
+      "test": "tb_vision_flyhash_mailbox",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 0.167
+    },
+    {
+      "test": "tb_vision_ai_bridge",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 0.129
+    },
+    {
+      "test": "tb_vision_control_bridge",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 0.145
+    },
+    {
+      "test": "tb_compute_lease",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 0.136
+    },
+    {
+      "test": "tb_analysis_dma",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 0.195
+    },
+    {
+      "test": "tb_packed_decode",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 0.234
+    },
+    {
+      "test": "tb_flyhash_encoder",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 0.501
+    },
+    {
+      "test": "tb_board_bank_switch",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 0.131
+    },
+    {
+      "test": "tb_stream_cdc",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 0.178
+    },
+    {
+      "test": "tb_axi_burst_qos",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 0.134
+    },
+    {
+      "test": "tb_frame_memory_system",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 0.69
+    },
+    {
+      "test": "tb_frame_pool",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 0.142
+    },
+    {
+      "test": "tb_frame_render_control",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 0.12
+    },
+    {
+      "test": "tb_video_test_pattern",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 12.088
+    },
+    {
+      "test": "tb_axi_frame_writer",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 0.175
+    },
+    {
+      "test": "tb_axi_line_reader",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 0.151
+    },
+    {
+      "test": "tb_roi_scaler",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 0.126
+    },
+    {
+      "test": "tb_roi_axi_scaler",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 0.134
+    },
+    {
+      "test": "tb_frame_render_engine",
+      "passed": true,
+      "compile_exit": 0,
+      "simulation_exit": 0,
+      "host_elapsed_seconds": 0.174
+    }
+  ]
+}

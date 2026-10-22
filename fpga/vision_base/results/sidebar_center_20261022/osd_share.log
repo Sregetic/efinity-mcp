@@ -1,0 +1,2 @@
+PASS shared sidebar label 262144 cycles, all items/edit/closed HUD/status/font bit-exact
+results/sidebar_center_20261022/tb_osd_share.sv:17: $finish called at 2621446000 (1ps)

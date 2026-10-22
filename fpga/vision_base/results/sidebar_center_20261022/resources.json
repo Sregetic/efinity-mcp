@@ -1,0 +1,41 @@
+{
+  "before": {
+    "xlr": 56916,
+    "ram": 241,
+    "dsp": 62,
+    "wns_ns": 0.285,
+    "whs_ns": 0.026
+  },
+  "after": {
+    "xlr": 57821,
+    "ram": 242,
+    "dsp": 62,
+    "wns_ns": 0.275,
+    "whs_ns": 0.026,
+    "unassigned_core_pins": 0,
+    "missing_interface_pins": 14,
+    "xlr_percent": 95.1
+  },
+  "capacity": {
+    "xlr": 60800,
+    "ram": 256,
+    "dsp": 160
+  },
+  "increased": {
+    "xlr": 905,
+    "ram": 1,
+    "dsp": 0
+  },
+  "free": {
+    "xlr": 2979,
+    "ram": 14,
+    "dsp": 98
+  },
+  "image_snapshot_ram": 5,
+  "sidebar_font_ram": 1,
+  "first_pass": {
+    "xlr": 57617,
+    "ram": 245
+  },
+  "note": "Whole-system native route values, final AI/selftest footer included; no board programming."
+}

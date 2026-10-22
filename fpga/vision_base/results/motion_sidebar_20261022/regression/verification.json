@@ -1,0 +1,32 @@
+[
+  {
+    "test": "fusion_display",
+    "passed": true,
+    "log": "F:\\Project\\fpga\\vision_base\\results\\motion_sidebar_20261022\\regression\\fusion_display.run.log"
+  },
+  {
+    "test": "edge_strength",
+    "passed": true,
+    "log": "F:\\Project\\fpga\\vision_base\\results\\motion_sidebar_20261022\\regression\\edge_strength.run.log"
+  },
+  {
+    "test": "edge_overlay",
+    "passed": true,
+    "log": "F:\\Project\\fpga\\vision_base\\results\\motion_sidebar_20261022\\regression\\edge_overlay.run.log"
+  },
+  {
+    "test": "frontend",
+    "passed": true,
+    "log": "F:\\Project\\fpga\\vision_base\\results\\motion_sidebar_20261022\\regression\\frontend.run.log"
+  },
+  {
+    "test": "line_snapshot",
+    "passed": true,
+    "log": "F:\\Project\\fpga\\vision_base\\results\\motion_sidebar_20261022\\regression\\line_snapshot.run.log"
+  },
+  {
+    "test": "sidebar_video",
+    "passed": true,
+    "log": "F:\\Project\\fpga\\vision_base\\results\\motion_sidebar_20261022\\regression\\sidebar_video.run.log"
+  }
+]

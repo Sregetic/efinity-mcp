@@ -13,6 +13,7 @@ try {
  $rtl='board/ti60f225_v4/rtl/vision/'
  $tests=@(
   @{name='osd';src=@('vision_osd.sv')},
+  @{name='sidebar_video';src=@('vision_osd.sv','vision_sidebar_overlay.sv')},
   @{name='line_direct';src=@('vision_line_direct.sv','vision_window3_pair.sv','vision_line_metrics.sv','vision_frontend.sv','vision_window3.sv','vision_median9.sv','vision_sobel.sv')},
   @{name='shape_classifier';src=@('vision_shape_classifier.sv')},
   @{name='shadow_chroma';src=@('../rgb_shadow_denoise.sv')},

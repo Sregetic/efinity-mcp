@@ -1,0 +1,2 @@
+PASS tb_vision_control_bridge ordered events, bounce/short/long keys, VS atomic commit, freeze CDC, held render/position, tagged error and overflow
+F:/Project/fpga/vision_base/sim/tb_vision_control_bridge.sv:85: $finish called at 4740000 (1ps)

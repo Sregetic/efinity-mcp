@@ -1,0 +1,2 @@
+PASS Sobel strength saturation/threshold, Canny antialias and binary recognition isolation
+sim/vision/tb_edge_strength.sv:32: $finish called at 216000 (1ps)

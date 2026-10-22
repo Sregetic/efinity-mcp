@@ -1,0 +1,2 @@
+PASS RV32I controls independent thresholds16..2047 step16, keys/history,11-page UI/AI single-shot/selftest/FOMO selection, bounded zoom/pan/viewport, coalesced frozen ROI commits, atomic feature wait and disable
+qemu-system-riscv32.exe: warning: Setting G will also set IMAFD

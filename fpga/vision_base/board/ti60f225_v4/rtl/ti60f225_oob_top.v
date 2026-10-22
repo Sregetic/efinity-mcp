@@ -1347,7 +1347,7 @@ end else begin:pool_raster
 end endgenerate
 wire[7:0]control_paddr;wire control_psel,control_penable,control_pwrite,control_pready,control_pslverror;
 wire[31:0]control_pwdata,control_prdata;
-wire[14:0]control_ui;wire[7:0]control_shape_threshold;wire tone_shadow_frame;
+wire[23:0]control_ui;wire[7:0]control_shape_threshold;wire tone_shadow_frame,control_motion;
 wire[3:0]boot_gpio;
 assign flash_sck=boot_gpio[0],flash_cs=boot_gpio[1],flash_mosi=boot_gpio[2];
 assign flash_wp=1'b1,flash_hold=1'b1,{flash_cs_oe,flash_sck_oe,flash_mosi_oe,flash_wp_oe,flash_hold_oe}={5{boot_gpio[3]}};
@@ -1356,12 +1356,12 @@ vision_control_bridge controls(.clk(core_clk),.rst_n(vid_rst_n),.video_clk(hdmi_
  .flash_miso(flash_miso),.flash_gpio(boot_gpio),
  .cmd_event(feature_cmd_event),.cmd_op(feature_command[31:24]),.cmd_value(feature_command[23:0]),
  .paddr(control_paddr),.psel(control_psel),.penable(control_penable),.pwrite(control_pwrite),.pwdata(control_pwdata),.prdata(control_prdata),.pready(control_pready),.pslverror(control_pslverror),
- .mode(feature_mode),.threshold(feature_threshold),.sobel_threshold(sobel_threshold),.canny_threshold(canny_threshold),.median_en(feature_median),.memory_mode(memory_mode),.history_index(history_index),.ui_state(control_ui),.shape_threshold(control_shape_threshold),
+ .mode(feature_mode),.threshold(feature_threshold),.sobel_threshold(sobel_threshold),.canny_threshold(canny_threshold),.median_en(feature_median),.motion_enable(control_motion),.memory_mode(memory_mode),.history_index(history_index),.ui_state(control_ui),.shape_threshold(control_shape_threshold),
  .job_ready(roi_job_ready),.capture_done(roi_capture_done),.capture_error(roi_capture_error),.capture_count(roi_capture_count),.source_hold_valid(roi_hold_valid),.render_done(roi_render_done),.render_error(roi_render_error),.render_pending(roi_render_pending),.vblank(roi_vblank),.scan_busy(roi_scan_busy),
  .job_valid(roi_job_valid),.enable(roi_enable),.freeze_source(roi_freeze),.job_config_id(roi_job_id),.roi_x(roi_x),.roi_y(roi_y),.roi_w(roi_w),.roi_h(roi_h),.dst_w(roi_dw),.dst_h(roi_dh),.display_x(roi_posx),.display_y(roi_posy),.config_busy(roi_config_busy),.commit_rejected(roi_commit_rejected),.requested_id(roi_requested_id),.config_error(roi_config_error),.committed_id(roi_commit_id),.rejected_id(roi_rejected_id));
 end else begin:hardware_roi
  assign boot_gpio=4'b0010;
- assign control_prdata=0,control_pready=1,control_pslverror=1,control_ui=0,control_shape_threshold=32;
+ assign control_prdata=0,control_pready=1,control_pslverror=1,control_ui=0,control_shape_threshold=32,control_motion=0;
 vision_roi_control roi_control(.rst_n(vid_rst_n),.video_clk(hdmi_tx_slow_clk),.cmd_event(feature_cmd_event),.cmd_op(feature_command[31:24]),.cmd_value(feature_command[23:0]),.memory_mode(memory_mode),.clk(core_clk),
  .job_ready(roi_job_ready),.capture_done(roi_capture_done),.capture_error(roi_capture_error),.source_hold_valid(roi_hold_valid),.render_done(roi_render_done),.render_error(roi_render_error),.render_pending(roi_render_pending),.vblank(roi_vblank),.scan_busy(roi_scan_busy),
  .job_valid(roi_job_valid),.enable(roi_enable),.freeze_source(roi_freeze),.job_config_id(roi_job_id),.roi_x(roi_x),.roi_y(roi_y),.roi_w(roi_w),.roi_h(roi_h),.dst_w(roi_dw),.dst_h(roi_dh),.display_x(roi_posx),.display_y(roi_posy),.config_busy(roi_config_busy),.commit_rejected(roi_commit_rejected),.requested_id(roi_requested_id),.config_error(roi_config_error),.committed_id(roi_commit_id),.rejected_id(roi_rejected_id));
@@ -1721,19 +1721,24 @@ vision_canny #(.CONTOUR_RASTER(1),.STABLE_NMS(1)) canny(.clk(hdmi_tx_slow_clk),.
  .edge_pixel(canny_pixel),.ready(canny_ready),.busy(canny_busy),.fault(canny_fault),.completed(canny_completed),
  .display_de(feature_de),.probe_hold(canny_probe_hold),.probe_req(canny_probe_req),.probe_address(canny_probe_address),
  .probe_ack(canny_probe_ack),.probe_data(canny_probe_data),.probe_read_address(canny_probe_read_address),.probe_busy(canny_probe_busy),.median_en(feature_median),.noise_mean(canny_noise_mean),.noise_valid(canny_noise_valid),.effective_threshold(canny_effective_threshold),.raster_de(feature_coordinate_de),.coarse_edges(canny_coarse_edges),.display_edges(canny_display_edges),.analysis_cycles(canny_analysis_cycles),.analysis_passes(canny_analysis_passes),.analysis_weak(canny_analysis_weak),.edge_coverage(canny_coverage));
-vision_display #(.FUSION(SAPPHIRE_ENABLE&&ANALYSIS_DMA_ENABLE)) feature_display(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n&&!roi_config_changed),.de(gamma_valid),.hs(gamma_hs),.vs(gamma_vs),
+wire[2:0]motion_direction;wire motion_held;
+vision_display #(.FUSION(SAPPHIRE_ENABLE&&ANALYSIS_DMA_ENABLE),.LOCAL_MOTION_ENABLE(SAPPHIRE_ENABLE)) feature_display(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n&&!roi_config_changed),.de(gamma_valid),.hs(gamma_hs),.vs(gamma_vs),
  .r(color_r),.g(color_g),.b(color_b),.mode(feature_mode),.threshold(sobel_threshold),.canny_effective_threshold(canny_effective_threshold),.canny_requested_threshold(canny_threshold),.median_en(feature_median),
  .memory_mode(memory_mode),.history_index(history_index),.canny_pixel(canny_pixel),.canny_ready(canny_ready),.canny_coverage(canny_coverage),.cx(feature_x),.cy(feature_y),
  .ode(feature_de),.ohs(feature_hs),.ovs(feature_vs),.orr(feature_r),.ogg(feature_g),.obb(feature_b),.debug_mag(feature_mag),.debug_edge(feature_edge),.shape_enable(shape_enable),.shape_threshold(shape_threshold),.shape_status(shape_status),.coordinate_de(feature_coordinate_de),
- .ui_state(control_ui),.analysis_enabled(ai_enabled),.analysis_context_changed(ai_context_changed),.frame_id(roi_view_frame),.render_config_id(roi_view_config),.analysis_context(ai_context),
+ .ui_state({9'b0,control_ui[23]?4'd0:control_ui[14:11],control_ui[10:0]}),.analysis_enabled(ai_enabled),.analysis_context_changed(ai_context_changed),.frame_id(roi_view_frame),.render_config_id(roi_view_config),.analysis_context(ai_context),
+ .motion_enable(control_motion),.motion_direction(motion_direction),.motion_held(motion_held),
  .analysis_result(ai_result),.analysis_match(ai_match),.analysis_identity_match(ai_identity),.analysis_age(ai_age),.geometry_done(geometry_done),.geometry_frame(geometry_frame),.geometry_config(geometry_config),.geometry_context(geometry_context));
 // M0 is an ISP bypass only when filtering is off. HDMI and readback share
 // this selection so the displayed camera image obeys the same noise switch.
-wire camera_bypass=feature_mode==0&&!feature_median&&control_ui[14:11]==0;
-assign {video_r,video_g,video_b}=camera_bypass?color_pixel:{feature_r,feature_g,feature_b};
-assign video_de=camera_bypass?gamma_valid:feature_de;
-assign video_hs=camera_bypass?gamma_hs:feature_hs;
-assign video_vs=camera_bypass?gamma_vs:feature_vs;
+wire camera_bypass=feature_mode==0&&!feature_median&&(control_ui[23]||control_ui[14:11]==0);
+vision_sidebar_overlay sidebar_output(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n),
+ .de(camera_bypass?gamma_valid:feature_de),.hs(camera_bypass?gamma_hs:feature_hs),.vs(camera_bypass?gamma_vs:feature_vs),
+ .rgb(camera_bypass?color_pixel:{feature_r,feature_g,feature_b}),
+ .ui_state({control_ui[23:15],control_ui[14],3'b0,control_ui[10:0]}),
+ .motion_enable(control_motion&&memory_mode==0),.motion_direction(motion_direction),.motion_held(motion_held),
+ .ai_status(ai_result[14:11]),
+ .ode(video_de),.ohs(video_hs),.ovs(video_vs),.orgb({video_r,video_g,video_b}));
 // Exact pre-TMDS output tap, plus the leased shared-range RGB16 source before Gamma.
 generate if(IMAGE_DEBUG)begin:image_debug
 vision_line_snapshot image_snapshot(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n),
@@ -2249,7 +2254,7 @@ always @(posedge jtag_diag_DRCK) begin
     else diag_shift<={32'h56495331,32'h2610051f,flyhash_result[255:128]};
    end
    6'd32: begin
-    if(SAPPHIRE_ENABLE) diag_shift<={32'h56495331,32'h26101040,feature_status,9'b0,shape_threshold,control_ui,roi_requested_id,roi_commit_id};
+    if(SAPPHIRE_ENABLE) diag_shift<={32'h56495331,32'h26101040,feature_status,control_ui[23:15],shape_threshold,control_ui[14:0],roi_requested_id,roi_commit_id};
     else diag_shift<={32'h56495331,32'h26091707,feature_status,memory_capture_id,memory_display_id,canny_completed};
    end
    default: diag_shift<={32'h56495331,32'h26091707,feature_status,memory_capture_id,memory_display_id,canny_completed};

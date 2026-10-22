@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include "control_service.h"
+#include "fusion_service.h"
 #include "fomo_pixels.h"
 #include "fomo_runtime.h"
 extern "C" {
@@ -14,7 +14,12 @@ extern "C" void fomo_control_poll(){control_service_step();}
 extern "C" [[noreturn]] void fomo_runtime_fail(uint32_t code){
  fomo_camera_status[17]=code;fomo_camera_status[1]=4;
  *reinterpret_cast<volatile uint32_t*>(0xf8100004u)=3;
- for(;;)control_service_step();
+ for(;;){
+  control_service_step();
+  if(CONTROL_STATE->center_stage||CONTROL_STATE->center_seen!=CONTROL_STATE->center_request){
+   CONTROL_STATE->center_seen=CONTROL_STATE->center_request;control_center_finish(CENTER_ERROR);
+  }
+ }
 }
 extern "C" [[noreturn]] void fomo_kernel_fail(){fomo_runtime_fail(7);}
 extern "C" void DebugLog(const char *s){

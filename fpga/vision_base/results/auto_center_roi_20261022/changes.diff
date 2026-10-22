@@ -1,0 +1,387 @@
+--- before/firmware/vision/fusion_service.h
++++ firmware/vision/fusion_service.h
+@@ -152,6 +152,8 @@
+ #ifdef VISION_FOMO
+ static void control_center_fomo(uint32_t nonce,const struct fusion_job *j,
+                                 unsigned valid,uint32_t x,uint32_t y,uint32_t w,uint32_t h){
++ // Invoke polls key events before returning; honor cancellation/new requests first.
++ control_center_step();
+  struct vision_control_state *s=CONTROL_STATE;
+  if(!nonce||nonce!=s->center_seen||s->center_stage!=3)return;
+  struct fusion_geometry latest=fusion_geometry_read();
+--- before/scripts/test_sidebar_center.py
++++ scripts/test_sidebar_center.py
+@@ -42,6 +42,12 @@
+ static void geometry(unsigned x,unsigned y,unsigned w,unsigned h,unsigned render,unsigned valid){
+  uint64_t box=(1ull<<63)|((uint64_t)valid<<62)|(2ull<<60)|((uint64_t)(x+2)<<36)|((uint64_t)(y+2)<<24)|((uint64_t)(x+w+1)<<12)|(y+h+1);
+  f[4]++;f[6]=render;f[8]=box>>32;f[9]=box;
++}
++static void trace_crop(const char *name,unsigned x,unsigned y,unsigned w,unsigned h){
++ const uint32_t words[12]={x,y,w,h,state.commit[0],state.commit[1],state.commit[2],state.commit[3],
++  state.center_frame,state.center_render,state.center_context,state.serial};
++ for(unsigned i=0;i<4;i++)check(state.commit[i]==state.roi[i]);
++ puts("ROI ");puts(name);for(unsigned i=0;i<12;i++){puts(" ");hex(words[i]);}puts("\n");
+ }
+ static void verify_box(unsigned x,unsigned y,unsigned w,unsigned h,unsigned maxz){
+  reset();state.center_zoom=maxz;state.center_serial=state.serial;state.center_settings=state.settings;state.center_shape=state.shape_threshold;
+@@ -93,14 +99,21 @@
+  // New geometry is required after confirmation, even when AI is OFF.
+  reset();action(SIDE_CENTER);check(state.center_request==1);apply();control_center_step();check(state.center_stage==4&&!state.pending);
+  control_center_step();check(!state.pending);geometry(700,400,160,120,0,1);control_center_step();check(state.center_stage==2&&state.pending==1&&state.center_frame==100);
++ trace_crop("geometry",700,400,160,120);
+  apply();check(state.pending==2);accept();control_center_step();check(state.center_status==CENTER_DONE&&!state.center_stage);trace("center_done");
+  unsigned serial=state.serial;for(unsigned i=0;i<10;i++){geometry(710,410,160,120,state.serial,1);control_center_step();}check(state.serial==serial);
++ // F0 uses the next capture for live rendering rather than waiting for a frozen lease.
++ reset();state.settings&=~48u;c[4]&=~64u;action(SIDE_CENTER);apply();control_center_step();
++ geometry(700,400,160,120,0,1);control_center_step();apply();check(state.pending==1&&state.warming);
++ c[5]++;apply();check(state.pending==2&&!state.warming&&!state.freeze);
++ accept();control_center_step();check(state.center_status==CENTER_DONE&&!state.center_stage&&!state.pending);
+  // A target in an already panned/scaled viewport is mapped back to the source.
+  reset();state.enabled=state.good=1;state.freeze=1;c[4]|=128;state.serial=7;
+  state.commit[0]=(480u<<12)|270;state.commit[1]=state.commit[2]=(960u<<12)|540;state.commit[3]=(400u<<12)|200;
+  action(SIDE_CENTER);apply();control_center_step();geometry(700,400,160,120,7,1);control_center_step();
+  check(state.center_stage==2&&state.center_render==7&&state.center_frame==100);
+  check(state.roi[0]==((620u<<12)|395)&&state.roi[1]==((480u<<12)|270)&&state.roi[2]==((1920u<<12)|1080)&&!state.roi[3]);
++ trace_crop("inverse_view",780,470,160,120);
+  // No target, stale transform, history mode and busy renderer do not alter the view.
+  reset();action(SIDE_CENTER);apply();control_center_step();geometry(700,400,160,120,0,0);control_center_step();check(state.center_status==CENTER_NONE&&!state.pending);trace("no_target");
+  reset();action(SIDE_CENTER);apply();control_center_step();geometry(700,400,160,120,99,1);control_center_step();check(state.center_status==CENTER_STALE&&!state.pending);
+@@ -115,12 +128,32 @@
+  reset();state.ai_manual=3;state.ai_policy=1;action(SIDE_CENTER);apply();control_center_step();control_center_fomo(state.center_seen,&j,0,0,0,0,0);check(state.center_status==CENTER_NONE);
+  reset();state.ai_manual=3;state.ai_policy=1;action(SIDE_CENTER);apply();control_center_step();j.g.context=4;control_center_fomo(state.center_seen,&j,1,700,400,160,120);check(state.center_status==CENTER_STALE);
+  reset();state.ai_manual=3;state.ai_policy=2;action(SIDE_CENTER);apply();control_center_step();state.ai_policy=0;control_center_step();check(state.center_status==CENTER_STALE&&!state.pending);
++ // A long Invoke polls keys before its completion callback, not the main loop.
++ j.g.frame=100;j.g.render=0;j.g.context=5;
++ reset();state.ai_manual=3;state.ai_policy=1;action(SIDE_CENTER);apply();control_center_step();
++ control_event(0x60000000);control_center_fomo(state.center_seen,&j,1,700,400,160,120);
++ check(state.center_status==CENTER_STALE&&!state.pending&&!state.center_stage&&!state.roi_enable);
++ reset();state.ai_manual=3;state.ai_policy=1;action(SIDE_CENTER);apply();control_center_step();
++ select(SIDE_MODEL);key(1);key(4);key(1);control_center_fomo(state.center_seen,&j,1,700,400,160,120);
++ check(state.center_status==CENTER_STALE&&!state.pending&&!state.center_stage&&!state.roi_enable);
++ reset();state.ai_manual=3;state.ai_policy=1;action(SIDE_CENTER);apply();control_center_step();
++ unsigned old_nonce=state.center_seen;action(SIDE_CENTER);apply();
++ control_center_fomo(old_nonce,&j,1,700,400,160,120);
++ check(state.center_seen==state.center_request&&state.center_stage==3&&!state.pending&&state.ai_request==2);
++ control_center_fomo(state.center_seen,&j,1,700,400,160,120);check(state.pending==1&&state.center_stage==2);
++ reset();state.ai_manual=3;state.ai_policy=1;action(SIDE_CENTER);apply();control_center_step();
++ action(SIDE_FULL_VIEW);control_center_fomo(state.center_seen,&j,1,700,400,160,120);
++ check(!state.center_stage&&!state.roi_enable&&!state.pending&&state.key_roi_dirty);
+  static const unsigned zs[5]={0,1,2,4,8};
+  for(unsigned iz=0;iz<5;iz++)for(unsigned iy=0;iy<9;iy++)for(unsigned ix=0;ix<9;ix++){
+   unsigned w=40+ix*13,h=30+iy*9,x=(1920-w)*ix/8,y=(1080-h)*iy/8;verify_box(x,y,w,h,zs[iz]);
+  }
+  verify_box(0,0,1920,1080,0);verify_box(100,0,1600,1080,8);
+- puts("PASS sidebar_center checks=");hex(checks);puts(" geometry_cases=407\n");finish(1);
++ verify_box(2,40,60,80,0);trace_crop("top_left",2,40,60,80);
++ verify_box(1850,980,64,72,0);trace_crop("bottom_right",1850,980,64,72);
++ verify_box(900,320,60,400,0);trace_crop("tall_target",900,320,60,400);
++ verify_box(1300,700,120,80,2);trace_crop("manual_2x",1300,700,120,80);
++ puts("PASS sidebar_center checks=");hex(checks);puts(" geometry_cases=411\n");finish(1);
+ }
+ void trap(void){puts("TRAP\n");finish(0);}
+ '''
+@@ -150,6 +183,15 @@
+  assert record==dict(menu=(word>>11)&15,menu_value=word&2047,shape_threshold=(word>>15)&255,index=(v['settings']>>15)&7,
+                      sidebar_open=(word>>31)&1,sidebar_edit=(word>>30)&1,sidebar_item=item,center_status=status,sidebar_level=level,sidebar_group=group),record
+ (out/'ui_vectors.json').write_text(json.dumps(ui,indent=2));(out/'ui_vectors.mem').write_text(''.join(f'{v["ui"]:06x}\n' for v in ui))
++roi=[]
++for line in r.stdout.splitlines():
++ if line.startswith('ROI '):
++  _,name,*words=line.split();values=[int(word,16) for word in words]
++  assert len(values)==12
++  roi.append(dict(name=name,target=values[:4],roi=values[4:8],frame=values[8],render=values[9],context=values[10],config=values[11]))
++assert len(roi)==6
++(out/'center_vectors.json').write_text(json.dumps(roi,indent=2))
++(out/'center_vectors.mem').write_text(''.join(f'{word:08x}\n' for v in roi for word in [*v['target'],*v['roi'],v['frame'],v['render'],v['context'],v['config']]))
+ checks=int(r.stdout.split('checks=')[1].split()[0],16)
+-(out/'result.json').write_text(json.dumps(dict(passed=True,isa='RV32I',checks=checks,geometry_cases=407,diagnostic_decode_vectors=len(ui),scope='Production control/MMIO/geometry/FOMO result logic on QEMU; no board timing or real recognition acceptance',ui_vectors=ui),indent=2))
++(out/'result.json').write_text(json.dumps(dict(passed=True,isa='RV32I',checks=checks,geometry_cases=411,render_vectors=len(roi),diagnostic_decode_vectors=len(ui),scope='Production control/MMIO/geometry/FOMO result logic on QEMU; no board timing or real recognition acceptance',ui_vectors=ui),indent=2))
+ print(r.stdout.strip())
+--- before/sim/tb_roi_axi_scaler.sv
++++ sim/tb_roi_axi_scaler.sv
+@@ -2,6 +2,7 @@
+ `default_nettype none
+ 
+ module tb_roi_axi_scaler;
++    parameter CENTER_REPLAY=0;
+     reg clk=0, rst_n=0;
+     always #5 clk=~clk;
+     reg job_valid=0;
+@@ -33,8 +34,11 @@
+     integer lines, expected_line, errors;
+     reg stalled=0;
+     reg [100:0] stalled_payload;
+-
+-    roi_axi_scaler #(.MAX_LINE_PIXELS(32), .MAX_BURST_BEATS(16), .FIFO_BEATS(16)) dut (
++    reg [31:0] center_vectors[0:71];
++    string vector_file,output_dir;
++    integer sample,output_file=0,target_x,target_y,target_w,target_h;
++
++    roi_axi_scaler #(.MAX_LINE_PIXELS(CENTER_REPLAY?2560:32), .MAX_BURST_BEATS(CENTER_REPLAY?32:16), .FIFO_BEATS(CENTER_REPLAY?32:16)) dut (
+       .clk(clk), .rst_n(rst_n), .job_valid(job_valid), .job_ready(job_ready),
+       .base_addr(base_addr), .stride_bytes(stride_bytes), .frame_id(frame_id),
+       .config_id(config_id), .src_width(src_width), .src_height(src_height),
+@@ -50,7 +54,16 @@
+       .m_axi_rvalid(m_axi_rvalid), .m_axi_rready(m_axi_rready));
+ 
+     function automatic [15:0] pixel_at(input integer a);
+-        pixel_at = ((a >> 1) ^ (a >> 5) ^ 16'h5a3c ^ (a * 13));
++        integer x,y;
++        begin
++         pixel_at = ((a >> 1) ^ (a >> 5) ^ 16'h5a3c ^ (a * 13));
++         if(CENTER_REPLAY)begin
++          x=((a-expected_base)/2)%1920;y=((a-expected_base)/2)/1920;
++          pixel_at=16'hef7b;
++          if(x>=target_x&&x<target_x+target_w&&y>=target_y&&y<target_y+target_h)
++           pixel_at=(x<target_x+3||x>=target_x+target_w-3||y<target_y+3||y>=target_y+target_h-3)?16'h8842:16'ha25c;
++         end
++        end
+     endfunction
+ 
+     always @(negedge clk) begin
+@@ -85,7 +98,7 @@
+                     $fatal(1,"Invalid AXI geometry");
+                 if (({1'b0,m_axi_araddr[11:0]} + (({1'b0,m_axi_arlen}+1)*16)) > 4096)
+                     $fatal(1,"Cross-page AXI burst");
+-                if (m_axi_arlen > 15) $fatal(1,"Burst cap");
++                if (m_axi_arlen > (CENTER_REPLAY?31:15)) $fatal(1,"Burst cap");
+                 pending<=1; response_left<=m_axi_arlen+1; response_addr<=m_axi_araddr; bursts<=bursts+1;
+             end
+             if (m_axi_rvalid && m_axi_rready) begin
+@@ -98,6 +111,10 @@
+             end
+ 
+             if (pixel_valid && pixel_ready) begin
++                if(CENTER_REPLAY)begin
++                    $fwrite(output_file,"%c%c",pixel_data[7:0],pixel_data[15:8]);
++                    if(pixel_keep==2'b11)$fwrite(output_file,"%c%c",pixel_data[23:16],pixel_data[31:24]);
++                end
+                 dx=received % expected_dst_w; dy=received / expected_dst_w;
+                 sx=expected_roi_x + (dx*expected_roi_w)/expected_dst_w;
+                 sy=expected_roi_y + (dy*expected_roi_h)/expected_dst_h;
+@@ -158,10 +175,36 @@
+ 
+     initial begin
+         repeat(4) @(negedge clk); rst_n=1;
+-        run_job(0); run_job(1);
+-        $display("PASS tb_roi_axi_scaler cases=2"); $finish;
+-    end
+-    initial begin #3000000; $fatal(1,"Timeout tb_roi_axi_scaler"); end
++        if(CENTER_REPLAY)begin
++            if(!$value$plusargs("vectors=%s",vector_file)||!$value$plusargs("output=%s",output_dir))$fatal(1,"center replay paths required");
++            $readmemh(vector_file,center_vectors);
++            for(sample=0;sample<6;sample=sample+1)begin
++                target_x=center_vectors[sample*12];target_y=center_vectors[sample*12+1];
++                target_w=center_vectors[sample*12+2];target_h=center_vectors[sample*12+3];
++                base_addr=32'h100000;stride_bytes=3840;src_width=1920;src_height=1080;
++                roi_x=center_vectors[sample*12+4]>>12;roi_y=center_vectors[sample*12+4]&4095;
++                roi_w=center_vectors[sample*12+5]>>12;roi_h=center_vectors[sample*12+5]&4095;
++                dst_width=center_vectors[sample*12+6]>>12;dst_height=center_vectors[sample*12+6]&4095;
++                frame_id=center_vectors[sample*12+8];config_id=center_vectors[sample*12+11];
++                expected_base=base_addr;expected_stride=stride_bytes;expected_roi_x=roi_x;expected_roi_y=roi_y;
++                expected_roi_w=roi_w;expected_roi_h=roi_h;expected_dst_w=dst_width;expected_dst_h=dst_height;
++                expected_frame=frame_id;expected_config=config_id;received=0;
++                output_file=$fopen($sformatf("%s/center_%0d.raw",output_dir,sample),"wb");
++                if(!output_file)$fatal(1,"center output file");
++                @(negedge clk);job_valid=1;while(!job_ready)@(negedge clk);
++                @(negedge clk);job_valid=0;
++                wait(done);@(negedge clk);
++                if(error||received!=expected_dst_w*expected_dst_h)$fatal(1,"center replay completion");
++                $fclose(output_file);$display("PASS center RTL sample=%0d pixels=%0d",sample,received);
++            end
++            $display("PASS tb_roi_axi_scaler six firmware center descriptors, native geometry, AXI/backpressure and source pixels");
++        end else begin
++            run_job(0); run_job(1);
++            $display("PASS tb_roi_axi_scaler cases=2");
++        end
++        $finish;
++    end
++    initial begin #(CENTER_REPLAY?1000000000:3000000); $fatal(1,"Timeout tb_roi_axi_scaler"); end
+ endmodule
+ 
+ `default_nettype wire
+--- before/scripts/test_center_render.py
++++ scripts/test_center_render.py
+@@ -0,0 +1,62 @@
++"""Check actual RTL pixel dumps against the RV32I-produced center descriptors."""
++import argparse,json
++from pathlib import Path
++import numpy as np
++from PIL import Image,ImageDraw,ImageFont
++
++ROOT=Path(__file__).resolve().parents[1]
++p=argparse.ArgumentParser();p.add_argument('--output-dir',type=Path,default=ROOT/'results/auto_center_roi_20261022')
++out=p.parse_args().output_dir
++cases=json.loads((out/'control/center_vectors.json').read_text())
++assert 'PASS tb_roi_axi_scaler six firmware center descriptors' in (out/'render/test.log').read_text()
++
++def rgb(pixels):
++    channels=[(pixels>>shift)&31 for shift in (10,5,0)]
++    return np.stack([(c<<3)|(c>>2) for c in channels],axis=-1).astype(np.uint8)
++
++font=ImageFont.truetype('C:/Windows/Fonts/Noto Sans SC Medium (TrueType).otf',24)
++sheet=Image.new('RGB',(1312,1248),'#20262c');draw=ImageDraw.Draw(sheet)
++selected={'geometry':0,'top_left':1,'bottom_right':2}
++titles={'geometry':'几何结果 → 自动构图','top_left':'左上目标 → 居中并留黑','bottom_right':'右下目标 → 居中并留黑'}
++records=[];total=0
++for index,case in enumerate(cases):
++    x,y,w,h=case['target']
++    xy,wh,size,pos=case['roi']
++    sx,sy=xy>>12,xy&4095;sw,sh=wh>>12,wh&4095
++    dw,dh=size>>12,size&4095;dx,dy=pos>>12,pos&4095
++    source=np.full((1080,1920),0xef7b,dtype=np.uint16)
++    source[y:y+h,x:x+w]=0x8842
++    source[y+3:y+h-3,x+3:x+w-3]=0xa25c
++    actual=np.fromfile(out/f'render/center_{index}.raw',dtype='<u2')
++    assert actual.size==dw*dh,(case['name'],actual.size,dw*dh)
++    actual=actual.reshape(dh,dw)
++    xs=sx+np.arange(dw,dtype=np.int64)*sw//dw
++    ys=sy+np.arange(dh,dtype=np.int64)*sh//dh
++    expected=source[np.ix_(ys,xs)]
++    assert np.array_equal(actual,expected),case['name']
++    scale=dw//sw
++    assert dw==sw*scale and dh==sh*scale and not(dw&7)
++    error_x=dx+(x+w//2-sx)*scale-960;error_y=dy+(y+h//2-sy)*scale-540
++    assert abs(error_x)<=4 and abs(error_y)<=4
++    assert sx<=x and sy<=y and x+w<=sx+sw and y+h<=sy+sh
++    canvas=np.zeros((1080,1920),dtype=np.uint16)
++    canvas[dy:dy+dh,dx:dx+dw]=actual
++    before=Image.fromarray(rgb(source));after=Image.fromarray(rgb(canvas))
++    before.save(out/f"render/{case['name']}_before.png")
++    after.save(out/f"render/{case['name']}_after.png")
++    if case['name'] in selected:
++        row=selected[case['name']];oy=row*416
++        marked=before.copy();ImageDraw.Draw(marked).rectangle((sx,sy,sx+sw-1,sy+sh-1),outline='#ff9830',width=5)
++        draw.text((12,oy+4),titles[case['name']]+'：左为源图与裁剪框，右为RTL缩放后定位',font=font,fill='#ffff80')
++        sheet.paste(marked.resize((640,360)),(0,oy+48))
++        sheet.paste(after.resize((640,360)),(672,oy+48))
++    total+=actual.size
++    records.append(dict(name=case['name'],pixels=int(actual.size),scale=scale,
++                        source=[sx,sy,sw,sh],destination=[dx,dy,dw,dh],
++                        center_error=[error_x,error_y],exact_pixels=True,
++                        source_frame=case['frame'],render_config=case['config']))
++sheet.save(out/'center_preview.png')
++result=dict(passed=True,rtl_pixels=total,cases=records,
++            scope='RV32I descriptor -> production AXI reader/scaler pixel replay; host canvas placement, synthetic targets, not camera recognition or HDMI acceptance')
++(out/'render/result.json').write_text(json.dumps(result,indent=2))
++print(f'PASS {len(cases)} production RV32I center descriptors, {total} actual RTL pixels, aspect ratio/center/whole target/letterbox')
+--- before/docs/AUTO_CENTER_ROI_20261022.md
++++ docs/AUTO_CENTER_ROI_20261022.md
+@@ -0,0 +1,64 @@
++# 一键自动居中 ROI：当前操作与离线验证
++
++2026-10-22。沿用两层中文侧栏和既有单目标构图算法；本轮完成后续联调，修复长时间FOMO推理与按键取消/重发之间的时序缺口。硬件不在现场，本轮未连接板卡、未写SRAM或Flash。
++
++## 怎么使用
++
++1. 在F0实时或F1冻结下，先取得有效目标。AI关闭或基础模型时使用既有几何结果；选中FOMO且开启AI时，居中动作请求一次新的FOMO任务。
++2. 长按KEY0打开中文菜单，KEY2/KEY3选“目标”，短按KEY0展开二级。
++3. 需要限制放大程度时，先选择“放大倍率”，进入编辑，设置“自动 / 1倍 / 2倍 / 4倍 / 8倍”，再次KEY0确认。倍率是上限，较大目标会自动降低倍率以保留整体。
++4. 选择“一键居中”，KEY0进入确认页，再按KEY0确认。RISC-V会自行计算源ROI、缩放尺寸和输出位置，无需手动调平移或输出坐标。
++5. 状态从“等待”转为“完成”表示现有ROI提交握手已确认，渲染结果随后按原帧边界切换。长按KEY0逐级返回并关闭菜单。
++6. 选择“恢复全幅”并确认，可退出ROI、恢复原全幅，同时取消尚未完成的居中请求。
++
++这是**一次识别后的一次自动构图**，不是连续跟踪。F0后续画面继续在这组ROI中实时更新；F1重渲染持有的同一原帧。目标移动后，可再次请求居中。F2/F3历史状态下显示“正忙”，先回到F0/F1再执行。
++
++几何路径仍沿用当前检测区域；FOMO固定单帧仍使用已提交源ROI，ROI关闭时为原固定分析区[640,300,640,480]，自动模式仍为几何引导。本轮没有增加全图搜索或训练新的模型。无目标显示“无目标”，旧变换/身份显示“已过期”；当前构图保持。识别精度与分析更新率保持原状态，不以本轮构图测试代替实物识别验收。
++
++## 构图规则
++
++- 将显示目标框逆映射到原始源坐标，不把已经放大的显示坐标再次当成源坐标。
++- 按1/2/4/8整数倍率等比放大，为目标保留余量；水平输出满足现有8像素对齐契约。
++- 靠近源图四边时，裁掉越界的源区域并用输出位置留黑边，保持目标居中且完整，不拉伸目标。
++- 沿用现有FRAME_ID、渲染配置、处理context、任务nonce和提交握手；不新增帧池或图像缓存。
++
++## 本轮修复
++
++FOMO的长卷积会轮询按键并更新控制状态，但完成回调先于主循环下一次control_center_step。旧代码可能在关闭AI、切换基础模型或重新发起居中后，仍接受前一任务的结果并提交ROI。
++
++修复位于共享的control_center_fomo入口：先执行已有control_center_step，处理取消、过期和新请求，再检查完成任务nonce并接受结果。没有在每个调用方复制检查，也没有新增状态字段或硬件寄存器。
++
++新增回归先在旧代码上复现失败，再通过新代码；覆盖关闭AI、切模型、重新请求及恢复全幅。原F0/F1、独立阈值、菜单确认/取消、无目标、旧坐标变换、已有ROI逆映射、历史忙状态和FOMO身份测试继续通过。
++
++## 离线证据与范围
++
++证据目录：F:/Project/fpga/vision_base/results/auto_center_roi_20261022/。
++
++- RV32I QEMU实际运行生产控制/融合头文件：2669个断言，411组几何参数、8组诊断UI向量；F0新增捕获后提交和F1持有帧路径均覆盖。
++- 六份实际固件提交描述符回放到生产axi_line_reader/roi_scaler/roi_axi_scaler，使用原生2560行宽上限、32拍突发/FIFO及总线/像素背压。
++- 10932352个真实RTL输出像素与独立整型最近邻参考一致，倍率/纵横比/目标完整性/中心误差均检查；六例最大中心误差4个显示像素。
++- 两份描述符来自几何路径与已有视图逆映射，另四份是框计算的贴边、长目标和手动倍率边界用例。输入目标框是联调夹具，不是本轮相机或新模型识别结果。
++- 预览左图是与RTL内存响应一致的合成源场景，橙框是固件ROI；右图为真实RTL缩放像素按固件输出位置放入画布。画布拼接在主机完成，不作为完整HDMI扫描或板上显示验收。
++- 19项核心RTL回归通过，包含控制/AI CDC、帧池、DDR仲裁、渲染/写入/发布、错误非发布、读通道和缩放器原有用例。
++
++本轮未修改生产RTL，没有重跑整机P&R。沿用中文位流原生实测57745/60800XLR、246/256RAM、62/160DSP，WNS+0.108ns/WHS+0.027ns，余3055XLR/10RAM/98DSP。片上资源增量为0；原RGB24图像回读和5RAM快照保持，中文菜单/图像算法/相机设置保持。
++
++## 当前配套制品
++
++- 位流继续用F:/Project/fpga/vision_base/results/sidebar_chinese_20261022/release/ti60f225_oob.bit。
++- 完整DDR应用更新为F:/Project/fpga/vision_base/results/auto_center_roi_20261022/firmware/vision.elf，185568B，比上一版增加96B；BSS66104B保持。
++- 原权重F:/Project/fpga/vision_base/models/shape_cards_bringup/shape_cards_weights.bin保持。
++- 新190000B离线启动包为F:/Project/fpga/vision_base/results/auto_center_roi_20261022/release/vision_boot.bin，按既有VBO1格式和CRC契约检查；仅生成文件，没有写Flash。
++
++新应用仍保留FOMO、原INT8、FlyHash、80节点连接组及伴随读出。旧Flash程序和此前中文化时的DDR应用都未被覆盖；后续加载需使用这份新DDR应用才能包含本轮取消/重发修复。
++
++## 复现关键检查
++
++```powershell
++python -E -X utf8 scripts/test_sidebar_center.py --output-dir results/auto_center_roi_20261022/control
++C:/iverilog/bin/iverilog.exe -g2012 -s tb_roi_axi_scaler '-Ptb_roi_axi_scaler.CENTER_REPLAY=1' -o results/auto_center_roi_20261022/render/center.vvp sim/tb_roi_axi_scaler.sv rtl/axi_line_reader.sv rtl/roi_scaler.sv rtl/roi_axi_scaler.sv
++C:/iverilog/bin/vvp.exe results/auto_center_roi_20261022/render/center.vvp +vectors=results/auto_center_roi_20261022/control/center_vectors.mem +output=results/auto_center_roi_20261022/render
++python -E -X utf8 scripts/test_center_render.py --output-dir results/auto_center_roi_20261022
++```
++
++运行目录为F:/Project/fpga/vision_base，Python使用本项目既有运行时。硬件返回后先做SRAM及DDR加载验证，再验收实物识别、实体按键、F0/F1居中、边缘留黑、恢复全幅和原图/各模式回读；Flash继续保持现状，后续按明确指令处理。
+--- before/docs/SIDEBAR_CENTER_20261022.md
++++ docs/SIDEBAR_CENTER_20261022.md
+@@ -1,6 +1,8 @@
+ # 侧栏菜单与单目标居中、放大
+ 
+ 本日后续UI已修订为两层窄菜单，最新操作及制品见[两层侧栏说明](SIDEBAR_HIERARCHY_20261022.md)。本文件保留首次单层候选的操作与验证记录；居中、帧身份和构图算法保持。
++
++后续的中文操作、当前DDR程序、FOMO长推理期间取消/重发修复与六例实际RTL像素回放见[自动居中ROI当前说明](AUTO_CENTER_ROI_20261022.md)。以下资源和制品为首次构建记录。
+ 
+ 日期：2026-10-22。**离线候选，已生成配套位流和完整 DDR 应用；本轮未连接板卡、未写 SRAM 或 Flash。** 当前现场部署记录仍见总状态中 10-18 的 SRAM 与 10-17 的 Flash 段落。
+ 
+--- before/docs/SIDEBAR_HIERARCHY_20261022.md
++++ docs/SIDEBAR_HIERARCHY_20261022.md
+@@ -50,4 +50,4 @@
+ 
+ 中文显示的离线证据与最终资源：`F:/Project/fpga/vision_base/results/sidebar_chinese_20261022/REPORT.md`、`resources.json`、`acceptance.json`。三张完整1080p预览及sidebar_chinese_detail.png来自实际RTL输出的合成场景，不是相机实拍。前一轮交互/RV32I证据仍在results/sidebar_hierarchy_20261022/，本轮复用原DDR应用，没有修改固件或控制协议。
+ 
+-新菜单需中文位流与results/sidebar_hierarchy_20261022/firmware/vision.elf完整DDR程序配套；仅运行原Flash应用仍为原菜单。板上按键、实际画面和长时验收待硬件返回后进行，Flash保持现状。
++后续已完成[自动居中ROI联调及推理期间取消/重发修复](AUTO_CENTER_ROI_20261022.md)。中文位流保持，当前配套完整DDR应用更新为results/auto_center_roi_20261022/firmware/vision.elf；上方sidebar_hierarchy中的程序为中文化当时的旧配套。仅运行原Flash应用仍为原菜单。板上按键、实际画面和长时验收待硬件返回后进行，Flash保持现状。
+--- before/docs/PROJECT_MASTER_STATUS.md
++++ docs/PROJECT_MASTER_STATUS.md
+@@ -1,4 +1,14 @@
+ # 项目总目标与状态（统一范围表）
++
++## 2026-10-22 一键自动居中ROI后续联调（离线候选，未烧录）
++
++复核既有“目标→一键居中/放大倍率/恢复全幅”链路，并修复FOMO长Invoke轮询按键后、主循环尚未处理取消/新请求时旧回调抢先提交ROI的问题。共享回调入口先推进既有居中状态机，生产只改fusion_service.h；新用例先在旧代码复现失败，修复后关闭AI/切模型/重发/恢复全幅通过。仍是一次性自动构图，不是连续跟踪或新增全图搜索，识别/分析范围与实物精度记录保持。
++
++严格RV32I2669断言/411几何参数及8诊断向量通过，包含F0下一采集启动、F1同源和已有ROI逆映射；六份固件commit描述符送到生产AXI/缩放器，10932352个RTL像素参考0差异，中心误差≤4显示像素；19核心回归通过。预览为合成源/真实RTL缩放后由主机画布定位，不计相机识别或完整HDMI协同验收，38完整视频未重复计通过。
++
++生产RTL与中文位流保持，本轮未重跑P&R；沿用57745XLR/246RAM/62DSP、WNS+0.108ns/WHS+0.027ns，余3055XLR/10RAM/98DSP，新增片上资源0。完整相机DDR应用185568B（+96B）、BSS66104B保持，新190000B离线启动包已生成；程序为results/auto_center_roi_20261022/firmware/vision.elf，位流继续results/sidebar_chinese_20261022/release/ti60f225_oob.bit，原权重保持。图像回读仍RGB24/5RAM，全部既有范围保持。
++
++本轮未连接板卡、未写SRAM或Flash，最近现场记录仍按10-18/10-17；实物识别、实体按键/画面、运动、长时和断电待硬件返回。操作见docs/AUTO_CENTER_ROI_20261022.md，证据见results/auto_center_roi_20261022/REPORT.md、acceptance.json及center_preview.png。
+ 
+ ## 2026-10-22 两层侧栏中文显示（离线候选，未烧录）
+ 
+--- before/docs/SYSTEM_SCOPE_AND_ROADMAP.md
++++ docs/SYSTEM_SCOPE_AND_ROADMAP.md
+@@ -1,4 +1,14 @@
+ # 完整视觉系统：长期范围与实施路线
++
++## 2026-10-22 一键自动居中ROI后续联调（离线候选，未烧录）
++
++复核既有“目标→一键居中/放大倍率/恢复全幅”链路，并修复FOMO长Invoke轮询按键后、主循环尚未处理取消/新请求时旧回调抢先提交ROI的问题。共享回调入口先推进既有居中状态机，生产只改fusion_service.h；新用例先在旧代码复现失败，修复后关闭AI/切模型/重发/恢复全幅通过。仍是一次性自动构图，不是连续跟踪或新增全图搜索，识别/分析范围与实物精度记录保持。
++
++严格RV32I2669断言/411几何参数及8诊断向量通过，包含F0下一采集启动、F1同源和已有ROI逆映射；六份固件commit描述符送到生产AXI/缩放器，10932352个RTL像素参考0差异，中心误差≤4显示像素；19核心回归通过。预览为合成源/真实RTL缩放后由主机画布定位，不计相机识别或完整HDMI协同验收，38完整视频未重复计通过。
++
++生产RTL与中文位流保持，本轮未重跑P&R；沿用57745XLR/246RAM/62DSP、WNS+0.108ns/WHS+0.027ns，余3055XLR/10RAM/98DSP，新增片上资源0。完整相机DDR应用185568B（+96B）、BSS66104B保持，新190000B离线启动包已生成；程序为results/auto_center_roi_20261022/firmware/vision.elf，位流继续results/sidebar_chinese_20261022/release/ti60f225_oob.bit，原权重保持。图像回读仍RGB24/5RAM，全部既有范围保持。
++
++本轮未连接板卡、未写SRAM或Flash，最近现场记录仍按10-18/10-17；实物识别、实体按键/画面、运动、长时和断电待硬件返回。操作见docs/AUTO_CENTER_ROI_20261022.md，证据见results/auto_center_roi_20261022/REPORT.md、acceptance.json及center_preview.png。
+ 
+ ## 2026-10-22 两层侧栏中文显示（离线候选，未烧录）
+ 

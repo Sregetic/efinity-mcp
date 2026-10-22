@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "tests": [
+    {
+      "test": "core",
+      "passed": true,
+      "log": "F:\\Project\\fpga\\vision_base\\results\\motion_sidebar_20261022\\rtl\\core.run.log"
+    },
+    {
+      "test": "tap",
+      "passed": true,
+      "log": "F:\\Project\\fpga\\vision_base\\results\\motion_sidebar_20261022\\rtl\\tap.run.log"
+    },
+    {
+      "test": "policy",
+      "passed": true,
+      "log": "F:\\Project\\fpga\\vision_base\\results\\motion_sidebar_20261022\\rtl\\policy.run.log"
+    },
+    {
+      "test": "readout",
+      "passed": true,
+      "log": "F:\\Project\\fpga\\vision_base\\results\\motion_sidebar_20261022\\rtl\\readout.run.log"
+    },
+    {
+      "test": "motion_display",
+      "passed": true,
+      "log": "F:\\Project\\fpga\\vision_base\\results\\motion_sidebar_20261022\\rtl\\motion_display.run.log"
+    },
+    {
+      "test": "motion_sidebar",
+      "passed": true,
+      "log": "F:\\Project\\fpga\\vision_base\\results\\motion_sidebar_20261022\\rtl\\motion_sidebar.run.log"
+    }
+  ],
+  "scope": "Core/reference, sampler, display readout and post-frontend synthetic integration; no physical accuracy",
+  "hardware_programmed": false
+}

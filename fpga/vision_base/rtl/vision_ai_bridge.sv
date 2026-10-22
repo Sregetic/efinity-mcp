@@ -68,7 +68,7 @@ module vision_ai_bridge #(parameter SIG_BITS=88)(
     end
     if(publish_sync[2]!=publish_ack)begin front<=staging;publish_ack<=publish_sync[2];end
    end
-   if(geometry_done&&enabled&&geometry_context==context_id&&geometry_req==geometry_ack_sync[1])begin
+   if(geometry_done&&geometry_context==context_id&&geometry_req==geometry_ack_sync[1])begin
     geometry_video<={geometry_status,geometry_context,geometry_config,geometry_frame};geometry_req<=~geometry_req;
    end
   end
