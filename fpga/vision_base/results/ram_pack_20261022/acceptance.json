@@ -1,0 +1,83 @@
+{
+  "offline_passed": true,
+  "physical_acceptance": false,
+  "resources": {
+    "before": {
+      "xlr": 59878,
+      "ram": 249,
+      "dsp": 63
+    },
+    "after": {
+      "xlr": 60510,
+      "ram": 239,
+      "dsp": 63
+    },
+    "delta": {
+      "xlr": 632,
+      "ram": -10,
+      "dsp": 0
+    },
+    "free": {
+      "xlr": 290,
+      "ram": 17,
+      "dsp": 97
+    },
+    "wns_ns": 0.112,
+    "whs_ns": 0.028,
+    "hardware_programmed": false,
+    "flash_written": false
+  },
+  "ram_savings_by_component": {
+    "canny_coverage": 3,
+    "canny_fit": 2,
+    "sensor_rom": 1,
+    "chinese_font": 1,
+    "cache_tags": 2,
+    "motion_state": 1
+  },
+  "current_production_pixel_pairs": 4147200,
+  "canny_ab_complete_cycles": 4773472,
+  "coverage_neighborhood_phase_pairs": 8192,
+  "fit_signed_pairs": 65536,
+  "canny_geometry_pixels": 138240,
+  "canny_fit_pixels": 6528,
+  "pixel_area_cases": 8256,
+  "osd_all_glyph_pixels": 55552,
+  "tag_random_cycles": 10000,
+  "sensor_boot_lengths": [
+    253,
+    251,
+    166
+  ],
+  "sensor_profile_gate_17_prefix_rejection": true,
+  "motion_core_frames": 62,
+  "motion_sample_grid_words": 864,
+  "motion_readout_checks": 57,
+  "motion_display_rasters": 24,
+  "motion_display_modes": 8,
+  "motion_display_exact_rgb_sync_cycles": 463059,
+  "motion_sidebar_exact_outside_pixels_and_characters": 4007264,
+  "snapshot_rgb_bits": 24,
+  "snapshot_ram": 5,
+  "unassigned_core_pins": 0,
+  "unchanged_missing_interface_waivers": 14,
+  "all_native_input_changes": [
+    "rtl/sapphire_ram.sv",
+    "board/ti60f225_v4/rtl/cam_i2c_ctrl/i2c/i2c_master_reg_rom.v",
+    "board/ti60f225_v4/rtl/vision/canny_coverage_index.mem",
+    "board/ti60f225_v4/rtl/vision/canny_coverage_palette.mem",
+    "board/ti60f225_v4/rtl/vision/vision_canny_raster.sv",
+    "board/ti60f225_v4/rtl/vision/vision_local_motion_core.sv",
+    "board/ti60f225_v4/rtl/vision/vision_osd.sv"
+  ],
+  "firmware_changed": false,
+  "firmware_load_bytes": 185888,
+  "candidate_bit": "F:\\Project\\fpga\\vision_base\\results\\ram_pack_20261022\\release\\ti60f225_oob.bit",
+  "paired_firmware": "F:\\Project\\fpga\\vision_base\\results\\motion_sidebar_20261022\\firmware\\vision.elf",
+  "weights": "F:\\Project\\fpga\\vision_base\\models\\shape_cards_bringup\\shape_cards_weights.bin",
+  "sram_written": false,
+  "flash_written": false,
+  "full_core_suite_rerun": false,
+  "full_video_suite_rerun": false,
+  "evidence_scope": "Production RTL equivalence/native P&R; synthetic images, not camera or physical HDMI acceptance"
+}

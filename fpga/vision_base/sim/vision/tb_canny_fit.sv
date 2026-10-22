@@ -3,7 +3,7 @@ module tb;
 localparam W=48,H=36,PW=W*4,PH=H*4;
 reg clk=0,rst=0,vblank=0,de=0,ready=1,bitmap=0;reg[11:0]x=0,y=0;
 wire[8:0]fx,fy;wire[7:0]coverage;wire pixel;wire[31:0]coarse,shown;
-vision_canny_raster #(.W(W),.H(H),.COVERAGE_FILE("board/ti60f225_v4/rtl/vision/canny_coverage_q5.mem"),.FIT_FILE("board/ti60f225_v4/rtl/vision/canny_fit_q4.mem"))
+vision_canny_raster #(.W(W),.H(H),.INDEX_FILE("board/ti60f225_v4/rtl/vision/canny_coverage_index.mem"),.PALETTE_FILE("board/ti60f225_v4/rtl/vision/canny_coverage_palette.mem"))
  dut(clk,rst,vblank,de,x,y,bitmap,ready,fx,fy,pixel,coarse,shown,coverage);
 always #5 clk=~clk;
 reg map[0:W*H-1];reg[79:0]lut[0:511];reg[4:0]level;reg[7:0]expected;

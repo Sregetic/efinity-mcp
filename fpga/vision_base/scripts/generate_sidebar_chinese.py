@@ -47,6 +47,7 @@ def generate(font_path):
         cell = Image.new("L", (16, 16))
         ImageDraw.Draw(cell).text((0, -5), ch, font=font, fill=255)
         bits = [int(value >= 96) for value in cell.tobytes()]
+        assert not any(bits[15::16]), f'Packed font requires its existing blank last column: {ch}'
         pattern = int("".join(map(str, bits)), 2)
         assert pattern and pattern not in patterns, f"Empty or duplicate glyph: {ch}"
         patterns.append(pattern)

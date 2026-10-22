@@ -1,0 +1,2 @@
+PASS production Canny storage: 8192 coverage and 65536 signed fit cycle pairs
+F:/Project/fpga/vision_base/sim/vision/tb_canny_storage.sv:33: $finish called at 737286000 (1ps)

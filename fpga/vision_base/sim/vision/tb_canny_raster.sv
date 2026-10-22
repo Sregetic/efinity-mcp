@@ -3,7 +3,7 @@ module tb;
 localparam W=16,H=12,PW=W*4,PH=H*4;
 reg clk=0,rst=0,vblank=0,de=0,ready=1,bitmap=0;reg[11:0]x=0,y=0;
 wire[8:0]fx,fy;wire[7:0]coverage;wire pixel;wire[31:0]coarse,shown;
-vision_canny_raster #(.W(W),.H(H),.COVERAGE_FILE("board/ti60f225_v4/rtl/vision/canny_coverage_q5.mem"),.FIT_FILE("board/ti60f225_v4/rtl/vision/canny_fit_q4.mem")) dut(clk,rst,vblank,de,x,y,bitmap,ready,fx,fy,pixel,coarse,shown,coverage);
+vision_canny_raster #(.W(W),.H(H),.INDEX_FILE("board/ti60f225_v4/rtl/vision/canny_coverage_index.mem"),.PALETTE_FILE("board/ti60f225_v4/rtl/vision/canny_coverage_palette.mem")) dut(clk,rst,vblank,de,x,y,bitmap,ready,fx,fy,pixel,coarse,shown,coverage);
 always #5 clk=~clk;
 reg map[0:W*H-1],gold[0:PW*PH-1];
 always @(posedge clk)bitmap<=fx<W&&fy<H?map[fy*W+fx]:0;
@@ -39,7 +39,7 @@ initial begin
     end
     level=lut[pattern][5*((yy%4)*4+xx%4)+:5];expected_coverage={level,level[4:2]};
     if(xx/4<2||xx/4>=W-2||yy/4<2||yy/4>=H-2)expected_coverage=0;
-    if(coverage!==expected_coverage)$fatal(1,"coverage mismatch frame%0d x%0d y%0d got%0d want%0d tile%b word%h",f,xx,yy,coverage,expected_coverage,dut.tile,dut.coverage_word);
+    if(coverage!==expected_coverage)$fatal(1,"coverage mismatch frame%0d x%0d y%0d got%0d want%0d tile%b level%0d",f,xx,yy,coverage,expected_coverage,dut.tile,dut.curve_level);
     if(f==4&&coverage!==0)$fatal(1,"halo ghost on flat frame");
     if(coverage!=0&&coverage!=255)halos=halos+1;
     checks=checks+1;if(pixel)lit=lit+1;

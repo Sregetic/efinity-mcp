@@ -39,12 +39,15 @@ if($SensorProfile){
     $words=@(Get-Content -LiteralPath $initFile.FullName)
     if($words.Count -ne $selectedProfile.init_length -or $words.Count -lt 3){throw 'Sensor initialization length mismatch.'}
     $registers=@{}
+    $prefixes=@{}
     foreach($word in $words){
         if($word -notmatch '^[0-1][0-9a-fA-F]{6}$'){throw 'Sensor table requires 25-bit hexadecimal write words.'}
         $packed=[Convert]::ToUInt32($word,16)
         if($packed -band 1){throw 'Sensor boot table requires write entries.'}
         $registers[[int]($packed -shr 9)]=[int](($packed -shr 1) -band 255)
+        $prefixes[[int]($packed -shr 17)]=$true
     }
+    if($prefixes.Count -gt 16){throw 'Sensor boot ROM supports at most16 distinct address prefixes.'}
     if($Sensor -eq 'sc2210'){
         if($registers[0x0100] -ne 1 -or $registers[0x3031] -ne 10 -or (($registers[0x3018] -shr 5)+1) -ne $selectedProfile.lanes -or (($registers[0x320e] -shl 8) -bor $registers[0x320f]) -ne $selectedProfile.vts){throw 'SC2210 table/profile format, lane count, stream or VTS mismatch.'}
         if($selectedProfile.exposure_min -lt 1 -or $selectedProfile.exposure_max -gt ($selectedProfile.vts-4) -or $selectedProfile.exposure_initial -lt $selectedProfile.exposure_min -or $selectedProfile.exposure_initial -gt $selectedProfile.exposure_max -or $selectedProfile.hs_byteclk_mhz -le 0 -or $selectedProfile.mclk_hz -lt 6000000 -or $selectedProfile.mclk_hz -gt 27000000){throw 'SC2210 clock or exposure profile out of datasheet range.'}

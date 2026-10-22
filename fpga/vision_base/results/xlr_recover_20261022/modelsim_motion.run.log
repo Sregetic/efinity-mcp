@@ -1,0 +1,972 @@
+Reading pref.tcl
+
+# 2020.4
+
+# vsim -c -modelsimini F:/Project/fpga/vision_base/results/xlr_recover_20261022/modelsim.ini -lib xlr_motion_work tb -do "run -all; quit -f" -gFRAMES=62 
+# Start time: 20:54:08 on Oct 22,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(210): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1430'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(210): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(210): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2633): (vopt-2685) [TFMPC] - Too few port connections for '\add_200/i26 '.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2633): (vopt-2718) [TFMPC] - Missing connection for port 'CO'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2733): (vopt-2685) [TFMPC] - Too few port connections for '\add_65/i26 '.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2733): (vopt-2718) [TFMPC] - Missing connection for port 'CO'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2837): (vopt-2685) [TFMPC] - Too few port connections for 'mult_3'.  Expected 11, found 10.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2837): (vopt-2718) [TFMPC] - Missing connection for port 'CASCOUT'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2936): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1431'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2936): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2938): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1432'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2938): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2940): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1433'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2940): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2942): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1434'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2942): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2942): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2947): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1436'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2947): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2947): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2952): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1438'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2952): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2954): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1439'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2954): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2959): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1441'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2959): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2964): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1443'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2964): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2969): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1445'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2969): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2971): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1446'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2971): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2971): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2976): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1448'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2976): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2976): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2981): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1450'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2981): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2981): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2995): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1455'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2995): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2997): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1456'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(2997): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3002): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1458'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3002): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3010): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1461'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3010): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3015): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1463'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3015): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3015): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3023): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1466'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3023): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3023): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3037): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1471'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3037): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3048): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1475'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3048): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3048): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3050): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1476'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3050): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3050): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3055): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1478'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3055): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3055): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3057): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1479'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3057): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3057): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3059): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1480'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3059): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3059): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3064): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1482'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3064): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3064): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3069): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1484'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3069): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3069): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3077): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1487'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3077): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3082): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1489'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3082): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3099): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1495'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3099): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3101): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1496'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3101): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3112): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1500'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3112): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3112): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3120): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1503'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3120): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3128): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1506'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3128): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3128): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3133): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1508'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3133): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3133): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3135): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1509'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3135): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3135): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3143): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1512'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3143): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3143): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3145): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1513'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3145): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3145): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3150): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1515'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3150): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3155): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1517'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3155): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3155): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3157): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1518'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3157): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3157): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3162): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1520'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3162): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3164): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1521'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3164): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3164): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3175): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1525'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3175): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3175): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3198): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1533'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3198): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3200): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1534'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3200): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3200): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3202): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1535'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3202): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3207): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1537'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3207): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3207): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3224): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1543'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3224): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3224): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3226): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1544'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3226): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3226): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3240): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1549'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3240): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3240): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3248): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1552'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3248): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3248): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3253): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1554'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3253): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3255): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1555'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3255): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3255): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3272): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1561'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3272): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3274): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1562'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3274): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3282): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1565'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3282): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3282): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3284): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1566'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3284): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3286): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1567'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3286): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3297): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1571'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3297): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3299): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1572'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3299): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3304): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1574'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3304): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3309): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1576'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3309): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3309): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3314): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1579'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3314): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3316): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1580'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3316): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3345): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1590'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3345): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3345): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3371): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1599'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3371): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3406): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1611'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3406): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3408): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1612'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3408): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3428): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1619'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3428): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3428): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3430): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1620'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3430): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3430): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3432): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1621'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3432): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3432): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3434): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1622'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3434): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3434): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3442): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1625'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3442): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3447): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1627'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3447): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3450): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1628'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3450): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3458): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1632'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3458): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3466): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1635'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3466): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3471): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1637'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3471): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3473): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1638'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3473): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3475): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1639'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3475): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3477): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1640'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3477): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3477): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3479): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1641'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3479): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3484): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1643'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3484): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3486): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1644'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3486): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3488): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1645'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3488): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3488): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3493): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1647'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3493): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3504): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1651'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3504): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3512): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1654'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3512): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3541): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1664'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3541): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3541): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3543): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1665'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3543): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3543): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3551): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1668'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3551): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3551): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3553): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1669'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3553): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3555): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1670'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3555): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3557): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1671'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3557): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3557): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3559): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1672'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3559): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3559): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3561): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1673'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3561): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3564): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1674'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3564): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3564): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3566): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1675'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3566): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3566): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3568): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1676'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3568): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3570): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1677'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3570): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3578): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1680'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3578): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3578): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3580): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1681'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3580): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3580): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3582): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1682'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3582): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3584): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1683'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3584): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3584): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3589): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1685'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3589): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3589): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3591): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1686'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3591): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3591): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3593): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1687'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3593): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3593): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3598): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1689'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3598): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3603): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1691'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3603): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3605): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1692'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3605): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3605): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3613): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1695'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3613): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3613): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3624): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1699'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3624): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3624): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3626): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1700'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3626): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3631): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1702'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3631): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3633): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1703'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3633): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3633): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3638): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1705'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3638): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3638): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3640): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1706'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3640): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3640): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3642): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1707'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3642): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3642): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3644): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1708'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3644): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3644): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3646): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1709'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3646): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3646): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3648): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1710'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3648): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3650): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1711'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3650): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3656): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1713'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3656): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3658): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1714'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3658): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3658): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3663): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1716'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3663): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3663): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3668): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1718'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3668): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3670): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1719'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3670): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3670): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3672): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1720'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3672): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3672): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3677): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1722'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3677): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3677): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3679): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1723'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3679): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3679): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3681): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1724'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3681): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3681): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3683): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1725'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3683): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3683): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3688): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1727'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3688): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3696): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1730'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3696): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3701): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1732'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3701): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3701): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3703): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1733'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3703): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3705): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1734'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3705): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3713): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1737'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3713): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3715): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1738'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3715): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3717): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1739'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3717): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3720): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1740'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3720): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3722): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1741'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3722): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3724): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1742'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3724): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3724): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3732): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1745'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3732): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3734): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1746'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3734): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3740): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1748'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3740): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3740): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3742): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1749'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3742): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3744): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1750'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3744): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3744): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3746): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1751'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3746): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3746): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3751): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1753'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3751): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3756): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1755'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3756): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3758): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1756'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3758): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3758): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3763): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1758'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3763): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3768): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1760'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3768): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3770): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1761'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3770): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3770): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3775): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1763'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3775): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3780): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1765'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3780): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3782): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1766'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3782): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3785): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1767'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3785): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3785): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3787): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1768'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3787): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3787): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3789): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1769'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3789): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3789): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3791): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1770'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3791): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3791): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3793): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1771'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3793): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3793): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3795): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1772'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3795): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3795): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3797): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1773'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3797): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3797): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3799): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1774'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3799): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3799): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3801): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1775'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3801): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3801): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3803): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1776'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3803): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3803): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3805): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1777'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3805): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3805): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3807): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1778'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3807): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3807): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3809): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1779'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3809): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3809): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3811): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1780'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3811): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3811): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3813): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1781'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3813): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3813): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3815): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1782'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3815): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3815): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3817): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1783'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3817): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3817): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3819): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1784'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3819): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3819): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3821): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1785'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3821): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3821): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3823): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1786'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3823): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3823): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3825): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1787'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3825): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3825): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3827): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1788'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3827): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3827): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3829): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1789'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3829): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3829): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3831): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1790'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3831): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3831): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3833): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1791'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3833): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3833): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3835): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1792'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3835): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3835): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3837): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1793'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3837): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3840): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1794'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3840): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3840): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3842): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1795'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3842): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3845): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1796'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3845): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3845): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3847): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1797'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3847): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3850): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1798'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3850): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3850): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3852): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1799'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3852): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3855): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1800'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3855): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3855): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3857): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1801'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3857): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3860): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1802'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3860): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3860): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3862): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1803'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3862): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3865): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1804'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3865): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3865): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3867): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1805'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3867): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3870): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1806'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3870): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3870): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3872): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1807'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3872): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3902): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1817'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3902): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3905): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1818'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3905): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3908): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1819'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3908): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3911): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1820'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3911): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3914): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1821'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3914): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3917): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1822'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3917): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3920): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1823'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3920): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3923): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1824'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3923): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3926): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1825'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3926): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3929): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1826'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3929): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3932): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1827'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3932): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3935): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1828'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3935): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3938): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1829'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3938): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3941): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1830'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3941): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3944): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1831'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3944): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3947): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1832'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3947): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3950): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1833'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3950): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3950): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3952): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1834'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3952): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3955): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1835'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3955): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3958): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1836'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3958): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3958): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3960): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1837'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3960): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3960): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3962): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1838'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3962): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3962): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3964): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1839'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3964): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3964): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3966): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1840'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3966): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3966): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3968): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1841'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3968): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3971): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1842'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3971): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3974): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1843'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3974): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3974): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3976): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1844'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3976): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3976): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3978): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1845'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3978): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3978): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3980): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1846'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3980): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(3980): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4006): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1855'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4006): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4009): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1856'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4009): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4015): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1858'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4015): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4023): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1861'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4023): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4025): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1862'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4025): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4027): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1863'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4027): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4027): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4029): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1864'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4029): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4034): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1866'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4034): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4037): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1867'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4037): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4037): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4039): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1868'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4039): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4045): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1870'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4045): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4048): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1871'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4048): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4054): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1873'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4054): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4057): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1874'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4057): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4063): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1876'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4063): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4065): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1877'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4065): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4067): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1878'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4067): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4072): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1880'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4072): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4072): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4074): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1881'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4074): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4076): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1882'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4076): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4078): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1883'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4078): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4083): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1885'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4083): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4083): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4085): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1886'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4085): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4087): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1887'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4087): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4089): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1888'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4089): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4094): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1890'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4094): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4094): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4096): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1891'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4096): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4098): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1892'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4098): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4100): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1893'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4100): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4105): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1895'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4105): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4105): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4107): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1896'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4107): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4109): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1897'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4109): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4111): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1898'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4111): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4116): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1900'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4116): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4116): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4118): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1901'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4118): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4120): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1902'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4120): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4122): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1903'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4122): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4127): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1905'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4127): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4129): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1906'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4129): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4137): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1909'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4137): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4139): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1910'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4139): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4142): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1911'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4142): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4147): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1913'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4147): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4147): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4149): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1914'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4149): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4151): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1915'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4151): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4153): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1916'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4153): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4159): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1918'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4159): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4159): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4161): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1919'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4161): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4163): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1920'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4163): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4165): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1921'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4165): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4171): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1923'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4171): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4171): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4173): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1924'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4173): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4175): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1925'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4175): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4177): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1926'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4177): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4183): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1928'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4183): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4183): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4185): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1929'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4185): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4187): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1930'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4187): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4189): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1931'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4189): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4195): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1933'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4195): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4195): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4197): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1934'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4197): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4199): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1935'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4199): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4201): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1936'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4201): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4207): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1938'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4207): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4209): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1939'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4209): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4224): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1944'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4224): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4226): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1945'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4226): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4228): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1946'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4228): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4228): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4230): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1947'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4230): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4235): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1949'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4235): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4235): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4237): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1950'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4237): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4237): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4239): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1951'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4239): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4239): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4241): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1952'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4241): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4241): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4243): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1953'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4243): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4243): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4245): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1954'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4245): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4245): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4247): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1955'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4247): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4249): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1956'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4249): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4249): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4251): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1957'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4251): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4256): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1959'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4256): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4258): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1960'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4258): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4258): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4260): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1961'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4260): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4265): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1963'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4265): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4265): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4267): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1964'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4267): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4267): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4269): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1965'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4269): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4269): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4271): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1966'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4271): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4271): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4273): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1967'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4273): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4273): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4275): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1968'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4275): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4275): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4277): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1969'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4277): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4277): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4279): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1970'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4279): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4279): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4281): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1971'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4281): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4281): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4283): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1972'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4283): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4283): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4291): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1975'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4291): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4291): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4305): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1980'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4305): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4310): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1982'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4310): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4310): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4312): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1983'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4312): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4314): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1984'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4314): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4316): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1985'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4316): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4318): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1986'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4318): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4320): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1987'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4320): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4322): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1988'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4322): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4324): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1989'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4324): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4326): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1990'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4326): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4328): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1991'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4328): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4330): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1992'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4330): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4332): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1993'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4332): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4334): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1994'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4334): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4336): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1995'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4336): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4338): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1996'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4338): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4340): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1997'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4340): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4342): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1998'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4342): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4344): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1999'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4344): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4346): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2000'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4346): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4348): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2001'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4348): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4350): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2002'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4350): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4352): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2003'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4352): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4354): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2004'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4354): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4356): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2005'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4356): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4358): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2006'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4358): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4360): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2007'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4360): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4363): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2008'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4363): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4377): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2013'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4377): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4382): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2015'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4382): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4384): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2016'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4384): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4386): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2017'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4386): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4388): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2018'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4388): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4390): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2019'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4390): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4392): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2020'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4392): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4394): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2021'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4394): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4396): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2022'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4396): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4398): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2023'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4398): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4400): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2024'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4400): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4405): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2026'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4405): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4407): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2027'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4407): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4407): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4409): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2028'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4409): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4411): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2029'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4411): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4413): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2030'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4413): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4415): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2031'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4415): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4415): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4420): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2033'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4420): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4425): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2035'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4425): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4427): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2036'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4427): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4427): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4429): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2037'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4429): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4434): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2039'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4434): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4436): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2040'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4436): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4436): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4438): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2041'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4438): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4443): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2043'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4443): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4445): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2044'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4445): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4445): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4447): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2045'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4447): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4452): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2047'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4452): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4454): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2048'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4454): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4454): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4456): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2049'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4456): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4458): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2050'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4458): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4460): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2051'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4460): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4465): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2053'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4465): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4467): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2054'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4467): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4470): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__2055'.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4470): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4472): (vopt-2685) [TFMPC] - Too few port connections for 'LUT__1429'.  Expected 5, found 3.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4472): (vopt-2718) [TFMPC] - Missing connection for port 'I3'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4472): (vopt-2718) [TFMPC] - Missing connection for port 'I2'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4789): (vopt-2685) [TFMPC] - Too few port connections for '\sub_6/add_2/i8__AUX_ADD_CO '.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4789): (vopt-2718) [TFMPC] - Missing connection for port 'CO'.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4793): (vopt-2685) [TFMPC] - Too few port connections for '\sub_6/add_2/i1__AUX_ADD_CI '.  Expected 5, found 4.
+# ** Warning: F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v(4793): (vopt-2718) [TFMPC] - Missing connection for port 'O'.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=943.
+# //  ModelSim SE-64 2020.4 Oct 13 2020
+# //
+# //  Copyright 1991-2020 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  ModelSim SE-64 and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.tb(fast)
+# run -all
+# PASS local motion core frames=62 synthetic-only stalled_cycles=106626
+# ** Note: $finish    : F:/Project/fpga/vision_base/results/xlr_recover_20261022/tb_mapped_motion.sv(47)
+#    Time: 1278130 ns  Iteration: 1  Instance: /tb
+# End time: 20:54:12 on Oct 22,2026, Elapsed time: 0:00:04
+# Errors: 0, Warnings: 943

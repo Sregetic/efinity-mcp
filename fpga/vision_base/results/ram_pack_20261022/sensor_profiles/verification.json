@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "profiles": [
+    {
+      "profile": "sc2210_1080p30_2lane_24mhz_reference",
+      "gate": true,
+      "wrong_clock_rejected": true,
+      "boot_entries": 253,
+      "boot_pass": true
+    },
+    {
+      "profile": "sc2210_1080p30_2lane_27mhz_ovs",
+      "gate": true,
+      "wrong_clock_rejected": true,
+      "boot_entries": 251,
+      "boot_pass": true
+    },
+    {
+      "profile": "sc431hai_1080p30_center_4lane",
+      "gate": true,
+      "wrong_clock_rejected": true,
+      "boot_entries": 166,
+      "boot_pass": true
+    }
+  ],
+  "reset_sc431_cycles": 4096,
+  "reset_sc2210_cycles": 25000,
+  "default_unchanged": true,
+  "hardware_tested": false
+}

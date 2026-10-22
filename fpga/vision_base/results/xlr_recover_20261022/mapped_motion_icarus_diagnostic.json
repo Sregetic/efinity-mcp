@@ -1,0 +1,10 @@
+{
+  "attempts_timeout_seconds": [
+    120,
+    900
+  ],
+  "short_trace": "mapped_motion_trace.log",
+  "observed": "LUT__1690 inputs0000 mask00bf output0; no FSM progress",
+  "cross_check": "Untouched netlist and official models pass all62frames in ModelSim",
+  "production_or_vendor_model_modified": false
+}

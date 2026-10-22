@@ -1,0 +1,2 @@
+PASS9-point fit 138240 raster pixels, 6528 fitted pixels, 8256 pixel-area cases, +/- shallow/steep slopes and empty next frame
+F:\Project\fpga\vision_base\sim\vision\tb_canny_fit.sv:92: $finish called at 1535090000 (1ps)

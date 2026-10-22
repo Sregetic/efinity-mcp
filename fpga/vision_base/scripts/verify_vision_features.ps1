@@ -24,6 +24,7 @@ try {
   @{name='sensor_init';src=@('../cam_i2c_ctrl/i2c/i2c_master_reg_rom.v')},
   @{name='canny_raster';src=@('vision_canny_raster.sv','vision_sparse_window.sv')},
   @{name='canny_fit';src=@('vision_canny_raster.sv','vision_sparse_window.sv')},
+  @{name='canny_storage';src=@('vision_canny_raster.sv','vision_sparse_window.sv')},
   @{name='line_snapshot';src=@('vision_line_snapshot.sv')},
   @{name='hysteresis_random';src=@('vision_hysteresis_sweep.sv','vision_hysteresis.sv')},
   @{name='weak_tiles';src=@('vision_hysteresis_sweep.sv','vision_hysteresis.sv')},

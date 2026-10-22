@@ -1,0 +1,22 @@
+{
+  "resource_report": "results/motion_sidebar_20261022/resources.json",
+  "xlr": 59878,
+  "ram": 249,
+  "dsp": 63,
+  "wns_ns": 0.237,
+  "whs_ns": 0.027,
+  "modified_scope": [
+    "board/ti60f225_v4/rtl/vision/vision_canny_raster.sv",
+    "board/ti60f225_v4/rtl/vision/vision_osd.sv",
+    "board/ti60f225_v4/rtl/vision/vision_local_motion_core.sv",
+    "board/ti60f225_v4/rtl/cam_i2c_ctrl/i2c/i2c_master_reg_rom.v",
+    "rtl/sapphire_ram.sv",
+    "scripts/generate_canny_coverage.py",
+    "scripts/generate_sidebar_chinese.py",
+    "sim/vision/tb_canny_raster.sv",
+    "sim/vision/tb_canny_fit.sv",
+    "sim/tb_sapphire_ram.sv"
+  ],
+  "hardware_programmed": false,
+  "flash_written": false
+}

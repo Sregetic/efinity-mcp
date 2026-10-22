@@ -1,0 +1,15 @@
+{
+  "xlr": 60510,
+  "ram": 239,
+  "dsp": 63,
+  "wns_ns": 0.112,
+  "whs_ns": 0.028,
+  "hardware_programmed": false,
+  "flash_written": false,
+  "source_paths": [
+    "rtl/sapphire_ram.sv",
+    "board/ti60f225_v4/rtl/vision/vision_canny_raster.sv",
+    "board/ti60f225_v4/rtl/vision/vision_osd.sv",
+    "board/ti60f225_v4/rtl/vision/vision_local_motion_core.sv"
+  ]
+}

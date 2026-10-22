@@ -1,0 +1,23 @@
+{
+  "unassigned_core_pins": 0,
+  "same_missing_interface_waivers": true,
+  "missing_interface_names": [
+    "jtag_inst1_DRCK",
+    "jtag_inst1_TMS",
+    "jtag_inst1_RESET",
+    "jtag_inst1_RUNTEST",
+    "jtag_inst1_UPDATE",
+    "jtag_diag_SEL",
+    "jtag_diag_TMS",
+    "jtag_diag_TCK",
+    "jtag_diag_RESET",
+    "jtag_diag_RUNTEST",
+    "ddr_addr[15]",
+    "mipi_dp_data0_LP_P_IN",
+    "mipi_dp_data0_LP_N_IN",
+    "ddr_addr[14]"
+  ],
+  "snapshot_rgb_bits": 24,
+  "snapshot_ram": 5,
+  "unchanged_interface_waivers": 14
+}

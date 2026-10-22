@@ -1,0 +1,33 @@
+{
+  "before": {
+    "xlr": 60510,
+    "ram": 239,
+    "dsp": 63
+  },
+  "after": {
+    "xlr": 60199,
+    "ram": 239,
+    "dsp": 66
+  },
+  "delta": {
+    "xlr": -311,
+    "ram": 0,
+    "dsp": 3
+  },
+  "free": {
+    "xlr": 601,
+    "ram": 17,
+    "dsp": 94
+  },
+  "before_ram_pack": {
+    "xlr": 59878,
+    "ram": 249,
+    "dsp": 63
+  },
+  "recovered_previous_632_xlr": 311,
+  "remaining_of_previous_632_xlr": 321,
+  "wns_ns": 0.072,
+  "whs_ns": 0.027,
+  "hardware_programmed": false,
+  "flash_written": false
+}

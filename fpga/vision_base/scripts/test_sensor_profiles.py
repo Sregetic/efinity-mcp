@@ -66,6 +66,13 @@ with tempfile.TemporaryDirectory() as tmp:
    wrong=dict(data,init_sha256=hashlib.sha256(bad_mem.read_bytes()).hexdigest());bad.write_text(json.dumps(wrong))
    rbad=subprocess.run([*args,str(bad)],capture_output=True,text=True)
    assert rbad.returncode!=0 and 'Bayer phase mismatch' in rbad.stderr,rbad.stderr
+   # The packed20bit ROM has16 prefix codes; reject overflow before synthesis.
+   too_many=expected+[(prefix<<17) for prefix in range(0x60,0x66)]
+   bad_mem.write_text(''.join(f'{w:07x}\n' for w in too_many))
+   wrong=dict(data,init_length=len(too_many),init_sha256=hashlib.sha256(bad_mem.read_bytes()).hexdigest())
+   bad.write_text(json.dumps(wrong))
+   rbad=subprocess.run([*args,str(bad)],capture_output=True,text=True)
+   assert rbad.returncode!=0 and 'at most16 distinct address prefixes' in rbad.stderr,rbad.stderr
   rom=ROOT/'board/ti60f225_v4/rtl/cam_i2c_ctrl/i2c'
   exe=tmp/'boot.vvp'
   subprocess.run([IVERILOG,'-g2012','-s','tb','-Ptb.N='+str(data['init_length']),'-Ptb.INIT_FILE="'+str(table).replace('\\','/')+'"',

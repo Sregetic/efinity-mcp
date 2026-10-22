@@ -2,8 +2,8 @@
 // is a node; segments join only existing 8-connected neighbors. No live RGB
 // is mixed with the retained Canny frame. Detection remains W x H.
 module vision_canny_raster #(parameter W=480,H=270,CW=9,
- parameter COVERAGE_FILE="./rtl/vision/canny_coverage_q5.mem",
- parameter FIT_FILE="./rtl/vision/canny_fit_q4.mem")(
+ parameter INDEX_FILE="./rtl/vision/canny_coverage_index.mem",
+ parameter PALETTE_FILE="./rtl/vision/canny_coverage_palette.mem")(
  input clk,rst_n,vblank,de,input[11:0]x,y,input bitmap,ready,
  output reg[CW-1:0]fetch_x,fetch_y,output pixel,
  output reg[31:0]coarse_edges,display_edges,output[7:0]coverage
@@ -84,13 +84,13 @@ module vision_canny_raster #(parameter W=480,H=270,CW=9,
  assign pixel=in_canvas&&
               ((center&&(node||horizontal||vertical||descending||ascending))||bridge);
  // Coverage is independent of the unchanged binary recognition graph.
- reg[79:0]coverage_rom[0:511],coverage_word;
- initial $readmemh(COVERAGE_FILE,coverage_rom);
+ (* syn_ramstyle="logic" *)reg[5:0]coverage_index[0:511];
+ reg[4:0]coverage_palette[0:1023],curve_level;
+ initial begin $readmemh(INDEX_FILE,coverage_index);$readmemh(PALETTE_FILE,coverage_palette);end
  wire[8:0]next_tile=de&&x[1:0]==0?(y[1:0]==0?fresh:row_q):tile;
- always @(posedge clk)coverage_word<=coverage_rom[next_tile];
- wire[4:0]curve_level=coverage_word[5*{uy,ux}+:5];
+ always @(posedge clk)curve_level<=coverage_palette[{coverage_index[next_tile],y[1:0],x[1:0]}];
  wire fit_enable;wire[7:0]fit_coverage;
- vision_canny_line_fit #(.W(W),.H(H),.CW(CW),.FIT_FILE(FIT_FILE)) line_fit(
+ vision_canny_line_fit #(.W(W),.H(H),.CW(CW)) line_fit(
   .clk(clk),.rst_n(rst_n),.valid(fit_rq),.ix(fit_qx),.bitmap(fit_zero_q?1'b0:bitmap),.first_row(fit_first_q),
   .de(de),.x(x),.ux(ux),.uy(uy),.tx(tx),.ty(ty),.enable(fit_enable),.coverage(fit_coverage));
  assign coverage=!in_canvas?8'd0:(fit_primed&&fit_enable)?fit_coverage:{curve_level,curve_level[4:2]};
@@ -106,8 +106,7 @@ module vision_canny_raster #(parameter W=480,H=270,CW=9,
 endmodule
 
 // Nine connected samples, or five near turns; four clocks share the tracer.
-module vision_canny_line_fit #(parameter W=480,H=270,CW=9,
- parameter FIT_FILE="./rtl/vision/canny_fit_q4.mem")(
+module vision_canny_line_fit #(parameter W=480,H=270,CW=9)(
  input clk,rst_n,valid,input[CW-1:0]ix,input bitmap,first_row,
  input de,input[11:0]x,input[1:0]ux,uy,input[CW-1:0]tx,ty,
  output enable,output[7:0]coverage);
@@ -234,13 +233,18 @@ module vision_canny_line_fit #(parameter W=480,H=270,CW=9,
   end
   if(!rst_n)begin busy<=0;done<=0;end
  end
- // Two read ports share one constant table instead of two fit arithmetic paths.
- reg[9:0]fit_rom[0:1023];initial $readmemh(FIT_FILE,fit_rom);
+ // Fold the +32 center into the DSP bias; signed rounding/truncation stay exact.
+ wire signed[6:0]center_factor=result_short?7'sd51:7'sd57;
+ wire signed[5:0]slope_factor=result_short?6'sd13:6'sd17;
+ (* syn_use_dsp="yes" *)wire signed[13:0]center_product=($signed(result_sum)*center_factor)+(result_short?14'sd130:14'sd260);
+ (* syn_use_dsp="yes" *)wire signed[13:0]slope_product=($signed(result_weight)*slope_factor)+(result_short?14'sd4:14'sd32);
+ wire signed[13:0]fit_center=result_short?(center_product>>>2):(center_product>>>3);
+ wire signed[13:0]fit_slope=result_short?(slope_product>>>3):(slope_product>>>6);
  reg signed[9:0]center_q=0;reg signed[5:0]slope=0;
  reg write_pending=0,write_valid=0,write_horizontal=0;reg[CW-1:0]write_x=0;
  always @(posedge clk)begin
-  center_q<=fit_rom[{2'b0,result_short,result_sum}];
-  slope<=fit_rom[{1'b1,result_short,result_weight}];
+  center_q<=fit_center[9:0];
+  slope<=fit_slope[5:0];
   write_pending<=done;write_x<=result_x;write_valid<=result_valid;write_horizontal<=result_horizontal;
   if(!rst_n)write_pending<=0;
  end

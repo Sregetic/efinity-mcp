@@ -11,8 +11,11 @@ module i2c_master_reg_rom #(
 );
 
 reg  [ROM_SIZE-1:0]   ROM [0:TOTAL_ROM_DEPTH-1];
-wire [ROM_SIZE-1:0]   DATAA = {ROM_SIZE{1'b0}};
-wire [ADDR_WIDTH-1:0] RADDR;
+reg [19:0] packed_rom [0:TOTAL_ROM_DEPTH-1], packed_q;
+(* syn_ramstyle="logic" *)reg [8:0] prefixes[0:15];
+integer entry,slot,prefix_count,prefix_index;
+reg [8:0] prefix_key;
+localparam PACK_LENGTH=INIT_FILE==""&&TOTAL_ROM_DEPTH>166?166:TOTAL_ROM_DEPTH;
    
 // initial begin
 // 		//9134				//addr /data/read_en[1]
@@ -79,10 +82,9 @@ wire [ADDR_WIDTH-1:0] RADDR;
 //     ROM[8'h3c] = {16'hffff, 8'hff,1'b0 };
       
 // end 
-generate if(INIT_FILE != "")begin:external_sensor_rom
- initial $readmemh(INIT_FILE,ROM);
-end else begin:sc431hai_rom
 initial begin
+ if(INIT_FILE != "")$readmemh(INIT_FILE,ROM);
+ else begin
     
 ROM[8'h00] = {16'h0100,8'h00,1'b0};
 ROM[8'h01] = {16'h36e9,8'h80,1'b0};
@@ -251,25 +253,20 @@ ROM[8'ha3] = {16'h3221,8'h66,1'b0};
 ROM[8'ha4] = {16'h3e07,8'h80,1'b0}; // 1x digital gain, independent of power-on defaults
 ROM[8'ha5] = {16'h0100,8'h01,1'b0}; // Start after geometry, gain and orientation
 end
-end endgenerate
-// write is unused
-wire [ADDR_WIDTH-1:0] ADDRA = {ADDR_WIDTH{1'b0}}; 
-wire                  WEA   = 1'b0; 
-always @ (posedge clock)
-begin
-    if (WEA) begin
-        ROM[ADDRA] <= DATAA;
-    end
+ // Startup address prefixes are constant; keep the original word and flag ABI.
+ prefix_count=0;
+ for(entry=0;entry<PACK_LENGTH;entry=entry+1)begin
+  prefix_key={ROM[entry][24:17],ROM[entry][0]};prefix_index=-1;
+  for(slot=0;slot<16;slot=slot+1)
+   if(slot<prefix_count&&prefixes[slot]==prefix_key)prefix_index=slot;
+  if(prefix_index==-1)begin
+   prefixes[prefix_count]=prefix_key;prefix_index=prefix_count;prefix_count=prefix_count+1;
+  end
+  packed_rom[entry]={prefix_index[3:0],ROM[entry][16:1]};
+ end
 end
-   
-assign RADDR = addr_ptr;
-   
-reg [ROM_SIZE-1:0] RDATA;
-always @ (posedge clock)
-begin
-     RDATA <= ROM[RADDR];
-end
-
-assign rdata_out = RDATA;
+always @(posedge clock)packed_q<=packed_rom[addr_ptr];
+wire [8:0] prefix=prefixes[packed_q[19:16]];
+assign rdata_out = {prefix[8:1],packed_q[15:0],prefix[0]};
    
 endmodule			      

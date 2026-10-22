@@ -19,6 +19,21 @@ module Ram_1w_1rs #(
    if(!wrMaskEnable||wr_mask[j])memory[wr_addr][j*LANE_WIDTH+:LANE_WIDTH]<=wr_data[j*LANE_WIDTH+:LANE_WIDTH];
   always @(posedge rd_clk)if(rd_en)q<=memory[rd_addr];
   assign rd_data=q;
+ end else if(wordCount==32&&wrDataWidth==23&&rdDataWidth==23&&
+             wrAddressWidth==5&&rdAddressWidth==5&&!clockCrossing&&!wrMaskEnable)begin:cache_tags
+  // The emitted I/D tags need all23 bits, but one RAM port is at most20 wide.
+  simple_dual_port_ram #(.DATA_WIDTH(20),.ADDR_WIDTH(5),.OUTPUT_REG("FALSE")) low(
+   .wclk(wr_clk),.we(wr_en),.waddr(wr_addr),.wdata(wr_data[19:0]),
+   .rclk(rd_clk),.re(rd_en),.raddr(rd_addr),.rdata(rd_data[19:0]));
+  wire[11:0]high_words;reg[1:0]read_bank;
+  for(i=0;i<4;i=i+1)begin:high_bank
+   (* syn_ramstyle="registers" *)reg[2:0]memory[0:7];reg[2:0]q;
+   always @(posedge wr_clk)if(wr_en&&wr_addr[4:3]==i)memory[wr_addr[2:0]]<=wr_data[22:20];
+   always @(posedge rd_clk)if(rd_en)q<=memory[rd_addr[2:0]];
+   assign high_words[i*3+:3]=q;
+  end
+  always @(posedge rd_clk)if(rd_en)read_bank<=rd_addr[4:3];
+  assign rd_data[22:20]=high_words[read_bank*3+:3];
  end else begin:block_ram
  for(i=0;i<LANES;i=i+1)begin:lane
   simple_dual_port_ram #(.DATA_WIDTH(LANE_WIDTH),.ADDR_WIDTH(wrAddressWidth),.OUTPUT_REG("FALSE")) ram(

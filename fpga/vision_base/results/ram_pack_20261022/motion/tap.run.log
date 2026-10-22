@@ -1,0 +1,2 @@
+PASS local tap exact grids=864 complete rasters=6 bad-raster and config guards
+F:\Project\fpga\vision_base\sim\motion_direction\tb_local_motion_tap.sv:50: $finish called at 1717590000 (1ps)

@@ -1,0 +1,2 @@
+PASS native1920x1080 Canny A/B: 4147200 pixel pairs, 4773472 complete cycles; bitmap/fetch/coverage/counts exact
+F:/Project/fpga/vision_base/results/ram_pack_20261022/tb_canny_ab.sv:57: $finish called at 47734760000 (1ps)

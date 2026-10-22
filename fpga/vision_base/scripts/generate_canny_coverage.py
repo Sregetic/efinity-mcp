@@ -6,6 +6,8 @@ import numpy as np
 ROOT=Path(__file__).resolve().parents[1]
 OUTPUT=ROOT/'board/ti60f225_v4/rtl/vision/canny_coverage_q5.mem'
 FIT_OUTPUT=ROOT/'board/ti60f225_v4/rtl/vision/canny_fit_q4.mem'
+INDEX_OUTPUT=OUTPUT.with_name('canny_coverage_index.mem')
+PALETTE_OUTPUT=OUTPUT.with_name('canny_coverage_palette.mem')
 SPURS={0b111010000,0b000010111,0b100110100,0b001011001}
 OFFSETS=[(-1,-1),(0,-1),(1,-1),(-1,0),(0,0),(1,0),(-1,1),(0,1),(1,1)]
 
@@ -70,7 +72,13 @@ def main():
     assert not table[0].any() and table[16,10]==31
     assert np.all(table[16+128+2].reshape(4,4)[:,2]==31)
     assert np.all(table[16+32+8].reshape(4,4)[2,:]==31)
-    text=''.join(f'{word:020x}\n' for word in words(table))
+    values=words(table)
+    text=''.join(f'{word:020x}\n' for word in values)
+    palette=list(dict.fromkeys(values))
+    assert len(palette)<=64
+    index_text=''.join(f'{palette.index(word):02x}\n' for word in values)
+    levels=[(word>>(5*phase))&31 for word in palette for phase in range(16)]
+    palette_text=''.join(f'{v:02x}\n' for v in levels+[0]*(1024-len(levels)))
     fit=[0]*1024
     for short in (0,1):
         for code in range(128):
@@ -83,8 +91,11 @@ def main():
     if args.check:
         assert OUTPUT.read_text(encoding='ascii')==text,'Coverage ROM differs from generator'
         assert FIT_OUTPUT.read_text(encoding='ascii')==fit_text,'Fit ROM differs from generator'
+        assert INDEX_OUTPUT.read_text(encoding='ascii')==index_text,'Coverage dictionary differs from generator'
+        assert PALETTE_OUTPUT.read_text(encoding='ascii')==palette_text,'Coverage palette differs from generator'
     else:
         OUTPUT.write_text(text,encoding='ascii');FIT_OUTPUT.write_text(fit_text,encoding='ascii')
-    print('PASS 512 contour neighborhoods and shared1024x10 Q4 fit ROM; binary graph unchanged')
+        INDEX_OUTPUT.write_text(index_text,encoding='ascii');PALETTE_OUTPUT.write_text(palette_text,encoding='ascii')
+    print(f'PASS 512 contour neighborhoods, {len(palette)} lossless palette entries and exact Q4 fit reference; binary graph unchanged')
 
 if __name__=='__main__':main()

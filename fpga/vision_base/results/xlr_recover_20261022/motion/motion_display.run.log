@@ -1,0 +1,26 @@
+motion raster 0 at 50000
+motion raster 1 at 192950000
+motion raster 2 at 385850000
+motion raster 3 at 578750000
+motion raster 4 at 771650000
+motion raster 5 at 964550000
+motion raster 6 at 1157450000
+motion raster 7 at 1350350000
+motion raster 8 at 1543250000
+motion raster 9 at 1736150000
+motion raster 10 at 1929050000
+motion raster 11 at 2121950000
+motion raster 12 at 2314850000
+motion raster 13 at 2507750000
+motion raster 14 at 2700650000
+motion raster 15 at 2893550000
+motion raster 16 at 3086450000
+motion raster 17 at 3279350000
+motion raster 18 at 3472250000
+motion raster 19 at 3665150000
+motion raster 20 at 3858050000
+motion raster 21 at 4050950000
+motion raster 22 at 4243850000
+motion raster 23 at 4436750000
+PASS motion_display post-frontend tap+readout, 24 rasters/all8 modes, 463059 RGB/sync cycles exact; freeze/history/off reset
+F:\Project\fpga\vision_base\sim\vision\tb_motion_display.sv:49: $finish called at 4630640000 (1ps)

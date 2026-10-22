@@ -261,7 +261,10 @@ wire[3:0]column=local_x%9'd12;
 reg[7:0]ch_q=32;reg[5:0]bitidx_q=0;reg ink_region_q=0;
 // Keep the original ASCII HUD font and a separate compact Chinese menu subset.
 reg font[0:8191];reg font_ink=0;integer letter,position;reg[34:0]pattern;
-reg chinese_font[0:CHINESE_GLYPHS*256-1];reg chinese_ink=0,chinese_q=0;
+// Three fixed 5bit row banks avoid address multiplication; last column stays blank.
+(* syn_ramdecomp="area" *)reg[4:0]chinese_font0[0:CHINESE_GLYPHS*16-1],chinese_font1[0:CHINESE_GLYPHS*16-1],chinese_font2[0:CHINESE_GLYPHS*16-1];
+reg[14:0]chinese_word=0;reg[3:0]chinese_position=15;reg chinese_q=0;
+wire chinese_ink=chinese_position!=15&&chinese_word[14-chinese_position];
 integer cn_letter,cn_position;reg[255:0]cn_pattern;
 initial begin
  for(letter=0;letter<128;letter=letter+1)begin
@@ -270,8 +273,11 @@ initial begin
  end
  for(cn_letter=0;cn_letter<CHINESE_GLYPHS;cn_letter=cn_letter+1)begin
   cn_pattern=chinese_glyph(cn_letter);
-  for(cn_position=0;cn_position<256;cn_position=cn_position+1)
-   chinese_font[cn_letter*256+cn_position]=cn_pattern[255-cn_position];
+  for(cn_position=0;cn_position<16;cn_position=cn_position+1)begin
+   chinese_font0[cn_letter*16+cn_position]=cn_pattern[255-cn_position*16-:5];
+   chinese_font1[cn_letter*16+cn_position]=cn_pattern[250-cn_position*16-:5];
+   chinese_font2[cn_letter*16+cn_position]=cn_pattern[245-cn_position*16-:5];
+  end
  end
 end
 wire sidebar=ui_state[23],editing=ui_state[22];
@@ -484,11 +490,13 @@ always @*begin
   bitidx=34-(side_py>>1)*5-(side_x[3:0]>>1);
  end
 end
+wire[10:0]chinese_row={ch[6:0],side_py[3:0]};
 // Split character selection from font decode; RGB/control use the same extra beat.
 always @(posedge clk)begin
  ch_q<=ch;bitidx_q<=bitidx;
  font_ink<=font[{ch[6:0],bitidx}];
- chinese_ink<=chinese_font[{ch[6:0],side_py[3:0],side_x[3:0]}];chinese_q<=ch[7];
+ chinese_word<={chinese_font0[chinese_row],chinese_font1[chinese_row],chinese_font2[chinese_row]};
+ chinese_position<=side_x[3:0];chinese_q<=ch[7];
  active<=sidebar?side_active:MOTION_HINT?motion_active:(x>=8&&x<((mode==5||mode==6||ai_page)?428:356)&&((y>=4&&y<20)||(shape_enable&&y>=22&&y<38)||(hud&&((y>=40&&y<56)||(y>=58&&y<74)||(y>=76&&y<92)))));
  ink_region_q<=(sidebar||motion_active)?(side_x>=16&&side_slot<8&&(ch[7]?side_py<16:(side_x[3:0]<10&&side_py<14&&bitidx<35))):(column<10&&local_y<14&&bitidx<35);
  marker_q<=sidebar&&side_active&&((side_left&&side_row=={4'b0,side_group}+6'd1&&(side_x<4||(root_only&&(y[5:0]==0||y[5:0]==63))))||(!side_left&&side_selected&&(side_x<4||y[5:0]==0||y[5:0]==63)));
