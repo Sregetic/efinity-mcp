@@ -1,0 +1,6 @@
+Connecting to JTAG_TAP: efx_ti
+Connecting to JTAG_TAP: efx_ti
+Flash device: Winbond W25Q64 8 MiB (JEDEC ID: 0xEF6017) @ JTAG freq 1.0 MHz
+Unlock all sectors for write.
+Command timeout (1 cycles), aborting flash programming
+ERROR: problem occurred during jtag_bridge programming, aborting!

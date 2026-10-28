@@ -1,0 +1,13 @@
+{
+  "finished_utc": "2026-10-28T05:07:02.2538080Z",
+  "full_old_flash_backup": "results/geometry_m7_20261028/flash_20261028/app/flash_before.bin",
+  "full_readback_verified": true,
+  "application_region_rewritten": false,
+  "physical_power_cycle_verified": false,
+  "passed": true,
+  "configuration_flash_written": true,
+  "spi_low_power_mode": "off",
+  "address": 0,
+  "verification_method": "vendor hostx1",
+  "input": "artifacts/camera/ti60f225_oob.hex"
+}

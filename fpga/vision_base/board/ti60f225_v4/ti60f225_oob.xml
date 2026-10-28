@@ -212,7 +212,7 @@
         <efx:param name="cold_boot" value="off" value_type="e_bool" />
         <efx:param name="cascade" value="off" value_type="e_option" />
         <efx:param name="enable_roms" value="on" value_type="e_option" />
-        <efx:param name="spi_low_power_mode" value="on" value_type="e_bool" />
+        <efx:param name="spi_low_power_mode" value="off" value_type="e_bool" />
         <efx:param name="io_weak_pullup" value="on" value_type="e_bool" />
         <efx:param name="oscillator_clock_divider" value="DIV8" value_type="e_option" />
         <efx:param name="enable_crc_check" value="on" value_type="e_bool" />
