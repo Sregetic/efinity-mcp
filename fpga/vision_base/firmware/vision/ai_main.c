@@ -3,6 +3,9 @@
 #include "fusion_service.h"
 #include "connectome.h"
 #include "ai_selftest.h"
+#ifdef VISION_GEOMETRY_M7
+#include "geometry_m7_service.h"
+#endif
 #ifdef VISION_CONNECTOME_READOUT
 #include "connectome_readout.h"
 extern const struct connectome_readout_model connectome_readout_weights;
@@ -46,7 +49,11 @@ static void ai_publish(struct fusion_job *j,uint32_t config,uint32_t flags,uint3
 void main(void){
  const struct shape_model *m=(const struct shape_model *)__weights_start;
  if(CONTROL_STATE->magic==0)control_init(); // SPI boot clears it; USER1 replacement preserves the live UI.
- if(m->magic!=0x53434d31u||DMA(0x2c)!=3||CTRL_R(0)!=0x26101002u||CONTROL_STATE->magic!=CONTROL_MAGIC||FUS_R(0)!=0x26101003u){REG(4)=3;for(;;);}
+ if(m->magic!=0x53434d31u||DMA(0x2c)!=3||CTRL_R(0)!=0x26101002u||CONTROL_STATE->magic!=CONTROL_MAGIC||FUS_R(0)!=0x26101003u
+#ifdef VISION_GEOMETRY_M7
+ ||M7_R(0)!=0x26102871u
+#endif
+ ){REG(4)=3;for(;;);}
 #ifdef VISION_CONNECTOME_READOUT
  if(!connectome_readout_valid(&connectome_readout_weights)){REG(4)=3;for(;;);}
 #endif
@@ -72,6 +79,9 @@ void main(void){
    policy=current_policy;seen=0;policy_geometry_sequence=FUS_R(0x10);FUS_W(4,policy!=0);
    if(!policy){ui_request=CONTROL_STATE->ai_request;ai_runtime[0]=0;ai_publish(&job,0,0,0);}
   }
+  #ifdef VISION_GEOMETRY_M7
+  if(geometry_m7_service_step(ai_runtime[0]!=1))continue;
+  #endif
   uint32_t status=DMA(4);
   if(status&2){
    if(status&4){if(CONTROL_STATE->center_stage==3)control_center_finish(CENTER_ERROR);failures++;analysis_result[22]=DMA(0x24);analysis_result[23]=failures;

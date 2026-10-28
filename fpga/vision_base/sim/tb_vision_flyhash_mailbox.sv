@@ -1,14 +1,14 @@
 `timescale 1ns/1ps
-module tb_vision_flyhash_mailbox;
+module tb_vision_flyhash_mailbox #(parameter RAW_READ_PORT=1);
  reg clk=0,cpu_clk=0;always #3.367 clk=~clk;always #5 cpu_clk=~cpu_clk;
  reg rst_n=0,cpu_rst_n=0,cmd_event=0;reg[7:0]cmd_op=0;reg[23:0]cmd_value=0;
  reg context_valid=1;reg[31:0]frame_id=11,config_id=22,epoch=33,stream_errors=0;
  wire[31:0]status,result_frame_id,result_config_id,result_epoch,firmware_state,full_cycles;
- wire bitmap_req,bitmap_busy;reg bitmap_ready=1;wire[11:0]bitmap_address;
+ reg raw_bitmap_enable=0;wire bitmap_req,bitmap_busy;reg bitmap_ready=1;wire[11:0]bitmap_address;
  reg bitmap_valid=0;reg[31:0]bitmap_data=0;
  reg[15:0]paddr=0;reg psel=0,penable=0,pwrite=0;reg[31:0]pwdata=0;
  wire[31:0]prdata;wire pready,pslverror;
- vision_flyhash_mailbox dut(.*);
+ vision_flyhash_mailbox #(.RAW_READ_PORT(RAW_READ_PORT)) dut(.*);
  integer delay_n=0;reg[11:0]saved_address=0;
  always @(posedge clk)begin
   bitmap_valid<=0;
@@ -63,7 +63,16 @@ module tb_vision_flyhash_mailbox;
   command(8'h52,0);
   command(8'h54,0);cpu_rst_n=0;repeat(12)@(negedge clk);
   if(status[30]||status[31]||status[27])$fatal(1,"CPU reset left accepted task");
+  if(RAW_READ_PORT)begin
+   cpu_rst_n=1;raw_bitmap_enable=1;repeat(12)@(negedge clk);
+   for(i=0;i<4050;i=i+1)begin
+    write_reg(16'h1c,i);read_reg(16'h20,v);
+    if(v!==(32'habcdef00|i)||bitmap_busy)$fatal(1,"independent raw word %0d returned %h",i,v);
+   end
+   bitmap_ready=0;write_reg(16'h1c,17);raw_bitmap_enable=0;repeat(12)@(negedge clk);read_reg(16'h20,v);
+   if(v!=0)$fatal(1,"raw cancellation blocked or returned stale bits");
+  end
   $display("PASS tb_vision_flyhash_mailbox DDR payload addresses / bitmap backpressure / full32 cycles / nonce / context / CPU reset");$finish;
  end
- initial begin #200000;$fatal(1,"mailbox watchdog");end
+ initial begin #3000000;$fatal(1,"mailbox watchdog");end
 endmodule

@@ -1,7 +1,17 @@
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from PIL import Image
-from capture_mode_images import decode_snapshot,decode_caps,check_row,rgb_bytes,write_png
+from capture_mode_images import decode_snapshot,decode_caps,check_row,rgb_bytes,write_png,check_frozen_source
+
+# Full-screen F1 has no ROI lease; RGB line headers still bind every row to its frame.
+source=dict(roi_enabled=0,source_held=0,source_frozen=1,roi_frame_id=13334,held_source_frame_id=0)
+check_frozen_source(source)
+for bad in [dict(source,source_frozen=0),dict(source,roi_enabled=1),
+            dict(source,roi_enabled=1,source_held=1,held_source_frame_id=13335)]:
+    try:check_frozen_source(bad)
+    except RuntimeError:pass
+    else:raise AssertionError('Unfrozen or mismatched ROI source accepted')
+check_frozen_source(dict(source,roi_enabled=1,source_held=1,held_source_frame_id=13334))
 
 status=(1<<31)|(1<<28)|(5<<25)|(128<<14)|(1<<13)|(3<<11)|1079
 v=(0x56495331<<160)|(0x2610051b<<128)|(123<<96)|(7<<64)|(1080<<32)|status

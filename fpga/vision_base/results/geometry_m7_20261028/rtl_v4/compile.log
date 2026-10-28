@@ -1,0 +1,67 @@
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+Start time: 05:15:54 on Oct 28,2026
+vlog -work results/geometry_m7_20261028/rtl_v4/work -sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\camera_auto_exposure.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\rgb_chroma_tone.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_canny_denoise.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_canny_raster.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_canny.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_display.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_edge_features.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_flyhash_control.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_frame_history.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_frontend.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_geometry_m7.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_hysteresis_sweep.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_hysteresis.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_keys.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_line_direct.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_line_metrics.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_line_snapshot.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_local_motion_core.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_local_motion_tap.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_median9.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_motion_policy.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_motion_readout.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_osd.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_raw_frontend.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_rgb_capture.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_rgb_scanout.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_roi_control.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_shape_classifier.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sidebar_overlay.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sobel.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_sparse_window.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_window3_pair.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_window3.sv F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_write_commit.sv results/geometry_m7_20261028/rtl_v4/classifier_reference.sv results/geometry_m7_20261028/rtl_v4/osd_reference.sv results/geometry_m7_20261028/rtl_v4/sidebar_reference.sv 
+-- Compiling module camera_auto_exposure
+-- Compiling module rgb_chroma_tone
+-- Compiling module vision_canny_denoise
+-- Compiling module vision_canny_raster
+-- Compiling module vision_canny_line_fit
+-- Compiling module vision_canny
+-- Compiling module vision_canny_nms
+-- Compiling module vision_display
+-- Compiling module vision_edge_features
+-- Compiling module vision_flyhash_control
+-- Compiling module vision_frame_history
+-- Compiling module vision_frontend
+-- Compiling module vision_geometry_m7
+-- Compiling module vision_hysteresis_sweep
+-- Compiling module vision_hysteresis
+-- Compiling module vision_canny_edge_ram
+-- Compiling module vision_canny_ram
+-- Compiling module vision_keys
+-- Compiling module vision_line_direct
+-- Compiling module vision_line_metrics
+-- Compiling module vision_line_snapshot
+-- Compiling module vision_local_motion_core
+-- Compiling module vision_local_motion_tap
+-- Compiling module vision_median9
+-- Compiling module vision_motion_policy
+-- Compiling module vision_motion_readout
+-- Compiling module vision_osd
+-- Compiling module vision_raw_frontend
+-- Compiling module vision_rgb_capture
+-- Compiling module vision_rgb_scanout
+-- Compiling module vision_roi_control
+-- Compiling module vision_shape_classifier
+-- Compiling module vision_sidebar_overlay
+-- Compiling module vision_sobel
+-- Compiling module vision_sparse_window
+-- Compiling module vision_window3_pair
+-- Compiling module vision_window3
+-- Compiling module vision_write_commit
+-- Compiling module vision_shape_classifier_reference
+-- Compiling module vision_osd_reference
+-- Compiling module vision_sidebar_overlay_reference
+
+Top level modules:
+	camera_auto_exposure
+	rgb_chroma_tone
+	vision_canny
+	vision_display
+	vision_flyhash_control
+	vision_frame_history
+	vision_hysteresis
+	vision_keys
+	vision_line_direct
+	vision_line_metrics
+	vision_line_snapshot
+	vision_raw_frontend
+	vision_rgb_capture
+	vision_rgb_scanout
+	vision_roi_control
+	vision_sidebar_overlay
+	vision_write_commit
+	vision_shape_classifier_reference
+	vision_sidebar_overlay_reference
+End time: 05:15:54 on Oct 28,2026, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0

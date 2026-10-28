@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "flash_written": false,
+  "cpu_resumed": true,
+  "physical_targets_checked": false,
+  "full_m7_compute_ms": 2795.9739,
+  "contours_ms": 134,
+  "gray_ms": 299,
+  "source_fps": 29.819089207683522,
+  "actual_canny_rgb_different_pixels": 0,
+  "live_canny_progress": {
+    "first_epoch": 19531,
+    "last_epoch": 19770,
+    "sample_interval_s": 4,
+    "external_hold": 0
+  },
+  "actual_m7_rgb_visually_inspected": true,
+  "actual_canny_rgb_visually_inspected": true
+}

@@ -19,7 +19,7 @@ vision_hysteresis_sweep_reference #(.W(W),.H(H),.CW(CW),.REUSE_CAPTURE_MAP(1),.M
  de,req,address,ref_ack,ref_data,ref_read_address,ref_pbusy,discard,ref_cycles,ref_passes,ref_visits,hx,hy,ref_hpixel);
 always #5 clk=~clk;
 integer ticks=0,compared=0,skip_checks=0,pixel_checks=0,probe_checks=0;
-integer display_phase=0,display_row=0;
+integer display_phase=0,display_row=0;reg pruning_seen=0;
 always @(negedge clk)begin
  display_phase=(display_phase+1)%(W+40);
  if(display_phase==0)display_row=(display_row+1)%H;
@@ -29,13 +29,14 @@ end
 always @(posedge clk)begin
  ticks=ticks+1;#1;
  if(rst)begin
-  if({cap,ready,busy,pixel,frames,fault,state,queue_size,ack,data,read_address,pbusy,cycles,passes,visits,hpixel} !==
-     {ref_cap,ref_ready,ref_busy,ref_pixel,ref_frames,ref_fault,ref_state,ref_queue_size,ref_ack,ref_data,ref_read_address,ref_pbusy,ref_cycles,ref_passes,ref_visits,ref_hpixel})
+  if(cap)pruning_seen=0;else if(state>=9||ref_state>=9)pruning_seen=1;
+  if({cap,ready,busy,pixel,frames,fault,queue_size,ack,data,read_address,pbusy,hpixel} !==
+     {ref_cap,ref_ready,ref_busy,ref_pixel,ref_frames,ref_fault,ref_queue_size,ref_ack,ref_data,ref_read_address,ref_pbusy,ref_hpixel})
    $fatal(1,"cycle/output mismatch tick=%0d state=%0d/%0d xy=%0d,%0d",ticks,state,ref_state,dut.px,dut.py);
-  if({dut.px,dut.py,dut.neighbor,dut.front,dut.reverse,dut.changed} !==
+  if(!pruning_seen&&{dut.px,dut.py,dut.neighbor,dut.front,dut.reverse,dut.changed} !==
      {original.px,original.py,original.neighbor,original.front,original.reverse,original.changed})
    $fatal(1,"scan timing mismatch tick=%0d",ticks);
-  if(state==4||state==7)begin
+  if(!pruning_seen&&(state==4||state==7))begin
    if(dut.tile_read_row_q!=(dut.py>>4)||dut.empty_tile!==original.empty_tile)
     $fatal(1,"tile prefetch mismatch tick=%0d xy=%0d,%0d row=%0d",ticks,dut.px,dut.py,dut.tile_read_row_q);
    skip_checks=skip_checks+1;
@@ -68,7 +69,8 @@ initial begin
    if(f==3&&i%7==0)begin @(negedge clk);cv=0;last=0;end
   end
   @(negedge clk);cv=0;last=0;process_start=ticks;
-  wait(state==8);@(negedge clk);
+  wait(state==8&&ref_state==8);@(negedge clk);
+  if(passes!==ref_passes||visits!==ref_visits)$fatal(1,"hysteresis sweep count mismatch");
   for(r=0;r<(H+15)/16;r=r+1)
    if((dut.tile_rows_valid[r]?dut.weak_tiles[r]:0)!==original.weak_tiles[r])
     $fatal(1,"captured tile row mismatch frame=%0d row=%0d",f,r);
@@ -81,7 +83,7 @@ initial begin
   repeat(N+W+40)@(negedge clk);
  end
  if(frames!=3||skip_checks==0||pixel_checks==0||probe_checks==0)$fatal(1,"missing coverage");
- $display("PASS weak tile cycle equivalence: %0d clocks, %0d tile decisions, %0d display pixels, %0d probe bits, clear/consecutive/column-major/gaps/last-sample/discard/history",compared,skip_checks,pixel_checks,probe_checks);
+ $display("PASS weak tile output equivalence and pre-prune scan timing: %0d clocks, %0d tile decisions, %0d display pixels, %0d probe bits, clear/consecutive/column-major/gaps/last-sample/discard/history",compared,skip_checks,pixel_checks,probe_checks);
  $finish;
 end
 initial begin #1000000000;$fatal(1,"weak tile watchdog state=%0d frame=%0d",state,f);end

@@ -26,7 +26,7 @@ def validate_roi(roi,size,pos):
 def decode_ui(v):
  if v>>160!=0x56495331 or (v>>128)&0xffffffff!=0x26101040:raise RuntimeError('Key UI diagnostic mismatch')
  s=(v>>96)&0xffffffff
- item=((v>>90)&15)|((((v>>78)&1)<<4) if (v>>95)&1 else 0);status=(v>>87)&7;level=0 if not((v>>95)&1) else 1 if status==7 else 2
+ item=((v>>90)&15)|((((v>>78)&1)<<4) if (v>>95)&1 else 0);status=(v>>87)&7;level=0 if not((v>>95)&1) else 1 if status==7 else 3 if (v>>94)&1 and item==0 else 2
  group=item if level==1 else (0 if item<3 else 1 if item<9 else 3 if item<13 else 2)
  return dict(menu=0 if level else (v>>75)&15,menu_value=(v>>64)&2047,shape_threshold=(v>>79)&255,index=(s>>15)&7,
              sidebar_open=(v>>95)&1,sidebar_edit=(v>>94)&1,sidebar_item=item,center_status=status,sidebar_level=level,sidebar_group=group)

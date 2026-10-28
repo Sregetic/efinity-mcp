@@ -1,4 +1,4 @@
-module vision_osd #(parameter MOTION_HINT=0)(input[11:0]x,y,input[2:0]mode,input[10:0]threshold,input median_en,input[1:0]memory_mode,input[2:0]history_index,input canny_ready,input[1:0]shape_class,input shape_valid,input shape_enable,output reg active=0,output ink,input[10:0]requested_threshold,input fusion_enabled,input[351:0]fusion_result,input fusion_match,input[15:0]fusion_age,input clk,input[23:0]ui_state);
+module vision_osd #(parameter MOTION_HINT=0,M7_FACE=0)(input[11:0]x,y,input[2:0]mode,input[10:0]threshold,input median_en,input[1:0]memory_mode,input[2:0]history_index,input canny_ready,input[1:0]shape_class,input shape_valid,input shape_enable,output reg active=0,output ink,input[10:0]requested_threshold,input fusion_enabled,input[351:0]fusion_result,input fusion_match,input[15:0]fusion_age,input clk,input[23:0]ui_state,input[12:0]geometry_counts);
 function automatic[34:0]glyph(input[7:0]ch);
  begin case(ch)
 8'd48:glyph=35'b01110100011001110101110011000101110;
@@ -37,6 +37,7 @@ function automatic[34:0]glyph(input[7:0]ch);
 8'd88:glyph=35'b10001100010101000100010101000110001;
 8'd89:glyph=35'b10001100010101000100001000010000100;
 8'd90:glyph=35'b11111000010001000100010001000011111;
+8'd43:glyph=35'b00000001000010011111001000010000000;
 8'd58:glyph=35'b00000001000010000000001000010000000;
  default:glyph=0;endcase end
 endfunction
@@ -283,15 +284,18 @@ end
 wire sidebar=ui_state[23],editing=ui_state[22];
 wire[4:0]selected={ui_state[14],ui_state[21:18]};wire[2:0]center_status=ui_state[17:15];
 wire root_only=center_status==7,side_left=x<144;
+wire mode_popup=editing&&selected==0&&!root_only;
+wire side_modes=mode_popup&&x>=304;
 wire[1:0]side_group=root_only?selected[1:0]:selected<3?0:selected<9?1:selected<13?3:2;
 wire[4:0]side_first=side_group==0?0:side_group==1?3:side_group==2?13:9;
 wire[3:0]side_count=side_group==1?6:side_group==2||side_group==3?4:3;
 wire[4:0]side_index=selected-side_first;wire[3:0]side_lines=side_count+4'd3;
 // Keep the original status HUD above the menu, including its right-hand fields.
-wire[5:0]side_row=y[11:6]-6'd2;wire[8:0]side_x=(side_left||!sidebar)?x[8:0]:x[8:0]-9'd144;
+wire[5:0]side_row=y[11:6]-6'd2;wire[8:0]side_x=(side_left||!sidebar)?x[8:0]:x[8:0]-(side_modes?9'd304:9'd144);
 wire[4:0]side_slot=(side_x-9'd16)>>4;reg[5:0]side_py;reg marker_q=0;
 wire side_selected=side_row=={1'b0,side_index}+6'd1;
-wire side_active=y>=128&&((x<144&&y<576)||(!root_only&&x>=144&&x<304&&side_row<{2'b0,side_lines}));
+wire side_active=y>=128&&((x<144&&y<576)||(!root_only&&x>=144&&x<304&&side_row<{2'b0,side_lines})||
+                                         (mode_popup&&x>=304&&x<464&&side_row<10));
 wire motion_on=MOTION_HINT&&fusion_result[19];
 wire motion_active=motion_on&&x<160&&y>=96&&y<120;
 reg[63:0]motion_text;
@@ -307,6 +311,12 @@ function automatic[63:0]group_label(input[1:0]group);
  0:group_label=ZH_IMAGE;1:group_label=ZH_VIEW;2:group_label=ZH_TARGET;3:group_label=ZH_AI;
  endcase end
 endfunction
+function automatic[63:0]mode_label(input[2:0]value);
+ begin case(value)
+ 0:mode_label=ZH_CAMERA;1:mode_label=ZH_GRAY;2:mode_label=ZH_SOBEL;3:mode_label=ZH_SPLIT;
+ 4:mode_label=ZH_SOBEL_OVERLAY;5:mode_label=ZH_CANNY;6:mode_label=ZH_CANNY_OVERLAY;7:mode_label=ZH_SHAPE;
+ endcase end
+endfunction
 wire[63:0]side_title=group_label(side_left?side_row[1:0]-1'b1:side_group);
 function automatic[63:0]side_label(input[4:0]item);
  begin case(item)
@@ -320,6 +330,10 @@ endfunction
 reg[63:0]side_text,side_value;
 wire[3:0]menu=ui_state[14:11];
 wire[10:0]shown=(menu!=0||sidebar)?ui_state[10:0]:threshold;
+wire[63:0]mode_text=mode_label(side_modes?side_row[2:0]-3'd1:shown[2:0]);
+wire[63:0]side_action=selected==2?{16'h4b30,shown[0]?ZH_OFF[63:48]:ZH_ON[63:48],32'h20202020}:
+                                 editing?ZH_CONFIRM:ZH_ENTER;
+wire[63:0]side_return=editing&&selected!=1?ZH_CANCEL:ZH_BACK;
 wire[15:0]shown_decimal=decimal(shown),requested_decimal=decimal(requested_threshold);
 wire[31:0]side_number={8'd48+shown_decimal[15:12],8'd48+shown_decimal[11:8],8'd48+shown_decimal[7:4],8'd48+shown_decimal[3:0]};
 reg[63:0]menu_text;reg[31:0]run_text,test_text;
@@ -356,7 +370,8 @@ always @*begin
   2:test_text=32'h50415353;3:test_text=32'h4641494c;
  endcase
  if(fusion_result[0]&&fusion_result[12:11]==2&&!fusion_match)run_text=32'h4f4c4420;
- if(row==0)begin
+ // The sidebar instance never renders the legacy HUD.
+ if(!MOTION_HINT&&row==0)begin
   if(idx<8)case(mode)
    0:ch=char8(64'h43414d4552412020,idx[2:0]); // CAMERA
    1:ch=char8(64'h4752415920202020,idx[2:0]);
@@ -382,19 +397,24 @@ always @*begin
   endcase
   if(menu!=0&&idx<8)ch=char8(menu_text,idx[2:0]);
  end
- else if(row==1&&shape_enable)begin
+ else if(!MOTION_HINT&&row==1&&shape_enable)begin
   case(idx)
    0:ch="S";1:ch="H";2:ch="A";3:ch="P";4:ch="E";5:ch=":";
-   7:ch=!shape_valid?"N":shape_class==1?"C":shape_class==2?"R":"O";
-   8:ch=!shape_valid?"O":shape_class==1?"I":shape_class==2?"E":"T";
-   9:ch=!shape_valid?"N":shape_class==1?"R":shape_class==2?"C":"H";
-   10:ch=!shape_valid?"E":shape_class==1?"C":shape_class==2?"T":"E";
-   11:ch=!shape_valid?" ":shape_class==1?"L":shape_class==2?" ":"R";
+   7:ch=!shape_valid?"N":shape_class==1?"C":shape_class==2?"R":((M7_FACE&&mode==7)?"F":"O");
+   8:ch=!shape_valid?"O":shape_class==1?"I":shape_class==2?"E":((M7_FACE&&mode==7)?"A":"T");
+   9:ch=!shape_valid?"N":shape_class==1?"R":shape_class==2?"C":((M7_FACE&&mode==7)?"C":"H");
+   10:ch=!shape_valid?"E":shape_class==1?"C":shape_class==2?"T":((M7_FACE&&mode==7)?"E":"E");
+   11:ch=!shape_valid?" ":shape_class==1?"L":shape_class==2?" ":((M7_FACE&&mode==7)?" ":"R");
    12:ch=(shape_valid&&shape_class==1)?"E":" ";
+   14:ch=(M7_FACE&&mode==7)?"N":" ";15:ch=(M7_FACE&&mode==7)?8'(48+geometry_counts[2:0]):" ";
+   16:ch=(M7_FACE&&mode==7&&geometry_counts[3])?"+":" ";
+   18:ch=(M7_FACE&&mode==7)?"C":" ";19:ch=(M7_FACE&&mode==7)?8'(48+geometry_counts[6:4]):" ";
+   21:ch=(M7_FACE&&mode==7)?"R":" ";22:ch=(M7_FACE&&mode==7)?8'(48+geometry_counts[9:7]):" ";
+   24:ch=(M7_FACE&&mode==7)?"F":" ";25:ch=(M7_FACE&&mode==7)?8'(48+geometry_counts[12:10]):" ";
    default:ch=32;
   endcase
  end
- if(hud&&row==2)begin
+ if(!MOTION_HINT&&hud&&row==2)begin
   if(idx==0)ch="A";else if(idx==1)ch="I";
   else if(idx>=3&&idx<=6)ch=char4(status_text,idx-3);
   else if(idx==8)ch="C";else if(idx==9)ch=hexchar({2'b0,fusion_result[7:6]});
@@ -411,12 +431,12 @@ always @*begin
    else if(idx>=28&&idx<=31&&fusion_result[1])ch=char4(32'h54455354,idx-28);
   end
  end
- if(hud&&row==3)begin
+ if(!MOTION_HINT&&hud&&row==3)begin
   if(idx==0)ch="F";else if(idx>=1&&idx<=8)ch=hexchar(nibble(fusion_result[63:32],8-idx));
   else if(idx==10)ch="R";else if(idx>=11&&idx<=18)ch=hexchar(nibble(fusion_result[127:96],18-idx));
   else if(idx==20)ch="M";else if(idx>=21&&idx<=24)ch=hexchar(nibble(fusion_result[159:128],24-idx));
  end
- if(hud&&row==4)begin
+ if(!MOTION_HINT&&hud&&row==4)begin
   if(idx==0)ch="S";else if(idx>=1&&idx<=8)ch=hexchar(nibble(fusion_result[95:64],8-idx));
   else if(idx>=10&&idx<=24)case((idx-10)%4)
    0:ch="Q";1:ch=hexchar(nibble(fusion_result[287:256],2*((idx-10)/4)+1));
@@ -431,13 +451,10 @@ always @*begin
    else if(idx==21)ch="H";else if(idx==22)ch="E";else if(idx==23)ch="X";
   end
  end
- bitidx=34-((local_y/2)*5)-(column/2);
+ bitidx=MOTION_HINT?6'd0:34-((local_y/2)*5)-(column/2);
  side_text=0;side_value={side_number,"    "};side_py=y[5:0]-6'd24;
  case(selected)
-  0:case(shown[2:0])
-   0:side_value=ZH_CAMERA;1:side_value=ZH_GRAY;2:side_value=ZH_SOBEL;3:side_value=ZH_SPLIT;
-   4:side_value=ZH_SOBEL_OVERLAY;5:side_value=ZH_CANNY;6:side_value=ZH_CANNY_OVERLAY;7:side_value=ZH_SHAPE;
-  endcase
+  0:side_value=mode_text;
   2,16:side_value=shown[0]?ZH_ON:ZH_OFF;
   3,6:side_value={ZH_WIDTH[63:56],side_number,ZH_PIXELS[63:48],8'd32};
   4,5,7,8:side_value={side_number,ZH_PIXELS[63:48],16'h2020};
@@ -456,7 +473,11 @@ always @*begin
    if(side_row==0)side_text=ZH_MENU;
    else if(side_row<=4)side_text=side_title;
    else if(side_row==5)begin side_text=y[5]?ZH_DOWN:ZH_UP;side_py=y[5:0]-(y[5]?6'd36:6'd12);end
-   else if(side_row==6)begin side_text=y[5]?(root_only?ZH_CLOSE:editing?ZH_CANCEL:ZH_BACK):editing?ZH_CONFIRM:ZH_ENTER;side_py=y[5:0]-(y[5]?6'd36:6'd12);end
+   else if(side_row==6)begin side_text=y[5]?(root_only?ZH_CLOSE:side_return):side_action;side_py=y[5:0]-(y[5]?6'd36:6'd12);end
+  end else if(side_modes)begin
+   if(side_row==0)side_text=ZH_MODE;
+   else if(side_row<=8)side_text=mode_text;
+   else if(side_row==9)begin side_text=y[5]?ZH_CANCEL:ZH_CONFIRM;side_py=y[5:0]-(y[5]?6'd36:6'd12);end
   end else if(!root_only)begin
    if(side_row==0)side_text=editing?ZH_EDIT:side_title;
    else if(side_row<=side_count)begin
@@ -479,7 +500,7 @@ always @*begin
      4:side_text=ZH_BUSY;5:side_text=ZH_STALE;6:side_text=ZH_ERROR;default:side_text=0;
     endcase
    end else if(side_row==side_count+2'd2)begin
-    side_text=y[5]?(editing?ZH_CANCEL:ZH_BACK):editing?ZH_CONFIRM:ZH_ENTER;side_py=y[5:0]-(y[5]?6'd36:6'd12);
+    side_text=y[5]?side_return:side_action;side_py=y[5:0]-(y[5]?6'd36:6'd12);
    end
   end
   if(side_slot<8)ch=char8(side_text,side_slot[2:0]);
@@ -498,8 +519,10 @@ always @(posedge clk)begin
  chinese_word<={chinese_font0[chinese_row],chinese_font1[chinese_row],chinese_font2[chinese_row]};
  chinese_position<=side_x[3:0];chinese_q<=ch[7];
  active<=sidebar?side_active:MOTION_HINT?motion_active:(x>=8&&x<((mode==5||mode==6||ai_page)?428:356)&&((y>=4&&y<20)||(shape_enable&&y>=22&&y<38)||(hud&&((y>=40&&y<56)||(y>=58&&y<74)||(y>=76&&y<92)))));
- ink_region_q<=(sidebar||motion_active)?(side_x>=16&&side_slot<8&&(ch[7]?side_py<16:(side_x[3:0]<10&&side_py<14&&bitidx<35))):(column<10&&local_y<14&&bitidx<35);
- marker_q<=sidebar&&side_active&&((side_left&&side_row=={4'b0,side_group}+6'd1&&(side_x<4||(root_only&&(y[5:0]==0||y[5:0]==63))))||(!side_left&&side_selected&&(side_x<4||y[5:0]==0||y[5:0]==63)));
+ ink_region_q<=(sidebar||motion_active)?(side_x>=16&&side_slot<8&&(ch[7]?side_py<16:(side_x[3:0]<10&&side_py<14&&bitidx<35))):(!MOTION_HINT&&column<10&&local_y<14&&bitidx<35);
+ marker_q<=sidebar&&side_active&&((side_left&&side_row=={4'b0,side_group}+6'd1&&(side_x<4||(root_only&&(y[5:0]==0||y[5:0]==63))))||
+             (!side_left&&!side_modes&&side_selected&&(side_x<4||y[5:0]==0||y[5:0]==63))||
+             (side_modes&&side_row=={3'd0,shown[2:0]}+6'd1&&(side_x<4||y[5:0]==0||y[5:0]==63)));
 end
 assign ink=active&&((ink_region_q&&(chinese_q?chinese_ink:font_ink))||marker_q);
 endmodule

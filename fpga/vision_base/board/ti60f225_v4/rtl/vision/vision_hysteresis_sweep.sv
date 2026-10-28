@@ -14,7 +14,7 @@ module vision_hysteresis_sweep #(parameter W=480,H=270,CW=9,AW=$clog2(W*H),REUSE
  input[CW-1:0]history_x,history_y,output history_pixel);
 localparam N=W*H;
 localparam CLEAR=0,WAIT_FRAME=1,CAPTURE=2,CUR_READ=3,CUR_CHECK=4,NREAD=5,NCHECK=6,ADVANCE=7,PUBLISH=8;
-localparam PRUNE_READ=9,PRUNE_CHECK=10,PRUNE_NODE=11,PRUNE_NREAD=12,PRUNE_NCHECK=13,PRUNE_COMMIT=14;
+localparam PRUNE_READ=9,PRUNE_CHECK=10,PRUNE_NODE=11,PRUNE_NREAD=12,PRUNE_NCHECK=13,PRUNE_COMMIT=14,PRUNE_QWAIT=15;
 reg[3:0]state=CLEAR;reg[AW-1:0]clear_addr=0;
 reg front=0,reverse=0,changed=0;reg[CW-1:0]px=0,py=0;reg[2:0]neighbor=0;
 // Conservative16x16 weak-presence mask. Promotion only removes weak pixels;
@@ -32,14 +32,13 @@ wire[CW-1:0]scan_next_x=scan_row_end?(reverse?CW'(W-1):CW'(0)):
                           (reverse?(empty_tile?tile_start-1'b1:px-1'b1):(empty_tile?tile_end+1'b1:px+1'b1));
 wire[CW-1:0]scan_next_y=scan_row_end?(reverse?py-1'b1:py+1'b1):py;
 // Bounded flood search: reaching MIN_COMPONENT proves a component is large.
-// Map3 is a visited edge. Membership distinguishes this search from prior kept
-// components, so a long component's unvisited tails are never erased.
+// Map3/edge0 denotes this search; map3/edge1 denotes a previously kept component.
+// Restore queued edge bits on keep, so unvisited tails still find the kept part.
+wire[1:0]map_q;
 localparam QW=$clog2(MIN_COMPONENT+1);
-reg[CW-1:0]qx[0:MIN_COMPONENT-1],qy[0:MIN_COMPONENT-1];
 reg[QW-1:0]head=0,tail=0,erase_index=0;
-reg[CW-1:0]bx=0,by=0;reg keep_component=0,own_neighbor=0;
-reg signed[CW+1:0]pnx,pny;reg prune_bounds,own_queue;
-integer qi;
+reg[CW-1:0]bx=0,by=0;reg keep_component=0,commit_fetch=0;
+reg signed[CW+1:0]pnx,pny;reg prune_bounds;
 always @*begin
  pnx=$signed({2'b0,bx});pny=$signed({2'b0,by});
  case(neighbor)
@@ -49,12 +48,18 @@ always @*begin
   7:begin pnx=pnx+1;pny=pny+1;end
  endcase
  prune_bounds=pnx>=0&&pnx<W&&pny>=0&&pny<H;
- own_queue=0;
- for(qi=0;qi<MIN_COMPONENT;qi=qi+1)
-  if(qi<tail&&qx[qi]==pnx&&qy[qi]==pny)own_queue=1;
 end
 wire[AW-1:0]prune_neighbor_addr=pny*W+pnx;
-wire[AW-1:0]erase_addr=qy[erase_index]*W+qx[erase_index];
+wire[AW-1:0]scan_addr=py*W+px;
+wire[2*CW+AW-1:0]queue_q;
+wire[QW-1:0]queue_read=state==PRUNE_COMMIT?erase_index+1'b1:
+ (state==PRUNE_QWAIT&&commit_fetch?QW'(0):head);
+wire queue_seed=state==PRUNE_CHECK&&map_q==2;
+wire queue_push=state==PRUNE_NCHECK&&prune_bounds&&map_q==2;
+vision_canny_ram #(.BITS(2*CW+AW),.AW(QW)) prune_queue(clk,rst_n&&(queue_seed||queue_push),queue_seed?QW'(0):tail,
+ queue_seed?{scan_addr,py,px}:{prune_neighbor_addr,pny[CW-1:0],pnx[CW-1:0]},queue_read,queue_q);
+// Store the already-computed address: the erase RAM path must not multiply a RAM output.
+wire[AW-1:0]erase_addr=queue_q[2*CW+AW-1:2*CW];
 reg[31:0]work_cycles=0;
 // Only the read-only skip path may consume the prefetched next pixel.
 // Flood erase commits can collide with that address and require a fresh read.
@@ -76,7 +81,7 @@ task advance_scan;begin
 
 end endtask
 reg signed[CW+1:0]nx,ny;reg in_bounds;
-wire[AW-1:0]scan_addr=py*W+px,class_addr=class_y*W+class_x,display_addr=display_y*W+display_x;
+wire[AW-1:0]class_addr=class_y*W+class_x,display_addr=display_y*W+display_x;
 reg signed[CW+1:0]fetch_x,fetch_y;
 wire[2:0]fetch_neighbor=(state==NCHECK)?neighbor+3'd1:neighbor;
 always @*begin
@@ -103,7 +108,7 @@ always @*begin
  endcase
  in_bounds=nx>=0&&nx<W&&ny>=0&&ny<H;
 end
-wire[1:0]map_q;wire e0,e1;
+wire e0,e1;
 // Borrow the existing front-plane read port only inside horizontal blanking.
 // The caller supplies a continuous1920-pixel DE and >=34 blank clocks/line.
 // Freeze publication in the caller while dumping a complete frame over JTAG.
@@ -132,9 +137,9 @@ wire clearing=state==CLEAR,storing=state==CAPTURE&&class_valid;
 wire promoting=state==NCHECK&&in_bounds&&map_q==2;
 wire prune_seed=state==PRUNE_CHECK&&map_q==2;
 wire prune_mark=state==PRUNE_NCHECK&&prune_bounds&&map_q==2;
-wire prune_erase=state==PRUNE_COMMIT&&!keep_component;
-wire[AW-1:0]write_addr=prune_mark?prune_neighbor_addr:(prune_erase?erase_addr:(clearing?clear_addr:(storing?class_addr:scan_addr)));
-wire[1:0]write_data=(prune_seed||prune_mark)?2'd3:(prune_erase?2'd0:(clearing?2'd0:(storing?classification:2'd2)));
+wire prune_commit=state==PRUNE_COMMIT;
+wire[AW-1:0]write_addr=prune_mark?prune_neighbor_addr:(prune_commit?erase_addr:(clearing?clear_addr:(storing?class_addr:scan_addr)));
+wire[1:0]write_data=(prune_seed||prune_mark)?2'd3:(prune_commit?(keep_component?2'd3:2'd0):(clearing?2'd0:(storing?classification:2'd2)));
 // Read the next neighbor while checking the current one; prefetch each center.
 wire skip_center=state==CUR_CHECK&&(empty_tile||map_q!=1);
 wire skip_prune=state==PRUNE_CHECK&&map_q!=2;
@@ -167,23 +172,25 @@ always @(posedge clk)begin
  if(tile_we)begin tile_last_row<=tile_write_row;tile_last_data<=tile_data;end
 end
 // Write only the back plane; publish the completed plane at vblank.
-wire edge_we=clearing||storing||promoting||prune_erase;
-wire edge_data=promoting||(storing&&classification==2);
-vision_canny_ram #(.BITS(2),.AW(AW)) map_ram(clk,rst_n&&(clearing||storing||promoting||prune_seed||prune_mark||prune_erase),write_addr,write_data,read_addr,map_q);
+wire edge_we=clearing||storing||promoting||prune_seed||prune_mark||prune_commit;
+wire edge_data=promoting||(storing&&classification==2)||(prune_commit&&keep_component);
+wire[AW-1:0]back_port_addr=state==PRUNE_NREAD?prune_neighbor_addr:write_addr;
+vision_canny_ram #(.BITS(2),.AW(AW)) map_ram(clk,rst_n&&(clearing||storing||promoting||prune_seed||prune_mark||prune_commit),write_addr,write_data,read_addr,map_q);
 // The front plane's write port is idle during CAPTURE. Read history there;
 // display and the blanking-time JTAG probe keep their independent read port.
 wire[AW-1:0]history_addr=history_y*W+history_x;wire h0,h1;
 vision_canny_edge_ram #(.AW(AW)) edge_ram0(clk,rst_n&&edge_we&&(front||(clearing&&!ready)),
- (HISTORY&&!front&&ready)?history_addr:write_addr,edge_data,h0,edge_read_addr,e0);
+ (HISTORY&&!front&&ready)?history_addr:back_port_addr,edge_data,h0,edge_read_addr,e0);
 vision_canny_edge_ram #(.AW(AW)) edge_ram1(clk,rst_n&&edge_we&&(!front||(clearing&&!ready)),
- (HISTORY&&front&&ready)?history_addr:write_addr,edge_data,h1,edge_read_addr,e1);
+ (HISTORY&&front&&ready)?history_addr:back_port_addr,edge_data,h1,edge_read_addr,e1);
+wire back_edge=front?h0:h1;
 assign history_pixel=HISTORY&&ready&&(front?h1:h0);
 assign pixel=ready?(front?e1:e0):1'b0;
 assign capture_enable=state==CAPTURE;assign busy=state!=WAIT_FRAME;assign debug_state=state;assign debug_queue=0;
 always @(posedge clk)begin
- if(!rst_n)begin work_cycles<=0;last_cycles<=0;sweep_passes<=0;weak_visits<=0;state<=CLEAR;clear_addr<=0;front<=0;ready<=0;completed<=0;fault<=0;px<=0;py<=0;reverse<=0;changed<=0;neighbor<=0;head<=0;tail<=0;erase_index<=0;bx<=0;by<=0;keep_component<=0;own_neighbor<=0;end
+ if(!rst_n)begin work_cycles<=0;last_cycles<=0;sweep_passes<=0;weak_visits<=0;state<=CLEAR;clear_addr<=0;front<=0;ready<=0;completed<=0;fault<=0;px<=0;py<=0;reverse<=0;changed<=0;neighbor<=0;head<=0;tail<=0;erase_index<=0;bx<=0;by<=0;keep_component<=0;commit_fetch<=0;end
  else begin
- if(state>=CUR_READ&&state<=PRUNE_COMMIT&&state!=PUBLISH)work_cycles<=work_cycles+1;
+ if((state>=CUR_READ&&state<=PRUNE_COMMIT&&state!=PUBLISH)||state==PRUNE_QWAIT)work_cycles<=work_cycles+1;
  if(state==CUR_CHECK&&map_q==1)weak_visits<=weak_visits+1;
  if(state==PUBLISH)last_cycles<=work_cycles;
  case(state)
@@ -201,19 +208,23 @@ always @(posedge clk)begin
  ADVANCE:advance_scan();
  PRUNE_READ:state<=PRUNE_CHECK;
  PRUNE_CHECK:if(map_q==2)begin
-  qx[0]<=px;qy[0]<=py;head<=0;tail<=1;keep_component<=0;erase_index<=0;state<=PRUNE_NODE;
+  head<=0;tail<=1;keep_component<=0;commit_fetch<=0;erase_index<=0;state<=PRUNE_NODE;
  end else prune_next(1'b1);
- PRUNE_NODE:if(head==tail)begin erase_index<=0;state<=PRUNE_COMMIT;end
- else begin bx<=qx[head];by<=qy[head];neighbor<=0;state<=PRUNE_NREAD;end
- PRUNE_NREAD:begin own_neighbor<=own_queue;state<=PRUNE_NCHECK;end
+ PRUNE_NODE:begin
+  if(head==tail)begin erase_index<=0;commit_fetch<=1;end else commit_fetch<=0;
+  state<=PRUNE_QWAIT;
+ end
+ PRUNE_QWAIT:if(commit_fetch)state<=PRUNE_COMMIT;
+ else begin bx<=queue_q[CW-1:0];by<=queue_q[2*CW-1:CW];neighbor<=0;state<=PRUNE_NREAD;end
+ PRUNE_NREAD:state<=PRUNE_NCHECK;
  PRUNE_NCHECK:begin
-  if(prune_bounds&&map_q==2)begin qx[tail]<=pnx[CW-1:0];qy[tail]<=pny[CW-1:0];tail<=tail+1'b1;end
-  if((prune_bounds&&map_q==3&&!own_neighbor)||(prune_bounds&&map_q==2&&tail==MIN_COMPONENT-1))begin
-   keep_component<=1;state<=PRUNE_COMMIT;
+  if(prune_bounds&&map_q==2)begin tail<=tail+1'b1;end
+  if((prune_bounds&&map_q==3&&back_edge)||(prune_bounds&&map_q==2&&tail==MIN_COMPONENT-1))begin
+   keep_component<=1;erase_index<=0;commit_fetch<=1;state<=PRUNE_QWAIT;
   end else if(neighbor==7)begin head<=head+1'b1;state<=PRUNE_NODE;end
   else begin neighbor<=neighbor+1'b1;state<=PRUNE_NREAD;end
  end
- PRUNE_COMMIT:if(keep_component||erase_index==tail-1'b1)prune_next(1'b0);
+ PRUNE_COMMIT:if(erase_index==tail-1'b1)prune_next(1'b0);
  else erase_index<=erase_index+1'b1;
  PUBLISH:if(vblank)begin
   // A frame classified below its newly measured noise floor is retried; it

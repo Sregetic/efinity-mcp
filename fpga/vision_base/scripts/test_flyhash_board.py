@@ -6,7 +6,7 @@ from capture_mode_images import check_frozen_source
 
 if __name__=='__main__':
     # Real board incident: a committed frozen field, sampled during the next VS.
-    source=dict(source_held=1,source_frozen=1,roi_frame_id=7941,held_source_frame_id=7941,roi_frame_ok=0)
+    source=dict(roi_enabled=1,source_held=1,source_frozen=1,roi_frame_id=7941,held_source_frame_id=7941,roi_frame_ok=0)
     check_frozen_source(source)
     for key,value in [('source_held',0),('source_frozen',0),('held_source_frame_id',7942)]:
         bad=dict(source);bad[key]=value

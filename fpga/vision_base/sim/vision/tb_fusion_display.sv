@@ -17,7 +17,7 @@ initial begin
  repeat(2)@(negedge clk);rst=1;@(negedge clk);force dut.x=700;force dut.y=300;
  force dut.shape_done=1;@(negedge clk);force dut.shape_done=0;
  if(geometry_frame!=10||geometry_config!=7||geometry_context!=3)$fatal(1,"completed geometry tags");
- if(dut.shape_gray!=90)$fatal(1,"AI geometry used retained Canny rather than source gray");
+ if(dut.shape_gray!=90)$fatal(1,"AI geometry grayscale input changed");
  frame_id=11;force dut.x=0;force dut.y=0;@(negedge clk);force dut.x=700;force dut.y=300;
  if(geometry_frame!=10||dut.shape_current)$fatal(1,"old geometry retagged with new source");
  packet[0]=1;packet[223:192]=700|(300<<16);packet[255:224]=800|(400<<16);
@@ -27,6 +27,6 @@ initial begin
  @(negedge clk);force dut.fd=0;force dut.fh=1;force dut.fv=1;
  @(posedge clk);#1;if(dut.ode!=1||{r,g,b}!=24'h64503c)$fatal(1,"last active pixel lost");
  @(posedge clk);#1;if(dut.ode!=0||dut.ohs!=1||dut.ovs!=1||{r,g,b}!=0)$fatal(1,"control/RGB pipeline mismatch");
- $display("PASS fusion display completed-frame tags, source-gray geometry, fresh/stale ROI and no retagging");$finish;
+ $display("PASS fusion display completed-frame tags, AI geometry grayscale input, fresh/stale ROI and no retagging");$finish;
 end
 endmodule

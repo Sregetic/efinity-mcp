@@ -6,11 +6,12 @@
 // Coordinates/result belong to the preceding displayed frame (not zero latency).
 module vision_shape_classifier #(
  parameter X0=640,Y0=300,X1=1280,Y1=780,
- parameter MIN_AREA=256,MIN_SIZE=16,BG_SPREAD=48
+ parameter MIN_AREA=256,MIN_SIZE=16,BG_SPREAD=48,EXTERNAL_RESULT=0
 )(input clk,rst_n,de,vs,input[11:0]x,y,input[7:0]gray,diff_threshold,
  output reg[1:0]shape_class,output reg shape_valid,
  output reg[11:0]box_x0,box_y0,box_x1,box_y1,
- output reg[7:0]background,output reg[3:0]reject_flags,output reg result_done=0);
+ output reg[7:0]background,output reg[3:0]reject_flags,output reg result_done=0,
+ input external_enable,external_write,external_publish,external_valid,input[1:0]external_class,input[11:0]external_x0,external_y0,external_x1,external_y1);
 reg vq=0,bg_valid=0;reg[7:0]thr=48,bg_min=255,bg_max=0;
 reg[15:0]patch_sum0=0,patch_sum1=0,patch_sum2=0,patch_sum3=0;
 function automatic[7:0]min8(input[7:0]a,b);begin min8=a<b?a:b;end endfunction
@@ -43,16 +44,26 @@ wire[11:0]current_right_start=(run_start&&runs==1)?x_q:right_start;
 function automatic connected(input[11:0]a0,a1,b0,b1);
  begin connected=({1'b0,a0}<={1'b0,b1}+13'd1)&&({1'b0,b0}<={1'b0,a1}+13'd1);end
 endfunction
-wire ll=connected(current_first,current_left_end,previous_first,previous_left_end);
-wire lr=previous_runs==2&&connected(current_first,current_left_end,previous_right_start,previous_last);
-wire rl=next_runs==2&&connected(current_right_start,current_last,previous_first,previous_left_end);
-wire rr=next_runs==2&&previous_runs==2&&connected(current_right_start,current_last,previous_right_start,previous_last);
-reg[2:0]pending=0;reg[20:0]a=0;reg[12:0]w=0,h=0;
-reg[25:0]box_area=0;reg round_aspect=0;reg[3:0]flags=0;
-wire[15:0]w8={3'b0,w}<<3,h8={3'b0,h}<<3;
-wire[15:0]w7=w8-{3'b0,w},h7=h8-{3'b0,h};
+// Ordered row spans only need a bridge (1<->2) or matching left/right links.
+function automatic row_connected(input c2,p2,input[11:0]c0,c1,c2x,c3,p0,p1,p2x,p3);
+ begin row_connected=connected(c2&&!p2?c2x:c0,c1,p2&&!c2?p2x:p0,p1)&&
+  (!(c2&&p2)||connected(c2x,c3,p2x,p3));end
+endfunction
+wire linked_rows=row_connected(next_runs==2,previous_runs==2,current_first,current_left_end,current_right_start,current_last,
+ previous_first,previous_left_end,previous_right_start,previous_last);
+localparam WW=$clog2(X1-X0+1),HW=$clog2(Y1-Y0+1),BW=$clog2((X1-X0)*(Y1-Y0)+1),AW=(WW>HW?WW:HW)+3;
+reg[2:0]pending=0;reg[20:0]a=0;reg[WW-1:0]w=0;reg[HW-1:0]h=0;
+reg[BW-1:0]box_area=0;reg round_aspect=0;reg[3:0]flags=0;
+wire[AW-1:0]w8=AW'(w)<<3,h8=AW'(h)<<3;
+wire[AW-1:0]w7=w8-AW'(w),h7=h8-AW'(h);
+wire[BW-1:0]round_base=(box_area>>1)+(box_area>>4);
+wire[BW-1:0]round_low=round_base+(box_area>>3),round_high=round_base+(box_area>>2)+(box_area>>5);
+wire external_result=EXTERNAL_RESULT&&external_enable;
+wire box_write=external_result?external_write:(vs_q&&!vq);
+wire[11:0]next_x0=external_result?external_x0:xmin,next_y0=external_result?external_y0:ymin;
+wire[11:0]next_x1=external_result?external_x1:xmax,next_y1=external_result?external_y1:ymax;
 always @(posedge clk)begin
- vq<=vs_q;result_done<=rst_n&&pending[1];
+ vq<=vs_q;result_done<=rst_n&&((EXTERNAL_RESULT&&external_enable)?external_publish:pending[1]);
  if(!rst_n)begin
   vq<=0;bg_valid<=0;background<=0;patch_sum0<=0;patch_sum1<=0;patch_sum2<=0;patch_sum3<=0;bg_sum<=0;bg_count<=0;bg_min<=255;bg_max<=0;thr<=48;
   area<=0;xmin<=4095;ymin<=4095;xmax<=0;ymax<=0;touched<=0;
@@ -66,8 +77,9 @@ always @(posedge clk)begin
   pending<=3'b001;a<=area;w<={1'b0,xmax}-{1'b0,xmin}+1'b1;h<={1'b0,ymax}-{1'b0,ymin}+1'b1;
   flags<={(!bg_valid||bg_count!=1024||(patch_hi-patch_lo)>BG_SPREAD),
            (bad_topology||(rows!=0&&previous_runs!=1)),touched,(area<MIN_AREA||xmin>xmax||ymin>ymax)};
-  box_x0<=xmin;box_y0<=ymin;box_x1<=xmax;box_y1<=ymax;
-  shape_valid<=0;shape_class<=0;
+  if(!(EXTERNAL_RESULT&&external_enable))begin
+   shape_valid<=0;shape_class<=0;
+  end
   if(bg_count==1024)background<=bg_sum[17:10];
   bg_valid<=bg_count==1024&&(patch_hi-patch_lo)<=BG_SPREAD;
   thr<=diff_threshold==0?8'd1:diff_threshold;
@@ -77,13 +89,13 @@ always @(posedge clk)begin
  end else begin
   pending<={pending[1:0],1'b0};
   if(pending[0])begin box_area<=w*h;round_aspect<=w8>=h7&&h8>=w7;end
-  if(pending[1])begin
+  if(pending[1]&&!(EXTERNAL_RESULT&&external_enable))begin
    reject_flags<=flags|((w<MIN_SIZE||h<MIN_SIZE)?4'b0001:4'b0000);
    shape_valid<=flags==0&&w>=MIN_SIZE&&h>=MIN_SIZE;
    if(flags!=0||w<MIN_SIZE||h<MIN_SIZE)shape_class<=0;
    else if({5'b0,a}>=(box_area-(box_area>>3)))shape_class<=2;
-   else if(round_aspect&&{5'b0,a}>=((box_area>>1)+(box_area>>3)+(box_area>>4))&&
-           {5'b0,a}<=((box_area>>1)+(box_area>>2)+(box_area>>4)+(box_area>>5)))shape_class<=1;
+   else if(round_aspect&&{5'b0,a}>=round_low&&
+           {5'b0,a}<=round_high)shape_class<=1;
    else shape_class<=3;
   end
   if(de_q&&roi_q)begin
@@ -110,9 +122,7 @@ always @(posedge clk)begin
      rows<=rows+1'b1;
      // Both directions matter: a side that stops before merging is an open contour.
      if(next_runs>2 || (rows==0&&next_runs!=1) ||
-        (rows!=0&&(y_q!=previous_y+1'b1 || !(ll||lr) ||
-                   (next_runs==2&&!(rl||rr)) || !(ll||rl) ||
-                   (previous_runs==2&&!(lr||rr)))))bad_topology<=1;
+        (rows!=0&&(y_q!=previous_y+1'b1 || !linked_rows)))bad_topology<=1;
      previous_y<=y_q;previous_runs<=next_runs;
      previous_first<=current_first;previous_left_end<=current_left_end;
      previous_right_start<=current_right_start;previous_last<=current_last;
@@ -121,6 +131,14 @@ always @(posedge clk)begin
    end
   end
  end
+ if(rst_n&&box_write)begin box_x0<=next_x0;box_y0<=next_y0;box_x1<=next_x1;box_y1<=next_y1;end
+ if(rst_n&&EXTERNAL_RESULT&&external_enable)begin
+  if(external_write)begin
+   shape_class<=external_class;shape_valid<=0;
+  end
+  if(external_publish)begin shape_valid<=external_valid;reject_flags<=0;if(!external_valid)shape_class<=0;end
+ end
+
 end
 endmodule
 

@@ -1,0 +1,24 @@
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+Start time: 06:12:46 on Oct 28,2026
+vlog -modelsimini F:/Project/fpga/vision_base/results/geometry_m7_20261028/prune_queue/modelsim.ini -work queue_work -sv board/ti60f225_v4/rtl/vision/vision_canny.sv board/ti60f225_v4/rtl/vision/vision_canny_denoise.sv board/ti60f225_v4/rtl/vision/vision_median9.sv board/ti60f225_v4/rtl/vision/vision_hysteresis_sweep.sv board/ti60f225_v4/rtl/vision/vision_hysteresis.sv board/ti60f225_v4/rtl/vision/vision_sparse_window.sv board/ti60f225_v4/rtl/vision/vision_sobel.sv board/ti60f225_v4/rtl/vision/vision_canny_raster.sv board/ti60f225_v4/rtl/vision/vision_frontend.sv board/ti60f225_v4/rtl/vision/vision_window3.sv results/geometry_m7_20261028/tb_native_bitmaps.sv 
+-- Compiling module vision_canny
+-- Compiling module vision_canny_nms
+-- Compiling module vision_canny_denoise
+-- Compiling module vision_median9
+-- Compiling module vision_hysteresis_sweep
+-- Compiling module vision_hysteresis
+-- Compiling module vision_canny_edge_ram
+-- Compiling module vision_canny_ram
+-- Compiling module vision_sparse_window
+-- Compiling module vision_sobel
+-- Compiling module vision_canny_raster
+-- Compiling module vision_canny_line_fit
+-- Compiling module vision_frontend
+-- Compiling module vision_window3
+-- Compiling module tb
+
+Top level modules:
+	vision_hysteresis
+	tb
+End time: 06:12:47 on Oct 28,2026, Elapsed time: 0:00:01
+Errors: 0, Warnings: 0

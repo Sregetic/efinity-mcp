@@ -1,0 +1,10 @@
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+Start time: 08:05:46 on Oct 28,2026
+vlog -modelsimini F:/Project/fpga/vision_base/results/geometry_m7_20261028/prune_queue/modelsim.ini -work queue_work -sv board/ti60f225_v4/rtl/vision/vision_canny_raster.sv 
+-- Compiling module vision_canny_raster
+-- Compiling module vision_canny_line_fit
+
+Top level modules:
+	vision_canny_raster
+End time: 08:05:46 on Oct 28,2026, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0

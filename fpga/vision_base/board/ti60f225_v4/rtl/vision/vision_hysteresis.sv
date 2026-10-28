@@ -88,6 +88,6 @@ always @(posedge clk)qb<=mem[ba];
 endmodule
 
 module vision_canny_ram #(parameter BITS=8,AW=15)(input clk,we,input[AW-1:0]wa,input[BITS-1:0]wd,input[AW-1:0]ra,output reg[BITS-1:0]q);
-reg[BITS-1:0]mem[0:(1<<AW)-1];
+(* syn_ramstyle="block_ram" *)reg[BITS-1:0]mem[0:(1<<AW)-1];
 always @(posedge clk)begin if(we)mem[wa]<=wd;q<=mem[ra];end
 endmodule

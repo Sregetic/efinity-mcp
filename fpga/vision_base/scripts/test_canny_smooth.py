@@ -44,7 +44,11 @@ def model(bitmap,x,y,horizontal,origin,radius=4):
             for candidate in(minor[side],minor[side]-1,minor[side]+1,minor[side]-2,minor[side]+2):
                 if abs(candidate)>5:continue
                 xx,yy=(x+direction*k,y+candidate)if horizontal else(x+candidate,y+direction*k)
-                if 0<=yy<bitmap.shape[0]and 0<=xx<bitmap.shape[1]and bitmap[yy,xx]:minor[side]=candidate;found=True;break
+                if 0<=yy<bitmap.shape[0]and 0<=xx<bitmap.shape[1]and bitmap[yy,xx]:
+                    if abs(candidate-minor[side])==2:
+                        px,py=(x+direction*(k-1),y+(minor[side]+candidate)//2)if horizontal else(x+(minor[side]+candidate)//2,y+direction*(k-1))
+                        if not bitmap[py,px]:continue
+                    minor[side]=candidate;found=True;break
             if not found:return None
         total+=sum(minor);weighted+=k*(minor[1]-minor[0])
     if abs(total-(2*radius+1)*origin)>(9 if radius==4 else 5):return None
@@ -148,6 +152,15 @@ def main():
         'T':((xx==48)&(yy>=12)&(yy<=52))|((yy==32)&(xx>=48)&(xx<78))}
     for name,line in shapes.items():assert components(fitted(line,new))==1,name
     report.update(finite_endpoint_cases=finite,closed_and_junction_shapes=list(shapes))
+    parallel_cases=0
+    for phase in (0,2/3):
+        height=np.floor((2/3)*(xx-48)+30+phase+.5)
+        pair=((yy==height)|(yy==height+3))&(xx>=23)&(xx<73)
+        for transposed in (False,True):
+            line=pair.T if transposed else pair
+            assert components(fitted(line,new))==2,('parallel contour split',phase,transposed)
+            parallel_cases+=1
+    report['parallel_contour_cases']=parallel_cases
     # Camera-derived turn: the former13-pixel flat and one-cell spur must stay gone.
     corner=['...............#.....','..............##.....','..............#......',
         '.............##.....#','.............#......#','##..........##.....##',

@@ -1,6 +1,7 @@
 `timescale 1ns/1ps
 module tb;
-localparam W=32,H=24,N=W*H,MIN=32;
+parameter MIN=32;
+localparam W=32,H=24,N=W*H;
 reg clk=0,rst=0,vblank=0,cv=0,last=0;reg[7:0]x=0,y=0,dx=0,dy=0;reg[1:0]c=0;
 wire cap,ready,busy,pixel,fault;wire[31:0]frames;wire[3:0]state;
 vision_hysteresis_sweep #(.W(W),.H(H),.CW(8),.REUSE_CAPTURE_MAP(1),.MIN_COMPONENT(MIN))
@@ -9,7 +10,10 @@ always #5 clk=~clk;
 reg[1:0]input_map[0:N-1];reg gold[0:N-1],seen[0:N-1];integer queue[0:N-1];
 integer testno,i,j,xx,yy,a,b,head,tail,idx,ni,nx,ny,kept=0,removed=0,cycles=0,checks=0;
 reg has_seed;
-always @(posedge clk)cycles=cycles+1;
+always @(posedge clk)begin
+ cycles=cycles+1;
+ if(rst&&state==14&&dut.erase_addr!==dut.queue_q[15:8]*W+dut.queue_q[7:0])$fatal(1,"queued erase address mismatch");
+end
 task reference;
  begin
   for(i=0;i<N;i=i+1)begin seen[i]=0;gold[i]=0;end

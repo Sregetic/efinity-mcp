@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "method": "USER1 1000kHz / 1KiB load-and-read chunks, full actual-byte compare before resume",
+  "elf": "results\\geometry_m7_20261028\\release\\vision.elf",
+  "entry": 117440512,
+  "payload_bytes": 447344,
+  "weights_bytes": 4400,
+  "jtag_khz": 1000,
+  "byte_readback_verified": true,
+  "flash_written": false,
+  "seconds": 75.29700000002049
+}

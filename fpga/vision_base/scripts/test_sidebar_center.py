@@ -72,7 +72,7 @@ void main(void){
  key(2);check(state.sidebar_item==SIDE_AI&&state.sidebar_open==1);key(4);check(state.sidebar_item==SIDE_MODE);
  key(1);check(state.sidebar_open==2&&!state.sidebar_edit&&state.settings==original);trace("image");
  key(2);check(state.sidebar_item==SIDE_MEDIAN);key(4);check(state.sidebar_item==SIDE_MODE);
- key(1);key(2);check(state.edit_value==6&&state.settings==original);trace("edit_mode");
+ key(1);check(state.sidebar_edit&&state.edit_mode==5);key(4);check(state.edit_value==6&&(state.settings&7)==6);trace("edit_mode");
  key(8);check(!state.sidebar_edit&&state.sidebar_open==2&&state.settings==original);trace("cancel");
  key(8);check(state.sidebar_open==1&&!state.sidebar_edit);key(8);check(!state.sidebar_open);
  for(unsigned group=0;group<4;group++){
@@ -91,10 +91,15 @@ void main(void){
  key(1);key(2);key(1);check(state.settings==(original|0x80000000u)&&!state.pending);trace("motion_on");apply();check(c[2]==state.settings);
  key(1);key(4);key(1);check(state.settings==original&&!state.pending);trace("motion_disabled");
  state.menu=8;key(8);key(8);check(!state.sidebar_open&&((control_ui(&state)>>11)&15)==8);reset();
- select(SIDE_MODE);key(1);key(2);check(state.sidebar_edit&&state.settings==original);key(1);check((state.settings&7)==6);
- select(SIDE_THRESHOLD);key(1);for(unsigned i=0;i<200;i++)key(4);check(state.edit_value==16&&((state.settings>>20)&2047)==80);key(1);check(((state.settings>>20)&2047)==16&&((state.settings>>9)&2047)==128);
- key(1);for(unsigned i=0;i<200;i++)key(2);check(state.edit_value==2047);key(8);check(((state.settings>>20)&2047)==16);
- select(SIDE_MEDIAN);key(1);key(4);check(state.settings&8);key(1);check(!(state.settings&8));
+ select(SIDE_MODE);key(1);key(4);check(state.sidebar_edit&&(state.settings&7)==6);key(1);check(!state.sidebar_edit&&state.sidebar_open==2&&(state.settings&7)==6);
+ key(1);for(unsigned i=0;i<8;i++){key(4);check(state.sidebar_edit&&state.edit_value==((7+i)&7)&&(state.settings&7)==state.edit_value);apply();check((c[2]&7)==state.edit_value&&!state.pending);}
+ key(2);check((state.settings&7)==5);key(8);check(!state.sidebar_edit&&(state.settings&7)==6);
+ select(SIDE_THRESHOLD);key(1);key(4);check(state.sidebar_edit&&state.edit_value==64&&((state.settings>>20)&2047)==64&&((state.settings>>9)&2047)==128);
+ for(unsigned i=0;i<200;i++)key(4);check(state.edit_value==16&&((state.settings>>20)&2047)==16);key(1);check(!state.sidebar_edit&&((state.settings>>20)&2047)==16);
+ key(1);for(unsigned i=0;i<200;i++)key(2);check(state.edit_value==2047&&((state.settings>>20)&2047)==2047);key(8);check(((state.settings>>20)&2047)==2047);
+ control_event(0x01000002);key(1);key(2);check(state.edit_value==144&&((state.settings>>9)&2047)==144&&((state.settings>>20)&2047)==2047);key(8);
+ control_event(0x01000007);key(1);for(unsigned i=0;i<32;i++)key(4);check(state.shape_threshold==1&&state.edit_value==1);for(unsigned i=0;i<32;i++)key(2);check(state.shape_threshold==255&&state.edit_value==255);key(1);check(!state.sidebar_edit);
+ select(SIDE_MEDIAN);key(1);check(!(state.settings&8)&&!state.sidebar_edit&&state.sidebar_open==2);key(1);check((state.settings&8)&&!state.sidebar_edit);
  select(SIDE_ZOOM);trace("view");key(1);key(2);check(state.edit_value==960&&state.roi[1]==((1920u<<12)|1080)&&!state.pending);trace("edit_zoom");
  key(8);check(state.roi[1]==((1920u<<12)|1080));key(1);key(2);key(1);check(state.key_roi_dirty&&state.roi[1]==((960u<<12)|540));
  apply();check(state.pending==2);accept();check(state.good&&!state.pending);
@@ -191,7 +196,7 @@ decode=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='d
 namespace={};exec(compile(ast.Module(body=[decode],type_ignores=[]),'decode_ui','exec'),namespace)
 for v in ui:
  word=v['word'];record=namespace['decode_ui']((0x56495331<<160)|(0x26101040<<128)|(v['settings']<<96)|(word<<64))
- item=((word>>26)&15)|(((word>>14)&1)<<4 if word>>31 else 0);status=(word>>23)&7;level=0 if not word>>31 else 1 if status==7 else 2
+ item=((word>>26)&15)|(((word>>14)&1)<<4 if word>>31 else 0);status=(word>>23)&7;level=0 if not word>>31 else 1 if status==7 else 3 if word>>30&1 and item==0 else 2
  group=item if level==1 else (0 if item<3 else 1 if item<9 else 3 if item<13 else 2)
  assert record==dict(menu=0 if level else (word>>11)&15,menu_value=word&2047,shape_threshold=(word>>15)&255,index=(v['settings']>>15)&7,
                      sidebar_open=(word>>31)&1,sidebar_edit=(word>>30)&1,sidebar_item=item,center_status=status,sidebar_level=level,sidebar_group=group),record

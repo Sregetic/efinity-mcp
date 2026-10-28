@@ -4,7 +4,7 @@ module vision_canny #(parameter MIN_COMPONENT=32,W=480,H=270,CONTOUR_RASTER=0,ST
  input display_de,probe_hold,probe_req,input[11:0]probe_address,
  output probe_ack,output[31:0]probe_data,output[11:0]probe_read_address,output probe_busy,
  input median_en,output[7:0]noise_mean,output noise_valid,output[10:0]effective_threshold,
- input raster_de,output[31:0]coarse_edges,display_edges,analysis_cycles,analysis_passes,analysis_weak,output[7:0]edge_coverage);
+ input raster_de,output[31:0]coarse_edges,display_edges,analysis_cycles,analysis_passes,analysis_weak,output[7:0]edge_coverage,output capture_start);
 reg[11:0]x=0,y=0;reg dq=0,vq=0;wire vblank=vs&&!vq;
 always @(posedge clk)begin
  dq<=de;vq<=vs;if(!rst_n)begin x<=0;y<=0;dq<=0;vq<=0;end
@@ -13,7 +13,7 @@ end
 reg median_q=0;wire median_change=vblank&&(median_en!=median_q);
 always @(posedge clk)begin if(!rst_n)median_q<=0;else if(vblank)median_q<=median_en;end
 wire processing_rst=rst_n&&!median_change;
-wire capture;reg sample=0;reg[8:0]sx=0,sy=0;reg[7:0]gs=0;
+wire capture;assign capture_start=processing_rst&&capture&&de&&x==0&&y==0;reg sample=0;reg[8:0]sx=0,sy=0;reg[7:0]gs=0;
 // Anti-aliasing: true 4x4 area average before 480x270 analysis.
 reg[15:0]luma=0;reg[11:0]xq=0,yq=0;reg deq=0;
 reg[9:0]hsum=0;reg[11:0]vertical[0:W-1];reg[11:0]vqsum=0;

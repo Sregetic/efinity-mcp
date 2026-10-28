@@ -1,0 +1,10 @@
+{
+  "finished_utc": "2026-10-28T01:26:37.6823379Z",
+  "configuration_flash_written": true,
+  "input": "artifacts/camera/ti60f225_oob.hex",
+  "full_old_flash_backup": "results/geometry_m7_20261028/flash_20261028/app/flash_before.bin",
+  "physical_power_cycle_verified": false,
+  "address": 0,
+  "passed": true,
+  "onchip_verification": true
+}

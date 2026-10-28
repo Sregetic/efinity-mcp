@@ -1,0 +1,20 @@
+[
+  {
+    "epoch": 19531,
+    "external_hold": 0,
+    "mode": 7,
+    "canny_status_hex": "564953312610041178f0060700004c4c03c000600000925b"
+  },
+  {
+    "epoch": 19651,
+    "external_hold": 0,
+    "mode": 7,
+    "canny_status_hex": "564953312610041178f0060700004cc303c00060000092d4"
+  },
+  {
+    "epoch": 19770,
+    "external_hold": 0,
+    "mode": 7,
+    "canny_status_hex": "564953312610041178f0060700004d3b03c000600000934d"
+  }
+]

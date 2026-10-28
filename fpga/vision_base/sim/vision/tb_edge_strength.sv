@@ -12,9 +12,15 @@ endtask
 initial begin
  force dut.fd=1;force dut.border=0;force dut.x=700;force dut.y=500;
  force dut.fr=8'd100;force dut.fg=8'd80;force dut.fb=8'd60;
- force dut.edge1=1;force dut.mag=11'd200;check(24'h646464);
+ force dut.edge1=1;force dut.mag=11'd64;check(24'ha0a0a0);
+ force dut.mag=11'd96;check(24'hb0b0b0);
+ force dut.mag=11'd200;check(24'he4e4e4);
+ force dut.mag=11'd255;check(24'hffffff);
+ force dut.mag=11'd256;check(24'hffffff);
  force dut.mag=11'd700;check(24'hffffff);
  force dut.edge1=0;check(24'h000000);
+ force dut.edge1=1;force dut.mag=11'd96;force dut.x=1200;mode=3;check(24'hb0b0b0);
+ force dut.x=700;
  mode=5;coverage=64;check(24'h404040);
  if(dut.shape_gray!==0)$fatal(1,"display halo entered binary classifier");
  coverage=255;check(24'hffffff);

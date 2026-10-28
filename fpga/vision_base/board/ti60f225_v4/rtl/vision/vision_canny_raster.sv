@@ -145,6 +145,7 @@ module vision_canny_line_fit #(parameter W=480,H=270,CW=9)(
  reg[120:0]job_window;reg busy=0;reg[1:0]step=0;
  reg[CW-1:0]job_x=0;
  reg signed[3:0]hl=0,hr=0,vl=0,vr=0;
+ reg[10:0]prior_hl,prior_hr,prior_vl,prior_vr;
  reg signed[1:0]origin_h=0,origin_v=0;
  reg valid_h=0,valid_v=0;
  reg signed[6:0]sum_h=0,sum_v=0;
@@ -166,22 +167,25 @@ module vision_canny_line_fit #(parameter W=480,H=270,CW=9)(
    endcase
   end
  endfunction
- function automatic[4:0]walk(input[10:0]line,input signed[3:0]previous);
-  reg[14:0]padded;reg[4:0]nearby;
+ function automatic[4:0]walk(input[10:0]line,input signed[3:0]previous,input[10:0]prior_line);
+  reg[14:0]padded,prior_padded;reg[4:0]nearby,prior_nearby;
   begin
    padded={2'b0,line,2'b0};nearby=padded>>($signed(previous)+5);
+   prior_padded={2'b0,prior_line,2'b0};prior_nearby=prior_padded>>($signed(previous)+5);
    walk=0;walk[4]=|nearby;
    if(nearby[2])walk[3:0]=previous;
    else if(nearby[1])walk[3:0]=previous-4'sd1;
    else if(nearby[3])walk[3:0]=previous+4'sd1;
-   else if(nearby[0])walk[3:0]=previous-4'sd2;
-   else if(nearby[4])walk[3:0]=previous+4'sd2;
+   else if(nearby[0]&&prior_nearby[1])walk[3:0]=previous-4'sd2;
+   else if(nearby[4]&&prior_nearby[3])walk[3:0]=previous+4'sd2;
+   else walk[4]=0;
   end
  endfunction
- wire[4:0]whl=walk(trace_line(job_window,step,1'b1,1'b0),hl);
- wire[4:0]whr=walk(trace_line(job_window,step,1'b1,1'b1),hr);
- wire[4:0]wvl=walk(trace_line(job_window,step,1'b0,1'b0),vl);
- wire[4:0]wvr=walk(trace_line(job_window,step,1'b0,1'b1),vr);
+ reg[10:0]trace_hl_q=0,trace_hr_q=0,trace_vl_q=0,trace_vr_q=0;
+ wire[4:0]whl=walk(trace_hl_q,hl,prior_hl);
+ wire[4:0]whr=walk(trace_hr_q,hr,prior_hr);
+ wire[4:0]wvl=walk(trace_vl_q,vl,prior_vl);
+ wire[4:0]wvr=walk(trace_vr_q,vr,prior_vr);
  wire signed[3:0]nhl=whl[3:0],nhr=whr[3:0],nvl=wvl[3:0],nvr=wvr[3:0];
  wire signed[6:0]next_h=sum_h+{{3{nhl[3]}},nhl}+{{3{nhr[3]}},nhr};
  wire signed[6:0]next_v=sum_v+{{3{nvl[3]}},nvl}+{{3{nvr[3]}},nvr};
@@ -210,6 +214,9 @@ module vision_canny_line_fit #(parameter W=480,H=270,CW=9)(
   done<=0;
   if(busy)begin
    hl<=nhl;hr<=nhr;vl<=nvl;vr<=nvr;
+   prior_hl<=trace_hl_q;prior_hr<=trace_hr_q;prior_vl<=trace_vl_q;prior_vr<=trace_vr_q;
+   trace_hl_q<=trace_line(job_window,step+2'd1,1'b1,1'b0);trace_hr_q<=trace_line(job_window,step+2'd1,1'b1,1'b1);
+   trace_vl_q<=trace_line(job_window,step+2'd1,1'b0,1'b0);trace_vr_q<=trace_line(job_window,step+2'd1,1'b0,1'b1);
    valid_h<=valid_h&&whl[4]&&whr[4];valid_v<=valid_v&&wvl[4]&&wvr[4];
    sum_h<=next_h;sum_v<=next_v;weight_h<=next_wh;weight_v<=next_wv;step<=step+1'b1;
    if(step==1)begin
@@ -225,25 +232,33 @@ module vision_canny_line_fit #(parameter W=480,H=270,CW=9)(
   end
   if(window_valid)begin
    job_window<=window;job_x<=window_x-5;busy<=1;step<=0;
+   // Prefetch inside the existing four-phase budget; no extra output cycle.
+   trace_hl_q<=trace_line(window,2'd0,1'b1,1'b0);trace_hr_q<=trace_line(window,2'd0,1'b1,1'b1);
+   trace_vl_q<=trace_line(window,2'd0,1'b0,1'b0);trace_vr_q<=trace_line(window,2'd0,1'b0,1'b1);
    origin_h<=h_origin;origin_v<=v_origin;
    hl<=h_origin;hr<=h_origin;vl<=v_origin;vr<=v_origin;
+   // A two-cell turn must pass through an accepted intermediate node.
+   for(integer k=0;k<11;k=k+1)begin
+    prior_hl[k]<=window[120-k*11-5];prior_hr[k]<=window[120-k*11-5];
+    prior_vl[k]<=window[120-5*11-k];prior_vr[k]<=window[120-5*11-k];
+   end
    valid_h<=h_candidate;valid_v<=v_candidate;
    sum_h<=h_origin;sum_v<=v_origin;weight_h<=0;weight_v<=0;
    short_valid<=0;
   end
   if(!rst_n)begin busy<=0;done<=0;end
  end
- // Fold the +32 center into the DSP bias; signed rounding/truncation stay exact.
+ // Keep the center offset outside the DSP: wide ABC cascade bias loses its sign on hardware.
  wire signed[6:0]center_factor=result_short?7'sd51:7'sd57;
  wire signed[5:0]slope_factor=result_short?6'sd13:6'sd17;
- (* syn_use_dsp="yes" *)wire signed[13:0]center_product=($signed(result_sum)*center_factor)+(result_short?14'sd130:14'sd260);
+ (* syn_use_dsp="yes" *)wire signed[13:0]center_product=($signed(result_sum)*center_factor)+(result_short?14'sd2:14'sd4);
  (* syn_use_dsp="yes" *)wire signed[13:0]slope_product=($signed(result_weight)*slope_factor)+(result_short?14'sd4:14'sd32);
  wire signed[13:0]fit_center=result_short?(center_product>>>2):(center_product>>>3);
  wire signed[13:0]fit_slope=result_short?(slope_product>>>3):(slope_product>>>6);
  reg signed[9:0]center_q=0;reg signed[5:0]slope=0;
  reg write_pending=0,write_valid=0,write_horizontal=0;reg[CW-1:0]write_x=0;
  always @(posedge clk)begin
-  center_q<=fit_center[9:0];
+  center_q<=10'sd32+fit_center[9:0];
   slope<=fit_slope[5:0];
   write_pending<=done;write_x<=result_x;write_valid<=result_valid;write_horizontal<=result_horizontal;
   if(!rst_n)write_pending<=0;

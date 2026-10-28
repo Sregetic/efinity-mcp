@@ -1,0 +1,54 @@
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+Start time: 04:01:58 on Oct 28,2026
+vlog -work results/geometry_m7_20261028/rtl_v2/work -sv board/ti60f225_v4/rtl/vision/*.sv rtl/vision_flyhash_mailbox.sv sim/tb_vision_flyhash_mailbox.sv 
+-- Compiling module camera_auto_exposure
+-- Compiling module rgb_chroma_tone
+-- Compiling module sensor_exposure_writer
+** Error: board/ti60f225_v4/rtl/vision/sensor_exposure_writer.sv(14): (vlog-2730) Undefined variable: 'state'.
+** Error (suppressible): board/ti60f225_v4/rtl/vision/sensor_exposure_writer.sv(15): (vlog-2388) 'state' already declared in this scope (sensor_exposure_writer) at board/ti60f225_v4/rtl/vision/sensor_exposure_writer.sv(14).
+-- Compiling module vision_canny
+-- Compiling module vision_canny_nms
+-- Compiling module vision_canny_denoise
+-- Compiling module vision_canny_raster
+-- Compiling module vision_canny_line_fit
+-- Compiling module vision_controls
+** Error: board/ti60f225_v4/rtl/vision/vision_controls.sv(6): (vlog-2730) Undefined variable: 'pmode'.
+** Error: board/ti60f225_v4/rtl/vision/vision_controls.sv(7): (vlog-2730) Undefined variable: 'pmem'.
+** Error (suppressible): board/ti60f225_v4/rtl/vision/vision_controls.sv(13): (vlog-2388) 'pmode' already declared in this scope (vision_controls) at board/ti60f225_v4/rtl/vision/vision_controls.sv(6).
+** Error (suppressible): board/ti60f225_v4/rtl/vision/vision_controls.sv(13): (vlog-2388) 'pmem' already declared in this scope (vision_controls) at board/ti60f225_v4/rtl/vision/vision_controls.sv(7).
+-- Compiling module vision_display
+-- Compiling module vision_edge_features
+-- Compiling module vision_flyhash_control
+-- Compiling module vision_frame_history
+-- Compiling module vision_frontend
+-- Compiling module vision_geometry_m7
+** Error: board/ti60f225_v4/rtl/vision/vision_geometry_m7.sv(69): (vlog-2730) Undefined variable: 'front_invalid'.
+-- Compiling module vision_hysteresis
+-- Compiling module vision_canny_edge_ram
+-- Compiling module vision_canny_ram
+-- Compiling module vision_hysteresis_sweep
+-- Compiling module vision_keys
+-- Compiling module vision_line_direct
+-- Compiling module vision_line_metrics
+-- Compiling module vision_line_snapshot
+-- Compiling module vision_local_motion_core
+-- Compiling module vision_local_motion_tap
+-- Compiling module vision_median9
+-- Compiling module vision_motion_policy
+-- Compiling module vision_motion_readout
+-- Compiling module vision_osd
+-- Compiling module vision_raw_frontend
+-- Compiling module vision_rgb_capture
+-- Compiling module vision_rgb_scanout
+-- Compiling module vision_roi_control
+-- Compiling module vision_shape_classifier
+-- Compiling module vision_sidebar_overlay
+-- Compiling module vision_sobel
+-- Compiling module vision_sparse_window
+-- Compiling module vision_window3
+-- Compiling module vision_window3_pair
+-- Compiling module vision_write_commit
+-- Compiling module vision_flyhash_mailbox
+-- Compiling module tb_vision_flyhash_mailbox
+End time: 04:01:58 on Oct 28,2026, Elapsed time: 0:00:00
+Errors: 7, Warnings: 0

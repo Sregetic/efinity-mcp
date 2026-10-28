@@ -16,10 +16,12 @@ ORDERS = [(0,1,2),(0,2,1),(2,1,0),(1,0,2),(1,2,0),(2,0,1)]
 def check_frozen_source(context):
     # vision_control's ROI commit already observed a valid field. frame_ok
     # clears at every VS and can be0 in the subsequent multi-page status read.
-    if not context['source_held'] or not context['source_frozen']:
+    if not context['source_frozen']:
         raise RuntimeError(f'Frozen RGB source was not acquired: {context}')
-    if context['roi_frame_id']!=context['held_source_frame_id']:
-        raise RuntimeError('Display/source lease mismatch')
+    # Direct frozen scanout uses the frame pool, not the ROI source lease.
+    if context['roi_enabled']:
+        if not context['source_held'] or context['roi_frame_id']!=context['held_source_frame_id']:
+            raise RuntimeError('Display/source lease mismatch')
 
 def decode_snapshot(v):
     if v >> 160 != 0x56495331 or (v >> 128) & 0xffffffff not in [0x2610051a,0x2610051b]:
@@ -111,14 +113,17 @@ def main():
             ftdi=e._engine_provider._ctrl._ftdi
             old_latency=ftdi.get_latency_timer();ftdi.set_latency_timer(1)
             result['usb_latency_ms']=dict(before=old_latency,during=1)
+            borrowed_hold=a.current_view and bool((page(e,16)>>94)&1)
+            result['canny_hold_borrowed']=borrowed_hold
             try:
-                command(e,0x26,0)
-                if any(m in a.modes for m in ['5','6']):
-                    deadline=time.monotonic()+10
-                    while not (page(e,17)>>125)&1:
-                        if time.monotonic()>deadline:raise TimeoutError('Canny result pending')
-                        time.sleep(.01)
-                command(e,0x26,1);time.sleep(.03)
+                if not borrowed_hold:
+                    command(e,0x26,0)
+                    if any(m in a.modes for m in ['5','6']):
+                        deadline=time.monotonic()+10
+                        while not (page(e,17)>>125)&1:
+                            if time.monotonic()>deadline:raise TimeoutError('Canny result pending')
+                            time.sleep(.01)
+                    command(e,0x26,1);time.sleep(.03)
                 result['canny_epoch']=page(e,16)&0xffffffff
                 color_order=(page(e,3)>>76)&7
                 tone=page(e,8)&3
@@ -164,7 +169,8 @@ def main():
                     print(f'Saved {filename}: {width}x{height}, source{frame}, {info["seconds"]:.2f}s',flush=True)
                 if page(e,16)&0xffffffff!=result['canny_epoch']:raise RuntimeError('Held Canny plane changed')
             finally:
-                command(e,0x26,0);command(e,126,0);ftdi.set_latency_timer(old_latency)
+                if not borrowed_hold:command(e,0x26,0)
+                command(e,126,0);ftdi.set_latency_timer(old_latency)
         after=control([])
         if after['roi_frame_id']!=frame or after['applied_config_id']!=config:
             raise RuntimeError('Frozen source/config changed during image export')

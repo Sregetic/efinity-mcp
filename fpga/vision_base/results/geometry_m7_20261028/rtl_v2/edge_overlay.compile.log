@@ -1,0 +1,9 @@
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+Start time: 04:16:09 on Oct 28,2026
+vlog -work results/geometry_m7_20261028/rtl_v2/work -sv sim/vision/tb_edge_overlay.sv 
+-- Compiling module tb
+
+Top level modules:
+	tb
+End time: 04:16:09 on Oct 28,2026, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0

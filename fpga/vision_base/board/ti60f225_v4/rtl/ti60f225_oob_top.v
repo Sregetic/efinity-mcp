@@ -1633,7 +1633,12 @@ end
 // Shape commands share the existing CDC mailbox; apply only at frame boundary.
 reg shape_enable=1,shape_pending=1,shape_vq=0;reg[7:0]shape_hw_threshold=32,shape_thr_pending=32;
 wire[7:0]shape_threshold=SAPPHIRE_ENABLE?control_shape_threshold:shape_hw_threshold;
-wire[63:0]shape_status;
+wire[63:0]shape_status;wire geo_hold,geo_raw_read;
+wire[7:0]geo_edge_threshold,geo_paddr;wire geo_psel,geo_penable,geo_pwrite,geo_pready,geo_cpu_rst_n;
+wire[31:0]geo_pwdata,geo_prdata;
+wire use_m7=SAPPHIRE_ENABLE&&ANALYSIS_DMA_ENABLE&&feature_mode==7;
+wire[10:0]active_canny_request=use_m7?{3'b0,geo_edge_threshold}:canny_threshold;
+wire[10:0]reported_threshold=use_m7?active_canny_request:feature_threshold;
 wire ai_enabled,ai_context_changed,ai_match,geometry_done;
 wire[31:0]ai_context,geometry_frame,geometry_config,geometry_context;
 wire ai_identity;wire[351:0]ai_result;wire[15:0]ai_age;
@@ -1673,7 +1678,7 @@ wire[7:0]color_r=color_pixel[23:16],color_g=color_pixel[15:8],color_b=color_pixe
 generate if(SAPPHIRE_ENABLE&&ANALYSIS_DMA_ENABLE)begin:ai_link
  vision_ai_bridge #(.SIG_BITS(88)) bridge(.clk(core_clk),.rst_n(vid_rst_n),.video_clk(hdmi_tx_slow_clk),.vs(gamma_vs),
   .view_frame(roi_view_frame),.view_config(roi_view_config),.frame_ok(roi_frame_ok),
-  .signature({tone_shadow_frame,wb_r,wb_g,wb_b,tone_mode,color_order,feature_mode,feature_median,sobel_threshold,canny_threshold,shape_threshold}),
+  .signature({tone_shadow_frame,wb_r,wb_g,wb_b,tone_mode,color_order,feature_mode,feature_median,sobel_threshold,active_canny_request,shape_threshold}),
   .geometry_done(geometry_done),.geometry_frame(geometry_frame),.geometry_config(geometry_config),.geometry_context(geometry_context),.geometry_status(shape_status),
   .paddr(ai_paddr),.psel(ai_psel),.penable(ai_penable),.pwrite(ai_pwrite),.pwdata(ai_pwdata),.prdata(ai_prdata),.pready(ai_pready),.pslverror(ai_pslverror),
   .enabled(ai_enabled),.context_changed(ai_context_changed),.context_id(ai_context),.result(ai_result),.result_match(ai_match),.result_identity_match(ai_identity),.result_age(ai_age));
@@ -1698,37 +1703,49 @@ wire[11:0] feature_x,feature_y;wire[10:0] feature_mag;wire feature_edge;
 reg canny_probe_hold=0,canny_probe_req=0;reg[11:0]canny_probe_address=0;
 wire canny_probe_ack,canny_probe_busy;wire[31:0]canny_probe_data;wire[11:0]canny_probe_read_address;
 wire fly_bitmap_req,fly_bitmap_busy;wire[11:0]fly_bitmap_address;
-wire fly_bitmap_ready=!canny_probe_busy&&canny_probe_req==canny_probe_ack;
-reg fly_bitmap_pending=0;
-wire fly_bitmap_valid=fly_bitmap_pending&&fly_bitmap_ready;
+wire probe_idle=!canny_probe_busy&&canny_probe_req==canny_probe_ack;
+reg fly_bitmap_pending=0,jtag_probe_pending=0;reg[11:0]jtag_probe_address=0;
+wire fly_bitmap_ready=probe_idle&&!jtag_probe_pending;
+wire fly_bitmap_valid=fly_bitmap_pending&&probe_idle;
 always @(posedge hdmi_tx_slow_clk)begin
- if(!vid_rst_n)begin canny_probe_hold<=0;canny_probe_req<=0;canny_probe_address<=0;fly_bitmap_pending<=0;end
+ if(!vid_rst_n)begin canny_probe_hold<=0;canny_probe_req<=0;canny_probe_address<=0;
+  fly_bitmap_pending<=0;jtag_probe_pending<=0;jtag_probe_address<=0;end
  else begin
-  if(fly_bitmap_req&&fly_bitmap_ready)begin canny_probe_address<=fly_bitmap_address;canny_probe_req<=~canny_probe_req;fly_bitmap_pending<=1;end
-  else if(fly_bitmap_valid||!fly_bitmap_busy)fly_bitmap_pending<=0;
+  if(fly_bitmap_valid||(!fly_bitmap_busy&&!geo_raw_read))fly_bitmap_pending<=0;
+  if(probe_idle)begin
+   if(jtag_probe_pending&&!fly_bitmap_busy)begin
+    canny_probe_address<=jtag_probe_address;canny_probe_req<=~canny_probe_req;jtag_probe_pending<=0;
+   end else if(fly_bitmap_req&&fly_bitmap_ready)begin
+    canny_probe_address<=fly_bitmap_address;canny_probe_req<=~canny_probe_req;fly_bitmap_pending<=1;
+
+   end
+  end
   if(feature_cmd_event)case(feature_command[31:24])
    8'h26:canny_probe_hold<=feature_command[0];
-   // Frozen extraction owns the existing port until it has consumed the plane.
-   8'h27:if(!fly_bitmap_busy)begin canny_probe_address<=feature_command[11:0];canny_probe_req<=~canny_probe_req;end
+   8'h27:if(!fly_bitmap_busy)begin jtag_probe_address<=feature_command[11:0];jtag_probe_pending<=1;end
   endcase
  end
 end
+wire canny_capture_start;
 wire[7:0]canny_noise_mean;wire canny_noise_valid;wire[10:0]canny_effective_threshold;
 wire canny_pixel,canny_ready,canny_busy,canny_fault;wire[31:0]canny_completed;
 wire[7:0]canny_coverage;
 vision_canny #(.CONTOUR_RASTER(1),.STABLE_NMS(1)) canny(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n&&!roi_config_changed),.de(gamma_valid),.hs(gamma_hs),.vs(gamma_vs),
- .r(color_r),.g(color_g),.b(color_b),.high_threshold(canny_threshold),.display_x(feature_x),.display_y(feature_y),
+ .r(color_r),.g(color_g),.b(color_b),.high_threshold(active_canny_request),.display_x(feature_x),.display_y(feature_y),
  .edge_pixel(canny_pixel),.ready(canny_ready),.busy(canny_busy),.fault(canny_fault),.completed(canny_completed),
- .display_de(feature_de),.probe_hold(canny_probe_hold),.probe_req(canny_probe_req),.probe_address(canny_probe_address),
- .probe_ack(canny_probe_ack),.probe_data(canny_probe_data),.probe_read_address(canny_probe_read_address),.probe_busy(canny_probe_busy),.median_en(feature_median),.noise_mean(canny_noise_mean),.noise_valid(canny_noise_valid),.effective_threshold(canny_effective_threshold),.raster_de(feature_coordinate_de),.coarse_edges(canny_coarse_edges),.display_edges(canny_display_edges),.analysis_cycles(canny_analysis_cycles),.analysis_passes(canny_analysis_passes),.analysis_weak(canny_analysis_weak),.edge_coverage(canny_coverage));
+ .display_de(feature_de),.probe_hold(canny_probe_hold||geo_hold),.probe_req(canny_probe_req),.probe_address(canny_probe_address),
+ .probe_ack(canny_probe_ack),.probe_data(canny_probe_data),.probe_read_address(canny_probe_read_address),.probe_busy(canny_probe_busy),.median_en(feature_median),.noise_mean(canny_noise_mean),.noise_valid(canny_noise_valid),.effective_threshold(canny_effective_threshold),.raster_de(feature_coordinate_de),.coarse_edges(canny_coarse_edges),.display_edges(canny_display_edges),.analysis_cycles(canny_analysis_cycles),.analysis_passes(canny_analysis_passes),.analysis_weak(canny_analysis_weak),.edge_coverage(canny_coverage),.capture_start(canny_capture_start));
 wire[2:0]motion_direction;wire motion_held;
-vision_display #(.FUSION(SAPPHIRE_ENABLE&&ANALYSIS_DMA_ENABLE),.LOCAL_MOTION_ENABLE(SAPPHIRE_ENABLE)) feature_display(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n&&!roi_config_changed),.de(gamma_valid),.hs(gamma_hs),.vs(gamma_vs),
- .r(color_r),.g(color_g),.b(color_b),.mode(feature_mode),.threshold(sobel_threshold),.canny_effective_threshold(canny_effective_threshold),.canny_requested_threshold(canny_threshold),.median_en(feature_median),
+vision_display #(.FUSION(SAPPHIRE_ENABLE&&ANALYSIS_DMA_ENABLE),.LOCAL_MOTION_ENABLE(SAPPHIRE_ENABLE),.EXTERNAL_GEOMETRY(SAPPHIRE_ENABLE&&ANALYSIS_DMA_ENABLE)) feature_display(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n&&!roi_config_changed),.de(gamma_valid),.hs(gamma_hs),.vs(gamma_vs),
+ .r(color_r),.g(color_g),.b(color_b),.mode(feature_mode),.threshold(sobel_threshold),.canny_effective_threshold(canny_effective_threshold),.canny_requested_threshold(active_canny_request),.median_en(feature_median),
  .memory_mode(memory_mode),.history_index(history_index),.canny_pixel(canny_pixel),.canny_ready(canny_ready),.canny_coverage(canny_coverage),.cx(feature_x),.cy(feature_y),
  .ode(feature_de),.ohs(feature_hs),.ovs(feature_vs),.orr(feature_r),.ogg(feature_g),.obb(feature_b),.debug_mag(feature_mag),.debug_edge(feature_edge),.shape_enable(shape_enable),.shape_threshold(shape_threshold),.shape_status(shape_status),.coordinate_de(feature_coordinate_de),
  .ui_state({9'b0,control_ui[23]?4'd0:control_ui[14:11],control_ui[10:0]}),.analysis_enabled(ai_enabled),.analysis_context_changed(ai_context_changed),.frame_id(roi_view_frame),.render_config_id(roi_view_config),.analysis_context(ai_context),
  .motion_enable(control_motion),.motion_direction(motion_direction),.motion_held(motion_held),
- .analysis_result(ai_result),.analysis_match(ai_match),.analysis_identity_match(ai_identity),.analysis_age(ai_age),.geometry_done(geometry_done),.geometry_frame(geometry_frame),.geometry_config(geometry_config),.geometry_context(geometry_context));
+ .analysis_result(ai_result),.analysis_match(ai_match),.analysis_identity_match(ai_identity),.analysis_age(ai_age),.geometry_done(geometry_done),.geometry_frame(geometry_frame),.geometry_config(geometry_config),.geometry_context(geometry_context),
+ .geometry_rst_n(vid_rst_n),.geometry_source_valid(roi_frame_ok),.geometry_changed(roi_config_changed),.canny_capture_start(canny_capture_start),.canny_completed(canny_completed),.geometry_source_errors(roi_bad_frames),
+ .geometry_cpu_clk(core_clk),.geometry_cpu_rst_n(geo_cpu_rst_n),.geometry_paddr(geo_paddr),.geometry_psel(geo_psel),.geometry_penable(geo_penable),.geometry_pwrite(geo_pwrite),.geometry_pwdata(geo_pwdata),
+ .geometry_prdata(geo_prdata),.geometry_pready(geo_pready),.geometry_bitmap_hold(geo_hold),.geometry_raw_read(geo_raw_read),.geometry_edge_threshold(geo_edge_threshold));
 // M0 is an ISP bypass only when filtering is off. HDMI and readback share
 // this selection so the displayed camera image obeys the same noise switch.
 wire camera_bypass=feature_mode==0&&!feature_median&&(control_ui[23]||control_ui[14:11]==0);
@@ -1745,7 +1762,7 @@ vision_line_snapshot image_snapshot(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n),
  .request_toggle(snapshot_request),.request_row(snapshot_row),.request_source(snapshot_source),
  .source_vs(roi_vs),.source_de(roi_de),.source_rgb(roi_rgb),
  .display_vs(video_vs),.display_de(video_de),.display_rgb({video_r,video_g,video_b}),
- .frame_id(roi_view_frame),.config_id(roi_view_config),.mode(feature_mode),.threshold(feature_threshold),.median(feature_median),.tone(tone_mode),
+ .frame_id(roi_view_frame),.config_id(roi_view_config),.mode(feature_mode),.threshold(reported_threshold),.median(feature_median),.tone(tone_mode),
  .status(snapshot_status),.sequence_id(snapshot_sequence),.captured_frame(snapshot_frame),.captured_config(snapshot_config),
  .read_clk(jtag_diag_DRCK),.bulk_capture(jtag_diag_CAPTURE&&feature_diag_page==27),.bulk_shift(jtag_diag_SHIFT&&feature_diag_page==27),
  .payload_phase(snapshot_payload_phase),.payload_tdo(snapshot_payload_tdo));
@@ -1763,11 +1780,13 @@ wire soc_reset;wire[15:0]soc_paddr;wire soc_psel,soc_penable,soc_pready,soc_pwri
 wire[31:0]mail_prdata,dma_prdata;wire mail_pready,mail_pslverror,dma_pready,dma_pslverror;
 wire dma_select=ANALYSIS_DMA_ENABLE&&soc_paddr[15:8]==1;wire control_select=soc_paddr[15:8]==2;
 wire ai_select=ANALYSIS_DMA_ENABLE&&soc_paddr[15:8]==3;
+wire geo_select=ANALYSIS_DMA_ENABLE&&soc_paddr[15:8]==5;
+assign geo_paddr=soc_paddr[7:0],geo_psel=soc_psel&&geo_select,geo_penable=soc_penable,geo_pwrite=soc_pwrite,geo_pwdata=soc_pwdata,geo_cpu_rst_n=!soc_reset;
 assign ai_paddr=soc_paddr[7:0],ai_psel=soc_psel&&ai_select,ai_penable=soc_penable,ai_pwrite=soc_pwrite,ai_pwdata=soc_pwdata;
 assign control_paddr=soc_paddr[7:0],control_psel=soc_psel&&control_select,control_penable=soc_penable,control_pwrite=soc_pwrite,control_pwdata=soc_pwdata;
-assign soc_prdata=ai_select?ai_prdata:(control_select?control_prdata:(dma_select?dma_prdata:mail_prdata)),
- soc_pready=ai_select?ai_pready:(control_select?control_pready:(dma_select?dma_pready:mail_pready)),
- soc_pslverror=ai_select?ai_pslverror:(control_select?control_pslverror:(dma_select?dma_pslverror:mail_pslverror));
+assign soc_prdata=geo_select?geo_prdata:(ai_select?ai_prdata:(control_select?control_prdata:(dma_select?dma_prdata:mail_prdata))),
+ soc_pready=geo_select?geo_pready:(ai_select?ai_pready:(control_select?control_pready:(dma_select?dma_pready:mail_pready))),
+ soc_pslverror=geo_select?1'b0:(ai_select?ai_pslverror:(control_select?control_pslverror:(dma_select?dma_pslverror:mail_pslverror)));
 if(ANALYSIS_DMA_ENABLE)begin:analysis_input
  vision_analysis_dma #(.BANK_BITS(COMPUTE_BANK_BITS),.SOURCE_BASE(RAW_TO_POOL?32'h0:32'h02000000)) dma(
  .clk(core_clk),.rst_n(vid_rst_n),.paddr(soc_paddr[7:0]),.psel(soc_psel&&dma_select),.penable(soc_penable),.pwrite(soc_pwrite),.pwdata(soc_pwdata),.prdata(dma_prdata),.pready(dma_pready),.pslverror(dma_pslverror),
@@ -1877,8 +1896,8 @@ VisionSapphire cpu(
  .vision_apb_PRDATA(soc_prdata),
  .vision_apb_PSLVERROR(soc_pslverror));
 vision_int8_cfu int8_cfu(.clk(core_clk),.rst_n(!soc_reset),.cmd_valid(cfu_cmd_valid),.cmd_ready(cfu_cmd_ready),.function_id(cfu_function_id),.a(cfu_inputs_0),.b(cfu_inputs_1),.rsp_valid(cfu_rsp_valid),.rsp_ready(cfu_rsp_ready),.result(cfu_outputs_0));
-vision_flyhash_mailbox flyhash_control(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n),.cpu_clk(core_clk),.cpu_rst_n(!soc_reset),
- .paddr(soc_paddr),.psel(soc_psel&&!dma_select&&!control_select),.penable(soc_penable),.pwrite(soc_pwrite),.pwdata(soc_pwdata),.prdata(mail_prdata),.pready(mail_pready),.pslverror(mail_pslverror),
+vision_flyhash_mailbox #(.RAW_READ_PORT(1)) flyhash_control(.raw_bitmap_enable(geo_raw_read),.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n),.cpu_clk(core_clk),.cpu_rst_n(!soc_reset),
+ .paddr(soc_paddr),.psel(soc_psel&&!dma_select&&!control_select&&!geo_select),.penable(soc_penable),.pwrite(soc_pwrite),.pwdata(soc_pwdata),.prdata(mail_prdata),.pready(mail_pready),.pslverror(mail_pslverror),
  .firmware_state(flyhash_firmware_state),.full_cycles(flyhash_full_cycles),
  .cmd_event(feature_cmd_event),.cmd_op(feature_command[31:24]),.cmd_value(feature_command[23:0]),
  // frame_ok clears at every VS; the frozen lease is persistent. Any actual
@@ -1892,6 +1911,7 @@ vision_flyhash_mailbox flyhash_control(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n),
  );
 assign flyhash_result=0,fly_feature_probe=0;
 end else begin:hardware_flyhash
+assign geo_paddr=0,geo_psel=0,geo_penable=0,geo_pwrite=0,geo_pwdata=0,geo_cpu_rst_n=0;
 assign control_paddr=0,control_psel=0,control_penable=0,control_pwrite=0,control_pwdata=0;
 vision_flyhash_control flyhash_control(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n),
  .cmd_event(feature_cmd_event),.cmd_op(feature_command[31:24]),.cmd_value(feature_command[23:0]),
@@ -1938,7 +1958,7 @@ always @(posedge hdmi_tx_slow_clk)begin
  if(gamma_vs&&!gamma_vs_prev)begin source_checksum_hold<=source_checksum;source_checksum<=0;highlight_hits_hold<=highlight_hits;highlight_hits<=0;end
  else if(gamma_valid)begin source_checksum<=source_checksum+{8'd0,gamma_rdata,gamma_bdata,gamma_gdata};if(tone_mode==3&&highlight_active)highlight_hits<=highlight_hits+1'b1;end
 end
-wire[31:0] feature_status={canny_fault,canny_busy,canny_ready,memory_history_count,2'b0,feature_mode,feature_median,memory_mode,history_index,feature_threshold,1'b0,vision_keys_n};
+wire[31:0] feature_status={canny_fault,canny_busy,canny_ready,memory_history_count,2'b0,feature_mode,feature_median,memory_mode,history_index,reported_threshold,1'b0,vision_keys_n};
 // Full HDMI video/control/data-island encoding with an AVI InfoFrame (VIC 16).
 dvi_encoder hdmi_encoder_m0
 (

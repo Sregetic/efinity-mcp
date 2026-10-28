@@ -4,6 +4,8 @@
 #ifndef CONTROL_TEST
 #define CTRL_R(off) (*(volatile uint32_t *)(0xf8100200u+(off)))
 #define CTRL_W(off,value) (CTRL_R(off)=(value))
+#define M7_R(off) (*(volatile uint32_t *)(0xf8100500u+(off)))
+#define M7_W(off,value) (M7_R(off)=(value))
 #endif
 struct vision_control_state {
  uint32_t magic,settings,feature_dirty,feature_wait;
@@ -27,6 +29,29 @@ struct vision_control_state {
 #endif
 static uint32_t threshold_up(uint32_t v){return v>2031?2047:v+16;}
 static uint32_t threshold_down(uint32_t v){return v<32?16:v-16;}
+static uint32_t control_geometry_threshold(struct vision_control_state *s){
+#ifdef VISION_GEOMETRY_M7
+ return M7_R(0x2c);
+#else
+ return s->shape_threshold;
+#endif
+}
+static void control_geometry_threshold_set(struct vision_control_state *s,uint32_t value){
+#ifdef VISION_GEOMETRY_M7
+ // M7 has its own edge parameter; legacy geometry and AI keep their threshold.
+ M7_W(0x2c,value<16?16:value>255?255:value);
+#else
+ s->shape_threshold=value;
+#endif
+ s->feature_dirty=1;
+}
+static uint32_t control_geometry_threshold_adjust(uint32_t v,unsigned up){
+#ifdef VISION_GEOMETRY_M7
+ return up?(v>239?255:v+16):(v<32?16:v-16);
+#else
+ return up?(v>239?255:v+16):(v<=17?1:v-16);
+#endif
+}
 static void control_threshold(struct vision_control_state *s,unsigned shift,uint32_t value){
  if(value<16)value=16;s->settings=(s->settings&~(2047u<<shift))|((value&2047)<<shift);s->feature_dirty=1;
 }
@@ -80,7 +105,7 @@ static unsigned control_sidebar_value(struct vision_control_state *s){
  if(s->sidebar_edit)return s->edit_value;
  unsigned i=s->sidebar_item;
  if(i==SIDE_MODE)return s->settings&7;
- if(i==SIDE_THRESHOLD)return (s->settings&7)==7?s->shape_threshold:(s->settings>>(((s->settings&7)==5||(s->settings&7)==6)?20:9))&2047;
+ if(i==SIDE_THRESHOLD)return (s->settings&7)==7?control_geometry_threshold(s):(s->settings>>(((s->settings&7)==5||(s->settings&7)==6)?20:9))&2047;
  if(i==SIDE_MEDIAN)return (s->settings>>3)&1;
  if(i==SIDE_MOTION)return s->settings>>31;
  if(i==SIDE_ZOOM)return s->roi[1]>>12;
@@ -96,11 +121,16 @@ static unsigned control_sidebar_value(struct vision_control_state *s){
 }
 static void control_sidebar_adjust(struct vision_control_state *s,unsigned up){
  unsigned i=s->sidebar_item,v=s->edit_value;
- if(i==SIDE_MODE)s->edit_value=up?(v==7?0:v+1):(v?v-1:7);
+ if(i==SIDE_MODE){
+  s->edit_value=up?(v?v-1:7):(v==7?0:v+1);
+  s->settings=(s->settings&~7u)|s->edit_value;
+ }
  else if(i==SIDE_THRESHOLD){
-  if(s->edit_mode==7)s->edit_value=up?(v>239?255:v+16):(v<=17?1:v-16);
+  if(s->edit_mode==7)s->edit_value=control_geometry_threshold_adjust(v,up);
   else s->edit_value=up?threshold_up(v):threshold_down(v);
- }else if(i==SIDE_MEDIAN||i==SIDE_MODEL||i==SIDE_MOTION)s->edit_value=up?1:0;
+  if(s->edit_mode==7)control_geometry_threshold_set(s,s->edit_value);
+  else control_threshold(s,s->edit_mode==5||s->edit_mode==6?20:9,s->edit_value);
+ }else if(i==SIDE_MODEL||i==SIDE_MOTION)s->edit_value=up?1:0;
  else if(i>=SIDE_ZOOM&&i<=SIDE_POS_Y){
   control_roi_change(s->edit_roi,&s->edit_enable,i-1,up);
   if(i==SIDE_ZOOM)s->edit_value=s->edit_roi[1]>>12;
@@ -114,12 +144,7 @@ static void control_sidebar_adjust(struct vision_control_state *s,unsigned up){
 }
 static void control_sidebar_confirm(struct vision_control_state *s){
  unsigned i=s->sidebar_item,v=s->edit_value;
- if(i==SIDE_MODE)s->settings=(s->settings&~7u)|v;
- else if(i==SIDE_THRESHOLD){
-  if(s->edit_mode==7)s->shape_threshold=v;
-  else control_threshold(s,s->edit_mode==5||s->edit_mode==6?20:9,v);
- }else if(i==SIDE_MEDIAN)s->settings=(s->settings&~8u)|(v<<3);
- else if(i==SIDE_MOTION)s->settings=(s->settings&0x7fffffffu)|(v<<31);
+ if(i==SIDE_MOTION)s->settings=(s->settings&0x7fffffffu)|(v<<31);
  else if(i>=SIDE_ZOOM&&i<=SIDE_POS_Y){
   for(unsigned k=0;k<4;k++)s->roi[k]=s->edit_roi[k];
   s->roi_enable=s->edit_enable;s->key_roi_dirty=1;
@@ -137,11 +162,15 @@ static void control_sidebar_confirm(struct vision_control_state *s){
 static void control_sidebar_keys(struct vision_control_state *s,unsigned keys){
  if(keys&8){
   if(!s->sidebar_open)s->sidebar_open=1;
-  else if(s->sidebar_edit)s->sidebar_edit=0;
+  else if(s->sidebar_edit){
+   if(s->sidebar_item==SIDE_MODE)s->settings=(s->settings&~7u)|s->edit_mode;
+   s->sidebar_edit=0;
+  }
   else s->sidebar_open--;
  }else if(keys&1){
   if(s->sidebar_open==1)s->sidebar_open=2;
   else if(s->sidebar_edit)control_sidebar_confirm(s);
+  else if(s->sidebar_item==SIDE_MEDIAN)s->settings^=8u;
   else{
    s->edit_value=control_sidebar_value(s);s->edit_mode=s->settings&7;
    for(unsigned k=0;k<4;k++)s->edit_roi[k]=s->roi[k];
@@ -180,7 +209,7 @@ static uint32_t control_ui(struct vision_control_state *s){
  // Compact-menu bits are unused on an open sidebar; bit14 carries item bit4.
  unsigned menu=s->sidebar_open?(item>>4)<<3:m;
  return ((uint32_t)(s->sidebar_open!=0)<<31)|(s->sidebar_edit<<30)|((item&15)<<26)|(status<<23)|
-        (s->shape_threshold<<15)|(menu<<11)|v;
+        (((s->settings&7)==7?control_geometry_threshold(s):s->shape_threshold)<<15)|(menu<<11)|v;
 }
 static void control_event(uint32_t event){
  struct vision_control_state *s=CONTROL_STATE;
@@ -207,7 +236,7 @@ static void control_event(uint32_t event){
    else if(s->menu==1)s->settings=(s->settings&~8u)|(key==1?8:0);
    else if(s->menu>=2)control_roi_key(s,key==1);
    else if(mem>=2){unsigned last=mem==2?6:5;unsigned next=key==1?(index>=last?0:index+1):(index==0||index>last?last:index-1);s->settings=(s->settings&~(7u<<6))|(next<<6);}
-   else if(mode==7){unsigned t=s->shape_threshold;s->shape_threshold=key==1?(t>239?255:t+16):(t<=17?1:t-16);}
+   else if(mode==7){unsigned t=control_geometry_threshold(s);control_geometry_threshold_set(s,control_geometry_threshold_adjust(t,key==1));}
    else {unsigned shift=(mode==5||mode==6)?20:9;uint32_t t=(old_settings>>shift)&2047;control_threshold(s,shift,key==1?threshold_up(t):threshold_down(t));}
   }
   unsigned next_mem=mem;
@@ -216,8 +245,12 @@ static void control_event(uint32_t event){
   s->settings=(s->settings&~(3u<<4))|(next_mem<<4);s->feature_dirty=1;
  }else switch(op){
   case 1:s->settings=(s->settings&~7u)|(v&7);s->feature_dirty=1;break;
-  case 2:if(mode==7){s->shape_threshold=v<1?1:v>255?255:v;s->feature_dirty=1;}else control_threshold(s,mode==5||mode==6?20:9,v&2047);break;
-  case 23:s->shape_threshold=v<1?1:v&255;s->feature_dirty=1;break;
+  case 2:if(mode==7)control_geometry_threshold_set(s,v<1?1:v>255?255:v);else control_threshold(s,mode==5||mode==6?20:9,v&2047);break;
+  case 23:
+#ifdef VISION_GEOMETRY_M7
+   if(mode==7)control_geometry_threshold_set(s,v&255);else
+#endif
+   {s->shape_threshold=v<1?1:v&255;s->feature_dirty=1;}break;
   case 0x28:control_threshold(s,9,v&2047);break;
   case 0x29:control_threshold(s,20,v&2047);break;
   case 3:s->settings=(s->settings&~8u)|((v&1)<<3);s->feature_dirty=1;break;

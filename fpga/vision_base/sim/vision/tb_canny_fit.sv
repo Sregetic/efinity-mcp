@@ -6,22 +6,48 @@ wire[8:0]fx,fy;wire[7:0]coverage;wire pixel;wire[31:0]coarse,shown;
 vision_canny_raster #(.W(W),.H(H),.INDEX_FILE("board/ti60f225_v4/rtl/vision/canny_coverage_index.mem"),.PALETTE_FILE("board/ti60f225_v4/rtl/vision/canny_coverage_palette.mem"))
  dut(clk,rst,vblank,de,x,y,bitmap,ready,fx,fy,pixel,coarse,shown,coverage);
 always #5 clk=~clk;
+integer trace_checks=0;
+always @(posedge clk)if(rst&&dut.line_fit.busy)begin
+ if({dut.line_fit.trace_hl_q,dut.line_fit.trace_hr_q,dut.line_fit.trace_vl_q,dut.line_fit.trace_vr_q}!==
+    {dut.line_fit.trace_line(dut.line_fit.job_window,dut.line_fit.step,1'b1,1'b0),
+     dut.line_fit.trace_line(dut.line_fit.job_window,dut.line_fit.step,1'b1,1'b1),
+     dut.line_fit.trace_line(dut.line_fit.job_window,dut.line_fit.step,1'b0,1'b0),
+     dut.line_fit.trace_line(dut.line_fit.job_window,dut.line_fit.step,1'b0,1'b1)})$fatal(1,"trace prefetch phase mismatch");
+ trace_checks=trace_checks+1;
+end
 reg map[0:W*H-1];reg[79:0]lut[0:511];reg[4:0]level;reg[7:0]expected;
 always @(posedge clk)bitmap<=fx<W&&fy<H?map[fy*W+fx]:0;
 integer f,i,xx,yy,a,b,nx,ny,pattern,cx,cy,k,minor,total,weight,slope,start,distance,major,minor_axis;
 integer checks=0,fit_checks=0,radius,walk_pattern,previous,candidate,q,golden;reg[4:0]actual_walk;
+integer bridge_mask,bridge_line;
 integer sample_slope,sample_error,sample_offset,sample_a,sample_b,sample_checks=0;
 reg signed[10:0]profile_error;reg[17:0]profile_active;
+reg signed[6:0]fit_sum_input;reg fit_short_input;integer center_cases=0;
 initial begin
  $readmemh("board/ti60f225_v4/rtl/vision/canny_coverage_q5.mem",lut);
  repeat(4)@(negedge clk);rst=1;
+ force dut.line_fit.result_sum=fit_sum_input;force dut.line_fit.result_short=fit_short_input;
+ for(f=0;f<2;f=f+1)for(i=-64;i<64;i=i+1)begin
+  @(negedge clk);fit_sum_input=i;fit_short_input=f;
+  repeat(2)@(posedge clk);#1;
+  golden=32+(f?((i*51+2)>>>2):((i*57+4)>>>3));
+  if(dut.line_fit.center_q!==10'(golden))$fatal(1,"signed center sum%0d short%0d got%0d expected%0d",i,f,dut.line_fit.center_q,golden);
+  center_cases=center_cases+1;
+ end
+ release dut.line_fit.result_sum;release dut.line_fit.result_short;
+ $display("PASS signed Canny center offset %0d cases",center_cases);
+ for(bridge_mask=0;bridge_mask<4;bridge_mask=bridge_mask+1)
  for(walk_pattern=0;walk_pattern<2048;walk_pattern=walk_pattern+1)for(previous=-5;previous<=5;previous=previous+1)begin
+  bridge_line=0;
+  if(previous>-5&&(bridge_mask&1))bridge_line=bridge_line|(1<<(previous+4));
+  if(previous<5&&(bridge_mask&2))bridge_line=bridge_line|(1<<(previous+6));
   golden=0;
   for(q=4;q>=0;q=q-1)begin
    candidate=previous+(q==1?-1:q==2?1:q==3?-2:q==4?2:0);
-   if(candidate>=-5&&candidate<=5&&(walk_pattern&(1<<(candidate+5))))golden=16|(candidate&15);
+   if(candidate>=-5&&candidate<=5&&(walk_pattern&(1<<(candidate+5)))&&
+      (q<3||(q==3?(bridge_mask&1):(bridge_mask&2))))golden=16|(candidate&15);
   end
-  actual_walk=dut.line_fit.walk(11'(walk_pattern),4'(previous));
+  actual_walk=dut.line_fit.walk(11'(walk_pattern),4'(previous),11'(bridge_line));
   if(actual_walk!==5'(golden))$fatal(1,"walk pattern%h previous%0d got%h expected%h",walk_pattern,previous,actual_walk,golden);
  end
  force dut.line_fit.error=profile_error;force dut.line_fit.active=profile_active;

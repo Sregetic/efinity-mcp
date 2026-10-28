@@ -1,0 +1,3 @@
+PASS photo: 129600 Canny bits and 2073600 reconstructed Canny pixels identical
+PASS face: 129600 Canny bits and 2073600 reconstructed Canny pixels identical
+PASS two_faces: 129600 Canny bits and 2073600 reconstructed Canny pixels identical

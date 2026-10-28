@@ -50,6 +50,7 @@
     <efx:design_file name="rtl/vision/vision_window3_pair.sv" version="default" library="default" />
     <efx:design_file name="rtl/vision/vision_line_direct.sv" version="default" library="default" />
     <efx:design_file name="rtl/vision/vision_line_metrics.sv" version="default" library="default" />
+        <efx:design_file name="rtl/vision/vision_geometry_m7.sv" version="default" library="default" />
         <efx:design_file name="rtl/vision/vision_display.sv" version="default" library="default" />
         <efx:design_file name="rtl/vision/vision_frontend.sv" version="default" library="default" />
         <efx:design_file name="rtl/vision/vision_median9.sv" version="default" library="default" />

@@ -173,7 +173,7 @@ module frame_pool #(
         if(COMPUTE_ENABLED)begin
             if(want_latest)begin compute_candidate_valid=|reader_eligible;compute_candidate_bank=latest_bank;end
             else for(cc=0;cc<BANKS;cc=cc+1)
-                if(reader_eligible[cc]&&frame_id_after_done[cc]==wanted_frame)begin
+                if(reader_eligible[cc]&&((cap_done_fire&&cap_done_ok&&cap_done_bank==cc)?writer_frame_id_q==wanted_frame:frame_id_q[cc]==wanted_frame))begin
                     compute_candidate_valid=1;compute_candidate_bank=BANK_ID_WIDTH'(cc);
                 end
         end
@@ -287,8 +287,8 @@ module frame_pool #(
     // Completion order is chronological with the single writer. Keep a bank
     // permutation instead of an 8x8 matrix of 32-bit history comparators.
     logic [BANK_ID_WIDTH-1:0] order_q[0:BANKS-1],order_after[0:BANKS-1];
-    logic [BANKS-1:0] pinned;
-    integer q,rank_count,chosen_display_age,chosen_analysis_age,old_position;
+    logic [BANKS-1:0] pinned,eligible_order,latest_order;
+    integer q,p,rank_count,chosen_display_age,chosen_analysis_age,old_position;
     always_comb begin
         old_position=0;
         for(q=0;q<BANKS;q=q+1)begin
@@ -317,9 +317,16 @@ module frame_pool #(
         history_count=3'(rank_count>6?6:rank_count);
         chosen_display_age=display_age<history_count?display_age:0;
         chosen_analysis_age=analysis_age<history_count?analysis_age:0;
-        display_candidate_bank=0;analysis_candidate_bank=0;pinned=0;rank_count=0;latest_bank=0;
-        for(q=0;q<BANKS;q=q+1)if(reader_eligible[order_after[q]])begin
-            if(rank_count==0)latest_bank=order_after[q];
+        // Latest selection does not need the serial age counter.
+        for(q=0;q<BANKS;q=q+1)eligible_order[q]=reader_eligible[order_after[q]];
+        for(q=0;q<BANKS;q=q+1)begin
+            latest_order[q]=eligible_order[q];
+            for(p=0;p<BANKS;p=p+1)if(p<q&&eligible_order[p])latest_order[q]=0;
+        end
+        latest_bank=0;
+        for(q=0;q<BANKS;q=q+1)latest_bank=latest_bank|(order_after[q]&{BANK_ID_WIDTH{latest_order[q]}});
+        display_candidate_bank=0;analysis_candidate_bank=0;pinned=0;rank_count=0;
+        for(q=0;q<BANKS;q=q+1)if(eligible_order[q])begin
             if(rank_count==chosen_display_age)display_candidate_bank=order_after[q];
             if(rank_count==chosen_analysis_age)analysis_candidate_bank=order_after[q];
             if(rank_count<6)pinned[order_after[q]]=1;
@@ -328,11 +335,11 @@ module frame_pool #(
         if(display_use_analysis&&analysis_hold_valid_q)display_candidate_bank=analysis_hold_bank_q;
         display_candidate_valid=rank_count!=0&&!(display_hold_valid_q&&!display_release);
         analysis_candidate_valid=rank_count!=0&&!(analysis_hold_valid_q&&!analysis_release);
-        display_candidate_frame_id=frame_id_after_done[display_candidate_bank];
-        display_candidate_config_id=config_id_after_done[display_candidate_bank];
-        analysis_candidate_frame_id=frame_id_after_done[analysis_candidate_bank];
-        analysis_candidate_config_id=config_id_after_done[analysis_candidate_bank];
-        latest_frame=frame_id_after_done[latest_bank];latest_config=config_id_after_done[latest_bank];
+        display_candidate_frame_id=((cap_done_fire&&cap_done_ok&&cap_done_bank==display_candidate_bank)?writer_frame_id_q:frame_id_q[display_candidate_bank]);
+        display_candidate_config_id=((cap_done_fire&&cap_done_ok&&cap_done_bank==display_candidate_bank)?writer_config_id_q:config_id_q[display_candidate_bank]);
+        analysis_candidate_frame_id=((cap_done_fire&&cap_done_ok&&cap_done_bank==analysis_candidate_bank)?writer_frame_id_q:frame_id_q[analysis_candidate_bank]);
+        analysis_candidate_config_id=((cap_done_fire&&cap_done_ok&&cap_done_bank==analysis_candidate_bank)?writer_config_id_q:config_id_q[analysis_candidate_bank]);
+        latest_frame=((cap_done_fire&&cap_done_ok&&cap_done_bank==latest_bank)?writer_frame_id_q:frame_id_q[latest_bank]);latest_config=((cap_done_fire&&cap_done_ok&&cap_done_bank==latest_bank)?writer_config_id_q:config_id_q[latest_bank]);
         display_acquire_ready=display_candidate_valid;analysis_acquire_ready=analysis_candidate_valid;
         display_acquire_bank=display_candidate_valid?display_candidate_bank:'0;
         analysis_acquire_bank=analysis_candidate_valid?analysis_candidate_bank:'0;
@@ -493,8 +500,8 @@ module frame_pool #(
             if(compute_release)compute_valid_q<=0;
             if(compute_fire)begin
                 compute_valid_q<=1;compute_bank_q<=compute_candidate_bank;
-                compute_frame_q<=frame_id_after_done[compute_candidate_bank];
-                compute_config_q<=config_id_after_done[compute_candidate_bank];
+                compute_frame_q<=((cap_done_fire&&cap_done_ok&&cap_done_bank==compute_candidate_bank)?writer_frame_id_q:frame_id_q[compute_candidate_bank]);
+                compute_config_q<=((cap_done_fire&&cap_done_ok&&cap_done_bank==compute_candidate_bank)?writer_config_id_q:config_id_q[compute_candidate_bank]);
             end
         end
     end

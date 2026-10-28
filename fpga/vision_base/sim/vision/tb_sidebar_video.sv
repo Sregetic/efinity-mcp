@@ -6,8 +6,10 @@ reg[3:0]ai_status=0;reg motion_enable=0,motion_held=0;reg[2:0]motion_direction=0
 wire ode,ohs,ovs;wire[23:0]orgb;
 vision_sidebar_overlay dut(.*);
 reg[23:0]words[0:2];integer pix,frame,row,col,file,good=0,outside=0;reg[23:0]expected;reg[31:0]rng=32'h4312210;
+reg[11:0]probe_x,probe_y;reg[63:0]wanted;integer choice,slot;
 function inside_panel(input integer xx,yy,input[23:0]ui);
- begin inside_panel=ui[23]&&yy>=128&&((xx<144&&yy<576)||(ui[17:15]!=7&&xx>=144&&xx<304&&yy<512));end
+ begin inside_panel=ui[23]&&yy>=128&&((xx<144&&yy<576)||(ui[17:15]!=7&&xx>=144&&xx<304&&yy<512)||
+       (ui[22]&&ui[21:18]==0&&!ui[14]&&ui[17:15]!=7&&xx>=304&&xx<464&&yy<768));end
 endfunction
 task tick;
  begin @(posedge clk);#1;
@@ -23,6 +25,20 @@ initial begin
  for(pix=65;pix<=90;pix=pix+1)if(dut.sidebar_font.glyph(pix)==0)$fatal(1,"missing uppercase UI glyph %0d",pix);
  repeat(2)@(negedge clk);rst_n=1;col=1000;row=1000;
  for(pix=0;pix<65536;pix=pix+1)begin rng=rng^(rng<<13);rng=rng^(rng>>17);rng=rng^(rng<<5);rgb=rng[23:0];de=rng[0];hs=rng[1];vs=rng[2];tick;end
+ force dut.x=probe_x;force dut.y=probe_y;
+ for(choice=0;choice<8;choice=choice+1)begin
+  ui_state=24'hc00000|choice;wanted=dut.sidebar_font.mode_label(choice);
+  for(slot=0;slot<8;slot=slot+1)begin
+   probe_x=320+slot*16;probe_y=128+(choice+1)*64+24;col=probe_x;row=probe_y;tick;
+   if(!dut.active||dut.sidebar_font.ch_q!==wanted[63-slot*8-:8])$fatal(1,"mode list name %0d slot%0d",choice,slot);
+  end
+  probe_x=304;probe_y=128+(choice+1)*64;col=probe_x;row=probe_y;tick;
+  if(!dut.sidebar_font.marker_q)$fatal(1,"mode list selected row%0d not highlighted",choice);
+ end
+ ui_state=24'h800005;probe_x=320;probe_y=300;col=probe_x;row=probe_y;tick;
+ if(dut.active)$fatal(1,"confirmed mode list did not collapse");
+ release dut.x;release dut.y;
+ de=0;hs=0;vs=0;rst_n=0;tick;rst_n=1;
  // Preview comes from the production font/compositor, on a synthetic test scene.
  for(frame=0;frame<3;frame=frame+1)begin
   ui_state=words[frame];de=0;hs=0;vs=0;tick;vs=1;tick;vs=0;tick;

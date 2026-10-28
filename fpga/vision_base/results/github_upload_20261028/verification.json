@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "native_source_and_model_files": 181,
+  "native_gate": "58458 XLR /243 RAM /64 DSP; WNS+.109/WHS+.026; pins0; local actual P&R",
+  "software_tests": "71 passed,1 Windows symlink-privilege skip",
+  "mcp_protocol_test": "passed",
+  "compileall": "passed for src, FPGA scripts and uploaded M7 Python entries",
+  "git_native_source_bytes": "actual index bytes match accepted local native inputs",
+  "preserved": [
+    "Runner scripts",
+    "guarded synthesize.ps1",
+    "repository environment bootstrap",
+    "original unrelated history"
+  ],
+  "publication": "source/model/fixtures and selected evidence; no new bit/ELF/VBO1/old Flash/DDR dumps",
+  "whitespace": "native/vendor/reference whitespace retained with accepted build bytes; raw diff-check not a build failure",
+  "hardware": "Flash config/app write verified, SPI-autoloaded app/weights actual bytes verified; M7/live video passed",
+  "physical_power_cycle_verified": false,
+  "config_flash_reload_verified": false
+}

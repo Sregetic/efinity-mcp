@@ -1,5 +1,5 @@
 // Tagged Canny task and bitmap read port only. Features/hash live in CPU DDR.
-module vision_flyhash_mailbox(
+module vision_flyhash_mailbox #(parameter RAW_READ_PORT=0)(
  input clk,rst_n,cpu_clk,cpu_rst_n,cmd_event,input[7:0]cmd_op,input[23:0]cmd_value,
  input context_valid,input[31:0]frame_id,config_id,epoch,stream_errors,
  output[31:0]status,result_frame_id,result_config_id,result_epoch,
@@ -7,7 +7,7 @@ module vision_flyhash_mailbox(
  input bitmap_valid,input[31:0]bitmap_data,
  input[15:0]paddr,input psel,penable,pwrite,input[31:0]pwdata,
  output reg[31:0]prdata,output pready,pslverror,
- output[31:0]firmware_state,full_cycles
+ output[31:0]firmware_state,full_cycles,input raw_bitmap_enable
 );
  reg valid=0,busy=0,fault=0,auto_features=0;
  reg[6:0]sequence_id=0;reg[15:0]nonce=0;
@@ -53,14 +53,15 @@ module vision_flyhash_mailbox(
  reg word_toggle=0;reg[11:0]word_address=0;
  (* async_reg="true" *)reg[1:0]word_req_sync=0;reg word_ack=0,word_wait=0;
  reg[31:0]word_data=0;
- assign bitmap_req=word_req_sync[1]!=word_ack&&!word_wait&&busy&&auto_features;
+ wire read_enabled=(busy&&auto_features)||(RAW_READ_PORT&&raw_bitmap_enable);
+ assign bitmap_req=word_req_sync[1]!=word_ack&&!word_wait&&read_enabled;
  assign bitmap_busy=busy&&auto_features,bitmap_address=word_address;
  always @(posedge clk)begin
   if(!rst_n)begin word_req_sync<=0;word_ack<=0;word_wait<=0;word_data<=0;end
   else begin
    word_req_sync<={word_req_sync[0],word_toggle};
    if(bitmap_req&&bitmap_ready)word_wait<=1;
-   if(word_req_sync[1]!=word_ack&&(!busy||!auto_features))begin word_data<=0;word_ack<=word_req_sync[1];word_wait<=0;end
+   if(word_req_sync[1]!=word_ack&&!read_enabled)begin word_data<=0;word_ack<=word_req_sync[1];word_wait<=0;end
    else if(word_wait&&bitmap_valid)begin word_data<=bitmap_data;word_ack<=word_req_sync[1];word_wait<=0;end
   end
  end
