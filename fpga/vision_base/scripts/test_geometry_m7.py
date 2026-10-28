@@ -55,6 +55,28 @@ def main():
     m = blank(); cv2.line(m, (60, 60), (60, 150), 255); cv2.line(m, (60, 150), (200, 150), 255); cv2.line(m, (200, 150), (200, 60), 255)
     add('open_outline', m, [])
 
+    def face_outline(cx, cy, rx=26, ry=36, eyes=True, mouth=True):
+        m = blank()
+        cv2.ellipse(m, (cx, cy), (rx, ry), 0, 0, 360, 255, 1)
+        if eyes:
+            for side in (-1, 1):
+                cv2.ellipse(m, (cx+side*rx//3, cy-ry//5), (max(3,rx//6), max(1,ry//18)), 0, 0, 360, 255, 1)
+        cv2.polylines(m, [np.array([[cx,cy-ry//8],[cx-2,cy+ry//5],[cx+2,cy+ry//5]])], False, 255, 1)
+        if mouth:
+            cv2.ellipse(m, (cx, cy+ry//2), (rx//3, max(2,ry//10)), 0, 0, 360, 255, 1)
+        return m
+
+    for name, cx, cy, rx, ry in [('edge_face_left_top',35,45,26,36), ('edge_face_right_top',443,45,26,36),
+                                ('edge_face_left_bottom',35,224,26,36), ('edge_face_right_bottom',443,224,26,36),
+                                ('edge_face_large',240,135,80,106)]:
+        add(name, face_outline(cx,cy,rx,ry), None)
+        cases[-1]['faces'] = 1
+    m = face_outline(90,110) | face_outline(350,155)
+    cv2.rectangle(m,(200,30),(260,70),255,1)
+    add('two_edge_faces_and_rectangle',m,None);cases[-1]['faces']=2
+    for name, eyes, mouth in [('head_without_eyes',False,True), ('head_without_mouth',True,False)]:
+        add(name,face_outline(240,135,eyes=eyes,mouth=mouth),None);cases[-1]['faces']=0
+
     def gray480(im):
         g = (im[:, :, 2].astype(np.uint32)*77 + im[:, :, 1].astype(np.uint32)*150 + im[:, :, 0].astype(np.uint32)*29 + 128) >> 8
         return ((g.reshape(270, 4, 480, 4).sum((1, 3)) + 8) >> 4).astype(np.uint8)
@@ -73,6 +95,8 @@ def main():
         packed_gray = ((decoded[:, :, 0]*77 + decoded[:, :, 1]*150 + decoded[:, :, 2]*29 + 128) >> 8).astype(np.uint8)
         add(name+'_packed', mask, None, packed_gray)
 
+    add('gray_face_without_edges', blank(), [], next(c['gray'] for c in cases if c['name']=='face_raw_v2'))
+
     with (out/'cases.bin').open('wb') as f:
         for c in cases:
             f.write(np.packbits(c['mask'].reshape(-1) != 0, bitorder='little').tobytes())
@@ -80,12 +104,12 @@ def main():
     compiler = ['wsl.exe', '-d', 'Ubuntu-24.04', '--exec', 'gcc', '-O2', '-DVISION_MULHI_CFU', '-DINT8_TEST', '-g', '-fsanitize=address,undefined',
                 '-std=c11', '-Wall', '-Wextra', '-Wno-misleading-indentation', '-o', wsl(out/'geometry_host')]
     compiler += [wsl(ROOT/s) for s in ['sim/test_geometry_m7.c', 'firmware/vision/geometry_m7.c',
-                                     'firmware/vision/geometry_face.c', 'firmware/vision/pico/picornt.c']]
+                                     'firmware/vision/geometry_face.c']]
     r = subprocess.run(compiler, capture_output=True)
     (out/'compile.stdout').write_bytes(r.stdout); (out/'compile.stderr').write_bytes(r.stderr)
     r.check_returncode()
     r = subprocess.run(['wsl.exe', '-d', 'Ubuntu-24.04', '--exec', wsl(out/'geometry_host'),
-                        wsl(ROOT/'models/geometry_face/facefinder'), wsl(out/'cases.bin')], capture_output=True)
+                        wsl(out/'cases.bin')], capture_output=True)
     (out/'host.stdout').write_bytes(r.stdout); (out/'host.stderr').write_bytes(r.stderr)
     r.check_returncode()
     results = [json.loads(s) for s in r.stdout.decode('utf-8').splitlines()]
@@ -97,20 +121,24 @@ def main():
             assert r['more'] == c['more'], r
         else:
             nfaces = sum(b[0] == 3 for b in r['boxes'])
-            assert nfaces == {'photo_raw_v2': 0, 'face_raw_v2': 1, 'two_faces_raw': 2}[c['name'].removesuffix('_packed')], r
+            wanted = c['faces'] if 'faces' in c else {'photo_raw_v2': 0, 'face_raw_v2': 1, 'two_faces_raw': 2}[c['name'].removesuffix('_packed')]
+            assert nfaces == wanted, r
             if c['name'].startswith('photo_raw_v2'):
                 assert any(b[0] == 2 and abs(b[1]-249) < 5 and abs(b[2]-113) < 5 and abs(b[3]-364) < 5 and abs(b[4]-162) < 5 for b in r['boxes']), r
         assert r['complex'] == 0, r
+    # Require the actual face locations, not just a matching total count.
+    targets = {'face_raw_v2': [(224,60)], 'two_faces_raw': [(110,125),(350,175)]}
+    for r in results:
+        base = r['name'].removesuffix('_packed')
+        if base in targets:
+            boxes = [b for b in r['boxes'] if b[0]==3]
+            assert all(sum(b[1]<x<b[3] and b[2]<y<b[4] for b in boxes)==1 for x,y in targets[base]), r
+            assert all(sum(b[1]<x<b[3] and b[2]<y<b[4] for x,y in targets[base])==1 for b in boxes), r
+    by_name = {r['name']: r for r in results}
+    for name in ('photo_raw_v2', 'face_raw_v2', 'two_faces_raw'):
+        assert by_name[name]['boxes'] == by_name[name+'_packed']['boxes']
     (out/'result.json').write_text(json.dumps(results, indent=2), encoding='utf-8')
-    math_compiler = compiler[:]
-    math_compiler[math_compiler.index('-o')+1] = wsl(out/'geometry_face_math')
-    math_compiler = math_compiler[:-4] + [wsl(ROOT/s) for s in ['sim/test_geometry_face_math.c', 'firmware/vision/geometry_m7.c', 'firmware/vision/pico/picornt.c']]
-    r = subprocess.run(math_compiler, capture_output=True)
-    (out/'math.compile.log').write_bytes(r.stdout+r.stderr); r.check_returncode()
-    r = subprocess.run(['wsl.exe', '-d', 'Ubuntu-24.04', '--exec', wsl(out/'geometry_face_math'), wsl(ROOT/'models/geometry_face/facefinder'), wsl(out/'cases.bin')], capture_output=True)
-    (out/'math.log').write_bytes(r.stdout+r.stderr); r.check_returncode()
-    print(r.stdout.decode('utf-8').strip())
-    print(f'PASS {len(results)} M7 C/Canny/face cases; ASan/UBSan clean; {out}')
+    print(f'PASS {len(results)} M7 shared edge-contour circle/rectangle/face cases; ASan/UBSan clean; {out}')
 
 
 if __name__ == '__main__':

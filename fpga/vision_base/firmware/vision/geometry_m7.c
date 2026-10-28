@@ -13,7 +13,7 @@ static unsigned back,first_set,xmin,ymin,xmax,ymax,perimeter,overflow;
 static int32_t area2;
 static unsigned nv,segment,pi,best_index,best_distance,epsilon;
 /* Sapphire shifts serially; bitmap membership uses a tiny constant mask table. */
-static const uint32_t bit_mask[32]={
+const uint32_t m7_bit_mask[32]={
  0x00000001u,0x00000002u,0x00000004u,0x00000008u,0x00000010u,0x00000020u,0x00000040u,0x00000080u,
  0x00000100u,0x00000200u,0x00000400u,0x00000800u,0x00001000u,0x00002000u,0x00004000u,0x00008000u,
  0x00010000u,0x00020000u,0x00040000u,0x00080000u,0x00100000u,0x00200000u,0x00400000u,0x00800000u,
@@ -21,13 +21,16 @@ static const uint32_t bit_mask[32]={
 };
 static const int8_t step_x[8]={1,1,0,-1,-1,-1,0,1};
 static const int8_t step_y[8]={0,1,1,1,0,-1,-1,-1};
+struct m7_contour m7_contours[M7_CONTOURS];
+unsigned m7_contour_count;
+static unsigned contour_index;
 struct m7_box m7_boxes[4];
 unsigned m7_count,m7_more,m7_complex;
 
 static unsigned on(int x,int y){
  if(x<0||x>=M7_W||y<0||y>=M7_H)return 0;
  unsigned p=(unsigned)y*M7_W+(unsigned)x;
- return !!(image[p>>5]&bit_mask[p&31]);
+ return !!(image[p>>5]&m7_bit_mask[p&31]);
 }
 static int point_x(unsigned n){return points[n==npoints?0:n]&511;}
 static int point_y(unsigned n){return points[n==npoints?0:n]>>9;}
@@ -37,9 +40,9 @@ static unsigned distance(unsigned a,unsigned b){
 }
 static int absolute(int v){return v<0?-v:v;}
 static unsigned box_area(const struct m7_box *b){return (b->x1-b->x0+1u)*(b->y1-b->y0+1u);}
-static void retain(struct m7_box b){
- for(unsigned i=0;i<m7_count;i++){
-  struct m7_box *a=&m7_boxes[i];
+void m7_retain(struct m7_box boxes[4],unsigned *count,unsigned *more,struct m7_box b){
+ for(unsigned i=0;i<(*count);i++){
+  struct m7_box *a=&boxes[i];
   int overlap_x=(a->x1<b.x1?a->x1:b.x1)-(int)(a->x0>b.x0?a->x0:b.x0)+1;
   int overlap_y=(a->y1<b.y1?a->y1:b.y1)-(int)(a->y0>b.y0?a->y0:b.y0)+1;
   unsigned close=absolute((int)a->x0-b.x0)<=3&&absolute((int)a->y0-b.y0)<=3&&
@@ -48,18 +51,18 @@ static void retain(struct m7_box b){
      overlap_x>0&&overlap_y>0&&(unsigned)(overlap_x*overlap_y)*10>=box_area(a)*7&&(unsigned)(overlap_x*overlap_y)*10>=box_area(&b)*7;
   if(close||face_pair){
    if(!(b.klass==M7_FACE||(a->klass!=M7_FACE&&b.area>a->area)))return;
-   for(unsigned j=i;j+1<m7_count;j++)m7_boxes[j]=m7_boxes[j+1];
-   m7_count--;break;
+   for(unsigned j=i;j+1<(*count);j++)boxes[j]=boxes[j+1];
+   (*count)--;break;
 
   }
  }
- if(m7_count==4){
-  m7_more=1;
-  if(b.area<=m7_boxes[3].area)return;
- }else m7_count++;
- unsigned i=m7_count-1;
- while(i&&m7_boxes[i-1].area<b.area){m7_boxes[i]=m7_boxes[i-1];i--;}
- m7_boxes[i]=b;
+ if((*count)==4){
+  (*more)=1;
+  if(b.area<=boxes[3].area)return;
+ }else (*count)++;
+ unsigned i=(*count)-1;
+ while(i&&boxes[i-1].area<b.area){boxes[i]=boxes[i-1];i--;}
+ boxes[i]=b;
 }
 static void polygon_result(void){
  unsigned klass=0,w=xmax-xmin+1,h=ymax-ymin+1;
@@ -98,17 +101,12 @@ static void polygon_result(void){
   }
   if(miss*10<=npoints)klass=M7_CIRCLE;
  }
- if(klass)retain((struct m7_box){xmin,ymin,xmax,ymax,(unsigned)area2/2,klass});
-}
-void m7_add_face(unsigned x0,unsigned y0,unsigned x1,unsigned y1){
- unsigned support=0;
- for(unsigned y=y0;y<=y1;y++)for(unsigned x=x0;x<=x1;x++)support+=on(x,y);
- if(support<(x1-x0+y1-y0)/2)return;
- retain((struct m7_box){x0,y0,x1,y1,(x1-x0+1)*(y1-y0+1),M7_FACE});
+ if(contour_index<M7_CONTOURS)m7_contours[contour_index].klass=klass;
+ if(klass)m7_retain(m7_boxes,&m7_count,&m7_more,(struct m7_box){xmin,ymin,xmax,ymax,(unsigned)area2/2,klass});
 }
 void m7_begin(const uint32_t *edges){
  image=edges;phase=1;scan=0;
- m7_count=m7_more=m7_complex=0;
+ m7_count=m7_more=m7_complex=m7_contour_count=0;
  for(unsigned i=0;i<M7_WORDS;i++)visited[i]=0;
 }
 unsigned m7_step(unsigned budget){
@@ -123,20 +121,27 @@ unsigned m7_step(unsigned budget){
 #else
    unsigned x=p%M7_W,y=p/M7_W;
 #endif
-   if(!on(x,y)||on((int)x-1,y)||(visited[p>>5]&bit_mask[p&31]))continue;
+   if(!on(x,y)||on((int)x-1,y)||(visited[p>>5]&m7_bit_mask[p&31]))continue;
    px=startx=x;py=starty=y;back=4;first_set=0;
    xmin=xmax=x;ymin=ymax=y;area2=0;npoints=perimeter=overflow=walk_steps=0;phase=2;
   }else if(phase==2){
    unsigned dir=back,k;
    for(k=0;k<8;k++,dir=(dir+1)&7)if(on(px+step_x[dir],py+step_y[dir]))break;
-   if(k==8){unsigned p=py*M7_W+px;visited[p>>5]|=bit_mask[p&31];phase=1;continue;}
+   if(k==8){unsigned p=py*M7_W+px;visited[p>>5]|=m7_bit_mask[p&31];phase=1;continue;}
    int nx=px+step_x[dir],ny=py+step_y[dir];
    if(first_set&&px==startx&&py==starty&&nx==firstx&&ny==firsty){
+    contour_index=M7_CONTOURS;
+    if(!overflow&&npoints>=4&&xmax>xmin&&ymax>ymin){
+     if(m7_contour_count<M7_CONTOURS){
+      contour_index=m7_contour_count++;
+      m7_contours[contour_index]=(struct m7_contour){xmin,ymin,xmax,ymax,(unsigned)absolute(area2),area2<0?M7_INNER_CONTOUR:0u};
+     }else m7_complex++; // shortcut: retain 512 contour descriptors; enlarge DDR table for denser scenes.
+    }
     if(overflow||npoints<8||area2<32||xmax-xmin<3||ymax-ymin<3||xmin==0||ymin==0||xmax==M7_W-1||ymax==M7_H-1){phase=1;continue;}
     best_distance=best_index=0;pi=1;phase=3;continue;
    }
    if(!first_set){firstx=nx;firsty=ny;first_set=1;}
-   unsigned p=py*M7_W+px,mask=bit_mask[p&31];
+   unsigned p=py*M7_W+px,mask=m7_bit_mask[p&31];
    visited[p>>5]|=mask;
    if(npoints<16384)points[npoints++]=(unsigned)px|((unsigned)py<<9);
    else if(!overflow){overflow=1;m7_complex++;} // shortcut: reject >16384-point contours; enlarge DDR scratch if needed.

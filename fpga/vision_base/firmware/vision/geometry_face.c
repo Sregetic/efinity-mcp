@@ -1,157 +1,90 @@
 #include "geometry_face.h"
-#include "geometry_m7.h"
-#include "pico/picornt.h"
-#ifdef VISION_MULHI_CFU
-#include "int8.h"
-#endif
 
-static const uint8_t *image;
-static void *model;
-static float scale,row,col,delta,origin,last_row,last_col,detections[1024*4];
-static unsigned count,finished;
-static int offset_scale;
-#ifdef VISION_MULHI_CFU
-static uint32_t basis[4];static unsigned scale_high;
-#else
-static int offset[256];
-#endif
-/* Pinned leaves are finite normal/zero; every prefix stays normal/zero. */
-static const uint32_t shift_factor[32]={
- 0,0x80000000u,0x40000000u,0x20000000u,0x10000000u,0x08000000u,0x04000000u,0x02000000u,
- 0x01000000u,0x00800000u,0x00400000u,0x00200000u,0x00100000u,0x00080000u,0x00040000u,0x00020000u,
- 0x00010000u,0x00008000u,0x00004000u,0x00002000u,0x00001000u,0x00000800u,0x00000400u,0x00000200u,
- 0x00000100u,0x00000080u,0x00000040u,0x00000020u,0x00000010u,0x00000008u,0x00000004u,0x00000002u
-};
-static const uint32_t shift_mask[32]={
- 0x00000000u,0x00000001u,0x00000003u,0x00000007u,0x0000000fu,0x0000001fu,0x0000003fu,0x0000007fu,
- 0x000000ffu,0x000001ffu,0x000003ffu,0x000007ffu,0x00000fffu,0x00001fffu,0x00003fffu,0x00007fffu,
- 0x0000ffffu,0x0001ffffu,0x0003ffffu,0x0007ffffu,0x000fffffu,0x001fffffu,0x003fffffu,0x007fffffu,
- 0x00ffffffu,0x01ffffffu,0x03ffffffu,0x07ffffffu,0x0fffffffu,0x1fffffffu,0x3fffffffu,0x7fffffffu
-};
-static unsigned exponent(uint32_t bits){
-#ifdef VISION_MULHI_CFU
- return (unsigned)int8_mulhi((int32_t)bits,512)&255;
-#else
- return (bits>>23)&255;
-#endif
+/* Private snapshots allow the common contour extractor to process newer frames. */
+static uint32_t edge[M7_WORDS];
+static struct m7_contour parts[M7_CONTOURS];
+static unsigned npart,part,phase,px,py,ey,mid,my,best;
+static unsigned x0,y0,w,h;
+static uint8_t grid[32][32],map_x[M7_W],map_y[M7_H];
+static uint16_t integral[33][33];
+static uint32_t eyes[32],lips[32];
+struct m7_box m7_face_boxes[4];
+unsigned m7_face_count,m7_face_more;
+static unsigned absdiff(unsigned a,unsigned b){return a>b?a-b:b-a;}
+static unsigned rect(unsigned l,unsigned t,unsigned r,unsigned b){
+ return integral[b][r]+integral[t][l]-integral[t][r]-integral[b][l];
 }
-static uint32_t positive_right(uint32_t value,unsigned n){
-#ifdef VISION_MULHI_CFU
- uint32_t q=(uint32_t)int8_mulhi(value,(int32_t)shift_factor[n]);
- return n==1?q+value:q;
-#else
- return value>>n;
-#endif
+static unsigned landmark(const uint32_t rows[32],unsigned l,unsigned t,unsigned r,unsigned b){
+ uint32_t mask=(m7_bit_mask[r]-1u)&~(m7_bit_mask[l]-1u);
+ for(unsigned y=t;y<b;y++)if(rows[y]&mask)return 1;
+ return 0;
 }
-/* IEEE binary32 round-to-nearest/even, with seven guard/sticky bits. */
-static float score_add(float a,float b){
- union{float f;uint32_t u;}x={a},y={b},result;
- if((x.u&0x7fffffff)<(y.u&0x7fffffff)){uint32_t t=x.u;x.u=y.u;y.u=t;}
- if(!(y.u&0x7fffffff)){
-  result.u=(x.u&0x7fffffff)?x.u:x.u&y.u;return result.f;
+static unsigned head(void){
+ const struct m7_contour *p=&parts[part];
+ x0=p->x0;y0=p->y0;w=p->x1-x0+1;h=p->y1-y0+1;
+ /* A face proposal is a non-circular/non-rectangular contour with internal features. */
+ return !p->klass&&w>=24&&h>=24&&w*2>=h&&h*3>=w*2;
+}
+static void prepare(void){
+ for(unsigned y=0;y<32;y++){eyes[y]=lips[y]=0;for(unsigned x=0;x<32;x++)grid[y][x]=0;}
+ for(unsigned x=0;x<=32;x++)integral[0][x]=0;
+ for(unsigned y=0;y<=32;y++)integral[y][0]=0;
+ for(unsigned x=0;x<w;x++)map_x[x]=x*32/w;
+ for(unsigned y=0;y<h;y++)map_y[y]=y*32/h;
+ for(unsigned i=0;i<npart;i++){
+  const struct m7_contour *p=&parts[i];
+  if(p->x0<x0||p->y0<y0||p->x1>=x0+w||p->y1>=y0+h)continue;
+  unsigned pw=p->x1-p->x0+1,ph=p->y1-p->y0+1;
+  unsigned cx=(p->x0+p->x1+1-2*x0)*16/w,cy=(p->y0+p->y1+1-2*y0)*16/h;
+  unsigned nw=pw*32/w;
+  if(pw>=3&&ph>=2&&pw>=ph&&pw<=4*ph&&2*p->area2>=pw*ph&&nw>=3&&nw<=10)eyes[cy]|=m7_bit_mask[cx];
+  if(pw>=5&&pw*2>=ph*3&&16*p->area2>=pw*ph&&nw>=5&&nw<=21&&ph*32<=h*10)lips[cy]|=m7_bit_mask[cx];
  }
- unsigned e=exponent(x.u),d=e-exponent(y.u);
- uint32_t sx=((x.u&0x7fffff)|0x800000)<<7,sy=((y.u&0x7fffff)|0x800000)<<7;
- if(d>=32)sy=1;
- else if(d)sy=positive_right(sy,d)|!!(sy&shift_mask[d]);
- uint32_t sum;
- if(!((x.u^y.u)&0x80000000)){
-  sum=sx+sy;
-  if(sum&0x80000000){sum=(sum>>1)|(sum&1);e++;}
- }else{
-  sum=sx-sy;if(!sum)return 0;
-  while(!(sum&0x40000000)){sum<<=1;e--;}
- }
- uint32_t fraction=sum>>7,round=sum&127;
- if(round>64||(round==64&&(fraction&1)))fraction++;
- if(fraction==0x1000000){fraction>>=1;e++;}
- result.u=(x.u&0x80000000)|(e<<23)|(fraction&0x7fffff);return result.f;
+ px=py=0;phase=2;best=0;
 }
-/* Scanner coordinates are positive normal floats below 512. */
-static int pixel_coordinate(float value){
- union{float f;uint32_t u;}v={value};
- return positive_right((v.u&0x7fffff)|0x800000,150-exponent(v.u));
+static unsigned pose(void){
+ unsigned le=rect(mid-10,ey-2,mid-2,ey+3),re=rect(mid+2,ey-2,mid+10,ey+3);
+ unsigned small=le<re?le:re,large=le>re?le:re,gap=rect(mid-1,ey-2,mid+2,ey+2);
+ if(small<7||large>3*small||gap*2>small+2)return 0;
+ if(!landmark(eyes,mid-10,ey-3,mid-1,ey+4)&&!landmark(eyes,mid+2,ey-3,mid+11,ey+4))return 0;
+ if(!landmark(lips,mid-4,my-3,mid+5,my+4))return 0;
+ unsigned mouth=rect(mid-7,my-1,mid+7,my+2),nose=rect(mid-3,ey+2,mid+4,my-1);
+ unsigned below=rect(mid-7,my+3,mid+7,my+6>32?32:my+6),forehead=rect(mid-5,ey-7,mid+5,ey-3);
+ if(mouth<11||nose<3||nose>36||forehead>small*2||below>mouth*2)return 0;
+ unsigned left=0,right=0;
+ for(unsigned y=ey;y<my+3;y++){left+=rect(1,y,8,y+1)!=0;right+=rect(24,y,31,y+1)!=0;}
+ if(left*2<my-ey||right*2<my-ey)return 0;
+ int score=(int)(small*4+mouth*2)-(int)(gap*3+absdiff(le,re)+forehead);
+ return score>0?(unsigned)score:0;
 }
-/* All scores are finite in the pinned cascade; compare their ordered bits. */
-static int finite_le(float a,float b){
- union{float f;uint32_t u;}x={a},y={b};
- if(!((x.u|y.u)&0x7fffffff))return 1;
- return (int32_t)x.u<0?((int32_t)y.u<0?x.u>=y.u:1):((int32_t)y.u<0?0:x.u<=y.u);
-}
-/* Pico evaluator (c) 2013 Nenad Markus, MIT: pico/LICENSE. Pinned depth-6/468-tree model; the installed dot4 unit scales packed node offsets. */
-/* The CPU has a 2 KiB instruction cache; keep the scanner outside this kernel. */
-static __attribute__((noinline)) int window_score(float *score,int r,int c,int s){
- if(offset_scale!=s){
-  #ifdef VISION_MULHI_CFU
-  uint32_t low=s&127;basis[0]=low;basis[1]=low<<8;basis[2]=low<<16;basis[3]=low<<24;scale_high=(unsigned)s>>7;
-#else
-  for(unsigned i=0;i<256;i++)offset[i]=(int8_t)i*s;
-#endif
-  offset_scale=s;
- }
- r*=256;c*=256;
- if((r+128*s)/256>=M7_H||(r-128*s)/256<0||
-    (c+128*s)/256>=M7_W||(c-128*s)/256<0)return -1;
- const uint8_t *tree=(const uint8_t*)model+16;
- float threshold=0;*score=0;
- for(unsigned i=0;i<468;i++,tree+=512){
-  unsigned idx=1;
-  for(unsigned j=0;j<6;j++){
-#ifdef VISION_MULHI_CFU
-   uint32_t codes=((const uint32_t*)tree)[idx-1];
-   int ar=int8_dot4(codes,basis[0]),ac=int8_dot4(codes,basis[1]);
-   int br=int8_dot4(codes,basis[2]),bc=int8_dot4(codes,basis[3]);
-   if(scale_high){
-    int ah=int8_dot4(codes,0x80),ch=int8_dot4(codes,0x8000);
-    int bh=int8_dot4(codes,0x800000),dh=int8_dot4(codes,0x80000000);
-    if(scale_high==2){ah+=ah;ch+=ch;bh+=bh;dh+=dh;}
-    ar-=ah;ac-=ch;br-=bh;bc-=dh;
-   }
-#else
-   const int8_t *codes=(const int8_t*)tree-4;
-   int ar=offset[(uint8_t)codes[4*idx]],ac=offset[(uint8_t)codes[4*idx+1]];
-   int br=offset[(uint8_t)codes[4*idx+2]],bc=offset[(uint8_t)codes[4*idx+3]];
-#endif
-   /* The scale scanner keeps both sample coordinates nonnegative. */
-   unsigned a=((uint32_t)(r+ar)>>8)*M7_W+
-              ((uint32_t)(c+ac)>>8);
-   unsigned b=((uint32_t)(r+br)>>8)*M7_W+
-              ((uint32_t)(c+bc)>>8);
-   idx=2*idx+(image[a]<=image[b]);
-  }
-  *score=score_add(*score,((const float*)(tree+252))[idx-64]);
-  threshold=*(const float*)(tree+508);
-  if(finite_le(*score,threshold))return -1;
- }
- *score-=threshold;return 1;
-}
-
-void m7_face_begin(const uint8_t *gray,void *cascade){
- image=gray;model=cascade;offset_scale=0;scale=24;row=col=13;delta=2.4f;origin=13;last_row=M7_H-13;last_col=M7_W-13;count=finished=0;
+void m7_face_begin(const uint32_t *bits,const struct m7_contour *contours,unsigned count){
+ for(unsigned i=0;i<M7_WORDS;i++)edge[i]=bits[i];
+ for(unsigned i=0;i<count;i++)parts[i]=contours[i];
+ npart=count;part=0;phase=1;m7_face_count=m7_face_more=0;
 }
 unsigned m7_face_step(unsigned budget){
- if(finished)return 1;
- while(budget--&&finite_le(scale,M7_H-2)){
-  float score;
-  if(window_score(&score,pixel_coordinate(row),pixel_coordinate(col),pixel_coordinate(scale))==1){
-   // shortcut: retain 1024 positive windows; enlarge DDR storage for dense crowds.
-   if(count<1024){
-    detections[count*4]=row;detections[count*4+1]=col;
-    detections[count*4+2]=scale;detections[count*4+3]=score;count++;
+ while(budget--){
+  if(phase==1){
+   if(part==npart){phase=0;return 1;}
+   if(!head()){part++;continue;}prepare();
+  }else if(phase==2){
+   unsigned p=(y0+py)*M7_W+x0+px;
+   if(edge[p>>5]&m7_bit_mask[p&31])grid[map_y[py]][map_x[px]]=1;
+   if(++px==w){px=0;if(++py==h){px=py=0;phase=3;}}
+  }else if(phase==3){
+   integral[py+1][px+1]=grid[py][px]+integral[py][px+1]+integral[py+1][px]-integral[py][px];
+   if(++px==32){px=0;if(++py==32){ey=10;mid=13;my=20;phase=4;}}
+  }else if(phase==4){
+   unsigned score=pose();if(score>best)best=score;
+   if(++my==28){
+    if(++mid==20){mid=13;ey++;}
+    my=ey+6>20?ey+6:20;
+    if(ey==19){
+     if(best)m7_retain(m7_face_boxes,&m7_face_count,&m7_face_more,(struct m7_box){x0,y0,x0+w-1,y0+h-1,w*h,M7_FACE});
+     part++;phase=1;
+    }
    }
-  }
-  col=score_add(col,delta);
-  if(!finite_le(col,last_col)){col=origin;row=score_add(row,delta);}
-  if(!finite_le(row,last_row)){
-   scale*=1.2f;origin=scale/2+1;row=col=origin;delta=scale*.1f;
-   last_row=M7_H-scale/2-1;last_col=M7_W-scale/2-1;
-  }
+  }else return 1;
  }
- if(finite_le(scale,M7_H-2))return 0;
- count=cluster_detections(detections,count);
- for(unsigned i=0;i<count;i++)if(detections[i*4+3]>=5){
-  float r=detections[i*4],c=detections[i*4+1],s=detections[i*4+2];
-  m7_add_face(c-s/2,r-s/2,c+s/2,r+s/2);
- }
- finished=1;return 1;
+ return 0;
 }

@@ -53,6 +53,7 @@ try {
  if($Full){
   $tests+=@{name='geometry_m7';src=@('vision_geometry_m7.sv')}
   $tests+=@{name='geometry_m7_display';src=@('vision_geometry_m7.sv','vision_display.sv','vision_frontend.sv','vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_shape_classifier.sv','vision_osd.sv')}
+  $tests+=@{name='geometry_m7_split';src=@('vision_geometry_m7.sv','vision_display.sv','vision_frontend.sv','vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_shape_classifier.sv','vision_osd.sv')}
   $tests+=@{name='bayer_fov_reduce';src=@('../bayer_fov_reduce.sv')}
   $tests+=@{name='canny';src=@('vision_canny.sv','vision_canny_denoise.sv','vision_median9.sv','vision_hysteresis_sweep.sv','vision_hysteresis.sv','vision_sparse_window.sv','vision_sobel.sv')}
  }

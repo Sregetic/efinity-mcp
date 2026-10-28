@@ -3,9 +3,9 @@ import json
 import argparse
 import subprocess
 from pathlib import Path
-p=argparse.ArgumentParser();p.add_argument('--service-only',action='store_true');args=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--service-only',action='store_true');p.add_argument('--cases-dir',type=Path,default=Path('results/geometry_edge_split_20261028/host_final'));p.add_argument('--output-dir',type=Path,default=Path('results/geometry_edge_split_20261028/rv32_final'));args=p.parse_args()
 ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/'results/geometry_m7_20261028/rv32_test';OUT.mkdir(parents=True,exist_ok=True)
+OUT=args.output_dir.resolve();OUT.mkdir(parents=True,exist_ok=True)
 BIN=Path('F:/Efinity/efinity-riscv-ide-2026.1/toolchain/bin')
 (OUT/'start.S').write_text('.section .text.start,"ax"\n.global _start\n_start:\n la sp,__stack_top\n la t0,trap\n csrw mtvec,t0\n call main\n j trap\n',encoding='utf-8')
 (OUT/'link.ld').write_text('OUTPUT_ARCH(riscv)\nENTRY(_start)\nSECTIONS{. = 0x80000000; .text : {*(.text.start) *(.text*)} .rodata : {*(.rodata*)} .data : {*(.data*) *(.sdata*)} .bss : {*(.bss*) *(.sbss*)} __stack_top = 0x81000000;}',encoding='utf-8')
@@ -18,8 +18,8 @@ def run(name,sources):
  print(r.stdout.decode().strip())
 run('service',[ROOT/'sim/test_geometry_m7_service.c'])
 if args.service_only:raise SystemExit(0)
-results=json.loads((ROOT/'results/geometry_m7_20261028/backend_test_v2/result.json').read_text(encoding='utf-8'))
-data='.section .rodata\n.balign 16\n.global model\nmodel:\n.incbin "'+(ROOT/'models/geometry_face/facefinder').as_posix()+'"\n.balign 16\n.global cases\ncases:\n.incbin "'+(ROOT/'results/geometry_m7_20261028/backend_test_v2/cases.bin').as_posix()+'"\n'
+results=json.loads((args.cases_dir/'result.json').read_text(encoding='utf-8'))
+data='.section .rodata\n.balign 16\n.global cases\ncases:\n.incbin "'+(args.cases_dir.resolve()/'cases.bin').as_posix()+'"\n'
 (OUT/'data.S').write_text(data,encoding='utf-8')
 expect=[]
 for r in results:
@@ -29,7 +29,7 @@ for r in results:
 source=r'''#include <stdint.h>
 #include "geometry_m7.h"
 #include "geometry_face.h"
-extern const uint8_t model[],cases[];
+extern const uint8_t cases[];
 void*memset(void*p,int v,unsigned n){volatile unsigned char*b=p;while(n--)*b++=v;return p;}
 static void text(const char*s){while(*s)*(volatile unsigned char*)0x10000000=*s++;}
 static void finish(unsigned ok){*(volatile unsigned*)0x100000=ok?0x5555:0x3333;for(;;);}
@@ -37,16 +37,17 @@ static unsigned expected[][22]={EXPECT};
 void main(void){
  for(unsigned n=0;n<sizeof(expected)/sizeof(expected[0]);n++){
   const uint8_t*input=cases+n*(16200+129600);m7_begin((const uint32_t*)input);
-  while(!m7_step(512));m7_face_begin(input+16200,(void*)model);while(!m7_face_step(8));
+  while(!m7_step(512));m7_face_begin((const uint32_t*)input,m7_contours,m7_contour_count);while(!m7_face_step(8));
+  for(unsigned i=0;i<m7_face_count;i++)m7_retain(m7_boxes,&m7_count,&m7_more,m7_face_boxes[i]);m7_more|=m7_face_more;
   if(m7_count!=expected[n][0]||m7_more!=expected[n][1]){text("FAIL RV32I count\n");finish(0);}
   for(unsigned i=0;i<m7_count;i++){
    const struct m7_box*b=&m7_boxes[i];unsigned*v=expected[n]+2+i*5;
    if(b->klass!=v[0]||b->x0!=v[1]||b->y0!=v[2]||b->x1!=v[3]||b->y1!=v[4]){text("FAIL RV32I box\n");finish(0);}
   }
  }
- text("PASS RV32I 17 edge/face fixtures equal host boxes, including native photo and packed-pixel inputs\n");finish(1);
+ text("PASS RV32I all shared-edge geometry fixtures equal host boxes\n");finish(1);
 }
 void trap(void){text("TRAP\n");finish(0);}
 '''.replace('EXPECT',','.join(expect))
 (OUT/'backend.c').write_text(source,encoding='utf-8')
-run('backend',[OUT/'backend.c',OUT/'data.S',*[ROOT/'firmware/vision'/p for p in ['geometry_m7.c','geometry_face.c','pico/picornt.c']]])
+run('backend',[OUT/'backend.c',OUT/'data.S',*[ROOT/'firmware/vision'/p for p in ['geometry_m7.c','geometry_face.c']]])

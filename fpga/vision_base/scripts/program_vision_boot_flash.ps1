@@ -29,7 +29,8 @@ try {
   if($LASTEXITCODE){throw 'Flash backup failed'}
   & $python -c 'import sys,struct;from pathlib import Path;sys.path.insert(0,"scripts");from pack_vision_boot import validate_package;p=Path(sys.argv[1]);d=bytes.fromhex((p/"flash_before.hex").read_text());assert len(d)==0x800000;(p/"flash_before.bin").write_bytes(d);tail=d[0x700000:];h=struct.unpack_from("<8I",tail);assert all(b==255 for b in tail) or tail[:32]==(p/"vision_boot.bin").read_bytes()[:32] or (h[0]==0x56424f31 and validate_package(tail[:32+h[2]+h[4]])),"Reserved application region contains unrelated data"' $out
   if($LASTEXITCODE){throw 'Flash layout validation failed; no erase/write issued'}
-  $log=& $python $programmer "$out/vision_boot.hex" -m jtag_bridge --jtag_bridge_mode all --verify_method onchipx1 -u $Url --jtag_clock_freq 1000000 --address 0x700000 2>&1
+  # This board's validated path uses host readback, not the bridge CRC mode.
+  $log=& $python $programmer "$out/vision_boot.hex" -m jtag_bridge --jtag_bridge_mode all --verify_method hostx1 -u $Url --jtag_clock_freq 1000000 --address 0x700000 2>&1
   $log | Set-Content "$out/write.log"
   if($LASTEXITCODE){throw 'Flash application write failed'}
   $length=(Get-Item -LiteralPath "$out/vision_boot.bin").Length

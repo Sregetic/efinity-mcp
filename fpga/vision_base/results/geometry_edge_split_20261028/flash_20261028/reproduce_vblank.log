@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "F:\Project\fpga\vision_base\scripts\test_geometry_m7_firmware.py", line 19, in <module>
+    run('service',[ROOT/'sim/test_geometry_m7_service.c'])
+  File "F:\Project\fpga\vision_base\scripts\test_geometry_m7_firmware.py", line 17, in run
+    assert r.returncode==0 and b'PASS' in r.stdout,(name,r.returncode,r.stdout,r.stderr)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('service', 0, b'FAIL service line 76\n', b'qemu-system-riscv32.exe: warning: Setting G will also set IMAFD\r\n')

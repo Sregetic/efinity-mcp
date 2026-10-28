@@ -82,8 +82,6 @@ def main():
     software_headers(src, overlay, a.cfu_kernels)
     data = '.section .rodata.fomo,"a"\n'
     data_files = [('fomo_model', [a.model_dir / 'shape_fomo_int8.tflite'])]
-    if a.camera:
-        data_files += [('m7_facefinder', [ROOT/'models/geometry_face/facefinder'])]
     if readout:
         data_files += [('connectome_readout_weights', [a.connectome_readout])]
     if not a.camera:
@@ -109,7 +107,7 @@ def main():
     }
     sources = [src / 'tensorflow/lite/c/common.c']
     sources += [src / 'tensorflow/lite' / group / (name + '.cc') for group, names in groups.items() for name in names]
-    application = ['ai_main.c', 'flyhash.c', 'fomo_camera.cc', 'geometry_m7.c', 'geometry_face.c', 'geometry_m7_service.c', 'pico/picornt.c'] if a.camera else ['fomo_main.cc']
+    application = ['ai_main.c', 'flyhash.c', 'fomo_camera.cc', 'geometry_m7.c', 'geometry_face.c', 'geometry_m7_service.c'] if a.camera else ['fomo_main.cc']
     sources += [ROOT / 'firmware/vision' / s for s in application]
     sources += [ROOT / 'firmware/vision/start.S', out / 'data.S']
     includes = [overlay, src, src / 'tensorflow/third_party/flatbuffers/include',
@@ -164,8 +162,8 @@ def main():
                   elf=str(elf), size_report=size, source_files=[str(s) for s in sources])
     record['resource_scope'] = 'firmware_only'
     if a.camera:
-        record['geometry_m7'] = dict(required_hardware_abi='0x26102871', native_rebuild_required=True,
-                                    face_model_bytes=239632, face_model_location='CPU_DDR', maximum_objects=4)
+        record['geometry_m7'] = dict(required_hardware_abi='0x26102871',
+                                    recognition='accepted-edge contour geometry for circle/rectangle/face', face_model_bytes=0, maximum_objects=4)
     if readout:
         record['connectome_readout'] = dict(path=str(a.connectome_readout.resolve()), bytes=364,
                                            version=readout['version'], graph_version=readout['graph'],

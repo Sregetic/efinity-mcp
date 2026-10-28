@@ -1,0 +1,2 @@
+PASS M7 split publications: newer geometry + older face, coherent I3 primary source, VS atomic counts and 2073600 RGB pixels
+sim/vision/tb_geometry_m7_split.sv:78: $finish called at 21183950000 (1ps)

@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "scope": "one-to-one actual head locations, not count-only",
+  "targets": {
+    "face_raw_v2": [
+      [
+        224,
+        60
+      ]
+    ],
+    "two_faces_raw": [
+      [
+        110,
+        125
+      ],
+      [
+        350,
+        175
+      ]
+    ]
+  }
+}

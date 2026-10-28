@@ -1,0 +1,2 @@
+PASS RV32I M7 independent geometry advances during slow face work; lane source IDs; primary metadata; frozen cache; cancellation/context/threshold; no new DMA lease; original UI threshold controls
+qemu-system-riscv32.exe: warning: Setting G will also set IMAFD
