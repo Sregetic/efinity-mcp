@@ -2,13 +2,17 @@
 #define CONTROL_TEST
 #define VISION_GEOMETRY_M7
 #define M7_SERVICE_TEST
-static uint32_t control[32],geo[32],dma[32],ticks,request,publication,reads,face_calls,tag;
+static uint32_t control[32],geo[64],dma[32],ticks,request,publication,reads,face_calls,tag;
 #define CTRL_R(o) control[(o)/4]
 #define CTRL_W(o,v) (control[(o)/4]=(v))
 #define CONTROL_STATE (&state)
 extern struct vision_control_state state;
+static uint32_t label_rows[64][2],label_cursor;
 static void geo_write(unsigned off,uint32_t value){
- if(off==4)request=value;
+ if(off==0x38)label_cursor=value;
+ else if(off==0x80)label_rows[label_cursor][0]=value;
+ else if(off==0x84)label_rows[label_cursor++][1]=value;
+ else if(off==4)request=value;
  else if(off==0x24){publication=2;geo[1]|=8;}
  else geo[off/4]=value;
 }
@@ -43,6 +47,8 @@ void m7_begin(const uint32_t *bits){
  m7_count=2;m7_boxes[0]=(struct m7_box){20+tag,25,60+tag,70,100,2};m7_boxes[1]=(struct m7_box){100+tag,80,150+tag,140,90,1};
  m7_contour_count=1;m7_contours[0]=(struct m7_contour){tag,10,100,120,123,0};
 }
+void m7_letters_begin(const uint32_t *bits){CHECK(bits[0]==(0x12340000u^tag));}
+unsigned m7_letters_step(unsigned b){CHECK(b==64);return 1;}
 unsigned m7_step(unsigned b){CHECK(b==2048);return 1;}
 void m7_face_begin(const uint32_t *bits,const struct m7_contour *c,unsigned n){
  CHECK(bits[0]==(0x12340000u^tag)&&n==1&&c[0].x0==tag);face_tag=tag;face_left=face_duration;face_calls++;
@@ -71,8 +77,9 @@ void main(void){
  CHECK(!geometry_m7_service_step(0)&&!request);
  CHECK(step()==1&&request);snapshot(100,1,0);CHECK(!step()&&!request);
  new_geometry(101,2);
+ CHECK(label_cursor==64&&((uint64_t)label_rows[0][1]<<19|label_rows[0][0])==m7_label_row(2,0));
  CHECK(reads==4050&&face_calls==1&&face_running&&geometry.sequence==1&&face.sequence==0);
- CHECK(geo[0x60/4]==101&&geo[0x78/4]==(2|(1<<4)|(1<<7)));
+ CHECK(geo[0x60/4]==101&&(geo[0x78/4]&8191)==(2|(1<<4)|(1<<7)));
  new_geometry(102,3);new_geometry(103,4);
  CHECK(geometry.sequence==3&&face.sequence==0&&face_calls==1&&geo[0x60/4]==103&&face_tag==2);
  // A new snapshot can miss during VBlank without invalidating completed/independent work.
@@ -85,7 +92,7 @@ void main(void){
  for(unsigned n=0;!face.valid;n++){step();CHECK(n<1100);}
  for(unsigned n=0;dirty;n++){step();CHECK(n<10);}
  CHECK(geometry.frame==103&&face.frame==101&&geometry_m7_lane_record[1]==103&&geometry_m7_lane_record[9]==101);
- CHECK(geo[0x60/4]==101&&geo[0x78/4]==(3|(1<<4)|(1<<7)|(1<<10)));
+ CHECK(geo[0x60/4]==101&&(geo[0x78/4]&8191)==(3|(1<<4)|(1<<7)|(1<<10)));
  CHECK(geometry_m7_record[0]==0x4d374733&&geometry_m7_record[2]==101);
  // Frozen unchanged edges do not restart either classifier; changed edges do.
  unsigned gs=geometry.sequence,fc=face_calls;geo[0x34/4]++;
@@ -120,6 +127,13 @@ void main(void){
  CHECK(((state.settings>>20)&2047)==160&&geo[0x2c/4]==144&&state.shape_threshold==32);
 
  CHECK(!step()&&!request&&!face_running);
+ state.settings=7;geo[1]=17;step();new_geometry(300,11);
+ geometry.boxes[0].klass=M7_LOWER;face.valid=0;dirty=1;
+ while(dirty)step();
+ CHECK(geometry_m7_classes[0]==M7_LOWER&&geometry_m7_classes[1]==M7_CIRCLE);
+ CHECK((geometry_m7_record[5]>>17)==97&&((geometry_m7_record[5]>>14)&7)==1);
+ CHECK((geometry_m7_record[9]>>17)==0&&label_cursor==64);
+ for(unsigned row=0;row<16;row++)CHECK(((uint64_t)label_rows[row][1]<<19|label_rows[row][0])==m7_label_row(M7_LOWER,row));
  text("PASS RV32I M7 independent geometry advances during slow face work; VBlank miss/copy rejection preserve completed lanes; late token/status ordering; lane source IDs; primary metadata; frozen cache; cancellation/context/threshold; no new DMA lease; original UI threshold controls\n");finish(1);
 }
 void trap(void){text("TRAP\n");finish(0);}

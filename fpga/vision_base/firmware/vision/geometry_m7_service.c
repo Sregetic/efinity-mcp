@@ -1,5 +1,7 @@
 #include "geometry_m7_service.h"
 #include "geometry_m7.h"
+#include "geometry_labels.h"
+#include "geometry_letters.h"
 #include "geometry_face.h"
 #include "control_service.h"
 #ifndef M7_SERVICE_TEST
@@ -11,6 +13,8 @@
 uint32_t geometry_m7_bitmap[M7_WORDS];
 /* GEO3: publication/primary identity, boxes, independent lane timing/sequences. */
 volatile uint32_t geometry_m7_record[24];
+/* Full class IDs accompany the legacy two-bit boxes under the same publication sequence. */
+volatile uint32_t geometry_m7_classes[4];
 /* Per lane: sequence/frame/render/context/cycles/count+more/complex/edge epoch. */
 volatile uint32_t geometry_m7_lane_record[16];
 struct m7_lane {
@@ -22,7 +26,7 @@ static struct m7_lane geometry,face;
 static struct {uint32_t frame,render,context,epoch,start;} job,face_job;
 static unsigned initialized,phase,word,unchanged,face_running,dirty,have_epoch;
 static uint32_t token,start,pub_sequence,last_epoch,settings,threshold,render,context;
-enum {IDLE,WAIT_SNAPSHOT,COPY,CONTOURS,DRAIN};
+enum {IDLE,WAIT_SNAPSHOT,COPY,CONTOURS,DRAIN,LETTERS};
 static void reject_snapshot(void){
  M7_W(4,0);phase=IDLE;geometry_m7_record[20]=IDLE;geometry_m7_record[23]++;
 }
@@ -55,13 +59,19 @@ static void publish(void){
   }
  }
  const struct m7_lane *primary=count&&boxes[0].klass==M7_FACE?&face:&geometry;
- uint32_t meta[4]={primary->frame,primary->render,primary->context,count|(more<<3)};
+ uint32_t meta[4]={primary->frame,primary->render,primary->context,count|(more<<3)|(1u<<13)|((count?m7_symbol(boxes[0].klass):0)<<17)};
  geometry_m7_record[1]=0;
  for(unsigned i=0;i<4;i++){
+  geometry_m7_classes[i]=i<count?boxes[i].klass:0;
   uint64_t value=0;
-  if(i<count){const struct m7_box*b=&boxes[i];value=((uint64_t)b->klass<<36)|((uint64_t)b->x0<<27)|((uint64_t)b->y0<<18)|((uint32_t)b->x1<<9)|b->y1;meta[3]+=1u<<(b->klass*3+1);}
+  if(i<count){const struct m7_box*b=&boxes[i];value=((uint64_t)(b->klass<=M7_FACE?b->klass:0)<<36)|((uint64_t)b->x0<<27)|((uint64_t)b->y0<<18)|((uint32_t)b->x1<<9)|b->y1;meta[3]+=1u<<(b->klass<=M7_FACE?b->klass*3+1:14);}
   uint32_t low=value&0x7ffff,high=value>>19;M7_W(0x40+i*8,low);M7_W(0x44+i*8,high);
   geometry_m7_record[8+i*2]=low;geometry_m7_record[9+i*2]=high;
+ }
+ M7_W(0x38,0);
+ for(unsigned i=0;i<4;i++)for(unsigned row=0;row<16;row++){
+  uint64_t data=m7_label_row(i<count?boxes[i].klass:0,row);
+  M7_W(0x80,(uint32_t)data&0x7ffff);M7_W(0x84,(uint32_t)(data>>19));
  }
  for(unsigned i=0;i<4;i++){M7_W(0x60+i*8,meta[i]&0x7ffff);M7_W(0x64+i*8,meta[i]>>19);}
  geometry_m7_record[0]=0x4d374733;geometry_m7_record[2]=meta[0];geometry_m7_record[3]=meta[1];geometry_m7_record[4]=meta[2];
@@ -121,10 +131,13 @@ unsigned geometry_m7_service_step(unsigned available){
   }
  }else if(phase==CONTOURS){
   if(m7_step(2048)){
-   geometry.frame=job.frame;geometry.render=job.render;geometry.context=job.context;geometry.epoch=job.epoch;geometry.cycles=M7_TICKS-job.start;
-   save_lane(&geometry,m7_boxes,m7_count,m7_more,m7_complex,0);
    if(!face_running){m7_face_begin(geometry_m7_bitmap,m7_contours,m7_contour_count);face_job=job;face_running=1;}
-   phase=IDLE;
+   m7_letters_begin(geometry_m7_bitmap);phase=LETTERS;
+  }
+ }else if(phase==LETTERS){
+  if(m7_letters_step(64)){
+   geometry.frame=job.frame;geometry.render=job.render;geometry.context=job.context;geometry.epoch=job.epoch;geometry.cycles=M7_TICKS-job.start;
+   save_lane(&geometry,m7_boxes,m7_count,m7_more,m7_complex,0);phase=IDLE;
   }
  }
  /* The existing VS bank swap is atomic; never publish during descriptor settling. */

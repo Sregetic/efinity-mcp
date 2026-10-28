@@ -1,3 +1,3 @@
 #pragma once
-/* Nonzero means M7 owns the shared analysis DMA; its AI consumer must wait. */
+/* Nonzero pauses AI scheduling while the shared M7 input/job is active; private face work does not. */
 unsigned geometry_m7_service_step(unsigned available);

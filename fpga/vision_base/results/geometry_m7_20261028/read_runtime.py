@@ -10,6 +10,9 @@ base=configuration(board_location(a.url),R/'artifacts/vision_soc/cpu0.yaml',s,5)
 commands=['halt','wait_halt 5000',f'echo "M7_RECORD [read_memory {s["geometry_m7_record"]:#x} 32 24]"',f'echo "AI_RUNTIME [read_memory {s["ai_runtime"]:#x} 32 8]"']
 if 'geometry_m7_lane_record' in s:
  commands.append(f'echo "M7_LANES [read_memory {s["geometry_m7_lane_record"]:#x} 32 16]"')
+if 'geometry_m7_classes' in s:
+ commands.append(f'echo "M7_CLASSES [read_memory {s["geometry_m7_classes"]:#x} 32 4]"')
+ commands.append('echo "M7_LABEL_ABI [read_memory 0xf810053c 32 1]"')
 for off in [0,4,8,0x18,0x1c,0x20,0x28,0x2c,0x34]:
  commands.append(f'echo "GEO_{off:02x} [read_memory {0xf8100500+off:#x} 32 1]"')
 commands.append('echo "DMA_STATE [read_memory 0xf8100104 32 1]"')
@@ -18,11 +21,15 @@ cfg=O/(a.name+'.cfg');cfg.write_text(base+body,encoding='utf-8')
 x=subprocess.run([str(IDE/'openocd/bin/openocd.exe'),'-f',str(cfg)],capture_output=True,text=True,timeout=120)
 log=x.stdout+x.stderr;(O/(a.name+'.log')).write_text(log,encoding='utf-8');x.check_returncode();assert 'M7_CPU_RESUMED' in log
 result={}
-for name,values in re.findall(r'^(M7_RECORD|M7_LANES|AI_RUNTIME|GEO_[0-9a-f]+|DMA_STATE) ([0-9xabcdefABCDEF ]+)$',log,re.M):result[name]=[int(v,0)for v in values.split()]
+for name,values in re.findall(r'^(M7_RECORD|M7_LANES|M7_CLASSES|M7_LABEL_ABI|AI_RUNTIME|GEO_[0-9a-f]+|DMA_STATE) ([0-9xabcdefABCDEF ]+)$',log,re.M):result[name]=[int(v,0)for v in values.split()]
 assert len(result['M7_RECORD'])==24 and result['GEO_00']==[0x26102871],result
 expected=0x4d374733 if 'geometry_m7_lane_record' in s else 0x4d374732
 result['cpu_resumed']=True;result['record_complete']=result['M7_RECORD'][0]==expected and result['M7_RECORD'][1]!=0
 if expected==0x4d374733:
  assert len(result['M7_LANES'])==16,result
  result['geometry_result_valid']=result['M7_LANES'][0]!=0;result['face_result_valid']=result['M7_LANES'][8]!=0;result['face_busy']=bool(result['M7_RECORD'][21])
+if 'geometry_m7_classes' in s:
+ assert len(result['M7_CLASSES'])==4 and result['M7_LABEL_ABI']==[0x4d374c31],result
+ labels=['NONE','CIRCLE','RECTANGLE','FACE']+list('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')+[c+'/'+c.lower() for c in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ']+['I/l']
+ result['labels']=[labels[v] for v in result['M7_CLASSES']]
 (O/(a.name+'.json')).write_text(json.dumps(result,indent=2),encoding='utf-8');print(json.dumps(result,indent=2))

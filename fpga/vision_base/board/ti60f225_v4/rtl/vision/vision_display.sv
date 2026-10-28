@@ -36,7 +36,7 @@ wire edge_on=!border && edge1;wire osd,ink;
 wire shape_done;reg[31:0]capture_frame=0,capture_config=0,capture_context=0;
 wire use_m7=EXTERNAL_GEOMETRY&&mode==7&&shape_enable;
 wire geo_current,geo_published,geo_primary_we,geo_meta_we,geo_mark;wire[2:0]geo_count;wire[1:0]geo_meta_index;
-wire[12:0]geo_counts;wire[37:0]geo_primary_data;wire[31:0]geo_meta_data;wire[23:0]geo_color;
+wire[15:0]geo_counts;wire[6:0]geo_symbol;wire[37:0]geo_primary_data;wire[31:0]geo_meta_data;wire[23:0]geo_color;
 wire[11:0]geo_right={1'b0,geo_primary_data[17:9],2'b0}+12'd5,geo_bottom={1'b0,geo_primary_data[8:0],2'b0}+12'd5;
 generate if(EXTERNAL_GEOMETRY)begin:m7_geometry
  vision_geometry_m7 detector(.clk(clk),.rst_n(geometry_rst_n),.de(fd),.vs(fv),.x(x),.y(y),.enabled(use_m7),
@@ -47,10 +47,10 @@ generate if(EXTERNAL_GEOMETRY)begin:m7_geometry
   .cpu_clk(geometry_cpu_clk),.cpu_rst_n(geometry_cpu_rst_n),.paddr(geometry_paddr),.psel(geometry_psel),.penable(geometry_penable),.pwrite(geometry_pwrite),.pwdata(geometry_pwdata),
   .prdata(geometry_prdata),.pready(geometry_pready),.current(geo_current),.count(geo_count),.published(geo_published),
   .primary_we(geo_primary_we),.primary_data(geo_primary_data),.meta_we(geo_meta_we),.meta_index(geo_meta_index),.meta_data(geo_meta_data),
-  .mark(geo_mark),.color(geo_color),.counts(geo_counts),.edge_threshold(geometry_edge_threshold));
+  .mark(geo_mark),.color(geo_color),.counts(geo_counts),.symbol(geo_symbol),.edge_threshold(geometry_edge_threshold));
 end else begin:no_m7_geometry
  assign geometry_bitmap_hold=0,geometry_raw_read=0,geometry_prdata=0,geometry_pready=1,geometry_edge_threshold=96;
- assign geo_counts=0,geo_current=0,geo_count=0,geo_published=0,geo_primary_we=0,geo_primary_data=0,geo_meta_we=0,geo_meta_index=0,geo_meta_data=0,geo_mark=0,geo_color=0;
+ assign geo_symbol=0,geo_counts=0,geo_current=0,geo_count=0,geo_published=0,geo_primary_we=0,geo_primary_data=0,geo_meta_we=0,geo_meta_index=0,geo_meta_data=0,geo_mark=0,geo_color=0;
 end endgenerate
 wire[1:0]shape_class;wire shape_valid;wire[11:0]sx0,sy0,sx1,sy1;wire[7:0]shape_bg;wire[3:0]shape_flags;
 wire shape_show=shape_enable&&mode>=2;
@@ -58,7 +58,7 @@ wire detection_edge=(mode==5||mode==6)?(canny_pixel&&canny_ready):edge_on;
 // Edge modes recognize the displayed edge mask, not the RGB image behind it.
 wire[7:0]shape_gray=(FUSION&&analysis_enabled)?gray:(mode>=2&&mode<=6)?{8{detection_edge}}:gray;
 vision_shape_classifier #(.X0(4),.Y0(4),.X1(WIDTH),.Y1(HEIGHT),.EXTERNAL_RESULT(EXTERNAL_GEOMETRY)) shape0(.clk(clk),.rst_n(rst_n&&!(FUSION&&analysis_context_changed)),.de(fd),.vs(fv),.x(x),.y(y),.gray(shape_gray),.diff_threshold(shape_threshold),
- .shape_class(shape_class),.shape_valid(shape_valid),.box_x0(sx0),.box_y0(sy0),.box_x1(sx1),.box_y1(sy1),.background(shape_bg),.reject_flags(shape_flags),.result_done(shape_done),.external_enable(use_m7),.external_write(geo_primary_we),.external_publish(geo_published),.external_valid(geo_count!=0),.external_class(geo_primary_data[37:36]),
+ .shape_class(shape_class),.shape_valid(shape_valid),.box_x0(sx0),.box_y0(sy0),.box_x1(sx1),.box_y1(sy1),.background(shape_bg),.reject_flags(shape_flags),.result_done(shape_done),.external_enable(use_m7),.external_write(geo_primary_we),.external_publish(geo_published),.external_valid(geo_count!=0),.external_class(geo_primary_data[37:36]==0?2'd3:geo_primary_data[37:36]),
  .external_x0({1'b0,geo_primary_data[35:27],2'b10}),.external_y0({1'b0,geo_primary_data[26:18],2'b10}),
  .external_x1(geo_right>=WIDTH?12'(WIDTH-1):geo_right),.external_y1(geo_bottom>=HEIGHT?12'(HEIGHT-1):geo_bottom));
 assign shape_status={shape_enable,shape_valid,shape_class,shape_bg,shape_flags,sx0,sy0,sx1,sy1};
@@ -76,7 +76,7 @@ wire shape_current=use_m7?(geo_current&&geo_count!=0):shape_valid&&(!(FUSION&&an
  (geometry_frame==frame_id&&geometry_config==render_config_id&&geometry_context==analysis_context));
 wire shape_box=shape_current&&((x>=sx0&&x<=sx1&&(y==sy0||y==sy1))||(y>=sy0&&y<=sy1&&(x==sx0||x==sx1)));
 vision_osd #(.M7_FACE(EXTERNAL_GEOMETRY)) osd0(x,y,mode,mode==7?(EXTERNAL_GEOMETRY?canny_effective_threshold:{3'b0,shape_threshold}):(mode==5||mode==6)?canny_effective_threshold:threshold,median_en,memory_mode,history_index,canny_ready,shape_class,shape_current,shape_show,osd,ink,canny_requested_threshold,
- (FUSION&&analysis_enabled),analysis_result,analysis_identity_match,analysis_age,clk,ui_state,geo_counts);
+ (FUSION&&analysis_enabled),analysis_result,analysis_identity_match,analysis_age,clk,ui_state,geo_counts,geo_symbol);
 // RGB/gradient metadata represents the center after two 3x3 windows.
 assign cx=x0>=2?x0-2:0;assign cy=y0>=2?y0-2:0;
 assign coordinate_de=fd0&&x0>=2&&y0>=2;reg[10:0]dm=0;reg dedge=0;assign debug_mag=dm;assign debug_edge=dedge;

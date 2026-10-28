@@ -51,7 +51,7 @@ void main(void){
  if(CONTROL_STATE->magic==0)control_init(); // SPI boot clears it; USER1 replacement preserves the live UI.
  if(m->magic!=0x53434d31u||DMA(0x2c)!=3||CTRL_R(0)!=0x26101002u||CONTROL_STATE->magic!=CONTROL_MAGIC||FUS_R(0)!=0x26101003u
 #ifdef VISION_GEOMETRY_M7
- ||M7_R(0)!=0x26102871u
+ ||M7_R(0)!=0x26102871u||M7_R(0x3c)!=0x4d374c31u
 #endif
  ){REG(4)=3;for(;;);}
 #ifdef VISION_CONNECTOME_READOUT

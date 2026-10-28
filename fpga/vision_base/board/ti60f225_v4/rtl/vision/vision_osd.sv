@@ -1,4 +1,4 @@
-module vision_osd #(parameter MOTION_HINT=0,M7_FACE=0)(input[11:0]x,y,input[2:0]mode,input[10:0]threshold,input median_en,input[1:0]memory_mode,input[2:0]history_index,input canny_ready,input[1:0]shape_class,input shape_valid,input shape_enable,output reg active=0,output ink,input[10:0]requested_threshold,input fusion_enabled,input[351:0]fusion_result,input fusion_match,input[15:0]fusion_age,input clk,input[23:0]ui_state,input[12:0]geometry_counts);
+module vision_osd #(parameter MOTION_HINT=0,M7_FACE=0)(input[11:0]x,y,input[2:0]mode,input[10:0]threshold,input median_en,input[1:0]memory_mode,input[2:0]history_index,input canny_ready,input[1:0]shape_class,input shape_valid,input shape_enable,output reg active=0,output ink,input[10:0]requested_threshold,input fusion_enabled,input[351:0]fusion_result,input fusion_match,input[15:0]fusion_age,input clk,input[23:0]ui_state,input[15:0]geometry_counts,input[6:0]geometry_symbol);
 function automatic[34:0]glyph(input[7:0]ch);
  begin case(ch)
 8'd48:glyph=35'b01110100011001110101110011000101110;
@@ -400,16 +400,17 @@ always @*begin
  else if(!MOTION_HINT&&row==1&&shape_enable)begin
   case(idx)
    0:ch="S";1:ch="H";2:ch="A";3:ch="P";4:ch="E";5:ch=":";
-   7:ch=!shape_valid?"N":shape_class==1?"C":shape_class==2?"R":((M7_FACE&&mode==7)?"F":"O");
-   8:ch=!shape_valid?"O":shape_class==1?"I":shape_class==2?"E":((M7_FACE&&mode==7)?"A":"T");
-   9:ch=!shape_valid?"N":shape_class==1?"R":shape_class==2?"C":((M7_FACE&&mode==7)?"C":"H");
-   10:ch=!shape_valid?"E":shape_class==1?"C":shape_class==2?"T":((M7_FACE&&mode==7)?"E":"E");
-   11:ch=!shape_valid?" ":shape_class==1?"L":shape_class==2?" ":((M7_FACE&&mode==7)?" ":"R");
-   12:ch=(shape_valid&&shape_class==1)?"E":" ";
+   7:ch=(M7_FACE&&mode==7&&shape_valid&&geometry_symbol)?"L":!shape_valid?"N":shape_class==1?"C":shape_class==2?"R":((M7_FACE&&mode==7)?"F":"O");
+   8:ch=(M7_FACE&&mode==7&&shape_valid&&geometry_symbol)?"E":!shape_valid?"O":shape_class==1?"I":shape_class==2?"E":((M7_FACE&&mode==7)?"A":"T");
+   9:ch=(M7_FACE&&mode==7&&shape_valid&&geometry_symbol)?"T":!shape_valid?"N":shape_class==1?"R":shape_class==2?"C":((M7_FACE&&mode==7)?"C":"H");
+   10:ch=(M7_FACE&&mode==7&&shape_valid&&geometry_symbol)?"T":!shape_valid?"E":shape_class==1?"C":shape_class==2?"T":((M7_FACE&&mode==7)?"E":"E");
+   11:ch=(M7_FACE&&mode==7&&shape_valid&&geometry_symbol)?"E":!shape_valid?" ":shape_class==1?"L":shape_class==2?" ":((M7_FACE&&mode==7)?" ":"R");
+   12:ch=(M7_FACE&&mode==7&&shape_valid&&geometry_symbol)?"R":(shape_valid&&shape_class==1)?"E":" ";
    14:ch=(M7_FACE&&mode==7)?"N":" ";15:ch=(M7_FACE&&mode==7)?8'(48+geometry_counts[2:0]):" ";
    16:ch=(M7_FACE&&mode==7&&geometry_counts[3])?"+":" ";
    18:ch=(M7_FACE&&mode==7)?"C":" ";19:ch=(M7_FACE&&mode==7)?8'(48+geometry_counts[6:4]):" ";
    21:ch=(M7_FACE&&mode==7)?"R":" ";22:ch=(M7_FACE&&mode==7)?8'(48+geometry_counts[9:7]):" ";
+   27:ch=(M7_FACE&&mode==7)?"L":" ";28:ch=(M7_FACE&&mode==7)?8'(48+geometry_counts[15:13]):" ";
    24:ch=(M7_FACE&&mode==7)?"F":" ";25:ch=(M7_FACE&&mode==7)?8'(48+geometry_counts[12:10]):" ";
    default:ch=32;
   endcase

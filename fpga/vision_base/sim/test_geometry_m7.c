@@ -3,11 +3,17 @@
 #include <stdlib.h>
 #include "../firmware/vision/geometry_m7.h"
 #include "../firmware/vision/geometry_face.h"
+#include "../firmware/vision/geometry_letters.h"
 static void test_retention(void){
  m7_count=m7_more=0;
  for(unsigned i=0;i<6;i++)m7_retain(m7_boxes,&m7_count,&m7_more,(struct m7_box){10+i*60,20,40+i*60,60,100+i,3});
  assert(m7_count==4&&m7_more);
  for(unsigned i=1;i<4;i++)assert(m7_boxes[i-1].area>=m7_boxes[i].area);
+ for(unsigned order=0;order<2;order++){
+  struct m7_box letter={10,10,200,200,36000,M7_UPPER},face={50,50,100,110,3000,M7_FACE};
+  m7_count=m7_more=0;m7_retain(m7_boxes,&m7_count,&m7_more,order?letter:face);
+  m7_retain(m7_boxes,&m7_count,&m7_more,order?face:letter);assert(m7_count==2);
+ }
 }
 int main(int argc,char **argv){
  test_retention();
@@ -17,6 +23,7 @@ int main(int argc,char **argv){
   assert(fread(gray,sizeof(gray),1,f)==1);
   m7_begin(bits);unsigned slices=0;
   while(!m7_step(512))assert(++slices<1000000);
+  m7_letters_begin(bits);while(!m7_letters_step(64))assert(++slices<1000000);
   unsigned geometry_slices=slices;
   m7_face_begin(bits,m7_contours,m7_contour_count);
   while(!m7_face_step(32))assert(++slices<1000000);

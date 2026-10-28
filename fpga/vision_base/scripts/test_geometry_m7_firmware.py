@@ -3,7 +3,7 @@ import json
 import argparse
 import subprocess
 from pathlib import Path
-p=argparse.ArgumentParser();p.add_argument('--service-only',action='store_true');p.add_argument('--cases-dir',type=Path,default=Path('results/geometry_edge_split_20261028/host_final'));p.add_argument('--output-dir',type=Path,default=Path('results/geometry_edge_split_20261028/rv32_final'));args=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--service-only',action='store_true');p.add_argument('--letters-cases-dir',type=Path);p.add_argument('--cases-dir',type=Path,default=Path('results/geometry_edge_split_20261028/host_final'));p.add_argument('--output-dir',type=Path,default=Path('results/geometry_edge_split_20261028/rv32_final'));args=p.parse_args()
 ROOT=Path(__file__).resolve().parents[1]
 OUT=args.output_dir.resolve();OUT.mkdir(parents=True,exist_ok=True)
 BIN=Path('F:/Efinity/efinity-riscv-ide-2026.1/toolchain/bin')
@@ -29,6 +29,7 @@ for r in results:
 source=r'''#include <stdint.h>
 #include "geometry_m7.h"
 #include "geometry_face.h"
+#include "geometry_letters.h"
 extern const uint8_t cases[];
 void*memset(void*p,int v,unsigned n){volatile unsigned char*b=p;while(n--)*b++=v;return p;}
 static void text(const char*s){while(*s)*(volatile unsigned char*)0x10000000=*s++;}
@@ -37,7 +38,7 @@ static unsigned expected[][22]={EXPECT};
 void main(void){
  for(unsigned n=0;n<sizeof(expected)/sizeof(expected[0]);n++){
   const uint8_t*input=cases+n*(16200+129600);m7_begin((const uint32_t*)input);
-  while(!m7_step(512));m7_face_begin((const uint32_t*)input,m7_contours,m7_contour_count);while(!m7_face_step(8));
+  while(!m7_step(512));m7_letters_begin((const uint32_t*)input);while(!m7_letters_step(64));m7_face_begin((const uint32_t*)input,m7_contours,m7_contour_count);while(!m7_face_step(8));
   for(unsigned i=0;i<m7_face_count;i++)m7_retain(m7_boxes,&m7_count,&m7_more,m7_face_boxes[i]);m7_more|=m7_face_more;
   if(m7_count!=expected[n][0]||m7_more!=expected[n][1]){text("FAIL RV32I count\n");finish(0);}
   for(unsigned i=0;i<m7_count;i++){
@@ -50,4 +51,39 @@ void main(void){
 void trap(void){text("TRAP\n");finish(0);}
 '''.replace('EXPECT',','.join(expect))
 (OUT/'backend.c').write_text(source,encoding='utf-8')
-run('backend',[OUT/'backend.c',OUT/'data.S',*[ROOT/'firmware/vision'/p for p in ['geometry_m7.c','geometry_face.c']]])
+run('backend',[OUT/'backend.c',OUT/'data.S',*[ROOT/'firmware/vision'/p for p in ['geometry_m7.c','geometry_face.c','geometry_letters.c']]])
+
+if args.letters_cases_dir:
+ records=json.loads((args.letters_cases_dir/'result.json').read_text(encoding='utf-8'))['frames']
+ expected=[];data='.section .rodata\n.balign 16\n.global letter_cases\nletter_cases:\n'
+ for name,r in records.items():
+  data+='.incbin "'+(args.letters_cases_dir.resolve()/(name+'.bin')).as_posix()+'"\n'
+  expected.extend([len(r['boxes']),r['more'],len(r['candidates'])])
+  for b in r['boxes']:expected.extend(b)
+  for c in r['candidates']:expected.extend([c[2],c[0],c[1],c[7],c[8]])
+ (OUT/'letters_data.S').write_text(data,encoding='utf-8')
+ source=r'''#include <stdint.h>
+#include "geometry_letters.c"
+extern const uint32_t letter_cases[];
+static const uint16_t expected[]={EXPECTED};
+void*memset(void*p,int v,unsigned n){volatile unsigned char*b=p;while(n--)*b++=v;return p;}
+static void text(const char*s){while(*s)*(volatile unsigned char*)0x10000000=*s++;}
+static void finish(unsigned ok){*(volatile unsigned*)0x100000=ok?0x5555:0x3333;for(;;);}
+static void equal(unsigned a,unsigned b){if(a!=b){text("FAIL RV32I letters\n");finish(0);}}
+static void box_equal(const struct m7_box*b,unsigned *p){
+ equal(b->klass,expected[(*p)++]);equal(b->x0,expected[(*p)++]);equal(b->y0,expected[(*p)++]);equal(b->x1,expected[(*p)++]);equal(b->y1,expected[(*p)++]);
+}
+void main(void){
+ unsigned p=0;
+ for(unsigned n=0;n<FRAMES;n++){
+  const uint32_t*bits=letter_cases+n*M7_WORDS;m7_begin(bits);while(!m7_step(512));m7_letters_begin(bits);while(!m7_letters_step(64));
+  equal(m7_count,expected[p++]);equal(m7_more,expected[p++]);equal(count,expected[p++]);
+  for(unsigned i=0;i<m7_count;i++)box_equal(m7_boxes+i,&p);
+  for(unsigned i=0;i<count;i++)box_equal(&candidates[i].box,&p);
+ }
+ equal(p,sizeof(expected)/sizeof(expected[0]));text("PASS RV32I all312 native glyph cases/79frames/full candidate identities and four displayed boxes equal ASan host\n");finish(1);
+}
+void trap(void){text("TRAP\n");finish(0);}
+'''.replace('EXPECTED',','.join(map(str,expected))).replace('FRAMES',str(len(records)))
+ (OUT/'letters.c').write_text(source,encoding='utf-8')
+ run('letters',[OUT/'letters.c',OUT/'letters_data.S',ROOT/'firmware/vision/geometry_m7.c'])

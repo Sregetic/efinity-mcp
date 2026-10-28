@@ -52,6 +52,8 @@ try {
  )
  if($Full){
   $tests+=@{name='geometry_m7';src=@('vision_geometry_m7.sv')}
+  $tests+=@{name='geometry_m7_labels';src=@('vision_geometry_m7.sv')}
+  $tests+=@{name='geometry_m7_labels_display';src=@('vision_geometry_m7.sv','vision_display.sv','vision_frontend.sv','vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_shape_classifier.sv','vision_osd.sv')}
   $tests+=@{name='geometry_m7_display';src=@('vision_geometry_m7.sv','vision_display.sv','vision_frontend.sv','vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_shape_classifier.sv','vision_osd.sv')}
   $tests+=@{name='geometry_m7_split';src=@('vision_geometry_m7.sv','vision_display.sv','vision_frontend.sv','vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_shape_classifier.sv','vision_osd.sv')}
   $tests+=@{name='bayer_fov_reduce';src=@('../bayer_fov_reduce.sv')}

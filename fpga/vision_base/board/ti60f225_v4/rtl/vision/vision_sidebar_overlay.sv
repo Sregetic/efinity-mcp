@@ -10,7 +10,7 @@ module vision_sidebar_overlay(input clk,rst_n,de,hs,vs,input[23:0]rgb,ui_state,i
   .mode(3'd0),.threshold(11'd0),.median_en(1'b0),.memory_mode(2'd0),.history_index(3'd0),
   .canny_ready(1'b0),.shape_class(2'd0),.shape_valid(1'b0),.shape_enable(1'b0),
   .requested_threshold(11'd0),.fusion_enabled(1'b0),.fusion_result({332'd0,motion_enable,direction_q,held_q,ai_status,11'd0}),
-  .fusion_match(1'b0),.fusion_age(16'd0),.active(active),.ink(ink));
+  .geometry_counts(16'd0),.geometry_symbol(7'd0),.fusion_match(1'b0),.fusion_age(16'd0),.active(active),.ink(ink));
  always @(posedge clk)begin
   if(!rst_n)begin x<=0;y<=0;de_q<=0;hs_q<=0;vs_q<=0;open_q<=0;rgb_q<=0;direction_q<=0;held_q<=0;end
   else begin

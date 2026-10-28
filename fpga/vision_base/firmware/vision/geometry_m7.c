@@ -45,6 +45,13 @@ void m7_retain(struct m7_box boxes[4],unsigned *count,unsigned *more,struct m7_b
   struct m7_box *a=&boxes[i];
   int overlap_x=(a->x1<b.x1?a->x1:b.x1)-(int)(a->x0>b.x0?a->x0:b.x0)+1;
   int overlap_y=(a->y1<b.y1?a->y1:b.y1)-(int)(a->y0>b.y0?a->y0:b.y0)+1;
+  /* A recognized printed glyph owns its inner/dotted contour fragments. */
+  unsigned a_in_b=a->x0>=b.x0&&a->y0>=b.y0&&a->x1<=b.x1&&a->y1<=b.y1;
+  unsigned b_in_a=b.x0>=a->x0&&b.y0>=a->y0&&b.x1<=a->x1&&b.y1<=a->y1;
+  if(a->klass>=M7_UPPER&&b.klass!=M7_FACE&&b_in_a&&box_area(a)>box_area(&b))return;
+  if(b.klass>=M7_UPPER&&a->klass!=M7_FACE&&a_in_b&&box_area(&b)>box_area(a)){
+   for(unsigned j=i;j+1<(*count);j++)boxes[j]=boxes[j+1];(*count)--;i--;continue;
+  }
   unsigned close=absolute((int)a->x0-b.x0)<=3&&absolute((int)a->y0-b.y0)<=3&&
                  absolute((int)a->x1-b.x1)<=3&&absolute((int)a->y1-b.y1)<=3;
   unsigned face_pair=(a->klass==M7_FACE||b.klass==M7_FACE)&&
@@ -131,7 +138,7 @@ unsigned m7_step(unsigned budget){
    int nx=px+step_x[dir],ny=py+step_y[dir];
    if(first_set&&px==startx&&py==starty&&nx==firstx&&ny==firsty){
     contour_index=M7_CONTOURS;
-    if(!overflow&&npoints>=4&&xmax>xmin&&ymax>ymin){
+    if(!overflow&&npoints>=2&&(xmax>xmin||ymax>ymin)){
      if(m7_contour_count<M7_CONTOURS){
       contour_index=m7_contour_count++;
       m7_contours[contour_index]=(struct m7_contour){xmin,ymin,xmax,ymax,(unsigned)absolute(area2),area2<0?M7_INNER_CONTOUR:0u};

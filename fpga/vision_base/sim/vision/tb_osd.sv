@@ -4,7 +4,7 @@ reg clk=0;always #5 clk=~clk;
 reg[11:0]x=8,y=4;reg[2:0]mode=2;reg[10:0]threshold=96;wire active,ink;
 reg[23:0]ui=0;
 reg fusion=0,matched=1;reg[351:0]packet=0;reg[15:0]age=0;
-vision_osd dut(x,y,mode,threshold,1'b1,2'd0,3'd0,1'b1,2'd0,1'b0,1'b0,active,ink,11'd16,fusion,packet,matched,age,clk,ui,13'd0);
+vision_osd dut(x,y,mode,threshold,1'b1,2'd0,3'd0,1'b1,2'd0,1'b0,1'b0,active,ink,11'd16,fusion,packet,matched,age,clk,ui,16'd0,7'd0);
 task character(input integer position,input[7:0]wanted);
 begin @(negedge clk);x=8+12*position;@(posedge clk);#1;if(dut.ch_q!==wanted||!active)$fatal(1,"OSD character %0d: %c expected %c",position,dut.ch_q,wanted);end
 endtask

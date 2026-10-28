@@ -104,7 +104,7 @@ def main():
     compiler = ['wsl.exe', '-d', 'Ubuntu-24.04', '--exec', 'gcc', '-O2', '-DVISION_MULHI_CFU', '-DINT8_TEST', '-g', '-fsanitize=address,undefined',
                 '-std=c11', '-Wall', '-Wextra', '-Wno-misleading-indentation', '-o', wsl(out/'geometry_host')]
     compiler += [wsl(ROOT/s) for s in ['sim/test_geometry_m7.c', 'firmware/vision/geometry_m7.c',
-                                     'firmware/vision/geometry_face.c']]
+                                     'firmware/vision/geometry_face.c','firmware/vision/geometry_letters.c']]
     r = subprocess.run(compiler, capture_output=True)
     (out/'compile.stdout').write_bytes(r.stdout); (out/'compile.stderr').write_bytes(r.stderr)
     r.check_returncode()

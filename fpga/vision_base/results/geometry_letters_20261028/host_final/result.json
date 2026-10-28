@@ -1,0 +1,530 @@
+[
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 7,
+    "geometry_slices": 7,
+    "contours": 0,
+    "boxes": [],
+    "name": "blank"
+  },
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 206,
+    "geometry_slices": 206,
+    "contours": 1,
+    "boxes": [
+      [
+        2,
+        40,
+        50,
+        180,
+        130
+      ]
+    ],
+    "name": "rectangle"
+  },
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 157,
+    "geometry_slices": 157,
+    "contours": 1,
+    "boxes": [
+      [
+        1,
+        175,
+        85,
+        265,
+        175
+      ]
+    ],
+    "name": "circle"
+  },
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 157,
+    "geometry_slices": 157,
+    "contours": 1,
+    "boxes": [
+      [
+        1,
+        175,
+        85,
+        265,
+        175
+      ]
+    ],
+    "name": "inverted_circle"
+  },
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 269,
+    "geometry_slices": 269,
+    "contours": 1,
+    "boxes": [
+      [
+        2,
+        153,
+        73,
+        286,
+        186
+      ]
+    ],
+    "name": "rotated_rectangle"
+  },
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 223,
+    "geometry_slices": 223,
+    "contours": 2,
+    "boxes": [
+      [
+        1,
+        300,
+        150,
+        380,
+        230
+      ],
+      [
+        2,
+        20,
+        30,
+        100,
+        90
+      ]
+    ],
+    "name": "two_objects"
+  },
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 136,
+    "geometry_slices": 136,
+    "contours": 2,
+    "boxes": [
+      [
+        2,
+        70,
+        40,
+        410,
+        230
+      ],
+      [
+        1,
+        185,
+        95,
+        255,
+        165
+      ]
+    ],
+    "name": "nested_distinct_objects"
+  },
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 131,
+    "geometry_slices": 131,
+    "contours": 3,
+    "boxes": [
+      [
+        1,
+        180,
+        90,
+        260,
+        170
+      ]
+    ],
+    "name": "one_double_edge_circle"
+  },
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 105,
+    "geometry_slices": 105,
+    "contours": 4,
+    "boxes": [
+      [
+        2,
+        445,
+        233,
+        473,
+        262
+      ],
+      [
+        2,
+        440,
+        5,
+        474,
+        28
+      ],
+      [
+        2,
+        4,
+        4,
+        30,
+        30
+      ],
+      [
+        1,
+        7,
+        228,
+        37,
+        258
+      ]
+    ],
+    "name": "four_screen_corners"
+  },
+  {
+    "more": 1,
+    "complex": 0,
+    "slices": 379,
+    "geometry_slices": 379,
+    "contours": 5,
+    "boxes": [
+      [
+        2,
+        370,
+        60,
+        430,
+        130
+      ],
+      [
+        2,
+        280,
+        60,
+        340,
+        125
+      ],
+      [
+        2,
+        190,
+        60,
+        250,
+        120
+      ],
+      [
+        2,
+        100,
+        60,
+        160,
+        115
+      ]
+    ],
+    "name": "five_objects"
+  },
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 227,
+    "geometry_slices": 227,
+    "contours": 1,
+    "boxes": [],
+    "name": "open_outline"
+  },
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 261,
+    "geometry_slices": 95,
+    "contours": 5,
+    "boxes": [
+      [
+        3,
+        9,
+        9,
+        61,
+        81
+      ]
+    ],
+    "name": "edge_face_left_top"
+  },
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 261,
+    "geometry_slices": 95,
+    "contours": 5,
+    "boxes": [
+      [
+        3,
+        417,
+        9,
+        469,
+        81
+      ]
+    ],
+    "name": "edge_face_right_top"
+  },
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 261,
+    "geometry_slices": 95,
+    "contours": 5,
+    "boxes": [
+      [
+        3,
+        9,
+        188,
+        61,
+        260
+      ]
+    ],
+    "name": "edge_face_left_bottom"
+  },
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 261,
+    "geometry_slices": 95,
+    "contours": 5,
+    "boxes": [
+      [
+        3,
+        417,
+        188,
+        469,
+        260
+      ]
+    ],
+    "name": "edge_face_right_bottom"
+  },
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 1717,
+    "geometry_slices": 600,
+    "contours": 6,
+    "boxes": [
+      [
+        3,
+        160,
+        29,
+        320,
+        241
+      ]
+    ],
+    "name": "edge_face_large"
+  },
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 568,
+    "geometry_slices": 235,
+    "contours": 11,
+    "boxes": [
+      [
+        3,
+        64,
+        74,
+        116,
+        146
+      ],
+      [
+        3,
+        324,
+        119,
+        376,
+        191
+      ],
+      [
+        2,
+        200,
+        30,
+        260,
+        70
+      ]
+    ],
+    "name": "two_edge_faces_and_rectangle"
+  },
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 261,
+    "geometry_slices": 95,
+    "contours": 3,
+    "boxes": [],
+    "name": "head_without_eyes"
+  },
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 261,
+    "geometry_slices": 95,
+    "contours": 4,
+    "boxes": [],
+    "name": "head_without_mouth"
+  },
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 895,
+    "geometry_slices": 270,
+    "contours": 86,
+    "boxes": [
+      [
+        2,
+        249,
+        113,
+        364,
+        162
+      ],
+      [
+        2,
+        133,
+        140,
+        161,
+        144
+      ],
+      [
+        2,
+        131,
+        130,
+        145,
+        133
+      ]
+    ],
+    "name": "photo_raw_v2"
+  },
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 895,
+    "geometry_slices": 270,
+    "contours": 86,
+    "boxes": [
+      [
+        2,
+        249,
+        113,
+        364,
+        162
+      ],
+      [
+        2,
+        133,
+        140,
+        161,
+        144
+      ],
+      [
+        2,
+        131,
+        130,
+        145,
+        133
+      ]
+    ],
+    "name": "photo_raw_v2_packed"
+  },
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 3595,
+    "geometry_slices": 1433,
+    "contours": 81,
+    "boxes": [
+      [
+        3,
+        185,
+        7,
+        264,
+        92
+      ],
+      [
+        1,
+        175,
+        183,
+        215,
+        224
+      ]
+    ],
+    "name": "face_raw_v2"
+  },
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 3595,
+    "geometry_slices": 1433,
+    "contours": 81,
+    "boxes": [
+      [
+        3,
+        185,
+        7,
+        264,
+        92
+      ],
+      [
+        1,
+        175,
+        183,
+        215,
+        224
+      ]
+    ],
+    "name": "face_raw_v2_packed"
+  },
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 4791,
+    "geometry_slices": 2899,
+    "contours": 60,
+    "boxes": [
+      [
+        3,
+        49,
+        49,
+        180,
+        195
+      ],
+      [
+        3,
+        287,
+        99,
+        417,
+        245
+      ]
+    ],
+    "name": "two_faces_raw"
+  },
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 4791,
+    "geometry_slices": 2899,
+    "contours": 60,
+    "boxes": [
+      [
+        3,
+        49,
+        49,
+        180,
+        195
+      ],
+      [
+        3,
+        287,
+        99,
+        417,
+        245
+      ]
+    ],
+    "name": "two_faces_raw_packed"
+  },
+  {
+    "more": 0,
+    "complex": 0,
+    "slices": 7,
+    "geometry_slices": 7,
+    "contours": 0,
+    "boxes": [],
+    "name": "gray_face_without_edges"
+  }
+]
