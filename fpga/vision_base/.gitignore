@@ -35,3 +35,7 @@ results/**/__pycache__/
 
 # Third-party receiver source is supplied locally, not redistributed.
 board/hdmi_input_test/vendor/
+
+# Efinity also writes a large warning log directly under results/.
+results/*.warn.log
+results/**/*.map.v
