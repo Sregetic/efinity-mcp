@@ -54,7 +54,6 @@
         <efx:design_file name="rtl/vision/vision_display.sv" version="default" library="default" />
         <efx:design_file name="rtl/vision/vision_frontend.sv" version="default" library="default" />
         <efx:design_file name="rtl/vision/vision_median9.sv" version="default" library="default" />
-        <efx:design_file name="rtl/vision/vision_shape_classifier.sv" version="default" library="default" />
         <efx:design_file name="rtl/vision/vision_osd.sv" version="default" library="default" />
         <efx:design_file name="rtl/vision/vision_sidebar_overlay.sv" version="default" library="default" />
         <efx:design_file name="rtl/vision/vision_sobel.sv" version="default" library="default" />

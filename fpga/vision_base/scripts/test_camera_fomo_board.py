@@ -27,12 +27,6 @@ def main():
             if (state['ai_flags']>>11)&3==3:raise RuntimeError(state)
             if time.monotonic()>deadline:raise TimeoutError(state)
             time.sleep(.25)
-    def network(value):
-        state=control('--menu',10)
-        assert state['menu']==10,state
-        if state['menu_value']!=value:state=control('--key-event',2)
-        assert state['menu_value']==value,state
-        return state
     def read(name,summary=False):
         directory=out/name
         args=[sys.executable,str(ROOT/'scripts/read_fomo_camera.py'),'--url',a.url,'--elf',str(a.elf),'--output-dir',str(directory)]
@@ -48,10 +42,8 @@ def main():
         return s,f
     before=control();(out/'before.json').write_text(json.dumps(before,indent=2));rows=[]
     try:
-        control('--ai-policy',0,'--mode',0,'--memory',0);state=network(0)
-        assert state['menu']==10 and state['menu_value']==0,state
-        state=control('--key-event',2);assert state['menu_value']==1,state
-        state=control('--menu',8,'--key-event',2);assert state['menu_value']==1,state
+        state=control('--ai-policy',0,'--mode',0,'--memory',0,'--recognition-model','fomo')
+        assert state['recognition_model']==1,state
         # Bulk source snapshots use the renderer's protected source contract.
         control('--roi',0,0,1920,1080,'--output-size',1920,1080,'--position',0,0,'--roi-enable',1)
         control('--memory',1)
@@ -81,8 +73,7 @@ def main():
         assert live[2]==second[2]+1 and live[3]!=frame and k[6]==2
         rows=[dict(case=name,sequence=s[2],source=s[3],render=s[5],context=s[6],invoke_ms=s[9]/100000) for name,s in [('first',first),('stable',stable),('rerender',second),('selftest',tested),('live',live)]]
     finally:
-        network(0)
-        restored=control('--ai-policy',0,'--memory',0,'--mode',before['mode'],'--median',before['median'],'--menu',0,'--roi-enable',0)
+        restored=control('--ai-policy',0,'--memory',0,'--recognition-model',{1:'fomo',2:'m7'}[before['recognition_model']],'--mode',before['mode'],'--median',before['median'],'--menu',0,'--roi-enable',0)
         (out/'restore.json').write_text(json.dumps(restored,indent=2))
     result=dict(passed=True,cases=rows,scope='Actual SRAM key-event policy/CPU/camera leases; not manual pressing or card accuracy')
     (out/'result.json').write_text(json.dumps(result,indent=2));print(json.dumps(result,indent=2))

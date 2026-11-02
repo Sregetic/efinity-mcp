@@ -1,4 +1,4 @@
-"""Desktop reference of actual Ti60 RGB preprocessing/output/components and legacy AI."""
+"""Desktop reference of actual Ti60 RGB preprocessing/output/components and shared edge/circuit diagnostics."""
 import argparse
 import json
 import struct
@@ -10,7 +10,7 @@ from PIL import Image
 from load_vision_ddr import ROOT
 sys.path.insert(0, str(ROOT/'models'))
 from fomo_post import components
-from shape_cards import features, dense
+from shape_cards import features
 from flyhash import encode
 from connectome import fixed
 
@@ -72,20 +72,15 @@ def main():
                   input_reference='Independent same-frame pre-Gamma RGB bulk snapshot sampled by the RV32I contract',
                   scope='Actual camera source/board output; optional full CPU input dump is separate; not real-card accuracy acceptance')
     assert legacy[15] == int(gray.sum())
-    blob=(ROOT/'models/shape_cards_bringup/shape_cards_weights.bin').read_bytes()
-    magic,iz,hz,oz,m0,s0,m1,s1=struct.unpack_from('<I7i',blob)
-    assert magic==0x53434d31
-    b0=np.frombuffer(blob,dtype='<i4',count=32,offset=32);b1=np.frombuffer(blob,dtype='<i4',count=4,offset=160)
-    w0=np.frombuffer(blob,dtype=np.int8,count=4096,offset=176).reshape(32,128)
-    w1=np.frombuffer(blob,dtype=np.int8,count=128,offset=4272).reshape(4,32)
-    x=features(gray);h=dense(x,w0,b0,iz,hz,m0,s0,True);o=dense(h,w1,b1,hz,oz,m1,s1)
-    for name,expected in [('features',x),('hidden',h),('logits',o)]:
-        assert np.array_equal(expected,np.frombuffer((out/(name+'.bin')).read_bytes(),dtype=np.int8)),name
+    assert legacy[4] == 2 and legacy[11:13] == (0,0), 'Removed BASE model/layers must not run'
+    assert legacy[5] == s[14] and legacy[16] == f[10], 'Published scores must be FOMO scores'
+    x=features(gray)
+    assert np.array_equal(x,np.frombuffer((out/'features.bin').read_bytes(),dtype=np.int8))
     assert int.from_bytes((out/'hash.bin').read_bytes(),'little')==encode((x[64:].astype(np.int16)+128).tolist())
     assert np.array_equal(fixed(x),np.frombuffer((out/'network.bin').read_bytes(),dtype='<i2'))
     n=struct.unpack('<10I',(out/'network_record.bin').read_bytes())
     assert n[9]==0 and n[1:6]==(s[2],s[3],s[4],s[5],s[6])
-    result.update(legacy_int8_exact=True,flyhash_exact=True,connectome_states_exact=80)
+    result.update(base_backend_removed=True,flyhash_exact=True,connectome_states_exact=80)
     if a.connectome_readout:
         from connectome_readout import load, predict, MAGIC, GRAPH_VERSION
         head = load(a.connectome_readout)

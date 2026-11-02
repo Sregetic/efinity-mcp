@@ -1,19 +1,23 @@
-# 一键自动居中 ROI：当前操作与离线验证
+# 全景选目标、单目标居中与重新选择
 
-2026-10-22当前候选为对称留边版。用户明确要求的是黑边对称，而非取消黑边或让目标偏离中心铺满屏幕。保留两层中文侧栏和前轮长时间FOMO推理期间取消/重发修复，仅调整共享构图函数。硬件不在现场，本轮未连接板卡、未写SRAM或Flash。
+在M7画面中，到“目标→一键居中”按KEY0，保持全景实时预览并选择要放大的目标。一次性居中默认不变；新的“目标→持续跟随”和“目标轨迹”候选用法见[M7持续跟随与三秒轨迹](M7_FOLLOW_TRAJECTORY.md)。新候选已自动验证和整机P&R，尚未部署或写Flash。当前Flash仍是已由用户重载确认正常的KEY1版本，配套在results/key1_back_flash_20261030/release/。
 
-## 怎么使用
+## M7操作顺序
 
-1. 在F0实时或F1冻结下，先取得有效目标。AI关闭或基础模型时使用既有几何结果；选中FOMO且开启AI时，居中动作请求一次新的FOMO任务。
-2. 长按KEY0打开中文菜单，KEY2/KEY3选“目标”，短按KEY0展开二级。
-3. 需要限制放大程度时，先选择“放大倍率”，进入编辑，设置“自动 / 1倍 / 2倍 / 4倍 / 8倍”，再次KEY0确认。倍率是上限，较大目标会自动降低倍率以保留整体。
-4. 选择“一键居中”，KEY0进入确认页，再按KEY0确认。RISC-V会自行计算源ROI、缩放尺寸和输出位置，无需手动调平移或输出坐标。
-5. 状态从“等待”转为“完成”表示现有ROI提交握手已确认，渲染结果随后按原帧边界切换。长按KEY0逐级返回并关闭菜单。
-6. 选择“恢复全幅”并确认，可退出ROI、恢复原全幅，同时取消尚未完成的居中请求。
+1. 在“智能→模型”选择“M7几何”，开启固定单帧或自动推理。显示可保持Sobel/Canny边缘或叠加，不用切回原图。
+2. 短按KEY1打开菜单，进入“目标→一键居中”，短按KEY0，直接展开第三列“选择目标”。
+3. 系统恢复1920×1080全景，加载和选择期间均保持F0实时预览。第一路结果未完成前显示“等待”；随后圆/矩形/字母与人脸各自完成即更新0–4行选项，不再等同一帧两路全部完成。
+4. KEY2/KEY3上下循环选择，所选框和标签显示洋红色。列表排序或小幅位移时，按相同类别和框重叠保留原选择；目标消失、位移过大或关联不唯一时取消选中，按上下键重新选择，KEY0不会误用原行号居中其他目标。
+5. 短按KEY0，将当前选中结果对应的目标等比放大并居中，第三列收起；保持原倍率上限、完整目标和对称留边。默认是一次性裁剪；在新候选中预先开启持续跟随，则继续以初始倍率平移ROI跟随该目标。
+6. 再次进入“一键居中”会回到全景，重新实时选择，不在已裁剪视图内继续套裁剪。短按KEY1取消，留在全景；默认确认或取消均恢复进入前F0/F1状态。新候选若已开启跟随或轨迹并成功选择，则保持F0实时取帧。无目标时不提交ROI，列表仍会继续更新。
 
-这是**一次识别后的一次自动构图**，不是连续跟踪。F0后续画面继续在这组ROI中实时更新；F1重渲染持有的同一原帧。目标移动后，可再次请求居中。F2/F3历史状态下显示“正忙”，先回到F0/F1再执行。
+即使进入前是F1冻结，选择期间也暂时改为F0实时预览；未启用跟随/轨迹的原一次性操作退出后恢复原状态。固定单帧策略的完整类别判定仅在选择栏打开期间临时连续，关闭后恢复单帧规则；推理关闭、历史F2/F3或渲染忙仍按原状态拒绝，不暗中启动识别。持续跟随建议使用自动推理。
 
-2026-10-27起，几何路径搜索整个有效显示画面，目标框仍用全屏坐标，一键居中沿原逆映射处理四角或中央目标。FOMO固定单帧仍使用已提交源ROI，ROI关闭时为原固定分析区[640,300,640,480]，自动模式仍为几何引导；FOMO本身未改成全图扫描，也没有训练新模型。无目标显示“无目标”，旧变换/身份显示“已过期”；当前构图保持。构图测试不代替实物识别验收。
+每一行记录自身的实际源帧；几何与人脸可以来自同一渲染配置/context下不同的已完成帧。列表按识别完成速度更新，不是每个视频帧都有新识别结果。人脸仍可能慢于普通几何；人脸有新结果时独立更新，不阻塞普通选项。
+
+## 其他模型保持原操作
+
+基础模型居中临时使用M7边缘定位；FOMO居中请求一次新的FOMO任务。两者仍先进入原动作确认页，再KEY0确认，没有改成M7多目标列表。推理关闭不运行隐式识别，居中显示“无目标”。“恢复全幅”退出ROI；关闭推理、切模型或改变参数会取消尚未提交的M7选择，过期身份不能拿来居中。
 
 ## 构图规则
 
@@ -31,9 +35,9 @@ FOMO的长卷积会轮询按键并更新控制状态，但完成回调先于主�
 
 新增回归先在旧代码上复现失败，再通过新代码；覆盖关闭AI、切模型、重新请求及恢复全幅。原F0/F1、独立阈值、菜单确认/取消、无目标、旧坐标变换、已有ROI逆映射、历史忙状态和FOMO身份测试继续通过。
 
-## 离线证据与范围
+## 2026-10-22对称构图证据（历史）
 
-当前证据目录：F:/Project/fpga/vision_base/results/center_symmetric_20261022/。前轮单边留黑/回调修复的原始证据保留在results/auto_center_roi_20261022/，本轮另存，没有覆盖。
+当时证据目录：F:/Project/fpga/vision_base/results/center_symmetric_20261022/。前轮单边留黑/回调修复的原始证据保留在results/auto_center_roi_20261022/，本轮另存，没有覆盖。
 
 - RV32I QEMU实际运行生产控制/融合头文件：4655个断言，636组几何参数、8组诊断UI向量；新增225组奇数/极小尺寸的四角、四边与中心位置测试，覆盖全部倍率。F0新增捕获后提交、F1持有帧和前轮取消/重发路径继续通过。
 - 六份实际固件提交描述符回放到生产axi_line_reader/roi_scaler/roi_axi_scaler，使用原生2560行宽上限、32拍突发/FIFO及总线/像素背压。
@@ -44,22 +48,32 @@ FOMO的长卷积会轮询按键并更新控制状态，但完成回调先于主�
 
 本轮未修改生产RTL，没有重跑整机P&R。沿用中文位流原生实测57745/60800XLR、246/256RAM、62/160DSP，WNS+0.108ns/WHS+0.027ns，余3055XLR/10RAM/98DSP。片上资源增量为0；原RGB24图像回读和5RAM快照保持，中文菜单/图像算法/相机设置保持。
 
-## 当前配套制品
+## 已固化的一次性居中配套与自动证据
+
+实时列表的位流、完整vision.elf与原权重在results/key1_back_flash_20261030/release/；控制ABI0x26103005、M7 ABI0x26103072、标签M7L1须成套使用。固件376784B，BSS1929912B，整机57462XLR/243RAM/63DSP，WNS+0.307ns/WHS+0.028ns。没有增加帧缓存；较前实时列表位流XLR少68，RAM/DSP不变。
+
+RV32控制4888断言/636组构图，以及实时服务的多目标增减、重排、选择关联/歧义、每行源帧、UI提交不取消计算、固定策略临时连续与退出停止通过。生产RTL验证列表无选中态、结果bank匹配高亮、Canny背景框/标签、RGB和同步，并已查看实际渲染。旧对称缩放器像素证据继续适用于未改的坐标计算/渲染链路。
+
+板上真实事件路径在固定策略打开列表后，持续约8秒完成24轮普通几何更新（约3.00次/秒），最近任务约243ms；源帧3393→4110持续变化，source_frozen保持0。关闭列表后固定策略两路停止自动更新，原设置/菜单恢复。当前场景未检出目标；实物变化、选择居中及准确率仍待现场，模拟目标不当成相机验收。
+
+当前按键、固化与用户重载证据见results/key1_back_flash_20261030/REPORT.md。实时列表的前轮状态机/像素证据保留在results/live_target_picker_20261030/，旧固化包仍保留用于历史恢复；本版配置、菜单和完整应用已固化。
+
+## 2026-10-22配套制品（历史）
 
 - 位流继续用F:/Project/fpga/vision_base/results/sidebar_chinese_20261022/release/ti60f225_oob.bit。
 - 完整DDR应用更新为F:/Project/fpga/vision_base/results/center_symmetric_20261022/firmware/vision.elf，185728B，比前轮增加160B；BSS66104B保持。
 - 原权重F:/Project/fpga/vision_base/models/shape_cards_bringup/shape_cards_weights.bin保持。
 - 新190160B离线启动包为F:/Project/fpga/vision_base/results/center_symmetric_20261022/release/vision_boot.bin，按既有VBO1格式和CRC契约检查；仅生成文件，没有写Flash。紧凑救援程序6784B仍在8KiB内，基础DDR应用9064B也已编译。
 
-新应用仍保留FOMO、原INT8、FlyHash、80节点连接组及伴随读出。旧Flash程序和旧DDR应用都保留；后续加载这份新DDR应用才能使用对称留边规则以及保留的取消/重发修复。
+新应用仍保留FOMO、原INT8、FlyHash、80节点连接组及伴随读出。旧Flash程序和旧DDR应用都保留；该历史应用提供当时的对称留边和取消/重发修复；当前新模型入口须使用上节2026-10-30配套。
 
-## 复现关键检查
+## 复现当前关键检查
+
+在F:/Project/fpga/vision_base运行：
 
 ```powershell
-python -E -X utf8 scripts/test_sidebar_center.py --output-dir results/center_symmetric_20261022/control
-C:/iverilog/bin/iverilog.exe -g2012 -s tb_roi_axi_scaler '-Ptb_roi_axi_scaler.CENTER_REPLAY=1' -o results/center_symmetric_20261022/render/center.vvp sim/tb_roi_axi_scaler.sv rtl/axi_line_reader.sv rtl/roi_scaler.sv rtl/roi_axi_scaler.sv
-C:/iverilog/bin/vvp.exe results/center_symmetric_20261022/render/center.vvp +vectors=results/center_symmetric_20261022/control/center_vectors.mem +output=results/center_symmetric_20261022/render
-python -E -X utf8 scripts/test_center_render.py --output-dir results/center_symmetric_20261022
+C:/ProgramData/anaconda3/python.exe -X utf8 -E scripts/test_sidebar_center.py --output-dir results/live_target_picker_20261030/control
+C:/ProgramData/anaconda3/python.exe -X utf8 -E scripts/test_geometry_m7_firmware.py --service-only --output-dir results/live_target_picker_20261030/service
 ```
 
-运行目录为F:/Project/fpga/vision_base，Python使用本项目既有运行时。硬件返回后先做SRAM及DDR加载验证，再验收实物识别、实体按键、F0/F1居中、对称留边、恢复全幅和原图/各模式回读；Flash继续保持现状，后续按明确指令处理。
+历史像素回放保留在上述日期目录，不覆盖原始证据。当前动态列表的板上日志、渲染图与恢复脚本见results/live_target_picker_20261030/；本版已固化Flash，实物变化/选择居中留待现场。

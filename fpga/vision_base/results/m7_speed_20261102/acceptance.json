@@ -1,0 +1,72 @@
+{
+  "status": "verified_and_temporarily_deployed",
+  "production_changes": [
+    "firmware/vision/geometry_m7.c"
+  ],
+  "test": "sim/test_m7_speed_math.c",
+  "arithmetic_equivalence": {
+    "passed": true,
+    "frames": 169,
+    "all_candidate_scores_and_classes_equal": true,
+    "all_boxes_and_more_equal": true,
+    "budgets_and_steps_equal": true,
+    "sanitizers": true,
+    "source": "Before/current exact production C backends; real saved HQ12 input plus 52 printed classes/poses/negatives/classic geometry",
+    "candidate": "final geometry_m7.c, original geometry_letters.c"
+  },
+  "rv32_evidence": "rv32/run_final.log",
+  "cpu_benchmark": "bench/result.json",
+  "live": {
+    "elapsed_unhalted_ms": 32906,
+    "category_count": 29,
+    "category_hz": 0.8812982434814319,
+    "last_category_request_to_completion_ms": 1100.36319,
+    "source_capture_increment": 991,
+    "display_source_increment": 992,
+    "scan_bad_frame_increment": 0,
+    "discard_increment": 0,
+    "position_updates": 0,
+    "position_rate": "not measured: follow and trail disabled by current user settings, no selected target",
+    "observation_to_roi_ms": null,
+    "ai_selftest": 2,
+    "fpga_reprogrammed": false,
+    "flash_written": false
+  },
+  "actual_output": {
+    "path": "actual_output.png",
+    "inspected": true,
+    "single_frame": false,
+    "source_frozen": false
+  },
+  "resources": {
+    "xlr": 56540,
+    "ram": 240,
+    "dsp": 63,
+    "hardware_rebuild": false,
+    "load_bytes": 339016,
+    "load_delta_bytes": 672,
+    "bss_bytes": 612112,
+    "bss_delta_bytes": 0,
+    "external_frame_results_bytes": 41943040,
+    "fomo_arena_bytes": 262144,
+    "control_bytes": 408,
+    "external_workspace_delta_bytes": 0
+  },
+  "deployment": {
+    "application": "candidate/vision.elf",
+    "bitstream": "results/multi_target_motion_20261102/lines/reset_release/vision_hdmi.bit",
+    "load_receipt": "candidate_load/result.json",
+    "state_restored": "restored.json",
+    "flash_written": false,
+    "fpga_reprogrammed": false
+  },
+  "not_checked": [
+    "new moving-object tracking frequency and observation-to-ROI latency: no active selection, follow/trail remain off",
+    "new live printed-letter accuracy: no controlled field letters",
+    "Flash boot: Flash unchanged"
+  ],
+  "rejected_optimization": {
+    "evidence": "bench_first/result.json",
+    "reason": "exact dot4 popcount/scaled-score candidate made the letter stage 7-12 percent slower; original letters restored"
+  }
+}

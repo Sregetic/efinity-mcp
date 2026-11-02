@@ -1,4 +1,4 @@
-module vision_osd #(parameter MOTION_HINT=0,M7_FACE=0)(input[11:0]x,y,input[2:0]mode,input[10:0]threshold,input median_en,input[1:0]memory_mode,input[2:0]history_index,input canny_ready,input[1:0]shape_class,input shape_valid,input shape_enable,output reg active=0,output ink,input[10:0]requested_threshold,input fusion_enabled,input[351:0]fusion_result,input fusion_match,input[15:0]fusion_age,input clk,input[23:0]ui_state,input[15:0]geometry_counts,input[6:0]geometry_symbol);
+module vision_osd #(parameter MOTION_HINT=0,M7_FACE=0)(input[11:0]x,y,input[2:0]mode,input[10:0]threshold,input median_en,input[1:0]memory_mode,input[2:0]history_index,input canny_ready,input[1:0]shape_class,input shape_valid,input shape_enable,output reg active=0,output ink,input[10:0]requested_threshold,input fusion_enabled,input[351:0]fusion_result,input fusion_match,input[15:0]fusion_age,input clk,input[23:0]ui_state,input[15:0]geometry_counts,input[6:0]geometry_symbol,input[27:0]target_classes);
 function automatic[34:0]glyph(input[7:0]ch);
  begin case(ch)
 8'd48:glyph=35'b01110100011001110101110011000101110;
@@ -39,11 +39,38 @@ function automatic[34:0]glyph(input[7:0]ch);
 8'd90:glyph=35'b11111000010001000100010001000011111;
 8'd43:glyph=35'b00000001000010011111001000010000000;
 8'd58:glyph=35'b00000001000010000000001000010000000;
+8'd97:glyph=35'b00000000000111000001011111000101111; // a
+8'd98:glyph=35'b10000100001011011001100011000111110; // b
+8'd99:glyph=35'b00000000000111010000100001000101110; // c
+8'd100:glyph=35'b00001000010110110011100011000101111; // d
+8'd101:glyph=35'b00000000000111010001111111000001110; // e
+8'd102:glyph=35'b00110010010100011100010000100001000; // f
+8'd103:glyph=35'b00000011111000110001011110000101110; // g
+8'd104:glyph=35'b10000100001011011001100011000110001; // h
+8'd105:glyph=35'b00100000000110000100001000010001110; // i
+8'd106:glyph=35'b00010000000011000010000101001001100; // j
+8'd107:glyph=35'b10000100001001010100110001010010010; // k
+8'd108:glyph=35'b01100001000010000100001000010001110; // l
+8'd109:glyph=35'b00000000001101010101101011000110001; // m
+8'd110:glyph=35'b00000000001011011001100011000110001; // n
+8'd111:glyph=35'b00000000000111010001100011000101110; // o
+8'd112:glyph=35'b00000000001111010001111101000010000; // p
+8'd113:glyph=35'b00000000000110110011011110000100001; // q
+8'd114:glyph=35'b00000000001011011001100001000010000; // r
+8'd115:glyph=35'b00000000000111110000011100000111110; // s
+8'd116:glyph=35'b01000010001110001000010000100100110; // t
+8'd117:glyph=35'b00000000001000110001100011001101101; // u
+8'd118:glyph=35'b00000000001000110001100010101000100; // v
+8'd119:glyph=35'b00000000001000110001101011010101010; // w
+8'd120:glyph=35'b00000000001000101010001000101010001; // x
+8'd121:glyph=35'b00000000001000110001011110000101110; // y
+8'd122:glyph=35'b00000000001111100010001000100011111; // z
+8'd47:glyph=35'b00001000100010001000100000000000000; // /
  default:glyph=0;endcase end
 endfunction
 // BEGIN GENERATED CHINESE SIDEBAR
 // Noto Sans SC Medium, 15px in 16x16 cells; regenerate with scripts/generate_sidebar_chinese.py.
-localparam integer CHINESE_GLYPHS=121;
+localparam integer CHINESE_GLYPHS=126;
 localparam[63:0] ZH_MENU=64'h8081202020202020; // 菜单
 localparam[63:0] ZH_IMAGE=64'h8283202020202020; // 图像
 localparam[63:0] ZH_VIEW=64'h8482202020202020; // 视图
@@ -72,47 +99,54 @@ localparam[63:0] ZH_SPLIT=64'hb7b8b9ba20202020; // 左右分屏
 localparam[63:0] ZH_SOBEL_OVERLAY=64'h534f42454cbbbc20; // SOBEL叠加
 localparam[63:0] ZH_CANNY=64'h43414e4e598d8e20; // CANNY边缘
 localparam[63:0] ZH_CANNY_OVERLAY=64'h43414e4e59bbbc20; // CANNY叠加
-localparam[63:0] ZH_SHAPE=64'hbdbebfc020202020; // 几何识别
-localparam[63:0] ZH_ON=64'hc1c2202020202020; // 开启
-localparam[63:0] ZH_OFF=64'hc3c4202020202020; // 关闭
-localparam[63:0] ZH_WIDTH=64'hc520202020202020; // 宽
-localparam[63:0] ZH_PIXELS=64'h83c6202020202020; // 像素
-localparam[63:0] ZH_FIXED=64'hc7c881c920202020; // 固定单帧
-localparam[63:0] ZH_AUTO=64'ha5ca202020202020; // 自动
-localparam[63:0] ZH_BASE=64'hcbcc8ba720202020; // 基础模型
+localparam[63:0] ZH_ON=64'hbdbe202020202020; // 开启
+localparam[63:0] ZH_OFF=64'hbfc0202020202020; // 关闭
+localparam[63:0] ZH_WIDTH=64'hc120202020202020; // 宽
+localparam[63:0] ZH_PIXELS=64'h83c2202020202020; // 像素
+localparam[63:0] ZH_FIXED=64'hc3c481c520202020; // 固定单帧
+localparam[63:0] ZH_AUTO=64'ha5c6202020202020; // 自动
+localparam[63:0] ZH_M7=64'h4d37c7c820202020; // M7几何
 localparam[63:0] ZH_TIMES=64'hac20202020202020; // 倍
-localparam[63:0] ZH_CONFIRM=64'h4b30cdce20202020; // K0确认
-localparam[63:0] ZH_ENTER=64'h4b30cfd020202020; // K0进入
-localparam[63:0] ZH_UP=64'h4b32d1d220202020; // K2上选
-localparam[63:0] ZH_DOWN=64'h4b33d3d220202020; // K3下选
-localparam[63:0] ZH_CLOSE=64'hd4d5c3c420202020; // 长按关闭
-localparam[63:0] ZH_BACK=64'hd4d5d6d720202020; // 长按返回
-localparam[63:0] ZH_CANCEL=64'hd4d5d8d920202020; // 长按取消
-localparam[63:0] ZH_EDIT=64'hdadb202020202020; // 编辑
-localparam[63:0] ZH_READY=64'hdcdd202020202020; // 就绪
-localparam[63:0] ZH_WAIT=64'hdedf202020202020; // 等待
-localparam[63:0] ZH_DONE=64'he0e1202020202020; // 完成
-localparam[63:0] ZH_NO_TARGET=64'he285862020202020; // 无目标
-localparam[63:0] ZH_BUSY=64'he3e4202020202020; // 正忙
-localparam[63:0] ZH_STALE=64'he5e6e72020202020; // 已过期
-localparam[63:0] ZH_ERROR=64'h9ce8202020202020; // 出错
-localparam[63:0] ZH_TEST_NONE=64'he9a5a62020202020; // 未自检
+localparam[63:0] ZH_CONFIRM=64'h4b30c9ca20202020; // K0确认
+localparam[63:0] ZH_FINISH=64'h4b30cbcc20202020; // K0完成
+localparam[63:0] ZH_ENTER=64'h4b30cdce20202020; // K0进入
+localparam[63:0] ZH_UP=64'h4b32cfd020202020; // K2上选
+localparam[63:0] ZH_DOWN=64'h4b33d1d020202020; // K3下选
+localparam[63:0] ZH_CLOSE=64'h4b31bfc020202020; // K1关闭
+localparam[63:0] ZH_BACK=64'h4b31d2d320202020; // K1返回
+localparam[63:0] ZH_CANCEL=64'h4b31d4d520202020; // K1取消
+localparam[63:0] ZH_EDIT=64'hd6d7202020202020; // 编辑
+localparam[63:0] ZH_READY=64'hd8d9202020202020; // 就绪
+localparam[63:0] ZH_WAIT=64'hdadb202020202020; // 等待
+localparam[63:0] ZH_DONE=64'hcbcc202020202020; // 完成
+localparam[63:0] ZH_NO_TARGET=64'hdc85862020202020; // 无目标
+localparam[63:0] ZH_BUSY=64'hddde202020202020; // 正忙
+localparam[63:0] ZH_STALE=64'hdfe0e12020202020; // 已过期
+localparam[63:0] ZH_ERROR=64'h9ce2202020202020; // 出错
+localparam[63:0] ZH_TEST_NONE=64'hdba5a62020202020; // 待自检
 localparam[63:0] ZH_TEST_WAIT=64'ha5a6912020202020; // 自检中
-localparam[63:0] ZH_TEST_PASS=64'ha5a6eae620202020; // 自检通过
-localparam[63:0] ZH_TEST_FAIL=64'ha5a6ebec20202020; // 自检失败
-localparam[63:0] ZH_AI_IDLE=64'ha1a2edee20202020; // 推理空闲
+localparam[63:0] ZH_TEST_PASS=64'ha5a6e3e020202020; // 自检通过
+localparam[63:0] ZH_TEST_FAIL=64'ha5a6e4e520202020; // 自检失败
+localparam[63:0] ZH_AI_IDLE=64'ha1a2e6e720202020; // 推理空闲
 localparam[63:0] ZH_AI_RUN=64'ha1a2912020202020; // 推理中
-localparam[63:0] ZH_AI_DONE=64'ha1a2e0e120202020; // 推理完成
-localparam[63:0] ZH_AI_ERROR=64'ha1a29ce820202020; // 推理出错
-localparam[63:0] ZH_AI_OLD=64'heff0e6e720202020; // 结果过期
-localparam[63:0] ZH_MOTION=64'hf1caf28a20202020; // 运动提示
-localparam[63:0] ZH_LEFT=64'hf3b7202020202020; // 向左
-localparam[63:0] ZH_RIGHT=64'hf3b8202020202020; // 向右
-localparam[63:0] ZH_MOVE_UP=64'hf3d1202020202020; // 向上
-localparam[63:0] ZH_MOVE_DOWN=64'hf3d3202020202020; // 向下
-localparam[63:0] ZH_STILL=64'hf4f5202020202020; // 静止
-localparam[63:0] ZH_UNKNOWN=64'hdff6202020202020; // 待判
-localparam[63:0] ZH_HOLD=64'hf7f8202020202020; // 保持
+localparam[63:0] ZH_AI_DONE=64'ha1a2cbcc20202020; // 推理完成
+localparam[63:0] ZH_AI_ERROR=64'ha1a29ce220202020; // 推理出错
+localparam[63:0] ZH_AI_OLD=64'he8e9e0e120202020; // 结果过期
+localparam[63:0] ZH_MOTION=64'heac6eb8a20202020; // 运动提示
+localparam[63:0] ZH_LEFT=64'hecb7202020202020; // 向左
+localparam[63:0] ZH_RIGHT=64'hecb8202020202020; // 向右
+localparam[63:0] ZH_MOVE_UP=64'heccf202020202020; // 向上
+localparam[63:0] ZH_MOVE_DOWN=64'hecd1202020202020; // 向下
+localparam[63:0] ZH_STILL=64'hedee202020202020; // 静止
+localparam[63:0] ZH_UNKNOWN=64'hdbef202020202020; // 待判
+localparam[63:0] ZH_HOLD=64'hf0f1202020202020; // 保持
+localparam[63:0] ZH_CHOOSE=64'hd0f2858620202020; // 选择目标
+localparam[63:0] ZH_CIRCLE=64'hf3f4202020202020; // 圆形
+localparam[63:0] ZH_RECTANGLE=64'hf5f4202020202020; // 矩形
+localparam[63:0] ZH_FACE=64'hf6f7202020202020; // 人脸
+localparam[63:0] ZH_FOLLOW=64'hf1f8f9fa20202020; // 持续跟随
+localparam[63:0] ZH_TRAIL=64'h8586fbfc20202020; // 目标轨迹
+localparam[63:0] ZH_LOST=64'h8586fde420202020; // 目标丢失
 function automatic[255:0]chinese_glyph(input[6:0]code);
  begin case(code)
  7'd0:chinese_glyph=256'h0c607ffc0c600cf87ff003183318113001007ffc07c00f603938711c01000000; // 菜
@@ -176,66 +210,71 @@ function automatic[255:0]chinese_glyph(input[6:0]code);
  7'd58:chinese_glyph=256'h00003ffc300c300c3ffc361032303ffc233023303ffc663066304c3048300000; // 屏
  7'd59:chinese_glyph=256'h1ff00e6007c01c707ef83cf87ef87ffc600c5ff4183018301ff018307ffc0000; // 叠
  7'd60:chinese_glyph=256'h1000100010fc7fcc3bcc13cc12cc32cc32cc32cc32cc22cc66fc4ecc40400000; // 加
- 7'd61:chinese_glyph=256'h00000fe00c600860086008600860186018601860186430663064603c40000000; // 几
- 7'd62:chinese_glyph=256'h080018001ffe300c300c77cc764c764c364c364c37cc360c300c303830780000; // 何
- 7'd63:chinese_glyph=256'h200033fc1b0c030c030c730c330c13fc1000100015981d983b0c330c02040000; // 识
- 7'd64:chinese_glyph=256'h00007f0c636c636c636c7f6c186c186c7f6c1b6c136c330c330c623c4e380000; // 别
- 7'd65:chinese_glyph=256'h00007ffc0c600c600c600c600c607ffc0c600c60186018603060706060600000; // 开
- 7'd66:chinese_glyph=256'h0100010001803ff8300830183ff8300030003ffc2c0c2c0c6c0c6ffc4c080000; // 启
- 7'd67:chinese_glyph=256'h083018300c600ce03ff80100010003807ffc038007c00e601c78781c600c0000; // 关
- 7'd68:chinese_glyph=256'h200037fc100c00cc60cc60cc6ffc61cc63cc66cc6ccc78cc63cc600c601c0000; // 闭
- 7'd69:chinese_glyph=256'h010003807ffc644c3ff8044004401ff01130133013b013b406841cc470fc0000; // 宽
- 7'd70:chinese_glyph=256'h01007ffc01003ff801007ffc06000c601fc00f303ffc298c19b0719c670c0000; // 素
- 7'd71:chinese_glyph=256'h00007ffc600c610c610c7ffc610c6fec6c6c6c6c6fec600c600c7ffc600c0000; // 固
- 7'd72:chinese_glyph=256'h030001007ffc600c600c5ff403801100198019f839003d00270063fc403c0000; // 定
- 7'd73:chinese_glyph=256'h10201060107c18607dfc558c558c55ac55ac55ac5dec116010d8138c13040000; // 帧
- 7'd74:chinese_glyph=256'h000000607e60006001fc7f6430643064366c224c6ecc7fcc418c01b800000000; // 动
- 7'd75:chinese_glyph=256'h082018307ffc18301ff018301ff018307ffc193039186fec01003ff800000000; // 基
- 7'd76:chinese_glyph=256'h00607d60316c316c216c216c7dfc6c60ef6c6f6c2f6c2f6c3f6c23fc00040000; // 础
- 7'd77:chinese_glyph=256'h00807d8031f8333027fc276c7f6c6ffc6f6c6f6c2ffc2f6c3e6c266c001c0000; // 确
- 7'd78:chinese_glyph=256'h0060306018600860006078601860186018e018f01c901d98199c330c02040000; // 认
- 7'd79:chinese_glyph=256'h01106190319017fc01b00190719037fc13b01310131036107c0047fc00000000; // 进
- 7'd80:chinese_glyph=256'h00000400060003000300038003c003c0066006600c301818301c600c00000000; // 入
- 7'd81:chinese_glyph=256'h0300030003000300030003f803f8030003000300030003007ffc7ffc00000000; // 上
- 7'd82:chinese_glyph=256'h0040634033fc16600440006077fc31b031b033343734363c38006f1c47fc0000; // 选
- 7'd83:chinese_glyph=256'h00007ffc7ffc03000300038003c0037003380308030003000300030003000000; // 下
- 7'd84:chinese_glyph=256'h08001838187018e01b8019001c007ffc198018c018c018701fb81f1c10000000; // 长
- 7'd85:chinese_glyph=256'h1040306033fc7e0c32c432c430c037fc3d98791873b030f030f033dc730c0000; // 按
- 7'd86:chinese_glyph=256'h001863f83200120003f80218769836d0367036703dd835887c004ffc00000000; // 返
- 7'd87:chinese_glyph=256'h00007ffc7ffc600c600c6fec6c6c6c6c6c6c6fec600c600c600c7ffc600c0000; // 回
- 7'd88:chinese_glyph=256'h00007f0067fc26cc3ecc2648264826783e78263027307f7866f807cc06840000; // 取
- 7'd89:chinese_glyph=256'h2040764c1b4c0358006063fc320c020c03fc120c13fc320c220c620c62380000; // 消
- 7'd90:chinese_glyph=256'h1060106033fc230c6b0c7bfc730033fc7bd47b5403fc3fd477544554000c0000; // 编
- 7'd91:chinese_glyph=256'h100011f87d8831f838003bfc79887df8198819881df879881bfc180808080000; // 辑
- 7'd92:chinese_glyph=256'h182008287f2c002400fc7e6062707e7008702e706ad04bd64996199c19000000; // 就
- 7'd93:chinese_glyph=256'h1040104c33fc20d86c507ffc78e031c03bfc7f8c01fc1d8c7d8c61fc018c0000; // 绪
- 7'd94:chinese_glyph=256'h104030c03ffc69b049103ff801007ffc006000607ffc08200c20066000e00000; // 等
- 7'd95:chinese_glyph=256'h1840384073fc606018403ffe3018701857fc1118131811981198101010700000; // 待
- 7'd96:chinese_glyph=256'h030001007ffc600c600c7ffc000000007ffc04c00cc00cc418c4707c40000000; // 完
- 7'd97:chinese_glyph=256'h00b000d800dc3ffc20c020c83ed836d82270267066646ee461f4431c40080000; // 成
- 7'd98:chinese_glyph=256'h00003ffc03000300030003007ffc07c00380078005800d84388470fc40000000; // 无
- 7'd99:chinese_glyph=256'h00007ffc0180018001801180118011f8118011801180118039807ffc00000000; // 正
- 7'd100:chinese_glyph=256'h10403060306078207ffe7d80718071803180318031803180318031fc30000000; // 忙
- 7'd101:chinese_glyph=256'h00007ff0003000103010301030303ff03010300030043004300c3ffc07e00000; // 已
- 7'd102:chinese_glyph=256'h00106010301017fc00380210731031101190101010f030f07c0047fc00000000; // 过
- 7'd103:chinese_glyph=256'h220026fc7fcc36cc26cc3efc26cc3ecc26fc36ccffcc34cc368c638c409c0000; // 期
- 7'd104:chinese_glyph=256'h309030903ffc60d840907ffc100010007dfc198c11fc158c1d8c39fc01880000; // 错
- 7'd105:chinese_glyph=256'h0100010003803ff80100010003807ffc078007c00d603938711c410c01000000; // 未
- 7'd106:chinese_glyph=256'h000067fc31b810e007fc064c77fc364c164c17fc164c365c7c0047fc00000000; // 通
- 7'd107:chinese_glyph=256'h0100190011003ff83ff8610003007ffc7ffc038006c00c603c38701c40040000; // 失
- 7'd108:chinese_glyph=256'h00407e4066407afc7ac87b887b887bd87a587a7052301c30367867cc40840000; // 败
- 7'd109:chinese_glyph=256'h030001007ffc600c644c4c70383820081ff003800100010001007ffc00000000; // 空
- 7'd110:chinese_glyph=256'h000037fc180c180c610c610c7ffc638c67cc6d6c792c610c610c603c40000000; // 闲
- 7'd111:chinese_glyph=256'h1060106033fc24606c60f8607bfc300034007dfc610c050c7d8c61fc01080000; // 结
- 7'd112:chinese_glyph=256'h00003ff8311831183ff831183ff8038003807ffc07c00d70393c610c01000000; // 果
- 7'd113:chinese_glyph=256'h000063f830001000000007fc718031b03318337837fc30047c0067fc00000000; // 运
- 7'd114:chinese_glyph=256'h300033f833087bf8330833f830003ffc786073603378334037c036fc6c000000; // 提
- 7'd115:chinese_glyph=256'h0300030002007ffc600c600c6fec6c6c6c6c6c6c6fec6c0c640c603c60380000; // 向
- 7'd116:chinese_glyph=256'h18407ec018f87fb019fcfe6c006c7ffe666c7e6c66fc7e6c666066606ce00000; // 静
- 7'd117:chinese_glyph=256'h0180018001800180118011f811fc118011801180118011807ffc7ffc00000000; // 止
- 7'd118:chinese_glyph=256'h08006d0c6d6c3f6c2e6c7f6c0c6c0c6c0c6c7fec186c180c180c303c60380000; // 判
- 7'd119:chinese_glyph=256'h08001bfc1a0c320c320c73fcf040704037fc31f031f03358364c3c4410400000; // 保
- 7'd120:chinese_glyph=256'h3060306033fc7860306037fc30183818fffc7018311831983098301870700000; // 持
+ 7'd61:chinese_glyph=256'h00007ffc0c600c600c600c600c607ffc0c600c60186018603060706060600000; // 开
+ 7'd62:chinese_glyph=256'h0100010001803ff8300830183ff8300030003ffc2c0c2c0c6c0c6ffc4c080000; // 启
+ 7'd63:chinese_glyph=256'h083018300c600ce03ff80100010003807ffc038007c00e601c78781c600c0000; // 关
+ 7'd64:chinese_glyph=256'h200037fc100c00cc60cc60cc6ffc61cc63cc66cc6ccc78cc63cc600c601c0000; // 闭
+ 7'd65:chinese_glyph=256'h010003807ffc644c3ff8044004401ff01130133013b013b406841cc470fc0000; // 宽
+ 7'd66:chinese_glyph=256'h01007ffc01003ff801007ffc06000c601fc00f303ffc298c19b0719c670c0000; // 素
+ 7'd67:chinese_glyph=256'h00007ffc600c610c610c7ffc610c6fec6c6c6c6c6fec600c600c7ffc600c0000; // 固
+ 7'd68:chinese_glyph=256'h030001007ffc600c600c5ff403801100198019f839003d00270063fc403c0000; // 定
+ 7'd69:chinese_glyph=256'h10201060107c18607dfc558c558c55ac55ac55ac5dec116010d8138c13040000; // 帧
+ 7'd70:chinese_glyph=256'h000000607e60006001fc7f6430643064366c224c6ecc7fcc418c01b800000000; // 动
+ 7'd71:chinese_glyph=256'h00000fe00c600860086008600860186018601860186430663064603c40000000; // 几
+ 7'd72:chinese_glyph=256'h080018001ffe300c300c77cc764c764c364c364c37cc360c300c303830780000; // 何
+ 7'd73:chinese_glyph=256'h00807d8031f8333027fc276c7f6c6ffc6f6c6f6c2ffc2f6c3e6c266c001c0000; // 确
+ 7'd74:chinese_glyph=256'h0060306018600860006078601860186018e018f01c901d98199c330c02040000; // 认
+ 7'd75:chinese_glyph=256'h030001007ffc600c600c7ffc000000007ffc04c00cc00cc418c4707c40000000; // 完
+ 7'd76:chinese_glyph=256'h00b000d800dc3ffc20c020c83ed836d82270267066646ee461f4431c40080000; // 成
+ 7'd77:chinese_glyph=256'h01106190319017fc01b00190719037fc13b01310131036107c0047fc00000000; // 进
+ 7'd78:chinese_glyph=256'h00000400060003000300038003c003c0066006600c301818301c600c00000000; // 入
+ 7'd79:chinese_glyph=256'h0300030003000300030003f803f8030003000300030003007ffc7ffc00000000; // 上
+ 7'd80:chinese_glyph=256'h0040634033fc16600440006077fc31b031b033343734363c38006f1c47fc0000; // 选
+ 7'd81:chinese_glyph=256'h00007ffc7ffc03000300038003c0037003380308030003000300030003000000; // 下
+ 7'd82:chinese_glyph=256'h001863f83200120003f80218769836d0367036703dd835887c004ffc00000000; // 返
+ 7'd83:chinese_glyph=256'h00007ffc7ffc600c600c6fec6c6c6c6c6c6c6fec600c600c600c7ffc600c0000; // 回
+ 7'd84:chinese_glyph=256'h00007f0067fc26cc3ecc2648264826783e78263027307f7866f807cc06840000; // 取
+ 7'd85:chinese_glyph=256'h2040764c1b4c0358006063fc320c020c03fc120c13fc320c220c620c62380000; // 消
+ 7'd86:chinese_glyph=256'h1060106033fc230c6b0c7bfc730033fc7bd47b5403fc3fd477544554000c0000; // 编
+ 7'd87:chinese_glyph=256'h100011f87d8831f838003bfc79887df8198819881df879881bfc180808080000; // 辑
+ 7'd88:chinese_glyph=256'h182008287f2c002400fc7e6062707e7008702e706ad04bd64996199c19000000; // 就
+ 7'd89:chinese_glyph=256'h1040104c33fc20d86c507ffc78e031c03bfc7f8c01fc1d8c7d8c61fc018c0000; // 绪
+ 7'd90:chinese_glyph=256'h104030c03ffc69b049103ff801007ffc006000607ffc08200c20066000e00000; // 等
+ 7'd91:chinese_glyph=256'h1840384073fc606018403ffe3018701857fc1118131811981198101010700000; // 待
+ 7'd92:chinese_glyph=256'h00003ffc03000300030003007ffc07c00380078005800d84388470fc40000000; // 无
+ 7'd93:chinese_glyph=256'h00007ffc0180018001801180118011f8118011801180118039807ffc00000000; // 正
+ 7'd94:chinese_glyph=256'h10403060306078207ffe7d80718071803180318031803180318031fc30000000; // 忙
+ 7'd95:chinese_glyph=256'h00007ff0003000103010301030303ff03010300030043004300c3ffc07e00000; // 已
+ 7'd96:chinese_glyph=256'h00106010301017fc00380210731031101190101010f030f07c0047fc00000000; // 过
+ 7'd97:chinese_glyph=256'h220026fc7fcc36cc26cc3efc26cc3ecc26fc36ccffcc34cc368c638c409c0000; // 期
+ 7'd98:chinese_glyph=256'h309030903ffc60d840907ffc100010007dfc198c11fc158c1d8c39fc01880000; // 错
+ 7'd99:chinese_glyph=256'h000067fc31b810e007fc064c77fc364c164c17fc164c365c7c0047fc00000000; // 通
+ 7'd100:chinese_glyph=256'h0100190011003ff83ff8610003007ffc7ffc038006c00c603c38701c40040000; // 失
+ 7'd101:chinese_glyph=256'h00407e4066407afc7ac87b887b887bd87a587a7052301c30367867cc40840000; // 败
+ 7'd102:chinese_glyph=256'h030001007ffc600c644c4c70383820081ff003800100010001007ffc00000000; // 空
+ 7'd103:chinese_glyph=256'h000037fc180c180c610c610c7ffc638c67cc6d6c792c610c610c603c40000000; // 闲
+ 7'd104:chinese_glyph=256'h1060106033fc24606c60f8607bfc300034007dfc610c050c7d8c61fc01080000; // 结
+ 7'd105:chinese_glyph=256'h00003ff8311831183ff831183ff8038003807ffc07c00d70393c610c01000000; // 果
+ 7'd106:chinese_glyph=256'h000063f830001000000007fc718031b03318337837fc30047c0067fc00000000; // 运
+ 7'd107:chinese_glyph=256'h300033f833087bf8330833f830003ffc786073603378334037c036fc6c000000; // 提
+ 7'd108:chinese_glyph=256'h0300030002007ffc600c600c6fec6c6c6c6c6c6c6fec6c0c640c603c60380000; // 向
+ 7'd109:chinese_glyph=256'h18407ec018f87fb019fcfe6c006c7ffe666c7e6c66fc7e6c666066606ce00000; // 静
+ 7'd110:chinese_glyph=256'h0180018001800180118011f811fc118011801180118011807ffc7ffc00000000; // 止
+ 7'd111:chinese_glyph=256'h08006d0c6d6c3f6c2e6c7f6c0c6c0c6c0c6c7fec186c180c180c303c60380000; // 判
+ 7'd112:chinese_glyph=256'h08001bfc1a0c320c320c73fcf040704037fc31f031f03358364c3c4410400000; // 保
+ 7'd113:chinese_glyph=256'h3060306033fc7860306037fc30183818fffc7018311831983098301870700000; // 持
+ 7'd114:chinese_glyph=256'h100033fc31987cf030e031f8370c3c6073f83060306037fc3060306070600000; // 择
+ 7'd115:chinese_glyph=256'h00007ffc600c6fec686c6fec600c6fec692c692c63cc7e7c780c7ffc600c0000; // 圆
+ 7'd116:chinese_glyph=256'h00087f98333032603240320c33187fb832603204320c2218623062e042c00000; // 形
+ 7'd117:chinese_glyph=256'h200021fc7d807980598059f819887f88198819f81d803780678061fc00000000; // 矩
+ 7'd118:chinese_glyph=256'h010003000300030003800380038006c006c00c601c703838701c600400000000; // 人
+ 7'd119:chinese_glyph=256'h004078e068f069986f0c7ffc6c00684c7b6c6968497849104c304ffc58000000; // 脸
+ 7'd120:chinese_glyph=256'h1060106033f820606ffc780c79ec32e03960786063fc08c078d8438c02040000; // 续
+ 7'd121:chinese_glyph=256'h00007dfc650c650c65fc7d0c198c59fc5f60592c59385d107ff873ec01040000; // 跟
+ 7'd122:chinese_glyph=256'h002078607ffc7a4070fc71cc7fcc7b7c6a4c6a7c7a4c7b5c67806cfc40000000; // 随
+ 7'd123:chinese_glyph=256'h184018407e4030c039f828d868d87ed80cd808d87e98799c099e0b1c08000000; // 轨
+ 7'd124:chinese_glyph=256'h00c0604037fc11b000b006b876bc35b43db43130333036607c0047fc00000000; // 迹
+ 7'd125:chinese_glyph=256'h00f83ff0010001003ff80380010003807ffc06000c2018303ff83ffc00080000; // 丢
  default:chinese_glyph=0;endcase end
 endfunction
 // END GENERATED CHINESE SIDEBAR
@@ -286,18 +325,23 @@ wire[4:0]selected={ui_state[14],ui_state[21:18]};wire[2:0]center_status=ui_state
 wire root_only=center_status==7,side_left=x<144;
 wire mode_popup=editing&&selected==0&&!root_only;
 wire side_modes=mode_popup&&x>=304;
+wire target_popup=editing&&selected==13&&ui_state[10]&&!root_only;
+wire side_targets=target_popup&&x>=304;
+wire[2:0]target_count=ui_state[4:2],target_rows=target_count?target_count:3'd1;
 wire[1:0]side_group=root_only?selected[1:0]:selected<3?0:selected<9?1:selected<13?3:2;
 wire[4:0]side_first=side_group==0?0:side_group==1?3:side_group==2?13:9;
-wire[3:0]side_count=side_group==1?6:side_group==2||side_group==3?4:3;
+wire[3:0]side_count=side_group==1||side_group==2?6:side_group==3?4:3;
 wire[4:0]side_index=selected-side_first;wire[3:0]side_lines=side_count+4'd3;
 // Keep the original status HUD above the menu, including its right-hand fields.
-wire[5:0]side_row=y[11:6]-6'd2;wire[8:0]side_x=(side_left||!sidebar)?x[8:0]:x[8:0]-(side_modes?9'd304:9'd144);
+wire[5:0]side_row=y[11:6]-6'd2;wire[8:0]side_x=(side_left||!sidebar)?x[8:0]:x[8:0]-((side_modes||side_targets)?9'd304:9'd144);
 wire[4:0]side_slot=(side_x-9'd16)>>4;reg[5:0]side_py;reg marker_q=0;
 wire side_selected=side_row=={1'b0,side_index}+6'd1;
 wire side_active=y>=128&&((x<144&&y<576)||(!root_only&&x>=144&&x<304&&side_row<{2'b0,side_lines})||
-                                         (mode_popup&&x>=304&&x<464&&side_row<10));
+                                         (mode_popup&&x>=304&&x<464&&side_row<9)||
+                                         (target_popup&&x>=304&&x<464&&side_row<{3'd0,target_rows}+6'd2));
 wire motion_on=MOTION_HINT&&fusion_result[19];
-wire motion_active=motion_on&&x<160&&y>=96&&y<120;
+wire target_lost=MOTION_HINT&&center_status==5&&ui_state[10]&&ui_state[14:11]==0;
+wire motion_active=(motion_on||target_lost)&&x<160&&y>=96&&y<120;
 reg[63:0]motion_text;
 always @*begin
  case(fusion_result[18:16])
@@ -305,16 +349,36 @@ always @*begin
   4:motion_text=ZH_MOVE_UP;5:motion_text=ZH_MOVE_DOWN;default:motion_text=ZH_UNKNOWN;
  endcase
  motion_text={ZH_MOTION[63:48],motion_text[63:48],fusion_result[15]?ZH_HOLD[63:48]:16'h2020,16'h2020};
+ if(target_lost)motion_text=ZH_LOST;
 end
 function automatic[63:0]group_label(input[1:0]group);
  begin case(group)
  0:group_label=ZH_IMAGE;1:group_label=ZH_VIEW;2:group_label=ZH_TARGET;3:group_label=ZH_AI;
  endcase end
 endfunction
+function automatic[63:0]target_label(input[6:0]kind);
+ reg[7:0]upper_char,lower_char;
+ begin
+ upper_char=8'd65+{1'b0,kind}-8'd56;lower_char=8'd97+{1'b0,kind}-8'd56;
+ if(kind==1)target_label=ZH_CIRCLE;
+ else if(kind==2)target_label=ZH_RECTANGLE;
+ else if(kind==3)target_label=ZH_FACE;
+ else if(kind>=4&&kind<30)target_label={8'd65+{1'b0,kind}-8'd4,56'h20202020202020};
+ else if(kind>=30&&kind<56)target_label={8'd97+{1'b0,kind}-8'd30,56'h20202020202020};
+ else if(kind>=56&&kind<82)target_label={upper_char,8'h2f,lower_char,40'h2020202020};
+ else if(kind==82)target_label="I/l     ";else target_label=64'h2020202020202020;
+ end
+endfunction
+reg[6:0]target_class;
+always @*case(side_row)
+ 1:target_class=target_classes[6:0];2:target_class=target_classes[13:7];
+ 3:target_class=target_classes[20:14];4:target_class=target_classes[27:21];default:target_class=0;
+endcase
+wire[63:0]target_name=target_label(target_class);
 function automatic[63:0]mode_label(input[2:0]value);
  begin case(value)
  0:mode_label=ZH_CAMERA;1:mode_label=ZH_GRAY;2:mode_label=ZH_SOBEL;3:mode_label=ZH_SPLIT;
- 4:mode_label=ZH_SOBEL_OVERLAY;5:mode_label=ZH_CANNY;6:mode_label=ZH_CANNY_OVERLAY;7:mode_label=ZH_SHAPE;
+ 4:mode_label=ZH_SOBEL_OVERLAY;5:mode_label=ZH_CANNY;6:mode_label=ZH_CANNY_OVERLAY;default:mode_label=ZH_CAMERA;
  endcase end
 endfunction
 wire[63:0]side_title=group_label(side_left?side_row[1:0]-1'b1:side_group);
@@ -324,16 +388,16 @@ function automatic[63:0]side_label(input[4:0]item);
  4:side_label=ZH_PAN_X;5:side_label=ZH_PAN_Y;6:side_label=ZH_SIZE;7:side_label=ZH_POS_X;
  8:side_label=ZH_POS_Y;9:side_label=ZH_AI_MODE;10:side_label=ZH_RUN;11:side_label=ZH_SELFTEST;
  12:side_label=ZH_MODEL;13:side_label=ZH_CENTER;14:side_label=ZH_TARGET_ZOOM;15:side_label=ZH_FULLVIEW;
- 16:side_label=ZH_MOTION;default:side_label=0;
+ 16:side_label=ZH_MOTION;17:side_label=ZH_FOLLOW;18:side_label=ZH_TRAIL;default:side_label=0;
  endcase end
 endfunction
 reg[63:0]side_text,side_value;
 wire[3:0]menu=ui_state[14:11];
 wire[10:0]shown=(menu!=0||sidebar)?ui_state[10:0]:threshold;
 wire[63:0]mode_text=mode_label(side_modes?side_row[2:0]-3'd1:shown[2:0]);
-wire[63:0]side_action=selected==2?{16'h4b30,shown[0]?ZH_OFF[63:48]:ZH_ON[63:48],32'h20202020}:
-                                 editing?ZH_CONFIRM:ZH_ENTER;
-wire[63:0]side_return=editing&&selected!=1?ZH_CANCEL:ZH_BACK;
+wire[63:0]side_action=(selected==2||selected==17||selected==18)?{16'h4b30,shown[0]?ZH_OFF[63:48]:ZH_ON[63:48],32'h20202020}:
+                                 editing?(selected>=3&&selected<=8?ZH_FINISH:ZH_CONFIRM):ZH_ENTER;
+wire[63:0]side_return=editing&&selected!=1&&!(selected>=3&&selected<=8)?ZH_CANCEL:ZH_BACK;
 wire[15:0]shown_decimal=decimal(shown),requested_decimal=decimal(requested_threshold);
 wire[31:0]side_number={8'd48+shown_decimal[15:12],8'd48+shown_decimal[11:8],8'd48+shown_decimal[7:4],8'd48+shown_decimal[3:0]};
 reg[63:0]menu_text;reg[31:0]run_text,test_text;
@@ -351,7 +415,7 @@ always @*begin
      default:menu_text=64'h4149204155544f20;
     endcase
   9:menu_text=64'h53454c4654455354;
-  10:menu_text=ui_state[0]?64'h4e4e20464f4d4f20:64'h4e4e204241534520;
+  10:menu_text=ui_state[1:0]==2?64'h4e4e204d37202020:ui_state[0]?64'h4e4e20464f4d4f20:64'h4e4e204241534520;
   default:menu_text=0;
  endcase
  row=y>=76?4:y>=58?3:y>=40?2:y>=22?1:0;origin=4+18*row;
@@ -400,18 +464,18 @@ always @*begin
  else if(!MOTION_HINT&&row==1&&shape_enable)begin
   case(idx)
    0:ch="S";1:ch="H";2:ch="A";3:ch="P";4:ch="E";5:ch=":";
-   7:ch=(M7_FACE&&mode==7&&shape_valid&&geometry_symbol)?"L":!shape_valid?"N":shape_class==1?"C":shape_class==2?"R":((M7_FACE&&mode==7)?"F":"O");
-   8:ch=(M7_FACE&&mode==7&&shape_valid&&geometry_symbol)?"E":!shape_valid?"O":shape_class==1?"I":shape_class==2?"E":((M7_FACE&&mode==7)?"A":"T");
-   9:ch=(M7_FACE&&mode==7&&shape_valid&&geometry_symbol)?"T":!shape_valid?"N":shape_class==1?"R":shape_class==2?"C":((M7_FACE&&mode==7)?"C":"H");
-   10:ch=(M7_FACE&&mode==7&&shape_valid&&geometry_symbol)?"T":!shape_valid?"E":shape_class==1?"C":shape_class==2?"T":((M7_FACE&&mode==7)?"E":"E");
-   11:ch=(M7_FACE&&mode==7&&shape_valid&&geometry_symbol)?"E":!shape_valid?" ":shape_class==1?"L":shape_class==2?" ":((M7_FACE&&mode==7)?" ":"R");
-   12:ch=(M7_FACE&&mode==7&&shape_valid&&geometry_symbol)?"R":(shape_valid&&shape_class==1)?"E":" ";
-   14:ch=(M7_FACE&&mode==7)?"N":" ";15:ch=(M7_FACE&&mode==7)?8'(48+geometry_counts[2:0]):" ";
-   16:ch=(M7_FACE&&mode==7&&geometry_counts[3])?"+":" ";
-   18:ch=(M7_FACE&&mode==7)?"C":" ";19:ch=(M7_FACE&&mode==7)?8'(48+geometry_counts[6:4]):" ";
-   21:ch=(M7_FACE&&mode==7)?"R":" ";22:ch=(M7_FACE&&mode==7)?8'(48+geometry_counts[9:7]):" ";
-   27:ch=(M7_FACE&&mode==7)?"L":" ";28:ch=(M7_FACE&&mode==7)?8'(48+geometry_counts[15:13]):" ";
-   24:ch=(M7_FACE&&mode==7)?"F":" ";25:ch=(M7_FACE&&mode==7)?8'(48+geometry_counts[12:10]):" ";
+   7:ch=(M7_FACE&&shape_valid&&geometry_symbol)?"L":!shape_valid?"N":shape_class==1?"C":shape_class==2?"R":((M7_FACE)?"F":"O");
+   8:ch=(M7_FACE&&shape_valid&&geometry_symbol)?"E":!shape_valid?"O":shape_class==1?"I":shape_class==2?"E":((M7_FACE)?"A":"T");
+   9:ch=(M7_FACE&&shape_valid&&geometry_symbol)?"T":!shape_valid?"N":shape_class==1?"R":shape_class==2?"C":((M7_FACE)?"C":"H");
+   10:ch=(M7_FACE&&shape_valid&&geometry_symbol)?"T":!shape_valid?"E":shape_class==1?"C":shape_class==2?"T":((M7_FACE)?"E":"E");
+   11:ch=(M7_FACE&&shape_valid&&geometry_symbol)?"E":!shape_valid?" ":shape_class==1?"L":shape_class==2?" ":((M7_FACE)?" ":"R");
+   12:ch=(M7_FACE&&shape_valid&&geometry_symbol)?"R":(shape_valid&&shape_class==1)?"E":" ";
+   14:ch=(M7_FACE)?"N":" ";15:ch=(M7_FACE)?8'(48+geometry_counts[2:0]):" ";
+   16:ch=(M7_FACE&&geometry_counts[3])?"+":" ";
+   18:ch=(M7_FACE)?"C":" ";19:ch=(M7_FACE)?8'(48+geometry_counts[6:4]):" ";
+   21:ch=(M7_FACE)?"R":" ";22:ch=(M7_FACE)?8'(48+geometry_counts[9:7]):" ";
+   27:ch=(M7_FACE)?"L":" ";28:ch=(M7_FACE)?8'(48+geometry_counts[15:13]):" ";
+   24:ch=(M7_FACE)?"F":" ";25:ch=(M7_FACE)?8'(48+geometry_counts[12:10]):" ";
    default:ch=32;
   endcase
  end
@@ -456,17 +520,17 @@ always @*begin
  side_text=0;side_value={side_number,"    "};side_py=y[5:0]-6'd24;
  case(selected)
   0:side_value=mode_text;
-  2,16:side_value=shown[0]?ZH_ON:ZH_OFF;
+  2,16,17,18:side_value=shown[0]?ZH_ON:ZH_OFF;
   3,6:side_value={ZH_WIDTH[63:56],side_number,ZH_PIXELS[63:48],8'd32};
   4,5,7,8:side_value={side_number,ZH_PIXELS[63:48],16'h2020};
   9:case(shown[1:0])
    0:side_value=ZH_OFF;1:side_value=ZH_FIXED;2:side_value=ZH_AUTO;default:side_value=0;
   endcase
-  12:side_value=shown[0]?"FOMO    ":ZH_BASE;
+  12:side_value=shown[1:0]==2?ZH_M7:shown[1:0]==1?"FOMO    ":"        ";
   14:case(shown[3:0])
    0:side_value=ZH_AUTO;1,2,4,8:side_value={8'd48+{4'b0,shown[3:0]},ZH_TIMES[63:56],48'h202020202020};default:side_value=0;
   endcase
-  10,11,13,15:side_value=editing?ZH_CONFIRM:ZH_ENTER;
+  10,11,13,15:side_value=target_popup?ZH_CHOOSE:editing?ZH_CONFIRM:ZH_ENTER;
  endcase
  if(sidebar)begin
   ch=32;
@@ -475,10 +539,17 @@ always @*begin
    else if(side_row<=4)side_text=side_title;
    else if(side_row==5)begin side_text=y[5]?ZH_DOWN:ZH_UP;side_py=y[5:0]-(y[5]?6'd36:6'd12);end
    else if(side_row==6)begin side_text=y[5]?(root_only?ZH_CLOSE:side_return):side_action;side_py=y[5:0]-(y[5]?6'd36:6'd12);end
+  end else if(side_targets)begin
+   if(side_row==0)side_text=ZH_CHOOSE;
+   else if(side_row<=target_count)side_text={8'd48+{2'd0,side_row},8'h20,target_name[63:16]};
+   else if(!target_count&&side_row==1)side_text=ui_state[6]?ZH_NO_TARGET:ZH_WAIT;
+   else if(side_row=={3'd0,target_rows}+6'd1)begin
+    side_text=y[5]?ZH_CANCEL:target_count?(ui_state[5]?ZH_CHOOSE:ZH_CONFIRM):ZH_WAIT;side_py=y[5:0]-(y[5]?6'd36:6'd12);
+   end
   end else if(side_modes)begin
    if(side_row==0)side_text=ZH_MODE;
-   else if(side_row<=8)side_text=mode_text;
-   else if(side_row==9)begin side_text=y[5]?ZH_CANCEL:ZH_CONFIRM;side_py=y[5:0]-(y[5]?6'd36:6'd12);end
+   else if(side_row<=7)side_text=mode_text;
+   else if(side_row==8)begin side_text=y[5]?ZH_CANCEL:ZH_CONFIRM;side_py=y[5:0]-(y[5]?6'd36:6'd12);end
   end else if(!root_only)begin
    if(side_row==0)side_text=editing?ZH_EDIT:side_title;
    else if(side_row<=side_count)begin
@@ -498,7 +569,7 @@ always @*begin
     else if(selected==16)side_text=motion_on?motion_text:ZH_OFF;
     else case(center_status)
      0:side_text=ZH_READY;1:side_text=ZH_WAIT;2:side_text=ZH_DONE;3:side_text=ZH_NO_TARGET;
-     4:side_text=ZH_BUSY;5:side_text=ZH_STALE;6:side_text=ZH_ERROR;default:side_text=0;
+     4:side_text=ZH_BUSY;5:side_text=((selected==13||selected==17||selected==18)&&shown[9])?ZH_LOST:ZH_STALE;6:side_text=ZH_ERROR;default:side_text=0;
     endcase
    end else if(side_row==side_count+2'd2)begin
     side_text=y[5]?side_return:side_action;side_py=y[5:0]-(y[5]?6'd36:6'd12);
@@ -522,7 +593,8 @@ always @(posedge clk)begin
  active<=sidebar?side_active:MOTION_HINT?motion_active:(x>=8&&x<((mode==5||mode==6||ai_page)?428:356)&&((y>=4&&y<20)||(shape_enable&&y>=22&&y<38)||(hud&&((y>=40&&y<56)||(y>=58&&y<74)||(y>=76&&y<92)))));
  ink_region_q<=(sidebar||motion_active)?(side_x>=16&&side_slot<8&&(ch[7]?side_py<16:(side_x[3:0]<10&&side_py<14&&bitidx<35))):(!MOTION_HINT&&column<10&&local_y<14&&bitidx<35);
  marker_q<=sidebar&&side_active&&((side_left&&side_row=={4'b0,side_group}+6'd1&&(side_x<4||(root_only&&(y[5:0]==0||y[5:0]==63))))||
-             (!side_left&&!side_modes&&side_selected&&(side_x<4||y[5:0]==0||y[5:0]==63))||
+             (!side_left&&!side_modes&&!side_targets&&side_selected&&(side_x<4||y[5:0]==0||y[5:0]==63))||
+             (side_targets&&target_count!=0&&!ui_state[5]&&side_row=={4'd0,ui_state[1:0]}+6'd1&&(side_x<4||y[5:0]==0||y[5:0]==63))||
              (side_modes&&side_row=={3'd0,shown[2:0]}+6'd1&&(side_x<4||y[5:0]==0||y[5:0]==63)));
 end
 assign ink=active&&((ink_region_q&&(chinese_q?chinese_ink:font_ink))||marker_q);

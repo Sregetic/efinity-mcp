@@ -8,7 +8,7 @@ ROOT=Path(__file__).resolve().parents[1]
 p=argparse.ArgumentParser();p.add_argument('--output-dir',type=Path,default=ROOT/'results/center_symmetric_20261022')
 out=p.parse_args().output_dir
 cases=json.loads((out/'control/center_vectors.json').read_text())
-assert 'PASS tb_roi_axi_scaler six firmware center descriptors' in (out/'render/test.log').read_text()
+assert b'PASS tb_roi_axi_scaler six firmware center descriptors' in (out/'render/test.log').read_bytes()
 
 def rgb(pixels):
     channels=[(pixels>>shift)&31 for shift in (10,5,0)]
@@ -56,7 +56,7 @@ for index,case in enumerate(cases):
                         source=[sx,sy,sw,sh],destination=[dx,dy,dw,dh],
                         center_error=[error_x,error_y],margins=[dx,1920-dx-dw,dy,1080-dy-dh],exact_pixels=True,
                         source_frame=case['frame'],render_config=case['config']))
-sheet.save(out/'center_preview.png')
+if any(case['name'] in selected for case in cases):sheet.save(out/'center_preview.png')
 result=dict(passed=True,rtl_pixels=total,cases=records,
             scope='RV32I descriptor -> production AXI reader/scaler pixel replay; host canvas placement, synthetic targets, not camera recognition or HDMI acceptance')
 (out/'render/result.json').write_text(json.dumps(result,indent=2))

@@ -8,7 +8,7 @@ module vision_rgb_capture #(parameter W=1920,H=1080,FIFO_AW=10,INPUT_PPC=1,PAIR_
  output capture_pixel_valid,input capture_pixel_ready,output[31:0]capture_pixel_data,
  output capture_pixel_sof,capture_pixel_eol,capture_pixel_eof,
  output capture_abort,input capture_done,capture_error,
- output active,output reg[31:0]completed,discarded
+ output active,output reg[31:0]completed,discarded,output[31:0]capture_debug
 );
  localparam DATA=0,EOL=1,EOF=2,HEADER=3,ABORT=7;
  reg request=0;reg[2:0]state=0;reg first=1,aborted=0;
@@ -70,6 +70,7 @@ module vision_rgb_capture #(parameter W=1920,H=1080,FIFO_AW=10,INPUT_PPC=1,PAIR_
   end
  end
  assign active=state!=0;
+ assign capture_debug={16'd0,source_abort,enable,freeze_source,request,md[34:32],mr,mv,first,aborted,state,capture_valid,capture_ready};
  assign capture_valid=state==2;
  assign capture_pixel_valid=state==3&&mv&&md[34:32]<=EOF;
  assign capture_pixel_data=md[31:0];

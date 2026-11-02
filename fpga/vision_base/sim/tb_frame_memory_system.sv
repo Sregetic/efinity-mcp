@@ -21,6 +21,7 @@ module tb_frame_memory_system #(parameter SCAN_BURST=16,PRIORITY=0);
  wire scan_pixel_valid,scan_pixel_sof,scan_pixel_eol,scan_pixel_eof,scan_busy,scan_done,scan_error;
  wire[31:0]scan_pixel_data,scan_pixel_frame_id,scan_pixel_config_id;wire[1:0]scan_pixel_keep;
  integer cycle=0;always @(posedge clk)cycle<=cycle+1;
+ always @(posedge clk)if(rst_n&&!dut.memory_rst_n&&(capture_ready||job_ready||analysis_acquire_ready))$fatal(1,"request acknowledged before synchronized reset release");
  wire scan_pixel_ready=cycle%5!=0;
  reg[5:0] legacy_arid=0;
  reg[31:0] legacy_araddr=0;
@@ -110,7 +111,7 @@ module tb_frame_memory_system #(parameter SCAN_BURST=16,PRIORITY=0);
  reg m_axi_bvalid=0;
  wire m_axi_bready;
  wire direct_scan=0;wire[1:0]memory_mode=0;wire[2:0]history_index=0;wire[2:0]history_count;wire[31:0]capture_frame_id;wire scan_source_mode;
- frame_memory_system #(.SCAN_BURST_BEATS(SCAN_BURST),.CPU_ENABLED(1),.MAX_LINE_PIXELS(1920),.SOURCE_BASE(0),.RESULT_BASE(32'h01000000),.BANK_SHIFT(22)) dut(.compute_acquire_valid(1'b0),.compute_latest(1'b0),.compute_release(1'b0),.compute_request_frame_id(32'd0),.compute_acquire_ready(),.compute_missing(),.compute_hold_valid(),.compute_hold_bank(),.compute_hold_frame_id(),.compute_hold_config_id(),.dma_arid(6'd0),.dma_awid(6'd0),.dma_araddr(32'd0),.dma_awaddr(32'd0),.dma_arlen(8'd0),.dma_awlen(8'd0),.dma_arsize(3'd0),.dma_awsize(3'd0),.dma_arburst(2'd0),.dma_awburst(2'd0),.dma_arvalid(1'd0),.dma_awvalid(1'd0),.dma_rready(1'd0),.dma_wdata(128'd0),.dma_wstrb(16'd0),.dma_wlast(1'd0),.dma_wvalid(1'd0),.dma_bready(1'd0),.dma_arready(),.dma_rdata(),.dma_rresp(),.dma_rlast(),.dma_rvalid(),.dma_awready(),.dma_wready(),.dma_bresp(),.dma_bvalid(),.*);
+ frame_memory_system #(.SCAN_BURST_BEATS(SCAN_BURST),.CPU_ENABLED(1),.MAX_LINE_PIXELS(1920),.SOURCE_BASE(0),.RESULT_BASE(32'h01000000),.BANK_SHIFT(22)) dut(.capture_debug(),.compute_acquire_valid(1'b0),.compute_latest(1'b0),.compute_release(1'b0),.compute_request_frame_id(32'd0),.compute_acquire_ready(),.compute_missing(),.compute_hold_valid(),.compute_hold_bank(),.compute_hold_frame_id(),.compute_hold_config_id(),.dma_arid(6'd0),.dma_awid(6'd0),.dma_araddr(32'd0),.dma_awaddr(32'd0),.dma_arlen(8'd0),.dma_awlen(8'd0),.dma_arsize(3'd0),.dma_awsize(3'd0),.dma_arburst(2'd0),.dma_awburst(2'd0),.dma_arvalid(1'd0),.dma_awvalid(1'd0),.dma_rready(1'd0),.dma_wdata(128'd0),.dma_wstrb(16'd0),.dma_wlast(1'd0),.dma_wvalid(1'd0),.dma_bready(1'd0),.dma_arready(),.dma_rdata(),.dma_rresp(),.dma_rlast(),.dma_rvalid(),.dma_awready(),.dma_wready(),.dma_bresp(),.dma_bvalid(),.*);
  reg[7:0]mem[0:33554431];
  reg rd_active=0,wr_active=0;integer ra=0,rc=0,wa=0,wc=0,bd=0;
  reg[5:0]rid=0,bid=0;reg inject_r=0,inject_b=0;integer arb_reads=0,arb_writes=0;
@@ -289,3 +290,4 @@ module tb_frame_memory_system #(parameter SCAN_BURST=16,PRIORITY=0);
  end
  initial begin #100000000;$fatal(1,"system watchdog");end
 endmodule
+

@@ -6,14 +6,14 @@ wire[23:0]rgb,base_rgb;wire ode,ohs,ovs,bde,bhs,bvs;wire[2:0]direction;wire held
 vision_display #(.LOCAL_MOTION_ENABLE(1),.WIDTH(192),.HEIGHT(96)) dut(
  .clk(clk),.rst_n(rst_n),.de(1'b0),.hs(1'b0),.vs(1'b0),.r(8'd0),.g(8'd0),.b(8'd0),.mode(mode),.threshold(11'd96),.median_en(1'b0),
  .memory_mode(memory_mode),.history_index(3'd0),.canny_pixel(1'b0),.canny_ready(1'b1),.canny_coverage(8'd0),
- .canny_effective_threshold(11'd80),.canny_requested_threshold(11'd80),.shape_enable(1'b0),.shape_threshold(8'd32),
+ .canny_effective_threshold(11'd80),.canny_requested_threshold(11'd80),.geometry_enable(1'b0),.shape_enable(1'b0),
  .analysis_enabled(1'b0),.analysis_context_changed(1'b0),.frame_id(32'd1),.render_config_id(32'd0),.analysis_context(32'd0),
  .analysis_result(352'd0),.analysis_match(1'b0),.analysis_identity_match(1'b0),.analysis_age(16'd0),.ui_state(24'd0),
  .motion_enable(motion_enable),.motion_direction(direction),.motion_held(held),.ode(ode),.ohs(ohs),.ovs(ovs),.orr(rgb[23:16]),.ogg(rgb[15:8]),.obb(rgb[7:0]));
 vision_display #(.WIDTH(192),.HEIGHT(96)) reference(
  .clk(clk),.rst_n(rst_n),.de(1'b0),.hs(1'b0),.vs(1'b0),.r(8'd0),.g(8'd0),.b(8'd0),.mode(mode),.threshold(11'd96),.median_en(1'b0),
  .memory_mode(memory_mode),.history_index(3'd0),.canny_pixel(1'b0),.canny_ready(1'b1),.canny_coverage(8'd0),
- .canny_effective_threshold(11'd80),.canny_requested_threshold(11'd80),.shape_enable(1'b0),.shape_threshold(8'd32),
+ .canny_effective_threshold(11'd80),.canny_requested_threshold(11'd80),.geometry_enable(1'b0),.shape_enable(1'b0),
  .analysis_enabled(1'b0),.analysis_context_changed(1'b0),.frame_id(32'd1),.render_config_id(32'd0),.analysis_context(32'd0),
  .analysis_result(352'd0),.analysis_match(1'b0),.analysis_identity_match(1'b0),.analysis_age(16'd0),.ui_state(24'd0),
  .motion_enable(1'b0),.ode(bde),.ohs(bhs),.ovs(bvs),.orr(base_rgb[23:16]),.ogg(base_rgb[15:8]),.obb(base_rgb[7:0]));

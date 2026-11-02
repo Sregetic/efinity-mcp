@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "host_sanitizers": true,
+  "rv32_service": true,
+  "continuous_line_pixels": 69120,
+  "selection_required": false,
+  "roi_required": false,
+  "board_access": false
+}

@@ -50,6 +50,9 @@ initial begin
  repeat(4)begin press(2,8);frame;if(ct!=16)$fatal(1,"Canny key crossed lower limit");end
  @(negedge clk);cmd=1;op=1;value=2;#10;cmd=0;frame;
  if(thr!=80)$fatal(1,"Sobel threshold was not retained");
- $display("CONTROLS PASS independent Sobel/Canny, lower16 step16, saturation, debounce and frame commit");$finish;
+ @(negedge clk);cmd=1;op=1;value=6;#10;cmd=0;frame;
+ press(0,8);frame;if(mode!=0)$fatal(1,"display mode did not wrap after M6");
+ @(negedge clk);cmd=1;op=1;value=7;#10;cmd=0;frame;if(mode!=0)$fatal(1,"retired M7 display command accepted");
+ $display("CONTROLS PASS seven displays, independent Sobel/Canny, lower16 step16, saturation, debounce and frame commit");$finish;
 end
 endmodule

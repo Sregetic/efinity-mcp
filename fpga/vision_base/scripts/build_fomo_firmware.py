@@ -56,7 +56,7 @@ def main():
     p.add_argument('--model-dir', type=Path, default=ROOT / 'models/shape_fomo')
     p.add_argument('--output-dir', type=Path, required=True)
     p.add_argument('--cfu-kernels', action='store_true', help='Requires the installed dot4/MulHi FPGA build; baseline software kernels remain available')
-    p.add_argument('--camera', action='store_true', help='Complete control/legacy AI application with camera RGB FOMO; no embedded test images')
+    p.add_argument('--camera', action='store_true', help='Complete control/FOMO/M7 application with camera RGB FOMO; no embedded test images')
     p.add_argument('--connectome-readout', type=Path, help='CRD1 trained 80->4 companion readout; preserves the existing NN/SHAPE selection')
     a = p.parse_args()
     if a.camera and not a.cfu_kernels:
@@ -71,7 +71,7 @@ def main():
         readout = load(a.connectome_readout)
     if a.camera:
         from build_ai_selftest import generate
-        generate(ROOT/'models/shape_cards_bringup/shape_cards_weights.bin', ROOT/'firmware/vision/ai_selftest_data.h')
+        generate(ROOT/'firmware/vision/ai_selftest_data.h')
     revision = subprocess.check_output(['git', '-C', str(a.tinyml_dir), 'rev-parse', 'HEAD'], text=True).strip()
     if revision != REVISION:
         raise ValueError('Build uses the audited Efinity 2026.1 TFLM revision')
@@ -107,7 +107,7 @@ def main():
     }
     sources = [src / 'tensorflow/lite/c/common.c']
     sources += [src / 'tensorflow/lite' / group / (name + '.cc') for group, names in groups.items() for name in names]
-    application = ['ai_main.c', 'flyhash.c', 'fomo_camera.cc', 'geometry_m7.c', 'geometry_letters.c', 'geometry_face.c', 'geometry_m7_service.c'] if a.camera else ['fomo_main.cc']
+    application = ['ai_main.c', 'flyhash.c', 'fomo_camera.cc', 'geometry_m7.c', 'geometry_letters.c', 'geometry_m7_service.c', 'target_track.c'] if a.camera else ['fomo_main.cc']
     sources += [ROOT / 'firmware/vision' / s for s in application]
     sources += [ROOT / 'firmware/vision/start.S', out / 'data.S']
     includes = [overlay, src, src / 'tensorflow/third_party/flatbuffers/include',
@@ -117,7 +117,7 @@ def main():
              '-DTF_LITE_DISABLE_X86_NEON', '-DTF_LITE_USE_GLOBAL_CMATH_FUNCTIONS',
              '-DTF_LITE_USE_GLOBAL_MIN', '-DTF_LITE_USE_GLOBAL_MAX', *['-I' + str(i) for i in includes]]
     if a.camera:
-        flags += ['-DVISION_FOMO', '-DVISION_MULHI_CFU', '-DVISION_GEOMETRY_M7']
+        flags += ['-DVISION_FOMO', '-DVISION_MULHI_CFU', '-DVISION_GEOMETRY_M7', '-DVISION_M7_NO_FACE']
     if readout:
         flags += ['-DVISION_CONNECTOME_READOUT']
     tools = IDE / 'toolchain/bin'
@@ -162,8 +162,12 @@ def main():
                   elf=str(elf), size_report=size, source_files=[str(s) for s in sources])
     record['resource_scope'] = 'firmware_only'
     if a.camera:
-        record['geometry_m7'] = dict(required_hardware_abi='0x26102871', required_label_abi='0x4d374c31',
-                                    recognition='accepted-edge contour geometry for circle/rectangle/face and printed A-Z/a-z', face_model_bytes=0, maximum_objects=4)
+        record.update(supported_models={'fomo':1,'m7':2},default_model='m7',external_weights_bytes=0,base_backend_removed=True,
+                      selftest_scope='dot4/MulHi, shared features, FlyHash and fixed connectome; no retired BASE MLP test')
+    if a.camera:
+        record['geometry_m7'] = dict(required_hardware_abi='0x26103173', required_control_abi='0x26103106', required_label_abi='0x4d374c31',
+                                    recognition='edge/contour geometry for circle/rectangle and printed A-Z/a-z; face temporarily disabled at user request', face_model_bytes=0, maximum_objects=4,
+                                    face_refinement=dict(enabled=False))
     if readout:
         record['connectome_readout'] = dict(path=str(a.connectome_readout.resolve()), bytes=364,
                                            version=readout['version'], graph_version=readout['graph'],

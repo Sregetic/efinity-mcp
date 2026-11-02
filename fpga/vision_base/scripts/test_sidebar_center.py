@@ -9,12 +9,14 @@ source=r'''
 #define CONTROL_TEST
 #define FUSION_TEST
 #define VISION_FOMO
+#define VISION_GEOMETRY_M7
 static uint32_t c[32],f[64];
 static uint32_t cr(unsigned o){return c[o/4];}
 static void cw(unsigned o,uint32_t v){c[o/4]=v;if(o==8)c[3]|=1;if(o==0x30){c[4]=(c[4]&~32u)|((v&1)<<5);if(v&2)c[4]|=16;if(v&4)c[4]&=~(1u<<11);if(v&8)c[6]=c[0x34/4];}}
 #define CTRL_R(o) cr(o)
 #define CTRL_W(o,v) cw(o,v)
 #define FUS_R(o) (f[(o)/4])
+#define M7_R(o) (f[(o)==0x1c?6:7])
 #define FUS_W(o,v) (f[(o)/4]=(v))
 #define CONTROL_STATE (&state)
 extern struct vision_control_state state;
@@ -43,6 +45,22 @@ static void geometry(unsigned x,unsigned y,unsigned w,unsigned h,unsigned render
  uint64_t box=(1ull<<63)|((uint64_t)valid<<62)|(2ull<<60)|((uint64_t)(x+2)<<36)|((uint64_t)(y+2)<<24)|((uint64_t)(x+w+1)<<12)|(y+h+1);
  f[4]++;f[6]=render;f[8]=box>>32;f[9]=box;
 }
+static void picker_begin(unsigned memory,unsigned policy,unsigned cropped){
+ reset();state.ai_manual=CONTROL_MODEL_M7<<1;state.ai_policy=policy;
+ state.settings=(state.settings&~48u)|(memory<<4);
+ if(cropped){state.enabled=state.good=1;state.serial=7;state.roi_enable=1;state.roi[0]=(480u<<12)|270;state.roi[1]=(960u<<12)|540;}
+ select(SIDE_CENTER);key(1);check(state.sidebar_edit&&state.center_request==1);
+ control_center_step();check(state.center_stage==CENTER_PANORAMA&&state.target_session&&state.roi_enable==0&&state.roi[1]==((1920u<<12)|1080));
+ key(1);check(state.center_request==1&&state.center_stage==CENTER_PANORAMA);
+ c[4]&=~64u;apply();control_center_step();check(!(state.settings&48)&&state.center_stage==CENTER_TARGET_SCAN&&!state.enabled&&!state.pending);
+}
+static void picker_result(unsigned count){
+ state.target_frame=100;state.target_render=0;state.target_context=5;state.target_count=count;state.target_classes=0;
+ for(unsigned i=0;i<count;i++){state.target_boxes[i*2]=(200+i*300)|((200+i*80)<<16);state.target_boxes[i*2+1]=(80+i*16)|(80u<<16);state.target_classes|=(i+1)<<(i*7);}
+ state.target_index=count?0:4;state.target_sequence=1;for(unsigned i=0;i<count;i++)state.target_frames[i]=100+i;
+ state.target_ready=1;control_center_step();check(state.center_stage==CENTER_TARGET_PICK&&state.sidebar_edit);
+ apply();check(c[0x54/4]==state.target_classes);
+}
 static void trace_crop(const char *name,unsigned x,unsigned y,unsigned w,unsigned h){
  const uint32_t words[12]={x,y,w,h,state.commit[0],state.commit[1],state.commit[2],state.commit[3],
   state.center_frame,state.center_render,state.center_context,state.serial};
@@ -51,7 +69,7 @@ static void trace_crop(const char *name,unsigned x,unsigned y,unsigned w,unsigne
 }
 static void verify_box(unsigned x,unsigned y,unsigned w,unsigned h,unsigned maxz){
  geometry_cases++;
- reset();state.center_zoom=maxz;state.center_serial=state.serial;state.center_settings=state.settings;state.center_shape=state.shape_threshold;
+ reset();state.center_zoom=maxz;state.center_serial=state.serial;state.center_settings=state.settings;state.center_model=control_model(&state);
  check(control_center_box(x,y,w,h,100,0,5));
  unsigned sx=state.roi[0]>>12,sy=state.roi[0]&4095,sw=state.roi[1]>>12,sh=state.roi[1]&4095;
  unsigned dw=state.roi[2]>>12,dh=state.roi[2]&4095,dx=state.roi[3]>>12,dy=state.roi[3]&4095,z=dw/sw;
@@ -92,48 +110,57 @@ void main(void){
  key(1);key(4);key(1);check(state.settings==original&&!state.pending);trace("motion_disabled");
  state.menu=8;key(8);key(8);check(!state.sidebar_open&&((control_ui(&state)>>11)&15)==8);reset();
  select(SIDE_MODE);key(1);key(4);check(state.sidebar_edit&&(state.settings&7)==6);key(1);check(!state.sidebar_edit&&state.sidebar_open==2&&(state.settings&7)==6);
- key(1);for(unsigned i=0;i<8;i++){key(4);check(state.sidebar_edit&&state.edit_value==((7+i)&7)&&(state.settings&7)==state.edit_value);apply();check((c[2]&7)==state.edit_value&&!state.pending);}
+ key(1);for(unsigned i=0;i<7;i++){key(4);check(state.sidebar_edit&&state.edit_value==(i%7)&&(state.settings&7)==state.edit_value);apply();check((c[2]&7)==state.edit_value&&!state.pending);}
  key(2);check((state.settings&7)==5);key(8);check(!state.sidebar_edit&&(state.settings&7)==6);
  select(SIDE_THRESHOLD);key(1);key(4);check(state.sidebar_edit&&state.edit_value==64&&((state.settings>>20)&2047)==64&&((state.settings>>9)&2047)==128);
  for(unsigned i=0;i<200;i++)key(4);check(state.edit_value==16&&((state.settings>>20)&2047)==16);key(1);check(!state.sidebar_edit&&((state.settings>>20)&2047)==16);
  key(1);for(unsigned i=0;i<200;i++)key(2);check(state.edit_value==2047&&((state.settings>>20)&2047)==2047);key(8);check(((state.settings>>20)&2047)==2047);
  control_event(0x01000002);key(1);key(2);check(state.edit_value==144&&((state.settings>>9)&2047)==144&&((state.settings>>20)&2047)==2047);key(8);
- control_event(0x01000007);key(1);for(unsigned i=0;i<32;i++)key(4);check(state.shape_threshold==1&&state.edit_value==1);for(unsigned i=0;i<32;i++)key(2);check(state.shape_threshold==255&&state.edit_value==255);key(1);check(!state.sidebar_edit);
+ control_event(0x01000007);check((state.settings&7)==2); // Retired display mode is not selectable.
  select(SIDE_MEDIAN);key(1);check(!(state.settings&8)&&!state.sidebar_edit&&state.sidebar_open==2);key(1);check((state.settings&8)&&!state.sidebar_edit);
- select(SIDE_ZOOM);trace("view");key(1);key(2);check(state.edit_value==960&&state.roi[1]==((1920u<<12)|1080)&&!state.pending);trace("edit_zoom");
- key(8);check(state.roi[1]==((1920u<<12)|1080));key(1);key(2);key(1);check(state.key_roi_dirty&&state.roi[1]==((960u<<12)|540));
+ select(SIDE_ZOOM);trace("view");key(1);key(2);check(state.edit_value==960&&state.roi[1]==((960u<<12)|540)&&state.key_roi_dirty&&!state.pending);trace("edit_zoom");
+ key(8);check(state.roi[1]==((960u<<12)|540));
  apply();check(state.pending==2);accept();check(state.good&&!state.pending);
- select(SIDE_PAN_X);key(1);key(2);check((state.edit_roi[0]>>12)==512&&(state.roi[0]>>12)==480);key(8);check((state.roi[0]>>12)==480);
- select(SIDE_AI);key(1);key(2);check(!state.ai_policy);key(1);check(state.ai_policy==1&&state.ai_manual==1);
+ select(SIDE_PAN_X);key(1);key(2);check((state.edit_roi[0]>>12)==512&&(state.roi[0]>>12)==512&&state.key_roi_dirty);key(8);check((state.roi[0]>>12)==512);
+ apply();accept();
+ // Every view value applies on the arrow; in-flight geometry stays immutable.
+ for(unsigned item=SIDE_ZOOM;item<=SIDE_POS_Y;item++){
+  reset();state.roi[0]=(480u<<12)|270;state.roi[1]=state.roi[2]=(960u<<12)|540;state.roi[3]=0;state.roi_enable=1;
+  select(item);key(1);key(2);check(state.key_roi_dirty);
+  for(unsigned k=0;k<4;k++)check(state.roi[k]==state.edit_roi[k]);
+  apply();check(state.pending==2);unsigned serial=state.serial,first[4];for(unsigned k=0;k<4;k++)first[k]=state.commit[k];
+  key(2);check(state.key_roi_dirty&&state.serial==serial);for(unsigned k=0;k<4;k++)check(state.commit[k]==first[k]);
+  accept();check(state.serial==serial+1&&state.pending==2);for(unsigned k=0;k<4;k++)check(state.commit[k]==state.roi[k]);
+  accept();check(!state.pending&&state.good);serial=state.serial;key(1);apply();check(!state.sidebar_edit&&state.serial==serial&&!state.key_roi_dirty);
+ }
+ reset();
+ select(SIDE_AI);key(1);key(2);check(!state.ai_policy);key(1);check(state.ai_policy==1&&state.ai_manual==5);
  action(SIDE_RUN);check(state.ai_request==1);action(SIDE_SELFTEST);check(state.selftest_request==1);
- select(SIDE_MODEL);key(1);key(2);check(state.ai_manual==1);key(1);check(state.ai_manual==3);
+ select(SIDE_MODEL);key(1);key(2);check(state.ai_manual==5);key(1);check(state.ai_manual==3);
  select(SIDE_TARGET_ZOOM);key(1);for(unsigned i=0;i<6;i++)key(2);check(state.edit_value==8&&!state.center_zoom);key(1);check(state.center_zoom==8);
  key(16);check(((state.settings>>4)&3)==0&&state.sidebar_open);key(32);check(((state.settings>>4)&3)==1&&state.sidebar_open);
  action(SIDE_FULL_VIEW);apply();check(!state.enabled&&!state.pending&&state.roi[0]==0&&state.roi[3]==0);
- // New geometry is required after confirmation, even when AI is OFF.
- reset();action(SIDE_CENTER);check(state.center_request==1);apply();control_center_step();check(state.center_stage==4&&!state.pending);
- control_center_step();check(!state.pending);geometry(700,400,160,120,0,1);control_center_step();check(state.center_stage==2&&state.pending==1&&state.center_frame==100);
- trace_crop("geometry",700,400,160,120);
- apply();check(state.pending==2);accept();control_center_step();check(state.center_status==CENTER_DONE&&!state.center_stage);trace("center_done");
- unsigned serial=state.serial;for(unsigned i=0;i<10;i++){geometry(710,410,160,120,state.serial,1);control_center_step();}check(state.serial==serial);
- // F0 uses the next capture for live rendering rather than waiting for a frozen lease.
- reset();state.settings&=~48u;c[4]&=~64u;action(SIDE_CENTER);apply();control_center_step();
- geometry(700,400,160,120,0,1);control_center_step();apply();check(state.pending==1&&state.warming);
- c[5]++;apply();check(state.pending==2&&!state.warming&&!state.freeze);
- accept();control_center_step();check(state.center_status==CENTER_DONE&&!state.center_stage&&!state.pending);
- // A target in an already panned/scaled viewport is mapped back to the source.
- reset();state.enabled=state.good=1;state.freeze=1;c[4]|=128;state.serial=7;
+ // Default is M7, OFF has no implicit detector; retired model0 is rejected.
+ reset();check(control_model(&state)==CONTROL_MODEL_M7&&!state.follow&&!state.trail&&!state.ai_policy);
+ select(SIDE_CENTER);key(1);apply();control_center_step();check(state.center_status==CENTER_NONE&&!state.pending);
+ control_event(0x63000000);check(control_model(&state)==CONTROL_MODEL_M7);
+ state.ai_manual=1;control_sidebar_reset();check(state.ai_manual==5&&!state.ai_policy);
+ // Both directions wrap only FOMO/M7, and confirmation preserves the manual flag.
+ reset();state.ai_manual|=1;select(SIDE_MODEL);key(1);key(2);check(state.edit_value==1);key(2);check(state.edit_value==2);key(4);check(state.edit_value==1);key(4);check(state.edit_value==2);key(1);
+ check(control_model(&state)==CONTROL_MODEL_M7&&(state.settings&7)==5&&(state.ai_manual&1));trace("model_m7");
+ state.ai_policy=2;check(control_geometry_enabled(&state));check(((control_ui(&state)>>15)&15)==14);state.ai_policy=0;check(!control_geometry_enabled(&state));
+ control_event(0x63000001);check(control_model(&state)==CONTROL_MODEL_FOMO);control_event(0x63000000);control_event(0x63000003);check(control_model(&state)==CONTROL_MODEL_FOMO);
+ // Source-bound FOMO completion retains the original one-shot crop and inverse mapping.
+ reset();state.ai_manual=CONTROL_MODEL_FOMO<<1;state.ai_policy=2;action(SIDE_CENTER);apply();control_center_step();check(state.center_stage==3&&state.ai_request==1);
+ static struct fusion_job crop;crop.g.frame=100;crop.g.context=5;
+ control_center_fomo(state.center_seen,&crop,1,700,400,160,120);check(state.pending==1&&state.center_frame==100);
+ trace_crop("geometry",700,400,160,120);apply();check(state.pending==2);accept();control_center_step();check(state.center_status==CENTER_DONE);trace("center_done");
+ reset();state.ai_manual=CONTROL_MODEL_FOMO<<1;state.ai_policy=2;state.enabled=state.good=1;state.freeze=1;c[4]|=128;state.serial=7;
  state.commit[0]=(480u<<12)|270;state.commit[1]=state.commit[2]=(960u<<12)|540;state.commit[3]=(400u<<12)|200;
- action(SIDE_CENTER);apply();control_center_step();geometry(700,400,160,120,7,1);control_center_step();
- check(state.center_stage==2&&state.center_render==7&&state.center_frame==100);
- check(state.roi[0]==((620u<<12)|395)&&state.roi[1]==((480u<<12)|270)&&state.roi[2]==((1920u<<12)|1080)&&!state.roi[3]);
- trace_crop("inverse_view",780,470,160,120);
- // No target, stale transform, history mode and busy renderer do not alter the view.
- reset();action(SIDE_CENTER);apply();control_center_step();geometry(700,400,160,120,0,0);control_center_step();check(state.center_status==CENTER_NONE&&!state.pending);trace("no_target");
- reset();action(SIDE_CENTER);apply();control_center_step();geometry(700,400,160,120,99,1);control_center_step();check(state.center_status==CENTER_STALE&&!state.pending);
- reset();state.pending=1;action(SIDE_CENTER);control_center_step();check(state.center_status==CENTER_BUSY&&state.pending==1&&state.serial==0);
- reset();state.settings=(state.settings&~48u)|32;action(SIDE_CENTER);control_center_step();check(state.center_status==CENTER_BUSY&&!state.pending&&((state.settings>>4)&3)==2);
- reset();action(SIDE_CENTER);apply();control_center_step();state.shape_threshold++;geometry(700,400,160,120,0,1);control_center_step();check(state.center_status==CENTER_STALE&&!state.pending);
+ action(SIDE_CENTER);apply();control_center_step();crop.g.render=7;control_center_fomo(state.center_seen,&crop,1,780,470,160,120);
+ check(state.roi[0]==((620u<<12)|395)&&state.roi[1]==((480u<<12)|270)&&state.roi[2]==((1920u<<12)|1080)&&!state.roi[3]);trace_crop("inverse_view",780,470,160,120);
+ reset();state.ai_policy=2;state.pending=1;select(SIDE_CENTER);key(1);control_center_step();check(state.center_status==CENTER_BUSY&&state.pending==1&&!state.target_session);
+ reset();state.ai_policy=2;state.settings=(state.settings&~48u)|32;select(SIDE_CENTER);key(1);control_center_step();check(state.center_status==CENTER_BUSY&&!state.target_session);
  // A FOMO selection requests a fresh job, not a previously published model result.
  reset();state.ai_manual=3;state.ai_policy=1;action(SIDE_CENTER);apply();control_center_step();check(state.center_stage==3&&state.ai_request==1);
  static struct fusion_job j;j.g.frame=100;j.g.context=5;
@@ -171,6 +198,52 @@ void main(void){
  verify_box(1850,980,64,72,0);trace_crop("bottom_right",1850,980,64,72);
  verify_box(900,320,60,400,0);trace_crop("tall_target",900,320,60,400);
  verify_box(1300,700,120,80,2);trace_crop("manual_2x",1300,700,120,80);
+ // Refused M7 requests close the chooser instead of showing an endless waiting column.
+ reset();state.ai_manual=CONTROL_MODEL_M7<<1;select(SIDE_CENTER);key(1);control_center_step();check(state.center_status==CENTER_NONE&&!state.sidebar_edit&&!state.target_session);
+ reset();state.ai_manual=CONTROL_MODEL_M7<<1;state.ai_policy=2;state.settings=(state.settings&~48u)|32;select(SIDE_CENTER);key(1);control_center_step();check(state.center_status==CENTER_BUSY&&!state.sidebar_edit&&!state.target_session);
+ // M7: live panorama,1..4 selectable targets, per-row sources, centering and reselection.
+ for(unsigned memory=0;memory<2;memory++)for(unsigned count=1;count<=4;count++){
+  picker_begin(memory,2,count&1);picker_result(count);
+  key(2);check(state.target_index==count-1);key(4);check(state.target_index==0);
+  for(unsigned i=1;i<count;i++)key(4);
+  check(((control_ui(&state)>>19)&7)==(4|count-1));
+  if(memory==0&&count==4)trace("target4");
+  key(1);apply();control_center_step();check(state.pending==1&&state.center_stage==2&&state.center_frame==100+count-1&&state.center_status==CENTER_WAIT);
+  if(memory==0||count<=2){
+   const uint32_t words[12]={200+(count-1)*300,200+(count-1)*80,80+(count-1)*16,80,
+    state.commit[0],state.commit[1],state.commit[2],state.commit[3],state.center_frame,state.center_render,state.center_context,state.serial};
+   puts("SELECTED ");puts(memory?"frozen_target":"live_target");hex(count);
+   for(unsigned i=0;i<12;i++){puts(" ");hex(words[i]);}puts("\n");
+  }
+  unsigned x=state.roi[0]>>12,w=state.roi[1]>>12;
+  int error=(int)(2*x+w)-(int)(2*(200+(count-1)*300)+80+(count-1)*16);check(error>=-8&&error<=8);
+  apply();c[5]++;apply();accept();control_center_step();check(state.center_status==CENTER_DONE&&!state.target_session&&((state.settings>>4)&3)==memory);
+  // The same menu action from a focused ROI returns to panorama, never recrops it.
+  key(1);control_center_step();check(state.center_stage==CENTER_PANORAMA&&!state.roi_enable&&!state.target_ready);
+  key(8);control_center_step();check(!state.target_session&&!state.sidebar_edit&&((state.settings>>4)&3)==memory);
+ }
+ picker_begin(0,1,0);check(state.ai_request==1);picker_result(0);key(1);check(state.center_stage==CENTER_TARGET_PICK&&!state.pending);key(8);control_center_step();check(!state.target_session&&state.center_status==CENTER_READY);
+ picker_begin(0,2,0);picker_result(2);state.target_index=4;
+ check((control_ui(&state)&32)&&!(control_ui(&state)&(4u<<19)));trace("target_lost");key(1);check(state.center_stage==CENTER_TARGET_PICK&&!state.pending);
+ key(4);check(state.target_index==0);f[5]++;key(1);apply();control_center_step();check(state.pending==1&&state.center_frame==100);
+ picker_begin(0,2,0);picker_result(2);f[7]++;key(1);apply();control_center_step();check(state.center_status==CENTER_STALE&&!state.pending&&!state.target_session);
+ picker_begin(0,2,0);picker_result(3);state.ai_policy=0;control_center_step();check(state.center_status==CENTER_STALE&&!state.target_session&&!(state.settings&48));
+ picker_begin(1,2,0);picker_result(4);state.settings=(state.settings&~48u)|32;control_center_step();check(!state.target_session&&((state.settings>>4)&3)==2);
+ picker_begin(0,2,0);picker_result(1);control_event(0x61000000);control_center_step();check(!state.target_session&&!(state.settings&48));
+ reset();select(SIDE_FOLLOW);key(1);check(state.follow&&!state.sidebar_edit&&control_sidebar_value(&state)==1);trace("follow_on");
+ select(SIDE_TRAIL);key(1);check(state.trail&&!state.sidebar_edit);trace("trail_on");
+ key(1);check(!state.trail&&state.follow);key(1);check(state.trail);
+ action(SIDE_FULL_VIEW);check(!state.follow&&state.trail);
+ control_event(0x64000001);control_event(0x65000000);check(state.follow&&!state.trail);
+ control_event(0x64000002);check(state.follow);
+ control_event(0x30000000);check(!state.follow);control_event(0x64000001);
+ picker_begin(0,2,0);state.follow=1;state.trail=1;picker_result(4);state.target_index=2;
+ state.target_sequence=77;state.target_classes=(4u<<14);key(1);apply();control_center_step();
+ check(state.track_request==1&&state.track_index==2&&state.track_sequence==77&&state.track_class==4&&state.pending==1);
+ picker_begin(1,2,0);state.follow=1;picker_result(1);key(1);apply();control_center_step();
+ apply();c[5]++;apply();accept();control_center_step();check(state.center_status==CENTER_DONE&&!(state.settings&48));
+ state.track_status=3;state.center_status=CENTER_STALE;state.sidebar_open=0;state.menu=0;
+ check((control_ui(&state)&1024)&&((control_ui(&state)>>23)&7)==CENTER_STALE);
  puts("PASS sidebar_center checks=");hex(checks);puts(" geometry_cases=");hex(geometry_cases);puts("\n");finish(1);
 }
 void trap(void){puts("TRAP\n");finish(0);}
@@ -195,11 +268,21 @@ tree=ast.parse((ROOT/'scripts/vision_control.py').read_text())
 decode=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='decode_ui')
 namespace={};exec(compile(ast.Module(body=[decode],type_ignores=[]),'decode_ui','exec'),namespace)
 for v in ui:
- word=v['word'];record=namespace['decode_ui']((0x56495331<<160)|(0x26101040<<128)|(v['settings']<<96)|(word<<64))
- item=((word>>26)&15)|(((word>>14)&1)<<4 if word>>31 else 0);status=(word>>23)&7;level=0 if not word>>31 else 1 if status==7 else 3 if word>>30&1 and item==0 else 2
+ word=v['word'];record=namespace['decode_ui']((0x56495331<<160)|(0x26103041<<128)|(v['settings']<<96)|(word<<64))
+ item=((word>>26)&15)|(((word>>14)&1)<<4 if word>>31 else 0);status=(word>>23)&7;target=bool(word>>30&1 and item==13 and word>>10&1);level=0 if not word>>31 else 1 if status==7 else 3 if word>>30&1 and (item==0 or target) else 2
  group=item if level==1 else (0 if item<3 else 1 if item<9 else 3 if item<13 else 2)
- assert record==dict(menu=0 if level else (word>>11)&15,menu_value=word&2047,shape_threshold=(word>>15)&255,index=(v['settings']>>15)&7,
-                     sidebar_open=(word>>31)&1,sidebar_edit=(word>>30)&1,sidebar_item=item,center_status=status,sidebar_level=level,sidebar_group=group),record
+ expected=dict(menu=0 if level else (word>>11)&15,menu_value=word&2047,recognition_model=(word>>15)&3,geometry_enabled=(word>>17)&1,recognition_enabled=(word>>18)&1,index=(v['settings']>>15)&7,
+                     sidebar_open=(word>>31)&1,sidebar_edit=(word>>30)&1,sidebar_item=item,center_status=status,sidebar_level=level,sidebar_group=group,target_highlight=(word>>21)&1,target_index=(word>>19)&3)
+ if target:expected.update(target_count=(word>>2)&7,target_ready=(word>>6)&1)
+ assert record==expected,record
+ current=namespace['decode_ui']((0x56495331<<160)|(0x26103042<<128)|(v['settings']<<96)|(word<<64))
+ if target:expected.update(target_selected=not bool(word&32),target_live=bool(word&128))
+ assert current==expected,current
+ current_key1=namespace['decode_ui']((0x56495331<<160)|(0x26103043<<128)|((v['settings']|8)<<96)|(word<<64))
+ expected['key1_n']=1
+ assert current_key1==expected,current_key1
+ current_follow=namespace['decode_ui']((0x56495331<<160)|(0x26103144<<128)|((v['settings']|8)<<96)|(word<<64))
+ assert current_follow==expected,current_follow
 (out/'ui_vectors.json').write_text(json.dumps(ui,indent=2));(out/'ui_vectors.mem').write_text(''.join(f'{v["ui"]:06x}\n' for v in ui))
 roi=[]
 for line in r.stdout.splitlines():
@@ -208,6 +291,15 @@ for line in r.stdout.splitlines():
   assert len(values)==12
   roi.append(dict(name=name,target=values[:4],roi=values[4:8],frame=values[8],render=values[9],context=values[10],config=values[11]))
 assert len(roi)==6
+selected=[]
+for line in r.stdout.splitlines():
+ if line.startswith('SELECTED '):
+  _,name,*words=line.split();values=[int(word,16) for word in words]
+  selected.append(dict(name=name,target=values[:4],roi=values[4:8],frame=values[8],render=values[9],context=values[10],config=values[11]))
+assert len(selected)==6
+selection=out.parent/'selection_render/control';selection.mkdir(parents=True,exist_ok=True)
+(selection/'center_vectors.json').write_text(json.dumps(selected,indent=2))
+(selection/'center_vectors.mem').write_text(''.join(f'{word:08x}\n' for v in selected for word in [*v['target'],*v['roi'],v['frame'],v['render'],v['context'],v['config']]))
 (out/'center_vectors.json').write_text(json.dumps(roi,indent=2))
 (out/'center_vectors.mem').write_text(''.join(f'{word:08x}\n' for v in roi for word in [*v['target'],*v['roi'],v['frame'],v['render'],v['context'],v['config']]))
 checks=int(r.stdout.split('checks=')[1].split()[0],16)

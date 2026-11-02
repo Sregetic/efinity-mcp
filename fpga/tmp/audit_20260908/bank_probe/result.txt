@@ -1,4 +1,0 @@
-NORMAL: rd_ack=1 rd_bank=0 expected_bank=0
-SIMULTANEOUS: wr_ack=1 rd_ack=1 rd_bank=1 pending_clean_bank=0
-REPRODUCED: read request acknowledged without selecting the pending completed frame.
-F:\Project\fpga\tmp\audit_20260908\bank_probe\tb_bank_switch.sv:38: $finish called at 126000 (1ps)

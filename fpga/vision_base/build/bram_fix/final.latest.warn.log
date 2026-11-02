@@ -1,6 +1,0 @@
-///////////////////////////////////
-// Efinity Synthesis Started 
-// Sep 08, 2026 01:36:17
-///////////////////////////////////
-
-[EFX-0011 VERI-WARNING] expression size 9 truncated to fit in target size 8 (VERI-1209) (F:\Project\fpga\vision_base\rtl\axi_line_reader.sv:59)

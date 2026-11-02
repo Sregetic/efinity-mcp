@@ -4,7 +4,7 @@ reg clk=0;always #5 clk=~clk;
 reg[11:0]x=8,y=4;reg[2:0]mode=2;reg[10:0]threshold=96;wire active,ink;
 reg[23:0]ui=0;
 reg fusion=0,matched=1;reg[351:0]packet=0;reg[15:0]age=0;
-vision_osd dut(x,y,mode,threshold,1'b1,2'd0,3'd0,1'b1,2'd0,1'b0,1'b0,active,ink,11'd16,fusion,packet,matched,age,clk,ui,16'd0,7'd0);
+vision_osd dut(x,y,mode,threshold,1'b1,2'd0,3'd0,1'b1,2'd0,1'b0,1'b0,active,ink,11'd16,fusion,packet,matched,age,clk,ui,16'd0,7'd0,28'd0);
 task character(input integer position,input[7:0]wanted);
 begin @(negedge clk);x=8+12*position;@(posedge clk);#1;if(dut.ch_q!==wanted||!active)$fatal(1,"OSD character %0d: %c expected %c",position,dut.ch_q,wanted);end
 endtask
@@ -16,8 +16,10 @@ task side_word(input integer line,input integer offset,input[63:0]wanted);
  begin for(slot=0;slot<8;slot=slot+1)side_character(line,offset,slot,wanted[63-8*slot-:8]);end
 endtask
 integer j,expected,m,k,g,item,line,py,px,font_pixels=0;reg[7:0]forced_code;reg expected_ink;
-reg[63:0]mode_names[0:7],labels[0:16],groups[0:3],statuses[0:6],tests[0:3],runs[0:3];reg[255:0]cn_pattern;
+reg[63:0]mode_names[0:7],labels[0:18],groups[0:3],statuses[0:6],tests[0:3],runs[0:3];reg[255:0]cn_pattern;
 initial begin
+ for(j=97;j<=122;j++)if(dut.glyph(j)==0)$fatal(1,"missing lowercase target label %0d",j);
+ if(dut.glyph(47)==0||dut.target_label(30)!="a       "||dut.target_label(56)!="A/a     "||dut.target_label(82)!="I/l     ")$fatal(1,"target class captions");
  for(j=0;j<2048;j=j+1)begin expected=((j/1000)<<12)|(((j/100)%10)<<8)|(((j/10)%10)<<4)|(j%10);if(dut.decimal(j)!==expected[15:0])$fatal(1,"decimal %0d",j);end
  character(0,"S");character(1,"O");character(2,"B");character(3,"E");character(4,"L");
  character(10,"0");character(11,"0");character(12,"9");character(13,"6");
@@ -60,8 +62,8 @@ initial begin
  end
  packet[0]=1;packet[12:11]=2;matched=0;side_word(5,24,dut.ZH_AI_OLD);packet[0]=0;matched=1;
  mode_names[0]=dut.ZH_CAMERA;mode_names[1]=dut.ZH_GRAY;mode_names[2]=dut.ZH_SOBEL;mode_names[3]=dut.ZH_SPLIT;
- mode_names[4]=dut.ZH_SOBEL_OVERLAY;mode_names[5]=dut.ZH_CANNY;mode_names[6]=dut.ZH_CANNY_OVERLAY;mode_names[7]=dut.ZH_SHAPE;
- for(m=0;m<8;m=m+1)begin
+ mode_names[4]=dut.ZH_SOBEL_OVERLAY;mode_names[5]=dut.ZH_CANNY;mode_names[6]=dut.ZH_CANNY_OVERLAY;mode_names[7]=dut.ZH_CAMERA;
+ for(m=0;m<7;m=m+1)begin
   ui=24'hc00000|m;
   side_word(1,36,mode_names[m]);
  end
@@ -69,8 +71,9 @@ initial begin
  labels[4]=dut.ZH_PAN_X;labels[5]=dut.ZH_PAN_Y;labels[6]=dut.ZH_SIZE;labels[7]=dut.ZH_POS_X;
  labels[8]=dut.ZH_POS_Y;labels[9]=dut.ZH_AI_MODE;labels[10]=dut.ZH_RUN;labels[11]=dut.ZH_SELFTEST;
  labels[12]=dut.ZH_MODEL;labels[13]=dut.ZH_CENTER;labels[14]=dut.ZH_TARGET_ZOOM;labels[15]=dut.ZH_FULLVIEW;labels[16]=dut.ZH_MOTION;
+ labels[17]=dut.ZH_FOLLOW;labels[18]=dut.ZH_TRAIL;
  groups[0]=dut.ZH_IMAGE;groups[1]=dut.ZH_VIEW;groups[2]=dut.ZH_TARGET;groups[3]=dut.ZH_AI;
- for(item=0;item<17;item=item+1)begin
+ for(item=0;item<19;item=item+1)begin
   ui=24'h800000|((item&15)<<18)|((item>>4)<<14);line=item<3?item+1:item<9?item-2:item<13?item-8:item-12;
   side_word(line,12,labels[item]);
  end
@@ -88,15 +91,19 @@ initial begin
  ui=24'h800000|(9<<18)|2;side_word(1,36,dut.ZH_AUTO);
  ui=24'h800000|(12<<18)|1;side_word(4,36,"FOMO    ");
  ui=24'h800000|(12<<18);side_word(4,36,dut.ZH_BASE);
+ ui=24'h800000|(12<<18)|2;side_word(4,36,dut.ZH_M7);
  ui=24'h800000|(14<<18);side_word(2,36,dut.ZH_AUTO);
  for(m=1;m<=8;m=m*2)begin ui=24'h800000|(14<<18)|m;side_word(2,36,{8'd48+m[7:0],dut.ZH_TIMES[63:56],48'h202020202020});end
  ui=24'h800000|(3<<18)|960;side_word(1,36,{dut.ZH_WIDTH[63:56],"0960",dut.ZH_PIXELS[63:48],8'd32});
  ui=24'h800000|(4<<18)|320;side_word(2,36,{"0320",dut.ZH_PIXELS[63:48],16'h2020});
  statuses[0]=dut.ZH_READY;statuses[1]=dut.ZH_WAIT;statuses[2]=dut.ZH_DONE;statuses[3]=dut.ZH_NO_TARGET;
  statuses[4]=dut.ZH_BUSY;statuses[5]=dut.ZH_STALE;statuses[6]=dut.ZH_ERROR;
- for(m=0;m<7;m=m+1)begin ui=24'h800000|(13<<18)|(m<<15);side_word(5,24,statuses[m]);end
- ui=24'h800000|(13<<18);side_word(1,36,dut.ZH_ENTER);side_word(6,12,dut.ZH_ENTER);side_word(6,36,dut.ZH_BACK);
- ui=24'hc00000|(13<<18);side_word(0,24,dut.ZH_EDIT);side_word(1,36,dut.ZH_CONFIRM);side_word(6,36,dut.ZH_CANCEL);
+ for(m=0;m<7;m=m+1)begin ui=24'h800000|(13<<18)|(m<<15);side_word(7,24,statuses[m]);end
+ ui=24'h800000|(13<<18);side_word(1,36,dut.ZH_ENTER);side_word(8,12,dut.ZH_ENTER);side_word(8,36,dut.ZH_BACK);
+ ui=24'hc00000|(13<<18);side_word(0,24,dut.ZH_EDIT);side_word(1,36,dut.ZH_CONFIRM);side_word(8,36,dut.ZH_CANCEL);
+ ui=24'h800000|(1<<18)|(1<<14)|1;side_word(5,36,dut.ZH_ON);
+ ui=24'h800000|(2<<18)|(1<<14);side_word(6,36,dut.ZH_OFF);
+ ui=24'h800000|(13<<18)|(5<<15)|512;side_word(7,24,dut.ZH_LOST);
  @(negedge clk);ui=24'h838005;x=16;y=100;@(posedge clk);#1;if(active)$fatal(1,"sidebar covered original status HUD");
  @(negedge clk);x=144;y=228;@(posedge clk);#1;if(active)$fatal(1,"root opened child without confirm");
  @(negedge clk);x=143;@(posedge clk);#1;if(!active)$fatal(1,"root width");
@@ -127,6 +134,6 @@ initial begin
   end
  end
  release dut.ch;
- $display("PASS OSD Chinese 4 groups/17 labels/8 modes/statuses/units and %0d font pixels, legacy HUD exact, widths144/304 row64",font_pixels);$finish;
+ $display("PASS OSD Chinese 4 groups/19 labels/follow/trail/lost/7 displays/3 models/statuses/units and %0d font pixels, legacy HUD exact, widths144/304 row64",font_pixels);$finish;
 end
 endmodule

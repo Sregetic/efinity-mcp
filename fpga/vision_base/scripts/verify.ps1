@@ -61,6 +61,7 @@ $tests = @(
     @{ Name='tb_board_bank_switch'; Sources=@('board/ti60f225_v4/rtl/frame_buffer_V3/bank_switch.v','sim/tb_board_bank_switch.sv') },
     @{ Name='tb_stream_cdc'; Sources=@('rtl/stream_cdc.sv','sim/tb_stream_cdc.sv') },
     @{ Name='tb_axi_burst_qos'; Sources=@('rtl/axi_burst_arbiter.sv','sim/tb_axi_burst_qos.sv') },
+    @{ Name='tb_axi_write_pressure'; Sources=@('rtl/axi_burst_arbiter.sv','sim/tb_axi_write_pressure.sv') },
     @{ Name='tb_frame_memory_system'; Sources=@('rtl/frame_pool.sv','rtl/frame_render_control.sv','rtl/roi_scaler.sv','rtl/axi_line_reader.sv','rtl/roi_axi_scaler.sv','rtl/axi_frame_writer.sv','rtl/frame_render_engine.sv','rtl/axi_frame_reader.sv','rtl/axi_burst_arbiter.sv','rtl/frame_memory_system.sv','sim/tb_frame_memory_system.sv') },
     @{ Name='tb_frame_pool'; Sources=@('rtl/frame_pool.sv','sim/tb_frame_pool.sv') },
     @{ Name='tb_frame_render_control'; Sources=@('rtl/frame_pool.sv','rtl/frame_render_control.sv','sim/tb_frame_render_control.sv') },

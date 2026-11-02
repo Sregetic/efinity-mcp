@@ -1,0 +1,10 @@
+[
+  {
+    "module": "geometry_m7",
+    "rv32_instructions_identical": true
+  },
+  {
+    "module": "geometry_letters",
+    "rv32_instructions_identical": true
+  }
+]

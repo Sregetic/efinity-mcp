@@ -7,13 +7,13 @@ from types import SimpleNamespace
 from urllib.error import HTTPError
 from urllib.request import Request,urlopen
 import roi_panel as panel
-from capture_mode_images import write_png
+from capture_mode_images import NAMES,write_png
 
 with TemporaryDirectory() as temporary:
     panel.out=Path(temporary)
     panel.a=SimpleNamespace(url='TEST',sensor='sc431hai')
     directory=panel.out/'mode_frames_1';directory.mkdir()
-    modes=['source',*map(str,range(8))]
+    modes=list(NAMES)
     images=[dict(mode=m,file='source.png' if m=='source' else f'mode_{m}.png',frame_id=42,config_id=7) for m in modes]
     metadata=dict(passed=True,context=dict(held_source_frame_id=42,applied_config_id=7),images=images,canny_epoch=9)
     def save_capture(target,data):
@@ -73,6 +73,17 @@ with TemporaryDirectory() as temporary:
             except HTTPError as error:assert error.code==400
             else:raise AssertionError('Invalid policy reached hardware')
             assert len(calls)==before
+        for model in [1,2]:
+            request=Request(base+'/ai-policy',data=json.dumps(dict(policy=2,model=model)).encode(),headers={'Content-Type':'application/json','Origin':base})
+            with urlopen(request,timeout=3) as response:assert json.load(response)==dict(mode=0)
+            assert calls[-1][-4:]==['--ai-policy','2','--recognition-model',{1:'fomo',2:'m7'}[model]]
+        for model in [0,3,True,'m7']:
+            request=Request(base+'/ai-policy',data=json.dumps(dict(policy=2,model=model)).encode(),headers={'Content-Type':'application/json','Origin':base})
+            before=len(calls)
+            try:urlopen(request,timeout=3)
+            except HTTPError as error:assert error.code==400
+            else:raise AssertionError('Invalid model reached hardware')
+            assert len(calls)==before
         for path in ['/mode_frames_1/../mode_gallery.json','/mode_frames_1/mode_8.png','/mode_frames_99/source.png']:
             try:get(path)
             except HTTPError as error:assert error.code==404
@@ -84,5 +95,9 @@ with TemporaryDirectory() as temporary:
         html=get('/').decode('utf-8')
         assert html.index('id="gallery"')<html.index('id="state"')
         assert 'loadImages();refresh();' in html and 'button:not([data-view])' in html
+        display=html.split('id="mode"')[1].split('</select>')[0]
+        assert '<option value="7">' not in display and 'id="recognitionModel"' in html
+        model_select=html.split('id="recognitionModel"')[1].split('</select>')[0]
+        assert 'value="0"' not in model_select and 'value="1"' in model_select and 'value="2" selected' in model_select
     finally:server.shutdown();server.server_close();thread.join()
-print('PASS: complete immutable gallery, partial capture rejection, reload, nine PNGs, independent static reads, serialized board access and route/origin boundaries')
+print('PASS: eight-image gallery, historical image routes, FOMO/M7 and rejected retired BASE model, legacy policy caller, static reads, serialization and origin boundaries')

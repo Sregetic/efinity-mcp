@@ -28,7 +28,6 @@ def main():
         fields += [('output', 'fomo_camera_output', 576),
               ('targets', 'fomo_detections', 144*14), ('layers', 'fomo_camera_layer_cycles', 200),
               ('gray', 'analysis_gray', 1024), ('features', 'analysis_features', 128),
-              ('hidden', 'analysis_hidden', 32), ('logits', 'analysis_logits', 4),
               ('hash', 'analysis_hash', 32), ('network', 'analysis_connectome', 160),
               ('network_record', 'connectome_result', 40)]
         if a.full_input:

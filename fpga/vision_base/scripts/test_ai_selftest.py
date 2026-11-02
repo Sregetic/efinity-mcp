@@ -1,19 +1,16 @@
 """Run production selftest with RV32I arithmetic references; board tests real CFUs."""
 from pathlib import Path
-import subprocess
+import argparse,subprocess
 ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/'results/ai_board_ui_20261010/selftest_test';OUT.mkdir(parents=True,exist_ok=True)
+p=argparse.ArgumentParser();p.add_argument('--output-dir',type=Path,default=ROOT/'results/ai_board_ui_20261010/selftest_test');args=p.parse_args()
+OUT=args.output_dir;OUT.mkdir(parents=True,exist_ok=True)
 BIN=Path('F:/Efinity/efinity-riscv-ide-2026.1/toolchain/bin')
-data=(ROOT/'models/shape_cards_bringup/shape_cards_weights.bin').read_bytes()
 source='#define INT8_TEST\n#define VISION_MULHI_CFU\n#include "ai_selftest.h"\n'
-source+='static const uint8_t weights[]={'+','.join(map(str,data))+'};\n'
 source+='''
 static void finish(unsigned ok){*(volatile unsigned *)0x100000=ok?0x5555:0x3333;for(;;);}
-void main(void){struct shape_model m;
- for(unsigned i=0;i<sizeof(m);i++)((uint8_t*)&m)[i]=weights[i];
- if(ai_selftest(&m)!=2)finish(0);
- m.m0=0;if(ai_selftest(&m)!=3)finish(0);
- const char*p="PASS RV32I three-input AI selftest and corrupted-weight FAIL\\n";
+void main(void){
+ if(ai_selftest()!=2)finish(0);
+ const char*p="PASS RV32I weight-free feature/FlyHash/connectome selftest\\n";
  while(*p)*(volatile unsigned char*)0x10000000=*p++;finish(1);
 }
 void trap(void){finish(0);}

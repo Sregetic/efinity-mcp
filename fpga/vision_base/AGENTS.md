@@ -9,3 +9,9 @@
 - 保留既有帧持有/DDR仲裁/CDC、二值识别掩码、消抖与帧边界提交、原图/模式回读。源帧配置与ROI渲染配置先核对实际ABI，I3不混用。
 - 摄像头60fps与MIPI LCD是用户明确暂缓；其他范围仅按用户明确调整。SC2210分支复用整套系统。
 - 当前硬件制品、未验收项与资源余量读取状态表，不将计划/候选写成已上板。默认在实际缺口上推进，已验收链路无需重做。
+
+- 当前输入接入任务在board/ti60_hdmi（HQ12 HDMI）；原摄像头备份见backups/camera_before_hq12_20261101。当前SRAM、Flash与未部署诊断候选必须按总状态表区分，用户基础验证期间不擅自重配或冻结画面。
+
+- HQ12正式SDI固化制品在results/hdmi_finalize_20261101/release，回执与原Flash恢复备份在该目录flash/；视图六项为即时调节。当前验收边界与物理重新加载确认读取总状态最新摘要。
+
+- 最新多目标连续轨迹/框内方向临时版本在results/multi_target_motion_20261102/lines/reset_release；Flash仍是上一SDI版。首帧启动修复、真实运行及验收边界见该任务REPORT.md/lines/acceptance.json，不把点版现场确认当成线版确认。

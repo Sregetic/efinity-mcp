@@ -15,12 +15,11 @@ try {
   @{name='osd';src=@('vision_osd.sv')},
   @{name='sidebar_video';src=@('vision_osd.sv','vision_sidebar_overlay.sv')},
   @{name='line_direct';src=@('vision_line_direct.sv','vision_window3_pair.sv','vision_line_metrics.sv','vision_frontend.sv','vision_window3.sv','vision_median9.sv','vision_sobel.sv')},
-  @{name='shape_classifier';src=@('vision_shape_classifier.sv')},
   @{name='shadow_chroma';src=@('../rgb_shadow_denoise.sv')},
   @{name='sobel';src=@('vision_sobel.sv')},
   @{name='canny_stability';src=@('vision_canny.sv','vision_sparse_window.sv')},
-  @{name='fusion_display';src=@('vision_display.sv','vision_frontend.sv','vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_shape_classifier.sv','vision_osd.sv')},
-  @{name='edge_strength';src=@('vision_display.sv','vision_frontend.sv','vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_shape_classifier.sv','vision_osd.sv')},
+  @{name='fusion_display';src=@('vision_display.sv','vision_frontend.sv','vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_osd.sv')},
+  @{name='edge_strength';src=@('vision_display.sv','vision_frontend.sv','vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_osd.sv')},
   @{name='sensor_init';src=@('../cam_i2c_ctrl/i2c/i2c_master_reg_rom.v')},
   @{name='canny_raster';src=@('vision_canny_raster.sv','vision_sparse_window.sv')},
   @{name='canny_fit';src=@('vision_canny_raster.sv','vision_sparse_window.sv')},
@@ -32,7 +31,7 @@ try {
   @{name='canny_denoise';src=@('vision_canny_denoise.sv','vision_sparse_window.sv','vision_median9.sv')},
   @{name='canny_noise';src=@('vision_canny.sv','vision_canny_denoise.sv','vision_median9.sv','vision_hysteresis_sweep.sv','vision_hysteresis.sv','vision_sparse_window.sv','vision_sobel.sv')},
   @{name='edge_components';src=@('vision_hysteresis_sweep.sv','vision_hysteresis.sv')},
-  @{name='edge_overlay';src=@('vision_display.sv','vision_frontend.sv','vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_shape_classifier.sv','vision_osd.sv')},
+  @{name='edge_overlay';src=@('vision_display.sv','vision_frontend.sv','vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_osd.sv')},
   @{name='frontend';src=@('vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_frontend.sv')},
   @{name='color';src=@('vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_frontend.sv')},
   @{name='color_denoise';src=@('vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_frontend.sv')},
@@ -53,9 +52,9 @@ try {
  if($Full){
   $tests+=@{name='geometry_m7';src=@('vision_geometry_m7.sv')}
   $tests+=@{name='geometry_m7_labels';src=@('vision_geometry_m7.sv')}
-  $tests+=@{name='geometry_m7_labels_display';src=@('vision_geometry_m7.sv','vision_display.sv','vision_frontend.sv','vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_shape_classifier.sv','vision_osd.sv')}
-  $tests+=@{name='geometry_m7_display';src=@('vision_geometry_m7.sv','vision_display.sv','vision_frontend.sv','vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_shape_classifier.sv','vision_osd.sv')}
-  $tests+=@{name='geometry_m7_split';src=@('vision_geometry_m7.sv','vision_display.sv','vision_frontend.sv','vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_shape_classifier.sv','vision_osd.sv')}
+  $tests+=@{name='geometry_m7_labels_display';src=@('vision_geometry_m7.sv','vision_display.sv','vision_frontend.sv','vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_osd.sv')}
+  $tests+=@{name='geometry_m7_display';src=@('vision_geometry_m7.sv','vision_display.sv','vision_frontend.sv','vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_osd.sv')}
+  $tests+=@{name='geometry_m7_split';src=@('vision_geometry_m7.sv','vision_display.sv','vision_frontend.sv','vision_window3.sv','vision_median9.sv','vision_sobel.sv','vision_osd.sv')}
   $tests+=@{name='bayer_fov_reduce';src=@('../bayer_fov_reduce.sv')}
   $tests+=@{name='canny';src=@('vision_canny.sv','vision_canny_denoise.sv','vision_median9.sv','vision_hysteresis_sweep.sv','vision_hysteresis.sv','vision_sparse_window.sv','vision_sobel.sv')}
  }

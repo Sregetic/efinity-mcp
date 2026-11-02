@@ -1,8 +1,9 @@
 """Run the production control policy on RV32I; MMIO model follows bridge ABI."""
 from pathlib import Path
-import subprocess
+import argparse,subprocess
 ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/'results/xlr_control_20261007/control_test';OUT.mkdir(parents=True,exist_ok=True)
+p=argparse.ArgumentParser();p.add_argument('--output-dir',type=Path,default=ROOT/'results/xlr_control_20261007/control_test');args=p.parse_args()
+OUT=args.output_dir;OUT.mkdir(parents=True,exist_ok=True)
 BIN=Path('F:/Efinity/efinity-riscv-ide-2026.1/toolchain/bin')
 source=r'''
 #include <stdint.h>
@@ -66,12 +67,13 @@ void main(void){
  reg[4]|=1<<8;control_service_step();accept();check(state.good);reg[4]|=1<<11;control_service_step();check(!state.good);event(0x34,0);event(0x35,0);control_service_step();check(!state.enabled&&!(reg[4]&32));
  reg[4]=(1<<8)|(1<<6);reg[5]=100;event(0x34,1);event(0x35,0);control_service_step();
  check(state.pending==2&&!state.warming&&(reg[4]&16));accept();check(state.good);
- event(4,1);unsigned saved_sobel=threshold(9);event(1,7);event(255,2);check(state.shape_threshold==48&&threshold(9)==saved_sobel);event(255,4);check(state.shape_threshold==32);event(23,1);event(255,4);check(state.shape_threshold==1);event(23,255);event(255,2);check(state.shape_threshold==255);event(23,32);
+ event(4,1);unsigned saved_sobel=threshold(9);event(1,6);event(1,7);check((state.settings&7)==6);event(255,1);check((state.settings&7)==0);
+ event(23,1);check(threshold(20)==16&&threshold(9)==saved_sobel);event(23,255);check(threshold(20)==255&&!state.shape_threshold);
  // UI reuses the real key event policy; no host is needed for any action.
  event(0x61,1);check(state.menu==1);event(255,2);check(state.settings&8);event(255,4);check(!(state.settings&8));
  event(0x30,0);event(0x31,(1920u<<12)|1080);event(0x32,(1920u<<12)|1080);event(0x33,0);
  event(0x61,2);check(state.menu==2);event(255,2);check(state.roi[0]==((480u<<12)|270)&&state.roi[1]==((960u<<12)|540));
- apply();check(state.pending==2&&reg[0x44/4]==((32u<<15)|(2u<<11)|960));
+ apply();check(state.pending==2&&reg[0x44/4]==((9u<<15)|(2u<<11)|960));
  event(255,2);check(state.roi[1]==((480u<<12)|270)&&state.key_roi_dirty);accept();accept();check(state.good&&!state.pending);
  event(0x61,3);check(state.menu==3);unsigned old_x=state.roi[0]>>12;event(255,2);check((state.roi[0]>>12)==old_x+32);
  for(unsigned i=0;i<100;i++)event(255,2);check((state.roi[0]>>12)==1440);event(255,4);check((state.roi[0]>>12)==1408);
@@ -82,14 +84,14 @@ void main(void){
  event(0x61,5);event(255,2);check(state.roi[2]==((1920u<<12)|1080)&&state.roi[3]==0);
  event(0x61,2);for(unsigned i=0;i<10;i++)event(255,4);check(state.roi[0]==0&&state.roi[1]==((1920u<<12)|1080)&&!state.roi_enable);
  event(0x61,8);check(state.menu==8);
- event(255,2);check(state.ai_policy==2&&!state.ai_manual);event(255,2);check(state.ai_policy==0);event(255,4);check(state.ai_request==0);
+ event(255,2);check(state.ai_policy==2&&state.ai_manual==2);event(255,2);check(state.ai_policy==0);event(255,4);check(state.ai_request==0);
  event(255,2);check(state.ai_policy==1&&state.ai_manual);event(255,4);check(state.ai_request==1);
  event(255,16);check(((state.settings>>4)&3)==0);event(255,16);check(((state.settings>>4)&3)==1);
  event(0x61,9);check(state.menu==9);event(255,2);check(state.selftest_request==1);event(255,4);check(state.selftest_request==1);
  event(0x61,10);check(state.menu==10);event(255,2);check(state.ai_manual==3);
  event(0x60,1);check(state.ai_manual==2);event(0x61,8);event(255,2);check(state.ai_policy==2&&state.ai_manual==2);
- event(0x61,10);event(255,4);check(state.ai_manual==0);event(0x61,0);check(state.menu==0);
- event(0x60,1);check(!state.ai_manual);apply();accept();control_service_step();check(!state.enabled&&!state.pending);
+ event(0x61,10);event(255,4);check(state.ai_manual==2);event(0x61,0);check(state.menu==0);
+ event(0x60,1);check(state.ai_manual==2);apply();accept();control_service_step();check(!state.enabled&&!state.pending);
  const char *p="PASS RV32I controls independent thresholds16..2047 step16, keys/history,11-page UI/AI single-shot/selftest/FOMO selection, bounded zoom/pan/viewport, coalesced frozen ROI commits, atomic feature wait and disable\n";
  while(*p)*(volatile unsigned char *)0x10000000=*p++;finish(1);
 }

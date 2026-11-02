@@ -1,7 +1,9 @@
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from PIL import Image
-from capture_mode_images import decode_snapshot,decode_caps,check_row,rgb_bytes,write_png,check_frozen_source
+from capture_mode_images import NAMES,decode_snapshot,decode_caps,check_row,rgb_bytes,write_png,check_frozen_source
+
+assert list(NAMES)==['source',*map(str,range(7))]
 
 # Full-screen F1 has no ROI lease; RGB line headers still bind every row to its frame.
 source=dict(roi_enabled=0,source_held=0,source_frozen=1,roi_frame_id=13334,held_source_frame_id=0)

@@ -1,0 +1,16 @@
+{
+  "elapsed_unhalted_ms": 32906,
+  "category_count": 29,
+  "category_hz": 0.8812982434814319,
+  "last_category_request_to_completion_ms": 1100.36319,
+  "source_capture_increment": 991,
+  "display_source_increment": 992,
+  "scan_bad_frame_increment": 0,
+  "discard_increment": 0,
+  "position_updates": 0,
+  "position_rate": "not measured: follow and trail disabled by current user settings, no selected target",
+  "observation_to_roi_ms": null,
+  "ai_selftest": 2,
+  "fpga_reprogrammed": false,
+  "flash_written": false
+}

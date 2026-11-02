@@ -128,8 +128,20 @@ module frame_memory_system #(
  input[5:0]m_axi_bid,
  input m_axi_bvalid,
  output m_axi_bready,
- output source_hold_valid,output[31:0]source_hold_frame_id,source_hold_config_id
+ output source_hold_valid,output[31:0]source_hold_frame_id,source_hold_config_id,
+ output[31:0]capture_debug
  );
+ // Video reset is released by another PLL domain. All memory FSMs leave reset together on clk.
+ (* async_reg="true" *)reg[2:0]reset_sync=0;
+ always @(posedge clk or negedge rst_n)begin
+  if(!rst_n)reset_sync<=0;else reset_sync<={reset_sync[1:0],1'b1};
+ end
+ wire memory_rst_n=reset_sync[2];
+ wire engine_job_ready,engine_analysis_ready,engine_compute_ready;
+ assign job_ready=memory_rst_n&&engine_job_ready;
+ assign analysis_acquire_ready=memory_rst_n&&engine_analysis_ready;
+ assign compute_acquire_ready=memory_rst_n&&engine_compute_ready;
+
  wire[BANK_BITS-1:0]cap_bank;reg[BANK_BITS-1:0]held_cap_bank=0;
  reg[1:0]cap_state=0;
  reg[15:0]cap_width=0,cap_height=0;reg[31:0]cap_stride=0;
@@ -139,12 +151,12 @@ module frame_memory_system #(
  wire cap_bad=src_width==0||src_height==0||src_width[2:0]!=0||src_stride_bytes[3:0]!=0||
   src_stride_bytes<32'(src_width)*2||cap_extent>(64'd1<<BANK_SHIFT);
  wire cap_req_ready,cap_done_ready,writer_ready,writer_done,writer_error,writer_pixel_ready;
- assign capture_ready=cap_state==0&&cap_req_ready&&writer_ready;
+ assign capture_ready=memory_rst_n&&cap_state==0&&cap_req_ready&&writer_ready;
  assign capture_done=writer_done||cap_state==3,capture_error=writer_error||cap_state==3;
  assign capture_pixel_ready=cap_state==2&&writer_pixel_ready;
  wire capture_fire=capture_valid&&capture_ready;
  always @(posedge clk)begin
-  if(!rst_n)begin cap_state<=0;held_cap_bank<=0;cap_width<=0;cap_height<=0;cap_stride<=0;end
+  if(!memory_rst_n)begin cap_state<=0;held_cap_bank<=0;cap_width<=0;cap_height<=0;cap_stride<=0;end
   else case(cap_state)
    0:if(capture_fire)begin
     if(cap_bad)cap_state<=3;
@@ -185,6 +197,10 @@ module frame_memory_system #(
  wire[CLIENTS*6-1:0]b_bid;
  wire[CLIENTS*1-1:0]b_bvalid;
  wire[CLIENTS*1-1:0]b_bready;
+ // Observe a stalled capture handshake without changing the writer or its leases.
+ assign capture_debug={4'd0,b_bresp[1:0],b_bready[0],b_bvalid[0],b_wready[0],b_wvalid[0],b_awready[0],b_awvalid[0],
+  3'(held_cap_bank),3'(cap_bank),cap_state,cap_done_ready,capture_abort,capture_pixel_ready,capture_pixel_valid,
+  capture_ready,capture_valid,cap_bad,writer_error,writer_done,writer_pixel_ready,writer_ready,cap_req_ready};
  generate if(LEGACY_ENABLED)begin:legacy_client
  assign b_arid[18+:6]=legacy_arid;
  assign b_araddr[96+:32]=legacy_araddr;
@@ -331,7 +347,7 @@ module frame_memory_system #(
  assign b_wlast[2]=0;
  assign b_wvalid[2]=0;
  assign b_bready[2]=0;
- axi_frame_writer capture_dma(.clk(clk),.rst_n(rst_n),.abort(capture_abort),
+ axi_frame_writer capture_dma(.clk(clk),.rst_n(memory_rst_n),.abort(capture_abort),
   .job_valid(cap_state==1),.job_ready(writer_ready),
   .base_addr(SOURCE_BASE+(32'(held_cap_bank)<<BANK_SHIFT)),
   .dst_width(cap_width),.dst_height(cap_height),.stride_bytes(cap_stride),
@@ -358,7 +374,7 @@ module frame_memory_system #(
  always @(posedge clk)begin
   mode_meta<=memory_mode;mode_core<=mode_meta;index_meta<=history_index;index_core<=index_meta;
   previous_mode<=mode_core;
-  if(!rst_n)begin mode_meta<=0;mode_core<=0;index_meta<=0;index_core<=0;previous_mode<=0;play<=0;history_tick<=0;end
+  if(!memory_rst_n)begin mode_meta<=0;mode_core<=0;index_meta<=0;index_core<=0;previous_mode<=0;play<=0;history_tick<=0;end
   else if(mode_core!=previous_mode)begin play<=0;history_tick<=0;end
   else if(vblank)begin
    history_tick<=history_tick==59?0:history_tick+1'b1;
@@ -379,7 +395,7 @@ module frame_memory_system #(
   ((direct_scan&&vblank&&mode_core!=1)||(!direct_scan&&mode_core!=1&&!start_scan));
  wire[31:0]capture_active_id;
  always @(posedge clk)begin
-  if(!rst_n)begin start_scan<=0;scan_from_source<=0;capture_frame_id<=0;end
+  if(!memory_rst_n)begin start_scan<=0;scan_from_source<=0;capture_frame_id<=0;end
   else begin
    start_scan<=vblank&&scan_enable&&!scan_busy&&
     ((DIRECT_SCAN&&direct_scan)?((mode_core==1&&analysis_hold_valid)||analysis_acquire_ready):(display_valid||render_pending));
@@ -388,17 +404,17 @@ module frame_memory_system #(
   end
  end
  frame_render_engine #(.SOURCE_BANKS(SOURCE_BANKS),.BANK_BITS(BANK_BITS),.KEEP_HISTORY(KEEP_HISTORY),.COMPUTE_ENABLED(COMPUTE_ENABLED),.MAX_LINE_PIXELS(MAX_LINE_PIXELS),.SOURCE_BASE(SOURCE_BASE),.RESULT_BASE(RESULT_BASE),.BANK_SHIFT(BANK_SHIFT)) engine(
-  .clk(clk),.rst_n(rst_n),.pin_history(pin_history),.display_use_analysis(DIRECT_SCAN&&mode_core==1&&analysis_hold_valid),.display_age(selected_age),.analysis_age(selected_age),.history_count(history_count),.capture_frame_id(capture_active_id),.cap_req_valid(capture_fire&&!cap_bad),.cap_req_ready(cap_req_ready),
+  .clk(clk),.rst_n(memory_rst_n),.pin_history(pin_history),.display_use_analysis(DIRECT_SCAN&&mode_core==1&&analysis_hold_valid),.display_age(selected_age),.analysis_age(selected_age),.history_count(history_count),.capture_frame_id(capture_active_id),.cap_req_valid(capture_fire&&!cap_bad),.cap_req_ready(cap_req_ready),
   .cap_req_config_id(capture_config_id),.cap_req_bank(cap_bank),
   .cap_done_valid(writer_done),.cap_done_ready(cap_done_ready),.cap_done_bank(held_cap_bank),.cap_done_ok(!writer_error&&!pin_history),
           .compute_acquire_valid(compute_acquire_valid),.compute_latest(compute_latest),.compute_release(compute_release),
-        .compute_request_frame_id(compute_request_frame_id),.compute_acquire_ready(compute_acquire_ready),.compute_missing(compute_missing),
+        .compute_request_frame_id(compute_request_frame_id),.compute_acquire_ready(engine_compute_ready),.compute_missing(compute_missing),
         .compute_hold_valid(compute_hold_valid),.compute_hold_bank(compute_hold_bank),
         .compute_hold_frame_id(compute_hold_frame_id),.compute_hold_config_id(compute_hold_config_id),
-.analysis_acquire_valid(DIRECT_SCAN?internal_acquire:analysis_acquire_valid),.analysis_acquire_ready(analysis_acquire_ready),
+.analysis_acquire_valid(DIRECT_SCAN?internal_acquire:analysis_acquire_valid),.analysis_acquire_ready(engine_analysis_ready),
   .analysis_release(DIRECT_SCAN?internal_release:analysis_release),.analysis_hold_valid(analysis_hold_valid),.analysis_hold_bank(analysis_hold_bank),
   .analysis_hold_frame_id(analysis_hold_frame_id),.analysis_hold_config_id(analysis_hold_config_id),
-  .job_valid(job_valid),.job_ready(job_ready),.freeze_source(freeze_source),.release_source(release_source),.job_config_id(job_config_id),
+  .job_valid(job_valid),.job_ready(engine_job_ready),.freeze_source(freeze_source),.release_source(release_source),.job_config_id(job_config_id),
   .src_width(src_width),.src_height(src_height),.src_stride_bytes(src_stride_bytes),
   .roi_x(roi_x),.roi_y(roi_y),.roi_w(roi_w),.roi_h(roi_h),
   .dst_width(dst_width),.dst_height(dst_height),.dst_stride_bytes(dst_stride_bytes),
@@ -433,7 +449,7 @@ module frame_memory_system #(
   .m_axi_bresp(b_bresp[2+:2]),
   .m_axi_bvalid(b_bvalid[1]),
   .m_axi_bready(b_bready[1]));
- axi_frame_reader #(.MAX_BURST_BEATS(SCAN_BURST_BEATS)) scan_dma(.clk(clk),.rst_n(rst_n),.job_valid(start_scan),.job_ready(),
+ axi_frame_reader #(.MAX_BURST_BEATS(SCAN_BURST_BEATS)) scan_dma(.clk(clk),.rst_n(memory_rst_n),.job_valid(start_scan),.job_ready(),
   .base_addr(scan_from_source?(SOURCE_BASE+(32'(analysis_hold_bank)<<BANK_SHIFT)):display_base),
   .width(scan_from_source?src_width:display_width),.height(scan_from_source?src_height:display_height),.stride_bytes(scan_from_source?src_stride_bytes:display_stride_bytes),
   .frame_id(scan_from_source?analysis_hold_frame_id:display_frame_id),.config_id(scan_from_source?32'd0:display_config_id),
@@ -452,7 +468,7 @@ module frame_memory_system #(
   .m_axi_rlast(b_rlast[2]),
   .m_axi_rvalid(b_rvalid[2]),
   .m_axi_rready(b_rready[2]));
- axi_burst_arbiter #(.N(CLIENTS)) bus(.clk(clk),.rst_n(rst_n),.read_urgent({{(CLIENTS-3){1'b0}},scan_urgent,2'b0}),
+ axi_burst_arbiter #(.N(CLIENTS)) bus(.clk(clk),.rst_n(memory_rst_n),.read_urgent({{(CLIENTS-3){1'b0}},scan_urgent,2'b0}),
   .s_arid(b_arid),.m_arid(m_axi_arid),
   .s_araddr(b_araddr),.m_araddr(m_axi_araddr),
   .s_arlen(b_arlen),.m_arlen(m_axi_arlen),

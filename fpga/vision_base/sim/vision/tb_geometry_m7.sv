@@ -3,6 +3,7 @@ module tb;
 reg clk=0,cpu=0,rst=0;always #5 clk=~clk;always #7 cpu=~cpu;
 reg cpu_run=1;reg de=0,vs=0,nde=0,nvs=0;integer ix=0,iy=0,rx=0,ry=0;
 always @(posedge clk)begin de<=nde;vs<=nvs;rx<=ix;ry<=iy;end
+reg[10:0]edge_request=96;
 reg enabled=1,frozen=0,valid=1,changed=0,capture=0,ready=1;reg[31:0]frame=123,view_cfg=2,context_id=1,completed=0;
 reg[31:0]errors=0;
 wire hold_plane,raw_read,published;
@@ -21,7 +22,7 @@ vision_geometry_m7 dut(.clk(clk),.rst_n(rst),.de(de),.vs(vs),.x(12'(rx)),.y(12'(
  .invalidated(changed),.capture_start(capture),.canny_ready(ready),.capture_frame(capture_frame),.result_frame(result_frame),.view_frame(frame),.view_config(view_cfg),.view_context(context_id),.canny_completed(completed),.source_errors(errors),
  .bitmap_hold(hold_plane),.raw_bitmap_enable(raw_read),
  .cpu_clk(cpu),.cpu_rst_n(rst&&cpu_run),.paddr(paddr),.psel(psel),.penable(penable),.pwrite(pwrite),.pwdata(pwdata),.prdata(prdata),.pready(pready),
- .current(current),.count(count),.primary_we(primary_we),.primary_data(primary_data),.published(published),.meta_we(meta_we),.meta_index(meta_index),.meta_data(meta_data),.mark(mark),.color(color));
+ .edge_threshold(edge_request),.selection_bank(1'b0),.selection(3'd0),.current(current),.count(count),.primary_we(primary_we),.primary_data(primary_data),.published(published),.meta_we(meta_we),.meta_index(meta_index),.meta_data(meta_data),.mark(mark),.color(color));
 task bus(input wr,input[7:0]a,input[31:0]v,output[31:0]q);begin
  @(negedge cpu);psel=1;penable=0;pwrite=wr;paddr=a;pwdata=v;
  @(negedge cpu);penable=1;@(posedge cpu);while(!pready)@(posedge cpu);
@@ -95,14 +96,9 @@ initial begin
  tagged_frame(202);snapshot;if(!s[0])$fatal(1,"clean capture after scan failure rejected");
  enabled=0;repeat(20)@(negedge clk);read_status;
  if(s[4]||s[0]||hold_plane||raw_read||current)$fatal(1,"mode exit did not cancel a blocked read");
- write_reg(8'h2c,144);if(dut.edge_threshold!=96)$fatal(1,"threshold changed outside VS");
- repeat(8)@(negedge clk);boundary;if(dut.edge_threshold!=144)$fatal(1,"threshold not applied at VS");
- write_reg(8'h2c,160);
- fork
-  begin write_reg(8'h2c,176);end
-  begin repeat(8)@(negedge cpu);if(pready)$fatal(1,"pending edge update did not backpressure");boundary;repeat(8)@(negedge clk);boundary;end
- join
- if(dut.edge_threshold!=176)$fatal(1,"consecutive edge updates lost a value");
+ bus(0,8'h2c,0,q);if(q!=96)$fatal(1,"Canny threshold readback");
+ write_reg(8'h2c,144);bus(0,8'h2c,0,q);if(q!=96)$fatal(1,"read-only threshold changed");
+ edge_request=2047;bus(0,8'h2c,0,q);if(q!=2047)$fatal(1,"shared full-range Canny threshold truncated");
  $display("PASS M7 async snapshot/shared-reader enable/atomic publish/2073600 pixels/frozen tags/context/cancel; hits%0d",hits);$finish;
 end
 initial begin #100000000;$fatal(1,"watchdog");end

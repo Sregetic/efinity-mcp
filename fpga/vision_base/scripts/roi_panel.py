@@ -64,7 +64,12 @@ class Handler(BaseHTTPRequestHandler):
             elif self.path=='/ai-policy':
                 policy=data['policy']
                 if type(policy) is not int or policy not in [0,1,2]:raise ValueError('AI policy is0/1/2')
-                result=control(['--ai-policy',str(policy)])
+                args=['--ai-policy',str(policy)]
+                if 'model' in data:
+                    model=data['model']
+                    if type(model) is not int or model not in [1,2]:raise ValueError('Recognition model is1 FOMO/2 M7')
+                    args+=['--recognition-model',{1:'fomo',2:'m7'}[model]]
+                result=control(args)
             elif self.path=='/modes':
                 directory=out/f'mode_frames_{time.time_ns()}'
                 subprocess.run([sys.executable,str(root/'scripts/capture_mode_images.py'),'--url',a.url,'--sensor',a.sensor,

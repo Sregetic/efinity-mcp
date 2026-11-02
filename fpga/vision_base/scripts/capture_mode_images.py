@@ -10,7 +10,7 @@ from pathlib import Path
 
 NAMES = {'source':'Source before Gamma', '0':'Camera color', '1':'Grayscale',
          '2':'Sobel', '3':'Gray / Sobel', '4':'Sobel overlay', '5':'Canny',
-         '6':'Canny overlay', '7':'Recognition'}
+         '6':'Canny overlay'}
 ORDERS = [(0,1,2),(0,2,1),(2,1,0),(1,0,2),(1,2,0),(2,0,1)]
 
 def check_frozen_source(context):
@@ -66,7 +66,7 @@ def main():
     from pyftdi.bits import BitSequence
     p=argparse.ArgumentParser();p.add_argument('--url',required=True)
     p.add_argument('--output-dir',type=Path,required=True)
-    p.add_argument('--sensor',choices=['sc431hai','sc2210'],default='sc431hai')
+    p.add_argument('--sensor',choices=['sc431hai','sc2210','hq12'],default='sc431hai')
     p.add_argument('--modes',nargs='+',choices=list(NAMES),default=list(NAMES))
     p.add_argument('--frequency',type=int,default=6000000)
     p.add_argument('--source-native-order',action='store_true',help='Keep packed-frame channels for analysis DMA training; display exports stay unchanged')

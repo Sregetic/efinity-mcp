@@ -1,12 +1,12 @@
 # I1 / I3：同帧融合与几何引导 ROI
 
-本轮对应长期路线的第1、2项。当前部署、资源、实际回读见 `results/fusion_roi_20261008/REPORT.md`；此文件说明实现契约，不用软件仿真替代实物识别验收。
+当前2026-10-30候选把M7移至智能模型并替换旧灰度定位，部署和资源见 `results/target_chooser_20261030/REPORT.md`。本页前部说明现行I1/I3接口，后部单列2026-10-08历史实测；旧实测不代表新M7定位已上板。
 
 ## 数据流与保持不变的部分
 
-复用单个 `vision_shape_classifier`、独立 compute lease、既有分析 DMA、128→32→4 INT8 固件和已有帧边界控制。分析打开时，几何定位读当前源帧的前端灰度，不读滞后发布的 Canny 位图；分析关闭时保留原边缘模式识别路径。摄像头、HDMI、Canny 二值掩码、历史/冻结、原图/模式回读保持。
+旧 `vision_shape_classifier` 已从生产RTL和工程XML删除。BASE/FOMO自动ROI改用M7对Canny接受位图的边缘/轮廓结果；M7、BASE、FOMO由“智能→模型”选择，与M0–M6显示独立。推理关闭时不保留隐式识别。独立compute lease、现有分析DMA、128→32→4 INT8模型及帧边界控制保留，摄像头、Canny二值掩码、历史/冻结和原图/模式回读保持。
 
-几何完成结果带完成帧号，而非下一帧开始时更新的采集标签。CPU 将显示坐标减去前端两层窗口的中心偏移，再按已提交的缩放/平移反变换到1920×1080源坐标。自动 ROI 加八分之一留白（每轴至少4显示像素）；接触可视区域边缘的候选不进入自动任务。DMA 持有确切源帧，写32×32灰度输入，完成后释放 compute lease；CPU 推理不阻塞视频。
+M7几何完成结果带实际接受边缘的源帧号，而非下一帧开始时更新的采集标签。只有该确切源帧仍可取得时才作I3分析；源帧失效按原SOURCE_MISSING处理，不能换用更新像素。M7发布的框沿用包含前端两层窗口中心偏移的显示坐标；CPU先减去该偏移，再按已提交的缩放/平移反变换到1920×1080源坐标。自动 ROI 加八分之一留白（每轴至少4显示像素）；接触可视区域边缘的候选不进入自动任务。DMA 持有确切源帧，写32×32灰度输入，完成后释放 compute lease；CPU 推理不阻塞视频。
 
 ## 三种分析策略
 
@@ -14,15 +14,15 @@
 
 |值|策略|
 |---|---|
-|0|关闭分析与融合 HUD；保留原几何识别路径|
-|1|对配置的原帧 ROI 分析，默认跟随已显示源帧；调试工具可指定精确帧或 latest|
-|2|由当前灰度几何结果选择 ROI，无完整候选时发布 NONE|
+|0|关闭所选模型与融合HUD；M7定位也停止|
+|1|BASE/FOMO分析配置的原帧ROI；M7每次“立即推理”处理一次，冻结同帧可重新请求|
+|2|BASE/FOMO由M7边缘结果选择ROI，无完整候选时发布NONE；选M7时连续运行边缘几何|
 
-ROI/模型版本/显式请求nonce等变化触发重算；相同冻结帧、几何内容与参数只计算一次。背景标定后的新几何内容即使源帧/context未变，也触发重算；不按每个HDMI扫描序号无谓重复推理。配置提交中或几何结果的渲染配置过期时等待完整新记录。手动源 ROI 可在当前可视裁剪外，DMA仍分析原帧；屏幕只画交集，交集为空不画框。
+ROI/模型版本/显式请求nonce等变化触发重算；相同冻结帧、几何内容与参数只计算一次。M7新几何内容即使源帧/context未变，也触发重算；不按每个HDMI扫描序号无谓重复推理。配置提交中或几何结果的渲染配置过期时等待完整新记录。手动源 ROI 可在当前可视裁剪外，DMA仍分析原帧；屏幕只画交集，交集为空不画框。
 
 ## 完整发布与显示契约
 
-新增 APB `0xf8100300`，ABI `0x26100803`。CPU九字 staging 包只在下一VS整包发布；忙期间背压阻止覆盖。geometry→CPU 为带序列的 held-data CDC；CPU读取前后序列一致才使用。
+融合APB `0xf8100300`，当前ABI `0x26101003`。控制与M7配套ABI分别为 `0x26103003` / `0x26103071`。CPU九字 staging 包只在下一VS整包发布；忙期间背压阻止覆盖。geometry→CPU 为带序列的 held-data CDC；CPU读取前后序列一致才使用。
 
 九字包依次为 flags、源帧号、源侧lease配置字段、渲染配置号、模型版本、处理context、框左上、框右下、四个signed INT8分数。源侧字段沿用DMA/帧池ABI；当前RAW合并分支的capture_config_id来自raw_id帧戳，不是传感器初始化版本。本轮保留这个真实值，绝不把ROI提交号写进它。阈值/模式/中值/色调/白平衡变化生成独立处理context。JTAG page31提供当前enabled/match/age、发布源帧与渲染配置、当前context。
 
@@ -30,7 +30,7 @@ ROI/模型版本/显式请求nonce等变化触发重算；相同冻结帧、几�
 
 HUD沿用原模式名、十进制阈值和SHAPE；新增AI状态、类别C/几何G、年龄A、源帧F、渲染R、模型M、采集S和四个Q分数字节。F/R/S/A为十六进制；Q为二补码INT8十六进制。字符选择与字模解码分两拍，RGB/DE/HS/VS一起延迟一拍（6.734ns），不改变视频刷新率。
 
-当前模型版本1来自合成联调，明确显示 `TEST`，不输出实物可信判断。真实模型仅在校准后的分数间距、有效几何与类别一致时显示OK；矛盾DIFF，证据不足UNKN。真实门槛校准属于后续实物数据任务。
+BASE模型版本1来自合成联调，明确显示 `TEST`；M7使用自身多框/标签发布，不产生这组INT8分数。真实模型仅在校准后的分数间距、有效几何与类别一致时显示OK；矛盾DIFF，证据不足UNKN。真实门槛校准属于后续实物数据任务。
 
 ## 可复现检查
 
@@ -46,7 +46,11 @@ $py='C:/Users/Sregetic/.cache/codex-runtimes/codex-primary-runtime/dependencies/
 
 板上使用 Efinity Python环境后，`vision_control.py --ai-policy 1/2 --ai-status` 查看显示状态；`read_ai_result.py --policy view --frame FRAME --roi X Y W H` 读取确切任务和所有张量；`read_fusion_result.py` 读取完整融合记录，随后均恢复CPU执行。`validate_ai_result.py`逐值核对CPU特征、隐藏层、输出和FlyHash；原帧采样比较使用 `capture_mode_images.py --source-native-order` 的Gamma前RGB。`--current-view`只读取已冻结且持有的视图，不重新提交ROI配置，便于把同一发布包和屏幕像素绑定；默认导出行为保持。
 
-## A6样本与证据边界
+## 2026-10-08旧定位实测（历史，算法已退役）
+
+以下灰度阈值与verify_shape_readback.py记录只用于追溯当时联调；脚本和灰度检测器现已退出生产，不再作为当前操作入口。M7当前证据见本页开头报告。
+
+### 当时A6样本与证据边界
 
 `prepare_a6_fixtures.py`产生空心/实心圆和矩形、反色空心图、空白、条纹背景和裁剪矩形，共9幅确定性离线样本；`verify_shape_readback.py --input-kind synthetic`将同一640×480输入送进真实RTL，与主机参考比较三次冻结帧。相机回读负例使用默认 `camera_readback`，分开记录。
 
@@ -54,11 +58,11 @@ $py='C:/Users/Sregetic/.cache/codex-runtimes/codex-primary-runtime/dependencies/
 
 板上另将既有相机背景暗斑放进几何区域，使用既有形状差值阈值64标定，得到圆形候选并自动反变换为源ROI `[562,947,14,14]`。这一案例用于验证自动调度/DMA/CPU/融合链，不算形状卡片识别精度；测试结束恢复阈值32和完整实时视场。实际灰度回读用 `verify_shape_readback.py --threshold 64` 对照真实RTL。
 
-## USER1回读速率修正
+### 当时USER1回读速率修正
 
 本轮100kHz回读出现错误字段与程序字节，其中包含 `0xa107a107`；同一halt状态、同一内存不重写，改25kHz后8456程序字节全部与ELF一致。既有加载器在比较失败时留CPU于halt，没有执行未验证代码。现将 `load_vision_ddr.configuration` 和加载CLI共用的默认速率统一设25kHz，AI/FlyHash/融合读口一起使用；不增加自动重试。reserved flags在结果外部解码边界直接报错。依据是本板实测，尚未声称最高可靠频率；[上游实现](https://github.com/SpinalHDL/openocd_riscv/blob/riscv_spinal/src/target/vexriscv.c)显示其通过JTAG排队注入访存并等待响应，具体本机fork不视为与上游逐行相同。
 
-## 用户操作与验收方法（2026-10-08）
+### 当时用户操作与验收方法（2026-10-08）
 
 入口：http://127.0.0.1:63438/。先刷新网页并点“读取状态”。当前图像区域是已保存快照，不是实时视频；实时切换看HDMI显示器，远程检查用新的回读数据。只点“显示已保存图像”不会采新图。
 

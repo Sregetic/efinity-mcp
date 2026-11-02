@@ -1,8 +1,6 @@
 # efinity-mcp
 
-Ti60当前离线候选：[2026-10-22中文按键UI、对称居中和运动提示](fpga/vision_base/docs/GITHUB_SNAPSHOT_20261022.md)。59878 XLR / 249 RAM / 63 DSP，保留图像回读，配套位流与DDR应用已附；本轮未上板，SRAM/Flash保持。
-
-此前10-20已上板快照入口：[2026-10-20快照](fpga/vision_base/docs/GITHUB_SNAPSHOT_20261020.md)。最新验收56916 XLR / 241 RAM / 62 DSP，源码、相机位流和九模式实际回读记录见该入口；main与PR分支分别管理。
+Ti60当前源码：[2026-11-02 HQ12输入、M7提速/跟随轨迹与可读性整理](fpga/vision_base/docs/GITHUB_SNAPSHOT_20261102.md)。完整源码候选339000B/BSS612112B，保留已验证的56540 XLR / 240 RAM / 63 DSP硬件接口；本轮不操作板子或Flash。使用入口与自动验证见该快照。
 
 Windows 本机 FPGA 构建与独立 SRAM 下载部署说明见 [Self-hosted Runner](docs/self-hosted-runner.md)。本机工作流需先审核合入 main，再手动验收；构建产物通过 Actions artifact 回传。
 

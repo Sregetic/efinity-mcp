@@ -15,15 +15,17 @@ TEXTS = dict(
     AI_MODE="推理模式", RUN="立即推理", SELFTEST="自检", MODEL="模型",
     CENTER="一键居中", TARGET_ZOOM="放大倍率", FULLVIEW="恢复全幅",
     CAMERA="彩色原图", GRAY="灰度图", SOBEL="SOBEL边缘", SPLIT="左右分屏",
-    SOBEL_OVERLAY="SOBEL叠加", CANNY="CANNY边缘", CANNY_OVERLAY="CANNY叠加", SHAPE="几何识别",
+    SOBEL_OVERLAY="SOBEL叠加", CANNY="CANNY边缘", CANNY_OVERLAY="CANNY叠加",
     ON="开启", OFF="关闭", WIDTH="宽", PIXELS="像素", FIXED="固定单帧", AUTO="自动",
-    BASE="基础模型", TIMES="倍", CONFIRM="K0确认", ENTER="K0进入", UP="K2上选", DOWN="K3下选",
-    CLOSE="长按关闭", BACK="长按返回", CANCEL="长按取消", EDIT="编辑",
+    M7="M7几何", TIMES="倍", CONFIRM="K0确认", FINISH="K0完成", ENTER="K0进入", UP="K2上选", DOWN="K3下选",
+    CLOSE="K1关闭", BACK="K1返回", CANCEL="K1取消", EDIT="编辑",
     READY="就绪", WAIT="等待", DONE="完成", NO_TARGET="无目标", BUSY="正忙", STALE="已过期", ERROR="出错",
-    TEST_NONE="未自检", TEST_WAIT="自检中", TEST_PASS="自检通过", TEST_FAIL="自检失败",
+    TEST_NONE="待自检", TEST_WAIT="自检中", TEST_PASS="自检通过", TEST_FAIL="自检失败",
     AI_IDLE="推理空闲", AI_RUN="推理中", AI_DONE="推理完成", AI_ERROR="推理出错", AI_OLD="结果过期",
     MOTION="运动提示", LEFT="向左", RIGHT="向右", MOVE_UP="向上", MOVE_DOWN="向下",
     STILL="静止", UNKNOWN="待判", HOLD="保持",
+    CHOOSE="选择目标", CIRCLE="圆形", RECTANGLE="矩形", FACE="人脸",
+    FOLLOW="持续跟随", TRAIL="目标轨迹", LOST="目标丢失",
 )
 
 

@@ -6,8 +6,8 @@ reg[31:0]frame=123,completed=0;wire[31:0]result_frame,result_config,result_conte
 reg[7:0]paddr=0;reg psel=0,penable=0,pwrite=0;reg[31:0]pwdata=0;wire[31:0]prdata;wire pready,done,ode;
 wire[7:0]r,g,b;wire[63:0]status;wire hold_plane,raw_read;
 vision_display #(.EXTERNAL_GEOMETRY(1),.FUSION(1)) dut(.clk(clk),.rst_n(rst),.de(1'b0),.hs(1'b0),.vs(1'b0),.r(8'd0),.g(8'd0),.b(8'd0),
- .mode(3'd7),.threshold(11'd96),.median_en(1'b1),.memory_mode(2'd0),.history_index(3'd0),.canny_pixel(1'b0),.canny_ready(1'b1),.canny_coverage(8'd0),
- .shape_enable(1'b1),.shape_threshold(8'd32),.shape_status(status),.canny_effective_threshold(11'd96),.canny_requested_threshold(11'd96),
+ .mode(3'd0),.threshold(11'd96),.median_en(1'b1),.memory_mode(2'd0),.history_index(3'd0),.canny_pixel(1'b0),.canny_ready(1'b1),.canny_coverage(8'd0),
+ .geometry_enable(1'b1),.geometry_selection_bank(1'b0),.geometry_selection(3'd0),.shape_enable(1'b1),.shape_status(status),.canny_effective_threshold(11'd96),.canny_requested_threshold(11'd96),
  .analysis_enabled(1'b0),.analysis_context_changed(1'b0),.frame_id(frame),.render_config_id(32'd2),.analysis_context(32'd1),.analysis_result(352'd0),
  .analysis_match(1'b0),.analysis_identity_match(1'b0),.analysis_age(16'd0),.ui_state(24'd0),.motion_enable(1'b0),
  .geometry_done(done),.geometry_frame(result_frame),.geometry_config(result_config),.geometry_context(result_context),.ode(ode),.orr(r),.ogg(g),.obb(b),

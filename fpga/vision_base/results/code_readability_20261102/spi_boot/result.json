@@ -1,0 +1,42 @@
+[
+  {
+    "scenario": 0,
+    "output": "PASS SPI RV32I production header CRC, >3840B program, weights, exact copies and OE release"
+  },
+  {
+    "scenario": 1,
+    "output": "PASS blank Flash USER1 development boot"
+  },
+  {
+    "scenario": 2,
+    "output": "PASS rejected corrupt SPI boot image"
+  },
+  {
+    "scenario": 3,
+    "output": "PASS rejected corrupt SPI boot image"
+  },
+  {
+    "scenario": 4,
+    "output": "PASS rejected corrupt SPI boot image"
+  },
+  {
+    "scenario": 5,
+    "output": "PASS rejected corrupt SPI boot image"
+  },
+  {
+    "scenario": 6,
+    "output": "PASS rejected corrupt SPI boot image"
+  },
+  {
+    "scenario": 7,
+    "output": "PASS rejected corrupt SPI boot image"
+  },
+  {
+    "scenario": 8,
+    "output": "PASS SPI RV32I production header CRC, >3840B program, weights, exact copies and OE release"
+  },
+  {
+    "scenario": 9,
+    "output": "PASS SPI RV32I production header CRC, >3840B program, weights, exact copies and OE release"
+  }
+]

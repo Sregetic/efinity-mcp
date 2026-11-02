@@ -19,3 +19,14 @@ results/*/release/*.hex -text
 
 # Redistributable M7 cascade model.
 models/geometry_face/facefinder binary
+
+# HQ12 native inputs retain exact source/constraint bytes.
+board/ti60_hdmi/rtl/** -text
+board/ti60_hdmi/*.xml -text
+board/ti60_hdmi/*.sdc -text
+board/ti60_hdmi/*.inithex -text
+
+# Simulation sources are native inputs too.
+*.sv -text
+*.v -text
+*.vh -text

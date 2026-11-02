@@ -1,10 +1,11 @@
 param([string]$Url='ftdi://0x0403:0x6011:4:9/2',
- [string]$AiElf='artifacts/vision_soc/ddr_firmware/vision.elf',
- [string]$Weights='models/shape_cards_bringup/shape_cards_weights.bin',
+ [Parameter(Mandatory=$true)][string]$AiElf,
+ [string]$Weights='',
  [string]$OutputDirectory='',
  [switch]$ValidateOnly)
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
+$weightArgs=if($Weights){@('--weights',$Weights)}else{@()}
 Push-Location $root
 try {
  & "$PSScriptRoot/program_vision_sram.ps1" -ValidateOnly
@@ -13,7 +14,7 @@ try {
  $out=if(!$OutputDirectory){Join-Path $root ('results/programming/boot_flash_'+(Get-Date -Format 'yyyyMMdd_HHmmss'))}elseif([IO.Path]::IsPathRooted($OutputDirectory)){$OutputDirectory}else{Join-Path $root $OutputDirectory}
  if(!$ValidateOnly -and (Test-Path -LiteralPath "$out/flash_before.bin")){throw 'Choose a new output directory to preserve the existing Flash backup.'}
  New-Item -ItemType Directory -Force -Path $out | Out-Null
- & $python "$PSScriptRoot/pack_vision_boot.py" --elf $AiElf --weights $Weights --output "$out/vision_boot.bin"
+ & $python "$PSScriptRoot/pack_vision_boot.py" --elf $AiElf @weightArgs --output "$out/vision_boot.bin"
  if($LASTEXITCODE){throw 'Boot package failed'}
  if($ValidateOnly){return}
  $programmer="$env:EFXPGM_HOME/bin/efx_pgm/ftdi_program.py"
@@ -24,9 +25,17 @@ try {
   $log | Set-Content "$out/bridge.log"
   if($LASTEXITCODE){throw 'Flash bridge programming failed'}
   $bridgeLoaded=$true
-  $log=& $python $programmer "$out/vision_boot.hex" -m jtag_bridge --jtag_bridge_mode read -u $Url --jtag_clock_freq 1000000 --address 0 --num_bytes 8388608 -o "$out/flash_before.hex" 2>&1
-  $log | Set-Content "$out/read_before.log"
-  if($LASTEXITCODE){throw 'Flash backup failed'}
+  # One8MiB read hit a USB pipe error; bound each read while preserving the full backup.
+  Set-Content -LiteralPath "$out/read_before.log" -Value ''
+  for($offset=0;$offset -lt 8388608;$offset+=1048576){
+   $part=$offset.ToString('x6')
+   $log=& $python $programmer "$out/vision_boot.hex" -m jtag_bridge --jtag_bridge_mode read -u $Url --jtag_clock_freq 1000000 --address $offset --num_bytes 1048576 -o "$out/flash_before_$part.hex" 2>&1
+   $log | Set-Content "$out/read_before_$part.log"
+   $log | Add-Content "$out/read_before.log"
+   if($LASTEXITCODE){throw "Flash backup failed at0x$part; no erase/write issued"}
+  }
+  & $python -c 'import sys;from pathlib import Path;p=Path(sys.argv[1]);d=b"".join(bytes.fromhex((p/f"flash_before_{o:06x}.hex").read_text()) for o in range(0,8388608,1048576));assert len(d)==8388608,"Incomplete Flash backup";(p/"flash_before.hex").write_text(d.hex())' $out
+  if($LASTEXITCODE){throw 'Flash backup assembly failed; no erase/write issued'}
   & $python -c 'import sys,struct;from pathlib import Path;sys.path.insert(0,"scripts");from pack_vision_boot import validate_package;p=Path(sys.argv[1]);d=bytes.fromhex((p/"flash_before.hex").read_text());assert len(d)==0x800000;(p/"flash_before.bin").write_bytes(d);tail=d[0x700000:];h=struct.unpack_from("<8I",tail);assert all(b==255 for b in tail) or tail[:32]==(p/"vision_boot.bin").read_bytes()[:32] or (h[0]==0x56424f31 and validate_package(tail[:32+h[2]+h[4]])),"Reserved application region contains unrelated data"' $out
   if($LASTEXITCODE){throw 'Flash layout validation failed; no erase/write issued'}
   # This board's validated path uses host readback, not the bridge CRC mode.

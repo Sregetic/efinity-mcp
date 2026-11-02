@@ -1,0 +1,62 @@
+{
+  "passed": true,
+  "stage": "temporary_sram_ddr_running",
+  "point_version_user_confirmed": true,
+  "continuous_line_user_confirmed": false,
+  "selection_required": false,
+  "centering_required": false,
+  "all_targets_maximum": 4,
+  "history_seconds": 3,
+  "workspace_bytes": 768,
+  "native_pnr": {
+    "Unassigned Core Pins": "0",
+    "XLRs": "56540 / 60800",
+    "Memory Blocks": "240 / 256",
+    "DSP Blocks": "63 / 160",
+    "Worst Negative Slack (WNS)": "0.227 ns",
+    "Worst Hold Slack (WHS)": "0.026 ns"
+  },
+  "load_bytes": 338344,
+  "bss_bytes": 612112,
+  "capture_reset_fix": true,
+  "application_byte_readback": true,
+  "actual_output_inspected": true,
+  "full_panorama": true,
+  "flash_written": false,
+  "runtime": {
+    "window_seconds": 16.019,
+    "classifications": 14,
+    "classifier_hz": 0.8739621699232163,
+    "last_classification_request_to_complete_ms": 1157.56157,
+    "association_cpu_us": [
+      19.84,
+      20.03
+    ],
+    "association_detections": [
+      0,
+      0
+    ],
+    "association_cost_excludes_line_publication": true,
+    "source_frames": [
+      5157,
+      5642
+    ],
+    "follow": 0,
+    "trail": 1,
+    "track_request": 0,
+    "full_panorama": true,
+    "capture_discarded": [
+      8,
+      8
+    ],
+    "scan_bad_frames": 0,
+    "cpu_selftest": 2,
+    "cpu_resumed": true,
+    "halt_ms": [
+      166,
+      166
+    ],
+    "physical_line_user_confirmed": false,
+    "flash_written": false
+  }
+}

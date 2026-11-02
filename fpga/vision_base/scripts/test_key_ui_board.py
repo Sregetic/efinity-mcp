@@ -15,7 +15,7 @@ def main():
   cmd+=['--roi-status'] if roi else ['--page','32','--samples','1']
   r=subprocess.run(cmd,check=True,capture_output=True,text=True);v=json.loads(r.stdout)
   if not roi:
-   v=v[0];assert v['build']=='26101040',v
+   v=v[0];assert v['build']=='26103043',v
   return v
  def settled(label,predicate):
   deadline=time.monotonic()+12
@@ -35,8 +35,10 @@ def main():
   control('--sobel-threshold',16);key(4);settled('Sobel_floor16',lambda s:s['sobel_threshold']==16)
   control('--mode',5);key(4);settled('Canny80_to64',lambda s:s['canny_threshold']==64 and s['sobel_threshold']==16)
   key(2);settled('Canny64_to80',lambda s:s['canny_threshold']==80)
-  control('--mode',7,'--shape-threshold',32);key(2);assert control(roi=False)['shape_threshold']==48
-  key(4);assert control(roi=False)['shape_threshold']==32
+  control('--recognition-model','m7','--ai-policy',2,'--mode',5,'--canny-threshold',96)
+  settled('M7_on_Canny',lambda s:s['recognition_model']==2 and s['geometry_enabled'] and s['mode']==5)
+  control('--mode',2);settled('M7_on_Sobel',lambda s:s['recognition_model']==2 and s['geometry_enabled'] and s['mode']==2)
+  control('--ai-policy',0);settled('recognition_off',lambda s:not s['geometry_enabled'] and not s['recognition_enabled'])
   focus(1);assert control(roi=False)['menu']==1
   key(2);settled('median_on',lambda s:s['median']==1)
   key(4);settled('median_off',lambda s:s['median']==0)
@@ -67,7 +69,7 @@ def main():
  finally:
   restored=control('--menu',0,'--memory',before['memory'],'--mode',before['mode'],'--median',before['median'],
    '--sobel-threshold',before['sobel_threshold'],'--canny-threshold',before['canny_threshold'],
-   '--roi',*before['roi'],'--output-size',*before['output_size'],'--position',*before['position'],'--roi-enable',before['roi_enabled'])
+   '--roi',*before['roi'],'--output-size',*before['output_size'],'--position',*before['position'],'--roi-enable',before['roi_enabled'],'--recognition-model',{1:'fomo',2:'m7'}[before['recognition_model']])
   (a.output_dir/'restore.json').write_text(json.dumps(restored,indent=2))
  result['restored']=restored;(a.output_dir/'result.json').write_text(json.dumps(result,indent=2));print(json.dumps(result,indent=2))
 

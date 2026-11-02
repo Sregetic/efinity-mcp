@@ -4,6 +4,7 @@ reg clk=0,cpu=0,rst=0;always #5 clk=~clk;always #7 cpu=~cpu;
 reg cpu_run=1;reg de=0,vs=0,nde=0,nvs=0;integer ix=0,iy=0,rx=0,ry=0;
 always @(posedge clk)begin de<=nde;vs<=nvs;rx<=ix;ry<=iy;end
 reg[37:0]label_rows[0:63];integer tx,ty,lc,lr;
+reg[10:0]edge_request=96;
 reg enabled=1,frozen=0,valid=1,changed=0,capture=0,ready=1;reg[31:0]frame=123,view_cfg=2,context_id=1,completed=0;
 reg[31:0]errors=0;
 wire hold_plane,raw_read,published;
@@ -17,12 +18,12 @@ always @(posedge clk)begin
  if(published)seen_published<=1;
 end
 reg[7:0]paddr=0;reg psel=0,penable=0,pwrite=0;reg[31:0]pwdata=0;wire[31:0]prdata;wire pready;
-wire current,mark;wire[2:0]count;wire[23:0]color;
+reg[2:0]selection=0;reg selection_bank=0;wire current,mark;wire[2:0]count;wire[23:0]color;
 vision_geometry_m7 dut(.clk(clk),.rst_n(rst),.de(de),.vs(vs),.x(12'(rx)),.y(12'(ry)),.enabled(enabled),.frozen(frozen),.source_valid(valid),
  .invalidated(changed),.capture_start(capture),.canny_ready(ready),.capture_frame(capture_frame),.result_frame(result_frame),.view_frame(frame),.view_config(view_cfg),.view_context(context_id),.canny_completed(completed),.source_errors(errors),
  .bitmap_hold(hold_plane),.raw_bitmap_enable(raw_read),
  .cpu_clk(cpu),.cpu_rst_n(rst&&cpu_run),.paddr(paddr),.psel(psel),.penable(penable),.pwrite(pwrite),.pwdata(pwdata),.prdata(prdata),.pready(pready),
- .current(current),.count(count),.primary_we(primary_we),.primary_data(primary_data),.published(published),.meta_we(meta_we),.meta_index(meta_index),.meta_data(meta_data),.mark(mark),.color(color));
+ .edge_threshold(edge_request),.selection_bank(selection_bank),.selection(selection),.current(current),.count(count),.primary_we(primary_we),.primary_data(primary_data),.published(published),.meta_we(meta_we),.meta_index(meta_index),.meta_data(meta_data),.mark(mark),.color(color));
 task bus(input wr,input[7:0]a,input[31:0]v,output[31:0]q);begin
  @(negedge cpu);psel=1;penable=0;pwrite=wr;paddr=a;pwdata=v;
  @(negedge cpu);penable=1;@(posedge cpu);while(!pready)@(posedge cpu);
@@ -84,6 +85,12 @@ initial begin
  // frame_ok is low in VBlank; completed status must remain valid independently.
  cpu_run=0;repeat(12)@(negedge cpu);cpu_run=1;repeat(12)@(negedge cpu);boundary;
  if(count!=4||result_frame!=123||dut.publish_request!=dut.publish_ack)$fatal(1,"CPU reset spuriously republished a RAM bank");
+ bus(0,4,0,q);if(q[5]!=dut.publish_request)$fatal(1,"publication bank is not readable after CPU replacement");
+ selection=4;selection_bank=~dut.active_bank;
+ repeat(40)begin @(negedge clk);if(dut.kind==6)$fatal(1,"stale list highlighted a reordered box");end
+ selection_bank=dut.active_bank;checks=0;
+ repeat(40)begin @(negedge clk);if(dut.kind==6)checks++;end
+ if(!checks)$fatal(1,"matching list bank failed to highlight");selection=0;checks=0;repeat(20)@(negedge clk);
  valid=0;repeat(4)@(negedge clk);if(count!=4||current)$fatal(1,"VBlank destroyed completed status");valid=1;
 
  ppm=$fopen("results/geometry_letters_20261028/labels.ppm","wb");$fwrite(ppm,"P6\n1920 1080\n255\n");
@@ -107,14 +114,9 @@ initial begin
  tagged_frame(202);snapshot;if(!s[0])$fatal(1,"clean capture after scan failure rejected");
  enabled=0;repeat(20)@(negedge clk);read_status;
  if(s[4]||s[0]||hold_plane||raw_read||current)$fatal(1,"mode exit did not cancel a blocked read");
- write_reg(8'h2c,144);if(dut.edge_threshold!=96)$fatal(1,"threshold changed outside VS");
- repeat(8)@(negedge clk);boundary;if(dut.edge_threshold!=144)$fatal(1,"threshold not applied at VS");
- write_reg(8'h2c,160);
- fork
-  begin write_reg(8'h2c,176);end
-  begin repeat(8)@(negedge cpu);if(pready)$fatal(1,"pending edge update did not backpressure");boundary;repeat(8)@(negedge clk);boundary;end
- join
- if(dut.edge_threshold!=176)$fatal(1,"consecutive edge updates lost a value");
+ bus(0,8'h2c,0,q);if(q!=96)$fatal(1,"Canny threshold readback");
+ write_reg(8'h2c,144);bus(0,8'h2c,0,q);if(q!=96)$fatal(1,"read-only threshold changed");
+ edge_request=2047;bus(0,8'h2c,0,q);if(q!=2047)$fatal(1,"shared full-range Canny threshold truncated");
  $display("PASS M7 label RAM/Chinese and lowercase pixels/right-edge clipping/async snapshot/shared-reader enable/atomic publish/2073600 pixels/frozen tags/context/cancel; hits%0d",hits);$finish;
 end
 initial begin #100000000;$fatal(1,"watchdog");end

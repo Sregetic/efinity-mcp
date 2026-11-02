@@ -1,0 +1,38 @@
+[
+  {
+    "font": "field_camera",
+    "size": null,
+    "char": "A",
+    "box": [
+      200,
+      95,
+      241,
+      139
+    ],
+    "source": "field_20261030"
+  },
+  {
+    "font": "field_camera",
+    "size": null,
+    "char": "B",
+    "box": [
+      349,
+      132,
+      388,
+      176
+    ],
+    "source": "field_20261030"
+  },
+  {
+    "font": "field_camera",
+    "size": null,
+    "char": "a",
+    "box": [
+      175,
+      208,
+      209,
+      247
+    ],
+    "source": "field_20261030"
+  }
+]

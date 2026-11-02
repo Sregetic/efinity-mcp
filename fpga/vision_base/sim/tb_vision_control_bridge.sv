@@ -2,9 +2,9 @@
 module tb_vision_control_bridge;
 reg clk=0,video_clk=0;always #5 clk=~clk;always #3.367 video_clk=~video_clk;
 reg rst_n=0,vs=0,cmd_event=0;reg[2:0]keys_n=7;reg[7:0]cmd_op=0,paddr=0;reg[23:0]cmd_value=0;
-reg flash_miso=0;wire[3:0]flash_gpio;
+reg back_n=1;reg flash_miso=0;wire[3:0]flash_gpio;
 reg psel=0,penable=0,pwrite=0;reg[31:0]pwdata=0;wire[31:0]prdata;wire pready,pslverror;
-wire[7:0]shape_threshold;wire[23:0]ui_state;wire[2:0]mode,history_index;wire median_en,motion_enable;wire[1:0]memory_mode;wire[10:0]sobel_threshold,canny_threshold,threshold;
+wire geometry_selection_bank;wire[27:0]target_classes;wire[2:0]geometry_selection;wire[1:0]recognition_model;wire geometry_enable,recognition_enable;wire[23:0]ui_state;wire[2:0]mode,history_index;wire median_en,motion_enable;wire[1:0]memory_mode;wire[10:0]sobel_threshold,canny_threshold,threshold;
 reg job_ready=0,capture_done=0,capture_error=0,source_hold_valid=0,render_done=0,render_error=0,render_pending=0,vblank=0,scan_busy=0;
 reg[31:0]capture_count=0;wire job_valid,enable,freeze_source;wire[31:0]job_config_id;
 wire[15:0]roi_x,roi_y,roi_w,roi_h,dst_w,dst_h,display_x,display_y;
@@ -32,6 +32,7 @@ initial begin
  wr('h48,5);wr('h4c,1);if(flash_gpio!=13)$fatal(1,"Flash APB outputs/enable");
  flash_miso=1;repeat(3)@(negedge clk);rd('h50,v);if(v!=8)$fatal(1,"Flash input synchronization");
  wr('h48,2);wr('h4c,0);if(flash_gpio!=2)$fatal(1,"Flash pad release");
+ rd(0,v);if(v!=32'h26103005)$fatal(1,"model-control capability");
  // Burst retained while CPU is busy; ignored diagnostics do not fill the queue.
  command(1,5);command('h28,96);command('h29,48);command('h7e,20);
  repeat(8)@(negedge clk);
@@ -39,27 +40,46 @@ initial begin
  rd(4,v);if(v!=32'h28000060)$fatal(1,"event order2");
  rd(4,v);if(v!=32'h29000030)$fatal(1,"event order3");
  rd(4,v);if(v!=0)$fatal(1,"diagnostic leaked into queue");
+ command('h63,2);repeat(8)@(negedge clk);rd(4,v);if(v!=32'h63000002)$fatal(1,"model selection event lost");
  @(negedge video_clk);keys_n[1]=0;@(negedge video_clk);keys_n[1]=1;repeat(8)@(negedge clk);
  rd(4,v);if(v)$fatal(1,"bounce accepted");
  repeat(3)begin
   @(negedge video_clk);keys_n[1]=0;repeat(8)@(negedge video_clk);keys_n[1]=1;repeat(9)@(negedge clk);
   rd(4,v);if(v!=32'hff000002)$fatal(1,"short key event");
  end
+ // KEY1 is debounced and emits the old back event, never a functional reset.
+ @(negedge video_clk);back_n=0;@(negedge video_clk);back_n=1;repeat(8)@(negedge clk);
+ rd(4,v);if(v)$fatal(1,"KEY1 bounce accepted");
+ @(negedge video_clk);back_n=0;repeat(8)@(negedge video_clk);back_n=1;repeat(9)@(negedge clk);
+ rd(4,v);if(v!=32'hff000008)$fatal(1,"KEY1 short did not emit back");
+ @(negedge video_clk);back_n=0;repeat(30)@(negedge video_clk);
+ rd(4,v);if(v!=32'hff000008)$fatal(1,"KEY1 hold did not emit one back");
+ repeat(30)@(negedge video_clk);back_n=1;repeat(9)@(negedge clk);
+ rd(4,v);if(v)$fatal(1,"KEY1 hold repeated or emitted another event on release");
  @(negedge video_clk);keys_n[0]=0;repeat(30)@(negedge video_clk);keys_n[0]=1;repeat(9)@(negedge clk);
- rd(4,v);if(v!=32'hff000008)$fatal(1,"long key event");rd(4,v);if(v)$fatal(1,"long press also emitted short");
- wr('h44,(48<<15)|(3<<11)|1408);wr(8,5|(1<<3)|(1<<4)|(96<<9)|(48<<20));repeat(8)@(negedge video_clk);
+ rd(4,v);if(v)$fatal(1,"long KEY0 still emitted back or confirm");
+ @(negedge video_clk);keys_n[0]=0;repeat(8)@(negedge video_clk);keys_n[0]=1;repeat(9)@(negedge clk);
+ rd(4,v);if(v!=32'hff000001)$fatal(1,"short KEY0 confirm changed");
+ for(i=1;i<3;i++)begin
+  @(negedge video_clk);keys_n[i]=0;repeat(30)@(negedge video_clk);keys_n[i]=1;repeat(9)@(negedge clk);
+  rd(4,v);if(v!=(32'hff000000|(1<<(i+3))))$fatal(1,"KEY2/3 long freeze/history changed");
+  rd(4,v);if(v)$fatal(1,"long KEY2/3 repeated short on release");
+ end
+ wr('h54,28'h080c101);wr('h44,(1<<22)|(14<<15)|(6<<19)|(3<<11)|1408);wr(8,5|(1<<3)|(1<<4)|(96<<9)|(48<<20));repeat(8)@(negedge video_clk);
  if(ui_state!=0)$fatal(1,"menu changed before VS");
  if(mode!=3||sobel_threshold!=128)$fatal(1,"feature changed before VS");
+ if(target_classes||geometry_selection||geometry_selection_bank)$fatal(1,"target snapshot changed before VS");
  rd('h0c,v);if(!(v&1))$fatal(1,"missing pending atomic commit");frame;
  if(mode!=5||!median_en||threshold!=48||sobel_threshold!=96||memory_mode!=1)$fatal(1,"atomic settings");
- if(ui_state!=((3<<11)|1408)||shape_threshold!=48)$fatal(1,"menu/settings not atomic");
- wr('h44,32'hcc1003c0);wr(8,5|(1<<3)|(1<<4)|(96<<9)|(48<<20));
+ if(ui_state!=((3<<11)|1408)||recognition_model!=2||!geometry_enable||!recognition_enable)$fatal(1,"menu/settings not atomic");
+ if(target_classes!=28'h080c101||geometry_selection!=6||!geometry_selection_bank)$fatal(1,"target snapshot/index not atomic with UI");
+ wr('h44,32'hcc0483c0);wr(8,5|(1<<3)|(1<<4)|(96<<9)|(48<<20));
  repeat(8)@(negedge video_clk);if(ui_state!=((3<<11)|1408))$fatal(1,"sidebar changed outside VS");frame;
- if(ui_state!=24'hcc03c0||shape_threshold!=32)$fatal(1,"sidebar selection/edit/value CDC mixed");
+ if(ui_state!=24'hcc03c0||recognition_model!=1||geometry_enable||!recognition_enable)$fatal(1,"sidebar selection/edit/value CDC mixed");
  wr(8,32'h80000000|5|(1<<3)|(1<<4)|(96<<9)|(48<<20));
  repeat(8)@(negedge video_clk);if(motion_enable)$fatal(1,"motion enable changed before VS");frame;
  if(!motion_enable||mode!=5||threshold!=48||memory_mode!=1)$fatal(1,"motion atomic enable changed video");
- wr('h44,(32<<15)|32'h80004001);wr(8,5|(1<<3)|(1<<4)|(96<<9)|(48<<20));
+ wr('h44,(0<<15)|32'h80004001);wr(8,5|(1<<3)|(1<<4)|(96<<9)|(48<<20));
  repeat(8)@(negedge video_clk);if(!motion_enable)$fatal(1,"motion disable changed before VS");frame;
  if(motion_enable||ui_state!=24'h804001)$fatal(1,"motion item high bit/UI CDC");
  repeat(8)@(negedge clk);if(!freeze_source)$fatal(1,"freeze CDC");

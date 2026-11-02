@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "frames": 169,
+  "all_candidate_scores_and_classes_equal": true,
+  "all_boxes_and_more_equal": true,
+  "budgets_and_steps_equal": true,
+  "sanitizers": true,
+  "source": "Before/current exact production C backends; real saved HQ12 input plus 52 printed classes/poses/negatives/classic geometry",
+  "candidate": "final geometry_m7.c, original geometry_letters.c"
+}

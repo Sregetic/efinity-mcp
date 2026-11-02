@@ -3,7 +3,7 @@ module tb;
 reg clk=0;always #5 clk=~clk;
 reg rst_n=0,de=0,hs=0,vs=0;reg[23:0]rgb=0,ui_state=0;
 reg[3:0]ai_status=0;reg motion_enable=0,motion_held=0;reg[2:0]motion_direction=0;
-wire ode,ohs,ovs;wire[23:0]orgb;
+reg[27:0]target_classes=0;wire ode,ohs,ovs;wire[23:0]orgb;
 vision_sidebar_overlay dut(.*);
 reg[23:0]vectors[0:11];reg[63:0]names[0:5],wanted;reg[11:0]probe_x,probe_y;
 integer direction,hold_state,slot,frame,row,col,file,checked=0,ink_count=0;reg in_overlay;
@@ -45,7 +45,7 @@ initial begin
    for(col=0;col<1920;col=col+1)begin
     de=1;rgb=(col>=850&&col<1070&&row>=430&&row<650)?24'h30a0e0:((col%120==0||row%120==0)?24'h606060:24'h303c44);
     @(posedge clk);#1;
-    in_overlay=frame==0?(row>=128&&row<576&&col<304):(col<160&&row>=96&&row<120);
+    in_overlay=frame==0?(row>=128&&row<704&&col<304):(col<160&&row>=96&&row<120);
     if(!ode||ohs!==hs||ovs!==vs)$fatal(1,"preview sync");
     if(!in_overlay)begin if(orgb!==rgb)$fatal(1,"motion UI changed image outside overlay %0d,%0d",col,row);checked=checked+1;end
     if(in_overlay&&orgb==24'hffff80)ink_count=ink_count+1;

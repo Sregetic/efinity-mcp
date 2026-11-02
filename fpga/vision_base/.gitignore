@@ -14,3 +14,24 @@ artifacts/vision_soc/firmware/*.hex
 artifacts/vision_soc/firmware/*.dis
 artifacts/vision_soc/firmware/*.map
 artifacts/vision_soc/generate.log
+# Local snapshots and EDA/simulator output are not source releases.
+backups/
+__pycache__/
+*.py[cod]
+*.vvp
+*.vcd
+*.wlf
+transcript
+board/ti60_hdmi/outflow/
+board/ti60_hdmi/work_syn/
+board/ti60_hdmi/work_pnr/
+board/ti60_hdmi/work_dbg/
+# Regenerate with the installed Sapphire generator; retain config.json/cpu0.yaml.
+
+results/**/*.elf
+results/**/*.out
+results/**/*.vvp
+results/**/__pycache__/
+
+# Third-party receiver source is supplied locally, not redistributed.
+board/hdmi_input_test/vendor/

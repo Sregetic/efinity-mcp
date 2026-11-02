@@ -26,6 +26,7 @@ module axi_burst_arbiter #(parameter N=4,ID_WIDTH=6,OW=$clog2(N))(
  reg[1:0]rs=IDLE,ws=IDLE;reg[OW-1:0]ro=0,wo=0,rl=N-1,wl=N-1;
  reg rf,wf,uf;reg[OW-1:0]rp,wp,up;integer k,ri,wi;
  reg[1:0]urgent_streak=0;reg selected_urgent=0;
+ wire urgent_read_turn=(uf&&urgent_streak<2)||(rs!=IDLE&&selected_urgent);
  always @*begin
   rf=0;wf=0;uf=0;rp=0;wp=0;up=0;
   for(k=1;k<=N;k=k+1)begin
@@ -72,7 +73,9 @@ module axi_burst_arbiter #(parameter N=4,ID_WIDTH=6,OW=$clog2(N))(
     end
    endcase
    case(ws)
-    IDLE:if(wf)begin wo<=wp;ws<=ADDR;end
+    // Let the current write finish, but do not refill DDR's write queue during
+    // an urgent read turn. The existing third ordinary turn also admits writes.
+    IDLE:if(wf&&!urgent_read_turn)begin wo<=wp;ws<=ADDR;end
     ADDR:if(m_awvalid&&m_awready)ws<=DATA;
     DATA:if(m_wvalid&&m_wready&&m_wlast)ws<=RESP;
     RESP:if(m_bvalid&&m_bready)begin wl<=wo;ws<=IDLE;end

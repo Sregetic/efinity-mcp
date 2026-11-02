@@ -85,20 +85,29 @@ def main():
     p.add_argument('--elf',type=Path,required=True);p.add_argument('--weights',type=Path)
     p.add_argument('--cpu-config',type=Path,default=ROOT/'artifacts/vision_soc/cpu0.yaml')
     p.add_argument('--jtag-khz',type=int,default=USER1_KHZ,help='25kHz verified for USER1 reads while ROI scan remains active')
+    p.add_argument('--chunk-bytes',type=int,default=0,help='0: original ELF transfer; 1024 with 1000kHz: verified short USER1 load/readback transactions')
     p.add_argument('--timeout-seconds',type=int,default=300,help='Load/readback deadline; large TFLM programs need longer than the original small application')
     p.add_argument('--output-dir',type=Path,required=True);a=p.parse_args()
     if a.jtag_khz<=0:p.error('--jtag-khz must be positive')
+    if a.chunk_bytes<0 or a.chunk_bytes%4:p.error('--chunk-bytes must be zero or a positive multiple of4')
     if a.timeout_seconds<=0:p.error('--timeout-seconds must be positive')
     entry,segments,sym=validate_image(a.elf,a.weights)
     location=board_location(a.url);a.output_dir.mkdir(parents=True,exist_ok=True)
-    commands=['halt','wait_halt 5000',f'load_image {tcl_path(a.elf)}']
+    commands=['halt','wait_halt 5000']
+    if not a.chunk_bytes:commands.append(f'load_image {tcl_path(a.elf)}')
     readbacks=[]
     image=a.elf.read_bytes()
     for i,s in enumerate(segments):
         if not s['size']:continue
-        path=a.output_dir/f'segment{i}.bin'
-        commands.append(f'dump_image {tcl_path(path)} {s["address"]:#x} {s["size"]}')
-        readbacks.append((path,image[s['offset']:s['offset']+s['size']]))
+        for offset in range(0,s['size'],a.chunk_bytes or s['size']):
+            size=min(a.chunk_bytes or s['size'],s['size']-offset)
+            payload=image[s['offset']+offset:s['offset']+offset+size]
+            path=a.output_dir/(f'segment{i}_{offset:06x}.bin' if a.chunk_bytes else f'segment{i}.bin')
+            if a.chunk_bytes:
+                write=path.with_suffix('.write.bin');write.write_bytes(payload)
+                commands.append(f'load_image {tcl_path(write)} {s["address"]+offset:#x} bin')
+            commands.append(f'dump_image {tcl_path(path)} {s["address"]+offset:#x} {size}')
+            readbacks.append((path,payload))
     if a.weights:
         path=a.output_dir/'weights.bin';payload=a.weights.read_bytes()
         commands.extend([f'load_image {tcl_path(a.weights)} {sym["__weights_start"]:#x} bin',f'dump_image {tcl_path(path)} {sym["__weights_start"]:#x} {len(payload)}'])
@@ -117,7 +126,7 @@ def main():
         if path.read_bytes()!=expected:raise RuntimeError('CPU memory readback mismatch: '+path.name)
     run('resume',['halt','wait_halt 5000',f'resume {entry:#x}'],'VISION_DDR_RESUMED')
     record=dict(passed=True,method='USER1 debug halt/load/verify/resume; no CPU reset',elf=str(a.elf.resolve()),entry=entry,segments=segments,
-                payload_bytes=sum(s['size'] for s in segments),weights_bytes=a.weights.stat().st_size if a.weights else 0,weights_address=sym['__weights_start'],usb_location=location,jtag_khz=a.jtag_khz,byte_readback_verified=True,fpga_reprogrammed=False,flash_written=False)
+                payload_bytes=sum(s['size'] for s in segments),weights_bytes=a.weights.stat().st_size if a.weights else 0,weights_address=sym['__weights_start'],usb_location=location,jtag_khz=a.jtag_khz,chunk_bytes=a.chunk_bytes,byte_readback_verified=True,fpga_reprogrammed=False,flash_written=False)
     (a.output_dir/'result.json').write_text(json.dumps(record,indent=2),encoding='utf-8');print(json.dumps(record,indent=2))
 
 if __name__=='__main__':main()

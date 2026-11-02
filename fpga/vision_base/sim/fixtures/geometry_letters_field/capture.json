@@ -1,0 +1,21 @@
+{
+  "width": 480,
+  "height": 270,
+  "epoch": 24715,
+  "context": {
+    "mode": 5,
+    "median": 1,
+    "memory": 0,
+    "requested_threshold": 80,
+    "noise_mean_bound": 2,
+    "noise_valid": 1,
+    "effective_threshold": 80,
+    "display_id_at_hold": 33088,
+    "roi_frame_id": 33089,
+    "applied_config_id": 0,
+    "held_source_frame_id": 0,
+    "held_raw_id_sample": 0
+  },
+  "partial_b_not_scored": true,
+  "source": "Actual USER2 accepted Canny plane; original screenshot is not an exact same-frame RGB capture"
+}

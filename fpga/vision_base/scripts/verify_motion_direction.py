@@ -18,7 +18,7 @@ def main():
     fixture = fixtures(out/'vectors')
     rtl = ROOT/'board/ti60f225_v4/rtl/vision'
     display = ['vision_display', 'vision_frontend', 'vision_window3', 'vision_median9',
-               'vision_sobel', 'vision_shape_classifier', 'vision_osd', 'vision_local_motion_core',
+               'vision_sobel', 'vision_osd', 'vision_local_motion_core',
                'vision_local_motion_tap', 'vision_motion_policy', 'vision_motion_readout']
     tests = [
         ('core', 'sim/motion_direction/tb_local_motion_core.sv', ['vision_local_motion_core']),
