@@ -1,0 +1,63 @@
+{
+  "implemented": true,
+  "simulation_passed": true,
+  "native_pnr_passed": true,
+  "native_stages": [
+    "map",
+    "interface",
+    "pnr",
+    "pgm"
+  ],
+  "artifact_source_timing_gate_passed": true,
+  "native_input_count": 172,
+  "changed_native_inputs": [
+    "board/ti60f225_v4/rtl/vision/rgb_chroma_tone.sv"
+  ],
+  "threshold_exhaustive": {
+    "gains_per_channel": 65536,
+    "channels": 3,
+    "thresholds_per_gain": 16,
+    "checks": 3145728,
+    "differences": 0,
+    "one_clock_update_preserved": true
+  },
+  "cycle_equivalence": {
+    "clocks": 181768,
+    "active_pixels": 172369,
+    "reset_clocks": 20,
+    "gain_pixel_pairs_per_channel": 116224,
+    "full_range_gain_steps_per_channel": 65536,
+    "differences": 0,
+    "normal_and_shadow_curves": true,
+    "freeze_and_resume": true,
+    "sync_and_latency": true
+  },
+  "resources": {
+    "xlr": 56997,
+    "xlr_used_percent": 93.74506578947368,
+    "free_xlr": 3803,
+    "ram": 237,
+    "free_ram": 19,
+    "dsp": 62,
+    "free_dsp": 98,
+    "wns_ns": 0.254,
+    "whs_ns": 0.026,
+    "unassigned_core_pins": 0
+  },
+  "net_released_xlr_this_round": 383,
+  "ram_added_this_round": 0,
+  "dsp_added_this_round": 0,
+  "threshold_values_and_single_clock_updates_preserved": true,
+  "pixel_pipeline_latency_preserved": true,
+  "normal_shadow_curves_and_freeze_preserved": true,
+  "previous_canny_tile_cache_retained": true,
+  "firmware_changed": false,
+  "image_readback_retained": true,
+  "image_readback_basis": "Source inputs outside rgb_chroma_tone unchanged; image_snapshot5RAM retained; full tone output and sync cycle equivalence",
+  "board_programmed": false,
+  "flash_written": false,
+  "physical_image_acceptance": false,
+  "physical_power_cycle_verified": false,
+  "flash_baseline": "results/canny_flash_20261017/deployment.json",
+  "release": "F:\\Project\\fpga\\vision_base\\results\\tone_config_xlr_20261018\\release"
+}

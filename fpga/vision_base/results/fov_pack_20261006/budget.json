@@ -1,0 +1,16 @@
+{
+  "scope": "Arithmetic estimate using separately measured SoC, not an integrated SoC build",
+  "snapshot_plus_soc": {
+    "ram": 251,
+    "xlr": 58773
+  },
+  "after_flyhash_firmware": {
+    "ram": 249,
+    "xlr": 53596.0
+  },
+  "estimated_glue": {
+    "ram_min": 0,
+    "ram_max": 2,
+    "xlr": 800
+  }
+}

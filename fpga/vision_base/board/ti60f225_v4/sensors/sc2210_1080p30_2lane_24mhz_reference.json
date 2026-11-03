@@ -1,0 +1,23 @@
+{
+  "sensor": "sc2210",
+  "mode": "SDK reference, not yet matched to purchased module",
+  "width": 1920,
+  "height": 1080,
+  "raw_bits": 10,
+  "bayer": "BGGR",
+  "lanes": 2,
+  "mclk_hz": 24000000,
+  "fps": 30,
+  "hs_byteclk_mhz": 47,
+  "mipi_clock_mode": "Discontinuous",
+  "vts": 1125,
+  "exposure_min": 112,
+  "exposure_max": 1121,
+  "exposure_initial": 444,
+  "init_file": "sc2210_1080p30_2lane_24mhz_reference.mem",
+  "init_length": 253,
+  "init_sha256": "047af98180067d1a886dfcc45a6c90027eec40997e5238ae4090aaa323c03cfb",
+  "source_url": "https://github.com/themactep/ingenic-sdk/blob/0eb3addbb3cac7ee85a5cc021514830e4dde2a1e/common/sensor/t31/sc2210.c",
+  "source_sha256": "2ef23c61fa943147d83c46b78b120f34516f59e45c5f1a75a238e35551e2210d",
+  "hardware_validated": false
+}

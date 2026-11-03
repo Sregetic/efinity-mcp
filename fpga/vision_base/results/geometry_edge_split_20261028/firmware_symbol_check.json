@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "absent": [
+    "m7_facefinder",
+    "run_cascade",
+    "cluster_detections",
+    "score_add"
+  ],
+  "present": [
+    "geometry_m7_lane_record"
+  ]
+}

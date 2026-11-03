@@ -92,3 +92,13 @@ ACK，也不会被静默消费。
 ## 选择逻辑与时序
 最新帧/最旧帧采用并行比较矩阵和 one-hot 选择，避免多个 32-bit 比较器串联后再进入采集 bank 排他判定。相同 frame_id 时仍选较小 bank 编号；空 bank 优先与同拍完成/读者获取的语义保持不变。该修改由板级真实 P&R 的 captured_bank 到 ready_q 临界路径驱动，功能回归使用原 tb_frame_pool 与帧控制回归。
 
+
+
+## 统一历史池（RAW_TO_POOL）
+
+`KEEP_HISTORY=0` 保留原来的最新帧策略；板级合并构建使用 `BANKS=8, KEEP_HISTORY=1`。
+历史顺序由单写者完成时更新的 bank 排列表维护，索引 0 是最新已完成帧，最多公开六帧。
+`pin_history=1` 保护这六帧；额外 bank 接收实时相机的 scratch 写入，由上层将其完成标为未发布。
+读者 lease 和同拍 acquire 仍排除 writer 候选，正在写入或失败的帧不进入历史序列。
+`display_age/analysis_age` 选择历史序号；`display_use_analysis` 使冻结的直扫源与后续 ROI 共用同一帧。
+冻结、六帧回放、相邻帧比较、失败不发布和 CPU DDR 客户端验证见 `sim/tb_unified_history.sv`。

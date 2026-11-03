@@ -1,0 +1,2 @@
+PASS tb_packed_decode: shared packed16 decoder65536 patterns, identical RGB precision/range for display and DMA
+sim/tb_packed_decode.sv:12: $finish called at 65536000 (1ps)

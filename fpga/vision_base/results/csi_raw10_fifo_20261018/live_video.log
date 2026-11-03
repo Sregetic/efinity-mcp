@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "seconds": 59.96899999998277,
+  "samples": 5232,
+  "rates": {
+    "capture": 29.998832730252577,
+    "display": 29.998832730252577,
+    "canny": 30.015508012481735
+  },
+  "csi_error_mask": "0x7ffd (FIFO-empty is normal)",
+  "geometry": {
+    "width_words": 480,
+    "lines": 1080,
+    "words": 518400,
+    "ppc": 4,
+    "datatype": 43
+  },
+  "end_geometry": {
+    "width_words": 480,
+    "lines": 1080,
+    "words": 518400,
+    "ppc": 4,
+    "datatype": 43
+  },
+  "scan_bad_delta": 0,
+  "discard_delta": 0
+}

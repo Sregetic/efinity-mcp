@@ -1,0 +1,33 @@
+{
+  "device": "Ti60F225",
+  "sensor": "SC431HAI",
+  "hdmi": "1920x1080@60Hz",
+  "control_boot": "8KB embedded ROM copies control/FlyHash firmware into DDR",
+  "boot_defaults": {
+    "roi_enabled": 0,
+    "canny": 128,
+    "sobel": 128,
+    "mode": 3,
+    "menu": 0,
+    "shape": 32,
+    "median": 0,
+    "memory": 0
+  },
+  "functions": [
+    "camera",
+    "median",
+    "Sobel",
+    "Canny",
+    "overlay",
+    "A6 geometry",
+    "six-frame history",
+    "freeze",
+    "ROI zoom/pan/place",
+    "physical-key menu"
+  ],
+  "requires_host_configuration": false,
+  "full_int8_autoload": false,
+  "flash_written": false,
+  "physical_power_cycle_verified": false,
+  "real_card_acceptance": false
+}

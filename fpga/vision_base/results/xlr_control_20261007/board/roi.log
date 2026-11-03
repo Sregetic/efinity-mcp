@@ -1,0 +1,10 @@
+live_full {"roi_frame_id": 11396, "applied_config_id": 1, "held_source_frame_id": 11403, "capture_discarded": 0, "scan_bad_frames": 0, "render_cycles": 3686830}
+PASS {"name": "live_full", "seconds": 9.718000000109896, "source_frames": 292, "scan_bad_delta": 0, "source_discard_delta": 0}
+live_zoom {"roi_frame_id": 11887, "applied_config_id": 2, "held_source_frame_id": 11894, "capture_discarded": 0, "scan_bad_frames": 0, "render_cycles": 1528432}
+PASS {"name": "live_zoom", "seconds": 9.686999999918044, "source_frames": 290, "scan_bad_delta": 0, "source_discard_delta": 0}
+frozen_full {"roi_frame_id": 12353, "applied_config_id": 3, "held_source_frame_id": 12353, "capture_discarded": 0, "scan_bad_frames": 0, "render_cycles": 3623055}
+frozen_zoom {"roi_frame_id": 12353, "applied_config_id": 4, "held_source_frame_id": 12353, "capture_discarded": 0, "scan_bad_frames": 0, "render_cycles": 1527985}
+frozen_pan {"roi_frame_id": 12353, "applied_config_id": 5, "held_source_frame_id": 12353, "capture_discarded": 0, "scan_bad_frames": 0, "render_cycles": 1526349}
+frozen_small {"roi_frame_id": 12353, "applied_config_id": 6, "held_source_frame_id": 12353, "capture_discarded": 0, "scan_bad_frames": 0, "render_cycles": 1744000}
+final_live {"roi_frame_id": 12944, "applied_config_id": 7, "held_source_frame_id": 12951, "capture_discarded": 0, "scan_bad_frames": 0, "render_cycles": 3697330}
+PASS actual ROI live/frozen shared DDR and immutable-source rerender

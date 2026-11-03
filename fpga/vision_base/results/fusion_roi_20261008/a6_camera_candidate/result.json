@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "scope": "Production A6 host/RTL parity; input kind explicit; physical card acceptance remains separate",
+  "cases": [
+    {
+      "image": "F:/Project/fpga/vision_base/results/fusion_roi_20261008/automatic_images/mode_1.png",
+      "input_kind": "camera_readback",
+      "threshold": 64,
+      "host_rtl_equal": true,
+      "valid": true,
+      "class_id": 1,
+      "label": "CIRCLE",
+      "reject_flags": 0,
+      "background": 131,
+      "corner_means": [
+        132,
+        132,
+        129,
+        132
+      ],
+      "filled_area": 4992,
+      "fill_ratio": 0.78,
+      "bbox": [
+        834,
+        454,
+        913,
+        533
+      ]
+    }
+  ]
+}

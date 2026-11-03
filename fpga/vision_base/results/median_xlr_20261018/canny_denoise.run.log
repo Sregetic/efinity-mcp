@@ -1,0 +1,2 @@
+PASS Canny denoise median/bypass 6144 pixels, metadata, noise bound, bootstrap calibration
+sim/vision/tb_canny_denoise.sv:28: $finish called at 983480000 (1ps)

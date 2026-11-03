@@ -1,0 +1,182 @@
+{
+  "full": false,
+  "tests": [
+    {
+      "run_exit": 0,
+      "test": "osd",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "line_direct",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "shape_classifier",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "shadow_chroma",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "sobel",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "canny_stability",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "fusion_display",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "edge_strength",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "sensor_init",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "canny_raster",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "line_snapshot",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "hysteresis_random",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "edge_probe",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "canny_denoise",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "canny_noise",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "edge_components",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "edge_overlay",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "frontend",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "color",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "color_denoise",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "packed_rgb",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "median9",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "chroma_tone",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "chroma_thresholds",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "controls",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "hysteresis",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "hysteresis_sweep",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "history",
+      "passed": true,
+      "compile_exit": 0
+    },
+    {
+      "run_exit": 0,
+      "test": "commit",
+      "passed": true,
+      "compile_exit": 0
+    }
+  ],
+  "passed": true,
+  "generated_utc": "2026-10-08T11:24:34.3596479Z",
+  "scope": "RTL simulation, not physical display acceptance"
+}

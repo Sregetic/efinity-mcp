@@ -1,0 +1,19 @@
+{
+  "phase": "complete: RTL, simulation, native P&R, candidate release and gate passed",
+  "board_programmed": false,
+  "flash_written": false,
+  "physical_acceptance": "pending; current run did not access hardware",
+  "resources": {
+    "xlr": 58436,
+    "xlr_capacity": 60800,
+    "xlr_used_percent": 96.11184210526315,
+    "free_xlr": 2364,
+    "ram": 235,
+    "free_ram": 21,
+    "dsp": 62,
+    "free_dsp": 98,
+    "wns_ns": 0.249,
+    "whs_ns": 0.026,
+    "unassigned_core_pins": 0
+  }
+}

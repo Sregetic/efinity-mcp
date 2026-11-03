@@ -1,0 +1,11 @@
+WARNING: cannot find correct IV value
+Creating F:/Project/fpga/vision_base/results/ordered_implementation_20261007/stream_final_native
+Creating F:/Project/fpga/vision_base/results/ordered_implementation_20261007/work_stream_final
+Running: efx_run_map.py ti60f225_oob --family Titanium --device Ti60F225 --project_xml F:\Project\fpga\vision_base\board\ti60f225_v4\ti60f225_oob.xml --output_dir F:/Project/fpga/vision_base/results/ordered_implementation_20261007/stream_final_native --work_dir F:/Project/fpga/vision_base/results/ordered_implementation_20261007/work_stream_final --timeout 1500 --opt top-params=IMAGE_DEBUG top-params=2 top-params=SAPPHIRE_ENABLE top-params=1 top-params=RAW_TO_POOL top-params=1 --opt root=ti60f225_oob_top --opt veri_options=verilog_mode=sv_09,vhdl_mode=vhdl_2008 work-dir=F:/Project/fpga/vision_base/results/ordered_implementation_20261007/work_stream_final write_efx_verilog=on
+   map :	PASS 
+Running: efx_run_pt_unified.py ti60f225_oob Titanium Ti60F225 --output_dir F:/Project/fpga/vision_base/results/ordered_implementation_20261007/stream_final_native --timing_model I3 --project_xml ti60f225_oob.xml --work_dir F:/Project/fpga/vision_base/results/ordered_implementation_20261007/work_stream_final
+   interface :	PASS 
+Running: efx_run_pnr.py ti60f225_oob --prj F:\Project\fpga\vision_base\board\ti60f225_v4\ti60f225_oob.xml --family Titanium --device Ti60F225 --timing_model I3 --output_dir F:/Project/fpga/vision_base/results/ordered_implementation_20261007/stream_final_native --work_dir F:/Project/fpga/vision_base/results/ordered_implementation_20261007/work_stream_final --timeout 1386 --opt seed=1 --opt sdc_file=ti60f225_oob.sdc
+   pnr :	PASS 
+Running: efx_run_pgm.py ti60f225_oob --family Titanium --device Ti60F225 --output_dir F:/Project/fpga/vision_base/results/ordered_implementation_20261007/stream_final_native --work_dir F:/Project/fpga/vision_base/results/ordered_implementation_20261007/work_stream_final --timeout 1042 --opt mode=active width=1 enable_roms=on spi_low_power_mode=on io_weak_pullup=on oscillator_clock_divider=DIV8 enable_crc_check=on bitstream_compression=on active_capture_clk_edge=posedge release_tri_then_reset=on enable_external_master_clock=off jtag_usercode=0xFFFFFFFF
+   pgm :	PASS 

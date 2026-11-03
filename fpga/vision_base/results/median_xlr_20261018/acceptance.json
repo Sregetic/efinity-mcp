@@ -1,0 +1,61 @@
+{
+  "implemented": true,
+  "simulation_passed": true,
+  "native_pnr_passed": true,
+  "artifact_source_timing_gate_passed": true,
+  "native_input_count": 172,
+  "changed_native_inputs": [
+    "board/ti60f225_v4/rtl/vision/vision_median9.sv"
+  ],
+  "equivalence": {
+    "windows": 26912,
+    "binary_threshold_windows": 2048,
+    "uniform_windows": 256,
+    "impulse_windows": 4608,
+    "random_windows": 20000,
+    "metadata_widths_in_direct_equivalence": [
+      64,
+      1
+    ],
+    "golden": "exact pre-optimization RTL plus independent sort reference",
+    "pipeline_stages": 9,
+    "windows_per_clock": 1,
+    "differences": 0
+  },
+  "integration": {
+    "frontend_checked": 450,
+    "color_denoise_checked": 450,
+    "canny_denoise_checked": 6144,
+    "line_direct_pixels": 46080,
+    "line_direct_interior_checks": 30656,
+    "canny_noise_checked": 36864,
+    "fusion_frame_binding": true
+  },
+  "resources": {
+    "xlr": 58436,
+    "xlr_capacity": 60800,
+    "xlr_used_percent": 96.11184210526315,
+    "free_xlr": 2364,
+    "ram": 235,
+    "free_ram": 21,
+    "dsp": 62,
+    "free_dsp": 98,
+    "wns_ns": 0.249,
+    "whs_ns": 0.026,
+    "unassigned_core_pins": 0
+  },
+  "net_released_xlr": 1614,
+  "ram_delta": 0,
+  "dsp_delta": 0,
+  "image_readback_retained": true,
+  "image_readback_basis": "Unchanged native source input and existing snapshot instance remains present with5RAM; no board image export in this run",
+  "all_existing_function_sources_retained": true,
+  "camera_profile": "sc431hai_1080p30_center_4lane",
+  "firmware_changed": false,
+  "board_programmed": false,
+  "flash_written": false,
+  "physical_image_acceptance": false,
+  "physical_power_cycle_verified": false,
+  "flash_baseline": "results/canny_flash_20261017/deployment.json",
+  "release": "F:\\Project\\fpga\\vision_base\\results\\median_xlr_20261018\\release"
+}

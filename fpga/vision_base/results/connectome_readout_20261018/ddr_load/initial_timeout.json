@@ -1,0 +1,6 @@
+{
+  "timeout_seconds": 600,
+  "phase": "full static readback",
+  "verified_prefix_bytes": 69632,
+  "cpu_resumed": false
+}

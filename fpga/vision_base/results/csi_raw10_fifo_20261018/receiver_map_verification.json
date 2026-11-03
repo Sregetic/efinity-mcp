@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "scope": "Actual synthesis structure only; not pixel simulation",
+  "ip_version": "5.15",
+  "raw10_path_retained": true,
+  "other_pack_paths_removed": true,
+  "counts": {
+    "csi_base": {
+      "EFX_ADD": "147",
+      "EFX_LUT4": "2241",
+      "EFX_FF": "1213",
+      "EFX_RAM10": "11"
+    },
+    "csi_new": {
+      "EFX_ADD": "144",
+      "EFX_LUT4": "1338",
+      "EFX_FF": "1018",
+      "EFX_RAM10": "8"
+    }
+  }
+}

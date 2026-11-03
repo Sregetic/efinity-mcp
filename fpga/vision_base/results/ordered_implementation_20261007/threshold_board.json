@@ -1,0 +1,76 @@
+{
+  "passed": true,
+  "scope": "Actual board USER2 commands, not physical button presses",
+  "before": {
+    "mode": 1,
+    "threshold": 96,
+    "sobel": 96,
+    "canny": 128,
+    "effective": 128
+  },
+  "cases": [
+    {
+      "mode": 2,
+      "threshold": 96,
+      "sobel": 96,
+      "canny": 144,
+      "effective": 144
+    },
+    {
+      "mode": 2,
+      "threshold": 16,
+      "sobel": 16,
+      "canny": 144,
+      "effective": 144
+    },
+    {
+      "mode": 2,
+      "threshold": 2047,
+      "sobel": 2047,
+      "canny": 144,
+      "effective": 144
+    },
+    {
+      "mode": 5,
+      "threshold": 144,
+      "sobel": 2047,
+      "canny": 144,
+      "effective": 144
+    },
+    {
+      "mode": 5,
+      "threshold": 16,
+      "sobel": 2047,
+      "canny": 16,
+      "effective": 24
+    },
+    {
+      "mode": 5,
+      "threshold": 160,
+      "sobel": 80,
+      "canny": 160,
+      "effective": 160
+    },
+    {
+      "mode": 2,
+      "threshold": 80,
+      "sobel": 80,
+      "canny": 160,
+      "effective": 160
+    },
+    {
+      "mode": 6,
+      "threshold": 160,
+      "sobel": 80,
+      "canny": 160,
+      "effective": 160
+    }
+  ],
+  "restored": {
+    "mode": 1,
+    "threshold": 96,
+    "sobel": 96,
+    "canny": 128,
+    "effective": 128
+  }
+}

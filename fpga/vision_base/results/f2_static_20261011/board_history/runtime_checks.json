@@ -1,0 +1,18 @@
+{
+  "scope": "Register and DDR frame-ID validation; physical image and buttons require observation",
+  "checks": [
+    "mode0 readback passed",
+    "mode1 readback passed",
+    "mode2 readback passed",
+    "mode3 readback passed",
+    "mode4 readback passed",
+    "mode5 readback passed",
+    "mode6 readback passed",
+    "mode7 readback passed",
+    "live advances and frozen frame holds",
+    "F2 static frame, six distinct key-selected frames, explicit index6 autoplay and stop",
+    "history3 frame IDs change",
+    "Canny publishes with fault0"
+  ],
+  "passed": true
+}

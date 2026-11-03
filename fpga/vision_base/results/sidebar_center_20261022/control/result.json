@@ -1,0 +1,46 @@
+{
+  "passed": true,
+  "isa": "RV32I",
+  "checks": 2525,
+  "geometry_cases": 407,
+  "diagnostic_decode_vectors": 6,
+  "scope": "Production control/MMIO/geometry/FOMO result logic on QEMU; no board timing or real recognition acceptance",
+  "ui_vectors": [
+    {
+      "name": "root",
+      "word": 2148532229,
+      "ui": 8388613,
+      "settings": 83951645
+    },
+    {
+      "name": "edit_mode",
+      "word": 3222274054,
+      "ui": 12582918,
+      "settings": 83951645
+    },
+    {
+      "name": "cancel",
+      "word": 2148532229,
+      "ui": 8388613,
+      "settings": 83951645
+    },
+    {
+      "name": "edit_zoom",
+      "word": 3423601600,
+      "ui": 13370304,
+      "settings": 16842774
+    },
+    {
+      "name": "center_done",
+      "word": 3037724672,
+      "ui": 11862016,
+      "settings": 83951645
+    },
+    {
+      "name": "no_target",
+      "word": 3046113280,
+      "ui": 11894784,
+      "settings": 83951645
+    }
+  ]
+}

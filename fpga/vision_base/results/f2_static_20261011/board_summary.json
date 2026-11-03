@@ -1,0 +1,89 @@
+{
+  "history2_static": {
+    "count": 60,
+    "ids": [
+      8388
+    ],
+    "seconds": 12.721101999282837,
+    "index": 0
+  },
+  "history2_index0": {
+    "count": 5,
+    "ids": [
+      8388
+    ],
+    "seconds": 0.8680243492126465,
+    "index": 0
+  },
+  "history2_index1": {
+    "count": 5,
+    "ids": [
+      8387
+    ],
+    "seconds": 0.848395586013794,
+    "index": 1
+  },
+  "history2_index2": {
+    "count": 5,
+    "ids": [
+      8386
+    ],
+    "seconds": 0.863739013671875,
+    "index": 2
+  },
+  "history2_index3": {
+    "count": 5,
+    "ids": [
+      8385
+    ],
+    "seconds": 0.8678202629089355,
+    "index": 3
+  },
+  "history2_index4": {
+    "count": 5,
+    "ids": [
+      8384
+    ],
+    "seconds": 0.8661079406738281,
+    "index": 4
+  },
+  "history2_index5": {
+    "count": 5,
+    "ids": [
+      8383
+    ],
+    "seconds": 0.8669097423553467,
+    "index": 5
+  },
+  "history2_auto": {
+    "count": 24,
+    "ids": [
+      8384,
+      8383,
+      8388,
+      8387,
+      8386,
+      8385
+    ],
+    "seconds": 4.932682275772095,
+    "index": 6
+  },
+  "history2_stop": {
+    "count": 18,
+    "ids": [
+      8383
+    ],
+    "seconds": 3.67223858833313,
+    "index": 5
+  },
+  "history3": {
+    "count": 18,
+    "ids": [
+      8388,
+      8387
+    ],
+    "seconds": 3.660518169403076,
+    "index": 0
+  },
+  "keys_cases": 17
+}

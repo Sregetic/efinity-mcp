@@ -1,0 +1,22 @@
+127.0.0.1 - - [07/Oct/2026 03:20:39] "GET /mode-gallery HTTP/1.1" 200 -
+127.0.0.1 - - [07/Oct/2026 03:20:39] "GET /mode-gallery HTTP/1.1" 200 -
+127.0.0.1 - - [07/Oct/2026 03:20:39] "GET /mode_frames_1/source.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Oct/2026 03:20:39] "GET /mode_frames_1/mode_0.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Oct/2026 03:20:39] "GET /mode_frames_1/mode_1.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Oct/2026 03:20:39] "GET /mode_frames_1/mode_2.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Oct/2026 03:20:39] "GET /mode_frames_1/mode_3.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Oct/2026 03:20:39] "GET /mode_frames_1/mode_4.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Oct/2026 03:20:39] "GET /mode_frames_1/mode_5.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Oct/2026 03:20:39] "GET /mode_frames_1/mode_6.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Oct/2026 03:20:39] "GET /mode_frames_1/mode_7.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Oct/2026 03:20:39] "GET /state HTTP/1.1" 200 -
+127.0.0.1 - - [07/Oct/2026 03:20:39] "POST /modes HTTP/1.1" 200 -
+127.0.0.1 - - [07/Oct/2026 03:20:39] "GET /mode-gallery HTTP/1.1" 200 -
+127.0.0.1 - - [07/Oct/2026 03:20:39] "GET /mode_frames_1/source.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Oct/2026 03:20:39] "GET /mode_frames_1791314439131064200/source.png HTTP/1.1" 200 -
+127.0.0.1 - - [07/Oct/2026 03:20:39] "GET /mode_frames_1/../mode_gallery.json HTTP/1.1" 404 -
+127.0.0.1 - - [07/Oct/2026 03:20:39] "GET /mode_frames_1/mode_8.png HTTP/1.1" 404 -
+127.0.0.1 - - [07/Oct/2026 03:20:39] "GET /mode_frames_99/source.png HTTP/1.1" 404 -
+127.0.0.1 - - [07/Oct/2026 03:20:39] "POST /apply HTTP/1.1" 400 -
+127.0.0.1 - - [07/Oct/2026 03:20:39] "GET / HTTP/1.1" 200 -
+PASS: complete immutable gallery, partial capture rejection, reload, nine PNGs, independent static reads, serialized board access and route/origin boundaries

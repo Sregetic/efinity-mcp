@@ -1,0 +1,62 @@
+{
+  "model": "fixed MaleCNS 80-state circuit + trained linear INT8 readout",
+  "model_version": 65537,
+  "graph_version": 65537,
+  "classes": [
+    "blank",
+    "circle",
+    "rectangle",
+    "triangle"
+  ],
+  "training_kind": "synthetic_bringup_only",
+  "real_accuracy_verified": false,
+  "train_samples": 400,
+  "test_samples": 160,
+  "manifest": null,
+  "train_seed": 2210,
+  "test_seed": 107,
+  "readout_weights": 320,
+  "readout_biases": 4,
+  "model_bytes": 364,
+  "int8_test_accuracy": 0.9875,
+  "confusion_matrix": [
+    [
+      40,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      40,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      40,
+      0
+    ],
+    [
+      0,
+      2,
+      0,
+      38
+    ]
+  ],
+  "float_test_accuracy": 1.0,
+  "direct_same_bins_float_accuracy": 0.98125,
+  "topology_advantage_verified": false,
+  "score_kind": "signed quantized logits, not probabilities",
+  "quantization": {
+    "input_scale": 0.0078125,
+    "input_zero": 0,
+    "weight_scale": 0.06668193237314034,
+    "output_scale": 0.010492775709753044,
+    "multiplier": 1705916091,
+    "shift": -4
+  },
+  "source": "Independent train/test card and session IDs are enforced by the existing collector loader",
+  "note": "The test split selects neither weights nor quantization; synthetic success is not real-camera acceptance"
+}

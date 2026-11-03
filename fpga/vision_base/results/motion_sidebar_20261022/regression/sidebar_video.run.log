@@ -1,0 +1,2 @@
+PASS sidebar_video outside=5936988 ink=13189 exact RGB and sync, mode bypass retained
+F:\Project\fpga\vision_base\sim\vision\tb_sidebar_video.sv:48: $finish called at 62928270000 (1ps)

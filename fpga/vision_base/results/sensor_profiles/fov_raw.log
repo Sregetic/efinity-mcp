@@ -1,0 +1,2 @@
+PASS RAW 4PPC->2PPC async rows 46080 pixels, bubbles/order/frame tags, ISP reference equivalence
+F:\efinity-ci\upload-current-20261007\fpga\vision_base\sim\vision\tb_raw_frontend.sv:60: $finish called at 464087078 (1ps)

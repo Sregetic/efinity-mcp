@@ -1,0 +1,112 @@
+{
+  "coverage_base": {
+    "EFX_FF": 4,
+    "EFX_SRL8": 0,
+    "EFX_ADD": 0,
+    "EFX_LUT4": 69,
+    "EFX_RAM10": 4,
+    "EFX_DPRAM10": 0,
+    "EFX_DSP24": 0,
+    "EFX_DSP48": 0,
+    "RAM": 4
+  },
+  "coverage_packed": {
+    "EFX_FF": 0,
+    "EFX_SRL8": 0,
+    "EFX_ADD": 0,
+    "EFX_LUT4": 92,
+    "EFX_RAM10": 1,
+    "EFX_DPRAM10": 0,
+    "EFX_DSP24": 0,
+    "EFX_DSP48": 0,
+    "RAM": 1
+  },
+  "fit_base": {
+    "EFX_FF": 0,
+    "EFX_SRL8": 0,
+    "EFX_ADD": 0,
+    "EFX_LUT4": 0,
+    "EFX_RAM10": 2,
+    "EFX_DPRAM10": 0,
+    "EFX_DSP24": 0,
+    "EFX_DSP48": 0,
+    "RAM": 2
+  },
+  "fit_arithmetic": {
+    "EFX_FF": 16,
+    "EFX_SRL8": 0,
+    "EFX_ADD": 70,
+    "EFX_LUT4": 35,
+    "EFX_RAM10": 0,
+    "EFX_DPRAM10": 0,
+    "EFX_DSP24": 0,
+    "EFX_DSP48": 0,
+    "RAM": 0
+  },
+  "tags_base": {
+    "EFX_FF": 0,
+    "EFX_SRL8": 0,
+    "EFX_ADD": 0,
+    "EFX_LUT4": 0,
+    "EFX_RAM10": 2,
+    "EFX_DPRAM10": 0,
+    "EFX_DSP24": 0,
+    "EFX_DSP48": 0,
+    "RAM": 2
+  },
+  "tags_split": {
+    "EFX_FF": 136,
+    "EFX_SRL8": 0,
+    "EFX_ADD": 0,
+    "EFX_LUT4": 121,
+    "EFX_RAM10": 1,
+    "EFX_DPRAM10": 0,
+    "EFX_DSP24": 0,
+    "EFX_DSP48": 0,
+    "RAM": 1
+  },
+  "sensor_base": {
+    "EFX_FF": 0,
+    "EFX_SRL8": 0,
+    "EFX_ADD": 0,
+    "EFX_LUT4": 0,
+    "EFX_RAM10": 2,
+    "EFX_DPRAM10": 0,
+    "EFX_DSP24": 0,
+    "EFX_DSP48": 0,
+    "RAM": 2
+  },
+  "sensor_packed": {
+    "EFX_FF": 0,
+    "EFX_SRL8": 0,
+    "EFX_ADD": 0,
+    "EFX_LUT4": 7,
+    "EFX_RAM10": 1,
+    "EFX_DPRAM10": 0,
+    "EFX_DSP24": 0,
+    "EFX_DSP48": 0,
+    "RAM": 1
+  },
+  "reader_base": {
+    "EFX_FF": 395,
+    "EFX_SRL8": 0,
+    "EFX_ADD": 182,
+    "EFX_LUT4": 643,
+    "EFX_RAM10": 7,
+    "EFX_DPRAM10": 0,
+    "EFX_DSP24": 0,
+    "EFX_DSP48": 0,
+    "RAM": 7
+  },
+  "reader_srl": {
+    "EFX_FF": 511,
+    "EFX_SRL8": 1024,
+    "EFX_ADD": 164,
+    "EFX_LUT4": 1268,
+    "EFX_RAM10": 0,
+    "EFX_DPRAM10": 0,
+    "EFX_DSP24": 0,
+    "EFX_DSP48": 0,
+    "RAM": 0
+  }
+}

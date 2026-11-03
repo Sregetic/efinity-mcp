@@ -1,0 +1,35 @@
+{
+  "sequence": 5995,
+  "flags": 515,
+  "state": "test",
+  "inference_valid": true,
+  "synthetic_model": true,
+  "geometry_valid": false,
+  "automatic_roi": false,
+  "geometry_class": 0,
+  "ai_class": 0,
+  "frame_id": 58008,
+  "source_config_id": 58008,
+  "render_config_id": 11,
+  "model_id": 1,
+  "processing_context": 12,
+  "display_box": [
+    662,
+    358,
+    1461,
+    891
+  ],
+  "scores": [
+    15,
+    -40,
+    -47,
+    -2
+  ],
+  "roi": [
+    700,
+    360,
+    480,
+    320
+  ],
+  "geometry_sequence": 119166
+}

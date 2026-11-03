@@ -1,0 +1,2 @@
+PASS tb_vision_ai_bridge asynchronous geometry, held packet/backpressure, VS commit, source/config/context/model, age and failed scan
+sim/tb_vision_ai_bridge.sv:45: $finish called at 1412000 (1ps)

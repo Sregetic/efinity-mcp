@@ -1,0 +1,62 @@
+PASS camera AI task on frozen source 12655 render 10
+READ completed camera FOMO sequence 1 source 12655 objects 0
+{
+  "passed": true,
+  "source": 12655,
+  "render": 10,
+  "sequence": 1,
+  "invoke_ms": 2666.94506,
+  "preprocess_ms": 40.05906,
+  "total_ms": 0.30777,
+  "objects": 0,
+  "errors": 0,
+  "cold_start_int8_flyhash_connectome_selftest": 2,
+  "raw_status": [
+    1179602226,
+    3,
+    1,
+    12655,
+    12655,
+    10,
+    29,
+    2,
+    4005906,
+    266694506,
+    30777,
+    270731189,
+    0,
+    0,
+    0,
+    100000000,
+    149388,
+    0,
+    0,
+    24,
+    128,
+    27648,
+    576,
+    0
+  ],
+  "fusion": [
+    1179996977,
+    5,
+    87297,
+    12655,
+    12655,
+    10,
+    2,
+    29,
+    4294967295,
+    0,
+    2155905151,
+    0,
+    70780800,
+    98,
+    0,
+    0
+  ],
+  "scope": "Actual camera/DMA/CPU/FOMO completion and initial three-vector arithmetic selftest, not real-card accuracy"
+}
+Restored live Canny, ROI/AI off
+
+Timing schema correction: index10 is postprocess; authoritative ai_board.json total_ms=2707.31189 from index11.

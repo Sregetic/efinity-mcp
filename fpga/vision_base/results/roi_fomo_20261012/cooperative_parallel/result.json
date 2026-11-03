@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "first_fomo_frame": 117359,
+  "last_fomo_frame": 121462,
+  "scope": "Actual continuous camera FOMO alongside live full/2x ROI and frozen rerenders; no physical card accuracy",
+  "restore_seconds": 3.8909999998286366
+}

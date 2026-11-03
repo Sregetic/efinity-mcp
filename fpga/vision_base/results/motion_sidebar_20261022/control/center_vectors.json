@@ -1,0 +1,116 @@
+[
+  {
+    "name": "geometry",
+    "target": [
+      700,
+      400,
+      160,
+      120
+    ],
+    "roi": [
+      2212165,
+      1966350,
+      7865400,
+      0
+    ],
+    "frame": 100,
+    "render": 0,
+    "context": 5,
+    "config": 1
+  },
+  {
+    "name": "inverse_view",
+    "target": [
+      780,
+      470,
+      160,
+      120
+    ],
+    "roi": [
+      2539915,
+      1966350,
+      7865400,
+      0
+    ],
+    "frame": 100,
+    "render": 7,
+    "context": 5,
+    "config": 8
+  },
+  {
+    "name": "top_left",
+    "target": [
+      2,
+      40,
+      60,
+      80
+    ],
+    "roi": [
+      13,
+      262278,
+      2098224,
+      2883588
+    ],
+    "frame": 100,
+    "render": 0,
+    "context": 5,
+    "config": 1
+  },
+  {
+    "name": "bottom_right",
+    "target": [
+      1850,
+      980,
+      64,
+      72
+    ],
+    "roi": [
+      7553976,
+      311424,
+      2491392,
+      2687004
+    ],
+    "frame": 100,
+    "render": 0,
+    "context": 5,
+    "config": 1
+  },
+  {
+    "name": "tall_target",
+    "target": [
+      900,
+      320,
+      60,
+      400
+    ],
+    "roi": [
+      1843450,
+      3932700,
+      7865400,
+      0
+    ],
+    "frame": 100,
+    "render": 0,
+    "context": 5,
+    "config": 1
+  },
+  {
+    "name": "manual_2x",
+    "target": [
+      1300,
+      700,
+      120,
+      80
+    ],
+    "roi": [
+      3604950,
+      3932700,
+      7865400,
+      0
+    ],
+    "frame": 100,
+    "render": 0,
+    "context": 5,
+    "config": 1
+  }
+]

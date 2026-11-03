@@ -1,0 +1,2 @@
+PASS pipelined OSD mode/threshold, fusion TEST/OLD, independent IDs and signed score bytes
+sim/vision/tb_osd.sv:43: $finish called at 966000 (1ps)

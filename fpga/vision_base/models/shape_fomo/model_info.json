@@ -1,0 +1,44 @@
+{
+  "tensorflow_version": "2.14.0",
+  "inputs": [
+    {
+      "name": "serving_default_x:0",
+      "index": 0,
+      "shape": [
+        1,
+        96,
+        96,
+        3
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "quantization": [
+        0.003921568859368563,
+        -128
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "name": "StatefulPartitionedCall:0",
+      "index": 67,
+      "shape": [
+        1,
+        12,
+        12,
+        4
+      ],
+      "dtype": "<class 'numpy.int8'>",
+      "quantization": [
+        0.00390625,
+        -128
+      ]
+    }
+  ],
+  "operations": {
+    "CONV_2D": 15,
+    "DEPTHWISE_CONV_2D": 6,
+    "ADD": 3,
+    "SOFTMAX": 1,
+    "DELEGATE": 1
+  }
+}

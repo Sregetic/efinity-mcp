@@ -1,0 +1,65 @@
+READ completed camera FOMO sequence 1 source 43417 objects 0
+Source before Gamma rows90/1080
+Source before Gamma rows180/1080
+Source before Gamma rows270/1080
+Source before Gamma rows360/1080
+Source before Gamma rows450/1080
+Source before Gamma rows540/1080
+Source before Gamma rows630/1080
+Source before Gamma rows720/1080
+Source before Gamma rows810/1080
+Source before Gamma rows900/1080
+Source before Gamma rows990/1080
+Source before Gamma rows1080/1080
+Saved source.png: 1920x1080, source43417, 54.39s
+PASS camera FOMO frozen source 43417 sequence 1
+READ completed camera FOMO sequence 1 source 43417 objects 0
+READ completed camera FOMO sequence 2 source 43417 objects 0
+READ completed camera FOMO sequence 2 source 43417 objects 0
+READ completed camera FOMO sequence 3 source 49900 objects 0
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "first",
+      "sequence": 1,
+      "source": 43417,
+      "render": 10,
+      "context": 21,
+      "invoke_ms": 1159.57356
+    },
+    {
+      "case": "stable",
+      "sequence": 1,
+      "source": 43417,
+      "render": 10,
+      "context": 21,
+      "invoke_ms": 1159.57356
+    },
+    {
+      "case": "rerender",
+      "sequence": 2,
+      "source": 43417,
+      "render": 11,
+      "context": 21,
+      "invoke_ms": 1160.30068
+    },
+    {
+      "case": "selftest",
+      "sequence": 2,
+      "source": 43417,
+      "render": 11,
+      "context": 21,
+      "invoke_ms": 1160.30068
+    },
+    {
+      "case": "live",
+      "sequence": 3,
+      "source": 49900,
+      "render": 0,
+      "context": 21,
+      "invoke_ms": 1162.89592
+    }
+  ],
+  "scope": "Actual SRAM key-event policy/CPU/camera leases; not manual pressing or card accuracy"
+}

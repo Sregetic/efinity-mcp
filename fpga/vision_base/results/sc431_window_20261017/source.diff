@@ -1,0 +1,242 @@
+--- before/scripts/synthesize.ps1
++++ scripts/synthesize.ps1
+@@ -25,29 +25,38 @@
+ $sensorHeader=[Text.Encoding]::UTF8.GetString($sensorDefaults)
+ $sensorFiles=@()
+ $selectedProfile=$null
+-if($Sensor -eq 'sc2210'){
+-    if(!$SensorProfile){throw 'SC2210 requires -SensorProfile with an explicit module/mode initialization table.'}
++if($Sensor -eq 'sc2210' -and !$SensorProfile){throw 'SC2210 requires -SensorProfile with an explicit module/mode initialization table.'}
++if($SensorProfile){
++    if($Top -ne 'board'){throw 'Sensor profiles apply to -Top board.'}
+     $profileFile=Get-Item -LiteralPath $SensorProfile
+     $selectedProfile=Get-Content -LiteralPath $profileFile.FullName -Raw | ConvertFrom-Json
+-    if($selectedProfile.sensor -ne 'sc2210' -or $selectedProfile.width -ne 1920 -or $selectedProfile.height -ne 1080 -or $selectedProfile.raw_bits -ne 10 -or $selectedProfile.bayer -ne 'BGGR' -or $selectedProfile.lanes -notin @(2,4)){
+-        throw 'Current SC2210 input contract: 1920x1080 BGGR RAW10, 2 or 4 MIPI lanes.'
++    if($selectedProfile.sensor -ne $Sensor -or $selectedProfile.width -ne 1920 -or $selectedProfile.height -ne 1080 -or $selectedProfile.raw_bits -ne 10 -or $selectedProfile.bayer -ne 'BGGR' -or $selectedProfile.lanes -notin @(2,4)){
++        throw 'Current native input contract: selected sensor, 1920x1080 BGGR RAW10, 2 or 4 MIPI lanes.'
+     }
+     $initFile=Get-Item -LiteralPath (Join-Path $profileFile.DirectoryName $selectedProfile.init_file)
+-    if((Get-FileHash -LiteralPath $initFile.FullName).Hash -ne $selectedProfile.init_sha256){throw 'SC2210 initialization table hash mismatch.'}
++    if((Get-FileHash -LiteralPath $initFile.FullName).Hash -ne $selectedProfile.init_sha256){throw 'Sensor initialization table hash mismatch.'}
+     $words=@(Get-Content -LiteralPath $initFile.FullName)
+-    if($words.Count -ne $selectedProfile.init_length -or $words.Count -lt 3){throw 'SC2210 initialization length mismatch.'}
++    if($words.Count -ne $selectedProfile.init_length -or $words.Count -lt 3){throw 'Sensor initialization length mismatch.'}
+     $registers=@{}
+     foreach($word in $words){
+-        if($word -notmatch '^[0-1][0-9a-fA-F]{6}$'){throw 'SC2210 table requires 25-bit hexadecimal write words.'}
++        if($word -notmatch '^[0-1][0-9a-fA-F]{6}$'){throw 'Sensor table requires 25-bit hexadecimal write words.'}
+         $packed=[Convert]::ToUInt32($word,16)
+-        if($packed -band 1){throw 'SC2210 boot table requires write entries.'}
++        if($packed -band 1){throw 'Sensor boot table requires write entries.'}
+         $registers[[int]($packed -shr 9)]=[int](($packed -shr 1) -band 255)
+     }
+-    if($registers[0x0100] -ne 1 -or $registers[0x3031] -ne 10 -or (($registers[0x3018] -shr 5)+1) -ne $selectedProfile.lanes -or (($registers[0x320e] -shl 8) -bor $registers[0x320f]) -ne $selectedProfile.vts){throw 'SC2210 table/profile format, lane count, stream or VTS mismatch.'}
+-    if($selectedProfile.exposure_min -lt 1 -or $selectedProfile.exposure_max -gt ($selectedProfile.vts-4) -or $selectedProfile.exposure_initial -lt $selectedProfile.exposure_min -or $selectedProfile.exposure_initial -gt $selectedProfile.exposure_max -or $selectedProfile.hs_byteclk_mhz -le 0 -or $selectedProfile.mclk_hz -lt 6000000 -or $selectedProfile.mclk_hz -gt 27000000){throw 'SC2210 clock or exposure profile out of datasheet range.'}
+-    if($selectedProfile.mipi_clock_mode -notin @('Continuous','Discontinuous') -or !($registers.ContainsKey(0x4800)) -or (($registers[0x4800] -band 0x20) -ne 0) -ne ($selectedProfile.mipi_clock_mode -eq 'Discontinuous')){throw 'SC2210 table/profile MIPI clock mode mismatch (4800[5]).'}
++    if($Sensor -eq 'sc2210'){
++        if($registers[0x0100] -ne 1 -or $registers[0x3031] -ne 10 -or (($registers[0x3018] -shr 5)+1) -ne $selectedProfile.lanes -or (($registers[0x320e] -shl 8) -bor $registers[0x320f]) -ne $selectedProfile.vts){throw 'SC2210 table/profile format, lane count, stream or VTS mismatch.'}
++        if($selectedProfile.exposure_min -lt 1 -or $selectedProfile.exposure_max -gt ($selectedProfile.vts-4) -or $selectedProfile.exposure_initial -lt $selectedProfile.exposure_min -or $selectedProfile.exposure_initial -gt $selectedProfile.exposure_max -or $selectedProfile.hs_byteclk_mhz -le 0 -or $selectedProfile.mclk_hz -lt 6000000 -or $selectedProfile.mclk_hz -gt 27000000){throw 'SC2210 clock or exposure profile out of datasheet range.'}
++        if($selectedProfile.mipi_clock_mode -notin @('Continuous','Discontinuous') -or !($registers.ContainsKey(0x4800)) -or (($registers[0x4800] -band 0x20) -ne 0) -ne ($selectedProfile.mipi_clock_mode -eq 'Discontinuous')){throw 'SC2210 table/profile MIPI clock mode mismatch (4800[5]).'}
++    } else {
++        # This window keeps the measured SC431 timing, gain and Bayer phase.
++        $expected=@{0x0100=1;0x3208=7;0x3209=128;0x320a=4;0x320b=56;0x3210=1;0x3211=68;0x3212=0;0x3213=184;0x3221=102}
++        foreach($address in $expected.Keys){if($registers[$address] -ne $expected[$address]){throw 'SC431HAI centered1080 window or Bayer phase mismatch.'}}
++        if($selectedProfile.lanes -ne 4 -or $selectedProfile.hs_byteclk_mhz -ne 70 -or $selectedProfile.mipi_clock_mode -ne 'Discontinuous' -or $selectedProfile.vts -ne 1500 -or $selectedProfile.exposure_min -ne 112 -or $selectedProfile.exposure_max -ne 2950 -or $selectedProfile.exposure_initial -ne 444){throw 'SC431HAI window requires unchanged1440p30 clocks and half-line exposure limits.'}
++    }
+     $initPath=$initFile.FullName.Replace('\','/')
+-    $sensorHeader="// Sensor: sc2210, explicit profile`n``define VISION_SENSOR_SC2210 1`n``define VISION_SENSOR_LANES $($selectedProfile.lanes)`n``define VISION_SENSOR_BYTECLK_MHZ $($selectedProfile.hs_byteclk_mhz)`n``define VISION_SENSOR_DPHY_CLOCK_MODE `"$($selectedProfile.mipi_clock_mode)`"`n``define VISION_SENSOR_INIT_LENGTH $($selectedProfile.init_length)`n``define VISION_SENSOR_INIT_FILE `"$initPath`"`n``define VISION_SENSOR_EXPOSURE_MIN $($selectedProfile.exposure_min)`n``define VISION_SENSOR_EXPOSURE_MAX $($selectedProfile.exposure_max)`n``define VISION_SENSOR_EXPOSURE_INITIAL $($selectedProfile.exposure_initial)`n"
++    $sc2210=[int]($Sensor -eq 'sc2210')
++    $sensorHeader="// Sensor: $Sensor, explicit profile`n``define VISION_SENSOR_SC2210 $sc2210`n``define VISION_SENSOR_NATIVE_1080 1`n``define VISION_SENSOR_LANES $($selectedProfile.lanes)`n``define VISION_SENSOR_BYTECLK_MHZ $($selectedProfile.hs_byteclk_mhz)`n``define VISION_SENSOR_DPHY_CLOCK_MODE `"$($selectedProfile.mipi_clock_mode)`"`n``define VISION_SENSOR_INIT_LENGTH $($selectedProfile.init_length)`n``define VISION_SENSOR_INIT_FILE `"$initPath`"`n``define VISION_SENSOR_EXPOSURE_MIN $($selectedProfile.exposure_min)`n``define VISION_SENSOR_EXPOSURE_MAX $($selectedProfile.exposure_max)`n``define VISION_SENSOR_EXPOSURE_INITIAL $($selectedProfile.exposure_initial)`n"
+     $sensorFiles=@($profileFile,$initFile)
+ }
+ $started=[DateTime]::UtcNow.ToString('o')
+@@ -130,7 +139,7 @@
+ if($Top -eq 'board' -and $VideoMode -eq 'camera' -and $exitCode -eq 0 -and $Flow -in @('map','compile','pnr')){
+     # warn.log accumulates previous builds; map.out belongs to this mapping run.
+     $warnings=Get-Content -LiteralPath (Join-Path $projectDir "outflow/$projectName.map.out") -Raw
+-    if($warnings -match "net '(?:sc2210_input|sc431hai_input)\.[^']+' does not have a driver"){
++    if($warnings -match "net '(?:native_input|sc431hai_input)\.[^']+' does not have a driver"){
+         Write-Output 'Sensor input branch has an undriven signal; camera artifact rejected.'; $exitCode=1
+     }
+ }
+--- before/board/ti60f225_v4/rtl/vision_sensor_config.vh
++++ board/ti60f225_v4/rtl/vision_sensor_config.vh
+@@ -1,5 +1,6 @@
+ // Default SC431HAI mode. synthesize.ps1 replaces this only during a sensor build.
+ `define VISION_SENSOR_SC2210 0
++`define VISION_SENSOR_NATIVE_1080 0
+ `define VISION_SENSOR_LANES 4
+ `define VISION_SENSOR_BYTECLK_MHZ 70
+ `define VISION_SENSOR_DPHY_CLOCK_MODE "Discontinuous"
+--- before/board/ti60f225_v4/rtl/ti60f225_oob_top.v
++++ board/ti60f225_v4/rtl/ti60f225_oob_top.v
+@@ -669,7 +669,7 @@
+  if(!vid_rst_n)fov_overruns<=0;else if(fov_overrun&&!fov_overrun_q)fov_overruns<=fov_overruns+1'b1;
+ end
+ wire[31:0]fov_data;
+-generate if(`VISION_SENSOR_SC2210)begin:sc2210_input
++generate if(`VISION_SENSOR_NATIVE_1080)begin:native_input
+  camera_native_1080 native_1080(.clk(i_mipi_rx_pclk),.rst_n(vid_rst_n),.vs(w_mipi_rx_vs),.hs(w_mipi_rx_hs),.valid(w_mipi_rx_de),
+   .data(w_mipi_rx_data[39:0]),.o_vs(fov_vs),.o_hs(fov_hs),.o_valid(fov_valid),.o_data(fov_data));
+  assign fov_overrun=1'b0;
+@@ -1089,7 +1089,7 @@
+ );
+ end else begin:pooled_raw
+  wire raw_vs,raw_de,raw_bad;wire[15:0]raw_data;wire[31:0]sensor_frame,raw_overflows;
+- vision_raw_frontend raw_front(.rst_n(vid_rst_n),.input_clk(i_mipi_rx_pclk),.vs(fov_vs),.valid(fov_valid&&fov_hs),.data(fov_data),
++ vision_raw_frontend #(.PREFILL_WORDS(`VISION_SENSOR_NATIVE_1080?1920/4:1920/8)) raw_front(.rst_n(vid_rst_n),.input_clk(i_mipi_rx_pclk),.vs(fov_vs),.valid(fov_valid&&fov_hs),.data(fov_data),
+   .isp_clk(hdmi_tx_slow_clk),.out_vs(raw_vs),.out_de(raw_de),.out_data(raw_data),.frame_id(sensor_frame),.frame_bad(raw_bad),.overflow_count(raw_overflows));
+  assign ch0_vs=raw_vs,ch0_hs=raw_de,ch0_de=raw_de,{ch0_g,ch0_b}=raw_data;
+  assign camera_source_frame=sensor_frame,camera_source_bad=raw_bad;
+--- before/board/ti60f225_v4/rtl/camera_native_1080.sv
++++ board/ti60f225_v4/rtl/camera_native_1080.sv
+@@ -1,4 +1,4 @@
+-// CSI-2 RAW10, four packed pixels/valid clock, native 1920x1080 BGGR.
++// CSI-2 RAW10, four packed pixels/valid clock, native 1920x1080.
+ // Regenerate active-frame VS even when the receiver presents a short FS pulse.
+ module camera_native_1080(input clk,rst_n,vs,hs,valid,input[39:0]data,
+  output reg o_vs=0,output o_hs,o_valid,output[31:0]o_data);
+--- before/scripts/test_sensor_profiles.py
++++ scripts/test_sensor_profiles.py
+@@ -8,7 +8,7 @@
+ import zipfile
+ 
+ ROOT=Path(__file__).resolve().parents[1]
+-OUT=ROOT/'results/sc2210_adapter_fix_20261014'
++OUT=ROOT/'results/sensor_profiles'
+ OUT.mkdir(exist_ok=True)
+ PS='C:/Program Files/PowerShell/7/pwsh.exe'
+ IVERILOG='C:/iverilog/bin/iverilog.exe'
+@@ -28,12 +28,15 @@
+  tmp=Path(tmp)
+  # Execute the production pre-build block; it emits no hardware command or source edits.
+  runner=tmp/'gate.ps1'
+- runner.write_text("param([string]$Profile)\n$PSScriptRoot='"+str(ROOT/'scripts')+"'\n$build=[scriptblock]::Create(@'\n"+
+-                   gate+"Write-Output $sensorHeader\n'@)\n& $build -Top board -Sensor sc2210 -SensorProfile $Profile\n")
+- for name in ['sc2210_1080p30_2lane_24mhz_reference','sc2210_1080p30_2lane_27mhz_ovs']:
++ runner.write_text("param([string]$Profile,[string]$Sensor)\n$PSScriptRoot='"+str(ROOT/'scripts')+"'\n$build=[scriptblock]::Create(@'\n"+
++                   gate+"Write-Output $sensorHeader\n'@)\n& $build -Top board -Sensor $Sensor -SensorProfile $Profile\n")
++ for name in ['sc2210_1080p30_2lane_24mhz_reference','sc2210_1080p30_2lane_27mhz_ovs','sc431hai_1080p30_center_4lane']:
+   p=profiles/(name+'.json');data=json.loads(p.read_text());table=profiles/data['init_file']
+-  r=subprocess.run([PS,'-NoProfile','-File',str(runner),'-Profile',str(p)],capture_output=True,text=True)
++  args=[PS,'-NoProfile','-File',str(runner),'-Sensor',data['sensor'],'-Profile']
++  r=subprocess.run([*args,str(p)],capture_output=True,text=True)
+   assert r.returncode==0,r.stderr
++  assert '`define VISION_SENSOR_NATIVE_1080 1' in r.stdout
++  assert f'`define VISION_SENSOR_SC2210 {int(data["sensor"]=="sc2210")}' in r.stdout
+   assert f'`define VISION_SENSOR_DPHY_CLOCK_MODE "{data["mipi_clock_mode"]}"' in r.stdout
+   assert f'`define VISION_SENSOR_BYTECLK_MHZ {data["hs_byteclk_mhz"]}' in r.stdout
+   (OUT/(name+'.vh')).write_text(r.stdout)
+@@ -43,11 +46,26 @@
+    writes=[tuple(int(x,16) for x in pair) for pair in re.findall(r'^\s*0x([0-9a-fA-F]{4}),\s*0x([0-9a-fA-F]{2}),\s*$',body,re.M)]
+    assert [int(w,16) for w in table.read_text().splitlines()]==[(a<<9)|(v<<1) for a,v in writes]
+    assert len(writes)==251 and data['mipi_clock_mode']=='Continuous' and data['hs_byteclk_mhz']==47.25
++  if data['sensor']=='sc431hai':
++   rom=(ROOT/'board/ti60f225_v4/rtl/cam_i2c_ctrl/i2c/i2c_master_reg_rom.v').read_text()
++   baseline=[(int(a,16),int(v,16)) for a,v in re.findall(r"^ROM\[8'h[0-9a-fA-F]{2}\]\s*=\s*\{16'h([0-9a-fA-F]{4}),8'h([0-9a-fA-F]{2}),1'b0\}",rom,re.M)]
++   changes={0x3208:7,0x3209:128,0x320a:4,0x320b:56,0x3210:1,0x3211:68,0x3212:0,0x3213:184}
++   expected=[(a<<9)|(changes.get(a,v)<<1) for a,v in baseline]
++   assert len(expected)==166 and [int(w,16) for w in table.read_text().splitlines()]==expected
++   assert data['crop_from_existing_active']==[320,180] and all(v%2==0 for v in data['sensor_output_origin'])
+   shutil.copyfile(table,tmp/table.name)
+   wrong=dict(data,mipi_clock_mode='Continuous' if data['mipi_clock_mode']=='Discontinuous' else 'Discontinuous')
+   bad=tmp/(name+'.json');bad.write_text(json.dumps(wrong))
+-  rbad=subprocess.run([PS,'-NoProfile','-File',str(runner),'-Profile',str(bad)],capture_output=True,text=True)
+-  assert rbad.returncode!=0 and 'MIPI clock mode mismatch' in rbad.stderr,rbad.stderr
++  rbad=subprocess.run([*args,str(bad)],capture_output=True,text=True)
++  error='MIPI clock mode mismatch' if data['sensor']=='sc2210' else 'unchanged1440p30 clocks'
++  assert rbad.returncode!=0 and error in rbad.stderr,rbad.stderr
++  if data['sensor']=='sc431hai':
++   import hashlib
++   odd=[(w&~0x1fe)|(69<<1) if w>>9==0x3211 else w for w in expected]
++   bad_mem=tmp/table.name;bad_mem.write_text(''.join(f'{w:07x}\n' for w in odd))
++   wrong=dict(data,init_sha256=hashlib.sha256(bad_mem.read_bytes()).hexdigest());bad.write_text(json.dumps(wrong))
++   rbad=subprocess.run([*args,str(bad)],capture_output=True,text=True)
++   assert rbad.returncode!=0 and 'Bayer phase mismatch' in rbad.stderr,rbad.stderr
+   rom=ROOT/'board/ti60f225_v4/rtl/cam_i2c_ctrl/i2c'
+   exe=tmp/'boot.vvp'
+   subprocess.run([IVERILOG,'-g2012','-s','tb','-Ptb.N='+str(data['init_length']),'-Ptb.INIT_FILE="'+str(table).replace('\\','/')+'"',
+@@ -55,6 +73,22 @@
+   result=subprocess.run([VVP,str(exe)],check=True,capture_output=True,text=True,cwd=ROOT)
+   (OUT/(name+'.boot.log')).write_text(result.stdout)
+   report.append(dict(profile=name,gate=True,wrong_clock_rejected=True,boot_entries=data['init_length'],boot_pass=True))
++ exe=tmp/'native.vvp'
++ subprocess.run([IVERILOG,'-g2012','-s','tb','-o',str(exe),str(ROOT/'sim/vision/tb_camera_native_1080.sv'),str(ROOT/'board/ti60f225_v4/rtl/camera_native_1080.sv')],check=True)
++ result=subprocess.run([VVP,str(exe)],check=True,capture_output=True,text=True)
++ (OUT/'native_1080.log').write_text(result.stdout)
++ raw_sources=[str(ROOT/'sim/vision/tb_raw_frontend.sv'),str(ROOT/'rtl/stream_cdc.sv'),
++              str(ROOT/'board/ti60f225_v4/rtl/vision/vision_raw_frontend.sv'),
++              *map(str,(ROOT/'board/ti60f225_v4/rtl/debayer').glob('*.v'))]
++ for name,slow,prefill,passed in [('fov_raw',0,240,True),('native_half_row_reproduced',1,240,False),('native_full_row',1,480,True)]:
++  exe=tmp/(name+'.vvp')
++  subprocess.run([IVERILOG,'-g2012','-s','tb_raw_frontend','-Ptb_raw_frontend.W=1920',
++                  '-Ptb_raw_frontend.SLOW_SOURCE='+str(slow),'-Ptb_raw_frontend.PREFILL_WORDS='+str(prefill),
++                  '-o',str(exe),*raw_sources],check=True)
++  result=subprocess.run([VVP,str(exe)],capture_output=True,text=True)
++  (OUT/(name+'.log')).write_text(result.stdout+result.stderr)
++  assert (result.returncode==0)==passed,result.stdout+result.stderr
++  if not passed:assert 'native RAW row underrun' in result.stdout
+  for sc,cycles in [(0,4096),(1,25000)]:
+   tb=f'''`timescale 1ns/1ps
+ `define VISION_SENSOR_SC2210 {sc}
+@@ -89,4 +123,4 @@
+ assert header.read_bytes()==original,'default header changed by profile gate test'
+ (OUT/'verification.json').write_text(json.dumps(dict(passed=True,profiles=report,reset_sc431_cycles=4096,
+                                                    reset_sc2210_cycles=25000,default_unchanged=True,hardware_tested=False),indent=2))
+-print('PASS both profile gates/boot tables and reset branches; wrong clock profiles rejected')
++print('PASS three profiles/boot tables, native1080 and raw/debayer streams, reset branches; half-row underrun reproduced and full-row fixed')
+--- before/board/ti60f225_v4/rtl/vision/vision_raw_frontend.sv
++++ board/ti60f225_v4/rtl/vision/vision_raw_frontend.sv
+@@ -1,7 +1,7 @@
+ // Sensor 4PPC RAW8 -> continuous 2PPC ISP rows, no DDR RAW frame store.
+ // FOV word {x0,x1,x2,x3}: emit MSB16 then LSB16, matching legacy vid_par2ser.
+-// Half-row prefill absorbs FOV's bubbles; the sensor cannot be backpressured.
+-module vision_raw_frontend #(parameter W=1920,H=1080,FIFO_AW=9)(
++// FOV needs half-row prefill; slower native CSI rows need a complete row.
++module vision_raw_frontend #(parameter W=1920,H=1080,FIFO_AW=9,PREFILL_WORDS=W/8)(
+  input rst_n,input_clk,vs,valid,input[31:0]data,
+  input isp_clk,output reg out_vs,out_de,output reg[15:0]out_data,
+  output reg[31:0]frame_id,output reg frame_bad,
+@@ -31,7 +31,7 @@
+  localparam WAIT_LINE=0,FIRST=1,SECOND=2,GAP=3;
+  reg[1:0]state=WAIT_LINE,gap=0;reg have_frame=0;reg[15:0]second_pair=0;reg[2:0]kind=0;
+  wire metadata=md[34:32]>=HEADER;
+- wire start_line=state==WAIT_LINE&&have_frame&&level>=W/8;
++ wire start_line=state==WAIT_LINE&&have_frame&&level>=PREFILL_WORDS;
+  assign mr=state!=SECOND&&(metadata||frame_bad||(!have_frame&&mv)||(state==FIRST)||start_line);
+  always @(posedge isp_clk)begin
+   out_vs<=0;out_de<=0;
+--- before/sim/vision/tb_raw_frontend.sv
++++ sim/vision/tb_raw_frontend.sv
+@@ -1,10 +1,10 @@
+ `timescale 1ns/1ps
+ module tb_raw_frontend;
+- parameter W=64,H=12;
++ parameter W=64,H=12,SLOW_SOURCE=0,PREFILL_WORDS=W/8;
+  reg input_clk=0,isp_clk=0;always #5 input_clk=~input_clk;always #3.367 isp_clk=~isp_clk;
+  reg rst_n=0,vs=0,valid=0;reg[31:0]data=0;
+  wire out_vs,out_de,frame_bad;wire[15:0]out_data;wire[31:0]frame_id,overflow_count;
+- vision_raw_frontend #(.W(W),.H(H),.FIFO_AW(W>64?9:6)) dut(.*);
++ vision_raw_frontend #(.W(W),.H(H),.FIFO_AW(W>64?9:6),.PREFILL_WORDS(PREFILL_WORDS)) dut(.*);
+  reg rv=0,rd=0;reg[15:0]rp=0;
+  wire av,ad,aval;wire[47:0]rgb;
+  wire bv,bd,bval;wire[47:0]reference_rgb;
+@@ -15,6 +15,7 @@
+  function automatic[7:0]raw(input integer f,y,x);raw=16+((f*9+y*5+x*3)%96);endfunction
+  reg[47:0]expected[0:2*W*H/2-1];integer written=0,checked=0,pairs=0,frames=0,expected_id=1,rx=0,ry=0;
+  always @(posedge isp_clk)begin
++  if(SLOW_SOURCE&&rst_n&&frame_bad)$fatal(1,"native RAW row underrun after %0d pairs",pairs);
+   if(bval&&bd)begin expected[written]<=reference_rgb;written<=written+1;end
+   if(out_vs)begin frames<=frames+1;rx=0;ry=0;if(frame_id!=expected_id)$fatal(1,"RAW source tag");end
+   if(out_de)begin
+@@ -47,7 +48,8 @@
+    for(y=0;y<H;y=y+1)begin
+     for(x=0;x<W;x=x+4)begin
+      valid=1;data={raw(f,y,x),raw(f,y,x+1),raw(f,y,x+2),raw(f,y,x+3)};@(negedge input_clk);
+-     if(x%12==0)begin valid=0;@(negedge input_clk);end
++     if(SLOW_SOURCE)begin valid=0;repeat(2+(x%16==0))@(negedge input_clk);end
++     else if(x%12==0)begin valid=0;@(negedge input_clk);end
+     end
+     valid=0;repeat(2)@(negedge input_clk);
+     if(y%6==5)repeat(W>64?W*2:W*4)@(negedge input_clk);

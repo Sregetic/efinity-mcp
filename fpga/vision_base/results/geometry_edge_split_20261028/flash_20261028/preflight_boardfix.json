@@ -1,0 +1,104 @@
+{
+  "CPU": [
+    1
+  ],
+  "ABI": [
+    638593137
+  ],
+  "BEFORE": [
+    813,
+    45481,
+    0,
+    5,
+    17816129,
+    0,
+    0,
+    35057,
+    813,
+    45481,
+    0,
+    5,
+    17885944,
+    0,
+    0,
+    35057
+  ],
+  "RUN_TICKS": [
+    1647025345,
+    2448346659
+  ],
+  "AFTER": [
+    856,
+    45819,
+    0,
+    5,
+    17887701,
+    0,
+    0,
+    35333,
+    856,
+    45819,
+    0,
+    5,
+    17956999,
+    0,
+    0,
+    35333
+  ],
+  "RECORD": [
+    1295468339,
+    1712,
+    45819,
+    0,
+    5,
+    0,
+    17887701,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    17887701,
+    17956999,
+    856,
+    856,
+    3,
+    0,
+    0,
+    15395
+  ],
+  "NATIVE": [
+    23
+  ],
+  "OWNER": [
+    0
+  ],
+  "free_run_seconds": 8.01321314,
+  "lanes": {
+    "geometry": {
+      "completions": 43,
+      "updates_per_second": 5.366137059970927,
+      "latest_source_to_result_ms": 178.87701,
+      "source_frame": 45819,
+      "count": 0,
+      "more": false,
+      "complex": 0
+    },
+    "face": {
+      "completions": 43,
+      "updates_per_second": 5.366137059970927,
+      "latest_source_to_result_ms": 179.56999,
+      "source_frame": 45819,
+      "count": 0,
+      "more": false,
+      "complex": 0
+    }
+  },
+  "passed": true,
+  "cpu_resumed": true,
+  "scope": "Current camera scene; independent completion counts, not accuracy or moving-object acceptance"
+}

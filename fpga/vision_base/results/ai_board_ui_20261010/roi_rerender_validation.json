@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "frame_id": 15573,
+  "sequences": [
+    4,
+    5
+  ],
+  "render_configs": [
+    10,
+    11
+  ],
+  "contexts": [
+    28,
+    28
+  ],
+  "rois": [
+    [
+      480,
+      270,
+      960,
+      540
+    ],
+    [
+      512,
+      270,
+      960,
+      540
+    ]
+  ],
+  "note": "Geometry-only change advances render configuration, not processing context"
+}

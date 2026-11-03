@@ -1,0 +1,2 @@
+RGB denoise checked=450 errors=0
+sim/vision/tb_color_denoise.sv:29: $finish called at 16421000 (1ps)

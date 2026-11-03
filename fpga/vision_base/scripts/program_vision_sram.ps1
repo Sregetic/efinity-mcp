@@ -1,14 +1,24 @@
+[CmdletBinding(DefaultParameterSetName='CiArtifact')]
 param(
-    [Parameter(Mandatory)][string]$ArtifactDirectory,
-    [Parameter(Mandatory)][string]$BuildRunId,
-    [Parameter(Mandatory)][string]$CommitSha,
-    [Parameter(Mandatory)][string]$Url,
-    [Parameter(Mandatory)][string]$OutputDirectory,
-    [ValidateSet('camera')][string]$Mode='camera',
-    [string]$EfinityHome='F:/Efinity/2026.1',
-    [switch]$ConfirmSram
+    [Parameter(Mandatory,ParameterSetName='CiArtifact')][string]$ArtifactDirectory,
+    [Parameter(Mandatory,ParameterSetName='CiArtifact')][string]$BuildRunId,
+    [Parameter(Mandatory,ParameterSetName='CiArtifact')][string]$CommitSha,
+    [Parameter(Mandatory,ParameterSetName='CiArtifact')]
+    [Parameter(ParameterSetName='Local')][string]$Url,
+    [Parameter(Mandatory,ParameterSetName='CiArtifact')][string]$OutputDirectory,
+    [Parameter(ParameterSetName='CiArtifact')][ValidateSet('camera')][string]$Mode='camera',
+    [Parameter(ParameterSetName='CiArtifact')][string]$EfinityHome='F:/Efinity/2026.1',
+    [Parameter(ParameterSetName='CiArtifact')][switch]$ConfirmSram,
+    [Parameter(ParameterSetName='Local')][ValidateSet('camera','pattern')][string]$VideoMode='camera',
+    [Parameter(ParameterSetName='Local')][ValidateSet('sc431hai','sc2210')][string]$Sensor='sc431hai',
+    [Parameter(ParameterSetName='Local')][switch]$ValidateOnly,
+    [Parameter(ParameterSetName='Local')][switch]$BootOnly
 )
 $ErrorActionPreference='Stop'
+if($PSCmdlet.ParameterSetName -eq 'Local') {
+    & "$PSScriptRoot/program_vision_local_sram.ps1" @PSBoundParameters
+    return
+}
 $PSNativeCommandUseErrorActionPreference=$false
 if(!$ConfirmSram){throw 'Explicit SRAM confirmation is required.'}
 if($BuildRunId -notmatch '^\d+$' -or $CommitSha -notmatch '^[a-f0-9]{40}$'){throw 'Invalid build identity.'}

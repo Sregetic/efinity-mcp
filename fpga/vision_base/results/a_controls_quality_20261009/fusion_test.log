@@ -1,0 +1,2 @@
+PASS RV32I fusion: padded ROI inverse mapping, config/pending/no-target, synthetic/agree/conflict/unknown, seqlock retry and complete publication
+qemu-system-riscv32.exe: warning: Setting G will also set IMAFD

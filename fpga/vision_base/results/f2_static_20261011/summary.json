@@ -1,0 +1,341 @@
+{
+  "scope": "F2 static history browsing, explicit autoplay, persistence; no physical button/HDMI/power-cycle acceptance",
+  "implemented": true,
+  "sram_programmed": true,
+  "configuration_flash": {
+    "configuration_flash_written": true,
+    "address": 0,
+    "physical_power_cycle_verified": false,
+    "full_old_flash_backup": "results/f2_static_20261011/flash_app/flash_before.bin",
+    "passed": true,
+    "onchip_verification": true
+  },
+  "application_flash": {
+    "address": 7340032,
+    "bytes": 23200,
+    "byte_readback_verified": true,
+    "configuration_flash_written": false,
+    "physical_power_cycle_verified": false
+  },
+  "autoboot": {
+    "passed": true,
+    "boot_status": [
+      1447186225,
+      7,
+      15687703,
+      18768,
+      4400
+    ],
+    "cpu_state": 1,
+    "program_bytes": 18768,
+    "weights_bytes": 4400,
+    "actual_ddr_bytes_verified": true,
+    "user1_program_download": false,
+    "physical_power_cycle_verified": false
+  },
+  "resources": {
+    "xlr": 60400,
+    "ram": 252,
+    "dsp": 59,
+    "free_xlr": 400,
+    "free_ram": 4,
+    "wns_ns": 0.015,
+    "whs_ns": 0.026,
+    "reference_xlr": 60082,
+    "net_xlr_delta": 318,
+    "net_ram_delta": 0,
+    "net_dsp_delta": 0
+  },
+  "tests": {
+    "core_final": 19,
+    "video": 32,
+    "injected_key_roi_cases": 17
+  },
+  "static_history": {
+    "history2_static": {
+      "count": 60,
+      "ids": [
+        8388
+      ],
+      "seconds": 12.721101999282837,
+      "index": 0
+    },
+    "history2_index0": {
+      "count": 5,
+      "ids": [
+        8388
+      ],
+      "seconds": 0.8680243492126465,
+      "index": 0
+    },
+    "history2_index1": {
+      "count": 5,
+      "ids": [
+        8387
+      ],
+      "seconds": 0.848395586013794,
+      "index": 1
+    },
+    "history2_index2": {
+      "count": 5,
+      "ids": [
+        8386
+      ],
+      "seconds": 0.863739013671875,
+      "index": 2
+    },
+    "history2_index3": {
+      "count": 5,
+      "ids": [
+        8385
+      ],
+      "seconds": 0.8678202629089355,
+      "index": 3
+    },
+    "history2_index4": {
+      "count": 5,
+      "ids": [
+        8384
+      ],
+      "seconds": 0.8661079406738281,
+      "index": 4
+    },
+    "history2_index5": {
+      "count": 5,
+      "ids": [
+        8383
+      ],
+      "seconds": 0.8669097423553467,
+      "index": 5
+    },
+    "history2_auto": {
+      "count": 24,
+      "ids": [
+        8384,
+        8383,
+        8388,
+        8387,
+        8386,
+        8385
+      ],
+      "seconds": 4.932682275772095,
+      "index": 6
+    },
+    "history2_stop": {
+      "count": 18,
+      "ids": [
+        8383
+      ],
+      "seconds": 3.67223858833313,
+      "index": 5
+    },
+    "history3": {
+      "count": 18,
+      "ids": [
+        8388,
+        8387
+      ],
+      "seconds": 3.660518169403076,
+      "index": 0
+    },
+    "keys_cases": 17
+  },
+  "static_pixels": {
+    "elapsed_seconds": 10.235000000102445,
+    "rgb_bytes": 5760,
+    "differing_bytes": 0
+  },
+  "stream": {
+    "seconds": 59.64099999982864,
+    "source_fps": 29.979376603429476,
+    "raw_overflow_delta": 0,
+    "capture_discard_delta": 0,
+    "scan_bad_delta": 0
+  },
+  "roi": [
+    {
+      "name": "live_full",
+      "seconds": 58.01600000006147,
+      "render_deadline_delta": 870,
+      "render_cycles_last": 5144908,
+      "source_capture_frames": 1741,
+      "scan_bad_delta": 0,
+      "capture_discard_delta": 0
+    },
+    {
+      "name": "live_zoom",
+      "seconds": 59.515000000130385,
+      "render_deadline_delta": 1784,
+      "render_cycles_last": 2102879,
+      "source_capture_frames": 1784,
+      "scan_bad_delta": 0,
+      "capture_discard_delta": 0
+    }
+  ],
+  "post_flash_runtime_failed_before_key1": true,
+  "human_key1_reset_verified": true,
+  "post_key1_runtime": {
+    "passed": true,
+    "checks": [
+      "mode0 readback passed",
+      "mode1 readback passed",
+      "mode2 readback passed",
+      "mode3 readback passed",
+      "mode4 readback passed",
+      "mode5 readback passed",
+      "mode6 readback passed",
+      "mode7 readback passed",
+      "live advances and frozen frame holds",
+      "F2 static frame, six distinct key-selected frames, explicit index6 autoplay and stop",
+      "history3 frame IDs change",
+      "Canny publishes with fault0"
+    ],
+    "scope": "Register and DDR frame-ID validation; physical image and buttons require observation"
+  },
+  "post_key1_history": {
+    "history2_static": {
+      "count": 60,
+      "ids": [
+        1452
+      ],
+      "seconds": 12.686164379119873,
+      "index": 0
+    },
+    "history2_index0": {
+      "count": 5,
+      "ids": [
+        1452
+      ],
+      "seconds": 0.8650302886962891,
+      "index": 0
+    },
+    "history2_index1": {
+      "count": 5,
+      "ids": [
+        1451
+      ],
+      "seconds": 0.8666095733642578,
+      "index": 1
+    },
+    "history2_index2": {
+      "count": 5,
+      "ids": [
+        1450
+      ],
+      "seconds": 0.8682291507720947,
+      "index": 2
+    },
+    "history2_index3": {
+      "count": 5,
+      "ids": [
+        1449
+      ],
+      "seconds": 0.849003791809082,
+      "index": 3
+    },
+    "history2_index4": {
+      "count": 5,
+      "ids": [
+        1448
+      ],
+      "seconds": 0.8543503284454346,
+      "index": 4
+    },
+    "history2_index5": {
+      "count": 5,
+      "ids": [
+        1447
+      ],
+      "seconds": 0.8662114143371582,
+      "index": 5
+    },
+    "history2_auto": {
+      "count": 24,
+      "ids": [
+        1448,
+        1447,
+        1452,
+        1451,
+        1450,
+        1449
+      ],
+      "seconds": 4.947861671447754,
+      "index": 6
+    },
+    "history2_stop": {
+      "count": 18,
+      "ids": [
+        1447
+      ],
+      "seconds": 3.659132957458496,
+      "index": 5
+    },
+    "history3": {
+      "count": 18,
+      "ids": [
+        1452,
+        1451
+      ],
+      "seconds": 3.675316333770752,
+      "index": 0
+    }
+  },
+  "final_state": {
+    "roi_frame_id": 3115,
+    "applied_config_id": 0,
+    "roi_enabled": 0,
+    "roi_frame_ok": 1,
+    "source_held": 0,
+    "source_frozen": 0,
+    "render_busy": 0,
+    "render_pending": 0,
+    "capture_active": 1,
+    "config_busy": 0,
+    "config_error": 0,
+    "render_error": 0,
+    "scan_error": 0,
+    "commit_rejected": 0,
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "threshold": 128,
+    "canny_ready": 1,
+    "canny_fault": 0,
+    "roi": [
+      0,
+      0,
+      1920,
+      1080
+    ],
+    "output_size": [
+      1920,
+      1080
+    ],
+    "capture_discarded": 0,
+    "scan_bad_frames": 0,
+    "render_cycles": 0,
+    "requested_config_id": 1,
+    "accepted_config_id": 1,
+    "rejected_config_id": 0,
+    "held_source_frame_id": 0,
+    "held_raw_id_sample": 0,
+    "rgb_capture_count": 3121,
+    "position": [
+      0,
+      0
+    ],
+    "display_size": [
+      0,
+      0
+    ],
+    "render_deadline_misses": 0,
+    "sobel_threshold": 128,
+    "canny_threshold": 80,
+    "canny_effective_threshold": 80,
+    "menu": 0,
+    "menu_value": 0,
+    "shape_threshold": 32,
+    "index": 0
+  },
+  "hot_reconfiguration_startup_root_cause": "unresolved"
+}

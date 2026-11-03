@@ -1,0 +1,159 @@
+[
+  {
+    "sequence": 1,
+    "address": 12551,
+    "value": 205,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 2,
+    "address": 12552,
+    "value": 107,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 3,
+    "address": 12808,
+    "value": 7,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 4,
+    "address": 12809,
+    "value": 128,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 5,
+    "address": 12810,
+    "value": 4,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 6,
+    "address": 12811,
+    "value": 56,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 7,
+    "address": 12816,
+    "value": 1,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 8,
+    "address": 12817,
+    "value": 68,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 9,
+    "address": 12818,
+    "value": 0,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 10,
+    "address": 12819,
+    "value": 184,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 11,
+    "address": 12812,
+    "value": 5,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 12,
+    "address": 12813,
+    "value": 120,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 13,
+    "address": 12814,
+    "value": 5,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "sequence": 14,
+    "address": 12815,
+    "value": 220,
+    "busy": 0,
+    "fault": 0,
+    "ack": 0,
+    "request": 0
+  },
+  {
+    "sequence": 15,
+    "address": 12833,
+    "value": 102,
+    "busy": 0,
+    "fault": 0,
+    "ack": 1,
+    "request": 1
+  },
+  {
+    "time_s": 1792218587.3009603,
+    "page": 13,
+    "raw": "564953312609190d78100807000040b71e043807e9004ad0",
+    "sensor_frames": 16567,
+    "words_per_line": 480,
+    "lines": 1080,
+    "words": 518400,
+    "ppc": 4,
+    "data_type": 43
+  },
+  {
+    "time_s": 1792218587.5185883,
+    "page": 13,
+    "raw": "564953312609190d78100807000040be1e043807e9004ad0",
+    "sensor_frames": 16574,
+    "words_per_line": 480,
+    "lines": 1080,
+    "words": 518400,
+    "ppc": 4,
+    "data_type": 43
+  }
+]

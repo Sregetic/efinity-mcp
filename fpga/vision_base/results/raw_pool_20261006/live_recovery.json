@@ -1,0 +1,35 @@
+[
+  {
+    "t": 1359018.718,
+    "capture_id": 2517,
+    "display_id": 2517,
+    "history_count": 6,
+    "mode": 0,
+    "memory": 0,
+    "raw_overflows": 0,
+    "capture_discarded": 0,
+    "scan_bad_frames": 0
+  },
+  {
+    "t": 1359018.812,
+    "capture_id": 2520,
+    "display_id": 2520,
+    "history_count": 6,
+    "mode": 0,
+    "memory": 0,
+    "raw_overflows": 0,
+    "capture_discarded": 0,
+    "scan_bad_frames": 0
+  },
+  {
+    "t": 1359018.906,
+    "capture_id": 2523,
+    "display_id": 2523,
+    "history_count": 6,
+    "mode": 0,
+    "memory": 0,
+    "raw_overflows": 0,
+    "capture_discarded": 0,
+    "scan_bad_frames": 0
+  }
+]

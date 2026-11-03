@@ -1,0 +1,2 @@
+PASS RAW FIFO depth512 words8192 wrap/full/drain asynchronous128bit; peaks W512 R510
+sim/tb_raw_fifo_depth.sv:32: $finish called at 97490000 (1ps)

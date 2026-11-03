@@ -1,0 +1,2 @@
+Packed RGB checked=262656 errors=0:262144 fine-range colors error<=1, independent bright channels, neutral gray and range boundary
+sim/vision/tb_packed_rgb.sv:33: $finish called at 262656000 (1ps)

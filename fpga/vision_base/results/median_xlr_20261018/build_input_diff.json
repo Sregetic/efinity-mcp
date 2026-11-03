@@ -1,0 +1,7 @@
+{
+  "changed_inputs": [
+    "board/ti60f225_v4/rtl/vision/vision_median9.sv"
+  ],
+  "native_inputs": 172,
+  "other_inputs_unchanged": true
+}

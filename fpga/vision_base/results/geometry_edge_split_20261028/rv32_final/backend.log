@@ -1,0 +1,2 @@
+PASS RV32I all shared-edge geometry fixtures equal host boxes
+qemu-system-riscv32.exe: warning: Setting G will also set IMAFD

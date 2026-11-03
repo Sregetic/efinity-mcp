@@ -23,7 +23,9 @@ wire [5:0] counter_t2 = {cnt, 1'b0};
 wire [5:0] counter_t2_p1 = {cnt, 1'b1};
 
 // Initialize parity bits to 0
-reg [7:0] parity [4:0] = {8'd0, 8'd0, 8'd0, 8'd0, 8'd0};
+reg [7:0] parity [4:0];
+integer p;
+initial for(p=0;p<5;p=p+1)parity[p]=8'd0;
 
 
 wire [63:0] bch [3:0];
@@ -78,20 +80,20 @@ endgenerate
 always @(posedge clk)
 begin
     if (rst_p)
-        parity <= '{8'd0, 8'd0, 8'd0, 8'd0, 8'd0};
+        for(p=0;p<5;p=p+1)parity[p]<=8'd0;
     else if (data_island_period)
     begin
         if (cnt < 5'd28) // Compute ECC only on subpacket data, not on itself
         begin
-            parity[3:0] <= parity_next_next;
+            for(p=0;p<4;p=p+1)parity[p]<=parity_next_next[p];
             if (cnt < 5'd24) // Header only has 24 bits, whereas subpackets have 56 and 56 / 2 = 28.
                 parity[4] <= parity_next[4];
         end
         else if (cnt == 5'd31)
-            parity <= '{8'd0, 8'd0, 8'd0, 8'd0, 8'd0}; // rst_p ECC for next packet
+            for(p=0;p<5;p=p+1)parity[p]<=8'd0; // ECC for next packet
     end
     else
-        parity <= '{8'd0, 8'd0, 8'd0, 8'd0, 8'd0};
+        for(p=0;p<5;p=p+1)parity[p]<=8'd0;
 end
 
 

@@ -1,0 +1,190 @@
+{
+  "production_ram": 244,
+  "total_ram": 256,
+  "free_ram": 12,
+  "production_xlr": 57356,
+  "free_xlr": 3444,
+  "production_rtl_modified": false,
+  "hardware_accessed": false,
+  "fpga_programmed": false,
+  "flash_written": false,
+  "module_inventory": [
+    {
+      "module": "inst_efx_csi2_rx:csi_rx_controller",
+      "ram": 11
+    },
+    {
+      "module": "u2_i2c_master_ctrl_top:i2c_master_ctrl_top(DATA_LENGTH=...",
+      "ram": 2
+    },
+    {
+      "module": "unified_memory:frame_memory_system(SCAN_BURST_BEATS=64,...",
+      "ram": 15
+    },
+    {
+      "module": "pooled_raw.raw_front:vision_raw_frontend(PREFILL_WORDS=...",
+      "ram": 2
+    },
+    {
+      "module": "u_ddr3_top:ddr3_top",
+      "ram": 39
+    },
+    {
+      "module": "debayer_top:debayer_top_2to1",
+      "ram": 4
+    },
+    {
+      "module": "line_direct.x3_direct:vision_line_direct",
+      "ram": 8
+    },
+    {
+      "module": "firmware_control.controls:vision_control_bridge",
+      "ram": 2
+    },
+    {
+      "module": "roi_capture:vision_rgb_capture(FIFO_AW=11,INPUT_PPC=2,P...",
+      "ram": 7
+    },
+    {
+      "module": "roi_scanout:vision_rgb_scanout(FIFO_AW=11)",
+      "ram": 7
+    },
+    {
+      "module": "chroma_tone:rgb_chroma_tone",
+      "ram": 1
+    },
+    {
+      "module": "inst_gamma_correction:gamma_correction(DATA_WIDTH=8,GAM...",
+      "ram": 2
+    },
+    {
+      "module": "canny:vision_canny(CONTOUR_RASTER=1,STABLE_NMS=1)",
+      "ram": 88
+    },
+    {
+      "module": "feature_display:vision_display(FUSION=1'b1)",
+      "ram": 24
+    },
+    {
+      "module": "image_debug.image_snapshot:vision_line_snapshot",
+      "ram": 5
+    },
+    {
+      "module": "sapphire.cpu:VisionSapphire",
+      "ram": 25
+    },
+    {
+      "module": "hdmi_encoder_m0:dvi_encoder",
+      "ram": 2
+    }
+  ],
+  "candidates": [
+    {
+      "before": "coverage_base",
+      "after": "coverage_packed",
+      "instances": 1,
+      "priority": 1,
+      "ram_before": 4,
+      "ram_after": 1,
+      "ram_saved": 3,
+      "logic_delta": {
+        "EFX_LUT4": 23,
+        "EFX_FF": -4,
+        "EFX_SRL8": 0,
+        "EFX_ADD": 0,
+        "EFX_DSP24": 0,
+        "EFX_DSP48": 0
+      },
+      "scope": "Isolated native map, not full-system XLR or deployable release"
+    },
+    {
+      "before": "fit_base",
+      "after": "fit_arithmetic",
+      "instances": 1,
+      "priority": 2,
+      "ram_before": 2,
+      "ram_after": 0,
+      "ram_saved": 2,
+      "logic_delta": {
+        "EFX_LUT4": 35,
+        "EFX_FF": 16,
+        "EFX_SRL8": 0,
+        "EFX_ADD": 70,
+        "EFX_DSP24": 0,
+        "EFX_DSP48": 0
+      },
+      "scope": "Isolated native map, not full-system XLR or deployable release"
+    },
+    {
+      "before": "sensor_base",
+      "after": "sensor_packed",
+      "instances": 1,
+      "priority": 3,
+      "ram_before": 2,
+      "ram_after": 1,
+      "ram_saved": 1,
+      "logic_delta": {
+        "EFX_LUT4": 7,
+        "EFX_FF": 0,
+        "EFX_SRL8": 0,
+        "EFX_ADD": 0,
+        "EFX_DSP24": 0,
+        "EFX_DSP48": 0
+      },
+      "scope": "Isolated native map, not full-system XLR or deployable release"
+    },
+    {
+      "before": "tags_base",
+      "after": "tags_split",
+      "instances": 2,
+      "priority": 4,
+      "ram_before": 4,
+      "ram_after": 2,
+      "ram_saved": 2,
+      "logic_delta": {
+        "EFX_LUT4": 242,
+        "EFX_FF": 272,
+        "EFX_SRL8": 0,
+        "EFX_ADD": 0,
+        "EFX_DSP24": 0,
+        "EFX_DSP48": 0
+      },
+      "scope": "Isolated native map, not full-system XLR or deployable release"
+    },
+    {
+      "before": "reader_base",
+      "after": "reader_srl",
+      "instances": 1,
+      "priority": 5,
+      "ram_before": 7,
+      "ram_after": 0,
+      "ram_saved": 7,
+      "logic_delta": {
+        "EFX_LUT4": 625,
+        "EFX_FF": 116,
+        "EFX_SRL8": 1024,
+        "EFX_ADD": -18,
+        "EFX_DSP24": 0,
+        "EFX_DSP48": 0
+      },
+      "scope": "Isolated native map, not full-system XLR or deployable release"
+    }
+  ],
+  "preferred_first_three_saved": 6,
+  "first_four_saved": 8,
+  "target_after_first_three": 238,
+  "target_after_first_four": 236,
+  "full_system_synthesis_done": false,
+  "actual_project_ram_released": 0,
+  "boot_rom_bytes": 8192,
+  "boot_last_nonzero_byte": 6427,
+  "unit_tests": {
+    "passed": true,
+    "coverage_pairs": 8192,
+    "fit_signed_pairs": 65536,
+    "sensor_boot_words": 166,
+    "cache_tag_cycles": 10000,
+    "reader_logs_cycle_identical": true,
+    "scope": "Isolated producer/consumer contracts; not full-system P&R or hardware acceptance"
+  }
+}

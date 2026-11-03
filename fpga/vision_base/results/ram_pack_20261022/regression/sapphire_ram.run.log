@@ -1,0 +1,2 @@
+PASS Sapphire RAM masks/22bit legacy/metadata/UART and10000 full23bit tag cycles including read-hold and same-address old-value
+F:\Project\fpga\vision_base\sim\tb_sapphire_ram.sv:32: $finish called at 100396000 (1ps)

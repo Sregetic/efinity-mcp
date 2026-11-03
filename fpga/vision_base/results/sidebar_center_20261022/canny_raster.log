@@ -1,0 +1,2 @@
+PASS contour raster 15360 pixels, 857 white pixels, diagonal/corner/horizontal/vertical/dense/random/zero next frame, sync bitmap RAM
+sim/vision/tb_canny_raster.sv:51: $finish called at 203640000 (1ps)

@@ -1,17 +1,154 @@
 import argparse,json,time
+from pathlib import Path
 from efx_pgm.ftdi_program import acquire_jtag_engine
 from efx_pgm.device_utils import DeviceUtils
 from pyftdi.bits import BitSequence
-p=argparse.ArgumentParser();p.add_argument('--url',default='ftdi://0x0403:0x6011:4:3/2');p.add_argument('--mode',type=int);p.add_argument('--threshold',type=int);p.add_argument('--median',type=int,choices=[0,1]);p.add_argument('--memory',type=int,choices=range(4));p.add_argument('--index',type=int,choices=range(6));p.add_argument('--page',type=int,default=0,choices=range(16));p.add_argument('--color-order',type=int,choices=range(6));p.add_argument('--gamma','--tone',dest='gamma',type=int,choices=[0,1,2,3]);p.add_argument('--gain-r',type=int);p.add_argument('--gain-g',type=int);p.add_argument('--gain-b',type=int);p.add_argument('--samples',type=int,default=5);p.add_argument('--ae',type=int,choices=[0,1]);p.add_argument('--exposure',type=int);p.add_argument('--lcd-test',type=int,choices=[0,1]);p.add_argument('--lcd-bist',type=int,choices=[0,1]);p.add_argument('--lcd-backlight',type=int,choices=[0,1]);a=p.parse_args()
+from capture_mode_images import decode_snapshot,decode_caps
+from flyhash_board import decode_status as decode_flyhash_status
+def decode_roi(v):
+ tag=(v>>128)&0xffffffff;u=(v>>64)&0xffffffff;t=(v>>32)&0xffffffff;l=v&0xffffffff
+ if tag==0x26100412:
+  names=['roi_enabled','roi_frame_ok','source_held','source_frozen','render_busy','render_pending','capture_active','config_busy','config_error','render_error','scan_error','commit_rejected']
+  return dict(roi_frame_id=u,applied_config_id=t,**{name:(l>>(31-i))&1 for i,name in enumerate(names)})
+ if tag==0x26100413:return dict(roi=[u>>16,u&65535,t>>16,t&65535],output_size=[l>>16,l&65535])
+ if tag==0x26100414:return dict(capture_discarded=u,scan_bad_frames=t,render_cycles=l)
+ if tag==0x26100415:return dict(requested_config_id=u,accepted_config_id=t,rejected_config_id=l)
+ if tag==0x26100416:return dict(held_source_frame_id=u,held_raw_id_sample=t,rgb_capture_count=l)
+ if tag==0x26100417:return dict(position=[u>>16,u&65535],display_size=[t>>16,t&65535],render_deadline_misses=l)
+ return None
+
+def validate_roi(roi,size,pos):
+ x,y,w,h=roi;dw,dh=size;dx,dy=pos
+ if min(x,y,dx,dy)<0 or min(w,h,dw,dh)<1:raise ValueError('ROI/size must be positive, origins nonnegative')
+ if x+w>1920 or y+h>1080:raise ValueError('ROI exceeds1920x1080 original frame')
+ if dw%8 or dx+dw>1920 or dy+dh>1080:raise ValueError('Output width must be a multiple of8; viewport must fit1920x1080 canvas')
+
+def decode_ui(v):
+ if v>>160!=0x56495331 or (v>>128)&0xffffffff not in (0x26101040,0x26103040,0x26103041,0x26103042,0x26103043,0x26103144):raise RuntimeError('Key UI diagnostic mismatch')
+ s=(v>>96)&0xffffffff
+ item=((v>>90)&15)|((((v>>78)&1)<<4) if (v>>95)&1 else 0);status=(v>>87)&7;level=0 if not((v>>95)&1) else 1 if status==7 else 3 if (v>>94)&1 and item==0 else 2
+ group=item if level==1 else (0 if item<3 else 1 if item<9 else 3 if item<13 else 2)
+ rec=dict(menu=0 if level else (v>>75)&15,menu_value=(v>>64)&2047,index=(s>>15)&7,
+             sidebar_open=(v>>95)&1,sidebar_edit=(v>>94)&1,sidebar_item=item,center_status=status,sidebar_level=level,sidebar_group=group)
+ if (v>>128)&0xffffffff in (0x26103040,0x26103041,0x26103042,0x26103043,0x26103144):rec.update(recognition_model=(v>>79)&3,geometry_enabled=(v>>81)&1,recognition_enabled=(v>>82)&1)
+ else:rec['shape_threshold']=(v>>79)&255
+ if (v>>128)&0xffffffff in (0x26103043,0x26103144):rec['key1_n']=(s>>3)&1
+ if (v>>128)&0xffffffff in (0x26103041,0x26103042,0x26103043,0x26103144):
+  rec.update(target_highlight=(v>>85)&1,target_index=(v>>83)&3)
+  if level==2 and (v>>94)&1 and item==13 and (v>>74)&1:
+   rec.update(sidebar_level=3,target_count=(v>>66)&7,target_ready=(v>>70)&1)
+   if (v>>128)&0xffffffff in (0x26103042,0x26103043,0x26103144):rec.update(target_selected=not bool((v>>69)&1),target_live=bool((v>>71)&1))
+ return rec
+
+p=argparse.ArgumentParser();p.add_argument('--sensor',choices=['sc431hai','sc2210','hq12'],default='sc431hai');p.add_argument('--url',default='ftdi://0x0403:0x6011:4:3/2');p.add_argument('--mode',type=int);p.add_argument('--threshold',type=int);p.add_argument('--sobel-threshold',type=int);p.add_argument('--canny-threshold',type=int);p.add_argument('--median',type=int,choices=[0,1]);p.add_argument('--memory',type=int,choices=range(4));p.add_argument('--index',type=int,choices=range(7),help='F2:0..5 static history,6 autoplay; F3:0..5 comparison');p.add_argument('--page',type=int,default=0,choices=range(37));p.add_argument('--color-order',type=int,choices=range(6));p.add_argument('--gamma','--tone',dest='gamma',type=int,choices=[0,1,2,3]);p.add_argument('--gain-r',type=int);p.add_argument('--gain-g',type=int);p.add_argument('--gain-b',type=int);p.add_argument('--samples',type=int,default=5);p.add_argument('--ae',type=int,choices=[0,1]);p.add_argument('--exposure',type=int);p.add_argument('--lcd-test',type=int,choices=[0,1]);p.add_argument('--lcd-bist',type=int,choices=[0,1]);p.add_argument('--lcd-backlight',type=int,choices=[0,1]);p.add_argument('--shape',type=int,choices=[0,1])
+p.add_argument('--menu',type=int,choices=range(11));p.add_argument('--key-event',type=int,choices=range(64),help='Physical events:1 KEY0,2 KEY2,4 KEY3,8 KEY1 back,16/32 KEY2/3 long');
+p.add_argument('--follow',type=int,choices=[0,1]);p.add_argument('--trail',type=int,choices=[0,1]);p.add_argument('--recognition-model',choices=['fomo','m7']);p.add_argument('--ai-policy',type=int,choices=[0,1,2],help='0 recognition off;1 fixed/single request;2 automatic (FOMO uses M7 edge ROI)');p.add_argument('--ai-status',action='store_true');
+p.add_argument('--roi',type=int,nargs=4,metavar=('X','Y','W','H'));p.add_argument('--output-size',type=int,nargs=2,metavar=('W','H'));p.add_argument('--position',type=int,nargs=2,metavar=('X','Y'));p.add_argument('--roi-enable',type=int,choices=[0,1]);p.add_argument('--rerender',action='store_true');p.add_argument('--roi-status',action='store_true');a=p.parse_args()
+change_roi=a.roi is not None or a.output_size is not None or a.position is not None or a.roi_enable is not None or a.rerender
+if change_roi and a.follow==1:p.error('Manual ROI takes control; enable following separately before selecting a target')
+exposure_min,exposure_max=112,2950
+if a.sensor=='sc2210':
+ manifest=json.loads((Path(__file__).resolve().parents[1]/'artifacts/camera_sc2210/manifest.json').read_text(encoding='utf-8-sig'))
+ if manifest['sensor']!='sc2210':raise ValueError('Selected artifact sensor mismatch')
+ profile=manifest['sensor_profile'];exposure_min,exposure_max=profile['exposure_min'],profile['exposure_max']
+if a.exposure is not None and not exposure_min<=a.exposure<=exposure_max:raise ValueError(f'exposure range{exposure_min}..{exposure_max}')
 with acquire_jtag_engine(1e6,a.url) as e:
  e.reset()
- for op,value in [(126,a.page),(1,a.mode),(2,a.threshold),(3,a.median),(4,a.memory),(5,a.index),(6,a.color_order),(7,a.gamma),(8,a.gain_r),(9,a.gain_g),(10,a.gain_b),(11,a.ae),(12,a.exposure),(13,a.lcd_test),(14,a.lcd_bist),(15,a.lcd_backlight)]:
+ def command(op,value):
+  e.write_ir(DeviceUtils.EFX_TI_INSTR['USER2']);e.write_dr(BitSequence((0x56495331<<32)|(op<<24)|value,length=192));e.go_idle();time.sleep(.02)
+ def roi_page(page):
+  command(126,page)
+  for _ in range(2):e.write_ir(DeviceUtils.EFX_TI_INSTR['USER2']);v=int(e.read_dr(192));e.go_idle()
+  if v>>160!=0x56495331 or (v>>128)&0xffffffff!=0x26100400+page:raise RuntimeError(f'ROI firmware/page mismatch: {v:048x}')
+  s=(v>>96)&0xffffffff;rec=decode_roi(v)
+  rec.update(mode=(s>>21)&7,median=(s>>20)&1,memory=(s>>18)&3,threshold=(s>>4)&2047,canny_ready=(s>>29)&1,canny_fault=(s>>31)&1)
+  return rec
+ def ai_status():
+  command(126,31)
+  for _ in range(2):e.write_ir(DeviceUtils.EFX_TI_INSTR['USER2']);v=int(e.read_dr(192));e.go_idle()
+  if v>>160!=0x56495331 or (v>>128)&0xffffffff!=0x2610083f:raise RuntimeError('AI fusion bitstream required')
+  f=(v>>96)&0xffffffff
+  return dict(ai_enabled=(f>>15)&1,ai_match=(f>>14)&1,ai_age_frames=f>>16,ai_flags=f&16383,
+   ai_geometry_policy=(f>>3)&1,ai_frame=(v>>64)&0xffffffff,ai_render_config=(v>>32)&0xffffffff,ai_context=v&0xffffffff)
+ def roi_status():
+  status={}
+  for page in range(18,24):status.update(roi_page(page))
+  command(126,8)
+  for _ in range(2):e.write_ir(DeviceUtils.EFX_TI_INSTR['USER2']);v=int(e.read_dr(192));e.go_idle()
+  if (v>>128)&0xffffffff!=0x26091785:raise RuntimeError('Threshold/color page mismatch')
+  status.update(sobel_threshold=(v>>24)&2047,canny_threshold=(v>>13)&2047,canny_effective_threshold=(v>>2)&2047)
+  command(126,32)
+  for _ in range(2):e.write_ir(DeviceUtils.EFX_TI_INSTR['USER2']);v=int(e.read_dr(192));e.go_idle()
+  status.update(decode_ui(v))
+  return status
+ # The HDMI build has no sensor I2C or camera white-balance controls.
+ if a.sensor=='hq12' or any(v is not None for v in (a.ae,a.exposure,a.gain_r,a.gain_g,a.gain_b)):
+  command(126,34)
+  for _ in range(2):e.write_ir(DeviceUtils.EFX_TI_INSTR['USER2']);v=int(e.read_dr(192));e.go_idle()
+  hdmi=(v>>160)==0x56495331 and (v>>128)&0xffffffff==0x26110134
+  if a.sensor=='hq12' and not hdmi:p.error('HQ12 requires the HDMI-input full-system bitstream')
+  if hdmi and any(v is not None for v in (a.ae,a.exposure,a.gain_r,a.gain_g,a.gain_b)):
+   p.error('HQ12 exposure and white balance are controlled at the external camera, not over HDMI')
+ if a.ai_policy is not None:ai_status()
+ if a.recognition_model is not None:
+  if 'recognition_model' not in roi_status():raise RuntimeError('Model selection requires the paired model-control bitstream/application')
+ if a.follow is not None or a.trail is not None or change_roi:
+  command(126,32)
+  for _ in range(2):e.write_ir(DeviceUtils.EFX_TI_INSTR['USER2']);v=int(e.read_dr(192));e.go_idle()
+  tracking_capable=(v>>128)&0xffffffff==0x26103144
+  if (a.follow is not None or a.trail is not None)and not tracking_capable:raise RuntimeError('Following requires the paired TRK1 bitstream/application')
+  if change_roi and tracking_capable:command(0x64,0) # Stop the automatic writer before reading an idle manual transaction.
+ commands=[(0x64,a.follow),(0x65,a.trail),(0x63,None if a.recognition_model is None else {'fomo':1,'m7':2}[a.recognition_model]),(0x61,a.menu),(0x62,a.key_event),(0x60,a.ai_policy),(126,a.page),(1,a.mode),(2,a.threshold),(0x28,a.sobel_threshold),(0x29,a.canny_threshold),(3,a.median),(4,a.memory),(5,a.index),(6,a.color_order),(7,a.gamma),(8,a.gain_r),(9,a.gain_g),(10,a.gain_b),(11,a.ae),(12,a.exposure),(13,a.lcd_test),(14,a.lcd_bist),(15,a.lcd_backlight),(22,a.shape)]
+ for op,value in commands:
   if value is None:continue
-  if op==12 and not 112<=value<=1776:raise ValueError("exposure range112..1776")
   if op in [8,9,10] and not 0<=value<=1024:raise ValueError('gain Q8.8 range0..1024')
-  if op==1 and not 0<=value<=7:raise ValueError('mode0..7')
-  if op==2 and not 0<=value<=2047:raise ValueError('threshold0..2047')
-  e.write_ir(DeviceUtils.EFX_TI_INSTR['USER2']);e.write_dr(BitSequence((0x56495331<<32)|(op<<24)|value,length=192));e.go_idle();time.sleep(.05)
+  if op==1 and not 0<=value<=6:raise ValueError('display mode0..6; select M7 with --recognition-model m7')
+  if op in [0x28,0x29] and not 16<=value<=2047:raise ValueError('Sobel/Canny threshold16..2047')
+  if op==2:
+   mode=a.mode if a.mode is not None else roi_page(18)['mode']
+   low,high=16,2047
+   if not low<=value<=high:raise ValueError(f'Mode{mode} threshold{low}..{high}')
+ if change_roi:
+  deadline=time.monotonic()+10
+  while roi_page(18)['config_busy']:
+   if time.monotonic()>deadline:raise TimeoutError('Previous ROI commit is pending')
+  current=roi_status();roi=current['roi'] if a.roi is None else a.roi;size=current['output_size'] if a.output_size is None else a.output_size;pos=current['position'] if a.position is None else a.position
+  validate_roi(roi,size,pos);enabled=1 if a.roi_enable is None else a.roi_enable
+ for op,value in commands:
+  if value is not None:command(op,value)
+ if a.recognition_model is not None:
+  wanted={'fomo':1,'m7':2}[a.recognition_model];deadline=time.monotonic()+20
+  while True:
+   applied=roi_status()
+   if applied['recognition_model']==wanted:break
+   if time.monotonic()>deadline:raise TimeoutError(f'Model selection not applied: {applied}')
+ if change_roi:
+  for op,values in [(0x30,roi[:2]),(0x31,roi[2:]),(0x32,size),(0x33,pos)]:command(op,(values[0]<<12)|values[1])
+  command(0x34,enabled);command(0x35,0);expected=(current['requested_config_id']+1)&0xffffffff;deadline=time.monotonic()+10
+  while True:
+   ids=roi_page(21);state=roi_page(18)
+   if ids['rejected_config_id']==expected:raise RuntimeError(f'ROI config{expected} rejected: {state}')
+   if enabled and state['roi_enabled'] and state['applied_config_id']==expected and state['roi_frame_ok']:break
+   if not enabled and ids['accepted_config_id']==expected and not state['roi_enabled']:break
+   if time.monotonic()>deadline:raise TimeoutError(f'ROI config{expected} not applied: {ids}, {state}')
+  command(126,a.page)
+ if a.ai_policy is not None:
+  # The dispatcher acknowledges OFF after the protected in-flight inference.
+  deadline=time.monotonic()+20
+  while True:
+   ai=ai_status()
+   command(126,32)
+   for _ in range(2):e.write_ir(DeviceUtils.EFX_TI_INSTR['USER2']);u=int(e.read_dr(192));e.go_idle()
+   state=decode_ui(u)
+   if 'recognition_model' in state and state['recognition_model']==2:
+    if state['recognition_enabled']==int(a.ai_policy!=0):break
+   elif ai['ai_enabled']==int(a.ai_policy!=0) and (a.ai_policy==0 or ai['ai_geometry_policy']==int(a.ai_policy==2)):break
+   if time.monotonic()>deadline:raise TimeoutError(f'AI policy not applied: {ai}')
+  command(126,a.page)
+ if a.ai_status:
+  print(json.dumps(ai_status(),indent=2));raise SystemExit(0)
+ if a.roi_status:
+  status=roi_status();command(126,a.page);print(json.dumps(status,indent=2));raise SystemExit(0)
  out=[]
  for i in range(a.samples+1):
   e.write_ir(DeviceUtils.EFX_TI_INSTR['USER2']);v=int(e.read_dr(192));e.go_idle();s=(v>>96)&0xffffffff
@@ -36,7 +173,9 @@ with acquire_jtag_engine(1e6,a.url) as e:
   if build in [0x2609168b,0x2609168c,0x2609168d,0x2609168e]:
    for key in ['capture_id','display_id','canny_completed']:rec.pop(key,None)
    rec['physical_gains_rgb']=[(v>>80)&65535,(v>>64)&65535,(v>>48)&65535]
-   if build in [0x2609168c,0x2609168d,0x2609168e]:rec['tone_mode']=v&3
+   if build in [0x2609168c,0x2609168d,0x2609168e]:
+    rec['tone_mode']=v&3
+    rec.update(sobel_threshold=(v>>24)&2047,canny_threshold=(v>>13)&2047,canny_effective_threshold=(v>>2)&2047)
   if build in [0x260916ad,0x260916ae]:
    for key in ['capture_id','display_id','canny_completed']:rec.pop(key,None)
    rec['highlight_pixels']=(v>>64)&0xffffffff
@@ -52,6 +191,62 @@ with acquire_jtag_engine(1e6,a.url) as e:
   if actual_build in [0x260917e4,0x260917e5] or (actual_build==0x260917f5 and a.page==14):
    for key in ['capture_id','display_id','canny_completed']:rec.pop(key,None)
    rec.update(lcd_phy_seen=f'{(v>>8)&255:02x}',lcd_reset_pin=(v>>3)&1,lcd_backlight_pin=(v>>2)&1,lcd_bist=(v>>1)&1,lcd_backlight_enabled=v&1)
+  if actual_build==0x260919a6:
+   for key in ['capture_id','display_id','canny_completed']:rec.pop(key,None)
+   rec.update(highlight_pixels=(v>>64)&0xffffffff,shape_enabled=(v>>63)&1,shape_valid=(v>>62)&1,shape_class=(v>>60)&3,shape_background=(v>>52)&255,shape_reject_flags=(v>>48)&15,shape_box=[(v>>36)&4095,(v>>24)&4095,(v>>12)&4095,v&4095])
+  if actual_build==0x26100410:
+   rec.pop('capture_id');rec.pop('display_id')
+   meta=(v>>64)&0xffffffff
+   rec.update(probe_busy=(meta>>31)&1,probe_hold=(meta>>30)&1,probe_request=(meta>>29)&1,probe_ack=(meta>>28)&1,probe_address=meta&4095,probe_data=f'{(v>>32)&0xffffffff:08x}')
+  if actual_build==0x26100411:
+   rec.pop('capture_id');rec.pop('display_id')
+   stats=(v>>32)&0xffffffff
+   rec.update(canny_completed=(v>>64)&0xffffffff,noise_mean_bound=(stats>>24)&255,noise_valid=(stats>>23)&1,median_applied=(stats>>22)&1,effective_threshold=stats&2047,display_id=v&0xffffffff)
+  if actual_build in [0x26100418,0x26100419]:
+   for key in ['capture_id','display_id','canny_completed']:rec.pop(key)
+   if actual_build==0x26100418:rec.update(canny_analysis_size=[(v>>80)&65535,(v>>64)&65535],canny_coarse_edges=(v>>32)&0xffffffff,canny_display_edges=v&0xffffffff,canny_render='1px connected contour')
+   else:rec.update(canny_analysis_cycles=(v>>64)&0xffffffff,canny_sweep_passes=(v>>32)&0xffffffff,canny_weak_visits=v&0xffffffff)
+  if actual_build in [0x2610051a,0x2610051b]:
+   rec=dict(magic=f'{v>>160:08x}',build=f'{actual_build:08x}',raw=f'{v:048x}',sample_time_s=time.time(),
+            **{'snapshot_'+k:value for k,value in decode_snapshot(v).items()})
+  if actual_build==0x2610051c:
+   for key in ['capture_id','display_id','canny_completed']:rec.pop(key)
+   width,height,bits=decode_caps(v)
+   rec.update(snapshot_width=width,snapshot_height=height,snapshot_rgb_bits=bits)
+  if actual_build in [0x26100603,0x26100604,0x26100605,0x26100606,0x26100607,0x2610061a,0x2610061b]:
+   for key in ['capture_id','display_id','canny_completed']:rec.pop(key)
+   rec.update(diagnostic_disabled=True,diagnostic_page=actual_build&255)
+  if actual_build in (0x2610051d,0x2610071d,0x2610081d):
+   rec=dict(magic=f'{v>>160:08x}',build=f'{actual_build:08x}',raw=f'{v:048x}',sample_time_s=time.time(),
+            **{'flyhash_'+k:value for k,value in decode_flyhash_status(v).items()})
+  if actual_build in [0x2610051e,0x2610051f]:
+   rec=dict(magic=f'{v>>160:08x}',build=f'{actual_build:08x}',raw=f'{v:048x}',sample_time_s=time.time(),
+            flyhash_half='low' if actual_build==0x2610051e else 'high',flyhash_bits=f'{v&((1<<128)-1):032x}')
+  if actual_build==0x2610081e:
+   rec=dict(magic=f'{v>>160:08x}',build=f'{actual_build:08x}',raw=f'{v:048x}',sample_time_s=time.time(),
+            flyhash_result_address=(v>>96)&0xffffffff,flyhash_input_address=(v>>64)&0xffffffff,
+            flyhash_firmware_state=(v>>32)&0xffffffff,flyhash_cycles=v&0xffffffff)
+  if actual_build in (0x26101040,0x26103040,0x26103041,0x26103042,0x26103043,0x26103144):
+   for key in ['capture_id','display_id','canny_completed']:rec.pop(key)
+   rec.update(decode_ui(v),requested_config_id=(v>>32)&0xffffffff,accepted_config_id=v&0xffffffff)
+  if actual_build==0x26110134:
+   h=(v>>64)&0xffffffff
+   for key in ['capture_id','display_id','canny_completed']:rec.pop(key)
+   rec.update(source='hq12_hdmi',source_present=bool(h&1),input_pll_locked=bool(h&2),input_aligned=bool(h&4),avi_seen=bool(h&8),
+    input_format=(h>>4)&3,colorimetry=(h>>6)&3,rgb_quantization=(h>>8)&3,ycc_quantization=(h>>10)&3,avi_vic=(h>>12)&127,
+    input_frame_bad=bool(h&(1<<19)),source_frame=(v>>32)&0xffffffff,input_fifo_overflows=v&0xffffffff)
+  if actual_build==0x261101ff:
+   for key in ['capture_id','display_id','canny_completed']:rec.pop(key)
+   rec.update(diagnostic_disabled=True,diagnostic_page=a.page,source='hq12_hdmi')
+  if actual_build in (0x26110135,0x26110136):
+   for key in ['capture_id','display_id','canny_completed']:rec.pop(key)
+   u=(v>>64)&0xffffffff;t=(v>>32)&0xffffffff;l=v&0xffffffff
+   if actual_build==0x26110135:rec.update(scan_service_gap_cycles=u,ddr_read_burst_cycles=t,slow_read_address=f'0x{l:08x}',core_clock_hz=100000000)
+   else:rec.update(ddr_read_backpressure_cycles=u,scan_bad_frames=t,capture_discarded=l,core_clock_hz=100000000)
+  roi_rec=decode_roi(v)
+  if roi_rec is not None:
+   for key in ['capture_id','display_id','canny_completed']:rec.pop(key)
+   rec.update(roi_rec)
   if i:out.append(rec)
   time.sleep(.2)
  print(json.dumps(out,indent=2))

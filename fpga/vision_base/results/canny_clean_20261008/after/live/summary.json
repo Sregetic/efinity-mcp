@@ -1,0 +1,12 @@
+{
+  "samples": 320,
+  "seconds": 58.5,
+  "row": 320,
+  "contour_changes": 0,
+  "distinct_contours": 1,
+  "source_frames": 320,
+  "magenta_max": 0,
+  "mode": 6,
+  "threshold": 80,
+  "median": 0
+}

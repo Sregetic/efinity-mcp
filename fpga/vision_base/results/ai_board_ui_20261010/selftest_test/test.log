@@ -1,0 +1,2 @@
+PASS RV32I three-input AI selftest and corrupted-weight FAIL
+qemu-system-riscv32.exe: warning: Setting G will also set IMAFD

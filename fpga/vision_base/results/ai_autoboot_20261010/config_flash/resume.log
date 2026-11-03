@@ -1,0 +1,16 @@
+Open On-Chip Debugger 0.11.0+dev-04060-g967f8f6f0-dirty (2026-03-24-19:56)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+Info : auto-selecting first available session transport "jtag". To override use 'transport select <transport>'.
+Info : clock speed 25 kHz
+Info : TAP ti60.bridge does not have valid IDCODE (idcode=0xbfa08fa)
+Info : JTAG tap: auto0.tap tap/device found: 0x85fd047d (mfg: 0x23e (Endicott Interconnect Technologies), part: 0x5fd0, ver: 0x8)
+Info : TAP auto1.tap does not have valid IDCODE (idcode=0x8833053c)
+Info : TAP auto2.tap does not have valid IDCODE (idcode=0xc419829e)
+Info : JTAG tap: auto3.tap tap/device found: 0xe20cc14f (mfg: 0x0a7 (Cabletron), part: 0x20cc, ver: 0xe)
+Warn : AUTO auto0.tap - use "jtag newtap auto0 tap -irlen 2 -expected-id 0x85fd047d"
+Error: auto0.tap: IR capture error; saw 0x0003 not 0x0001
+Warn : Bypassing JTAG setup events due to errors
+Error: To support VexRiscv jtag header and multiple tap on the jtag chain, you need to provision more 'jtagIgnoreWidth'
+

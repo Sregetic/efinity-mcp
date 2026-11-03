@@ -1,0 +1,16 @@
+{
+  "xlr": 60050,
+  "free_xlr": 750,
+  "ram": 235,
+  "free_ram": 21,
+  "dsp": 62,
+  "free_dsp": 98,
+  "wns_ns": 0.071,
+  "whs_ns": 0.029,
+  "flash_written": false,
+  "delta_vs_border": {
+    "xlr": 115,
+    "ram": 0,
+    "dsp": 0
+  }
+}

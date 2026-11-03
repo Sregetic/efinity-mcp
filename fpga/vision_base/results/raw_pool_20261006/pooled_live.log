@@ -1,0 +1,8 @@
+ROI cfg1 held10/10 view8 pixels12288
+ROI cfg2 held13/13 view13 pixels24576
+ROI cfg3 held13/13 view13 pixels33792
+ROI cfg4 held13/13 view13 pixels43008
+ROI cfg6 held13/13 view13 pixels52224
+ROI cfg8 held49/49 view49 pixels73728
+PASS pooled RGB live 89088 pixels, 29 full frames; scale/pan/placement, frozen-source rerender, atomic configs, invalid config, overflow abort and scan starvation recovery
+sim/vision/tb_pooled_live.sv:371: $finish called at 3048097962 (1ps)

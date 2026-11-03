@@ -1,0 +1,2 @@
+PASS unified 8-bank history: six distinct static frames, index6 replay/restart, scratch nonpublication, freeze/comparison, same-source ROI rerender, live recovery; 130048 pixels
+sim/tb_unified_history.sv:311: $finish called at 1397800000 (1ps)

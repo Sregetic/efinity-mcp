@@ -1,0 +1,22 @@
+{
+  "modified": [
+    "firmware/vision/ai_main.c",
+    "scripts/build_fomo_firmware.py",
+    "scripts/read_fomo_camera.py",
+    "scripts/verify_fomo_camera.py",
+    "scripts/test_camera_fomo_board.py"
+  ],
+  "added": [
+    "firmware/vision/connectome_readout.h",
+    "models/connectome_readout.py",
+    "scripts/train_connectome_readout.py",
+    "scripts/test_connectome_readout.py"
+  ],
+  "documentation": [
+    "docs/CONNECTOME_READOUT_20261018.md",
+    "docs/PROJECT_MASTER_STATUS.md",
+    "docs/SYSTEM_SCOPE_AND_ROADMAP.md"
+  ],
+  "generated_model": "models/connectome_readout_bringup",
+  "rtl_changed": []
+}

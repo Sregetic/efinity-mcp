@@ -1,0 +1,3 @@
+PASS photo: all 129600 native Canny bits identical
+PASS face: all 129600 native Canny bits identical
+PASS two_faces: all 129600 native Canny bits identical

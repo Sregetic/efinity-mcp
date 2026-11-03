@@ -1,0 +1,58 @@
+{
+  "passed": true,
+  "kind": "offline_source_candidate_not_deployed",
+  "backend_equivalence_frames": 169,
+  "backend_instruction_equality": true,
+  "native_letter_fixture": {
+    "frames": 79,
+    "total": 312,
+    "exact": 306,
+    "ambiguous": 6,
+    "failures": 0,
+    "display_failures": 0
+  },
+  "controls": "RV32, 4996 sidebar assertions and 636 geometry cases",
+  "following": "no-face and optional-face shared lease/ROI cases passed",
+  "motion": "four targets, ambiguity/gaps/expiry/source transform plus 69120 actual line pixels",
+  "spi_boot_scenarios": 10,
+  "adapter": {
+    "passed": 71,
+    "skipped": 1,
+    "reason": "Windows symlink privilege unavailable",
+    "real_mcp_protocol": true
+  },
+  "candidate": {
+    "load_bytes": 339000,
+    "bss_bytes": 612112,
+    "load_delta_bytes": -16,
+    "control_bytes": 408,
+    "xlr": 56540,
+    "ram": 240,
+    "dsp": 63,
+    "hardware_rebuild": false
+  },
+  "cleanup": {
+    "files": 723,
+    "logical_local_bytes": 1401878599,
+    "history_rewritten": false,
+    "live_backups_deleted": false
+  },
+  "native_build_inputs": {
+    "source_references": 108,
+    "provided_source_files": 93,
+    "local_reference_receiver_files": 14,
+    "official_generated_netlists": 1,
+    "documented": true
+  },
+  "deployment": {
+    "board_access": false,
+    "fpga_programmed": false,
+    "flash_written": false
+  },
+  "github": {
+    "repository": "Sregetic/efinity-mcp",
+    "branch": "sync/fpga-20261007",
+    "pull_request": 6,
+    "merged": false
+  }
+}

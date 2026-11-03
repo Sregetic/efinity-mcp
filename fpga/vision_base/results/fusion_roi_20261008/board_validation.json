@@ -1,0 +1,185 @@
+{
+  "passed": true,
+  "scope": "Actual board I1/I3 data/pixel checks; calibrated camera background spot is not a physical shape-card accuracy test",
+  "cases": [
+    {
+      "case": "full",
+      "frame": 1971,
+      "render": 2,
+      "context": 4,
+      "roi": [
+        700,
+        360,
+        480,
+        320
+      ],
+      "scores": [
+        19,
+        -40,
+        -44,
+        -6
+      ],
+      "automatic": false,
+      "geometry_class": 0,
+      "cpu_validation": {
+        "passed": true,
+        "sequence": 2,
+        "frame_id": 1971,
+        "source_config_id": 1971,
+        "model_id": 1,
+        "roi": [
+          700,
+          360,
+          480,
+          320
+        ],
+        "class_name": "blank",
+        "gray_pixels": 1024,
+        "features": 128,
+        "hidden": 32,
+        "logits": 4,
+        "flyhash_bits": 256,
+        "training_kind": "synthetic_bringup_only",
+        "real_card_accuracy_verified": false,
+        "dma_microseconds": 1644.25,
+        "network_microseconds": 2817.82,
+        "total_cpu_microseconds": 6325.48
+      }
+    },
+    {
+      "case": "automatic",
+      "frame": 1971,
+      "render": 6,
+      "context": 11,
+      "roi": [
+        562,
+        947,
+        14,
+        14
+      ],
+      "scores": [
+        -4,
+        -39,
+        -51,
+        4
+      ],
+      "automatic": true,
+      "geometry_class": 1,
+      "cpu_validation": {
+        "passed": true,
+        "sequence": 4,
+        "frame_id": 1971,
+        "source_config_id": 1971,
+        "model_id": 1,
+        "roi": [
+          562,
+          947,
+          14,
+          14
+        ],
+        "class_name": "triangle",
+        "gray_pixels": 1024,
+        "features": 128,
+        "hidden": 32,
+        "logits": 4,
+        "flyhash_bits": 256,
+        "training_kind": "synthetic_bringup_only",
+        "real_card_accuracy_verified": false,
+        "dma_microseconds": 2642.85,
+        "network_microseconds": 3212.76,
+        "total_cpu_microseconds": 6826.09
+      }
+    },
+    {
+      "case": "verified_full",
+      "frame": 58008,
+      "render": 10,
+      "context": 12,
+      "roi": [
+        700,
+        360,
+        480,
+        320
+      ],
+      "scores": [
+        15,
+        -40,
+        -47,
+        -2
+      ],
+      "automatic": false,
+      "geometry_class": 0,
+      "cpu_validation": {
+        "passed": true,
+        "sequence": 6,
+        "frame_id": 58008,
+        "source_config_id": 58008,
+        "model_id": 1,
+        "roi": [
+          700,
+          360,
+          480,
+          320
+        ],
+        "class_name": "blank",
+        "gray_pixels": 1024,
+        "features": 128,
+        "hidden": 32,
+        "logits": 4,
+        "flyhash_bits": 256,
+        "training_kind": "synthetic_bringup_only",
+        "real_card_accuracy_verified": false,
+        "dma_microseconds": 1807.98,
+        "network_microseconds": 2805.22,
+        "total_cpu_microseconds": 6315.06
+      }
+    },
+    {
+      "case": "verified_zoom",
+      "frame": 58008,
+      "render": 11,
+      "context": 12,
+      "roi": [
+        700,
+        360,
+        480,
+        320
+      ],
+      "scores": [
+        15,
+        -40,
+        -47,
+        -2
+      ],
+      "automatic": false,
+      "geometry_class": 0,
+      "cpu_validation": {
+        "passed": true,
+        "sequence": 9,
+        "frame_id": 58008,
+        "source_config_id": 58008,
+        "model_id": 1,
+        "roi": [
+          700,
+          360,
+          480,
+          320
+        ],
+        "class_name": "blank",
+        "gray_pixels": 1024,
+        "features": 128,
+        "hidden": 32,
+        "logits": 4,
+        "flyhash_bits": 256,
+        "training_kind": "synthetic_bringup_only",
+        "real_card_accuracy_verified": false,
+        "dma_microseconds": 2080.55,
+        "network_microseconds": 2915.12,
+        "total_cpu_microseconds": 6499.12
+      }
+    }
+  ],
+  "same_source_rerenders": true,
+  "automatic_recalibration_retriggered": true,
+  "stale_roi_hidden": true
+}

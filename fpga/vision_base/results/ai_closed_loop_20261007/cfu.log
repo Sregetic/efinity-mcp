@@ -1,0 +1,2 @@
+PASS signed INT8 dot4 + signed32 MulHi,1024 vectors each, extremes, response hold/backpressure/reset
+sim/tb_vision_int8_cfu.sv:31: $finish called at 102450000 (1ps)

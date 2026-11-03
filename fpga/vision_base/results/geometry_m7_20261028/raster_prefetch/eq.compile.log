@@ -1,0 +1,17 @@
+Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+vmap -modelsimini F:/Project/fpga/vision_base/results/geometry_m7_20261028/prune_queue/modelsim.ini raster_eq_work F:/Project/fpga/vision_base/results/geometry_m7_20261028/raster_prefetch/eq_work 
+Modifying F:/Project/fpga/vision_base/results/geometry_m7_20261028/prune_queue/modelsim.ini
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+Start time: 08:09:05 on Oct 28,2026
+vlog -modelsimini F:/Project/fpga/vision_base/results/geometry_m7_20261028/prune_queue/modelsim.ini -work raster_eq_work -sv board/ti60f225_v4/rtl/vision/vision_canny_raster.sv board/ti60f225_v4/rtl/vision/vision_sparse_window.sv F:/Project/fpga/vision_base/results/geometry_m7_20261028/raster_prefetch/reference.sv F:/Project/fpga/vision_base/results/geometry_m7_20261028/raster_prefetch/tb_equivalence.sv 
+-- Compiling module vision_canny_raster
+-- Compiling module vision_canny_line_fit
+-- Compiling module vision_sparse_window
+-- Compiling module vision_canny_raster_reference
+-- Compiling module vision_canny_line_fit_reference
+-- Compiling module tb
+
+Top level modules:
+	tb
+End time: 08:09:05 on Oct 28,2026, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0

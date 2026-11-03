@@ -1,0 +1,48 @@
+{
+  "implemented": true,
+  "simulation_passed": true,
+  "native_pnr_passed": true,
+  "native_stages": [
+    "map",
+    "interface",
+    "pnr",
+    "pgm"
+  ],
+  "artifact_source_timing_gate_passed": true,
+  "native_input_count": 172,
+  "changed_native_inputs": [
+    "board/ti60f225_v4/rtl/vision/vision_hysteresis_sweep.sv"
+  ],
+  "cycle_equivalence": {
+    "clocks": 3049668,
+    "tile_decisions": 851299,
+    "display_pixels": 2031116,
+    "probe_bits": 896,
+    "differences": 0
+  },
+  "resources": {
+    "xlr": 57380,
+    "xlr_used_percent": 94.375,
+    "free_xlr": 3420,
+    "ram": 237,
+    "free_ram": 19,
+    "dsp": 62,
+    "free_dsp": 98,
+    "wns_ns": 0.211,
+    "whs_ns": 0.026,
+    "unassigned_core_pins": 0
+  },
+  "net_released_xlr_this_round": 888,
+  "ram_added_this_round": 2,
+  "algorithm_or_display_reconstruction_changed": false,
+  "capture_or_scan_cycles_added": 0,
+  "firmware_changed": false,
+  "image_readback_retained": true,
+  "image_readback_basis": "172-input source comparison; snapshot5RAM retained; Canny front-plane/history/probe cycle comparison and independent edge probe regression",
+  "board_programmed": false,
+  "flash_written": false,
+  "physical_image_acceptance": false,
+  "physical_power_cycle_verified": false,
+  "flash_baseline": "results/canny_flash_20261017/deployment.json",
+  "release": "F:\\Project\\fpga\\vision_base\\results\\canny_tile_cache_20261018\\release"
+}

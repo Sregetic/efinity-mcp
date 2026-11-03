@@ -1,0 +1,26 @@
+{
+  "before": {
+    "xlr": 59878,
+    "ram": 249,
+    "dsp": 63
+  },
+  "after": {
+    "xlr": 60510,
+    "ram": 239,
+    "dsp": 63
+  },
+  "delta": {
+    "xlr": 632,
+    "ram": -10,
+    "dsp": 0
+  },
+  "free": {
+    "xlr": 290,
+    "ram": 17,
+    "dsp": 97
+  },
+  "wns_ns": 0.112,
+  "whs_ns": 0.028,
+  "hardware_programmed": false,
+  "flash_written": false
+}

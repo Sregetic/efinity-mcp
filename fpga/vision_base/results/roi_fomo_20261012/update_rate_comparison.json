@@ -1,0 +1,20 @@
+[
+  {
+    "name": "full",
+    "before_hz": 6.25,
+    "after_hz": 18.25,
+    "speedup": 2.92,
+    "seconds": 20.0,
+    "poll_hz": 62.55,
+    "scan_bad_delta": 0
+  },
+  {
+    "name": "zoom",
+    "before_hz": 7.65,
+    "after_hz": 29.5,
+    "speedup": 3.856209150326797,
+    "seconds": 20.0,
+    "poll_hz": 62.5,
+    "scan_bad_delta": 0
+  }
+]

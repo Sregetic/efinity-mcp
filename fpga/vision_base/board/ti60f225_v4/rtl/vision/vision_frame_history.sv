@@ -11,7 +11,7 @@ always @*begin
  candidate=write_slot+1'b1;if(candidate==read_slot)candidate=candidate+1'b1;
  idx=(index<history_count)?index:3'd0;
  next_idx=(idx+1>=history_count)?3'd0:idx+1'b1;
- replay_idx={1'b0,idx}+{1'b0,play};
+ replay_idx={1'b0,idx}+{1'b0,(index==6?play:3'd0)};
  if(replay_idx>=history_count)replay_idx=replay_idx-history_count;
  selected=read_slot;
  if(history_count!=0)case(mode)

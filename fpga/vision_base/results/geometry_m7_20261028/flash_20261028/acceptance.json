@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "configuration_flash_written": true,
+  "application_flash_written": true,
+  "program_bytes": 447344,
+  "weights_bytes": 4400,
+  "boot_package_bytes": 451776,
+  "user1_program_download": false,
+  "cpu_resumed": true,
+  "source_fps": 29.875,
+  "m7_compute_ms": 2873.86524,
+  "physical_power_cycle_verified": false,
+  "config_flash_reload_verified": false
+}

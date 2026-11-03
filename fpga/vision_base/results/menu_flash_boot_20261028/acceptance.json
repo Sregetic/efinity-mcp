@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "scope": "Flash startup and physical KEY0 menu, user-observed",
+  "physical_power_cycle_verified_by_user": true,
+  "physical_key0_menu_visible_confirmed_by_user": true,
+  "automatic_readback_after_power_cycle": false,
+  "board_connected_to_this_host": false,
+  "configuration_flash_written": true,
+  "full_flash_readback_verified": true,
+  "spi_low_power_mode": "off",
+  "application_region_rewritten": false,
+  "resources": {
+    "xlr": 58458,
+    "ram": 243,
+    "dsp": 64,
+    "wns_ns": 0.109,
+    "whs_ns": 0.026
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "tag_base": {
+    "EFX_LUT4": 121,
+    "EFX_FF": 136,
+    "EFX_RAM10": 1,
+    "RAM": 1
+  },
+  "tag_bits": {
+    "EFX_LUT4": 124,
+    "EFX_FF": 138,
+    "EFX_RAM10": 1,
+    "RAM": 1
+  },
+  "tag_mask": {
+    "EFX_LUT4": 217,
+    "EFX_FF": 108,
+    "EFX_RAM10": 1,
+    "RAM": 1
+  },
+  "tag_banks": {
+    "EFX_LUT4": 106,
+    "EFX_FF": 110,
+    "EFX_RAM10": 1,
+    "RAM": 1
+  },
+  "tag_onehot": {
+    "EFX_LUT4": 136,
+    "EFX_FF": 142,
+    "EFX_RAM10": 1,
+    "RAM": 1
+  },
+  "fit_base": {
+    "EFX_ADD": 70,
+    "EFX_LUT4": 35,
+    "EFX_FF": 16,
+    "RAM": 0
+  },
+  "fit_dsp": {
+    "EFX_ADD": 22,
+    "EFX_LUT4": 21,
+    "EFX_DSP24": 2,
+    "EFX_FF": 21,
+    "RAM": 0
+  },
+  "fit_factored": {
+    "EFX_ADD": 69,
+    "EFX_LUT4": 36,
+    "EFX_FF": 21,
+    "RAM": 0
+  },
+  "font_banks": {
+    "EFX_LUT4": 13,
+    "EFX_FF": 4,
+    "EFX_RAM10": 3,
+    "RAM": 3
+  },
+  "motion_base": {
+    "EFX_ADD": 143,
+    "EFX_LUT4": 691,
+    "EFX_DSP24": 1,
+    "EFX_FF": 365,
+    "EFX_RAM10": 1,
+    "RAM": 1
+  },
+  "motion_fold": {
+    "EFX_ADD": 142,
+    "EFX_LUT4": 599,
+    "EFX_DSP24": 1,
+    "EFX_FF": 346,
+    "EFX_RAM10": 1,
+    "RAM": 1
+  },
+  "fit_mac": {
+    "EFX_LUT4": 17,
+    "EFX_DSP24": 3,
+    "EFX_FF": 1,
+    "RAM": 0
+  },
+  "motion_step": {
+    "EFX_ADD": 88,
+    "EFX_LUT4": 620,
+    "EFX_DSP24": 1,
+    "EFX_FF": 378,
+    "EFX_RAM10": 1,
+    "RAM": 1
+  },
+  "motion_shared": {
+    "EFX_ADD": 62,
+    "EFX_LUT4": 625,
+    "EFX_DSP24": 1,
+    "EFX_FF": 300,
+    "EFX_RAM10": 1,
+    "RAM": 1
+  },
+  "motion_acc": {
+    "EFX_ADD": 88,
+    "EFX_LUT4": 601,
+    "EFX_DSP48": 1,
+    "EFX_FF": 375,
+    "EFX_RAM10": 1,
+    "RAM": 1
+  },
+  "tag_banks2": {
+    "EFX_LUT4": 129,
+    "EFX_FF": 121,
+    "EFX_RAM10": 1,
+    "RAM": 1
+  },
+  "tag_banks8": {
+    "EFX_LUT4": 103,
+    "EFX_FF": 123,
+    "EFX_RAM10": 1,
+    "RAM": 1
+  },
+  "tag_toggle": {
+    "EFX_LUT4": 235,
+    "EFX_FF": 114,
+    "EFX_RAM10": 1,
+    "RAM": 1
+  },
+  "tag_toggle_banks": {
+    "EFX_LUT4": 212,
+    "EFX_FF": 111,
+    "EFX_RAM10": 1,
+    "RAM": 1
+  }
+}

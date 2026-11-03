@@ -1,0 +1,2 @@
+F:\Project\fpga\vision_base\sim\vision\tb_edge_strength.sv:4: warning: Port 46 (ui_state) of vision_display expects 24 bits, got 15.
+F:\Project\fpga\vision_base\sim\vision\tb_edge_strength.sv:4:        : Padding 9 high bits of the port.

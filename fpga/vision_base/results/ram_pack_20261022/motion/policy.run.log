@@ -1,0 +1,2 @@
+PASS motion policy full/roi/skip, source guard, gap/config, backpressure, wrap, stale
+F:\Project\fpga\vision_base\sim\motion_direction\tb_motion_policy.sv:26: $finish called at 1030000 (1ps)

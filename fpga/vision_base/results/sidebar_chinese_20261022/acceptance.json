@@ -1,0 +1,111 @@
+{
+  "offline_passed": true,
+  "native_passed": true,
+  "resources": {
+    "before": {
+      "xlr": 57906,
+      "ram": 242,
+      "dsp": 62,
+      "wns_ns": 0.188,
+      "whs_ns": 0.026
+    },
+    "after": {
+      "xlr": 57745,
+      "ram": 246,
+      "dsp": 62,
+      "wns_ns": 0.108,
+      "whs_ns": 0.027,
+      "unassigned_core_pins": 0,
+      "missing_interface_pins": 14
+    },
+    "capacity": {
+      "xlr": 60800,
+      "ram": 256,
+      "dsp": 160
+    },
+    "increased": {
+      "xlr": -161,
+      "ram": 4,
+      "dsp": 0
+    },
+    "free": {
+      "xlr": 3055,
+      "ram": 10,
+      "dsp": 98
+    },
+    "snapshot_ram": 5,
+    "sidebar_font_ram": 5,
+    "chinese_font_ram": 4,
+    "chinese_glyphs": 113,
+    "chinese_rom_bits": 28928,
+    "changed_native_inputs": [
+      "board/ti60f225_v4/rtl/vision/vision_osd.sv"
+    ],
+    "unchanged_native_inputs": 172
+  },
+  "localization": {
+    "groups": [
+      "图像",
+      "视图",
+      "目标",
+      "智能"
+    ],
+    "fixed_texts": 61,
+    "glyphs": 113,
+    "glyph_cell": [
+      16,
+      16
+    ],
+    "font_source": "Noto Sans SC Medium, 15px; generated subset only",
+    "ascii_hud_preserved": true,
+    "proper_names_retained": [
+      "SOBEL",
+      "CANNY",
+      "FOMO"
+    ]
+  },
+  "layout": {
+    "root_width": 144,
+    "child_width": 160,
+    "expanded_width": 304,
+    "row_height": 64,
+    "origin_y": 128,
+    "levels": 2
+  },
+  "rtl_tests_passed": [
+    "osd",
+    "sidebar_video",
+    "fusion_display",
+    "edge_strength",
+    "edge_overlay",
+    "line_snapshot"
+  ],
+  "font_pixel_checks": 53504,
+  "preview_frames": 3,
+  "preview_source": "actual RTL synthetic scene, not camera capture",
+  "unchanged_outside_pixels": 5936988,
+  "preview_ink_pixels": 13189,
+  "extra_pipeline_clocks_vs_previous": 0,
+  "snapshot_rgb_bits": 24,
+  "image_readback_retained": true,
+  "firmware_changed": false,
+  "firmware_control_tests_rerun": false,
+  "reused_control_evidence": "results/sidebar_hierarchy_20261022/control, 2591 RV32I assertions; no new hardware claim",
+  "full_video_suite_rerun": false,
+  "hardware_access": false,
+  "sram_written": false,
+  "flash_written": false,
+  "physical_acceptance": false,
+  "candidate": {
+    "bit": "F:\\Project\\fpga\\vision_base\\results\\sidebar_chinese_20261022\\release\\ti60f225_oob.bit",
+    "camera_elf": "F:\\Project\\fpga\\vision_base\\results\\sidebar_hierarchy_20261022\\firmware\\vision.elf",
+    "weights": "F:\\Project\\fpga\\vision_base\\models\\shape_cards_bringup\\shape_cards_weights.bin",
+    "boot_package": "F:\\Project\\fpga\\vision_base\\results\\sidebar_hierarchy_20261022\\release\\vision_boot.bin"
+  },
+  "unverified": [
+    "physical keys",
+    "real camera/HDMI appearance",
+    "target recognition and centering on hardware",
+    "long-run and power-cycle"
+  ]
+}

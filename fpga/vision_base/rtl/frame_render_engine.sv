@@ -1,23 +1,31 @@
 `timescale 1ns/1ps
-// RGB565 source/result memory engine. Capture and scanout pixel adapters external.
+// Packed16 source/result memory engine. Capture and scanout pixel adapters external.
 // Memory map: four 4 MiB source banks, then two 4 MiB result banks by default.
 module frame_render_engine #(
     parameter integer MAX_LINE_PIXELS=2560,
+    parameter integer SOURCE_BANKS=4,BANK_BITS=$clog2(SOURCE_BANKS),KEEP_HISTORY=0,COMPUTE_ENABLED=0,
     parameter [31:0] SOURCE_BASE=32'h00000000,
     parameter [31:0] RESULT_BASE=32'h01000000,
     parameter integer BANK_SHIFT=22
 )(
     input wire clk,rst_n,
     input wire cap_req_valid,output wire cap_req_ready,
-    input wire [31:0] cap_req_config_id,output wire [1:0] cap_req_bank,
+    input wire [31:0] cap_req_config_id,output wire [BANK_BITS-1:0] cap_req_bank,
     input wire cap_done_valid,output wire cap_done_ready,
-    input wire [1:0] cap_done_bank,input wire cap_done_ok,
+    input wire [BANK_BITS-1:0] cap_done_bank,input wire cap_done_ok,
+    input wire compute_acquire_valid,compute_latest,compute_release,
+    input wire[31:0]compute_request_frame_id,
+    output wire compute_acquire_ready,compute_missing,compute_hold_valid,
+    output wire[BANK_BITS-1:0]compute_hold_bank,
+    output wire[31:0]compute_hold_frame_id,compute_hold_config_id,
     input wire analysis_acquire_valid,output wire analysis_acquire_ready,
     input wire analysis_release,output wire analysis_hold_valid,
-    output wire [1:0] analysis_hold_bank,
+    output wire [BANK_BITS-1:0] analysis_hold_bank,
     output wire [31:0] analysis_hold_frame_id,analysis_hold_config_id,
+    input wire pin_history,display_use_analysis,input wire[2:0]display_age,analysis_age,
+    output wire[2:0]history_count,output wire[31:0]capture_frame_id,
     input wire job_valid,output wire job_ready,
-    input wire freeze_source,input wire [31:0] job_config_id,
+    input wire freeze_source,release_source,input wire [31:0] job_config_id,
     input wire [15:0] src_width,src_height,roi_x,roi_y,roi_w,roi_h,dst_width,dst_height,
     input wire [31:0] src_stride_bytes,dst_stride_bytes,
     input wire vblank,
@@ -42,20 +50,24 @@ module frame_render_engine #(
     output wire m_axi_awvalid,input wire m_axi_awready,
     output wire [127:0] m_axi_wdata,output wire [15:0] m_axi_wstrb,
     output wire m_axi_wlast,m_axi_wvalid,input wire m_axi_wready,
-    input wire [1:0] m_axi_bresp,input wire m_axi_bvalid,output wire m_axi_bready
+    input wire [1:0] m_axi_bresp,input wire m_axi_bvalid,output wire m_axi_bready,
+    output wire source_hold_valid,output wire[31:0]source_hold_frame_id,source_hold_config_id
 );
     localparam [63:0] BANK_BYTES=64'd1<<BANK_SHIFT;
     initial begin
         if(BANK_SHIFT<4 || BANK_SHIFT>28 || (SOURCE_BASE % BANK_BYTES)!=0 || (RESULT_BASE % BANK_BYTES)!=0)
             $fatal(1,"invalid aligned frame bank map");
-        if((64'(SOURCE_BASE)+4*BANK_BYTES)>64'h100000000 || (64'(RESULT_BASE)+2*BANK_BYTES)>64'h100000000 ||
-           ((64'(SOURCE_BASE)<64'(RESULT_BASE)+2*BANK_BYTES) && (64'(RESULT_BASE)<64'(SOURCE_BASE)+4*BANK_BYTES)))
+        if((64'(SOURCE_BASE)+SOURCE_BANKS*BANK_BYTES)>64'h100000000 || (64'(RESULT_BASE)+2*BANK_BYTES)>64'h100000000 ||
+           ((64'(SOURCE_BASE)<64'(RESULT_BASE)+2*BANK_BYTES) && (64'(RESULT_BASE)<64'(SOURCE_BASE)+SOURCE_BANKS*BANK_BYTES)))
             $fatal(1,"overlapping or overflowing frame bank map");
     end
     reg [15:0] sw,sh,rx,ry,rw,rh,dw,dh;
     reg [31:0] ss,ds;
-    wire [63:0] source_extent=64'(src_stride_bytes)*(src_height-16'd1)+64'(src_width)*2;
-    wire [63:0] result_extent=64'(dst_stride_bytes)*(dst_height-16'd1)+64'(dst_width)*2;
+    // A32-bit byte stride times a16-bit row index needs48 bits, not64x64.
+    wire [15:0] source_last_row=src_height-16'd1,result_last_row=dst_height-16'd1;
+    wire [47:0] source_offset=src_stride_bytes*source_last_row,result_offset=dst_stride_bytes*result_last_row;
+    wire [63:0] source_extent={16'd0,source_offset}+64'(src_width)*2;
+    wire [63:0] result_extent={16'd0,result_offset}+64'(dst_width)*2;
     wire config_ok=src_width!=0 && src_height!=0 && roi_w!=0 && roi_h!=0 && dst_width!=0 && dst_height!=0 &&
         roi_w<=MAX_LINE_PIXELS && {1'b0,roi_x}+{1'b0,roi_w}<={1'b0,src_width} &&
         {1'b0,roi_y}+{1'b0,roi_h}<={1'b0,src_height} && !src_stride_bytes[0] &&
@@ -71,26 +83,31 @@ module frame_render_engine #(
         else if(pending && vblank)begin display_width<=dw;display_height<=dh;display_stride_bytes<=ds;end
     end
     wire run_valid,scale_ready,write_ready,scale_done,scale_error,write_done,write_error;
-    wire [1:0] source_bank;
+    wire [BANK_BITS-1:0] source_bank;
     wire result_bank,display_bank;
     wire [31:0] frame_id,config_id;
-    frame_render_control control (
-        .clk(clk),.rst_n(rst_n),.cap_req_valid(cap_req_valid),.cap_req_ready(cap_req_ready),
+    frame_render_control #(.BANKS(SOURCE_BANKS),.BANK_BITS(BANK_BITS),.KEEP_HISTORY(KEEP_HISTORY),.COMPUTE_ENABLED(COMPUTE_ENABLED)) control (
+        .clk(clk),.rst_n(rst_n),.pin_history(pin_history),.display_use_analysis(display_use_analysis),.display_age(display_age),.analysis_age(analysis_age),.history_count(history_count),.capture_frame_id(capture_frame_id),.cap_req_valid(cap_req_valid),.cap_req_ready(cap_req_ready),
         .cap_req_config_id(cap_req_config_id),.cap_req_bank(cap_req_bank),
         .cap_done_valid(cap_done_valid),.cap_done_ready(cap_done_ready),.cap_done_bank(cap_done_bank),.cap_done_ok(cap_done_ok),
-        .analysis_acquire_valid(analysis_acquire_valid),.analysis_acquire_ready(analysis_acquire_ready),
+                .compute_acquire_valid(compute_acquire_valid),.compute_latest(compute_latest),.compute_release(compute_release),
+        .compute_request_frame_id(compute_request_frame_id),.compute_acquire_ready(compute_acquire_ready),.compute_missing(compute_missing),
+        .compute_hold_valid(compute_hold_valid),.compute_hold_bank(compute_hold_bank),
+        .compute_hold_frame_id(compute_hold_frame_id),.compute_hold_config_id(compute_hold_config_id),
+.analysis_acquire_valid(analysis_acquire_valid),.analysis_acquire_ready(analysis_acquire_ready),
         .analysis_release(analysis_release),.analysis_hold_valid(analysis_hold_valid),.analysis_hold_bank(analysis_hold_bank),
         .analysis_hold_frame_id(analysis_hold_frame_id),.analysis_hold_config_id(analysis_hold_config_id),
-        .job_valid(job_valid),.job_ready(job_ready),.job_config_ok(config_ok),.freeze_source(freeze_source),.job_config_id(job_config_id),
+        .job_valid(job_valid),.job_ready(job_ready),.job_config_ok(config_ok),.freeze_source(freeze_source),.release_source(release_source),.job_config_id(job_config_id),
         .run_valid(run_valid),.run_ready(scale_ready && write_ready),.run_source_bank(source_bank),
         .run_frame_id(frame_id),.run_config_id(config_id),.run_result_bank(result_bank),
         .scaler_done(scale_done),.scaler_error(scale_error),.writer_done(write_done),.writer_error(write_error),
         .vblank(vblank),.display_valid(display_valid),.display_bank(display_bank),
         .display_frame_id(display_frame_id),.display_config_id(display_config_id),
         .done(done),.error(error),.busy(busy),.pending(pending),.last_cycles(last_cycles),.deadline_misses(deadline_misses),
-        .source_hold_valid(),.source_hold_bank()
+        .source_hold_valid(source_hold_valid),.source_hold_bank(),
+        .source_hold_frame_id(source_hold_frame_id),.source_hold_config_id(source_hold_config_id)
     );
-    wire [31:0] source_addr=SOURCE_BASE+({30'b0,source_bank}<<BANK_SHIFT);
+    wire [31:0] source_addr=SOURCE_BASE+(32'(source_bank)<<BANK_SHIFT);
     wire [31:0] result_addr=RESULT_BASE+({31'b0,result_bank}<<BANK_SHIFT);
     assign display_base=RESULT_BASE+({31'b0,display_bank}<<BANK_SHIFT);
     wire pv,pr,psof,peol,peof;wire [31:0] pd;wire [1:0] pk;
@@ -105,7 +122,7 @@ module frame_render_engine #(
         .m_axi_rdata(m_axi_rdata),.m_axi_rresp(m_axi_rresp),.m_axi_rlast(m_axi_rlast),.m_axi_rvalid(m_axi_rvalid),.m_axi_rready(m_axi_rready)
     );
     axi_frame_writer writer (
-        .clk(clk),.rst_n(rst_n),.job_valid(run_valid && scale_ready),.job_ready(write_ready),
+        .clk(clk),.rst_n(rst_n),.abort(1'b0),.job_valid(run_valid && scale_ready),.job_ready(write_ready),
         .base_addr(result_addr),.dst_width(dw),.dst_height(dh),.stride_bytes(ds),
         .pixel_valid(pv),.pixel_ready(pr),.pixel_data(pd),.pixel_keep(pk),.pixel_sof(psof),.pixel_eol(peol),.pixel_eof(peof),
         .busy(),.done(write_done),.error(write_error),

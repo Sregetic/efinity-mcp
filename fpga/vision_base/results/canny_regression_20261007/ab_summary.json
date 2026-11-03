@@ -1,0 +1,71 @@
+{
+  "passed": true,
+  "scope": "Actual same frozen source250350,1920x384 rows300..683; not full-image noise acceptance",
+  "cases": [
+    {
+      "threshold": 128,
+      "source_frame_id": 250350,
+      "captured_threshold": 128,
+      "white_pixels": 768,
+      "components": 2,
+      "small_components": 0,
+      "minimum_component_area": 384,
+      "seam_coverage_rows": [
+        0,
+        384,
+        0
+      ]
+    },
+    {
+      "threshold": 96,
+      "source_frame_id": 250350,
+      "captured_threshold": 96,
+      "white_pixels": 2304,
+      "components": 6,
+      "small_components": 0,
+      "minimum_component_area": 384,
+      "seam_coverage_rows": [
+        384,
+        384,
+        384
+      ]
+    },
+    {
+      "threshold": 64,
+      "source_frame_id": 250350,
+      "captured_threshold": 64,
+      "white_pixels": 2304,
+      "components": 6,
+      "small_components": 0,
+      "minimum_component_area": 384,
+      "seam_coverage_rows": [
+        384,
+        384,
+        384
+      ]
+    },
+    {
+      "threshold": 48,
+      "source_frame_id": 250350,
+      "captured_threshold": 48,
+      "white_pixels": 2304,
+      "components": 6,
+      "small_components": 0,
+      "minimum_component_area": 384,
+      "seam_coverage_rows": [
+        384,
+        384,
+        384
+      ]
+    }
+  ],
+  "selected_threshold": 96,
+  "sobel_threshold_unchanged": 96,
+  "median_enabled": true,
+  "algorithm_bitstream_changed": false,
+  "display_analysis_size": [
+    480,
+    270
+  ],
+  "component_min": 32
+}

@@ -1,0 +1,2 @@
+PASS line snapshot 192 RGB888 pixels, both taps, all rows,192-bit header, serial order, metadata, bad row/short line rejected
+sim/vision/tb_line_snapshot.sv:43: $finish called at 505726000 (1ps)

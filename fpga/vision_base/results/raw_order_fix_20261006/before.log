@@ -1,0 +1,2 @@
+FATAL: sim/vision/tb_raw_frontend.sv:21: RAW order x0 y0
+       Time: 159437551  Scope: tb_raw_frontend

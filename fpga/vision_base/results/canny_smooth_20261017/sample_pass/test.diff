@@ -1,0 +1,54 @@
+--- before_tb_canny_fit.sv
++++ sim/vision/tb_canny_fit.sv
+@@ -10,6 +10,8 @@
+ always @(posedge clk)bitmap<=fx<W&&fy<H?map[fy*W+fx]:0;
+ integer f,i,xx,yy,a,b,nx,ny,pattern,cx,cy,k,minor,total,weight,slope,start,distance,major,minor_axis;
+ integer checks=0,fit_checks=0,radius,walk_pattern,previous,candidate,q,golden;reg[4:0]actual_walk;
++integer sample_slope,sample_error,sample_offset,sample_a,sample_b,sample_checks=0;
++reg signed[10:0]profile_error;reg[17:0]profile_active;
+ initial begin
+  $readmemh("board/ti60f225_v4/rtl/vision/canny_coverage_q5.mem",lut);
+  repeat(4)@(negedge clk);rst=1;
+@@ -22,6 +24,20 @@
+   actual_walk=dut.line_fit.walk(11'(walk_pattern),4'(previous));
+   if(actual_walk!==5'(golden))$fatal(1,"walk pattern%h previous%0d got%h expected%h",walk_pattern,previous,actual_walk,golden);
+  end
++ force dut.line_fit.error=profile_error;force dut.line_fit.active=profile_active;
++ for(sample_slope=-32;sample_slope<32;sample_slope=sample_slope+1)
++  for(sample_error=-64;sample_error<=64;sample_error=sample_error+1)begin
++   profile_error=sample_error;profile_active={12'd0,6'(sample_slope)};#1;
++   sample_offset=(sample_slope<0?-sample_slope:sample_slope)/4;
++   sample_a=sample_error-sample_offset;if(sample_a<0)sample_a=-sample_a;
++   sample_b=sample_error+sample_offset;if(sample_b<0)sample_b=-sample_b;
++   sample_a=255-16*sample_a;if(sample_a<0)sample_a=0;
++   sample_b=255-16*sample_b;if(sample_b<0)sample_b=0;
++   golden=(sample_a+sample_b)/2;
++   if(dut.line_fit.coverage!==8'(golden))$fatal(1,"pixel samples slope%0d error%0d got%0d expected%0d",sample_slope,sample_error,dut.line_fit.coverage,golden);
++   sample_checks=sample_checks+1;
++  end
++ release dut.line_fit.error;release dut.line_fit.active;
+  for(f=0;f<5;f=f+1)begin
+   for(yy=0;yy<H;yy=yy+1)for(xx=0;xx<W;xx=xx+1)
+    case(f)
+@@ -58,7 +74,12 @@
+      start=32+(radius==4?((total*57+4)>>>3):((total*51+2)>>>2))-2*slope;
+      major=f<2?xx%4:yy%4;minor_axis=f<2?yy%4:xx%4;
+      distance=minor_axis*16-(start+major*slope);if(distance<0)distance=-distance;
+-     expected=distance<16?255-distance*16:0;fit_checks=fit_checks+1;
++     sample_offset=(slope<0?-slope:slope)/4;
++     sample_a=distance-sample_offset;if(sample_a<0)sample_a=-sample_a;
++     sample_b=distance+sample_offset;
++     sample_a=255-16*sample_a;if(sample_a<0)sample_a=0;
++     sample_b=255-16*sample_b;if(sample_b<0)sample_b=0;
++     expected=(sample_a+sample_b)/2;fit_checks=fit_checks+1;
+     end
+     if(cx<2||cx>=W-2||cy<2||cy>=H-2)expected=0;
+     if(coverage!==expected)$fatal(1,"fit frame%0d x%0d y%0d got%0d expected%0d enable%b active%h",f,xx,yy,coverage,expected,dut.fit_enable,dut.line_fit.active);
+@@ -68,6 +89,6 @@
+   end
+  end
+  if(fit_checks<3000)$fatal(1,"straight-fit interior not exercised");
+- $display("PASS9-point fit %0d raster pixels, %0d fitted pixels, +/- shallow/steep slopes and empty next frame",checks,fit_checks);$finish;
++ $display("PASS9-point fit %0d raster pixels, %0d fitted pixels, %0d pixel-area cases, +/- shallow/steep slopes and empty next frame",checks,fit_checks,sample_checks);$finish;
+ end
+ endmodule

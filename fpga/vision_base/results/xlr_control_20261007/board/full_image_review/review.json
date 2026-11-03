@@ -1,0 +1,35 @@
+{
+  "frame": 18546,
+  "size": [
+    1920,
+    1080
+  ],
+  "edge_pixels": 16619,
+  "components": 15,
+  "component_sizes": [
+    181,
+    181,
+    241,
+    241,
+    367,
+    407,
+    447,
+    487,
+    1053,
+    1053,
+    1135,
+    1187,
+    1196,
+    3882,
+    4561
+  ],
+  "background_pixels_different_from_mode0_outside_red_and_osd": 1651224,
+  "purple_pixels": 0,
+  "overlay_red_matches_canny_mask_outside_osd": true,
+  "overlay_rgb_center_coordinate_delay": [
+    2,
+    2
+  ],
+  "background_pixels_different_after_coordinate_alignment": 0,
+  "visual_review": "Full source, camera, Canny and overlay reviewed; clear contour staircase remains; frozen color has no purple cast."
+}

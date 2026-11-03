@@ -1,0 +1,37 @@
+{
+  "scope": "copied-source simulation and host verification, not a new physical acceptance",
+  "passed": true,
+  "host_outline": true,
+  "rtl": [
+    {
+      "test": "controls",
+      "passed": true
+    },
+    {
+      "test": "osd",
+      "passed": true
+    },
+    {
+      "test": "line_direct",
+      "passed": true
+    },
+    {
+      "test": "shape_classifier",
+      "passed": true
+    },
+    {
+      "test": "edge_overlay",
+      "passed": true
+    }
+  ],
+  "image_codec": true,
+  "isolated_panel_test": true,
+  "upload_boundary_audit": true,
+  "runner_guard_files_unchanged": true,
+  "adapter_software": {
+    "tests": 72,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1
+  }
+}

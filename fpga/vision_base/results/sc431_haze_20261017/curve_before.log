@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "F:\Project\fpga\vision_base\scripts\test_shadow_curve.py", line 17, in <module>
+    assert 125<=light<=129 and (light-dark)/(light+dark)>.52, (light,dark)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (127.7584, 52.5984)

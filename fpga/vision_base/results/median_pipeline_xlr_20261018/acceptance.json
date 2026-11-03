@@ -1,0 +1,54 @@
+{
+  "implemented": true,
+  "simulation_passed": true,
+  "native_pnr_passed": true,
+  "artifact_source_timing_gate_passed": true,
+  "native_input_count": 172,
+  "changed_native_inputs": [
+    "board/ti60f225_v4/rtl/vision/vision_median9.sv"
+  ],
+  "equivalence": {
+    "rtl_windows": 26912,
+    "binary_threshold_windows": 2048,
+    "uniform_windows": 256,
+    "impulse_windows": 4608,
+    "random_windows": 20000,
+    "differences": 0,
+    "actual_schedule_binary_maps": 512,
+    "compute_stages": 7,
+    "output_delay_stages": 2,
+    "total_stages": 9,
+    "windows_per_clock": 1
+  },
+  "integration_tests": [
+    "frontend",
+    "color_denoise",
+    "canny_denoise",
+    "line_direct",
+    "fusion_display",
+    "canny_noise"
+  ],
+  "resources": {
+    "xlr": 58268,
+    "xlr_used_percent": 95.83552631578948,
+    "free_xlr": 2532,
+    "ram": 235,
+    "free_ram": 21,
+    "dsp": 62,
+    "free_dsp": 98,
+    "wns_ns": 0.152,
+    "whs_ns": 0.026,
+    "unassigned_core_pins": 0
+  },
+  "net_released_xlr_this_round": 168,
+  "net_released_xlr_vs_flash": 1782,
+  "firmware_changed": false,
+  "image_readback_retained": true,
+  "image_readback_basis": "Unchanged native source input and snapshot5RAM present; no new board export",
+  "board_programmed": false,
+  "flash_written": false,
+  "physical_image_acceptance": false,
+  "physical_power_cycle_verified": false,
+  "flash_baseline": "results/canny_flash_20261017/deployment.json",
+  "release": "F:\\Project\\fpga\\vision_base\\results\\median_pipeline_xlr_20261018\\release"
+}

@@ -1,0 +1,2 @@
+PASS native SC2210 4147200 pixels, RAW10 order, FS pulse/level, bubbles and frame closure
+F:\efinity-ci\upload-current-20261007\fpga\vision_base\sim\vision\tb_camera_native_1080.sv:41: $finish called at 10778690000 (1ps)

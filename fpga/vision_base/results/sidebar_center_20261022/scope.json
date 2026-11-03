@@ -1,0 +1,29 @@
+{
+  "baseline": "csi_raw10_fifo_20261018",
+  "baseline_resources": {
+    "xlr": 56916,
+    "ram": 241,
+    "dsp": 62
+  },
+  "hardware_access": false,
+  "flash_written": false,
+  "continuous_tracking": false,
+  "files_before": [
+    "firmware/vision/control_service.h",
+    "firmware/vision/fusion_service.h",
+    "firmware/vision/ai_main.c",
+    "firmware/vision/main.c",
+    "firmware/vision/fomo_main.cc",
+    "rtl/vision_control_bridge.sv",
+    "rtl/vision_ai_bridge.sv",
+    "board/ti60f225_v4/rtl/vision/vision_display.sv",
+    "board/ti60f225_v4/rtl/vision/vision_osd.sv",
+    "board/ti60f225_v4/rtl/ti60f225_oob_top.v",
+    "scripts/test_control_firmware.py",
+    "scripts/test_key_ui_board.py",
+    "scripts/test_ai_board_ui.py",
+    "sim/tb_vision_control_bridge.sv",
+    "sim/tb_vision_ai_bridge.sv",
+    "sim/vision/tb_osd.sv"
+  ]
+}

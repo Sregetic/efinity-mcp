@@ -61,6 +61,14 @@ currently enumerated USB URL, and literal `PROGRAM SRAM`. It verifies repository
 build workflow ID, main branch, successful conclusion and main ancestry. There
 is no `latest` fallback and no repository `.bit` fallback.
 
+`program_vision_sram.ps1` defaults to that CI artifact contract. Its explicit
+`-ValidateOnly`, `-BootOnly`, `-VideoMode` and `-Sensor` local parameter set keeps
+the existing interactive tools working through `program_vision_local_sram.ps1`.
+The parameter sets cannot be mixed. GitHub Actions may validate local artifacts,
+but local-mode programming is rejected there; device jobs must use the approved
+artifact path. `efinity_env.ps1 -EfinityHome` also retains the caller's existing
+user-directory settings.
+
 The current private repository rejected Required reviewers with HTTP 422:
 “billing plan supports the required reviewers protection rule”. Therefore this
 deployment uses local one-use approval, not an unprotected environment label.

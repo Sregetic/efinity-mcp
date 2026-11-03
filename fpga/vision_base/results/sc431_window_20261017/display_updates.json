@@ -1,0 +1,17 @@
+{
+  "seconds": 5.994719700000132,
+  "samples": 806,
+  "poll_hz": 134.28484404366432,
+  "max_sample_gap_ms": 8.45560000743717,
+  "distinct_changes": {
+    "capture": 180,
+    "display": 180,
+    "canny": 180
+  },
+  "updates_hz": {
+    "capture": 30.02642475510507,
+    "display": 30.02642475510507,
+    "canny": 30.02642475510507
+  },
+  "display_max_step": 1
+}

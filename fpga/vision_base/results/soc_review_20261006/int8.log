@@ -1,0 +1,2 @@
+PASS signed INT8 dot41024 vectors incl -128, response hold/backpressure/reset
+sim/tb_vision_int8_cfu.sv:22: $finish called at 51250000 (1ps)

@@ -1,0 +1,38 @@
+[
+  {
+    "xlr": 5574,
+    "ram": 24,
+    "dsp": 0,
+    "wns_ns": 4.864,
+    "whs_ns": 0.028,
+    "unassigned": 0,
+    "small_ram_logic": 0,
+    "cpu_xlr": 5134.0,
+    "harness_xlr": 440.0,
+    "report": "F:\\Project\\fpga\\vision_base\\results\\resource_trials_20261005\\sapphire_eval\\area\\native\\sapphire_area.route.rpt.xml"
+  },
+  {
+    "xlr": 7461,
+    "ram": 20,
+    "dsp": 0,
+    "wns_ns": 5.057,
+    "whs_ns": 0.029,
+    "unassigned": 0,
+    "small_ram_logic": 2,
+    "cpu_xlr": 7020.0,
+    "harness_xlr": 441.0,
+    "report": "F:\\Project\\fpga\\vision_base\\results\\resource_trials_20261005\\sapphire_eval\\area\\selective_native\\sapphire_area.route.rpt.xml"
+  },
+  {
+    "xlr": 15155,
+    "ram": 12,
+    "dsp": 0,
+    "wns_ns": 4.577,
+    "whs_ns": 0.047,
+    "unassigned": 0,
+    "small_ram_logic": 1,
+    "cpu_xlr": 14729.0,
+    "harness_xlr": 426.0,
+    "report": "F:\\Project\\fpga\\vision_base\\results\\resource_trials_20261005\\sapphire_eval\\area\\small_logic_native\\sapphire_area.route.rpt.xml"
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "nodes": 80,
+  "aggregate_directed_edges": 1296,
+  "synaptic_contacts": 26029,
+  "inputs": 32,
+  "readout_nodes": 16,
+  "table_bytes": 4660,
+  "state_format": "signed Q14",
+  "iterations": 3,
+  "state_policy": "reset for every independent ROI; no cross-object state retention",
+  "encoding": "eight spatial bins from existing64 edge-density features; engineered, not biological receptive fields",
+  "graph_version": "malecns-dino-circuit-v1",
+  "trained_readout": false,
+  "new_fpga_modules": false
+}

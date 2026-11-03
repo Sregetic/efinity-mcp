@@ -1,0 +1,2 @@
+PASS2PPC direct 46080 pixels, 30656 interior comparisons, median off/on, full width, six-row gaps, VS latency17 cycles, semantic1950..2974 cycles
+sim/vision/tb_line_direct.sv:58: $finish called at 507300000 (1ps)

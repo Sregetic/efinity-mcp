@@ -1,0 +1,16 @@
+{
+  "initial_boot_status": [
+    1447186225,
+    3,
+    16777215
+  ],
+  "cpu_state": 0,
+  "m7_abi": "0x26102871",
+  "control_magic": 0,
+  "delayed_rom_restart": "phase3 / JEDEC FFFFFF",
+  "release_powerdown_then_same_rom": "phase7 / JEDEC EF6017 / app447344 / weights4400 / CPU1",
+  "user1_program_download": false,
+  "configuration": "spi_low_power_mode=on",
+  "correction": "spi_low_power_mode=off",
+  "source": "https://www.efinixinc.com/docs/an033-configuring-titanium-fpgas-v3.1.pdf page77"
+}

@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "source_fps": 29.989780019140817,
+  "analysis_interval_seconds": 12.58333332,
+  "analysis_sequence_delta": 112,
+  "steady_seconds": 59.686999999918044,
+  "source_frame_delta": 1790,
+  "counter_deltas": {
+    "raw_overflows": 0,
+    "capture_discarded": 0,
+    "scan_bad_frames": 0
+  },
+  "historical_scan_bad_frames": 152,
+  "historical_counter_preserved": true,
+  "model_id": 1,
+  "real_card_accuracy_verified": false,
+  "final_source_frame": 30015,
+  "final_roi": [
+    640,
+    300,
+    640,
+    480
+  ],
+  "dma_microseconds": 1529.88,
+  "network_microseconds": 2796.75,
+  "total_cpu_microseconds": 6130.9,
+  "x3_pipeline_cycles": 17,
+  "display_probe_enabled": false,
+  "live_display_restored": true,
+  "flash_written": false,
+  "analysis_hz_with_debug_halts": 8.900662261086794,
+  "target_analysis_hz": 10,
+  "rate_scope": "112 completed records /12.58333332s APB time; includes USER1 halt/read/resume pauses"
+}

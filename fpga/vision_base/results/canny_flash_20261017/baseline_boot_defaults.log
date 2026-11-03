@@ -1,0 +1,6 @@
+F:/Efinity/efinity-riscv-ide-2026.1/toolchain/bin/../lib/gcc/riscv-none-elf/13.4.0/../../../../riscv-none-elf/bin/ld.exe: warning: F:\Project\fpga\vision_base\results\xlr_control_20261007\control_test\test.elf has a LOAD segment with RWX permissions
+Traceback (most recent call last):
+  File "F:\Project\fpga\vision_base\scripts\test_control_firmware.py", line 104, in <module>
+    assert r.returncode==0 and 'PASS RV32I controls' in r.stdout,(r.returncode,r.stdout,r.stderr)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (0, '001f', 'qemu-system-riscv32.exe: warning: Setting G will also set IMAFD\n')

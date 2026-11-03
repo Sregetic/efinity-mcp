@@ -1,0 +1,82 @@
+{
+  "passed": true,
+  "scope": "Synthetic weight version1->2->1; not a real-model accuracy benchmark",
+  "source_frame": 93939,
+  "render_config": 16,
+  "processing_context": 14,
+  "input_bytes_identical": true,
+  "changed_scores": true,
+  "restored_original_scores": true,
+  "cases": [
+    {
+      "version": 2,
+      "frame_id": 93939,
+      "render": 16,
+      "scores": [
+        25,
+        -40,
+        -50,
+        0
+      ],
+      "validation": {
+        "passed": true,
+        "sequence": 4,
+        "frame_id": 93939,
+        "source_config_id": 93939,
+        "model_id": 2,
+        "roi": [
+          700,
+          360,
+          480,
+          320
+        ],
+        "class_name": "blank",
+        "gray_pixels": 1024,
+        "features": 128,
+        "hidden": 32,
+        "logits": 4,
+        "flyhash_bits": 256,
+        "training_kind": "synthetic_bringup_only",
+        "real_card_accuracy_verified": false,
+        "dma_microseconds": 1814.72,
+        "network_microseconds": 2783.93,
+        "total_cpu_microseconds": 6291.75
+      }
+    },
+    {
+      "version": 1,
+      "frame_id": 93939,
+      "render": 16,
+      "scores": [
+        12,
+        -40,
+        -50,
+        0
+      ],
+      "validation": {
+        "passed": true,
+        "sequence": 5,
+        "frame_id": 93939,
+        "source_config_id": 93939,
+        "model_id": 1,
+        "roi": [
+          700,
+          360,
+          480,
+          320
+        ],
+        "class_name": "blank",
+        "gray_pixels": 1024,
+        "features": 128,
+        "hidden": 32,
+        "logits": 4,
+        "flyhash_bits": 256,
+        "training_kind": "synthetic_bringup_only",
+        "real_card_accuracy_verified": false,
+        "dma_microseconds": 1812.85,
+        "network_microseconds": 2785.67,
+        "total_cpu_microseconds": 6274.04
+      }
+    }
+  ]
+}

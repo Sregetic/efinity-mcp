@@ -1,0 +1,20 @@
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+Start time: 20:51:57 on Oct 22,2026
+vlog -work F:\Project\fpga\vision_base\results\xlr_recover_20261022\modelsim_work -sv F:\Project\fpga\vision_base\results\xlr_recover_20261022\tb_mapped_motion.sv F:\Project\fpga\vision_base\results\xlr_recover_20261022\motion_shared\outflow\motion_shared.map.v F:\Efinity\2026.1\sim_models\verilog\efx_add.v F:\Efinity\2026.1\sim_models\verilog\efx_dsp24.v F:\Efinity\2026.1\sim_models\verilog\efx_ff.v F:\Efinity\2026.1\sim_models\verilog\efx_lut4.v F:\Efinity\2026.1\sim_models\verilog\efx_ram10.v 
+-- Compiling module tb
+-- Compiling module vision_local_motion_core
+-- Compiling module EFX_ADD
+-- Compiling module EFX_DSP24
+-- Compiling module EFX_DSP24_pipe
+-- Compiling module EFX_DSP24_mult
+-- Compiling module EFX_DSP24_extender
+-- Compiling module EFX_DSP24_shifter
+-- Compiling module EFX_DSP24_add_sub
+-- Compiling module EFX_FF
+-- Compiling module EFX_LUT4
+-- Compiling module EFX_RAM10
+
+Top level modules:
+	tb
+End time: 20:51:57 on Oct 22,2026, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0

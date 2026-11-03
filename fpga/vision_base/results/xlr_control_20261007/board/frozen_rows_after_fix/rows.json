@@ -1,0 +1,1602 @@
+[
+  {
+    "i": 0,
+    "t": 1448128.875,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 65,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 0,
+    "t": 1448128.937,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 66,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 1,
+    "t": 1448129.062,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 67,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 1,
+    "t": 1448129.109,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 68,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 2,
+    "t": 1448129.25,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 69,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 2,
+    "t": 1448129.296,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 70,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 3,
+    "t": 1448129.437,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 71,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 3,
+    "t": 1448129.484,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 72,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 4,
+    "t": 1448129.609,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 73,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 4,
+    "t": 1448129.656,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 74,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 5,
+    "t": 1448129.796,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 75,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 5,
+    "t": 1448129.843,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 76,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 6,
+    "t": 1448129.984,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 77,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 6,
+    "t": 1448130.031,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 78,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 7,
+    "t": 1448130.156,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 79,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 7,
+    "t": 1448130.218,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 80,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 8,
+    "t": 1448130.343,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 81,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 8,
+    "t": 1448130.39,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 82,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 9,
+    "t": 1448130.531,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 83,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 9,
+    "t": 1448130.578,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 84,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 10,
+    "t": 1448130.718,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 85,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 10,
+    "t": 1448130.765,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 86,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 11,
+    "t": 1448130.906,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 87,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 11,
+    "t": 1448130.953,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 88,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 12,
+    "t": 1448131.078,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 89,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 12,
+    "t": 1448131.125,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 90,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 13,
+    "t": 1448131.265,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 91,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 13,
+    "t": 1448131.312,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 92,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 14,
+    "t": 1448131.453,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 93,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 14,
+    "t": 1448131.5,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 94,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 15,
+    "t": 1448131.625,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 95,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 15,
+    "t": 1448131.671,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 96,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 16,
+    "t": 1448131.812,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 97,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 16,
+    "t": 1448131.859,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 98,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 17,
+    "t": 1448132.0,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 99,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 17,
+    "t": 1448132.046,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 100,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 18,
+    "t": 1448132.171,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 101,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 18,
+    "t": 1448132.234,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 102,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 19,
+    "t": 1448132.359,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 103,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 19,
+    "t": 1448132.406,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 104,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 20,
+    "t": 1448132.546,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 105,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 20,
+    "t": 1448132.593,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 106,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 21,
+    "t": 1448132.734,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 107,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 21,
+    "t": 1448132.781,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 108,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 22,
+    "t": 1448132.906,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 109,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 22,
+    "t": 1448132.968,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 110,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 23,
+    "t": 1448133.093,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 111,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 23,
+    "t": 1448133.14,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 112,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 24,
+    "t": 1448133.281,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 113,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 24,
+    "t": 1448133.328,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 114,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 25,
+    "t": 1448133.468,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 115,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 25,
+    "t": 1448133.515,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 116,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 26,
+    "t": 1448133.64,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 117,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 26,
+    "t": 1448133.703,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 118,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 27,
+    "t": 1448133.828,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 119,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 27,
+    "t": 1448133.875,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 120,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 28,
+    "t": 1448134.015,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 121,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 28,
+    "t": 1448134.062,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 122,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 29,
+    "t": 1448134.203,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 123,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 29,
+    "t": 1448134.25,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 124,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 30,
+    "t": 1448134.375,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 125,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 30,
+    "t": 1448134.421,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 126,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 31,
+    "t": 1448134.562,
+    "source": 1,
+    "mean_rgb": [
+      13.746875,
+      18.021875,
+      16.436458333333334
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 1,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 127,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  },
+  {
+    "i": 31,
+    "t": 1448134.609,
+    "source": 0,
+    "mean_rgb": [
+      86.35,
+      110.6484375,
+      101.0765625
+    ],
+    "magenta": 0,
+    "header": {
+      "ready": 1,
+      "busy": 0,
+      "error": 0,
+      "source": 0,
+      "mode": 6,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "row": 480,
+      "sequence": 128,
+      "config_id": 1,
+      "frame_id": 2706
+    }
+  }
+]

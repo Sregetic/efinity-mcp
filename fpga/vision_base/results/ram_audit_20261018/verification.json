@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "coverage_pairs": 8192,
+  "fit_signed_pairs": 65536,
+  "sensor_boot_words": 166,
+  "cache_tag_cycles": 10000,
+  "reader_logs_cycle_identical": true,
+  "scope": "Isolated producer/consumer contracts; not full-system P&R or hardware acceptance"
+}

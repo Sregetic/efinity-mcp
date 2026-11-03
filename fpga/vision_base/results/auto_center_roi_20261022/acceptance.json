@@ -1,0 +1,73 @@
+{
+  "offline_passed": true,
+  "prior_regression_failed": true,
+  "failure_case": "AI OFF during long Invoke before main-loop cancellation; old callback submitted ROI",
+  "old_failure_evidence": "F:\\Project\\fpga\\vision_base\\results\\auto_center_roi_20261022\\control_before\\test.log",
+  "fix": "Shared FOMO completion entry services existing centering state machine before nonce acceptance",
+  "rv32i_checks": 2669,
+  "geometry_cases": 411,
+  "diagnostic_vectors": 8,
+  "core_tests": 19,
+  "pixel_replay_cases": 6,
+  "exact_rtl_pixels": 10932352,
+  "max_center_error_pixels": 4,
+  "preview_kind": "Synthetic source; actual RTL scaled pixels with host canvas placement, not physical HDMI",
+  "real_model_inference_rerun": false,
+  "real_classifier_input_used_in_pixel_replay": false,
+  "full_video_suite_rerun": false,
+  "image_readback_retained": true,
+  "snapshot_rgb_bits": 24,
+  "resources": {
+    "native_rerun": false,
+    "basis": "Unchanged Chinese bitstream and production RTL; DDR firmware only",
+    "native_manifest": "F:\\Project\\fpga\\vision_base\\results\\sidebar_chinese_20261022\\release\\manifest.json",
+    "usage": {
+      "xlr": 57745,
+      "ram": 246,
+      "dsp": 62,
+      "wns_ns": 0.108,
+      "whs_ns": 0.027,
+      "unassigned_core_pins": 0,
+      "missing_interface_pins": 14
+    },
+    "capacity": {
+      "xlr": 60800,
+      "ram": 256,
+      "dsp": 160
+    },
+    "free": {
+      "xlr": 3055,
+      "ram": 10,
+      "dsp": 98
+    },
+    "increment": {
+      "xlr": 0,
+      "ram": 0,
+      "dsp": 0
+    },
+    "ddr_program_before": 185472,
+    "ddr_program_after": 185568,
+    "ddr_program_increase": 96,
+    "bss_bytes": 66104,
+    "snapshot_ram": 5
+  },
+  "camera_application_built": true,
+  "ddr_app_bytes": 185568,
+  "boot_package_bytes": 190000,
+  "hardware_access": false,
+  "sram_written": false,
+  "flash_written": false,
+  "physical_acceptance": false,
+  "candidate": {
+    "bit": "F:\\Project\\fpga\\vision_base\\results\\sidebar_chinese_20261022\\release\\ti60f225_oob.bit",
+    "camera_elf": "F:\\Project\\fpga\\vision_base\\results\\auto_center_roi_20261022\\firmware\\vision.elf",
+    "weights": "F:\\Project\\fpga\\vision_base\\models\\shape_cards_bringup\\shape_cards_weights.bin",
+    "boot_package": "F:\\Project\\fpga\\vision_base\\results\\auto_center_roi_20261022\\release\\vision_boot.bin"
+  },
+  "unverified": [
+    "real object detection and recognition accuracy",
+    "physical keys and camera/HDMI centering",
+    "live moving target behavior",
+    "board latency and long-run/power-cycle"
+  ]
+}

@@ -2,6 +2,7 @@
 `default_nettype none
 
 module tb_roi_axi_scaler;
+    parameter CENTER_REPLAY=0;
     reg clk=0, rst_n=0;
     always #5 clk=~clk;
     reg job_valid=0;
@@ -33,8 +34,11 @@ module tb_roi_axi_scaler;
     integer lines, expected_line, errors;
     reg stalled=0;
     reg [100:0] stalled_payload;
+    reg [31:0] center_vectors[0:71];
+    string vector_file,output_dir;
+    integer sample,output_file=0,target_x,target_y,target_w,target_h;
 
-    roi_axi_scaler #(.MAX_LINE_PIXELS(32), .MAX_BURST_BEATS(16), .FIFO_BEATS(16)) dut (
+    roi_axi_scaler #(.MAX_LINE_PIXELS(CENTER_REPLAY?2560:32), .MAX_BURST_BEATS(CENTER_REPLAY?32:16), .FIFO_BEATS(CENTER_REPLAY?32:16)) dut (
       .clk(clk), .rst_n(rst_n), .job_valid(job_valid), .job_ready(job_ready),
       .base_addr(base_addr), .stride_bytes(stride_bytes), .frame_id(frame_id),
       .config_id(config_id), .src_width(src_width), .src_height(src_height),
@@ -50,7 +54,16 @@ module tb_roi_axi_scaler;
       .m_axi_rvalid(m_axi_rvalid), .m_axi_rready(m_axi_rready));
 
     function automatic [15:0] pixel_at(input integer a);
-        pixel_at = ((a >> 1) ^ (a >> 5) ^ 16'h5a3c ^ (a * 13));
+        integer x,y;
+        begin
+         pixel_at = ((a >> 1) ^ (a >> 5) ^ 16'h5a3c ^ (a * 13));
+         if(CENTER_REPLAY)begin
+          x=((a-expected_base)/2)%1920;y=((a-expected_base)/2)/1920;
+          pixel_at=16'hef7b;
+          if(x>=target_x&&x<target_x+target_w&&y>=target_y&&y<target_y+target_h)
+           pixel_at=(x<target_x+3||x>=target_x+target_w-3||y<target_y+3||y>=target_y+target_h-3)?16'h8842:16'ha25c;
+         end
+        end
     endfunction
 
     always @(negedge clk) begin
@@ -85,7 +98,7 @@ module tb_roi_axi_scaler;
                     $fatal(1,"Invalid AXI geometry");
                 if (({1'b0,m_axi_araddr[11:0]} + (({1'b0,m_axi_arlen}+1)*16)) > 4096)
                     $fatal(1,"Cross-page AXI burst");
-                if (m_axi_arlen > 15) $fatal(1,"Burst cap");
+                if (m_axi_arlen > (CENTER_REPLAY?31:15)) $fatal(1,"Burst cap");
                 pending<=1; response_left<=m_axi_arlen+1; response_addr<=m_axi_araddr; bursts<=bursts+1;
             end
             if (m_axi_rvalid && m_axi_rready) begin
@@ -98,6 +111,10 @@ module tb_roi_axi_scaler;
             end
 
             if (pixel_valid && pixel_ready) begin
+                if(CENTER_REPLAY)begin
+                    $fwrite(output_file,"%c%c",pixel_data[7:0],pixel_data[15:8]);
+                    if(pixel_keep==2'b11)$fwrite(output_file,"%c%c",pixel_data[23:16],pixel_data[31:24]);
+                end
                 dx=received % expected_dst_w; dy=received / expected_dst_w;
                 sx=expected_roi_x + (dx*expected_roi_w)/expected_dst_w;
                 sy=expected_roi_y + (dy*expected_roi_h)/expected_dst_h;
@@ -158,10 +175,36 @@ module tb_roi_axi_scaler;
 
     initial begin
         repeat(4) @(negedge clk); rst_n=1;
-        run_job(0); run_job(1);
-        $display("PASS tb_roi_axi_scaler cases=2"); $finish;
+        if(CENTER_REPLAY)begin
+            if(!$value$plusargs("vectors=%s",vector_file)||!$value$plusargs("output=%s",output_dir))$fatal(1,"center replay paths required");
+            $readmemh(vector_file,center_vectors);
+            for(sample=0;sample<6;sample=sample+1)begin
+                target_x=center_vectors[sample*12];target_y=center_vectors[sample*12+1];
+                target_w=center_vectors[sample*12+2];target_h=center_vectors[sample*12+3];
+                base_addr=32'h100000;stride_bytes=3840;src_width=1920;src_height=1080;
+                roi_x=center_vectors[sample*12+4]>>12;roi_y=center_vectors[sample*12+4]&4095;
+                roi_w=center_vectors[sample*12+5]>>12;roi_h=center_vectors[sample*12+5]&4095;
+                dst_width=center_vectors[sample*12+6]>>12;dst_height=center_vectors[sample*12+6]&4095;
+                frame_id=center_vectors[sample*12+8];config_id=center_vectors[sample*12+11];
+                expected_base=base_addr;expected_stride=stride_bytes;expected_roi_x=roi_x;expected_roi_y=roi_y;
+                expected_roi_w=roi_w;expected_roi_h=roi_h;expected_dst_w=dst_width;expected_dst_h=dst_height;
+                expected_frame=frame_id;expected_config=config_id;received=0;
+                output_file=$fopen($sformatf("%s/center_%0d.raw",output_dir,sample),"wb");
+                if(!output_file)$fatal(1,"center output file");
+                @(negedge clk);job_valid=1;while(!job_ready)@(negedge clk);
+                @(negedge clk);job_valid=0;
+                wait(done);@(negedge clk);
+                if(error||received!=expected_dst_w*expected_dst_h)$fatal(1,"center replay completion");
+                $fclose(output_file);$display("PASS center RTL sample=%0d pixels=%0d",sample,received);
+            end
+            $display("PASS tb_roi_axi_scaler six firmware center descriptors, native geometry, AXI/backpressure and source pixels");
+        end else begin
+            run_job(0); run_job(1);
+            $display("PASS tb_roi_axi_scaler cases=2");
+        end
+        $finish;
     end
-    initial begin #3000000; $fatal(1,"Timeout tb_roi_axi_scaler"); end
+    initial begin #(CENTER_REPLAY?1000000000:3000000); $fatal(1,"Timeout tb_roi_axi_scaler"); end
 endmodule
 
 `default_nettype wire

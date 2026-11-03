@@ -1,0 +1,73 @@
+{
+  "passed": true,
+  "scope": "Engineering/numeric integration only, not physical recognition acceptance",
+  "host_integer_vectors": 227,
+  "same_frame_pixels": 138240,
+  "connectome_readout": {
+    "exact": true,
+    "scores": [
+      54,
+      74,
+      -12,
+      -34
+    ],
+    "label": 1,
+    "version": 65537,
+    "training_kind": 1,
+    "readout_ms": 0.17121,
+    "circuit_ms": 4.07571,
+    "real_accuracy_verified": false
+  },
+  "readout_bound_cases": 5,
+  "video": {
+    "passed": true,
+    "samples": 1554,
+    "seconds": 19.96899999998277,
+    "min_ms": 16.0021,
+    "median_ms": 17.72435,
+    "max_ms": 18.50196,
+    "mean_ms": 17.599160978120977,
+    "observed_publications": 596,
+    "observed_publications_hz": 29.846261705669498,
+    "max_poll_gap_ms": 32.00000000651926,
+    "scan_bad_delta": 0,
+    "discard_delta": 0,
+    "deadline_delta": 532
+  },
+  "resources": {
+    "hardware_unchanged": true,
+    "fpga_rebuilt": false,
+    "flash_written": false,
+    "hardware": {
+      "xlr": 57356,
+      "free_xlr": 3444,
+      "xlr_percent": 94.33552631578948,
+      "ram": 244,
+      "free_ram": 12,
+      "dsp": 62,
+      "free_dsp": 98,
+      "wns_ns": 0.254,
+      "whs_ns": 0.026,
+      "unassigned_core_pins": 0
+    },
+    "xlr_delta": 0,
+    "ram_delta": 0,
+    "dsp_delta": 0,
+    "ddr_load_before": 177728,
+    "ddr_load_after": 178896,
+    "ddr_bss_before": 66048,
+    "ddr_bss_after": 66104,
+    "static_ddr_delta": 1224,
+    "readout_model_bytes": 364,
+    "scope": "Same deployed FPGA bitstream, DDR application only"
+  },
+  "recognition_accepted": false,
+  "external_fixed_correct": 2,
+  "external_fixed_total": 4,
+  "scene_false_positive": "Full-frame ceiling companion readout predicted circle; original FOMO reported zero detections",
+  "main_osd_changed": false,
+  "physical_card_accuracy_checked": false,
+  "flash_written": false,
+  "cpu_resumed": true,
+  "live_restored": true
+}

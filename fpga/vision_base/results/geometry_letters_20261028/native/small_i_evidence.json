@@ -1,0 +1,20 @@
+{
+  "character": "i",
+  "font": "Times New Roman",
+  "font_size": 200,
+  "full_resolution_bbox": [
+    857,
+    242,
+    913,
+    381
+  ],
+  "analysis_crop": [
+    210,
+    56,
+    233,
+    100
+  ],
+  "accepted_edge_pixels": 0,
+  "source": "native/lower_bitmap.mem",
+  "canny_modified": false
+}

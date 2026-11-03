@@ -1,0 +1,77 @@
+{
+  "before": {
+    "xlr": 57356,
+    "ram": 244,
+    "dsp": 62,
+    "wns_ns": 0.254,
+    "whs_ns": 0.026
+  },
+  "after": {
+    "xlr": 56916,
+    "ram": 241,
+    "dsp": 62,
+    "free_xlr": 3884,
+    "free_ram": 15,
+    "free_dsp": 98,
+    "wns_ns": 0.285,
+    "whs_ns": 0.026,
+    "unassigned_core_pins": 0
+  },
+  "released": {
+    "xlr": 440,
+    "ram": 3,
+    "dsp": 0
+  },
+  "changed_build_inputs": [
+    "board/ti60f225_v4/rtl/csi_rx_controller.sv"
+  ],
+  "csi_before": {
+    "ff": 1461,
+    "srl": 0,
+    "add": 218,
+    "lut": 2543,
+    "ram": 11
+  },
+  "csi_after": {
+    "ff": 1304,
+    "srl": 0,
+    "add": 215,
+    "lut": 2083,
+    "ram": 8
+  },
+  "snapshot_ram": 5,
+  "sensor_profile": {
+    "sensor": "sc431hai",
+    "mode": "Centered digital window; keep1440p30 sensor readout timing",
+    "width": 1920,
+    "height": 1080,
+    "raw_bits": 10,
+    "bayer": "BGGR",
+    "lanes": 4,
+    "fps": 30,
+    "hs_byteclk_mhz": 70,
+    "mipi_clock_mode": "Discontinuous",
+    "vts": 1500,
+    "exposure_min": 112,
+    "exposure_max": 2950,
+    "exposure_initial": 444,
+    "init_file": "sc431hai_1080p30_center_4lane.mem",
+    "init_length": 166,
+    "init_sha256": "6bdfa23f165d8d49c3210fc86ada51cd209cf6708a399b8a788ebfb30a05ffee",
+    "source": "Existing166-write SC431HAI ROM, only output-window registers differ (seven byte values changed)",
+    "sensor_output_origin": [
+      324,
+      184
+    ],
+    "crop_from_existing_active": [
+      320,
+      180
+    ],
+    "full_active_size": [
+      2560,
+      1440
+    ],
+    "note": "No binning or full-field scaling. Pixel pitch, PLL, HTS/VTS, orientation and gain stay unchanged; Bayer parity retained."
+  },
+  "flash_written": false
+}

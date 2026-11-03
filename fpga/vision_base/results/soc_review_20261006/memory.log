@@ -1,0 +1,2 @@
+PASS tb_frame_memory_system capture/ROI/freeze/scan 512 pixels, read/write error nonpublication, legacy R=219 B=86 CPU R=218 B=86 shared AXI
+sim/tb_frame_memory_system.sv:262: $finish called at 37500000 (1ps)

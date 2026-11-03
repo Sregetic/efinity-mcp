@@ -1,0 +1,87 @@
+{
+  "width": 1920,
+  "height": 100,
+  "canvas_height": 1080,
+  "y": 0,
+  "format": "RGB888",
+  "method": "FPGA line RAM / bulk USER2; no HDMI capture card",
+  "images": [
+    {
+      "mode": "6",
+      "name": "Canny overlay",
+      "file": "mode_6.png",
+      "frame_id": 93939,
+      "config_id": 16,
+      "canny_epoch": 20650,
+      "threshold": 80,
+      "median": 0,
+      "tone": 3,
+      "color_order": 2,
+      "sequence_first": 6286,
+      "sequence_last": 6385,
+      "seconds": 4.969000000040978,
+      "width": 1920,
+      "height": 100,
+      "y": 0
+    }
+  ],
+  "context": {
+    "roi_frame_id": 93939,
+    "applied_config_id": 16,
+    "roi_enabled": 1,
+    "roi_frame_ok": 1,
+    "source_held": 1,
+    "source_frozen": 1,
+    "render_busy": 0,
+    "render_pending": 0,
+    "capture_active": 1,
+    "config_busy": 0,
+    "config_error": 0,
+    "render_error": 0,
+    "scan_error": 0,
+    "commit_rejected": 0,
+    "mode": 6,
+    "median": 0,
+    "memory": 1,
+    "threshold": 80,
+    "canny_ready": 1,
+    "canny_fault": 0,
+    "roi": [
+      0,
+      0,
+      1920,
+      1080
+    ],
+    "output_size": [
+      1920,
+      1080
+    ],
+    "capture_discarded": 0,
+    "scan_bad_frames": 0,
+    "render_cycles": 2971187,
+    "requested_config_id": 16,
+    "accepted_config_id": 16,
+    "rejected_config_id": 0,
+    "held_source_frame_id": 93939,
+    "held_raw_id_sample": 93939,
+    "rgb_capture_count": 114731,
+    "position": [
+      0,
+      0
+    ],
+    "display_size": [
+      1920,
+      1080
+    ],
+    "render_deadline_misses": 68,
+    "sobel_threshold": 128,
+    "canny_threshold": 80,
+    "canny_effective_threshold": 80
+  },
+  "usb_latency_ms": {
+    "before": 16,
+    "during": 1
+  },
+  "canny_epoch": 20650,
+  "passed": true
+}

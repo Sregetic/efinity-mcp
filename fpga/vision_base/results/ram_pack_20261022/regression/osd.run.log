@@ -1,0 +1,2 @@
+PASS OSD Chinese 4 groups/17 labels/8 modes/statuses/units and 55552 font pixels, legacy HUD exact, widths144/304 row64
+F:\Project\fpga\vision_base\sim\vision\tb_osd.sv:130: $finish called at 563066000 (1ps)

@@ -1,0 +1,2315 @@
+{
+  "current_board_mode": "camera",
+  "current_output_protocol": "HDMI with AVI VIC16, original 1080p60 timing",
+  "current_output_format": "1080p60 VIC16",
+  "sram_programmed": true,
+  "flash_written": false,
+  "display_mode": 0,
+  "memory_mode": 0,
+  "diagnostic_page": 0,
+  "capture_received": false,
+  "usb_route": "UGREEN USB-A directly to computer, replugged by user",
+  "physical_hdmi_route": "Current receiver readout matches previous HDMI-connected state; cable route not freshly user-confirmed",
+  "latest_report": "F:/Project/fpga/vision_base/results/raw_pool_20261006/REPORT.md",
+  "display_1080p30_observation": "Previous bitstream had user-confirmed stable image; new sync bitstream not visually checked on monitor",
+  "candidate_sync_alignment": "Not active: reverted to original60Hz at user request",
+  "candidate_bit_sha256": "CDB64DDD16D61B3BD83E61245E732D2C7908AA287F01D970357D983E8FADC911",
+  "candidate_report": "F:/Project/fpga/vision_base/results/hdmi_sync_alignment_20261003/REPORT.md",
+  "receiver_abc_report": "F:\\Project\\fpga\\vision_base\\results\\ugreen_rx_abc_20261003\\REPORT.md",
+  "capture_note": "Latest20second capture contains blank and receiver No Signal; valid FPGA pixels not received",
+  "current_board_artifact_dir": "F:/Project/fpga/vision_base/results/raw_pool_20261006/final_timer_snapshot",
+  "prepared_release": "F:/Project/fpga/vision_base/results/raw_pool_20261006/final_timer_snapshot",
+  "sc2210_preparation": {
+    "report": "F:\\Project\\fpga\\vision_base\\results\\sc2210_preparation_20261003\\REPORT.md",
+    "artifact_dir": "F:\\Project\\fpga\\vision_base\\artifacts\\camera_sc2210",
+    "reference_bit_sha256": "CC4B91EAB413039B6F0D1CB6961C58AA46AFEA3EF85F7D0A39D13E690EEA0797",
+    "reference_profile": "2-lane RAW10 BGGR 1080p30, 24MHz MCLK",
+    "real_module_profile_confirmed": false,
+    "hardware_programmed": false,
+    "new_camera_capture_validated": false,
+    "wns_ns": 0.353,
+    "whs_ns": 0.026,
+    "last_rebuild_date": "2026-10-04",
+    "source_checked": true,
+    "roi_integrated": true,
+    "pending_rebuild_reason": "Stored SC2210 artifact not rebuilt after shared IMAGE_DEBUG0/1/2 controls; native1080 branch bypasses the FOV module"
+  },
+  "noise_completion_work": "Implemented, SRAM programmed, current-scene JTAG image and reference checks passed",
+  "noise_acceptance": {
+    "acceptance": "current-scene isolated-speckle and contour checks",
+    "contour_recall_within2px": 0.9992229992229992,
+    "frames": {
+      "release_baseline": {
+        "pixels": 2574,
+        "components": [
+          {
+            "box": [
+              3,
+              3,
+              237,
+              113
+            ],
+            "area": 320
+          },
+          {
+            "box": [
+              3,
+              3,
+              244,
+              116
+            ],
+            "area": 332
+          },
+          {
+            "box": [
+              273,
+              3,
+              59,
+              122
+            ],
+            "area": 171
+          },
+          {
+            "box": [
+              276,
+              3,
+              58,
+              121
+            ],
+            "area": 171
+          },
+          {
+            "box": [
+              134,
+              55,
+              60,
+              134
+            ],
+            "area": 165
+          },
+          {
+            "box": [
+              21,
+              85,
+              399,
+              182
+            ],
+            "area": 887
+          },
+          {
+            "box": [
+              66,
+              189,
+              139,
+              78
+            ],
+            "area": 203
+          },
+          {
+            "box": [
+              28,
+              205,
+              141,
+              62
+            ],
+            "area": 325
+          }
+        ],
+        "small_components": 0,
+        "compact12_components": 0,
+        "epoch": 24,
+        "context": {
+          "mode": 5,
+          "median": 0,
+          "memory": 1,
+          "requested_threshold": 128,
+          "noise_mean_bound": 2,
+          "noise_valid": 1,
+          "effective_threshold": 128,
+          "display_id_at_hold": 578
+        }
+      },
+      "release_denoised": {
+        "pixels": 2556,
+        "components": [
+          {
+            "box": [
+              3,
+              3,
+              241,
+              116
+            ],
+            "area": 649
+          },
+          {
+            "box": [
+              273,
+              3,
+              59,
+              122
+            ],
+            "area": 171
+          },
+          {
+            "box": [
+              276,
+              3,
+              58,
+              121
+            ],
+            "area": 171
+          },
+          {
+            "box": [
+              134,
+              55,
+              60,
+              134
+            ],
+            "area": 165
+          },
+          {
+            "box": [
+              24,
+              85,
+              396,
+              181
+            ],
+            "area": 883
+          },
+          {
+            "box": [
+              67,
+              189,
+              138,
+              77
+            ],
+            "area": 198
+          },
+          {
+            "box": [
+              30,
+              205,
+              139,
+              61
+            ],
+            "area": 319
+          }
+        ],
+        "small_components": 0,
+        "compact12_components": 0,
+        "epoch": 10,
+        "context": {
+          "mode": 5,
+          "median": 1,
+          "memory": 1,
+          "requested_threshold": 128,
+          "noise_mean_bound": 2,
+          "noise_valid": 1,
+          "effective_threshold": 128,
+          "display_id_at_hold": 578
+        }
+      },
+      "release_live1": {
+        "pixels": 2946,
+        "components": [
+          {
+            "box": [
+              3,
+              3,
+              241,
+              116
+            ],
+            "area": 649
+          },
+          {
+            "box": [
+              273,
+              3,
+              59,
+              122
+            ],
+            "area": 171
+          },
+          {
+            "box": [
+              276,
+              3,
+              58,
+              121
+            ],
+            "area": 169
+          },
+          {
+            "box": [
+              383,
+              3,
+              93,
+              209
+            ],
+            "area": 276
+          },
+          {
+            "box": [
+              396,
+              3,
+              80,
+              177
+            ],
+            "area": 230
+          },
+          {
+            "box": [
+              134,
+              55,
+              60,
+              134
+            ],
+            "area": 168
+          },
+          {
+            "box": [
+              210,
+              87,
+              210,
+              179
+            ],
+            "area": 366
+          },
+          {
+            "box": [
+              24,
+              126,
+              310,
+              140
+            ],
+            "area": 396
+          },
+          {
+            "box": [
+              67,
+              189,
+              139,
+              77
+            ],
+            "area": 200
+          },
+          {
+            "box": [
+              30,
+              205,
+              139,
+              61
+            ],
+            "area": 321
+          }
+        ],
+        "small_components": 0,
+        "compact12_components": 0,
+        "epoch": 320,
+        "context": {
+          "mode": 5,
+          "median": 1,
+          "memory": 0,
+          "requested_threshold": 128,
+          "noise_mean_bound": 2,
+          "noise_valid": 1,
+          "effective_threshold": 128,
+          "display_id_at_hold": 7101
+        }
+      },
+      "release_live2": {
+        "pixels": 2557,
+        "components": [
+          {
+            "box": [
+              3,
+              3,
+              241,
+              116
+            ],
+            "area": 647
+          },
+          {
+            "box": [
+              273,
+              3,
+              59,
+              122
+            ],
+            "area": 171
+          },
+          {
+            "box": [
+              276,
+              3,
+              58,
+              121
+            ],
+            "area": 169
+          },
+          {
+            "box": [
+              134,
+              55,
+              60,
+              134
+            ],
+            "area": 170
+          },
+          {
+            "box": [
+              23,
+              85,
+              397,
+              181
+            ],
+            "area": 1201
+          },
+          {
+            "box": [
+              67,
+              189,
+              139,
+              77
+            ],
+            "area": 199
+          }
+        ],
+        "small_components": 0,
+        "compact12_components": 0,
+        "epoch": 329,
+        "context": {
+          "mode": 5,
+          "median": 1,
+          "memory": 0,
+          "requested_threshold": 128,
+          "noise_mean_bound": 2,
+          "noise_valid": 1,
+          "effective_threshold": 128,
+          "display_id_at_hold": 9170
+        }
+      }
+    },
+    "runtime": {
+      "seconds": 21.55249333381653,
+      "source_fps": 30.01972857520095,
+      "canny_fps": 3.851062552923769,
+      "faults": 0,
+      "samples": 101
+    },
+    "final_controls": {
+      "magic": "56495331",
+      "build": "26091707",
+      "mode": 5,
+      "median": 1,
+      "memory": 0,
+      "index": 0,
+      "threshold": 128,
+      "raw": "564953312609170778b0080700002c2600002c250000015a",
+      "capture_id": 11302,
+      "display_id": 11301,
+      "canny_completed": 346,
+      "canny_fault": 0,
+      "canny_busy": 1,
+      "canny_ready": 1,
+      "history_count": 6,
+      "keys_n": 7,
+      "sample_time_s": 1791086997.604781
+    }
+  },
+  "roi_work": "X1 native camera integration complete; live and immutable-source rerender board tests passed",
+  "roi_acceptance": {
+    "passed": true,
+    "bit_sha256": "3D1B037AC54ED5A927FCA3E0E7EA02CFD7640D0D6D0E94EAD902738924D94793",
+    "live": [
+      {
+        "name": "live_full",
+        "seconds": 59.436999999918044,
+        "source_frames": 3564,
+        "scan_bad_delta": 0,
+        "source_discard_delta": 0
+      },
+      {
+        "name": "live_zoom",
+        "seconds": 59.312000000150874,
+        "source_frames": 3558,
+        "scan_bad_delta": 0,
+        "source_discard_delta": 0
+      }
+    ],
+    "frozen": [
+      {
+        "name": "frozen_full",
+        "roi_frame_id": 7872,
+        "applied_config_id": 3,
+        "roi_enabled": 1,
+        "roi_frame_ok": 1,
+        "source_held": 1,
+        "source_frozen": 1,
+        "render_busy": 0,
+        "render_pending": 0,
+        "capture_active": 0,
+        "config_busy": 0,
+        "config_error": 0,
+        "render_error": 0,
+        "scan_error": 0,
+        "commit_rejected": 0,
+        "mode": 5,
+        "median": 1,
+        "memory": 1,
+        "threshold": 128,
+        "canny_ready": 1,
+        "canny_fault": 0,
+        "roi": [
+          0,
+          0,
+          1920,
+          1080
+        ],
+        "output_size": [
+          1920,
+          1080
+        ],
+        "capture_discarded": 0,
+        "scan_bad_frames": 0,
+        "render_cycles": 2827148,
+        "requested_config_id": 3,
+        "accepted_config_id": 3,
+        "rejected_config_id": 0,
+        "held_source_frame_id": 7872,
+        "held_raw_id_sample": 4399,
+        "rgb_capture_count": 7873,
+        "position": [
+          0,
+          0
+        ],
+        "display_size": [
+          1920,
+          1080
+        ],
+        "render_deadline_misses": 3279
+      },
+      {
+        "name": "frozen_zoom",
+        "roi_frame_id": 7872,
+        "applied_config_id": 4,
+        "roi_enabled": 1,
+        "roi_frame_ok": 1,
+        "source_held": 1,
+        "source_frozen": 1,
+        "render_busy": 0,
+        "render_pending": 0,
+        "capture_active": 0,
+        "config_busy": 0,
+        "config_error": 0,
+        "render_error": 0,
+        "scan_error": 0,
+        "commit_rejected": 0,
+        "mode": 5,
+        "median": 1,
+        "memory": 1,
+        "threshold": 128,
+        "canny_ready": 1,
+        "canny_fault": 0,
+        "roi": [
+          480,
+          270,
+          960,
+          540
+        ],
+        "output_size": [
+          1920,
+          1080
+        ],
+        "capture_discarded": 0,
+        "scan_bad_frames": 0,
+        "render_cycles": 1421420,
+        "requested_config_id": 4,
+        "accepted_config_id": 4,
+        "rejected_config_id": 0,
+        "held_source_frame_id": 7872,
+        "held_raw_id_sample": 4399,
+        "rgb_capture_count": 7873,
+        "position": [
+          0,
+          0
+        ],
+        "display_size": [
+          1920,
+          1080
+        ],
+        "render_deadline_misses": 3279
+      },
+      {
+        "name": "frozen_pan",
+        "roi_frame_id": 7872,
+        "applied_config_id": 5,
+        "roi_enabled": 1,
+        "roi_frame_ok": 1,
+        "source_held": 1,
+        "source_frozen": 1,
+        "render_busy": 0,
+        "render_pending": 0,
+        "capture_active": 0,
+        "config_busy": 0,
+        "config_error": 0,
+        "render_error": 0,
+        "scan_error": 0,
+        "commit_rejected": 0,
+        "mode": 5,
+        "median": 1,
+        "memory": 1,
+        "threshold": 128,
+        "canny_ready": 1,
+        "canny_fault": 0,
+        "roi": [
+          608,
+          334,
+          960,
+          540
+        ],
+        "output_size": [
+          1920,
+          1080
+        ],
+        "capture_discarded": 0,
+        "scan_bad_frames": 0,
+        "render_cycles": 1478047,
+        "requested_config_id": 5,
+        "accepted_config_id": 5,
+        "rejected_config_id": 0,
+        "held_source_frame_id": 7872,
+        "held_raw_id_sample": 4399,
+        "rgb_capture_count": 7873,
+        "position": [
+          0,
+          0
+        ],
+        "display_size": [
+          1920,
+          1080
+        ],
+        "render_deadline_misses": 3279
+      },
+      {
+        "name": "frozen_small",
+        "roi_frame_id": 7872,
+        "applied_config_id": 6,
+        "roi_enabled": 1,
+        "roi_frame_ok": 1,
+        "source_held": 1,
+        "source_frozen": 1,
+        "render_busy": 0,
+        "render_pending": 0,
+        "capture_active": 0,
+        "config_busy": 0,
+        "config_error": 0,
+        "render_error": 0,
+        "scan_error": 0,
+        "commit_rejected": 0,
+        "mode": 5,
+        "median": 1,
+        "memory": 1,
+        "threshold": 128,
+        "canny_ready": 1,
+        "canny_fault": 0,
+        "roi": [
+          0,
+          0,
+          1920,
+          1080
+        ],
+        "output_size": [
+          960,
+          540
+        ],
+        "capture_discarded": 0,
+        "scan_bad_frames": 0,
+        "render_cycles": 1428226,
+        "requested_config_id": 6,
+        "accepted_config_id": 6,
+        "rejected_config_id": 0,
+        "held_source_frame_id": 7872,
+        "held_raw_id_sample": 4399,
+        "rgb_capture_count": 7873,
+        "position": [
+          480,
+          270
+        ],
+        "display_size": [
+          960,
+          540
+        ],
+        "render_deadline_misses": 3279
+      }
+    ],
+    "final": {
+      "roi_frame_id": 7886,
+      "applied_config_id": 7,
+      "roi_enabled": 1,
+      "roi_frame_ok": 1,
+      "source_held": 1,
+      "source_frozen": 0,
+      "render_busy": 1,
+      "render_pending": 0,
+      "capture_active": 1,
+      "config_busy": 0,
+      "config_error": 0,
+      "render_error": 0,
+      "scan_error": 0,
+      "commit_rejected": 0,
+      "mode": 5,
+      "median": 1,
+      "memory": 0,
+      "threshold": 128,
+      "canny_ready": 1,
+      "canny_fault": 0,
+      "roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "output_size": [
+        1920,
+        1080
+      ],
+      "capture_discarded": 0,
+      "scan_bad_frames": 0,
+      "render_cycles": 3878945,
+      "requested_config_id": 7,
+      "accepted_config_id": 7,
+      "rejected_config_id": 0,
+      "held_source_frame_id": 7901,
+      "held_raw_id_sample": 13143,
+      "rgb_capture_count": 7901,
+      "position": [
+        0,
+        0
+      ],
+      "display_size": [
+        1920,
+        1080
+      ],
+      "render_deadline_misses": 3291
+    }
+  },
+  "roi_images": {
+    "passed": true,
+    "frames": {
+      "frozen_full": {
+        "edge_pixels": 3562,
+        "small_components": 0,
+        "compact_components": 0,
+        "config_id": 3,
+        "source_frame": 7872
+      },
+      "frozen_zoom": {
+        "edge_pixels": 2141,
+        "small_components": 0,
+        "compact_components": 0,
+        "config_id": 4,
+        "source_frame": 7872
+      },
+      "frozen_pan": {
+        "edge_pixels": 2329,
+        "small_components": 0,
+        "compact_components": 0,
+        "config_id": 5,
+        "source_frame": 7872
+      },
+      "frozen_small": {
+        "edge_pixels": 1750,
+        "small_components": 0,
+        "compact_components": 0,
+        "config_id": 6,
+        "source_frame": 7872
+      }
+    }
+  },
+  "current_roi": {
+    "roi_frame_id": 4423,
+    "applied_config_id": 13,
+    "roi_enabled": 0,
+    "roi_frame_ok": 0,
+    "source_held": 0,
+    "source_frozen": 0,
+    "render_busy": 0,
+    "render_pending": 0,
+    "capture_active": 0,
+    "config_busy": 0,
+    "config_error": 0,
+    "render_error": 0,
+    "scan_error": 0,
+    "commit_rejected": 0,
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "threshold": 128,
+    "canny_ready": 1,
+    "canny_fault": 0,
+    "roi": [
+      0,
+      0,
+      1920,
+      1080
+    ],
+    "output_size": [
+      1920,
+      1080
+    ],
+    "capture_discarded": 0,
+    "scan_bad_frames": 0,
+    "render_cycles": 3485015,
+    "requested_config_id": 14,
+    "accepted_config_id": 14,
+    "rejected_config_id": 0,
+    "held_source_frame_id": 4426,
+    "held_raw_id_sample": 40378,
+    "rgb_capture_count": 4428,
+    "position": [
+      0,
+      0
+    ],
+    "display_size": [
+      1920,
+      1080
+    ],
+    "render_deadline_misses": 1833
+  },
+  "roi_panel_url": "http://127.0.0.1:63438",
+  "roi_panel_server": {
+    "url": "http://127.0.0.1:63438",
+    "pid": 42856,
+    "jtag_url": "ftdi://0x0403:0x6011:4:9/2"
+  },
+  "last_reprogram_report": "F:\\Project\\fpga\\vision_base\\results\\project_light_20261005\\REPORT.md",
+  "last_reprogram_sram": "F:\\Project\\fpga\\vision_base\\results\\project_light_20261005\\release_artifact\\ti60f225_oob.bit",
+  "button_nosignal_before": "JTAG USER2 signature and diagnostic page all zero; no valid feature state",
+  "button_reprogram_verification": {
+    "passed": true,
+    "seconds": 21.31605577468872,
+    "raw_fps": 29.977403266075445,
+    "canny_fps": 28.66383942969029,
+    "roi": {
+      "roi_frame_id": 6434,
+      "applied_config_id": 1,
+      "roi_enabled": 1,
+      "roi_frame_ok": 1,
+      "source_held": 1,
+      "source_frozen": 0,
+      "render_busy": 1,
+      "render_pending": 0,
+      "capture_active": 1,
+      "config_busy": 0,
+      "config_error": 0,
+      "render_error": 0,
+      "scan_error": 0,
+      "commit_rejected": 0,
+      "mode": 2,
+      "median": 1,
+      "memory": 0,
+      "threshold": 128,
+      "canny_ready": 1,
+      "canny_fault": 0,
+      "roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "output_size": [
+        1920,
+        1080
+      ],
+      "capture_discarded": 0,
+      "scan_bad_frames": 0,
+      "render_cycles": 3893751,
+      "requested_config_id": 1,
+      "accepted_config_id": 1,
+      "rejected_config_id": 0,
+      "held_source_frame_id": 6449,
+      "held_raw_id_sample": 3699,
+      "rgb_capture_count": 6449,
+      "position": [
+        0,
+        0
+      ],
+      "display_size": [
+        1920,
+        1080
+      ],
+      "render_deadline_misses": 2150
+    },
+    "user_visual_confirmation": "Picture restored after SRAM reprogramming",
+    "pressed_button": "Physical board button, user says not SW; exact silkscreen unconfirmed",
+    "cause_assessment": "Configuration reset is consistent with dedicated RESET_N/CRESET_N schematic and zero USER2 diagnostics before reprogramming; exact button not confirmed"
+  },
+  "last_reprogram_visual_confirmation": "Actual nonblack pre-TMDS image and browser verification; no new physical monitor observation",
+  "last_reprogram_source": "native compile SC431HAI / weak tile skip / FPGA occupancy and FlyHash",
+  "current_bit_artifact": "F:\\Project\\fpga\\vision_base\\results\\project_light_20261005\\release_artifact\\ti60f225_oob.bit",
+  "edge_quality_work": {
+    "generated_utc": "2026-10-04T15:56:08.319924+00:00",
+    "tests": {
+      "sobel": "PASS",
+      "controls": "PASS",
+      "frontend": "PASS",
+      "edge_overlay": "PASS",
+      "hysteresis_random": "PASS",
+      "hysteresis_sweep": "PASS",
+      "edge_components": "PASS",
+      "edge_probe": "PASS",
+      "canny_raster": "PASS",
+      "canny_noise": "PASS",
+      "canny": "PASS"
+    },
+    "hysteresis_random_cycles": {
+      "before": 179963,
+      "after": 125216,
+      "reduction_percent": 30.421253257614065
+    },
+    "components_process_cycles": {
+      "before": 660116,
+      "after": 474207,
+      "reduction_percent": 28.16308042828836
+    },
+    "sobel_frozen_counts": {
+      "0": 65463,
+      "1": 65463,
+      "16": 0,
+      "128": 0,
+      "256": 0,
+      "1024": 0,
+      "2047": 0
+    },
+    "runtime": {
+      "seconds": 21.321961164474487,
+      "raw_capture_fps": 29.96910064092358,
+      "canny_processing_fps": 30.01600064192659,
+      "canny_faults": 0,
+      "input_scene": "near black; not complex moving-scene FPS acceptance"
+    },
+    "raw_input": {
+      "pixels": 240,
+      "minimum": 16,
+      "maximum": 17,
+      "mean": 16.258333333333333
+    },
+    "analysis": {
+      "magic": "56495331",
+      "build": "26100419",
+      "mode": 5,
+      "median": 1,
+      "memory": 0,
+      "index": 0,
+      "threshold": 128,
+      "raw": "564953312610041978b008070003f4820000000100000000",
+      "canny_fault": 0,
+      "canny_busy": 1,
+      "canny_ready": 1,
+      "history_count": 6,
+      "keys_n": 7,
+      "sample_time_s": 1791129068.1753519,
+      "canny_analysis_cycles": 259202,
+      "canny_sweep_passes": 1,
+      "canny_weak_visits": 0
+    },
+    "write_errors": {
+      "first_observed": 1,
+      "last": 1,
+      "additional_during_samples": 0
+    },
+    "programming": {
+      "artifact": "F:\\Project\\fpga\\vision_base\\results\\edge_quality_20261004\\release_artifact\\ti60f225_oob.bit",
+      "jtag_url": "ftdi://0x0403:0x6011:4:9/2",
+      "operation": "JTAG SRAM",
+      "device_id": "0x10660A79",
+      "flash_written": false,
+      "programmer_completed": true,
+      "diagnostic_tags": [
+        "26100418",
+        "26100419"
+      ],
+      "physical_contour_acceptance": "pending valid illuminated camera scene"
+    },
+    "build": {
+      "dsp": 43,
+      "pgm_pass": true,
+      "built_utc": "2026-10-04T15:46:26.9603601Z",
+      "identity_method": "Fresh native reports and bitstream plus diagnostic page24/25 readback after programming",
+      "xlr": 58398,
+      "map_pass": true,
+      "hdmi": "1920x1080p60 VIC16",
+      "whs_ns": 0.026,
+      "analysis": "480x270 exact Canny",
+      "ram": 244,
+      "render": "1px connected contour",
+      "unassigned_core_pins": 0,
+      "sensor": "sc431hai",
+      "interface_pass": true,
+      "started_utc": "2026-10-04T15:40:05.8600382Z",
+      "video_mode": "camera",
+      "wns_ns": 0.32,
+      "pnr_pass": true,
+      "flow": "native compile",
+      "artifact_directory": "F:/Project/fpga/vision_base/results/edge_quality_20261004/release_artifact"
+    }
+  },
+  "mode_readback": {
+    "passed": true,
+    "scope": "JTAG exact mode-pixel export, not HDMI electrical or scene recognition acceptance",
+    "source": 28,
+    "config": 8,
+    "canny_epoch": 24,
+    "images": {
+      "source": {
+        "size": [
+          1920,
+          1080
+        ],
+        "extrema": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "colors": [
+          [
+            2073600,
+            [
+              0,
+              0,
+              0
+            ]
+          ]
+        ],
+        "seconds": 53.92200000002049
+      },
+      "0": {
+        "size": [
+          1920,
+          1080
+        ],
+        "extrema": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "colors": [
+          [
+            2073600,
+            [
+              0,
+              0,
+              0
+            ]
+          ]
+        ],
+        "seconds": 53.718000000109896
+      },
+      "1": {
+        "size": [
+          1920,
+          1080
+        ],
+        "extrema": [
+          [
+            0,
+            255
+          ],
+          [
+            0,
+            255
+          ],
+          [
+            0,
+            128
+          ]
+        ],
+        "colors": [
+          [
+            3268,
+            [
+              16,
+              16,
+              16
+            ]
+          ],
+          [
+            956,
+            [
+              255,
+              255,
+              128
+            ]
+          ],
+          [
+            2069376,
+            [
+              0,
+              0,
+              0
+            ]
+          ]
+        ],
+        "seconds": 53.98400000017136
+      },
+      "2": {
+        "size": [
+          1920,
+          1080
+        ],
+        "extrema": [
+          [
+            0,
+            255
+          ],
+          [
+            0,
+            255
+          ],
+          [
+            0,
+            128
+          ]
+        ],
+        "colors": [
+          [
+            6856,
+            [
+              16,
+              16,
+              16
+            ]
+          ],
+          [
+            1592,
+            [
+              255,
+              255,
+              128
+            ]
+          ],
+          [
+            2065152,
+            [
+              0,
+              0,
+              0
+            ]
+          ]
+        ],
+        "seconds": 53.735000000102445
+      },
+      "3": {
+        "size": [
+          1920,
+          1080
+        ],
+        "extrema": [
+          [
+            0,
+            255
+          ],
+          [
+            0,
+            255
+          ],
+          [
+            0,
+            128
+          ]
+        ],
+        "colors": [
+          [
+            6852,
+            [
+              16,
+              16,
+              16
+            ]
+          ],
+          [
+            1596,
+            [
+              255,
+              255,
+              128
+            ]
+          ],
+          [
+            4320,
+            [
+              0,
+              255,
+              128
+            ]
+          ],
+          [
+            2060832,
+            [
+              0,
+              0,
+              0
+            ]
+          ]
+        ],
+        "seconds": 53.687999999849126
+      },
+      "4": {
+        "size": [
+          1920,
+          1080
+        ],
+        "extrema": [
+          [
+            0,
+            255
+          ],
+          [
+            0,
+            255
+          ],
+          [
+            0,
+            128
+          ]
+        ],
+        "colors": [
+          [
+            6856,
+            [
+              16,
+              16,
+              16
+            ]
+          ],
+          [
+            1592,
+            [
+              255,
+              255,
+              128
+            ]
+          ],
+          [
+            2065152,
+            [
+              0,
+              0,
+              0
+            ]
+          ]
+        ],
+        "seconds": 53.78099999995902
+      },
+      "5": {
+        "size": [
+          1920,
+          1080
+        ],
+        "extrema": [
+          [
+            0,
+            255
+          ],
+          [
+            0,
+            255
+          ],
+          [
+            0,
+            128
+          ]
+        ],
+        "colors": [
+          [
+            6844,
+            [
+              16,
+              16,
+              16
+            ]
+          ],
+          [
+            1604,
+            [
+              255,
+              255,
+              128
+            ]
+          ],
+          [
+            2065152,
+            [
+              0,
+              0,
+              0
+            ]
+          ]
+        ],
+        "seconds": 53.90599999995902
+      },
+      "6": {
+        "size": [
+          1920,
+          1080
+        ],
+        "extrema": [
+          [
+            0,
+            255
+          ],
+          [
+            0,
+            255
+          ],
+          [
+            0,
+            128
+          ]
+        ],
+        "colors": [
+          [
+            6848,
+            [
+              16,
+              16,
+              16
+            ]
+          ],
+          [
+            1600,
+            [
+              255,
+              255,
+              128
+            ]
+          ],
+          [
+            2065152,
+            [
+              0,
+              0,
+              0
+            ]
+          ]
+        ],
+        "seconds": 53.75
+      },
+      "7": {
+        "size": [
+          1920,
+          1080
+        ],
+        "extrema": [
+          [
+            0,
+            255
+          ],
+          [
+            0,
+            255
+          ],
+          [
+            0,
+            128
+          ]
+        ],
+        "colors": [
+          [
+            6868,
+            [
+              16,
+              16,
+              16
+            ]
+          ],
+          [
+            1580,
+            [
+              255,
+              255,
+              128
+            ]
+          ],
+          [
+            1118,
+            [
+              128,
+              128,
+              128
+            ]
+          ],
+          [
+            2064034,
+            [
+              0,
+              0,
+              0
+            ]
+          ]
+        ],
+        "seconds": 53.70299999997951
+      }
+    },
+    "tests": [
+      "23040 RGB888 RTL pixels; both taps; header/serial order; invalid/short rows rejected",
+      "Host codec/header binding and lossless PNG",
+      "Vendor512-byte streaming read and process-local latency16ms to1ms",
+      "Browser nine images natural1920x1080 dimensions and restore"
+    ],
+    "source_scene": "RGB source is all zero; real objects/lighting still need confirmation",
+    "restored": {
+      "roi_frame_id": 30,
+      "applied_config_id": 8,
+      "roi_enabled": 0,
+      "roi_frame_ok": 0,
+      "source_held": 0,
+      "source_frozen": 0,
+      "render_busy": 0,
+      "render_pending": 0,
+      "capture_active": 0,
+      "config_busy": 0,
+      "config_error": 0,
+      "render_error": 0,
+      "scan_error": 0,
+      "commit_rejected": 0,
+      "mode": 0,
+      "median": 1,
+      "memory": 0,
+      "threshold": 128,
+      "canny_ready": 1,
+      "canny_fault": 0,
+      "roi": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "output_size": [
+        1920,
+        1080
+      ],
+      "capture_discarded": 0,
+      "scan_bad_frames": 0,
+      "render_cycles": 3490892,
+      "requested_config_id": 9,
+      "accepted_config_id": 9,
+      "rejected_config_id": 0,
+      "held_source_frame_id": 33,
+      "held_raw_id_sample": 52793,
+      "rgb_capture_count": 35,
+      "position": [
+        0,
+        0
+      ],
+      "display_size": [
+        1920,
+        1080
+      ],
+      "render_deadline_misses": 15
+    },
+    "build": {
+      "unassigned_core_pins": 0,
+      "interface_pass": true,
+      "pnr_pass": true,
+      "snapshot_tags": [
+        "2610051a",
+        "2610051b",
+        "2610051c"
+      ],
+      "built_utc": "2026-10-04T17:32:05.1656155Z",
+      "video": "1080p60 VIC16",
+      "flow": "native compile",
+      "sensor": "sc431hai",
+      "map_pass": true,
+      "whs_ns": 0.026,
+      "pgm_pass": true,
+      "snapshot_format": "1920x1080 RGB888; source and exact pre-TMDS mode pixels",
+      "wns_ns": 0.288,
+      "xlr": 59213,
+      "ram": 249,
+      "dsp": 43
+    }
+  },
+  "previous_runtime": {
+    "scope": "Full/2x ROI each60s requested; source held through4 rerenders; static exact image and frame-tagged encoder checks",
+    "roi_runtime": "F:\\Project\\fpga\\vision_base\\results\\project_advance_20261005\\roi_board\\board.verification.json",
+    "scene": "near black RAW15..18; no complex motion/object acceptance",
+    "capture_discarded": 0,
+    "scan_bad_frames": 0
+  },
+  "current_runtime": {
+    "scope": "Sequential nonblack wall scene / same settings /19s before and after; not identical frozen inputs",
+    "performance": {
+      "before": {
+        "seconds": 19.120382070541382,
+        "raw_fps": 29.9680204028358,
+        "canny_fps": 6.485226055762023,
+        "faults": 0,
+        "threshold": 128,
+        "median": 1,
+        "mode": 0,
+        "memory": 0
+      },
+      "after": {
+        "seconds": 19.14727544784546,
+        "raw_fps": 29.978155459428,
+        "canny_fps": 12.2210598911257,
+        "faults": 0,
+        "threshold": 128,
+        "median": 1,
+        "mode": 0,
+        "memory": 0
+      },
+      "note": "Same camera/static wall/settings; sequential measurements, not identical frozen inputs. Exact identical-input comparison is the scene RTL benchmark."
+    },
+    "faults": 0,
+    "feature_task_seconds": 0.062
+  },
+  "project_advance": {
+    "report": "F:\\Project\\fpga\\vision_base\\results\\project_advance_20261005\\REPORT.md",
+    "build": {
+      "video": "1080p60 VIC16",
+      "map_pass": true,
+      "pnr_pass": true,
+      "ram": 252,
+      "interface_pass": true,
+      "flow": "native compile",
+      "dsp": 43,
+      "pgm_pass": true,
+      "wns_ns": 0.243,
+      "built_utc": "2026-10-04T18:44:39.2477579Z",
+      "xlr": 48672,
+      "whs_ns": 0.026,
+      "sensor": "sc431hai",
+      "unassigned_core_pins": 0
+    },
+    "hardware_flyhash": "F:\\Project\\fpga\\vision_base\\results\\project_advance_20261005\\flyhash_actual\\result.json",
+    "images": "F:\\Project\\fpga\\vision_base\\results\\project_advance_20261005\\images\\images.json",
+    "roi_runtime": "F:\\Project\\fpga\\vision_base\\results\\project_advance_20261005\\roi_board\\board.verification.json",
+    "gui": "F:\\Project\\fpga\\vision_base\\results\\project_advance_20261005\\panel.result.json",
+    "feature_extractor": "host",
+    "trained_classifier": false
+  },
+  "light_progress": {
+    "report": "F:\\Project\\fpga\\vision_base\\results\\project_light_20261005\\REPORT.md",
+    "build": {
+      "flow": "native compile",
+      "map_pass": true,
+      "interface_pass": true,
+      "pnr_pass": true,
+      "pgm_pass": true,
+      "xlr": 53325,
+      "ram": 252,
+      "dsp": 43,
+      "wns_ns": 0.34,
+      "whs_ns": 0.026,
+      "unassigned_core_pins": 0,
+      "sensor": "sc431hai",
+      "video": "1080p60 VIC16",
+      "feature_producer": "FPGA",
+      "feature_capture_mode": "frozen ROI / existing blanking probe",
+      "frame_ram_added": 0
+    },
+    "feature_source": "FPGA",
+    "hardware_result": "F:\\Project\\fpga\\vision_base\\results\\project_light_20261005\\fpga_after\\result.json",
+    "performance": "F:\\Project\\fpga\\vision_base\\results\\project_light_20261005\\performance.json",
+    "images": "F:\\Project\\fpga\\vision_base\\results\\project_light_20261005\\image_verification.json",
+    "roi_verification": "F:\\Project\\fpga\\vision_base\\results\\project_light_20261005\\roi_after\\board.verification.json",
+    "gui": "F:\\Project\\fpga\\vision_base\\results\\project_light_20261005\\panel.result.json",
+    "trained_classifier": false
+  },
+  "image_quality_work": {
+    "build": {
+      "all_flows_passed": true,
+      "resources": {
+        "Inputs": "120 / 1703",
+        "Outputs": "355 / 2267",
+        "XLRs": "55310 / 60800",
+        "Clocks": "21 / 64",
+        "Memory Blocks": "256 / 256",
+        "DSP Blocks": "43 / 160"
+      },
+      "wns_ns": 0.293,
+      "whs_ns": 0.026,
+      "unassigned_core_pins": 0,
+      "sensor": "sc431hai",
+      "hdmi": "1080p60 VIC16",
+      "source_format": "packed16 shared-range RGB555: all channels0..63 two-count steps/error<=1; otherwise normalized5-bit",
+      "default_physical_wb_rgb": [
+        336,
+        256,
+        504
+      ],
+      "shadow_curve": "common gain<=9x; monotonic black0/white255; normal curve unchanged"
+    },
+    "sram_programmed": true,
+    "flash_written": false,
+    "source_format": "packed16 shared-range RGB555: all channels0..63 two-count steps/error<=1; otherwise normalized5-bit",
+    "physical_wb_default_rgb": [
+      336,
+      256,
+      504
+    ],
+    "physical_wb_runtime_rgb": [
+      440,
+      256,
+      516
+    ],
+    "actual_image_checks": {
+      "before": {
+        "mean_rgb": [
+          159.42277777777778,
+          160.15916666666666,
+          159.59433333333334
+        ],
+        "chroma_std": [
+          7.682209481355744,
+          7.559832962219911
+        ],
+        "chroma_rms": 7.621266854404809
+      },
+      "after": {
+        "mean_rgb": [
+          159.14475,
+          160.08738888888888,
+          159.31344444444446
+        ],
+        "chroma_std": [
+          4.705689668740137,
+          5.010733922426736
+        ],
+        "chroma_rms": 4.8606053995282155
+      },
+      "comparison": "Sequential scene captures under current light and same runtime white balance; not the same frozen frame",
+      "chroma_variation_reduction_percent": 36.22313071587349,
+      "canny": {
+        "pixels": 2498,
+        "components": 8,
+        "min_area": 97,
+        "max_area": 473,
+        "context": {
+          "mode": 0,
+          "median": 1,
+          "memory": 1,
+          "requested_threshold": 128,
+          "noise_mean_bound": 3,
+          "noise_valid": 1,
+          "effective_threshold": 128,
+          "display_id_at_hold": 1111,
+          "roi_frame_id": 10,
+          "applied_config_id": 4,
+          "held_source_frame_id": 10,
+          "held_raw_id_sample": 1111
+        }
+      },
+      "flyhash": {
+        "passed": true,
+        "all64_equal": true,
+        "encoder_cycles": 4877,
+        "feature_task_seconds": 0.06199999991804361,
+        "frame_id": 10,
+        "config_id": 4,
+        "epoch": 57
+      },
+      "board": {
+        "roi_frame_id": 12,
+        "applied_config_id": 4,
+        "roi_enabled": 0,
+        "roi_frame_ok": 0,
+        "source_held": 0,
+        "source_frozen": 0,
+        "render_busy": 0,
+        "render_pending": 0,
+        "capture_active": 0,
+        "config_busy": 0,
+        "config_error": 0,
+        "render_error": 0,
+        "scan_error": 0,
+        "commit_rejected": 0,
+        "mode": 0,
+        "median": 1,
+        "memory": 0,
+        "threshold": 128,
+        "canny_ready": 1,
+        "canny_fault": 0,
+        "roi": [
+          0,
+          0,
+          1920,
+          1080
+        ],
+        "output_size": [
+          1920,
+          1080
+        ],
+        "capture_discarded": 0,
+        "scan_bad_frames": 0,
+        "render_cycles": 3903859,
+        "requested_config_id": 6,
+        "accepted_config_id": 6,
+        "rejected_config_id": 0,
+        "held_source_frame_id": 15,
+        "held_raw_id_sample": 1423,
+        "rgb_capture_count": 18,
+        "position": [
+          0,
+          0
+        ],
+        "display_size": [
+          1920,
+          1080
+        ],
+        "render_deadline_misses": 7
+      },
+      "page8": {
+        "magic": "56495331",
+        "build": "26091785",
+        "mode": 0,
+        "median": 1,
+        "memory": 0,
+        "index": 0,
+        "threshold": 128,
+        "raw": "56495331260917857810080701b801000204000000000003",
+        "canny_fault": 0,
+        "canny_busy": 1,
+        "canny_ready": 1,
+        "history_count": 6,
+        "keys_n": 7,
+        "sample_time_s": 1791201119.8973656,
+        "physical_gains_rgb": [
+          440,
+          256,
+          516
+        ],
+        "tone_mode": 3
+      },
+      "page11": {
+        "magic": "56495331",
+        "build": "260917b5",
+        "mode": 0,
+        "median": 1,
+        "memory": 0,
+        "index": 0,
+        "threshold": 128,
+        "raw": "56495331260917b57810080702f902f9000a002f9000000c",
+        "canny_fault": 0,
+        "canny_busy": 1,
+        "canny_ready": 1,
+        "history_count": 6,
+        "keys_n": 7,
+        "sample_time_s": 1791201121.668099,
+        "exposure_applied": 761,
+        "exposure_request": 761,
+        "exposure_updates": 10,
+        "exposure_readback": "002f90",
+        "ae_fault": 0,
+        "ae_busy": 0,
+        "ae_enabled": 1,
+        "shadow_boost": 1
+      },
+      "page12": {
+        "magic": "56495331",
+        "build": "260917c5",
+        "mode": 0,
+        "median": 1,
+        "memory": 0,
+        "index": 0,
+        "threshold": 128,
+        "raw": "56495331260917c5781008070000d4c104000ff000e40000",
+        "canny_fault": 0,
+        "canny_busy": 1,
+        "canny_ready": 1,
+        "history_count": 6,
+        "keys_n": 7,
+        "sample_time_s": 1791201123.4231768,
+        "center_mean_raw": 53.1884765625,
+        "center_count": 1024,
+        "total_count": 4080,
+        "clip_count": 228,
+        "clip_fraction": 0.05588235294117647,
+        "ae_decision": 0
+      }
+    },
+    "all_mode_capture": {
+      "passed": true,
+      "directory": "F:\\Project\\fpga\\vision_base\\results\\roi_live_20261004\\mode_frames_1791201192729833200",
+      "images": 9,
+      "size": [
+        1920,
+        1080
+      ],
+      "source": 19,
+      "config": 7,
+      "canny_epoch": 25,
+      "restored": {
+        "roi_frame_id": 21,
+        "applied_config_id": 7,
+        "roi_enabled": 0,
+        "roi_frame_ok": 0,
+        "source_held": 0,
+        "source_frozen": 0,
+        "render_busy": 0,
+        "render_pending": 0,
+        "capture_active": 0,
+        "config_busy": 0,
+        "config_error": 0,
+        "render_error": 0,
+        "scan_error": 0,
+        "commit_rejected": 0,
+        "mode": 0,
+        "median": 1,
+        "memory": 0,
+        "threshold": 128,
+        "canny_ready": 1,
+        "canny_fault": 0,
+        "roi": [
+          0,
+          0,
+          1920,
+          1080
+        ],
+        "output_size": [
+          1920,
+          1080
+        ],
+        "capture_discarded": 0,
+        "scan_bad_frames": 0,
+        "render_cycles": 3868628,
+        "requested_config_id": 8,
+        "accepted_config_id": 8,
+        "rejected_config_id": 0,
+        "held_source_frame_id": 24,
+        "held_raw_id_sample": 18657,
+        "rgb_capture_count": 27,
+        "position": [
+          0,
+          0
+        ],
+        "display_size": [
+          1920,
+          1080
+        ],
+        "render_deadline_misses": 11
+      },
+      "browser": {
+        "all9_loaded_at_1920x1080": true,
+        "source_switch_verified": true,
+        "canny_switch_verified": true,
+        "screenshot": "F:\\Project\\fpga\\vision_base\\results\\image_color_fix_20261005\\panel.final.png"
+      },
+      "live_counters": {
+        "seconds": 4.9594035148620605,
+        "samples": 24,
+        "capture_count_delta": 148,
+        "display_count_delta": 148,
+        "canny_completed_delta": 149,
+        "capture_counter_fps": 29.84229848538881,
+        "display_counter_fps": 29.84229848538881,
+        "canny_completion_fps": 30.043935637317112,
+        "scope": "Short current-scene completion-counter observation, not distinct-source tracking or complex-motion sustained acceptance"
+      }
+    },
+    "trained_classifier": false,
+    "runtime_mode": {
+      "mode": 0,
+      "median": 1,
+      "memory": 0,
+      "threshold": 128,
+      "roi_enabled": 0,
+      "page": 0
+    },
+    "physical_monitor_acceptance": "Not newly observed; evidence is FPGA pixel readback and browser display"
+  },
+  "threshold": 96,
+  "median": 1,
+  "physical_button_fix": {
+    "status": "SRAM programmed; physical KEY2/KEY3 validated96->112->96",
+    "pins": {
+      "KEY0": "C4",
+      "KEY1": "P14",
+      "KEY2": "N14",
+      "KEY3": "A3",
+      "LED0": "P13",
+      "LED1": "N13"
+    },
+    "before": "KEY3 pressed as increase reduced threshold80 to64; KEY2 press had no input transition",
+    "guide": "TI60F225I3-V4 hardware guide 260813-1 p33, conflicting with March schematic",
+    "flash_written": false,
+    "trace": "results/edge_clarity_20261005/physical_fixed_trace.jsonl",
+    "sobel_same_source_sweep": "results/edge_clarity_20261005/sobel_board_checks.json"
+  },
+  "resource_optimization_latest": {
+    "deployed_profile": "debug_512",
+    "image_debug": 1,
+    "raw_fifo_depth": 512,
+    "xlr": 55402,
+    "ram": 243,
+    "dsp": 43,
+    "wns_ns": 0.345,
+    "whs_ns": 0.026,
+    "previous": {
+      "ram": 255,
+      "xlr": 55368,
+      "dsp": 43,
+      "wns_ns": 0.341,
+      "whs_ns": 0.026,
+      "change": "Merge normal/shadow256x16 ROM banks into one512x16 ROM; pixel equations unchanged"
+    },
+    "build_profiles": [
+      {
+        "xlr": 55675,
+        "ram": 255,
+        "dsp": 43,
+        "wns_ns": 0.334,
+        "whs_ns": 0.026,
+        "unassigned": 0,
+        "profile": "baseline",
+        "image_debug": 1,
+        "raw_fifo_depth": 1024,
+        "report": "F:\\Project\\fpga\\vision_base\\results\\resource_trials_20261005\\baseline_native\\ti60f225_oob.route.rpt.xml"
+      },
+      {
+        "xlr": 53675,
+        "ram": 245,
+        "dsp": 43,
+        "wns_ns": 0.181,
+        "whs_ns": 0.026,
+        "unassigned": 0,
+        "profile": "competition_1024",
+        "image_debug": 0,
+        "raw_fifo_depth": 1024,
+        "report": "F:\\Project\\fpga\\vision_base\\results\\resource_trials_20261005\\competition_1024_native\\ti60f225_oob.route.rpt.xml"
+      },
+      {
+        "xlr": 55402,
+        "ram": 243,
+        "dsp": 43,
+        "wns_ns": 0.345,
+        "whs_ns": 0.026,
+        "unassigned": 0,
+        "profile": "debug_512",
+        "image_debug": 1,
+        "raw_fifo_depth": 512,
+        "report": "F:\\Project\\fpga\\vision_base\\results\\resource_trials_20261005\\debug_512_native\\ti60f225_oob.route.rpt.xml"
+      },
+      {
+        "xlr": 53951,
+        "ram": 233,
+        "dsp": 43,
+        "wns_ns": 0.233,
+        "whs_ns": 0.026,
+        "unassigned": 0,
+        "profile": "competition_512",
+        "image_debug": 0,
+        "raw_fifo_depth": 512,
+        "report": "F:\\Project\\fpga\\vision_base\\results\\resource_trials_20261005\\competition_512_native\\ti60f225_oob.route.rpt.xml"
+      }
+    ],
+    "sapphire_standalone": [
+      {
+        "xlr": 5574,
+        "ram": 24,
+        "dsp": 0,
+        "wns_ns": 4.864,
+        "whs_ns": 0.028,
+        "unassigned": 0,
+        "small_ram_logic": 0,
+        "cpu_xlr": 5134.0,
+        "harness_xlr": 440.0,
+        "report": "F:\\Project\\fpga\\vision_base\\results\\resource_trials_20261005\\sapphire_eval\\area\\native\\sapphire_area.route.rpt.xml"
+      },
+      {
+        "xlr": 7461,
+        "ram": 20,
+        "dsp": 0,
+        "wns_ns": 5.057,
+        "whs_ns": 0.029,
+        "unassigned": 0,
+        "small_ram_logic": 2,
+        "cpu_xlr": 7020.0,
+        "harness_xlr": 441.0,
+        "report": "F:\\Project\\fpga\\vision_base\\results\\resource_trials_20261005\\sapphire_eval\\area\\selective_native\\sapphire_area.route.rpt.xml"
+      },
+      {
+        "xlr": 15155,
+        "ram": 12,
+        "dsp": 0,
+        "wns_ns": 4.577,
+        "whs_ns": 0.047,
+        "unassigned": 0,
+        "small_ram_logic": 1,
+        "cpu_xlr": 14729.0,
+        "harness_xlr": 426.0,
+        "report": "F:\\Project\\fpga\\vision_base\\results\\resource_trials_20261005\\sapphire_eval\\area\\small_logic_native\\sapphire_area.route.rpt.xml"
+      }
+    ],
+    "soc_integrated": false,
+    "flyhash_firmware_migrated": false,
+    "canny_fov_repacked": false,
+    "raw_isp_merged": false,
+    "board_comparison": "F:\\Project\\fpga\\vision_base\\results\\resource_trials_20261005\\board_comparison.json",
+    "raw_write_errors_total": 1,
+    "bright_scene_image_acceptance": false,
+    "full_project_scope_preserved": true,
+    "write_monitor": {
+      "sample_count": 290,
+      "seconds": 62.2710645198822,
+      "write_errors_first": 1,
+      "write_errors_last": 1,
+      "write_errors_delta": 0,
+      "scope": "Live RAW write-commit counter only; not FIFO high-water/overflow telemetry"
+    },
+    "fov_candidate": {
+      "report": "F:\\Project\\fpga\\vision_base\\results\\fov_pack_20261006\\REPORT.md",
+      "hardware_programmed": false,
+      "fov_ram_before": 36,
+      "fov_ram_after": 25,
+      "profiles": [
+        {
+          "profile": "competition",
+          "image_debug": 0,
+          "raw_fifo_depth": 512,
+          "xlr": 53367,
+          "ram": 222,
+          "dsp": 43,
+          "wns_ns": 0.157,
+          "whs_ns": 0.027,
+          "unassigned": 0,
+          "report": "F:\\Project\\fpga\\vision_base\\results\\fov_pack_20261006\\competition_native\\ti60f225_oob.route.rpt.xml",
+          "hardware_programmed": false,
+          "fov": {
+            "xlr": 913.5,
+            "ram": 25
+          },
+          "flyhash": {
+            "xlr": 5139.0,
+            "ram": 2
+          }
+        },
+        {
+          "profile": "debug",
+          "image_debug": 1,
+          "raw_fifo_depth": 512,
+          "xlr": 55368,
+          "ram": 232,
+          "dsp": 43,
+          "wns_ns": 0.17,
+          "whs_ns": 0.024,
+          "unassigned": 0,
+          "report": "F:\\Project\\fpga\\vision_base\\results\\fov_pack_20261006\\debug_native\\ti60f225_oob.route.rpt.xml",
+          "hardware_programmed": false,
+          "fov": {
+            "xlr": 915.5,
+            "ram": 25
+          },
+          "flyhash": {
+            "xlr": 5137.0,
+            "ram": 2
+          }
+        },
+        {
+          "profile": "snapshot",
+          "image_debug": 2,
+          "raw_fifo_depth": 512,
+          "xlr": 53639,
+          "ram": 227,
+          "dsp": 43,
+          "wns_ns": 0.416,
+          "whs_ns": 0.026,
+          "unassigned": 0,
+          "report": "F:\\Project\\fpga\\vision_base\\results\\fov_pack_20261006\\snapshot_native\\ti60f225_oob.route.rpt.xml",
+          "hardware_programmed": false,
+          "fov": {
+            "xlr": 908.5,
+            "ram": 25
+          },
+          "flyhash": {
+            "xlr": 5177.0,
+            "ram": 2
+          },
+          "image_snapshot": {
+            "xlr": 317.0,
+            "ram": 5
+          }
+        }
+      ],
+      "soc_integrated": false,
+      "flyhash_firmware_migrated": false
+    }
+  },
+  "last_readback": {
+    "roi_frame_id": 0,
+    "applied_config_id": 0,
+    "roi_enabled": 0,
+    "roi_frame_ok": 0,
+    "source_held": 0,
+    "source_frozen": 0,
+    "render_busy": 0,
+    "render_pending": 0,
+    "capture_active": 0,
+    "config_busy": 0,
+    "config_error": 0,
+    "render_error": 0,
+    "scan_error": 0,
+    "commit_rejected": 0,
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "threshold": 96,
+    "canny_ready": 1,
+    "canny_fault": 0,
+    "roi": [
+      0,
+      0,
+      1920,
+      1080
+    ],
+    "output_size": [
+      1920,
+      1080
+    ],
+    "capture_discarded": 0,
+    "scan_bad_frames": 0,
+    "render_cycles": 0,
+    "requested_config_id": 1,
+    "accepted_config_id": 1,
+    "rejected_config_id": 0,
+    "held_source_frame_id": 0,
+    "held_raw_id_sample": 0,
+    "rgb_capture_count": 0,
+    "position": [
+      0,
+      0
+    ],
+    "display_size": [
+      0,
+      0
+    ],
+    "render_deadline_misses": 0
+  },
+  "soc_optimization_latest": {
+    "report": "F:/Project/fpga/vision_base/results/soc_review_20261006/REPORT.md",
+    "soc_integrated_rtl_and_pnr": true,
+    "flyhash_firmware_implemented": true,
+    "board_programmed": true,
+    "board_cpu_boot_verified": true,
+    "board_firmware_run_verified": true,
+    "full_control_firmware_migrated": false,
+    "muldiv": false,
+    "cache_kb": 2,
+    "cache_ram_saved_measured": 2,
+    "raw_merge_triggered": true,
+    "canny_single_buffer_triggered": false,
+    "candidates": [
+      {
+        "name": "final_snapshot",
+        "image_debug": 2,
+        "sapphire_enable": 1,
+        "raw_fifo_depth": 512,
+        "xlr": 56398,
+        "ram": 246,
+        "dsp": 47,
+        "wns_ns": 0.236,
+        "whs_ns": 0.026,
+        "bit": "F:/Project/fpga/vision_base/results/soc_review_20261006/final_snapshot/ti60f225_oob.bit",
+        "programmed": false,
+        "superseded": true,
+        "map_pass": true,
+        "interface_pass": true,
+        "pnr_pass": true,
+        "bit_generation_pass": true,
+        "unassigned_io": 0,
+        "xlr_free": 4402,
+        "ram_free": 10
+      },
+      {
+        "name": "final_competition",
+        "image_debug": 0,
+        "sapphire_enable": 1,
+        "raw_fifo_depth": 512,
+        "xlr": 55866,
+        "ram": 241,
+        "dsp": 47,
+        "wns_ns": 0.132,
+        "whs_ns": 0.026,
+        "bit": "F:/Project/fpga/vision_base/results/soc_review_20261006/final_competition/ti60f225_oob.bit",
+        "programmed": false,
+        "superseded": true,
+        "map_pass": true,
+        "interface_pass": true,
+        "pnr_pass": true,
+        "bit_generation_pass": true,
+        "unassigned_io": 0,
+        "xlr_free": 4934,
+        "ram_free": 15
+      }
+    ],
+    "final_rebuild_pending": false,
+    "cpu_hot_reset_shared_axi_cleanup_implemented": false,
+    "cancelled_result_write_isolation_verified": true,
+    "firmware_image_bytes": 1780,
+    "current_candidates_report": "F:/Project/fpga/vision_base/results/raw_pool_20261006/REPORT.md",
+    "firmware_timer": "APB0x30 CPU100MHz"
+  },
+  "raw_pool_latest": {
+    "report": "F:/Project/fpga/vision_base/results/raw_pool_20261006/REPORT.md",
+    "candidates": [
+      {
+        "name": "final_timer_snapshot",
+        "image_debug": 2,
+        "sapphire_enable": 1,
+        "raw_to_pool": 1,
+        "pnr_seed": 1,
+        "raw_cdc_depth": 512,
+        "rgb_capture_depth": 2048,
+        "xlr": 53395,
+        "ram": 235,
+        "dsp": 45,
+        "wns_ns": 0.015,
+        "whs_ns": 0.023,
+        "unassigned_io": 0,
+        "bit": "F:/Project/fpga/vision_base/results/raw_pool_20261006/final_timer_snapshot/ti60f225_oob.bit",
+        "programmed": true,
+        "map_pass": true,
+        "interface_pass": true,
+        "pnr_pass": true,
+        "pgm_pass": true,
+        "xlr_free": 7405,
+        "ram_free": 21,
+        "firmware_timer": "APB0x30 CPU clock"
+      },
+      {
+        "name": "final_timer_competition",
+        "image_debug": 0,
+        "sapphire_enable": 1,
+        "raw_to_pool": 1,
+        "pnr_seed": 0,
+        "raw_cdc_depth": 512,
+        "rgb_capture_depth": 2048,
+        "xlr": 53108,
+        "ram": 230,
+        "dsp": 45,
+        "wns_ns": 0.216,
+        "whs_ns": 0.026,
+        "unassigned_io": 0,
+        "bit": "F:/Project/fpga/vision_base/results/raw_pool_20261006/final_timer_competition/ti60f225_oob.bit",
+        "programmed": false,
+        "map_pass": true,
+        "interface_pass": true,
+        "pnr_pass": true,
+        "pgm_pass": true,
+        "xlr_free": 7692,
+        "ram_free": 26,
+        "firmware_timer": "APB0x30 CPU clock"
+      }
+    ],
+    "board_programmed": true,
+    "board_acceptance": "passed live/history/freeze/ROI/firmware32vectors/fullRGBandCanny readback",
+    "history_model_verified": true,
+    "live_roi_model_verified": true,
+    "isp_full_width_verified": true,
+    "source_format": "post-ISP packed16 RGB",
+    "raw_cdc_depth": 512,
+    "rgb_capture_depth": 2048,
+    "gross_checker0_ram_removed": 16,
+    "net_ram_saved": 11,
+    "flash_written": false,
+    "program_log": "F:/Project/fpga/vision_base/results/raw_pool_20261006/program_final.log",
+    "programmed_bit": "F:/Project/fpga/vision_base/results/raw_pool_20261006/final_timer_snapshot/ti60f225_oob.bit",
+    "programmed_at": "2026-10-06T21:51:49",
+    "history_board_verified": true,
+    "live_60s_board_verified": true,
+    "roi_freeze_board_verified": true,
+    "raw_overflows": 0,
+    "capture_discarded": 0,
+    "scan_bad_frames": 0,
+    "full_1080p_model_pixels": 20736000,
+    "full_1080p_model_frames": 10,
+    "firmware_runtime_fault_state": null,
+    "firmware_runtime_fault": "fixed: timer now APB0x30 instead of unmapped mcycle CSR",
+    "firmware_timer_fix_in_source": true,
+    "final_rebuild_pending": false,
+    "firmware_timer_fix_in_bit": true,
+    "cpu_boot_verified": true,
+    "firmware_task_verified": true,
+    "software_feature_encode_ms": 64.21987,
+    "software_encode_ms": 2.07811,
+    "synthetic_feature_vectors_verified": 32,
+    "camera_fps": 30.003341129250355,
+    "hardware_report": "F:/Project/fpga/vision_base/results/raw_pool_20261006/flyhash_final/result.json",
+    "final_images": "F:/Project/fpga/vision_base/results/raw_pool_20261006/images_final/images.json",
+    "final_images_source_frame": 16893,
+    "final_images_config": 9
+  },
+  "roi_current": {
+    "roi_frame_id": 20409,
+    "applied_config_id": 0,
+    "roi_enabled": 0,
+    "roi_frame_ok": 1,
+    "source_held": 0,
+    "source_frozen": 0,
+    "render_busy": 0,
+    "render_pending": 0,
+    "capture_active": 1,
+    "config_busy": 0,
+    "config_error": 0,
+    "render_error": 0,
+    "scan_error": 0,
+    "commit_rejected": 0,
+    "mode": 0,
+    "median": 1,
+    "memory": 0,
+    "threshold": 96,
+    "canny_ready": 1,
+    "canny_fault": 0,
+    "roi": [
+      0,
+      0,
+      1920,
+      1080
+    ],
+    "output_size": [
+      1920,
+      1080
+    ],
+    "capture_discarded": 0,
+    "scan_bad_frames": 0,
+    "render_cycles": 2850675,
+    "requested_config_id": 10,
+    "accepted_config_id": 10,
+    "rejected_config_id": 0,
+    "held_source_frame_id": 20403,
+    "held_raw_id_sample": 20403,
+    "rgb_capture_count": 20415,
+    "position": [
+      0,
+      0
+    ],
+    "display_size": [
+      1920,
+      1080
+    ],
+    "render_deadline_misses": 15
+  }
+}

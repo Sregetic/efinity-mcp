@@ -1,5 +1,7 @@
 module i2c_master_ctrl_top #(
 	parameter DATA_LENGTH = 164,
+	parameter INIT_FILE = "",
+	parameter EXPOSURE_MIN = 112, EXPOSURE_MAX = 2950, EXPOSURE_INITIAL = 444,
 	parameter I2C_REG_ADDR_WIDTH = 16,
 	parameter I2C_DATA_WIDTH = 8,
 	parameter I2C_DEVICE_ADDR = 8'h60,
@@ -12,6 +14,8 @@ input		wire	rst_n,
 input exposure_req_toggle, input[15:0] exposure_req_value,
 output exposure_ack,exposure_fault,exposure_busy,
 output[15:0] exposure_applied,exposure_updates,output[23:0] exposure_readback,
+input debug_req,debug_write,input[15:0]debug_addr,input[7:0]debug_data,
+output debug_ack,debug_fault,debug_busy,output[7:0]debug_readback,
 input  scl_pad_i,       // SCL-line input
 output scl_pad_o,       // SCL-line output (always 1'b0)
 output scl_padoen_o,    // SCL-line output enable (active low)
@@ -46,13 +50,16 @@ assign wr_en=configured?run_wr:boot_wr;
 assign rd_en=configured?run_rd:boot_rd;
 assign addr=configured?run_addr:boot_addr;
 assign set_data=configured?run_data:boot_data;
-sensor_exposure_writer exposure_writer(.clk(clk),.rst_n(rst_n),.configured(configured),
+sensor_exposure_writer #(.EXPOSURE_MIN(EXPOSURE_MIN),.EXPOSURE_MAX(EXPOSURE_MAX),.EXPOSURE_INITIAL(EXPOSURE_INITIAL)) exposure_writer(.clk(clk),.rst_n(rst_n),.configured(configured),
  .req_toggle(exposure_req_toggle),.req_value(exposure_req_value),.wr_done(wr_done),.rd_done(rd_done),.read_data(get_data),
  .wr_en(run_wr),.rd_en(run_rd),.addr(run_addr),.data(run_data),.ack_toggle(exposure_ack),.fault(exposure_fault),
- .busy(exposure_busy),.applied(exposure_applied),.readback(exposure_readback),.updates(exposure_updates));
+ .busy(exposure_busy),.applied(exposure_applied),.readback(exposure_readback),.updates(exposure_updates),
+ .debug_req(debug_req),.debug_write(debug_write),.debug_addr(debug_addr),.debug_data(debug_data),
+ .debug_ack(debug_ack),.debug_fault(debug_fault),.debug_busy(debug_busy),.debug_readback(debug_readback));
 //==================================================
 i2c_master_reg_set #(
 	.DATA_LENGTH (DATA_LENGTH),
+	.INIT_FILE (INIT_FILE),
 	.I2C_REG_ADDR_WIDTH (I2C_REG_ADDR_WIDTH),
 	.I2C_DATA_WIDTH (I2C_DATA_WIDTH),
 	.I2C_DEVICE_ADDR (I2C_DEVICE_ADDR)

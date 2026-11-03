@@ -1,0 +1,2 @@
+CHROMA THRESHOLDS PASS 65536 gains/channel, 3145728 threshold checks, cycle-exact updates
+sim/vision/tb_chroma_thresholds.sv:35: $finish called at 655366000 (1ps)

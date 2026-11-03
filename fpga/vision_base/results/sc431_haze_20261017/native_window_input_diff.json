@@ -1,0 +1,8 @@
+{
+  "changed": [
+    "board/ti60f225_v4/rtl/gamma_conrrection/chroma_tone_gain_q8.mem",
+    "board/ti60f225_v4/rtl/vision/camera_auto_exposure.sv"
+  ],
+  "added": [],
+  "removed": []
+}

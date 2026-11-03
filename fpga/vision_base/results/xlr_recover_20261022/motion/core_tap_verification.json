@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "tests": [
+    {
+      "test": "core",
+      "passed": true
+    },
+    {
+      "test": "tap",
+      "passed": true
+    }
+  ],
+  "fixture": {
+    "core_frames": 62,
+    "pixel_frames": 6,
+    "kind": "generated_synthetic_only",
+    "seed": 2214
+  },
+  "scope": "Synthetic RTL and actual RV32I menu words; not physical keys or camera accuracy",
+  "hardware_programmed": false
+}

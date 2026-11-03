@@ -1,0 +1,24 @@
+[
+  {
+    "magic": "56495331",
+    "build": "260917c5",
+    "mode": 1,
+    "median": 1,
+    "memory": 0,
+    "index": 2,
+    "threshold": 96,
+    "raw": "56495331260917c578310607000040f504000ff000000000",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1791300055.7056983,
+    "center_mean_raw": 16.2392578125,
+    "center_count": 1024,
+    "total_count": 4080,
+    "clip_count": 0,
+    "clip_fraction": 0.0,
+    "ae_decision": 0
+  }
+]

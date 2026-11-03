@@ -1,0 +1,2 @@
+PASS RV32I all312 native glyph cases/79frames/full candidate identities and four displayed boxes equal ASan host
+qemu-system-riscv32.exe: warning: Setting G will also set IMAFD

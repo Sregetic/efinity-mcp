@@ -1,0 +1,70 @@
+{
+  "baseline": {
+    "xlr": 60015,
+    "ram": 243,
+    "dsp": 58,
+    "wns_ns": 0.093,
+    "whs_ns": 0.026,
+    "unassigned_core_pins": 0,
+    "report": "results\\ai_closed_loop_20261007\\dma_final_snapshot\\ti60f225_oob.route.rpt.xml"
+  },
+  "candidate": {
+    "xlr": 56818,
+    "ram": 245,
+    "dsp": 58,
+    "wns_ns": 0.074,
+    "whs_ns": 0.026,
+    "unassigned_core_pins": 0,
+    "report": "results\\xlr_control_20261007\\release_snapshot\\ti60f225_oob.route.rpt.xml"
+  },
+  "xlr_released": 3197,
+  "ram_delta": 2,
+  "remaining_xlr": 3982,
+  "remaining_ram": 11,
+  "utilization_percent": 93.45,
+  "flows_passed": [
+    "map",
+    "interface",
+    "pnr",
+    "pgm"
+  ],
+  "rtl_tests": 18,
+  "programmed": false,
+  "flash_written": false,
+  "bitstream": "F:\\Project\\fpga\\vision_base\\results\\xlr_control_20261007\\release_snapshot\\ti60f225_oob.bit",
+  "firmware_elf": "F:\\Project\\fpga\\vision_base\\results\\xlr_control_20261007\\control_ai_firmware\\vision.elf",
+  "parameters": {
+    "IMAGE_DEBUG": 2,
+    "SAPPHIRE_ENABLE": 1,
+    "RAW_TO_POOL": 1,
+    "ANALYSIS_DMA_ENABLE": 1,
+    "DISPLAY_LATENCY_PROBE": 0,
+    "seed": 1
+  },
+  "layer_resources": {
+    "flyhash_mailbox": {
+      "before": {
+        "ff": 1349,
+        "lut": 845,
+        "ram": 0
+      },
+      "after": {
+        "ff": 447,
+        "lut": 163,
+        "ram": 0
+      }
+    },
+    "control_policy": {
+      "before": {
+        "ff": 724,
+        "lut": 772,
+        "ram": 0
+      },
+      "after": {
+        "ff": 574,
+        "lut": 462,
+        "ram": 2
+      }
+    }
+  }
+}

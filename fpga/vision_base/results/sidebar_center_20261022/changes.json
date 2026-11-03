@@ -1,0 +1,125 @@
+{
+  "modified": [
+    {
+      "file": "board/ti60f225_v4/rtl/ti60f225_oob_top.v",
+      "added_lines": 9,
+      "removed_lines": 7
+    },
+    {
+      "file": "board/ti60f225_v4/rtl/vision/vision_display.sv",
+      "added_lines": 1,
+      "removed_lines": 1
+    },
+    {
+      "file": "board/ti60f225_v4/rtl/vision/vision_osd.sv",
+      "added_lines": 47,
+      "removed_lines": 5
+    },
+    {
+      "file": "board/ti60f225_v4/ti60f225_oob.xml",
+      "added_lines": 1,
+      "removed_lines": 0
+    },
+    {
+      "file": "docs/BOARD_BUTTON_DEMO_20261009.md",
+      "added_lines": 6,
+      "removed_lines": 0
+    },
+    {
+      "file": "docs/PROJECT_MASTER_STATUS.md",
+      "added_lines": 10,
+      "removed_lines": 0
+    },
+    {
+      "file": "docs/SYSTEM_SCOPE_AND_ROADMAP.md",
+      "added_lines": 4,
+      "removed_lines": 0
+    },
+    {
+      "file": "firmware/vision/ai_main.c",
+      "added_lines": 12,
+      "removed_lines": 3
+    },
+    {
+      "file": "firmware/vision/control_service.h",
+      "added_lines": 125,
+      "removed_lines": 14
+    },
+    {
+      "file": "firmware/vision/fomo_camera.cc",
+      "added_lines": 7,
+      "removed_lines": 2
+    },
+    {
+      "file": "firmware/vision/fomo_main.cc",
+      "added_lines": 4,
+      "removed_lines": 3
+    },
+    {
+      "file": "firmware/vision/fusion_service.h",
+      "added_lines": 72,
+      "removed_lines": 0
+    },
+    {
+      "file": "firmware/vision/main.c",
+      "added_lines": 8,
+      "removed_lines": 1
+    },
+    {
+      "file": "rtl/vision_ai_bridge.sv",
+      "added_lines": 1,
+      "removed_lines": 1
+    },
+    {
+      "file": "rtl/vision_control_bridge.sv",
+      "added_lines": 5,
+      "removed_lines": 5
+    },
+    {
+      "file": "scripts/build_vision_firmware.py",
+      "added_lines": 1,
+      "removed_lines": 1
+    },
+    {
+      "file": "scripts/test_control_firmware.py",
+      "added_lines": 11,
+      "removed_lines": 11
+    },
+    {
+      "file": "scripts/test_key_ui_board.py",
+      "added_lines": 2,
+      "removed_lines": 2
+    },
+    {
+      "file": "scripts/verify_vision_features.ps1",
+      "added_lines": 1,
+      "removed_lines": 0
+    },
+    {
+      "file": "scripts/vision_control.py",
+      "added_lines": 2,
+      "removed_lines": 1
+    },
+    {
+      "file": "sim/tb_vision_ai_bridge.sv",
+      "added_lines": 6,
+      "removed_lines": 0
+    },
+    {
+      "file": "sim/tb_vision_control_bridge.sv",
+      "added_lines": 4,
+      "removed_lines": 1
+    },
+    {
+      "file": "sim/vision/tb_osd.sv",
+      "added_lines": 10,
+      "removed_lines": 2
+    }
+  ],
+  "added": [
+    "board/ti60f225_v4/rtl/vision/vision_sidebar_overlay.sv",
+    "scripts/test_sidebar_center.py",
+    "sim/vision/tb_sidebar_video.sv",
+    "docs/SIDEBAR_CENTER_20261022.md"
+  ]
+}

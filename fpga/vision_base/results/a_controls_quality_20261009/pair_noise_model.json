@@ -1,0 +1,19 @@
+{
+  "scope": "Synthetic flat-field input before source packing; not a physical-camera noise estimate",
+  "seed": 9,
+  "base_rgb": [
+    72,
+    80,
+    88
+  ],
+  "input_noise": "independent uniform -4..4/channel",
+  "pairs": 20000,
+  "old_packed_rmse": 4.370812281487275,
+  "new_packed_rmse": 3.677390379059585,
+  "mean_shift_rgb": [
+    0.8944000000000045,
+    0.5945999999999998,
+    0.6037999999999926
+  ],
+  "reduction_percent": 15.86482918437615
+}

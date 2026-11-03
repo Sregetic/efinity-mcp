@@ -1,0 +1,96 @@
+{
+  "passed": true,
+  "scope": "Real CPU/DMA/DDR with injected physical-key events, not human presses or recognition accuracy",
+  "cases": [
+    {
+      "case": "first",
+      "frame_id": 3420,
+      "sequence": 1,
+      "runtime": [
+        2,
+        2,
+        1,
+        2876,
+        2058,
+        5149,
+        3420,
+        5
+      ]
+    },
+    {
+      "case": "stable",
+      "frame_id": 3420,
+      "sequence": 1,
+      "runtime": [
+        2,
+        2,
+        1,
+        2876,
+        2058,
+        5149,
+        3420,
+        5
+      ]
+    },
+    {
+      "case": "repeat",
+      "frame_id": 3420,
+      "sequence": 2,
+      "runtime": [
+        2,
+        2,
+        2,
+        2887,
+        2060,
+        5130,
+        3420,
+        5
+      ]
+    },
+    {
+      "case": "selftest",
+      "frame_id": 3420,
+      "sequence": 2,
+      "runtime": [
+        2,
+        2,
+        2,
+        2887,
+        2060,
+        5130,
+        3420,
+        5
+      ]
+    },
+    {
+      "case": "live_idle",
+      "frame_id": 3420,
+      "sequence": 2,
+      "runtime": [
+        2,
+        2,
+        2,
+        2887,
+        2060,
+        5130,
+        3420,
+        5
+      ]
+    },
+    {
+      "case": "live_once",
+      "frame_id": 9409,
+      "sequence": 3,
+      "runtime": [
+        2,
+        2,
+        3,
+        2902,
+        2059,
+        5169,
+        9409,
+        5
+      ]
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+{
+  "purpose": "Check whether noreturn diagnostic annotation changes loaded machine code; decide whether board timing can be reused",
+  "loaded_segments_identical": false
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "xlr": 55675,
+    "ram": 255,
+    "dsp": 43,
+    "wns_ns": 0.334,
+    "whs_ns": 0.026,
+    "unassigned": 0,
+    "profile": "baseline",
+    "image_debug": 1,
+    "raw_fifo_depth": 1024,
+    "report": "F:\\Project\\fpga\\vision_base\\results\\resource_trials_20261005\\baseline_native\\ti60f225_oob.route.rpt.xml"
+  },
+  {
+    "xlr": 53675,
+    "ram": 245,
+    "dsp": 43,
+    "wns_ns": 0.181,
+    "whs_ns": 0.026,
+    "unassigned": 0,
+    "profile": "competition_1024",
+    "image_debug": 0,
+    "raw_fifo_depth": 1024,
+    "report": "F:\\Project\\fpga\\vision_base\\results\\resource_trials_20261005\\competition_1024_native\\ti60f225_oob.route.rpt.xml"
+  },
+  {
+    "xlr": 55402,
+    "ram": 243,
+    "dsp": 43,
+    "wns_ns": 0.345,
+    "whs_ns": 0.026,
+    "unassigned": 0,
+    "profile": "debug_512",
+    "image_debug": 1,
+    "raw_fifo_depth": 512,
+    "report": "F:\\Project\\fpga\\vision_base\\results\\resource_trials_20261005\\debug_512_native\\ti60f225_oob.route.rpt.xml"
+  },
+  {
+    "xlr": 53951,
+    "ram": 233,
+    "dsp": 43,
+    "wns_ns": 0.233,
+    "whs_ns": 0.026,
+    "unassigned": 0,
+    "profile": "competition_512",
+    "image_debug": 0,
+    "raw_fifo_depth": 512,
+    "report": "F:\\Project\\fpga\\vision_base\\results\\resource_trials_20261005\\competition_512_native\\ti60f225_oob.route.rpt.xml"
+  }
+]

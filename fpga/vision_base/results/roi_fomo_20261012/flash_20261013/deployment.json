@@ -1,0 +1,80 @@
+{
+  "passed": true,
+  "config": {
+    "onchip_verification": true,
+    "physical_power_cycle_verified": false,
+    "address": 0,
+    "full_old_flash_backup": "results/roi_fomo_20261012/flash_20261013/app/flash_before.bin",
+    "configuration_flash_written": true,
+    "passed": true,
+    "finished_utc": "2026-10-13T00:57:12.6462881Z",
+    "bytes": 1072572
+  },
+  "application": {
+    "address": 7340032,
+    "bytes": 182160,
+    "byte_readback_verified": true,
+    "configuration_flash_written": false,
+    "physical_power_cycle_verified": false
+  },
+  "spi_autoload": {
+    "passed": true,
+    "boot_status": [
+      1447186225,
+      7,
+      15687703,
+      177728,
+      4400
+    ],
+    "cpu_state": 1,
+    "program_bytes": 177728,
+    "weights_bytes": 4400,
+    "actual_ddr_bytes_verified": true,
+    "user1_program_download": false,
+    "physical_power_cycle_verified": false
+  },
+  "keys": {
+    "passed": true,
+    "cases": 17
+  },
+  "history": {
+    "passed": true,
+    "static_source": 28055,
+    "static_duration_s": 12.054378032684326,
+    "checks": [
+      "mode0 readback passed",
+      "mode1 readback passed",
+      "mode2 readback passed",
+      "mode3 readback passed",
+      "mode4 readback passed",
+      "mode5 readback passed",
+      "mode6 readback passed",
+      "mode7 readback passed",
+      "live advances and frozen frame holds",
+      "F2 static frame, six distinct key-selected frames, explicit index6 autoplay and stop",
+      "history3 frame IDs change",
+      "Canny publishes with fault0"
+    ]
+  },
+  "camera_fomo": {
+    "passed": true,
+    "source": 29875,
+    "sequence": 1,
+    "model": 2,
+    "invoke_ms": 2667.74967,
+    "preprocess_ms": 32.65766,
+    "postprocess_ms": 0.38041,
+    "objects": 1,
+    "selftest_passed": true,
+    "user1_program_download": false,
+    "scope": "SPI-loaded camera task and key-event policy; not card accuracy or manual pressing"
+  },
+  "final_display_frames": [
+    30492,
+    30597
+  ],
+  "user_onsite": false,
+  "physical_power_cycle_verified": false,
+  "physical_card_accuracy_verified": false,
+  "physical_hdmi_visual_verified": false
+}

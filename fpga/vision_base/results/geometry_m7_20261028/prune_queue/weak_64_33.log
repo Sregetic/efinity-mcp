@@ -1,0 +1,6 @@
+PASS tile frame=0 64x33 processing=11080 last_cycles=0 passes=2 weak_visits=346
+PASS tile frame=1 64x33 processing=2246 last_cycles=11080 passes=1 weak_visits=0
+PASS tile frame=2 64x33 processing=11080 last_cycles=2246 passes=2 weak_visits=346
+PASS tile frame=3 64x33 processing=11080 last_cycles=11080 passes=2 weak_visits=346
+PASS weak tile output equivalence and pre-prune scan timing: 55975 clocks, 13842 tile decisions, 25029 display pixels, 256 probe bits, clear/consecutive/column-major/gaps/last-sample/discard/history
+sim/vision/tb_weak_tiles.sv:87: $finish called at 559790000 (1ps)

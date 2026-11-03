@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "compared_pixels": 2046208,
+  "different_pixels": 0,
+  "frame_id": 22733,
+  "canny_epoch": 9420,
+  "held_binary_identical": true,
+  "active_requested_threshold": 96
+}

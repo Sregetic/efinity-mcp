@@ -1,0 +1,101 @@
+{
+  "passed": true,
+  "scope": "Focused edge pipeline regression; full480x270 stable NMS plus production median/noise, binary graph/probe and camera startup. Not physical HDMI acceptance.",
+  "tests": [
+    {
+      "test": "osd",
+      "passed": true,
+      "log": "results/vision_features/osd.run.log"
+    },
+    {
+      "test": "line_direct",
+      "passed": true,
+      "log": "results/vision_features/line_direct.run.log"
+    },
+    {
+      "test": "shape_classifier",
+      "passed": true,
+      "log": "results/vision_features/shape_classifier.run.log"
+    },
+    {
+      "test": "shadow_chroma",
+      "passed": true,
+      "log": "results/vision_features/shadow_chroma.run.log"
+    },
+    {
+      "test": "sobel",
+      "passed": true,
+      "log": "results/vision_features/sobel.run.log"
+    },
+    {
+      "test": "canny_stability",
+      "passed": true,
+      "log": "results/vision_features/canny_stability.run.log"
+    },
+    {
+      "test": "edge_strength",
+      "passed": true,
+      "log": "results/vision_features/edge_strength.run.log"
+    },
+    {
+      "test": "sensor_init",
+      "passed": true,
+      "log": "results/vision_features/sensor_init.run.log"
+    },
+    {
+      "test": "canny_raster",
+      "passed": true,
+      "log": "results/vision_features/canny_raster.run.log"
+    },
+    {
+      "test": "line_snapshot",
+      "passed": true,
+      "log": "results/vision_features/line_snapshot.run.log"
+    },
+    {
+      "test": "hysteresis_random",
+      "passed": true,
+      "log": "results/vision_features/hysteresis_random.run.log"
+    },
+    {
+      "test": "edge_probe",
+      "passed": true,
+      "log": "results/vision_features/edge_probe.run.log"
+    },
+    {
+      "test": "canny_denoise",
+      "passed": true,
+      "log": "results/vision_features/canny_denoise.run.log"
+    },
+    {
+      "test": "canny_noise",
+      "passed": true,
+      "log": "results/vision_features/canny_noise.run.log"
+    },
+    {
+      "test": "edge_components",
+      "passed": true,
+      "log": "results\\canny_clean_20261008\\edge_components.log"
+    },
+    {
+      "test": "edge_overlay",
+      "passed": true,
+      "log": "results\\canny_clean_20261008\\edge_overlay.log"
+    },
+    {
+      "test": "hysteresis_sweep",
+      "passed": true,
+      "log": "results\\canny_clean_20261008\\hysteresis_sweep.log"
+    },
+    {
+      "test": "full_stable",
+      "passed": true,
+      "log": "results\\canny_clean_20261008\\full_stable.log"
+    },
+    {
+      "test": "stable_noise",
+      "passed": true,
+      "log": "results\\canny_clean_20261008\\stable_noise.log"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+ROI cfg1 held3/3 view2 pixels6144
+ROI cfg2 held4/4 view4 pixels18432
+ROI cfg3 held4/4 view4 pixels27648
+ROI cfg4 held4/4 view4 pixels36864
+ROI cfg6 held4/4 view4 pixels46080
+ROI cfg8 held6/23 view6 pixels58368
+PASS ROI live 73728 pixels, 24 full frames; scale/pan/placement, frozen-source rerender, atomic configs, invalid config, overflow abort and scan starvation recovery
+sim/vision/tb_roi_live.sv:346: $finish called at 3137747704 (1ps)

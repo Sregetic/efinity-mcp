@@ -1,0 +1,8 @@
+{
+  "configuration_flash_written": true,
+  "backup": "../flash/flash_before.bin",
+  "physical_power_cycle_verified": false,
+  "onchip_verify_passed": true,
+  "address": 0,
+  "application_region_preserved": true
+}

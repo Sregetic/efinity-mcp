@@ -1,0 +1,7 @@
+{
+  "config_or_power_reload_verified_by_user": true,
+  "user_report": "菜单出现，画面正常",
+  "method": "CONFIG or power cycle; user did not distinguish",
+  "automatic_version_read_after_user_reload": false,
+  "usb_enumeration_after_user_reload": "no FTDI interfaces returned"
+}

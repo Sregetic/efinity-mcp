@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "samples": 47,
+  "seconds": 11.860000000000582,
+  "row": 500,
+  "bands": [
+    [
+      380,
+      450
+    ],
+    [
+      730,
+      790
+    ],
+    [
+      1650,
+      1710
+    ]
+  ],
+  "missing_samples": [
+    0,
+    0,
+    0
+  ],
+  "minimum_band_pixels": [
+    9,
+    4,
+    5
+  ],
+  "first_display_source": 10718,
+  "last_display_source": 11073,
+  "first_canny_epoch": 3257,
+  "last_canny_epoch": 3613,
+  "scope": "Sampled live display row, not every frame or the full image; source and Canny plane are not held"
+}

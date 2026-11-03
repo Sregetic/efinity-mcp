@@ -1,0 +1,2 @@
+SINGLE CLIP PASS measured highlight chroma reduced; saturated colors/midtone/black preserved
+sim/vision/tb_chroma_singleclip.sv:18: $finish called at 450000 (1ps)

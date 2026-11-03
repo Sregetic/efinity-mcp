@@ -1,0 +1,25 @@
+Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+vmap -modelsimini F:/Project/fpga/vision_base/results/geometry_m7_20261028/prune_queue/modelsim.ini queue_work F:/Project/fpga/vision_base/results/geometry_m7_20261028/prune_queue/work 
+Modifying F:/Project/fpga/vision_base/results/geometry_m7_20261028/prune_queue/modelsim.ini
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+Start time: 06:11:43 on Oct 28,2026
+vlog -modelsimini F:/Project/fpga/vision_base/results/geometry_m7_20261028/prune_queue/modelsim.ini -work queue_work -sv board/ti60f225_v4/rtl/vision/vision_canny.sv board/ti60f225_v4/rtl/vision/vision_canny_denoise.sv board/ti60f225_v4/rtl/vision/vision_median9.sv board/ti60f225_v4/rtl/vision/vision_hysteresis_sweep.sv board/ti60f225_v4/rtl/vision/vision_hysteresis.sv board/ti60f225_v4/rtl/vision/vision_sparse_window.sv board/ti60f225_v4/rtl/vision/vision_sobel.sv board/ti60f225_v4/rtl/vision/vision_canny_raster.sv board/ti60f225_v4/rtl/vision/vision_frontend.sv board/ti60f225_v4/rtl/vision/vision_window3.sv results/geometry_m7_20261028/tb_native_bitmaps.sv 
+-- Compiling module vision_canny
+-- Compiling module vision_canny_nms
+-- Compiling module vision_canny_denoise
+-- Compiling module vision_median9
+-- Compiling module vision_hysteresis_sweep
+** Error: board/ti60f225_v4/rtl/vision/vision_hysteresis_sweep.sv(56): (vlog-2730) Undefined variable: 'map_q'.
+** Error (suppressible): board/ti60f225_v4/rtl/vision/vision_hysteresis_sweep.sv(109): (vlog-2388) 'map_q' already declared in this scope (vision_hysteresis_sweep) at board/ti60f225_v4/rtl/vision/vision_hysteresis_sweep.sv(56).
+-- Compiling module vision_hysteresis
+-- Compiling module vision_canny_edge_ram
+-- Compiling module vision_canny_ram
+-- Compiling module vision_sparse_window
+-- Compiling module vision_sobel
+-- Compiling module vision_canny_raster
+-- Compiling module vision_canny_line_fit
+-- Compiling module vision_frontend
+-- Compiling module vision_window3
+-- Compiling module tb
+End time: 06:11:44 on Oct 28,2026, Elapsed time: 0:00:01
+Errors: 2, Warnings: 0

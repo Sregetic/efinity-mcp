@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "elf": "F:\\Project\\fpga\\vision_base\\results\\connectome_readout_20261018\\firmware\\vision.elf",
+  "load_bytes": 178896,
+  "byte_exact": true,
+  "static_read_khz": 25,
+  "resume_khz": 5,
+  "fpga_reprogrammed": false,
+  "flash_written": false,
+  "weights_written": false,
+  "initial_timeout_resolved_by_completing_remaining_readback": true
+}

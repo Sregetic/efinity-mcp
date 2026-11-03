@@ -1,0 +1,1 @@
+PASS RV32I controls independent thresholds16..2047 step16, keys/history,10-page UI/AI single-shot/selftest, bounded zoom/pan/viewport, coalesced frozen ROI commits, atomic feature wait and disable

@@ -1,19 +1,20 @@
 `timescale 1ns/1ps
 
-// AXI4 frame writer for a 2PPC RGB565 render stream.
+// AXI4 frame writer for a 2PPC packed16 render stream.
 //
-// One accepted pixel beat contains two RGB565 pixels:
+// One accepted pixel beat contains two opaque16-bit pixels:
 //   pixel_data[15:0]  = lower-address (left) pixel
 //   pixel_data[31:16] = next pixel
 // Four input beats are packed into one 128-bit AXI W beat, preserving the
 // low-address-first ordering.  The writer owns only a small assembled-word
 // FIFO; it does not contain frame-sized storage.
 module axi_frame_writer #(
-    parameter integer MAX_BURST_BEATS = 16,
-    parameter integer FIFO_DEPTH = ((MAX_BURST_BEATS < 2) ? 4 : (MAX_BURST_BEATS * 2))
+    parameter integer MAX_BURST_BEATS = 8,
+    parameter integer FIFO_DEPTH = ((MAX_BURST_BEATS < 2) ? 4 : MAX_BURST_BEATS)
 ) (
     input  wire         clk,
     input  wire         rst_n,
+    input  wire         abort,
 
     input  wire         job_valid,
     output wire         job_ready,
@@ -58,12 +59,13 @@ module axi_frame_writer #(
     localparam [1:0] ST_W    = 2'd2;
     localparam [1:0] ST_B    = 2'd3;
 
-    localparam integer FIFO_PTR_WIDTH = (FIFO_DEPTH <= 1) ? 1 : $clog2(FIFO_DEPTH);
     localparam integer FIFO_COUNT_WIDTH = $clog2(FIFO_DEPTH + 1);
 
     reg [1:0] state;
     reg       active;
     reg       input_complete;
+    reg       aborting;
+    wire cancel=abort||aborting;
 
     reg [31:0] base_addr_r;
     reg [15:0] dst_width_r;
@@ -84,9 +86,9 @@ module axi_frame_writer #(
     reg [127:0] pack_word;
     reg [2:0]  pack_count;
 
-    reg [127:0] fifo_mem [0:FIFO_DEPTH-1];
-    reg [FIFO_PTR_WIDTH-1:0] fifo_wr_ptr;
-    reg [FIFO_PTR_WIDTH-1:0] fifo_rd_ptr;
+    // Push-only shift FIFO permits native SRLs; count-1 selects the oldest.
+    // Depth and full-burst ownership remain unchanged, with no block RAM.
+    (* syn_ramstyle="registers" *) reg [127:0] fifo_mem [0:FIFO_DEPTH-1];
     reg [FIFO_COUNT_WIDTH-1:0] fifo_count;
 
     reg [31:0] burst_addr_r;
@@ -138,7 +140,7 @@ module axi_frame_writer #(
     assign page_beats = (13'd4096 - {1'b0, out_addr[11:0]}) >> 4;
 
     // Rows and 4 KiB boundaries are independent limits.  MAX_BURST_BEATS is
-    // intentionally bounded by the integration contract to 16 or 32.
+    // intentionally bounded by the integration contract to 8, 16 or 32.
     always @* begin
         planned_burst_len = 9'd0;
         if (active && (out_beats_remaining != 0) &&
@@ -160,7 +162,7 @@ module axi_frame_writer #(
     // A partial four-input-beat pack can be filled even when the word FIFO is
     // full.  The fourth beat is accepted only when a FIFO slot is available,
     // or when a W beat is being removed on this same edge.
-    assign pixel_ready = active && !input_complete &&
+    assign pixel_ready = active && !input_complete && !cancel &&
         ((pack_count != 3'd3) || (fifo_count < FIFO_DEPTH) || fifo_pop);
 
     assign m_axi_awid = 4'd0;
@@ -170,7 +172,7 @@ module axi_frame_writer #(
     assign m_axi_awburst = 2'b01;
     assign m_axi_awvalid = (state == ST_AW);
 
-    assign m_axi_wdata = fifo_mem[fifo_rd_ptr];
+    assign m_axi_wdata = fifo_mem[fifo_count-1'b1];
     assign m_axi_wstrb = 16'hffff;
     assign m_axi_wlast = (burst_len_r != 0) &&
                          (burst_w_count == (burst_len_r - 1'b1));
@@ -183,21 +185,19 @@ module axi_frame_writer #(
     assign w_fire = m_axi_wvalid && m_axi_wready;
     assign b_fire = m_axi_bvalid && m_axi_bready;
 
-    function automatic [FIFO_PTR_WIDTH-1:0] next_fifo_ptr;
-        input [FIFO_PTR_WIDTH-1:0] ptr;
-        begin
-            if (ptr == FIFO_DEPTH-1)
-                next_fifo_ptr = {FIFO_PTR_WIDTH{1'b0}};
-            else
-                next_fifo_ptr = ptr + 1'b1;
-        end
-    endfunction
+    integer fifo_index;
+    always @(posedge clk) if (fifo_push) begin
+        fifo_mem[0] <= {pixel_data, pack_word[95:0]};
+        for (fifo_index=1; fifo_index<FIFO_DEPTH; fifo_index=fifo_index+1)
+            fifo_mem[fifo_index] <= fifo_mem[fifo_index-1];
+    end
 
     always @(posedge clk) begin
         if (!rst_n) begin
             state <= ST_IDLE;
             active <= 1'b0;
             input_complete <= 1'b0;
+            aborting <= 1'b0;
             base_addr_r <= 32'd0;
             dst_width_r <= 16'd0;
             dst_height_r <= 16'd0;
@@ -214,18 +214,17 @@ module axi_frame_writer #(
             out_addr <= 32'd0;
             pack_word <= 128'd0;
             pack_count <= 3'd0;
-            fifo_wr_ptr <= {FIFO_PTR_WIDTH{1'b0}};
-            fifo_rd_ptr <= {FIFO_PTR_WIDTH{1'b0}};
             fifo_count <= {FIFO_COUNT_WIDTH{1'b0}};
             burst_addr_r <= 32'd0;
             burst_len_r <= 9'd0;
             burst_w_count <= 9'd0;
             done <= 1'b0;
+            if(active&&abort)begin aborting<=1;error<=1;end
             error <= 1'b0;
         end else begin
             done <= 1'b0;
 
-            // The FIFO count and pointers are updated from the independent
+            // The FIFO count is updated from the independent
             // input and W channel handshakes.  Simultaneous push/pop is safe,
             // including when the FIFO is full.
             case ({fifo_push, fifo_pop})
@@ -233,10 +232,6 @@ module axi_frame_writer #(
                 2'b01: fifo_count <= fifo_count - 1'b1;
                 default: fifo_count <= fifo_count;
             endcase
-            if (fifo_push)
-                fifo_wr_ptr <= next_fifo_ptr(fifo_wr_ptr);
-            if (fifo_pop)
-                fifo_rd_ptr <= next_fifo_ptr(fifo_rd_ptr);
 
             // Input packing and protocol checks.  A malformed keep/marker is
             // recorded, but the known dimensions still drain the frame so a
@@ -265,9 +260,6 @@ module axi_frame_writer #(
                         pack_count <= 3'd3;
                     end
                     default: begin
-                        fifo_mem[fifo_wr_ptr] <=
-                            {pixel_data, pack_word[95:64],
-                             pack_word[63:32], pack_word[31:0]};
                         pack_count <= 3'd0;
                     end
                 endcase
@@ -287,7 +279,10 @@ module axi_frame_writer #(
             case (state)
                 ST_IDLE: begin
                     if (active) begin
-                        if (fifo_has_planned_burst) begin
+                        if(cancel)begin
+                            active<=0;done<=1;error<=1;aborting<=0;
+                            fifo_count<=0;pack_count<=0;
+                        end else if (fifo_has_planned_burst) begin
                             burst_addr_r <= out_addr;
                             burst_len_r <= planned_burst_len;
                             burst_w_count <= 9'd0;
@@ -301,6 +296,7 @@ module axi_frame_writer #(
                             done <= 1'b1;
                         end else begin
                             active <= 1'b1;
+                            aborting <= 1'b0;
                             error <= 1'b0;
                             input_complete <= 1'b0;
                             base_addr_r <= base_addr;
@@ -319,8 +315,6 @@ module axi_frame_writer #(
                             out_addr <= base_addr;
                             pack_word <= 128'd0;
                             pack_count <= 3'd0;
-                            fifo_wr_ptr <= {FIFO_PTR_WIDTH{1'b0}};
-                            fifo_rd_ptr <= {FIFO_PTR_WIDTH{1'b0}};
                             fifo_count <= {FIFO_COUNT_WIDTH{1'b0}};
                         end
                     end
@@ -368,7 +362,13 @@ module axi_frame_writer #(
                     if (b_fire) begin
                         if (m_axi_bresp != 2'b00)
                             error <= 1'b1;
-                        if (out_beats_remaining == 32'd0) begin
+                        // Every advertised burst already owns all its FIFO
+                        // words. On camera overflow, finish that burst/B before
+                        // discarding unissued data and releasing the bad lease.
+                        if(cancel)begin
+                            active<=0;done<=1;error<=1;aborting<=0;state<=ST_IDLE;
+                            fifo_count<=0;pack_count<=0;
+                        end else if (out_beats_remaining == 32'd0) begin
                             if (input_complete && (fifo_count == 0) &&
                                 (pack_count == 3'd0)) begin
                                 // The final B is the publication boundary.

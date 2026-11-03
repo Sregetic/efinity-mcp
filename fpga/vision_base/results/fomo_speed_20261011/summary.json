@@ -1,0 +1,90 @@
+{
+  "passed": true,
+  "exact_match": true,
+  "mean_baseline_ms": 25967.1844125,
+  "mean_optimized_ms": 949.11024,
+  "mean_speedup": 27.359502951416896,
+  "samples": [
+    {
+      "sample": "blank",
+      "baseline_ms": 25959.4255,
+      "optimized_ms": 949.05574,
+      "speedup": 27.35289868222071,
+      "mismatched_bytes": 0
+    },
+    {
+      "sample": "circle",
+      "baseline_ms": 25960.86187,
+      "optimized_ms": 949.12661,
+      "speedup": 27.352369638019105,
+      "mismatched_bytes": 0
+    },
+    {
+      "sample": "rectangle",
+      "baseline_ms": 25977.28564,
+      "optimized_ms": 949.12175,
+      "speedup": 27.36981387266702,
+      "mismatched_bytes": 0
+    },
+    {
+      "sample": "triangle",
+      "baseline_ms": 25971.16464,
+      "optimized_ms": 949.13686,
+      "speedup": 27.36292913542521,
+      "mismatched_bytes": 0
+    }
+  ],
+  "phases": [
+    {
+      "directory": "board_cfu",
+      "change": "dot4 and exact MulHi Q31",
+      "selected": false,
+      "exact_match": true,
+      "mean_ms": 2435.6998000000003
+    },
+    {
+      "directory": "board_quant",
+      "change": "precomputed quantization",
+      "selected": false,
+      "exact_match": true,
+      "mean_ms": 1265.4313375
+    },
+    {
+      "directory": "board_final",
+      "change": "early activation clamp",
+      "selected": false,
+      "exact_match": true,
+      "mean_ms": 1273.7330674999998
+    },
+    {
+      "directory": "board_tiled",
+      "change": "eight-channel tiling",
+      "selected": false,
+      "exact_match": true,
+      "mean_ms": 1440.569765
+    },
+    {
+      "directory": "board_address",
+      "change": "incremental addresses and unrolled DW",
+      "selected": false,
+      "exact_match": true,
+      "mean_ms": 949.11024
+    },
+    {
+      "directory": "board_release",
+      "change": "final diagnostic annotation and full board recheck",
+      "selected": true,
+      "exact_match": true,
+      "mean_ms": 949.11024
+    }
+  ],
+  "arena_used_bytes": 149388,
+  "load_bytes": 285200,
+  "hardware_delta": {
+    "xlr": 0,
+    "block_ram": 0,
+    "dsp": 0
+  },
+  "camera_end_to_end_verified": false,
+  "firmware_restored": true
+}

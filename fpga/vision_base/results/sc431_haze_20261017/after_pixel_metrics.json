@@ -1,0 +1,47 @@
+{
+  "frame": 1871,
+  "config": 1,
+  "note": "Both predictions use the same current pre-tone source, not a recapture of the old bitstream; hardware includes spatial denoise/median.",
+  "dark_fixture": {
+    "rect": [
+      20,
+      630,
+      120,
+      680
+    ],
+    "source_mean_rgb": [
+      7.798,
+      11.185,
+      10.418
+    ],
+    "hardware_mean_rgb": [
+      17.545,
+      24.999,
+      23.075
+    ],
+    "hardware_luma": 23.275137679999997,
+    "old_prediction_luma": 41.63830208,
+    "new_prediction_luma": 23.713734959999996
+  },
+  "ceiling": {
+    "rect": [
+      900,
+      400,
+      1050,
+      550
+    ],
+    "source_mean_rgb": [
+      39.373,
+      51.671,
+      50.204
+    ],
+    "hardware_mean_rgb": [
+      93.542,
+      123.078,
+      119.479
+    ],
+    "hardware_luma": 116.53863123555556,
+    "old_prediction_luma": 116.29867264888888,
+    "new_prediction_luma": 116.29867264888888
+  }
+}

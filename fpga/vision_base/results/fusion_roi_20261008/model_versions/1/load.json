@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "model_version": 1,
+  "synthetic": true,
+  "weights_readback_equal": true,
+  "fpga_programmed": false,
+  "flash_written": false
+}

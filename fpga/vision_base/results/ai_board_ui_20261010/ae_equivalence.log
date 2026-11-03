@@ -1,0 +1,2 @@
+PASS AE300 frame-equivalent decisions/statistics, mixed samples/fresh/fault/manual, two-clock delayed request
+results/ai_board_ui_20261010/tb_ae_equivalence.sv:23: $finish called at 906040000 (1ps)

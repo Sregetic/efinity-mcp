@@ -1,0 +1,8 @@
+{
+  "configuration_flash_written": true,
+  "address": 0,
+  "physical_power_cycle_verified": false,
+  "full_old_flash_backup": "results/f2_static_20261011/flash_app/flash_before.bin",
+  "passed": true,
+  "onchip_verification": true
+}

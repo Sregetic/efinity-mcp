@@ -1,0 +1,1 @@
+PASS RV32I M7 independent geometry advances during slow face work; VBlank miss/copy rejection preserve completed lanes; late token/status ordering; lane source IDs; primary metadata; frozen cache; cancellation/context/threshold; no new DMA lease; original UI threshold controls

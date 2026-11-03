@@ -1,0 +1,77 @@
+PASS FlyHash reference32 vectors, top13, ties, edge occupancy and prototype matching
+PASS tb_vision_flyhash_mailbox DDR payload addresses / bitmap backpressure / full32 cycles / nonce / context / CPU reset
+F:\Project\fpga\vision_base\sim\tb_vision_flyhash_mailbox.sv:66: $finish called at 2626260 (1ps)
+PASS tb_vision_ai_bridge asynchronous geometry, held packet/backpressure, VS commit, source/config/context/model, age and failed scan
+F:\Project\fpga\vision_base\sim\tb_vision_ai_bridge.sv:41: $finish called at 1205000 (1ps)
+PASS tb_vision_control_bridge ordered events, bounce/short/long keys, VS atomic commit, freeze CDC, held render/position, tagged error and overflow
+F:\Project\fpga\vision_base\sim\tb_vision_control_bridge.sv:69: $finish called at 4040000 (1ps)
+PASS tb_compute_lease: exact/latest/stale, independent display+scan and20 concurrent captures without source overwrite
+F:\Project\fpga\vision_base\sim\tb_compute_lease.sv:38: $finish called at 1480000 (1ps)
+PASS tb_analysis_dma:1024 nearest gray pixels, nonaligned ROI, tags, backpressure, double buffer, busy rejection, stale/invalid/read/write faults and lease release
+F:\Project\fpga\vision_base\sim\tb_analysis_dma.sv:82: $finish called at 91050000 (1ps)
+PASS tb_packed_decode: shared packed16 decoder65536 patterns, identical RGB precision/range for display and DMA
+F:\Project\fpga\vision_base\sim\tb_packed_decode.sv:12: $finish called at 65536000 (1ps)
+PASS tb_flyhash_encoder 32 vectors, 13 winners, ties, metadata lock, reset; cycles=4877
+F:\Project\fpga\vision_base\sim\tb_flyhash_encoder.sv:32: $finish called at 1584700000 (1ps)
+PASS tb_board_bank_switch concurrent_events=handled frame_span=2074112
+F:\Project\fpga\vision_base\sim\tb_board_bank_switch.sv:43: $finish called at 146000 (1ps)
+PASS tb_stream_cdc 2048 tagged beats, async clocks, FIFO wrap/full, stalled stability and reset
+F:\Project\fpga\vision_base\sim\tb_stream_cdc.sv:35: $finish called at 47175000 (1ps)
+PASS tb_axi_burst_qos one bounded scan-priority grant, normal RR cursor preserved, all clients serviced, response ownership
+F:\Project\fpga\vision_base\sim\tb_axi_burst_qos.sv:27: $finish called at 1235000 (1ps)
+PASS tb_frame_memory_system capture/ROI/freeze/scan 512 pixels, read/write error nonpublication, legacy R=219 B=86 CPU R=218 B=86 shared AXI
+F:\Project\fpga\vision_base\sim\tb_frame_memory_system.sv:263: $finish called at 37500000 (1ps)
+PASS tb_frame_pool
+F:\Project\fpga\vision_base\sim\tb_frame_pool.sv:564: $finish called at 470000 (1ps)
+PASS tb_frame_render_control freeze/live final-response error vblank deadline
+F:\Project\fpga\vision_base\sim\tb_frame_render_control.sv:87: $finish called at 630000 (1ps)
+PASS tb_video_test_pattern total=2475000 active=2073600 positive_sync=44x5
+F:\Project\fpga\vision_base\sim\tb_video_test_pattern.sv:18: $finish called at 24750026000 (1ps)
+CASE frame_writer width=16 height=3 stride=64 bursts=4 wbeats=6 cycles=36 error=0
+CASE frame_writer width=32 height=4 stride=128 bursts=4 wbeats=16 cycles=76 error=0
+CASE frame_writer width=64 height=3 stride=256 bursts=4 wbeats=24 cycles=114 error=0
+CASE frame_writer width=96 height=2 stride=256 bursts=3 wbeats=24 cycles=120 error=0
+CASE frame_writer width=192 height=2 stride=512 bursts=5 wbeats=48 cycles=209 error=0
+CASE frame_writer width=256 height=3 stride=768 bursts=7 wbeats=96 cycles=669 error=0
+CASE frame_writer width=32 height=3 stride=128 bursts=3 wbeats=12 cycles=60 error=1
+CASE frame_writer width=64 height=3 stride=256 bursts=4 wbeats=24 cycles=113 error=1
+CASE frame_writer invalid width=20 height=2 stride=64 base=00009000
+CASE frame_writer invalid width=16 height=2 stride=32 base=00009008
+CASE frame_writer invalid width=32 height=2 stride=48 base=00009000
+CASE frame_writer invalid width=0 height=2 stride=16 base=00009000
+CASE frame_writer invalid width=16 height=2 stride=16 base=fffffff0
+PASS tb_axi_frame_writer
+F:\Project\fpga\vision_base\sim\tb_axi_frame_writer.sv:600: $finish called at 14320000 (1ps)
+PASS case axi_line addr=00001000 pixels=8 bursts=1 cycles=13 keep_tail=0 error=0
+PASS case axi_line addr=00001206 pixels=21 bursts=1 cycles=23 keep_tail=1 error=0
+PASS case axi_line addr=00000ffe pixels=33 bursts=2 cycles=35 keep_tail=1 error=0
+PASS case axi_line addr=00001ff2 pixels=600 bursts=6 cycles=445 keep_tail=0 error=0
+PASS case axi_line addr=00004000 pixels=1280 bursts=10 cycles=939 keep_tail=0 error=0
+PASS case axi_line addr=fffffffe pixels=1 bursts=1 cycles=7 keep_tail=1 error=0
+PASS case axi_line addr=00002200 pixels=12 bursts=1 cycles=13 keep_tail=0 error=1
+PASS case axi_line addr=00001001 pixels=8 bursts=0 cycles=1 keep_tail=0 error=1
+PASS case axi_line addr=00001000 pixels=0 bursts=0 cycles=1 keep_tail=0 error=1
+PASS case axi_line addr=fffffffe pixels=2 bursts=0 cycles=1 keep_tail=0 error=1
+PASS tb_axi_line_reader cases=10 invalid=4
+F:\Project\fpga\vision_base\sim\tb_axi_line_reader.sv:173: $finish called at 15000000 (1ps)
+PASS case=1 pixels=16 source_lines=2 cycles=41 beats=8 issues=8 captures=8 accepts=8
+PASS case=2 pixels=6 source_lines=2 cycles=46 beats=4 issues=4 captures=4 accepts=4
+PASS case=3 pixels=8 source_lines=2 cycles=46 beats=4 issues=4 captures=4 accepts=4
+PASS case=4 pixels=35 source_lines=3 cycles=67 beats=20 issues=20 captures=20 accepts=20
+PASS invalid case=5 no_memory_read=1
+PASS invalid case=6 no_memory_read=1
+PASS invalid case=7 no_memory_read=1
+PASS invalid case=8 no_memory_read=1
+INFO FULL skipped; use +FULL=1 for 1080p cases
+PASS tb_roi_scaler
+F:\Project\fpga\vision_base\sim\tb_roi_scaler.sv:276: $finish called at 2160000 (1ps)
+PASS integrated error=0 pixels=88 bursts=6 cycles=126
+PASS integrated error=1 pixels=88 bursts=6 cycles=122
+PASS tb_roi_axi_scaler cases=2
+F:\Project\fpga\vision_base\sim\tb_roi_axi_scaler.sv:162: $finish called at 2560000 (1ps)
+ENGINE case=100 pixels=96 cycles=125 reads=3 writes=6 error=0
+ENGINE case=101 pixels=96 cycles=125 reads=6 writes=12 error=1
+ENGINE case=102 pixels=96 cycles=125 reads=9 writes=18 error=1
+PASS tb_frame_render_engine
+F:\Project\fpga\vision_base\sim\tb_frame_render_engine.sv:149: $finish called at 4046000 (1ps)
+PASS vision_base suite=quick

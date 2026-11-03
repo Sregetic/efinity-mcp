@@ -1,0 +1,2 @@
+F:\Project\fpga\vision_base\sim\vision\tb_motion_display.sv:30: vvp.tgt sorry: procedural continuous assignments are not yet fully supported. The RHS of this assignment will only be evaluated once, at the time the assignment statement is executed.
+F:\Project\fpga\vision_base\sim\vision\tb_motion_display.sv:33: vvp.tgt sorry: procedural continuous assignments are not yet fully supported. The RHS of this assignment will only be evaluated once, at the time the assignment statement is executed.

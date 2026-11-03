@@ -1,0 +1,61 @@
+{
+  "previous_candidate": {
+    "xlr": 58268,
+    "ram": 235,
+    "dsp": 62,
+    "wns_ns": 0.152,
+    "whs_ns": 0.026
+  },
+  "candidate": {
+    "xlr": 57380,
+    "xlr_used_percent": 94.375,
+    "free_xlr": 3420,
+    "ram": 237,
+    "free_ram": 19,
+    "dsp": 62,
+    "free_dsp": 98,
+    "wns_ns": 0.211,
+    "whs_ns": 0.026,
+    "unassigned_core_pins": 0
+  },
+  "released_this_round": {
+    "xlr": 888,
+    "ram": -2,
+    "dsp": 0
+  },
+  "ram_added_this_round": 2,
+  "released_vs_flash_baseline": {
+    "xlr": 2670,
+    "ram": -2,
+    "dsp": 0
+  },
+  "hysteresis": {
+    "before": {
+      "xlr": 4376.5,
+      "self_xlr": 4179.5,
+      "ram": 64.0,
+      "self_ram": 0.0,
+      "dsp": 7.0
+    },
+    "after": {
+      "xlr": 3585.5,
+      "self_xlr": 3391.5,
+      "ram": 66.0,
+      "self_ram": 2.0,
+      "dsp": 7.0
+    },
+    "net_released_xlr": 791.0
+  },
+  "other_packing_net_released_xlr": 97.0,
+  "tile_cache": {
+    "logical_bits": 510,
+    "width": 30,
+    "rows": 17,
+    "native_ram_blocks": 2,
+    "reset_valid_bits": 17,
+    "extra_scan_cycles": 0,
+    "extra_capture_cycles": 0
+  },
+  "image_snapshot_ram": 5,
+  "below_95_percent_by_xlr": 380
+}

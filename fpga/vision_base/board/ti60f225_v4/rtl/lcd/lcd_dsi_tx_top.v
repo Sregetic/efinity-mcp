@@ -145,7 +145,7 @@ assign pixel_data_en        =  vid_rst_n;
 panel_config
 #(
 	.INITIAL_CODE	("./rtl/lcd/Panel_1080p_reg.mem"),
-	.REG_DEPTH(9'd173),.BIST_INDEX(165)
+	.REG_DEPTH(9'd169),.BIST_INDEX(-1)
 )
 inst_panel_config
 (

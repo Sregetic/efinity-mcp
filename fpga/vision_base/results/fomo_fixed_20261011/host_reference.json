@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "tensorflow": "2.21.0",
+  "reference": "BUILTIN_REF",
+  "samples": [
+    {
+      "sample": "blank",
+      "max_lsb_diff": 0,
+      "mismatched_bytes": 0
+    },
+    {
+      "sample": "circle",
+      "max_lsb_diff": 0,
+      "mismatched_bytes": 0
+    },
+    {
+      "sample": "rectangle",
+      "max_lsb_diff": 0,
+      "mismatched_bytes": 0
+    },
+    {
+      "sample": "triangle",
+      "max_lsb_diff": 0,
+      "mismatched_bytes": 0
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+{"passed": true, "samples": 1736, "seconds": 19.98399999999674, "min_ms": 15.97451, "median_ms": 17.70981, "max_ms": 18.53215, "mean_ms": 17.601174948156682, "observed_publications": 596, "observed_publications_hz": 29.82385908727468, "max_poll_gap_ms": 30.999999988125637, "scan_bad_delta": 0, "discard_delta": 0, "deadline_delta": 529}
+READ completed camera FOMO sequence 20 source 51363 objects 0

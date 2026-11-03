@@ -1,0 +1,94 @@
+{
+  "offline_passed": true,
+  "physical_acceptance": false,
+  "user_contract": "Chinese two-level key menu motion toggle, all eight modes and source-bound ROI retained, RGB24 readback retained",
+  "upstream_commit": "74cc8f2d531c2119aad1d9ca1c367d6b34dabb11",
+  "rv32i_assertions": 4664,
+  "geometry_cases": 636,
+  "diagnostic_vectors": 12,
+  "core_vectors": 62,
+  "tap_grid_words": 864,
+  "readout_checks": 57,
+  "motion_rasters": 24,
+  "all_modes": 8,
+  "video_cycles_exact": 463059,
+  "new_ui_outside_pixels": 4007168,
+  "new_ui_characters": 96,
+  "old_ui_outside_pixels": 5936988,
+  "ui_labels": 17,
+  "font_pixels": 55552,
+  "vs_atomic_settings": true,
+  "freeze_history_pause": true,
+  "readback_retained": true,
+  "full_core_suite_rerun": false,
+  "full_video_suite_rerun": false,
+  "resources": {
+    "before": {
+      "xlr": 57745,
+      "ram": 246,
+      "dsp": 62
+    },
+    "initial": {
+      "xlr": 60648,
+      "ram": 247,
+      "dsp": 63
+    },
+    "after": {
+      "xlr": 59878,
+      "ram": 249,
+      "dsp": 63
+    },
+    "capacity": {
+      "xlr": 60800,
+      "ram": 256,
+      "dsp": 160
+    },
+    "delta": {
+      "xlr": 2133,
+      "ram": 3,
+      "dsp": 1
+    },
+    "free": {
+      "xlr": 922,
+      "ram": 7,
+      "dsp": 97
+    },
+    "xlr_recovered_from_initial": 770,
+    "wns_ns": 0.237,
+    "whs_ns": 0.027,
+    "unassigned_core_pins": 0,
+    "snapshot_rgb_bits": 24,
+    "snapshot_ram": 5,
+    "sidebar_font_ram": 5,
+    "chinese_font_ram": 4,
+    "chinese_glyphs": 121,
+    "changed_native_inputs": [
+      "rtl/vision_control_bridge.sv",
+      "board/ti60f225_v4/rtl/ti60f225_oob_top.v",
+      "board/ti60f225_v4/rtl/vision/vision_display.sv",
+      "board/ti60f225_v4/rtl/vision/vision_local_motion_core.sv",
+      "board/ti60f225_v4/rtl/vision/vision_local_motion_tap.sv",
+      "board/ti60f225_v4/rtl/vision/vision_motion_policy.sv",
+      "board/ti60f225_v4/rtl/vision/vision_motion_readout.sv",
+      "board/ti60f225_v4/rtl/vision/vision_osd.sv",
+      "board/ti60f225_v4/rtl/vision/vision_sidebar_overlay.sv",
+      "board/ti60f225_v4/ti60f225_oob.xml"
+    ],
+    "unchanged_native_inputs": 167
+  },
+  "firmware_load_bytes": 185888,
+  "firmware_increase": 160,
+  "bss_bytes": 66104,
+  "bootstrap_bytes": 6820,
+  "boot_package_bytes": 190320,
+  "preview": "Synthetic scene; actual RTL font/compositor, not camera",
+  "candidate": {
+    "bit": "F:\\Project\\fpga\\vision_base\\results\\motion_sidebar_20261022\\release\\ti60f225_oob.bit",
+    "elf": "F:\\Project\\fpga\\vision_base\\results\\motion_sidebar_20261022\\firmware\\vision.elf",
+    "weights": "F:\\Project\\fpga\\vision_base\\models\\shape_cards_bringup\\shape_cards_weights.bin",
+    "boot": "F:\\Project\\fpga\\vision_base\\results\\motion_sidebar_20261022\\release\\vision_boot.bin"
+  },
+  "hardware_access": false,
+  "sram_written": false,
+  "flash_written": false
+}

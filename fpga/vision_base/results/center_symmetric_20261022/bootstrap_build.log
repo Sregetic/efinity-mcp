@@ -1,0 +1,4 @@
+F:/Efinity/efinity-riscv-ide-2026.1/toolchain/bin/../lib/gcc/riscv-none-elf/13.4.0/../../../../riscv-none-elf/bin/ld.exe: warning: F:\Project\fpga\vision_base\results\center_symmetric_20261022\bootstrap\vision.elf has a LOAD segment with RWX permissions
+   text	   data	    bss	    dec	    hex	filename
+   6784	      0	      8	   6792	   1a88	F:\Project\fpga\vision_base\results\center_symmetric_20261022\bootstrap\vision.elf
+BUILT F:\Project\fpga\vision_base\results\center_symmetric_20261022\bootstrap\vision.hex

@@ -1,0 +1,9 @@
+{
+  "before_count": 172,
+  "after_count": 172,
+  "added": [],
+  "removed": [],
+  "changed": [
+    "board/ti60f225_v4/rtl/vision/rgb_chroma_tone.sv"
+  ]
+}

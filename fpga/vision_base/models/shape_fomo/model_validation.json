@@ -1,0 +1,126 @@
+{
+  "model_sha256": "bb5d40b8e9a58c0351e9f5c1cb4b560d8f836383fdd9fb0c468df022a5eed47a",
+  "input": {
+    "name": "serving_default_x:0",
+    "shape": [
+      1,
+      96,
+      96,
+      3
+    ],
+    "dtype": "<class 'numpy.int8'>",
+    "scale": 0.003921568859368563,
+    "zero_point": -128
+  },
+  "output": {
+    "name": "StatefulPartitionedCall:0",
+    "shape": [
+      1,
+      12,
+      12,
+      4
+    ],
+    "dtype": "<class 'numpy.int8'>",
+    "scale": 0.00390625,
+    "zero_point": -128
+  },
+  "labels": [
+    "background",
+    "circle",
+    "rectangle",
+    "triangle"
+  ],
+  "operations": {
+    "CONV_2D": 15,
+    "DEPTHWISE_CONV_2D": 6,
+    "ADD": 3,
+    "SOFTMAX": 1
+  },
+  "preprocessing": "RGB / 255; center crop (fit shortest); nearest-neighbor resize to 96x96",
+  "reference": "TensorFlow Lite BUILTIN_REF on Windows; no FPGA execution",
+  "samples": [
+    {
+      "sample": "blank",
+      "source": "C:\\Users\\PC\\Desktop\\shape_dataset\\test\\blank\\blank_001.png",
+      "positive_cells": [],
+      "output_sha256": "e101fba52bb89abff03282156c3f022ceeafa51a778dba82a28ac5299908033b"
+    },
+    {
+      "sample": "circle",
+      "source": "C:\\Users\\PC\\Desktop\\shape_dataset\\test\\circle\\circle_001.png",
+      "positive_cells": [
+        {
+          "label": "circle",
+          "grid_x": 5,
+          "grid_y": 5,
+          "center_x": 44,
+          "center_y": 44,
+          "score": 0.74609375
+        },
+        {
+          "label": "circle",
+          "grid_x": 4,
+          "grid_y": 6,
+          "center_x": 36,
+          "center_y": 52,
+          "score": 0.71484375
+        }
+      ],
+      "output_sha256": "dec45630418eceb985ce6a6fcee5fb1ff41ce04f820f670d66e3ec94cfc40dd3"
+    },
+    {
+      "sample": "rectangle",
+      "source": "C:\\Users\\PC\\Desktop\\shape_dataset\\test\\rectangle\\rectangle_001.png",
+      "positive_cells": [
+        {
+          "label": "rectangle",
+          "grid_x": 4,
+          "grid_y": 5,
+          "center_x": 36,
+          "center_y": 44,
+          "score": 0.90234375
+        }
+      ],
+      "output_sha256": "0ed0bb300f81629067fd9bd875ae703a32af610a3bfe00a6c4d0ebf16513dfe4"
+    },
+    {
+      "sample": "triangle",
+      "source": "C:\\Users\\PC\\Desktop\\shape_dataset\\test\\triangle\\triangle_001.png",
+      "positive_cells": [
+        {
+          "label": "triangle",
+          "grid_x": 7,
+          "grid_y": 5,
+          "center_x": 60,
+          "center_y": 44,
+          "score": 0.77734375
+        },
+        {
+          "label": "triangle",
+          "grid_x": 6,
+          "grid_y": 6,
+          "center_x": 52,
+          "center_y": 52,
+          "score": 0.8203125
+        },
+        {
+          "label": "triangle",
+          "grid_x": 7,
+          "grid_y": 6,
+          "center_x": 60,
+          "center_y": 52,
+          "score": 0.91796875
+        },
+        {
+          "label": "triangle",
+          "grid_x": 6,
+          "grid_y": 7,
+          "center_x": 52,
+          "center_y": 60,
+          "score": 0.71875
+        }
+      ],
+      "output_sha256": "55effef4b94b20fe1ff9a9a7610f4c3d67f43e13a41725135a2a2eaaa5cae6d4"
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+[
+  {
+    "profile": "competition",
+    "image_debug": 0,
+    "raw_fifo_depth": 512,
+    "xlr": 53367,
+    "ram": 222,
+    "dsp": 43,
+    "wns_ns": 0.157,
+    "whs_ns": 0.027,
+    "unassigned": 0,
+    "report": "F:\\Project\\fpga\\vision_base\\results\\fov_pack_20261006\\competition_native\\ti60f225_oob.route.rpt.xml",
+    "hardware_programmed": false,
+    "fov": {
+      "xlr": 913.5,
+      "ram": 25
+    },
+    "flyhash": {
+      "xlr": 5139.0,
+      "ram": 2
+    }
+  },
+  {
+    "profile": "debug",
+    "image_debug": 1,
+    "raw_fifo_depth": 512,
+    "xlr": 55368,
+    "ram": 232,
+    "dsp": 43,
+    "wns_ns": 0.17,
+    "whs_ns": 0.024,
+    "unassigned": 0,
+    "report": "F:\\Project\\fpga\\vision_base\\results\\fov_pack_20261006\\debug_native\\ti60f225_oob.route.rpt.xml",
+    "hardware_programmed": false,
+    "fov": {
+      "xlr": 915.5,
+      "ram": 25
+    },
+    "flyhash": {
+      "xlr": 5137.0,
+      "ram": 2
+    }
+  },
+  {
+    "profile": "snapshot",
+    "image_debug": 2,
+    "raw_fifo_depth": 512,
+    "xlr": 53639,
+    "ram": 227,
+    "dsp": 43,
+    "wns_ns": 0.416,
+    "whs_ns": 0.026,
+    "unassigned": 0,
+    "report": "F:\\Project\\fpga\\vision_base\\results\\fov_pack_20261006\\snapshot_native\\ti60f225_oob.route.rpt.xml",
+    "hardware_programmed": false,
+    "fov": {
+      "xlr": 908.5,
+      "ram": 25
+    },
+    "flyhash": {
+      "xlr": 5177.0,
+      "ram": 2
+    },
+    "image_snapshot": {
+      "xlr": 317.0,
+      "ram": 5
+    }
+  }
+]

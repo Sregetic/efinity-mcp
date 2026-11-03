@@ -1,0 +1,46 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "first",
+      "sequence": 1,
+      "source": 137307,
+      "render": 27,
+      "context": 37,
+      "invoke_ms": 1159.4916
+    },
+    {
+      "case": "stable",
+      "sequence": 1,
+      "source": 137307,
+      "render": 27,
+      "context": 37,
+      "invoke_ms": 1159.4916
+    },
+    {
+      "case": "rerender",
+      "sequence": 2,
+      "source": 137307,
+      "render": 28,
+      "context": 37,
+      "invoke_ms": 1158.61322
+    },
+    {
+      "case": "selftest",
+      "sequence": 2,
+      "source": 137307,
+      "render": 28,
+      "context": 37,
+      "invoke_ms": 1158.61322
+    },
+    {
+      "case": "live",
+      "sequence": 3,
+      "source": 143829,
+      "render": 0,
+      "context": 37,
+      "invoke_ms": 1163.28707
+    }
+  ],
+  "scope": "Actual SRAM key-event policy/CPU/camera leases; not manual pressing or card accuracy"
+}

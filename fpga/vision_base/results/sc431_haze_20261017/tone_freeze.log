@@ -1,0 +1,2 @@
+PASS tone gain remains latched across20 frozen frames and resumes at live VS
+sim/vision/tb_tone_freeze.sv:14: $finish called at 2840000 (1ps)

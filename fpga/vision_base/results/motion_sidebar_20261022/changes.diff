@@ -1,0 +1,1429 @@
+--- before/docs/PROJECT_MASTER_STATUS.md
++++ docs/PROJECT_MASTER_STATUS.md
+@@ -1,4 +1,14 @@
+ # 项目总目标与状态（统一范围表）
++
++## 2026-10-22 运动提示接入中文按键菜单（离线候选，未烧录）
++
++“目标”二级新增第4项“运动提示”，原4分类/八模式及M7几何识别保持。KEY0进入/确认、KEY2开启/KEY3关闭、长按取消/逐级返回；确认前仅草稿，VS统一生效。关闭菜单后显示中文方向/静止/待判及明确的“保持”，冻结/历史/比较时暂停并清状态，恢复F0后重新积累；不是连续目标跟踪，也不接管ROI/AI/DDR调度。运动取当前视图的边缘检测前灰度，只移植远端4个模块，没有覆盖旧顶层/Gamma/引脚。
++
++最终59878/60800XLR、249/256RAM、63/160DSP，余922XLR/7RAM/97DSP；WNS+0.237ns、WHS+0.027ns、未分配核心引脚0。比此前中文对称居中版新增2133XLR/3RAM/1DSP；首版60648/247/63通过但逻辑仅余152，新增列状态改同步小RAM并按输入界限收窄累加器后回收770XLR、多用2RAM。原RGB24快照仍5RAM；69文本/121汉字字体仍5RAM（中文4），无UI帧缓存。
++
++完整相机DDR应用185888B（+160B），BSS66104B保持，救援6820B/8KiB、基础DDR9132B通过构建；原SoC/IP/cache/ROM未扩大或重新写入。RV32I4664断言/636居中几何/12诊断、VS原子开关、62核心参考/864网格/57读出、24光栅八模式463059周期RGB同步、六状态及保持/4007168新UI外像素和96字符、原菜单5936988外像素及融合/边缘/前端/RGB24行快照定向回归通过。19核心/38全视频未整套重跑，不将历史上板或合成数据写成实物精度。
++
++本轮位流results/motion_sidebar_20261022/release/ti60f225_oob.bit与firmware/vision.elf配套，原权重保持；190320B启动包仅生成文件，artifacts/camera为该离线候选。本轮未访问板卡、未写SRAM/Flash；最近实机仍按10-18 SRAM/10-17 Flash记录。实际按键/相机运动/干扰和长时待硬件返回。操作见docs/MOTION_SIDEBAR_20261022.md，证据见本轮REPORT.md/resources.json/acceptance.json及motion_ui_detail.png。
+ 
+ ## 2026-10-22 自动居中对称留边修复（离线候选，未烧录）
+ 
+--- before/docs/SIDEBAR_HIERARCHY_20261022.md
++++ docs/SIDEBAR_HIERARCHY_20261022.md
+@@ -1,4 +1,6 @@
+ # 两层中文侧栏菜单与模式名
++
++当前候选已加入“目标→运动提示”，共17项；本轮位流与DDR程序、资源和操作见[MOTION_SIDEBAR_20261022.md](MOTION_SIDEBAR_20261022.md)。下方保留中文菜单原始结构，原图、各模式、对称居中及回读保持。
+ 
+ 2026-10-22 离线修订，后续按用户要求完成中文显示。替代上一轮单层16项菜单；本轮未连接板卡、未写SRAM或Flash。现场状态仍以总状态的硬件记录为准。
+ 
+@@ -23,6 +25,7 @@
+ | 目标 | 一键居中 | 对一个新的有效目标执行一次居中、等比放大 |
+ | 目标 | 放大倍率 | 自动 / 1倍 / 2倍 / 4倍 / 8倍，居中放大的倍率上限 |
+ | 目标 | 恢复全幅 | 恢复当前1920×1080整幅、零偏移并退出ROI |
++| 目标 | 运动提示 | 开启 / 关闭；确认后生效，关闭菜单后显示方向，冻结/历史时暂停 |
+ | 智能 | 推理模式 | 关闭 / 固定单帧 / 自动，自动仍是几何引导分析 |
+ | 智能 | 立即推理 | 请求一次分析 |
+ | 智能 | 自检 | 定点自检；页脚显示未自检 / 自检中 / 自检通过 / 自检失败 |
+@@ -30,7 +33,7 @@
+ 
+ “显示模式”直接显示名称，例如“CANNY边缘”“CANNY叠加”；算法名称SOBEL/CANNY及模型名FOMO保留，其余分类、选项、单位、操作提示和侧栏状态使用中文，不再用005、006代替模式名。顶部原调试HUD保持原样，F0/F1、帧号、模型编号等技术字段继续可查。
+ 
+-中文字库仅收录61条菜单文本实际用到的113个汉字，16×16点阵；ASCII保留原5×7二倍显示。文本采用8个紧凑字形编号，不在FPGA上解析UTF-8或加载完整中文字库，没有UI帧缓存。同步读取保持原来的一拍，不增加视频流水拍数。字形/文本由scripts/generate_sidebar_chinese.py生成；重生成及--check使用本机Noto Sans SC Medium字体与Pillow，字体文件未复制进项目。几何识别、模型精度、FOMO分析范围和耗时保持原状态，本轮只调整显示。
++当前中文字库仅收录69条菜单文本实际用到的121个汉字，16×16点阵；ASCII保留原5×7二倍显示。文本采用8个紧凑字形编号，不在FPGA上解析UTF-8或加载完整中文字库，没有UI帧缓存。同步读取保持原来的一拍，不增加视频流水拍数。字形/文本由scripts/generate_sidebar_chinese.py生成；重生成及--check使用本机Noto Sans SC Medium字体与Pillow，字体文件未复制进项目。几何识别、模型精度、FOMO分析范围和耗时保持原状态，中文化当轮只调整显示；新增运动功能见本页开头的后续说明。
+ 
+ ## 按键顺序
+ 
+@@ -44,7 +47,7 @@
+ 
+ ## 接口与验证
+ 
+-复用原32bit UI字和24bit视频域状态，无新增跨时钟域总线或片上RAM端口。原低23bit语义保持；高位状态码7仅表示一级分类，其余0–6仍为原居中状态。一级时条目域表示分类，二级时表示原16项条目ID。诊断增加sidebar_level和sidebar_group，原命令0x61/0x62保持。
++复用原32bit UI字和24bit视频域状态，无新增跨时钟域总线或片上RAM端口。高位状态码7仅表示一级分类，其余0–6仍为原居中状态。一级时条目域表示分类，二级时表示17项条目ID；仅侧栏开启时，原紧凑菜单字段bit14复用为条目bit4，关闭后恢复原语义。诊断增加sidebar_level和sidebar_group，原命令0x61/0x62保持。
+ 
+ 固件sidebar_open字段为0关闭、1一级、2二级；结构地址、CON4魔数和字段布局保持。完整DDR应用进入时仍清除侧栏扩展区并保留原视频设置，8KiB紧凑救援程序仍用旧紧凑菜单。
+ 
+--- before/docs/SYSTEM_SCOPE_AND_ROADMAP.md
++++ docs/SYSTEM_SCOPE_AND_ROADMAP.md
+@@ -1,4 +1,14 @@
+ # 完整视觉系统：长期范围与实施路线
++
++## 2026-10-22 运动提示接入中文按键菜单（离线候选，未烧录）
++
++“目标”二级新增第4项“运动提示”，原4分类/八模式及M7几何识别保持。KEY0进入/确认、KEY2开启/KEY3关闭、长按取消/逐级返回；确认前仅草稿，VS统一生效。关闭菜单后显示中文方向/静止/待判及明确的“保持”，冻结/历史/比较时暂停并清状态，恢复F0后重新积累；不是连续目标跟踪，也不接管ROI/AI/DDR调度。运动取当前视图的边缘检测前灰度，只移植远端4个模块，没有覆盖旧顶层/Gamma/引脚。
++
++最终59878/60800XLR、249/256RAM、63/160DSP，余922XLR/7RAM/97DSP；WNS+0.237ns、WHS+0.027ns、未分配核心引脚0。比此前中文对称居中版新增2133XLR/3RAM/1DSP；首版60648/247/63通过但逻辑仅余152，新增列状态改同步小RAM并按输入界限收窄累加器后回收770XLR、多用2RAM。原RGB24快照仍5RAM；69文本/121汉字字体仍5RAM（中文4），无UI帧缓存。
++
++完整相机DDR应用185888B（+160B），BSS66104B保持，救援6820B/8KiB、基础DDR9132B通过构建；原SoC/IP/cache/ROM未扩大或重新写入。RV32I4664断言/636居中几何/12诊断、VS原子开关、62核心参考/864网格/57读出、24光栅八模式463059周期RGB同步、六状态及保持/4007168新UI外像素和96字符、原菜单5936988外像素及融合/边缘/前端/RGB24行快照定向回归通过。19核心/38全视频未整套重跑，不将历史上板或合成数据写成实物精度。
++
++本轮位流results/motion_sidebar_20261022/release/ti60f225_oob.bit与firmware/vision.elf配套，原权重保持；190320B启动包仅生成文件，artifacts/camera为该离线候选。本轮未访问板卡、未写SRAM/Flash；最近实机仍按10-18 SRAM/10-17 Flash记录。实际按键/相机运动/干扰和长时待硬件返回。操作见docs/MOTION_SIDEBAR_20261022.md，证据见本轮REPORT.md/resources.json/acceptance.json及motion_ui_detail.png。
+ 
+ ## 2026-10-22 自动居中对称留边修复（离线候选，未烧录）
+ 
+--- before/rtl/vision_control_bridge.sv
++++ rtl/vision_control_bridge.sv
+@@ -6,7 +6,7 @@
+  input cmd_event,input[7:0]cmd_op,input[23:0]cmd_value,
+  input[7:0]paddr,input psel,penable,pwrite,input[31:0]pwdata,
+  output reg[31:0]prdata,output pready,pslverror,
+- output[2:0]mode,history_index,output median_en,output[1:0]memory_mode,
++ output[2:0]mode,history_index,output median_en,motion_enable,output[1:0]memory_mode,
+  output[10:0]sobel_threshold,canny_threshold,threshold,
+  input job_ready,capture_done,capture_error,source_hold_valid,render_done,render_error,render_pending,vblank,scan_busy,
+  input[31:0]capture_count,
+@@ -35,12 +35,13 @@
+    if((cmd_valid&&!in_ready)||(!in_ready&&|(key_pending&{long_p,short_p})))overflow<=1;
+   end
+  end
+- reg[30:0]settings=31'(3|(128<<9)|(128<<20));reg apply_request=0,apply_ack=0;
++ reg[31:0]settings=32'(3|(128<<9)|(128<<20));reg apply_request=0,apply_ack=0;
+  reg[31:0]ui_pending=32'(32<<15);
+  (* async_reg="true" *)reg[2:0]apply_sync=0;(* async_reg="true" *)reg[1:0]ack_sync=0;
+- reg[30:0]active=31'(3|(128<<9)|(128<<20));reg vq=0;
++ reg[31:0]active=32'(3|(128<<9)|(128<<20));reg vq=0;
+  wire apply_busy=apply_request!=ack_sync[1];
+  assign mode=active[2:0],median_en=active[3],memory_mode=active[5:4],history_index=active[8:6];
++ assign motion_enable=active[31];
+  assign sobel_threshold=active[19:9],canny_threshold=active[30:20];
+  assign threshold=mode==7?{3'b0,shape_threshold}:(mode==5||mode==6)?canny_threshold:sobel_threshold;
+  always @(posedge video_clk)begin
+@@ -81,7 +82,7 @@
+    if(render_done&&render_error)begin error_latch<=1;rejected<=config_id;end
+    if(render_pending&&vblank&&!scan_busy)begin display_x<={4'b0,jdx};display_y<={4'b0,jdy};end
+    if(psel&&penable&&pwrite&&pready)case(paddr)
+-    8'h08:begin settings<=pwdata[30:0];apply_request<=~apply_request;end
++    8'h08:begin settings<=pwdata;apply_request<=~apply_request;end
+     8'h20:begin rx<=pwdata[23:12];ry<=pwdata[11:0];end
+     8'h24:begin rw<=pwdata[23:12];rh<=pwdata[11:0];end
+     8'h28:begin dw<=pwdata[23:12];dh<=pwdata[11:0];end
+--- before/scripts/generate_sidebar_chinese.py
++++ scripts/generate_sidebar_chinese.py
+@@ -22,6 +22,8 @@
+     READY="就绪", WAIT="等待", DONE="完成", NO_TARGET="无目标", BUSY="正忙", STALE="已过期", ERROR="出错",
+     TEST_NONE="未自检", TEST_WAIT="自检中", TEST_PASS="自检通过", TEST_FAIL="自检失败",
+     AI_IDLE="推理空闲", AI_RUN="推理中", AI_DONE="推理完成", AI_ERROR="推理出错", AI_OLD="结果过期",
++    MOTION="运动提示", LEFT="向左", RIGHT="向右", MOVE_UP="向上", MOVE_DOWN="向下",
++    STILL="静止", UNKNOWN="待判", HOLD="保持",
+ )
+ 
+ 
+--- before/scripts/test_sidebar_center.py
++++ scripts/test_sidebar_center.py
+@@ -2,7 +2,7 @@
+ import argparse,ast,json,subprocess
+ from pathlib import Path
+ ROOT=Path(__file__).resolve().parents[1]
+-p=argparse.ArgumentParser();p.add_argument('--output-dir',type=Path,default=ROOT/'results/center_symmetric_20261022/control')
++p=argparse.ArgumentParser();p.add_argument('--output-dir',type=Path,default=ROOT/'results/motion_sidebar_20261022/control')
+ out=p.parse_args().output_dir;out.mkdir(parents=True,exist_ok=True)
+ source=r'''
+ #include <stdint.h>
+@@ -85,6 +85,12 @@
+   key(8);check(state.sidebar_open==1&&!state.sidebar_edit);key(8);check(!state.sidebar_open);
+  }
+  reset();
++ select(SIDE_MOTION);check(!state.pending&&state.sidebar_item==16&&state.settings==original);trace("motion_off");
++ key(1);key(2);check(state.edit_value==1&&state.settings==original);trace("motion_edit");
++ key(8);check(!state.sidebar_edit&&state.settings==original);
++ key(1);key(2);key(1);check(state.settings==(original|0x80000000u)&&!state.pending);trace("motion_on");apply();check(c[2]==state.settings);
++ key(1);key(4);key(1);check(state.settings==original&&!state.pending);trace("motion_disabled");
++ state.menu=8;key(8);key(8);check(!state.sidebar_open&&((control_ui(&state)>>11)&15)==8);reset();
+  select(SIDE_MODE);key(1);key(2);check(state.sidebar_edit&&state.settings==original);key(1);check((state.settings&7)==6);
+  select(SIDE_THRESHOLD);key(1);for(unsigned i=0;i<200;i++)key(4);check(state.edit_value==16&&((state.settings>>20)&2047)==80);key(1);check(((state.settings>>20)&2047)==16&&((state.settings>>9)&2047)==128);
+  key(1);for(unsigned i=0;i<200;i++)key(2);check(state.edit_value==2047);key(8);check(((state.settings>>20)&2047)==16);
+@@ -185,9 +191,9 @@
+ namespace={};exec(compile(ast.Module(body=[decode],type_ignores=[]),'decode_ui','exec'),namespace)
+ for v in ui:
+  word=v['word'];record=namespace['decode_ui']((0x56495331<<160)|(0x26101040<<128)|(v['settings']<<96)|(word<<64))
+- item=(word>>26)&15;status=(word>>23)&7;level=0 if not word>>31 else 1 if status==7 else 2
++ item=((word>>26)&15)|(((word>>14)&1)<<4 if word>>31 else 0);status=(word>>23)&7;level=0 if not word>>31 else 1 if status==7 else 2
+  group=item if level==1 else (0 if item<3 else 1 if item<9 else 3 if item<13 else 2)
+- assert record==dict(menu=(word>>11)&15,menu_value=word&2047,shape_threshold=(word>>15)&255,index=(v['settings']>>15)&7,
++ assert record==dict(menu=0 if level else (word>>11)&15,menu_value=word&2047,shape_threshold=(word>>15)&255,index=(v['settings']>>15)&7,
+                      sidebar_open=(word>>31)&1,sidebar_edit=(word>>30)&1,sidebar_item=item,center_status=status,sidebar_level=level,sidebar_group=group),record
+ (out/'ui_vectors.json').write_text(json.dumps(ui,indent=2));(out/'ui_vectors.mem').write_text(''.join(f'{v["ui"]:06x}\n' for v in ui))
+ roi=[]
+--- before/scripts/vision_control.py
++++ scripts/vision_control.py
+@@ -26,9 +26,9 @@
+ def decode_ui(v):
+  if v>>160!=0x56495331 or (v>>128)&0xffffffff!=0x26101040:raise RuntimeError('Key UI diagnostic mismatch')
+  s=(v>>96)&0xffffffff
+- item=(v>>90)&15;status=(v>>87)&7;level=0 if not((v>>95)&1) else 1 if status==7 else 2
++ item=((v>>90)&15)|((((v>>78)&1)<<4) if (v>>95)&1 else 0);status=(v>>87)&7;level=0 if not((v>>95)&1) else 1 if status==7 else 2
+  group=item if level==1 else (0 if item<3 else 1 if item<9 else 3 if item<13 else 2)
+- return dict(menu=(v>>75)&15,menu_value=(v>>64)&2047,shape_threshold=(v>>79)&255,index=(s>>15)&7,
++ return dict(menu=0 if level else (v>>75)&15,menu_value=(v>>64)&2047,shape_threshold=(v>>79)&255,index=(s>>15)&7,
+              sidebar_open=(v>>95)&1,sidebar_edit=(v>>94)&1,sidebar_item=item,center_status=status,sidebar_level=level,sidebar_group=group)
+ p=argparse.ArgumentParser();p.add_argument('--sensor',choices=['sc431hai','sc2210'],default='sc431hai');p.add_argument('--url',default='ftdi://0x0403:0x6011:4:3/2');p.add_argument('--mode',type=int);p.add_argument('--threshold',type=int);p.add_argument('--sobel-threshold',type=int);p.add_argument('--canny-threshold',type=int);p.add_argument('--median',type=int,choices=[0,1]);p.add_argument('--memory',type=int,choices=range(4));p.add_argument('--index',type=int,choices=range(7),help='F2:0..5 static history,6 autoplay; F3:0..5 comparison');p.add_argument('--page',type=int,default=0,choices=range(33));p.add_argument('--color-order',type=int,choices=range(6));p.add_argument('--gamma','--tone',dest='gamma',type=int,choices=[0,1,2,3]);p.add_argument('--gain-r',type=int);p.add_argument('--gain-g',type=int);p.add_argument('--gain-b',type=int);p.add_argument('--samples',type=int,default=5);p.add_argument('--ae',type=int,choices=[0,1]);p.add_argument('--exposure',type=int);p.add_argument('--lcd-test',type=int,choices=[0,1]);p.add_argument('--lcd-bist',type=int,choices=[0,1]);p.add_argument('--lcd-backlight',type=int,choices=[0,1]);p.add_argument('--shape',type=int,choices=[0,1]);p.add_argument('--shape-threshold',type=int,choices=range(1,256))
+ p.add_argument('--menu',type=int,choices=range(11));p.add_argument('--key-event',type=int,choices=range(64),help='Inject the same short/long event bits as hardware keys for automated policy checks');
+--- before/sim/tb_vision_control_bridge.sv
++++ sim/tb_vision_control_bridge.sv
+@@ -4,7 +4,7 @@
+ reg rst_n=0,vs=0,cmd_event=0;reg[2:0]keys_n=7;reg[7:0]cmd_op=0,paddr=0;reg[23:0]cmd_value=0;
+ reg flash_miso=0;wire[3:0]flash_gpio;
+ reg psel=0,penable=0,pwrite=0;reg[31:0]pwdata=0;wire[31:0]prdata;wire pready,pslverror;
+-wire[7:0]shape_threshold;wire[23:0]ui_state;wire[2:0]mode,history_index;wire median_en;wire[1:0]memory_mode;wire[10:0]sobel_threshold,canny_threshold,threshold;
++wire[7:0]shape_threshold;wire[23:0]ui_state;wire[2:0]mode,history_index;wire median_en,motion_enable;wire[1:0]memory_mode;wire[10:0]sobel_threshold,canny_threshold,threshold;
+ reg job_ready=0,capture_done=0,capture_error=0,source_hold_valid=0,render_done=0,render_error=0,render_pending=0,vblank=0,scan_busy=0;
+ reg[31:0]capture_count=0;wire job_valid,enable,freeze_source;wire[31:0]job_config_id;
+ wire[15:0]roi_x,roi_y,roi_w,roi_h,dst_w,dst_h,display_x,display_y;
+@@ -56,6 +56,12 @@
+  wr('h44,32'hcc1003c0);wr(8,5|(1<<3)|(1<<4)|(96<<9)|(48<<20));
+  repeat(8)@(negedge video_clk);if(ui_state!=((3<<11)|1408))$fatal(1,"sidebar changed outside VS");frame;
+  if(ui_state!=24'hcc03c0||shape_threshold!=32)$fatal(1,"sidebar selection/edit/value CDC mixed");
++ wr(8,32'h80000000|5|(1<<3)|(1<<4)|(96<<9)|(48<<20));
++ repeat(8)@(negedge video_clk);if(motion_enable)$fatal(1,"motion enable changed before VS");frame;
++ if(!motion_enable||mode!=5||threshold!=48||memory_mode!=1)$fatal(1,"motion atomic enable changed video");
++ wr('h44,(32<<15)|32'h80004001);wr(8,5|(1<<3)|(1<<4)|(96<<9)|(48<<20));
++ repeat(8)@(negedge video_clk);if(!motion_enable)$fatal(1,"motion disable changed before VS");frame;
++ if(motion_enable||ui_state!=24'h804001)$fatal(1,"motion item high bit/UI CDC");
+  repeat(8)@(negedge clk);if(!freeze_source)$fatal(1,"freeze CDC");
+  wr('h20,(13<<12)|7);wr('h24,(37<<12)|45);wr('h28,(80<<12)|64);wr('h2c,(8<<12)|12);
+  wr('h34,17);wr('h3c,17);wr('h38,1);wr('h30,7);
+--- before/board/ti60f225_v4/ti60f225_oob.xml
++++ board/ti60f225_v4/ti60f225_oob.xml
+@@ -7,6 +7,10 @@
+     <efx:design_info def_veri_version="sv_09" def_vhdl_version="vhdl_2008" unified_flow="false" partition_interface_allowed_off_perimeter="true">
+         <efx:top_module name="ti60f225_oob_top" />
+         <efx:design_file name="rtl/vision/vision_raw_frontend.sv" version="default" library="default" />
++        <efx:design_file name="rtl/vision/vision_local_motion_core.sv" version="default" library="default" />
++        <efx:design_file name="rtl/vision/vision_local_motion_tap.sv" version="default" library="default" />
++        <efx:design_file name="rtl/vision/vision_motion_readout.sv" version="default" library="default" />
++        <efx:design_file name="rtl/vision/vision_motion_policy.sv" version="default" library="default" />
+         <efx:design_file name="../../rtl/sapphire_ram.sv" version="default" library="default" />
+         <efx:design_file name="../../rtl/vision_int8_cfu.sv" version="default" library="default" />
+         <efx:design_file name="../../rtl/vision_packed_rgb.sv" version="default" library="default" />
+--- before/board/ti60f225_v4/rtl/ti60f225_oob_top.v
++++ board/ti60f225_v4/rtl/ti60f225_oob_top.v
+@@ -1347,7 +1347,7 @@
+ end endgenerate
+ wire[7:0]control_paddr;wire control_psel,control_penable,control_pwrite,control_pready,control_pslverror;
+ wire[31:0]control_pwdata,control_prdata;
+-wire[23:0]control_ui;wire[7:0]control_shape_threshold;wire tone_shadow_frame;
++wire[23:0]control_ui;wire[7:0]control_shape_threshold;wire tone_shadow_frame,control_motion;
+ wire[3:0]boot_gpio;
+ assign flash_sck=boot_gpio[0],flash_cs=boot_gpio[1],flash_mosi=boot_gpio[2];
+ assign flash_wp=1'b1,flash_hold=1'b1,{flash_cs_oe,flash_sck_oe,flash_mosi_oe,flash_wp_oe,flash_hold_oe}={5{boot_gpio[3]}};
+@@ -1356,12 +1356,12 @@
+  .flash_miso(flash_miso),.flash_gpio(boot_gpio),
+  .cmd_event(feature_cmd_event),.cmd_op(feature_command[31:24]),.cmd_value(feature_command[23:0]),
+  .paddr(control_paddr),.psel(control_psel),.penable(control_penable),.pwrite(control_pwrite),.pwdata(control_pwdata),.prdata(control_prdata),.pready(control_pready),.pslverror(control_pslverror),
+- .mode(feature_mode),.threshold(feature_threshold),.sobel_threshold(sobel_threshold),.canny_threshold(canny_threshold),.median_en(feature_median),.memory_mode(memory_mode),.history_index(history_index),.ui_state(control_ui),.shape_threshold(control_shape_threshold),
++ .mode(feature_mode),.threshold(feature_threshold),.sobel_threshold(sobel_threshold),.canny_threshold(canny_threshold),.median_en(feature_median),.motion_enable(control_motion),.memory_mode(memory_mode),.history_index(history_index),.ui_state(control_ui),.shape_threshold(control_shape_threshold),
+  .job_ready(roi_job_ready),.capture_done(roi_capture_done),.capture_error(roi_capture_error),.capture_count(roi_capture_count),.source_hold_valid(roi_hold_valid),.render_done(roi_render_done),.render_error(roi_render_error),.render_pending(roi_render_pending),.vblank(roi_vblank),.scan_busy(roi_scan_busy),
+  .job_valid(roi_job_valid),.enable(roi_enable),.freeze_source(roi_freeze),.job_config_id(roi_job_id),.roi_x(roi_x),.roi_y(roi_y),.roi_w(roi_w),.roi_h(roi_h),.dst_w(roi_dw),.dst_h(roi_dh),.display_x(roi_posx),.display_y(roi_posy),.config_busy(roi_config_busy),.commit_rejected(roi_commit_rejected),.requested_id(roi_requested_id),.config_error(roi_config_error),.committed_id(roi_commit_id),.rejected_id(roi_rejected_id));
+ end else begin:hardware_roi
+  assign boot_gpio=4'b0010;
+- assign control_prdata=0,control_pready=1,control_pslverror=1,control_ui=0,control_shape_threshold=32;
++ assign control_prdata=0,control_pready=1,control_pslverror=1,control_ui=0,control_shape_threshold=32,control_motion=0;
+ vision_roi_control roi_control(.rst_n(vid_rst_n),.video_clk(hdmi_tx_slow_clk),.cmd_event(feature_cmd_event),.cmd_op(feature_command[31:24]),.cmd_value(feature_command[23:0]),.memory_mode(memory_mode),.clk(core_clk),
+  .job_ready(roi_job_ready),.capture_done(roi_capture_done),.capture_error(roi_capture_error),.source_hold_valid(roi_hold_valid),.render_done(roi_render_done),.render_error(roi_render_error),.render_pending(roi_render_pending),.vblank(roi_vblank),.scan_busy(roi_scan_busy),
+  .job_valid(roi_job_valid),.enable(roi_enable),.freeze_source(roi_freeze),.job_config_id(roi_job_id),.roi_x(roi_x),.roi_y(roi_y),.roi_w(roi_w),.roi_h(roi_h),.dst_w(roi_dw),.dst_h(roi_dh),.display_x(roi_posx),.display_y(roi_posy),.config_busy(roi_config_busy),.commit_rejected(roi_commit_rejected),.requested_id(roi_requested_id),.config_error(roi_config_error),.committed_id(roi_commit_id),.rejected_id(roi_rejected_id));
+@@ -1721,19 +1721,22 @@
+  .edge_pixel(canny_pixel),.ready(canny_ready),.busy(canny_busy),.fault(canny_fault),.completed(canny_completed),
+  .display_de(feature_de),.probe_hold(canny_probe_hold),.probe_req(canny_probe_req),.probe_address(canny_probe_address),
+  .probe_ack(canny_probe_ack),.probe_data(canny_probe_data),.probe_read_address(canny_probe_read_address),.probe_busy(canny_probe_busy),.median_en(feature_median),.noise_mean(canny_noise_mean),.noise_valid(canny_noise_valid),.effective_threshold(canny_effective_threshold),.raster_de(feature_coordinate_de),.coarse_edges(canny_coarse_edges),.display_edges(canny_display_edges),.analysis_cycles(canny_analysis_cycles),.analysis_passes(canny_analysis_passes),.analysis_weak(canny_analysis_weak),.edge_coverage(canny_coverage));
+-vision_display #(.FUSION(SAPPHIRE_ENABLE&&ANALYSIS_DMA_ENABLE)) feature_display(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n&&!roi_config_changed),.de(gamma_valid),.hs(gamma_hs),.vs(gamma_vs),
++wire[2:0]motion_direction;wire motion_held;
++vision_display #(.FUSION(SAPPHIRE_ENABLE&&ANALYSIS_DMA_ENABLE),.LOCAL_MOTION_ENABLE(SAPPHIRE_ENABLE)) feature_display(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n&&!roi_config_changed),.de(gamma_valid),.hs(gamma_hs),.vs(gamma_vs),
+  .r(color_r),.g(color_g),.b(color_b),.mode(feature_mode),.threshold(sobel_threshold),.canny_effective_threshold(canny_effective_threshold),.canny_requested_threshold(canny_threshold),.median_en(feature_median),
+  .memory_mode(memory_mode),.history_index(history_index),.canny_pixel(canny_pixel),.canny_ready(canny_ready),.canny_coverage(canny_coverage),.cx(feature_x),.cy(feature_y),
+  .ode(feature_de),.ohs(feature_hs),.ovs(feature_vs),.orr(feature_r),.ogg(feature_g),.obb(feature_b),.debug_mag(feature_mag),.debug_edge(feature_edge),.shape_enable(shape_enable),.shape_threshold(shape_threshold),.shape_status(shape_status),.coordinate_de(feature_coordinate_de),
+- .ui_state({9'b0,control_ui[14:0]}),.analysis_enabled(ai_enabled),.analysis_context_changed(ai_context_changed),.frame_id(roi_view_frame),.render_config_id(roi_view_config),.analysis_context(ai_context),
++ .ui_state({9'b0,control_ui[23]?4'd0:control_ui[14:11],control_ui[10:0]}),.analysis_enabled(ai_enabled),.analysis_context_changed(ai_context_changed),.frame_id(roi_view_frame),.render_config_id(roi_view_config),.analysis_context(ai_context),
++ .motion_enable(control_motion),.motion_direction(motion_direction),.motion_held(motion_held),
+  .analysis_result(ai_result),.analysis_match(ai_match),.analysis_identity_match(ai_identity),.analysis_age(ai_age),.geometry_done(geometry_done),.geometry_frame(geometry_frame),.geometry_config(geometry_config),.geometry_context(geometry_context));
+ // M0 is an ISP bypass only when filtering is off. HDMI and readback share
+ // this selection so the displayed camera image obeys the same noise switch.
+-wire camera_bypass=feature_mode==0&&!feature_median&&control_ui[14:11]==0;
++wire camera_bypass=feature_mode==0&&!feature_median&&(control_ui[23]||control_ui[14:11]==0);
+ vision_sidebar_overlay sidebar_output(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n),
+  .de(camera_bypass?gamma_valid:feature_de),.hs(camera_bypass?gamma_hs:feature_hs),.vs(camera_bypass?gamma_vs:feature_vs),
+  .rgb(camera_bypass?color_pixel:{feature_r,feature_g,feature_b}),
+- .ui_state({control_ui[23:15],4'b0,control_ui[10:0]}),
++ .ui_state({control_ui[23:15],control_ui[14],3'b0,control_ui[10:0]}),
++ .motion_enable(control_motion&&memory_mode==0),.motion_direction(motion_direction),.motion_held(motion_held),
+  .ai_status(ai_result[14:11]),
+  .ode(video_de),.ohs(video_hs),.ovs(video_vs),.orgb({video_r,video_g,video_b}));
+ // Exact pre-TMDS output tap, plus the leased shared-range RGB16 source before Gamma.
+--- before/board/ti60f225_v4/rtl/vision/vision_display.sv
++++ board/ti60f225_v4/rtl/vision/vision_display.sv
+@@ -1,4 +1,4 @@
+-module vision_display #(parameter EDGE_STRENGTH=1,FUSION=0)(input clk,rst_n,de,hs,vs,input[7:0]r,g,b,input[2:0]mode,input[10:0]threshold,input median_en,
++module vision_display #(parameter EDGE_STRENGTH=1,FUSION=0,LOCAL_MOTION_ENABLE=0,WIDTH=1920,HEIGHT=1080)(input clk,rst_n,de,hs,vs,input[7:0]r,g,b,input[2:0]mode,input[10:0]threshold,input median_en,
+  input[1:0]memory_mode,input[2:0]history_index,
+  input canny_pixel,input canny_ready,output[11:0]cx,cy,
+  output reg ode,ohs,ovs,output reg[7:0]orr,ogg,obb,
+@@ -6,10 +6,26 @@
+  input shape_enable,input[7:0]shape_threshold,output[63:0]shape_status,output coordinate_de,input[10:0]canny_effective_threshold,canny_requested_threshold,input[7:0]canny_coverage,
+  input analysis_enabled,analysis_context_changed,input[31:0]frame_id,render_config_id,analysis_context,
+  input[351:0]analysis_result,input analysis_match,analysis_identity_match,input[15:0]analysis_age,
+- output reg geometry_done,output reg[31:0]geometry_frame,geometry_config,geometry_context,input[23:0]ui_state);
++ output reg geometry_done,output reg[31:0]geometry_frame,geometry_config,geometry_context,input[23:0]ui_state,
++ input motion_enable,output[2:0]motion_direction,output motion_held);
+ wire fd0,fh0,fv0,border0;wire[11:0]x0,y0;wire[7:0]fr0,fg0,fb0,gray0;wire[10:0]mag0;wire[1:0]dir;
+ wire edge0;reg edge1=0;
+-vision_frontend front(clk,rst_n,de,hs,vs,r,g,b,median_en,fd0,fh0,fv0,border0,x0,y0,fr0,fg0,fb0,gray0,mag0,dir,threshold,edge0);
++vision_frontend #(.WIDTH(WIDTH)) front(clk,rst_n,de,hs,vs,r,g,b,median_en,fd0,fh0,fv0,border0,x0,y0,fr0,fg0,fb0,gray0,mag0,dir,threshold,edge0);
++generate if(LOCAL_MOTION_ENABLE)begin:motion
++ wire[31:0]observation,status,horizontal,vertical;wire[15:0]sites;
++ wire live_reset=rst_n&&motion_enable&&memory_mode==0;reg vq=0;
++ always @(posedge clk)vq<=live_reset?fv0:1'b0;
++ // Observe pre-edge grayscale only; never gate video, DDR or ROI tasks.
++ vision_local_motion_tap #(.WIDTH(WIDTH),.HEIGHT(HEIGHT)) tap(
++  .clk(clk),.rst_n(live_reset),.de(fd0),.vs(fv0),.x(x0),.y(y0),.gray(gray0),.config_bit(median_en),
++  .observation_id(observation),.status(status),.horizontal_response(horizontal),.vertical_response(vertical),
++  .active_sites(sites),.roi_x0(),.roi_y0(),.roi_x1(),.roi_y1(),.dropped_frames());
++ vision_motion_readout readout(.clk(clk),.rst_n(live_reset),.frame_tick(fv0&&!vq),
++  .status(status),.observation(observation),.horizontal(horizontal),.vertical(vertical),.active_sites(sites),
++  .show_direction(motion_direction),.held(motion_held));
++end else begin:no_motion
++ assign motion_direction=0,motion_held=0;
++end endgenerate
+ reg fd=0,fh=0,fv=0,border=1;reg[11:0]x=0,y=0;reg[7:0]fr=0,fg=0,fb=0,gray=0;reg[10:0]mag=0;
+ always @(posedge clk)begin {fd,fh,fv,border,x,y,fr,fg,fb,gray,mag}<={fd0,fh0,fv0,(border0||x0<4||y0<4),x0,y0,fr0,fg0,fb0,gray0,mag0};end
+ always @(posedge clk)edge1<=edge0;
+--- before/board/ti60f225_v4/rtl/vision/vision_osd.sv
++++ board/ti60f225_v4/rtl/vision/vision_osd.sv
+@@ -1,4 +1,4 @@
+-module vision_osd(input[11:0]x,y,input[2:0]mode,input[10:0]threshold,input median_en,input[1:0]memory_mode,input[2:0]history_index,input canny_ready,input[1:0]shape_class,input shape_valid,input shape_enable,output reg active=0,output ink,input[10:0]requested_threshold,input fusion_enabled,input[351:0]fusion_result,input fusion_match,input[15:0]fusion_age,input clk,input[23:0]ui_state);
++module vision_osd #(parameter MOTION_HINT=0)(input[11:0]x,y,input[2:0]mode,input[10:0]threshold,input median_en,input[1:0]memory_mode,input[2:0]history_index,input canny_ready,input[1:0]shape_class,input shape_valid,input shape_enable,output reg active=0,output ink,input[10:0]requested_threshold,input fusion_enabled,input[351:0]fusion_result,input fusion_match,input[15:0]fusion_age,input clk,input[23:0]ui_state);
+ function automatic[34:0]glyph(input[7:0]ch);
+  begin case(ch)
+ 8'd48:glyph=35'b01110100011001110101110011000101110;
+@@ -42,7 +42,7 @@
+ endfunction
+ // BEGIN GENERATED CHINESE SIDEBAR
+ // Noto Sans SC Medium, 15px in 16x16 cells; regenerate with scripts/generate_sidebar_chinese.py.
+-localparam integer CHINESE_GLYPHS=113;
++localparam integer CHINESE_GLYPHS=121;
+ localparam[63:0] ZH_MENU=64'h8081202020202020; // 菜单
+ localparam[63:0] ZH_IMAGE=64'h8283202020202020; // 图像
+ localparam[63:0] ZH_VIEW=64'h8482202020202020; // 视图
+@@ -104,6 +104,14 @@
+ localparam[63:0] ZH_AI_DONE=64'ha1a2e0e120202020; // 推理完成
+ localparam[63:0] ZH_AI_ERROR=64'ha1a29ce820202020; // 推理出错
+ localparam[63:0] ZH_AI_OLD=64'heff0e6e720202020; // 结果过期
++localparam[63:0] ZH_MOTION=64'hf1caf28a20202020; // 运动提示
++localparam[63:0] ZH_LEFT=64'hf3b7202020202020; // 向左
++localparam[63:0] ZH_RIGHT=64'hf3b8202020202020; // 向右
++localparam[63:0] ZH_MOVE_UP=64'hf3d1202020202020; // 向上
++localparam[63:0] ZH_MOVE_DOWN=64'hf3d3202020202020; // 向下
++localparam[63:0] ZH_STILL=64'hf4f5202020202020; // 静止
++localparam[63:0] ZH_UNKNOWN=64'hdff6202020202020; // 待判
++localparam[63:0] ZH_HOLD=64'hf7f8202020202020; // 保持
+ function automatic[255:0]chinese_glyph(input[6:0]code);
+  begin case(code)
+  7'd0:chinese_glyph=256'h0c607ffc0c600cf87ff003183318113001007ffc07c00f603938711c01000000; // 菜
+@@ -219,6 +227,14 @@
+  7'd110:chinese_glyph=256'h000037fc180c180c610c610c7ffc638c67cc6d6c792c610c610c603c40000000; // 闲
+  7'd111:chinese_glyph=256'h1060106033fc24606c60f8607bfc300034007dfc610c050c7d8c61fc01080000; // 结
+  7'd112:chinese_glyph=256'h00003ff8311831183ff831183ff8038003807ffc07c00d70393c610c01000000; // 果
++ 7'd113:chinese_glyph=256'h000063f830001000000007fc718031b03318337837fc30047c0067fc00000000; // 运
++ 7'd114:chinese_glyph=256'h300033f833087bf8330833f830003ffc786073603378334037c036fc6c000000; // 提
++ 7'd115:chinese_glyph=256'h0300030002007ffc600c600c6fec6c6c6c6c6c6c6fec6c0c640c603c60380000; // 向
++ 7'd116:chinese_glyph=256'h18407ec018f87fb019fcfe6c006c7ffe666c7e6c66fc7e6c666066606ce00000; // 静
++ 7'd117:chinese_glyph=256'h0180018001800180118011f811fc118011801180118011807ffc7ffc00000000; // 止
++ 7'd118:chinese_glyph=256'h08006d0c6d6c3f6c2e6c7f6c0c6c0c6c0c6c7fec186c180c180c303c60380000; // 判
++ 7'd119:chinese_glyph=256'h08001bfc1a0c320c320c73fcf040704037fc31f031f03358364c3c4410400000; // 保
++ 7'd120:chinese_glyph=256'h3060306033fc7860306037fc30183818fffc7018311831983098301870700000; // 持
+  default:chinese_glyph=0;endcase end
+ endfunction
+ // END GENERATED CHINESE SIDEBAR
+@@ -259,29 +275,40 @@
+  end
+ end
+ wire sidebar=ui_state[23],editing=ui_state[22];
+-wire[3:0]selected=ui_state[21:18];wire[2:0]center_status=ui_state[17:15];
++wire[4:0]selected={ui_state[14],ui_state[21:18]};wire[2:0]center_status=ui_state[17:15];
+ wire root_only=center_status==7,side_left=x<144;
+ wire[1:0]side_group=root_only?selected[1:0]:selected<3?0:selected<9?1:selected<13?3:2;
+-wire[3:0]side_first=side_group==0?0:side_group==1?3:side_group==2?13:9;
+-wire[3:0]side_count=side_group==1?6:side_group==3?4:3;
+-wire[3:0]side_index=selected-side_first,side_lines=side_count+4'd3;
++wire[4:0]side_first=side_group==0?0:side_group==1?3:side_group==2?13:9;
++wire[3:0]side_count=side_group==1?6:side_group==2||side_group==3?4:3;
++wire[4:0]side_index=selected-side_first;wire[3:0]side_lines=side_count+4'd3;
+ // Keep the original status HUD above the menu, including its right-hand fields.
+-wire[5:0]side_row=y[11:6]-6'd2;wire[8:0]side_x=side_left?x[8:0]:x[8:0]-9'd144;
++wire[5:0]side_row=y[11:6]-6'd2;wire[8:0]side_x=(side_left||!sidebar)?x[8:0]:x[8:0]-9'd144;
+ wire[4:0]side_slot=(side_x-9'd16)>>4;reg[5:0]side_py;reg marker_q=0;
+-wire side_selected=side_row=={2'b0,side_index}+6'd1;
++wire side_selected=side_row=={1'b0,side_index}+6'd1;
+ wire side_active=y>=128&&((x<144&&y<576)||(!root_only&&x>=144&&x<304&&side_row<{2'b0,side_lines}));
++wire motion_on=MOTION_HINT&&fusion_result[19];
++wire motion_active=motion_on&&x<160&&y>=96&&y<120;
++reg[63:0]motion_text;
++always @*begin
++ case(fusion_result[18:16])
++  1:motion_text=ZH_STILL;2:motion_text=ZH_LEFT;3:motion_text=ZH_RIGHT;
++  4:motion_text=ZH_MOVE_UP;5:motion_text=ZH_MOVE_DOWN;default:motion_text=ZH_UNKNOWN;
++ endcase
++ motion_text={ZH_MOTION[63:48],motion_text[63:48],fusion_result[15]?ZH_HOLD[63:48]:16'h2020,16'h2020};
++end
+ function automatic[63:0]group_label(input[1:0]group);
+  begin case(group)
+  0:group_label=ZH_IMAGE;1:group_label=ZH_VIEW;2:group_label=ZH_TARGET;3:group_label=ZH_AI;
+  endcase end
+ endfunction
+ wire[63:0]side_title=group_label(side_left?side_row[1:0]-1'b1:side_group);
+-function automatic[63:0]side_label(input[3:0]item);
++function automatic[63:0]side_label(input[4:0]item);
+  begin case(item)
+  0:side_label=ZH_MODE;1:side_label=ZH_THRESHOLD;2:side_label=ZH_MEDIAN;3:side_label=ZH_ZOOM;
+  4:side_label=ZH_PAN_X;5:side_label=ZH_PAN_Y;6:side_label=ZH_SIZE;7:side_label=ZH_POS_X;
+  8:side_label=ZH_POS_Y;9:side_label=ZH_AI_MODE;10:side_label=ZH_RUN;11:side_label=ZH_SELFTEST;
+  12:side_label=ZH_MODEL;13:side_label=ZH_CENTER;14:side_label=ZH_TARGET_ZOOM;15:side_label=ZH_FULLVIEW;
++ 16:side_label=ZH_MOTION;default:side_label=0;
+  endcase end
+ endfunction
+ reg[63:0]side_text,side_value;
+@@ -405,7 +432,7 @@
+    0:side_value=ZH_CAMERA;1:side_value=ZH_GRAY;2:side_value=ZH_SOBEL;3:side_value=ZH_SPLIT;
+    4:side_value=ZH_SOBEL_OVERLAY;5:side_value=ZH_CANNY;6:side_value=ZH_CANNY_OVERLAY;7:side_value=ZH_SHAPE;
+   endcase
+-  2:side_value=shown[0]?ZH_ON:ZH_OFF;
++  2,16:side_value=shown[0]?ZH_ON:ZH_OFF;
+   3,6:side_value={ZH_WIDTH[63:56],side_number,ZH_PIXELS[63:48],8'd32};
+   4,5,7,8:side_value={side_number,ZH_PIXELS[63:48],16'h2020};
+   9:case(shown[1:0])
+@@ -440,6 +467,7 @@
+      endcase
+      if(fusion_result[0]&&fusion_result[12:11]==2&&!fusion_match)side_text=ZH_AI_OLD;
+     end
++    else if(selected==16)side_text=motion_on?motion_text:ZH_OFF;
+     else case(center_status)
+      0:side_text=ZH_READY;1:side_text=ZH_WAIT;2:side_text=ZH_DONE;3:side_text=ZH_NO_TARGET;
+      4:side_text=ZH_BUSY;5:side_text=ZH_STALE;6:side_text=ZH_ERROR;default:side_text=0;
+@@ -451,14 +479,18 @@
+   if(side_slot<8)ch=char8(side_text,side_slot[2:0]);
+   bitidx=34-(side_py>>1)*5-(side_x[3:0]>>1);
+  end
++ if(!sidebar&&motion_active)begin
++  side_py=y-12'd100;ch=side_slot<8?char8(motion_text,side_slot[2:0]):8'd32;
++  bitidx=34-(side_py>>1)*5-(side_x[3:0]>>1);
++ end
+ end
+ // Split character selection from font decode; RGB/control use the same extra beat.
+ always @(posedge clk)begin
+  ch_q<=ch;bitidx_q<=bitidx;
+  font_ink<=font[{ch[6:0],bitidx}];
+  chinese_ink<=chinese_font[{ch[6:0],side_py[3:0],side_x[3:0]}];chinese_q<=ch[7];
+- active<=sidebar?side_active:(x>=8&&x<((mode==5||mode==6||ai_page)?428:356)&&((y>=4&&y<20)||(shape_enable&&y>=22&&y<38)||(hud&&((y>=40&&y<56)||(y>=58&&y<74)||(y>=76&&y<92)))));
+- ink_region_q<=sidebar?(side_x>=16&&side_slot<8&&(ch[7]?side_py<16:(side_x[3:0]<10&&side_py<14&&bitidx<35))):(column<10&&local_y<14&&bitidx<35);
++ active<=sidebar?side_active:MOTION_HINT?motion_active:(x>=8&&x<((mode==5||mode==6||ai_page)?428:356)&&((y>=4&&y<20)||(shape_enable&&y>=22&&y<38)||(hud&&((y>=40&&y<56)||(y>=58&&y<74)||(y>=76&&y<92)))));
++ ink_region_q<=(sidebar||motion_active)?(side_x>=16&&side_slot<8&&(ch[7]?side_py<16:(side_x[3:0]<10&&side_py<14&&bitidx<35))):(column<10&&local_y<14&&bitidx<35);
+  marker_q<=sidebar&&side_active&&((side_left&&side_row=={4'b0,side_group}+6'd1&&(side_x<4||(root_only&&(y[5:0]==0||y[5:0]==63))))||(!side_left&&side_selected&&(side_x<4||y[5:0]==0||y[5:0]==63)));
+ end
+ assign ink=active&&((ink_region_q&&(chinese_q?chinese_ink:font_ink))||marker_q);
+--- before/board/ti60f225_v4/rtl/vision/vision_sidebar_overlay.sv
++++ board/ti60f225_v4/rtl/vision/vision_sidebar_overlay.sv
+@@ -1,19 +1,21 @@
+ // Final scan overlay: opening the sidebar never switches the camera ISP bypass.
+ // All pixels and syncs retain their order, with one extra video-clock beat.
+ module vision_sidebar_overlay(input clk,rst_n,de,hs,vs,input[23:0]rgb,ui_state,input[3:0]ai_status,
++ input motion_enable,motion_held,input[2:0]motion_direction,
+  output ode,ohs,ovs,output[23:0]orgb);
+  reg[11:0]x=0,y=0;reg de_q=0,hs_q=0,vs_q=0,open_q=0;reg[23:0]rgb_q=0;
++ reg[2:0]direction_q=0;reg held_q=0;
+  wire active,ink;
+- vision_osd sidebar_font(.clk(clk),.x(x),.y(y),.ui_state(ui_state),
++ vision_osd #(.MOTION_HINT(1)) sidebar_font(.clk(clk),.x(x),.y(y),.ui_state(ui_state),
+   .mode(3'd0),.threshold(11'd0),.median_en(1'b0),.memory_mode(2'd0),.history_index(3'd0),
+   .canny_ready(1'b0),.shape_class(2'd0),.shape_valid(1'b0),.shape_enable(1'b0),
+-  .requested_threshold(11'd0),.fusion_enabled(1'b0),.fusion_result({337'd0,ai_status,11'd0}),
++  .requested_threshold(11'd0),.fusion_enabled(1'b0),.fusion_result({332'd0,motion_enable,direction_q,held_q,ai_status,11'd0}),
+   .fusion_match(1'b0),.fusion_age(16'd0),.active(active),.ink(ink));
+  always @(posedge clk)begin
+-  if(!rst_n)begin x<=0;y<=0;de_q<=0;hs_q<=0;vs_q<=0;open_q<=0;rgb_q<=0;end
++  if(!rst_n)begin x<=0;y<=0;de_q<=0;hs_q<=0;vs_q<=0;open_q<=0;rgb_q<=0;direction_q<=0;held_q<=0;end
+   else begin
+-   de_q<=de;hs_q<=hs;vs_q<=vs;rgb_q<=rgb;open_q<=ui_state[23];
+-   if(vs&&!vs_q)begin x<=0;y<=0;end
++   de_q<=de;hs_q<=hs;vs_q<=vs;rgb_q<=rgb;open_q<=ui_state[23]||motion_enable;
++   if(vs&&!vs_q)begin x<=0;y<=0;direction_q<=motion_direction;held_q<=motion_held;end
+    else if(de)x<=x+1'b1;
+    else if(de_q)begin x<=0;y<=y+1'b1;end
+   end
+--- before/firmware/vision/control_service.h
++++ firmware/vision/control_service.h
+@@ -65,15 +65,15 @@
+ }
+ enum { SIDE_MODE,SIDE_THRESHOLD,SIDE_MEDIAN,SIDE_ZOOM,SIDE_PAN_X,SIDE_PAN_Y,
+  SIDE_SIZE,SIDE_POS_X,SIDE_POS_Y,SIDE_AI,SIDE_RUN,SIDE_SELFTEST,SIDE_MODEL,
+- SIDE_CENTER,SIDE_TARGET_ZOOM,SIDE_FULL_VIEW,SIDE_COUNT };
++ SIDE_CENTER,SIDE_TARGET_ZOOM,SIDE_FULL_VIEW,SIDE_MOTION,SIDE_COUNT };
+ enum { CENTER_READY,CENTER_WAIT,CENTER_DONE,CENTER_NONE,CENTER_BUSY,CENTER_STALE,CENTER_ERROR };
+ static unsigned control_sidebar_group(unsigned item){return item<3?0:item<9?1:item<13?3:2;}
+ static unsigned control_sidebar_first(unsigned group){return group==0?SIDE_MODE:group==1?SIDE_ZOOM:group==2?SIDE_CENTER:SIDE_AI;}
+ static unsigned control_sidebar_count(unsigned group){
+ #ifdef VISION_FOMO
+- return group==1?6:group==3?4:3;
++ return group==1?6:group==2||group==3?4:3;
+ #else
+- return group==1?6:3;
++ return group==1?6:group==2?4:3;
+ #endif
+ }
+ static unsigned control_sidebar_value(struct vision_control_state *s){
+@@ -82,6 +82,7 @@
+  if(i==SIDE_MODE)return s->settings&7;
+  if(i==SIDE_THRESHOLD)return (s->settings&7)==7?s->shape_threshold:(s->settings>>(((s->settings&7)==5||(s->settings&7)==6)?20:9))&2047;
+  if(i==SIDE_MEDIAN)return (s->settings>>3)&1;
++ if(i==SIDE_MOTION)return s->settings>>31;
+  if(i==SIDE_ZOOM)return s->roi[1]>>12;
+  if(i==SIDE_PAN_X)return s->roi[0]>>12;
+  if(i==SIDE_PAN_Y)return s->roi[0]&4095;
+@@ -99,7 +100,7 @@
+  else if(i==SIDE_THRESHOLD){
+   if(s->edit_mode==7)s->edit_value=up?(v>239?255:v+16):(v<=17?1:v-16);
+   else s->edit_value=up?threshold_up(v):threshold_down(v);
+- }else if(i==SIDE_MEDIAN||i==SIDE_MODEL)s->edit_value=up?1:0;
++ }else if(i==SIDE_MEDIAN||i==SIDE_MODEL||i==SIDE_MOTION)s->edit_value=up?1:0;
+  else if(i>=SIDE_ZOOM&&i<=SIDE_POS_Y){
+   control_roi_change(s->edit_roi,&s->edit_enable,i-1,up);
+   if(i==SIDE_ZOOM)s->edit_value=s->edit_roi[1]>>12;
+@@ -118,6 +119,7 @@
+   if(s->edit_mode==7)s->shape_threshold=v;
+   else control_threshold(s,s->edit_mode==5||s->edit_mode==6?20:9,v);
+  }else if(i==SIDE_MEDIAN)s->settings=(s->settings&~8u)|(v<<3);
++ else if(i==SIDE_MOTION)s->settings=(s->settings&0x7fffffffu)|(v<<31);
+  else if(i>=SIDE_ZOOM&&i<=SIDE_POS_Y){
+   for(unsigned k=0;k<4;k++)s->roi[k]=s->edit_roi[k];
+   s->roi_enable=s->edit_enable;s->key_roi_dirty=1;
+@@ -175,8 +177,10 @@
+  // Status7 is the category-list tag; a child page carries the real center status0..6.
+  unsigned item=s->sidebar_open==1?control_sidebar_group(s->sidebar_item):s->sidebar_item;
+  unsigned status=s->sidebar_open==1?7:s->center_status;
+- return ((uint32_t)(s->sidebar_open!=0)<<31)|(s->sidebar_edit<<30)|(item<<26)|(status<<23)|
+-        (s->shape_threshold<<15)|(m<<11)|v;
++ // Compact-menu bits are unused on an open sidebar; bit14 carries item bit4.
++ unsigned menu=s->sidebar_open?(item>>4)<<3:m;
++ return ((uint32_t)(s->sidebar_open!=0)<<31)|(s->sidebar_edit<<30)|((item&15)<<26)|(status<<23)|
++        (s->shape_threshold<<15)|(menu<<11)|v;
+ }
+ static void control_event(uint32_t event){
+  struct vision_control_state *s=CONTROL_STATE;
+--- before/sim/vision/tb_edge_overlay.sv
++++ sim/vision/tb_edge_overlay.sv
+@@ -3,7 +3,7 @@
+ reg clk=0,rst=1,shape=1,cp=0,cr=1;reg[2:0]mode=0;
+ wire de,hs,vs;wire[7:0]r,g,b;wire[63:0]status;
+ vision_display #(.EDGE_STRENGTH(0)) dut(clk,rst,1'b0,1'b0,1'b0,8'd0,8'd0,8'd0,mode,11'd64,1'b1,2'd0,3'd0,
+- cp,cr,,,de,hs,vs,r,g,b,,,shape,8'd32,status,,11'd128,11'd128,8'd0,1'b0,1'b0,32'd0,32'd0,32'd0,352'd0,1'b0,1'b0,16'd0,,,,,15'd0);
++ cp,cr,,,de,hs,vs,r,g,b,,,shape,8'd32,status,,11'd128,11'd128,8'd0,1'b0,1'b0,32'd0,32'd0,32'd0,352'd0,1'b0,1'b0,16'd0,,,,,15'd0,1'b0,,);
+ always #5 clk=~clk;
+ task check_pixel(input[2:0]m,input[23:0]wanted);
+  begin @(negedge clk);mode=m;repeat(2)@(posedge clk);#1;if({r,g,b}!==wanted)$fatal(1,"mode%0d pixel=%h expected%h",m,{r,g,b},wanted);end
+--- before/sim/vision/tb_osd.sv
++++ sim/vision/tb_osd.sv
+@@ -16,7 +16,7 @@
+  begin for(slot=0;slot<8;slot=slot+1)side_character(line,offset,slot,wanted[63-8*slot-:8]);end
+ endtask
+ integer j,expected,m,k,g,item,line,py,px,font_pixels=0;reg[7:0]forced_code;reg expected_ink;
+-reg[63:0]mode_names[0:7],labels[0:15],groups[0:3],statuses[0:6],tests[0:3],runs[0:3];reg[255:0]cn_pattern;
++reg[63:0]mode_names[0:7],labels[0:16],groups[0:3],statuses[0:6],tests[0:3],runs[0:3];reg[255:0]cn_pattern;
+ initial begin
+  for(j=0;j<2048;j=j+1)begin expected=((j/1000)<<12)|(((j/100)%10)<<8)|(((j/10)%10)<<4)|(j%10);if(dut.decimal(j)!==expected[15:0])$fatal(1,"decimal %0d",j);end
+  character(0,"S");character(1,"O");character(2,"B");character(3,"E");character(4,"L");
+@@ -68,10 +68,10 @@
+  labels[0]=dut.ZH_MODE;labels[1]=dut.ZH_THRESHOLD;labels[2]=dut.ZH_MEDIAN;labels[3]=dut.ZH_ZOOM;
+  labels[4]=dut.ZH_PAN_X;labels[5]=dut.ZH_PAN_Y;labels[6]=dut.ZH_SIZE;labels[7]=dut.ZH_POS_X;
+  labels[8]=dut.ZH_POS_Y;labels[9]=dut.ZH_AI_MODE;labels[10]=dut.ZH_RUN;labels[11]=dut.ZH_SELFTEST;
+- labels[12]=dut.ZH_MODEL;labels[13]=dut.ZH_CENTER;labels[14]=dut.ZH_TARGET_ZOOM;labels[15]=dut.ZH_FULLVIEW;
++ labels[12]=dut.ZH_MODEL;labels[13]=dut.ZH_CENTER;labels[14]=dut.ZH_TARGET_ZOOM;labels[15]=dut.ZH_FULLVIEW;labels[16]=dut.ZH_MOTION;
+  groups[0]=dut.ZH_IMAGE;groups[1]=dut.ZH_VIEW;groups[2]=dut.ZH_TARGET;groups[3]=dut.ZH_AI;
+- for(item=0;item<16;item=item+1)begin
+-  ui=24'h800000|(item<<18);line=item<3?item+1:item<9?item-2:item<13?item-8:item-12;
++ for(item=0;item<17;item=item+1)begin
++  ui=24'h800000|((item&15)<<18)|((item>>4)<<14);line=item<3?item+1:item<9?item-2:item<13?item-8:item-12;
+   side_word(line,12,labels[item]);
+  end
+  for(g=0;g<4;g=g+1)begin
+@@ -94,9 +94,9 @@
+  ui=24'h800000|(4<<18)|320;side_word(2,36,{"0320",dut.ZH_PIXELS[63:48],16'h2020});
+  statuses[0]=dut.ZH_READY;statuses[1]=dut.ZH_WAIT;statuses[2]=dut.ZH_DONE;statuses[3]=dut.ZH_NO_TARGET;
+  statuses[4]=dut.ZH_BUSY;statuses[5]=dut.ZH_STALE;statuses[6]=dut.ZH_ERROR;
+- for(m=0;m<7;m=m+1)begin ui=24'h800000|(13<<18)|(m<<15);side_word(4,24,statuses[m]);end
+- ui=24'h800000|(13<<18);side_word(1,36,dut.ZH_ENTER);side_word(5,12,dut.ZH_ENTER);side_word(5,36,dut.ZH_BACK);
+- ui=24'hc00000|(13<<18);side_word(0,24,dut.ZH_EDIT);side_word(1,36,dut.ZH_CONFIRM);side_word(5,36,dut.ZH_CANCEL);
++ for(m=0;m<7;m=m+1)begin ui=24'h800000|(13<<18)|(m<<15);side_word(5,24,statuses[m]);end
++ ui=24'h800000|(13<<18);side_word(1,36,dut.ZH_ENTER);side_word(6,12,dut.ZH_ENTER);side_word(6,36,dut.ZH_BACK);
++ ui=24'hc00000|(13<<18);side_word(0,24,dut.ZH_EDIT);side_word(1,36,dut.ZH_CONFIRM);side_word(6,36,dut.ZH_CANCEL);
+  @(negedge clk);ui=24'h838005;x=16;y=100;@(posedge clk);#1;if(active)$fatal(1,"sidebar covered original status HUD");
+  @(negedge clk);x=144;y=228;@(posedge clk);#1;if(active)$fatal(1,"root opened child without confirm");
+  @(negedge clk);x=143;@(posedge clk);#1;if(!active)$fatal(1,"root width");
+@@ -127,6 +127,6 @@
+   end
+  end
+  release dut.ch;
+- $display("PASS OSD Chinese 4 groups/16 labels/8 modes/statuses/units and %0d font pixels, legacy HUD exact, widths144/304 row64",font_pixels);$finish;
++ $display("PASS OSD Chinese 4 groups/17 labels/8 modes/statuses/units and %0d font pixels, legacy HUD exact, widths144/304 row64",font_pixels);$finish;
+ end
+ endmodule
+--- before/sim/vision/tb_sidebar_video.sv
++++ sim/vision/tb_sidebar_video.sv
+@@ -2,7 +2,7 @@
+ module tb;
+ reg clk=0;always #5 clk=~clk;
+ reg rst_n=0,de=0,hs=0,vs=0;reg[23:0]rgb=0,ui_state=0;
+-reg[3:0]ai_status=0;
++reg[3:0]ai_status=0;reg motion_enable=0,motion_held=0;reg[2:0]motion_direction=0;
+ wire ode,ohs,ovs;wire[23:0]orgb;
+ vision_sidebar_overlay dut(.*);
+ reg[23:0]words[0:2];integer pix,frame,row,col,file,good=0,outside=0;reg[23:0]expected;reg[31:0]rng=32'h4312210;
+--- /dev/null
++++ board/ti60f225_v4/rtl/vision/vision_local_motion_core.sv
+@@ -0,0 +1,120 @@
++// Local ON/OFF delayed correlation. No MaleCNS/Flyvis whole-network state.
++// One 8x8 multiplier is time-shared over eight terms per grid word.
++module vision_local_motion_core #(
++ parameter COLS=12,ROWS=12,N=COLS*ROWS,AW=$clog2(N),CW=$clog2(COLS+1),RW=$clog2(ROWS+1)
++)(input clk,rst_n,abort_frame,
++ input in_valid,output in_ready,input in_first,in_last,reset_history,input[7:0]in_gray,
++ output reg out_valid, input out_ready,
++ output reg temporal_valid,output reg[2:0]direction,
++ output reg signed[31:0]horizontal_response,vertical_response,
++ output reg[15:0]active_sites,output reg roi_valid,
++ output reg[CW-1:0]roi_x0,roi_x1,output reg[RW-1:0]roi_y0,roi_y1,
++ output reg fault);
++localparam IDLE=0,READ=1,LOAD=2,MULTIPLY=3,COMMIT=4,FINISH=5;
++reg[2:0]state;reg[AW-1:0]index;reg[CW-1:0]col;reg[RW-1:0]row;
++reg packet_open,history_valid,warm;reg[7:0]gray_latched,current_on,current_off;
++// Store signed contrast instead of two disjoint ON/OFF bytes: 8+9 bits/site.
++reg[16:0]cells[0:N-1],cell_q;
++// Per-column previous-row history shares the existing READ stage, not a register mux.
++(* syn_ramstyle="block_ram" *)reg[17:0]line_store[0:COLS-1];reg[17:0]above,left;
++reg[2:0]term;reg[7:0]mul_a,mul_b;wire[15:0]product=mul_a*mul_b;
++wire signed[31:0]signed_product={16'd0,product};
++localparam SUM_W=$clog2(2*N*255*255+1)+1;
++reg signed[SUM_W-1:0]hx,vy;reg[15:0]count_active;
++reg[CW-1:0]xmin,xmax;reg[RW-1:0]ymin,ymax;
++wire signed[8:0]delta=$signed({1'b0,gray_latched})-$signed({1'b0,cell_q[16:9]});
++wire[8:0]negative_delta=-delta;
++wire signed[8:0]old_delta=cell_q[8:0],old_left=left[17:9],now_left=left[8:0],old_above=above[17:9],now_above=above[8:0];
++wire[8:0]neg_old=-old_delta,neg_ol=-old_left,neg_nl=-now_left,neg_oa=-old_above,neg_na=-now_above;
++wire[7:0]old_on=old_delta>0?old_delta[7:0]:0,old_off=old_delta<0?neg_old[7:0]:0;
++wire[7:0]ol_on=old_left>0?old_left[7:0]:0,ol_off=old_left<0?neg_ol[7:0]:0;
++wire[7:0]nl_on=now_left>0?now_left[7:0]:0,nl_off=now_left<0?neg_nl[7:0]:0;
++wire[7:0]oa_on=old_above>0?old_above[7:0]:0,oa_off=old_above<0?neg_oa[7:0]:0;
++wire[7:0]na_on=now_above>0?now_above[7:0]:0,na_off=now_above<0?neg_na[7:0]:0;
++wire[8:0]stored_delta=warm?delta:9'd0;
++always @(posedge clk)if(rst_n&&!abort_frame&&state==COMMIT)
++ line_store[col]<={warm?cell_q[8:0]:9'd0,stored_delta};
++wire[31:0]abs_h=hx[SUM_W-1]?-hx:hx,abs_v=vy[SUM_W-1]?-vy:vy;
++wire[31:0]major=abs_h>=abs_v?abs_h:abs_v,minor=abs_h>=abs_v?abs_v:abs_h;
++assign in_ready=state==IDLE&&(!out_valid||out_ready);
++always @*begin
++ mul_a=0;mul_b=0;
++ if(warm&&term<4&&col!=0)case(term)
++  0:begin mul_a=ol_on;mul_b=current_on;end
++  1:begin mul_a=old_on;mul_b=nl_on;end
++  2:begin mul_a=ol_off;mul_b=current_off;end
++  3:begin mul_a=old_off;mul_b=nl_off;end
++ endcase
++ if(warm&&term>=4&&row!=0)case(term)
++  4:begin mul_a=oa_on;mul_b=current_on;end
++  5:begin mul_a=old_on;mul_b=na_on;end
++  6:begin mul_a=oa_off;mul_b=current_off;end
++  7:begin mul_a=old_off;mul_b=na_off;end
++ endcase
++end
++always @(posedge clk)begin
++ if(!rst_n)begin
++  state<=IDLE;index<=0;col<=0;row<=0;packet_open<=0;history_valid<=0;warm<=0;
++  out_valid<=0;fault<=0;direction<=0;temporal_valid<=0;roi_valid<=0;
++  horizontal_response<=0;vertical_response<=0;active_sites<=0;
++  roi_x0<=0;roi_y0<=0;roi_x1<=0;roi_y1<=0;hx<=0;vy<=0;count_active<=0;
++  current_on<=0;current_off<=0;term<=0;gray_latched<=0;
++ end else if(abort_frame)begin
++  state<=IDLE;packet_open<=0;history_valid<=0;out_valid<=0;fault<=1;
++ end else begin
++  if(out_valid&&out_ready)out_valid<=0;
++  case(state)
++   IDLE:if(in_valid&&in_ready)begin
++    if((!packet_open&&!in_first)||(in_first&&in_last)||(!in_first&&(in_last!=(index==N-1))))begin
++     fault<=1;packet_open<=0;history_valid<=0;
++    end else begin
++     gray_latched<=in_gray;
++     if(in_first)begin
++      warm<=history_valid&&!reset_history&&!packet_open;
++      if(packet_open)fault<=1;
++      index<=0;col<=0;row<=0;packet_open<=1;hx<=0;vy<=0;count_active<=0;
++      xmin<=COLS-1;xmax<=0;ymin<=ROWS-1;ymax<=0;
++     end
++     state<=READ;
++    end
++   end
++   READ:begin cell_q<=cells[index];above<=line_store[col];state<=LOAD;end
++   LOAD:begin
++    current_on<=(warm&&delta>0)?delta[7:0]:8'd0;
++    current_off<=(warm&&delta<0)?negative_delta[7:0]:8'd0;
++    term<=0;state<=MULTIPLY;
++   end
++   MULTIPLY:begin
++    if(term<4)begin if(term[0])hx<=hx-signed_product;else hx<=hx+signed_product;end
++    else begin if(term[0])vy<=vy-signed_product;else vy<=vy+signed_product;end
++    if(term==7)state<=COMMIT;else term<=term+1'b1;
++   end
++   COMMIT:begin
++    cells[index]<={gray_latched,stored_delta};
++    left<={warm?cell_q[8:0]:9'd0,stored_delta};
++    if(warm&&(current_on>8||current_off>8))begin
++     count_active<=count_active+1'b1;
++     if(col<xmin)xmin<=col;if(col>xmax)xmax<=col;
++     if(row<ymin)ymin<=row;if(row>ymax)ymax<=row;
++    end
++    if(index==N-1)state<=FINISH;
++    else begin index<=index+1'b1;if(col==COLS-1)begin col<=0;row<=row+1'b1;end else col<=col+1'b1;state<=IDLE;end
++   end
++   FINISH:begin
++    out_valid<=1;temporal_valid<=warm;horizontal_response<=hx;vertical_response<=vy;
++    active_sites<=count_active;roi_valid<=count_active!=0;
++    roi_x0<=count_active!=0?xmin:0;roi_x1<=count_active!=0?CW'(xmax+1'b1):0;
++    roi_y0<=count_active!=0?ymin:0;roi_y1<=count_active!=0?RW'(ymax+1'b1):0;
++    direction<=0;
++    // 0 unknown,1 static,2 left,3 right,4 up,5 down. Scores are not probability.
++    if(warm&&count_active==0)direction<=1;
++    else if(warm&&major>=256&&(major<<1)>=minor+(minor<<1))begin
++     if(abs_h>=abs_v)direction<=hx[SUM_W-1]?2:3;else direction<=vy[SUM_W-1]?4:5;
++    end
++    history_valid<=1;packet_open<=0;state<=IDLE;
++   end
++   default:begin state<=IDLE;history_valid<=0;packet_open<=0;fault<=1;end
++  endcase
++ end
++end
++endmodule
+--- /dev/null
++++ board/ti60f225_v4/rtl/vision/vision_local_motion_tap.sv
+@@ -0,0 +1,116 @@
++// Tap already-aligned gray/fde/fx/fy. Fixed 8x8 sample mean per coarse tile.
++// Default board use is observational: no capture/display gating is performed.
++module vision_local_motion_tap #(
++ parameter WIDTH=1920,HEIGHT=1080,COLS=12,ROWS=12,
++ parameter TW=WIDTH/COLS,TH=HEIGHT/ROWS,PADX=(WIDTH*6+95)/96,PADY=(HEIGHT*6+95)/96
++)(input clk,rst_n,input de,vs,input[11:0]x,y,input[7:0]gray,input config_bit,
++ output reg[31:0]observation_id,output reg[31:0]status,
++ output reg signed[31:0]horizontal_response,vertical_response,
++ output reg[11:0]roi_x0,roi_y0,roi_x1,roi_y1,
++ output reg[15:0]active_sites,output reg[31:0]dropped_frames);
++reg vq,blocked,abort_core,was_bad,config_previous;
++reg[11:0]local_x,local_y,scan_x,scan_y;reg[$clog2(COLS+1)-1:0]tile_x;reg[$clog2(ROWS+1)-1:0]tile_y;
++(* syn_ramstyle="block_ram" *)reg[13:0]sums[0:COLS-1];reg[13:0]sum_q,last_sum;
++reg[$clog2(COLS+1)-1:0]last_tile;
++reg[7:0]word;reg word_valid,word_first,word_last,word_reset;
++reg pending,pending_temporal,pending_roi;reg[2:0]pending_direction;
++reg signed[31:0]pending_hx,pending_vy;reg[15:0]pending_active;
++reg[$clog2(COLS+1)-1:0]pending_x0,pending_x1;
++reg[$clog2(ROWS+1)-1:0]pending_y0,pending_y1;
++reg request_valid;wire policy_valid;wire[1:0]policy_task;
++wire core_ready,core_valid,core_temporal,core_roi,core_fault;wire[2:0]core_direction;
++wire signed[31:0]hx,vy;wire[15:0]core_active;
++wire[$clog2(COLS+1)-1:0]bx0,bx1;wire[$clog2(ROWS+1)-1:0]by0,by1;
++integer k;reg sample_x,sample_y;
++always @*begin
++ sample_x=0;sample_y=0;
++ for(k=0;k<8;k=k+1)begin
++  if(local_x==((2*k+1)*TW)/16)sample_x=1;
++  if(local_y==((2*k+1)*TH)/16)sample_y=1;
++ end
++end
++wire first_sample=local_x==TW/16&&local_y==TH/16;
++wire last_sample=local_x==(15*TW)/16&&local_y==(15*TH)/16;
++always @(posedge clk)sum_q<=sums[tile_x];
++// Forward the last write because block RAM reads the pre-write word.
++wire[13:0]stored_sum=last_tile==tile_x?last_sum:sum_q;
++wire[13:0]sample_sum=first_sample?{6'd0,gray}:(stored_sum+{6'd0,gray});
++wire sample_write=de&&!blocked&&x==scan_x&&y==scan_y&&x<WIDTH&&y<HEIGHT&&sample_x&&sample_y;
++always @(posedge clk)if(rst_n&&sample_write)begin
++ sums[tile_x]<=sample_sum;last_tile<=tile_x;last_sum<=sample_sum;
++end
++vision_local_motion_core #(.COLS(COLS),.ROWS(ROWS))core(
++ .clk(clk),.rst_n(rst_n),.abort_frame(abort_core),.in_valid(word_valid),.in_ready(core_ready),
++ .in_first(word_first),.in_last(word_last),.reset_history(word_reset),.in_gray(word),
++ .out_valid(core_valid),.out_ready(1'b1),.temporal_valid(core_temporal),.direction(core_direction),
++ .horizontal_response(hx),.vertical_response(vy),.active_sites(core_active),.roi_valid(core_roi),
++ .roi_x0(bx0),.roi_y0(by0),.roi_x1(bx1),.roi_y1(by1),.fault(core_fault));
++// Existing DDR identity is asynchronous here; keep live requests FULL.
++vision_motion_policy #(.WIDTH(WIDTH),.HEIGHT(HEIGHT))policy(
++ .clk(clk),.rst_n(rst_n),.in_valid(request_valid),.in_ready(),.source_verified(1'b0),
++ .frame_id(observation_id),.timestamp_us(32'd0),.config_id({15'd0,config_previous}),
++ .temporal_valid(status[1]),.roi_valid(status[2]),.x0(roi_x0),.y0(roi_y0),.x1(roi_x1),.y1(roi_y1),
++ .out_valid(policy_valid),.out_ready(1'b1),.task_code(policy_task),.out_frame_id(),
++ .out_x0(),.out_y0(),.out_x1(),.out_y1(),.metadata_fault());
++// Explicit shift/add coordinate scaling avoids consuming DSPs for constants.
++function automatic[15:0]scale(input[15:0]value,input integer factor);
++ integer bit_index;begin scale=0;for(bit_index=0;bit_index<12;bit_index=bit_index+1)if((factor>>bit_index)&1)scale=scale+(value<<bit_index);end
++endfunction
++localparam[15:0]PX=PADX,PY=PADY,W=WIDTH,H=HEIGHT;
++wire[15:0]px0=scale(pending_x0,TW),py0=scale(pending_y0,TH),px1=scale(pending_x1,TW)+PX,py1=scale(pending_y1,TH)+PY;
++wire[15:0]clamp_x0=px0>PX?px0-PX:16'd0,clamp_y0=py0>PY?py0-PY:16'd0,clamp_x1=px1>W?W:px1,clamp_y1=py1>H?H:py1;
++always @(posedge clk)begin
++ vq<=vs;word_valid<=0;abort_core<=0;request_valid<=0;
++ if(!rst_n)begin
++  vq<=0;blocked<=1;abort_core<=0;was_bad<=1;config_previous<=0;
++  local_x<=0;local_y<=0;scan_x<=0;scan_y<=0;tile_x<=0;tile_y<=0;
++  word<=0;word_first<=0;word_last<=0;word_reset<=1;
++  observation_id<=0;status<=0;horizontal_response<=0;vertical_response<=0;
++  roi_x0<=0;roi_y0<=0;roi_x1<=0;roi_y1<=0;active_sites<=0;dropped_frames<=0;
++  pending<=0;request_valid<=0;
++ end else begin
++  if(vs&&!vq)begin
++   if(!blocked)begin
++    if(scan_y!=HEIGHT||scan_x!=0||!pending)begin dropped_frames<=dropped_frames+1'b1;abort_core<=1;was_bad<=1;status[2:0]<=0;end
++    else begin
++     observation_id<=observation_id+1'b1;request_valid<=1;
++     status<={22'd0,2'd2,1'b0,core_fault,pending_direction,pending_roi,pending_temporal,1'b1};
++     horizontal_response<=pending_hx;vertical_response<=pending_vy;active_sites<=pending_active;
++     roi_x0<=pending_roi?clamp_x0[11:0]:0;roi_y0<=pending_roi?clamp_y0[11:0]:0;
++     roi_x1<=pending_roi?clamp_x1[11:0]:0;roi_y1<=pending_roi?clamp_y1[11:0]:0;
++    end
++   end
++   pending<=0;
++   blocked<=0;local_x<=0;local_y<=0;scan_x<=0;scan_y<=0;tile_x<=0;tile_y<=0;
++   if(config_bit!=config_previous)begin was_bad<=1;abort_core<=1;end
++   config_previous<=config_bit;
++  end
++  if(word_valid&&!core_ready&&!blocked)begin blocked<=1;abort_core<=1;was_bad<=1;dropped_frames<=dropped_frames+1'b1;status[2:0]<=0;end
++  if(de&&!blocked)begin
++   if(x!=scan_x||y!=scan_y||x>=WIDTH||y>=HEIGHT)begin blocked<=1;abort_core<=1;was_bad<=1;dropped_frames<=dropped_frames+1'b1;status[2:0]<=0;end
++   else begin
++    if(sample_x&&sample_y)begin
++     if(last_sample)begin
++      word_valid<=1;word<=sample_sum[13:6];word_first<=tile_x==0&&tile_y==0;
++      word_last<=tile_x==COLS-1&&tile_y==ROWS-1;
++      if(tile_x==0&&tile_y==0)begin word_reset<=was_bad;was_bad<=0;end
++     end
++    end
++    if(x==WIDTH-1)begin
++     scan_x<=0;scan_y<=scan_y+1'b1;local_x<=0;tile_x<=0;
++     if(local_y==TH-1)begin local_y<=0;tile_y<=tile_y+1'b1;end else local_y<=local_y+1'b1;
++    end else begin
++     scan_x<=scan_x+1'b1;
++     if(local_x==TW-1)begin local_x<=0;tile_x<=tile_x+1'b1;end else local_x<=local_x+1'b1;
++    end
++   end
++  end
++  if(core_valid&&!blocked&&!(vs&&!vq))begin
++   pending<=1;pending_temporal<=core_temporal;pending_roi<=core_roi;pending_direction<=core_direction;
++   pending_hx<=hx;pending_vy<=vy;pending_active<=core_active;
++   pending_x0<=bx0;pending_y0<=by0;pending_x1<=bx1;pending_y1<=by1;
++  end
++  if(policy_valid)status[9:8]<=policy_task;
++ end
++end
++endmodule
+--- /dev/null
++++ board/ti60f225_v4/rtl/vision/vision_motion_policy.sv
+@@ -0,0 +1,32 @@
++// Same-clock request policy. A request is NOT a completed image-processing job.
++// Unverified source identity always asks for FULL: display refresh != camera ID.
++module vision_motion_policy #(parameter WIDTH=96,HEIGHT=96)(input clk,rst_n,
++ input in_valid,output in_ready,input source_verified,input[31:0]frame_id,timestamp_us,
++ input[15:0]config_id,input temporal_valid,roi_valid,input[11:0]x0,y0,x1,y1,
++ output reg out_valid,input out_ready,output reg[1:0]task_code,
++ output reg[31:0]out_frame_id,output reg[11:0]out_x0,out_y0,out_x1,out_y1,
++ output reg metadata_fault);
++reg seen;reg[31:0]last_id,last_time,last_full;reg[15:0]last_config;
++wire[31:0]id_delta=frame_id-last_id,time_delta=timestamp_us-last_time,since_full=timestamp_us-last_full;
++wire stale=seen&&(id_delta==0||id_delta[31]||time_delta==0||time_delta[31]);
++wire bad_roi=roi_valid&&(x0>=x1||y0>=y1||x1>WIDTH||y1>HEIGHT);
++wire force_full=!source_verified||!seen||!temporal_valid||config_id!=last_config||id_delta!=1||since_full>=100000||stale||bad_roi;
++assign in_ready=!out_valid||out_ready;
++always @(posedge clk)begin
++ if(!rst_n)begin seen<=0;out_valid<=0;task_code<=2;metadata_fault<=0;last_id<=0;last_time<=0;last_full<=0;last_config<=0;out_frame_id<=0;out_x0<=0;out_y0<=0;out_x1<=0;out_y1<=0;end
++ else begin
++  if(out_valid&&out_ready)out_valid<=0;
++  if(in_valid&&in_ready)begin
++   out_valid<=1;out_frame_id<=frame_id;
++   task_code<=force_full?2:(roi_valid?1:0);
++   out_x0<=force_full?0:(roi_valid?x0:0);out_y0<=force_full?0:(roi_valid?y0:0);
++   out_x1<=force_full?WIDTH:(roi_valid?x1:0);out_y1<=force_full?HEIGHT:(roi_valid?y1:0);
++   if((stale&&source_verified)||bad_roi)metadata_fault<=1;
++   if(source_verified&&!stale)begin
++    seen<=1;last_id<=frame_id;last_time<=timestamp_us;last_config<=config_id;
++    if(force_full)last_full<=timestamp_us;
++   end else seen<=0;
++  end
++ end
++end
++endmodule
+--- /dev/null
++++ board/ti60f225_v4/rtl/vision/vision_motion_readout.sv
+@@ -0,0 +1,88 @@
++// Display-only temporal readout. Raw core/status and scheduling are untouched.
++// Four fresh observations form one signed-response window. Two agreeing windows
++// confirm a direction; HOLD explicitly marks a bounded previous result.
++module vision_motion_readout #(
++ parameter CLOCK_HZ=148500000,HOLD_MS=700,MIN_DWELL_MS=250,FRESH_MS=100,
++ parameter MS_CYCLES=CLOCK_HZ/1000,MW=(MS_CYCLES<2?1:$clog2(MS_CYCLES))
++)(input clk,rst_n,frame_tick,input[31:0]status,observation,
++ input signed[31:0]horizontal,vertical,input[15:0]active_sites,
++ output reg[2:0]show_direction,output held);
++reg[MW-1:0]ms_div;
++wire ms_tick=ms_div==MS_CYCLES-1;
++reg[9:0]hold_ms,watchdog_ms;reg[7:0]dwell_ms,fresh_ms;
++reg have_observation;reg[31:0]last_observation;
++reg signed[33:0]sum_h,sum_v;
++reg[1:0]window_count;reg[2:0]active_count,previous_candidate;
++reg candidate_seen;
++wire signed[33:0]next_h=sum_h+{{2{horizontal[31]}},horizontal};
++wire signed[33:0]next_v=sum_v+{{2{vertical[31]}},vertical};
++// Break accumulation, absolute value and dominance into separate clocks.
++reg window_pending,magnitude_valid,candidate_valid;
++reg signed[33:0]complete_h,complete_v;
++reg[2:0]complete_active,mag_active;
++reg[33:0]mag_h,mag_v;reg sign_h,sign_v;
++wire[33:0]major=mag_h>=mag_v?mag_h:mag_v,minor=mag_h>=mag_v?mag_v:mag_h;
++wire[2:0]next_active=active_count+(active_sites!=0);
++wire ready=status[0]&&status[1]&&!status[6]&&active_sites<=144;
++wire fresh_observation=frame_tick&&(!have_observation||observation!=last_observation);
++wire gap=have_observation&&observation!=last_observation+32'd1;
++wire flush_pipeline=(frame_tick&&!ready)||(fresh_observation&&gap)||(ms_tick&&watchdog_ms==1);
++reg[2:0]candidate,candidate_q;
++always @*begin
++ candidate=0;
++ if(mag_active==0)candidate=1;
++ else if(mag_active>=2&&major>=256&&{1'b0,major,1'b0}>=({2'd0,minor}+{1'b0,minor,1'b0}))
++  candidate=mag_h>=mag_v?(sign_h?2:3):(sign_v?4:5);
++end
++assign held=show_direction>=2&&show_direction<=5&&fresh_ms==0;
++always @(posedge clk)begin
++ if(!rst_n)begin
++  window_pending<=0;magnitude_valid<=0;candidate_valid<=0;candidate_q<=0;
++  complete_h<=0;complete_v<=0;complete_active<=0;mag_h<=0;mag_v<=0;mag_active<=0;sign_h<=0;sign_v<=0;
++  ms_div<=0;hold_ms<=0;watchdog_ms<=0;dwell_ms<=0;fresh_ms<=0;
++  show_direction<=0;have_observation<=0;last_observation<=0;
++  sum_h<=0;sum_v<=0;window_count<=0;active_count<=0;previous_candidate<=0;candidate_seen<=0;
++ end else begin
++  window_pending<=0;magnitude_valid<=window_pending;candidate_valid<=magnitude_valid;
++  if(window_pending)begin
++   mag_h<=complete_h[33]?-complete_h:complete_h;mag_v<=complete_v[33]?-complete_v:complete_v;
++   sign_h<=complete_h[33];sign_v<=complete_v[33];mag_active<=complete_active;
++  end
++  if(magnitude_valid)candidate_q<=candidate;
++  if(flush_pipeline)begin window_pending<=0;magnitude_valid<=0;candidate_valid<=0;end
++  if(ms_tick)begin
++   ms_div<=0;
++   if(hold_ms!=0)begin hold_ms<=hold_ms-1'b1;if(hold_ms==1)show_direction<=0;end
++   if(dwell_ms!=0)dwell_ms<=dwell_ms-1'b1;
++   if(fresh_ms!=0)fresh_ms<=fresh_ms-1'b1;
++   if(watchdog_ms!=0)begin
++    watchdog_ms<=watchdog_ms-1'b1;
++    if(watchdog_ms==1)begin show_direction<=0;have_observation<=0;sum_h<=0;sum_v<=0;window_count<=0;active_count<=0;candidate_seen<=0;hold_ms<=0;fresh_ms<=0;dwell_ms<=0;end
++   end
++  end else ms_div<=ms_div+1'b1;
++  if(candidate_valid&&!flush_pipeline)begin
++    previous_candidate<=candidate_q;candidate_seen<=candidate_q>=2&&candidate_q<=5;
++    if(candidate_q>=2&&candidate_q<=5&&candidate_seen&&candidate_q==previous_candidate)begin
++     if(show_direction==candidate_q||show_direction<2||dwell_ms==0)begin
++      show_direction<=candidate_q;hold_ms<=HOLD_MS;fresh_ms<=FRESH_MS;
++      if(show_direction!=candidate_q)dwell_ms<=MIN_DWELL_MS;
++     end
++    end else if(candidate_q==1&&(show_direction<2||hold_ms==0))begin show_direction<=1;hold_ms<=0;fresh_ms<=0;end
++  end
++  if(frame_tick&&!ready)begin
++   show_direction<=0;have_observation<=0;hold_ms<=0;fresh_ms<=0;dwell_ms<=0;watchdog_ms<=0;
++   sum_h<=0;sum_v<=0;window_count<=0;active_count<=0;candidate_seen<=0;
++  end else if(fresh_observation)begin
++   have_observation<=1;last_observation<=observation;watchdog_ms<=HOLD_MS;
++   if(active_sites!=0&&show_direction==1)show_direction<=0;
++   if(gap)begin
++    sum_h<=0;sum_v<=0;window_count<=0;active_count<=0;candidate_seen<=0;
++    show_direction<=0;hold_ms<=0;fresh_ms<=0;dwell_ms<=0;
++   end else if(window_count==3)begin
++    sum_h<=0;sum_v<=0;window_count<=0;active_count<=0;
++    complete_h<=next_h;complete_v<=next_v;complete_active<=next_active;window_pending<=1;
++   end else begin sum_h<=next_h;sum_v<=next_v;window_count<=window_count+1'b1;active_count<=next_active;end
++  end
++ end
++end
++endmodule
+--- /dev/null
++++ sim/motion_direction/tb_local_motion_core.sv
+@@ -0,0 +1,50 @@
++`timescale 1ns/1ps
++module tb;
++parameter FRAMES=346;
++reg clk=0;always #5 clk=~clk;
++reg rst=0,abort_frame=0,iv=0,first=0,last=0,clear_history=0,oready=0;
++reg[7:0]gray;wire ir,ov,tv,rv,fault;wire[2:0]direction;wire signed[31:0]hx,vy;
++wire[15:0]active;wire[3:0]x0,y0,x1,y1;
++vision_local_motion_core dut(clk,rst,abort_frame,iv,ir,first,last,clear_history,gray,
++ ov,oready,tv,direction,hx,vy,active,rv,x0,x1,y0,y1,fault);
++reg[7:0]words[0:FRAMES*144-1],resets[0:FRAMES-1];
++reg[100:0]expected[0:FRAMES-1];wire[100:0]actual={tv,direction,rv,active,hx,vy,x0,y0,x1,y1};
++integer f,i,n=0,stalls=0;reg[100:0]held;
++task send_word(input[7:0]value,input sf,sl,rh);
++ begin
++  @(negedge clk);iv=1;gray=value;first=sf;last=sl;clear_history=rh;
++  while(!ir)begin @(negedge clk);stalls=stalls+1;end
++  @(negedge clk);iv=0;
++ end
++endtask
++initial begin
++ $readmemh("vectors/grid_words.mem",words);
++ $readmemh("vectors/reset_history.mem",resets);
++ $readmemh("vectors/core_expected.mem",expected);
++ repeat(3)@(negedge clk);rst=1;
++ for(f=0;f<FRAMES;f=f+1)begin
++  for(i=0;i<144;i=i+1)begin
++   send_word(words[f*144+i],i==0,i==143,resets[f][0]);
++   if((i+f)%17==0)repeat(3)@(negedge clk);
++  end
++  while(!ov)@(negedge clk);
++  if(actual!==expected[f])begin $display("BAD frame=%0d actual=%h expected=%h hx=%0d vy=%0d",f,actual,expected[f],hx,vy);$fatal;end
++  held=actual;
++  repeat(5+(f%7))begin @(negedge clk);if(!ov||ir||actual!==held)$fatal(1,"Output not held under backpressure");end
++  oready=1;@(negedge clk);oready=0;n=n+1;
++ end
++ if(fault)$fatal(1,"Unexpected core packet fault");
++ // Abort a partial packet. The next complete packet must be a warmup.
++ for(i=0;i<7;i=i+1)send_word(255,i==0,0,0);
++ @(negedge clk);abort_frame=1;@(negedge clk);abort_frame=0;
++ for(i=0;i<144;i=i+1)send_word(i[7:0],i==0,i==143,0);
++ while(!ov)@(negedge clk);
++ if(tv||rv||direction!=0||hx!=0||vy!=0)$fatal(1,"Abort did not invalidate history");
++ oready=1;@(negedge clk);oready=0;
++ // A malformed last marker cannot publish a partial result.
++ send_word(255,1,1,0);repeat(30)@(negedge clk);
++ if(ov||!fault)$fatal(1,"Malformed packet silently accepted");
++ $display("PASS local motion core frames=%0d synthetic-only stalled_cycles=%0d",n,stalls);$finish;
++end
++initial begin #100000000;$fatal(1,"Core timeout");end
++endmodule
+--- /dev/null
++++ sim/motion_direction/tb_local_motion_tap.sv
+@@ -0,0 +1,53 @@
++`timescale 1ns/1ps
++module tb;
++reg clk=0;always #5 clk=~clk;
++reg rst=0,de=0,vs=0,config_bit=0;reg[11:0]x=0,y=0;reg[7:0]gray=0;
++wire[31:0]id,status,hx,vy,dropped;wire[11:0]x0,y0,x1,y1;wire[15:0]active;
++vision_local_motion_tap #(.WIDTH(192),.HEIGHT(96))dut(clk,rst,de,vs,x,y,gray,config_bit,id,status,hx,vy,x0,y0,x1,y1,active,dropped);
++reg[7:0]pixels[0:6*192*96-1],grid_expected[0:6*144-1];
++integer f,ix,iy,nwords=0,last_id=0,fd;
++always @(negedge clk)if(rst)begin
++ if(dut.word_valid)begin
++  if(!dut.core_ready)$fatal(1,"Unexpected tap overrun");
++  if(nwords<864&&dut.word!==grid_expected[nwords])$fatal(1,"Grid mismatch index=%0d actual=%0d expected=%0d",nwords,dut.word,grid_expected[nwords]);
++  nwords=nwords+1;
++ end
++ if(id!=last_id)begin
++  $fdisplay(fd,"%0d %0d %0d %0d %0d %0d %0d %0d %0d %0d",id,status,$signed(hx),$signed(vy),active,x0,y0,x1,y1,dropped);
++  last_id=id;
++ end
++ if(status[7]||status[9:8]!=2&&id!=0)$fatal(1,"Unverified raster requested partial work");
++end
++task boundary;
++ begin @(negedge clk);de=0;vs=1;repeat(8)@(negedge clk);vs=0;repeat(8)@(negedge clk);end
++endtask
++task frame(input integer number);
++ begin
++  for(iy=0;iy<96;iy=iy+1)begin
++   for(ix=0;ix<192;ix=ix+1)begin @(negedge clk);de=1;x=ix;y=iy;gray=pixels[number*192*96+iy*192+ix];end
++   @(negedge clk);de=0;repeat(5)@(negedge clk);
++  end
++  repeat(50)@(negedge clk);
++ end
++endtask
++initial begin
++ fd=$fopen("tap_results.txt","w");
++ $readmemh("vectors/pixel_frames.mem",pixels);
++ $readmemh("vectors/pixel_grid_expected.mem",grid_expected);
++ repeat(3)@(negedge clk);rst=1;
++ for(f=0;f<6;f=f+1)begin boundary;frame(f);end
++ boundary;repeat(10)@(negedge clk);
++ if(id!=6||dropped!=0||nwords!=864)$fatal(1,"Tap count/dropped mismatch id=%0d drop=%0d words=%0d",id,dropped,nwords);
++ // Bad raster must not publish and must reset temporal state on recovery.
++ @(negedge clk);de=1;x=5;y=0;@(negedge clk);de=0;repeat(5)@(negedge clk);boundary;
++ if(id!=6||dropped!=1)$fatal(1,"Bad raster not explicitly dropped");
++ frame(0);boundary;repeat(10)@(negedge clk);
++ if(id!=7||status[1]||status[2])$fatal(1,"Bad raster recovery did not warm up");
++ config_bit=1;frame(1);boundary;repeat(10)@(negedge clk);
++ // Configuration becomes effective at the following frame boundary.
++ frame(2);boundary;repeat(10)@(negedge clk);
++ if(status[1])$fatal(1,"Configuration change did not clear history");
++ $fclose(fd);$display("PASS local tap exact grids=864 complete rasters=6 bad-raster and config guards");$finish;
++end
++initial begin #100000000;$fatal(1,"Tap timeout");end
++endmodule
+--- /dev/null
++++ sim/motion_direction/tb_motion_policy.sv
+@@ -0,0 +1,28 @@
++`timescale 1ns/1ps
++module tb;
++reg clk=0;always #5 clk=~clk;
++reg rst=0,iv=0,verified=1,tv=1,rv=0,ready=0;reg[31:0]id=0,stamp=0;reg[15:0]cfg=0;
++wire ir,ov,fault;wire[1:0]task_code;wire[31:0]oid;wire[11:0]x0,y0,x1,y1;
++vision_motion_policy dut(clk,rst,iv,ir,verified,id,stamp,cfg,tv,rv,12'd10,12'd20,12'd30,12'd40,ov,ready,task_code,oid,x0,y0,x1,y1,fault);
++task submit(input[31:0]fid,t,input v,roi,input[1:0]expected);
++ begin
++  @(negedge clk);iv=1;id=fid;stamp=t;verified=v;rv=roi;
++  while(!ir)@(negedge clk);
++  @(negedge clk);iv=0;
++  if(!ov||task_code!==expected||oid!==fid)$fatal(1,"Policy mismatch fid=%0d task=%0d expected=%0d",fid,task_code,expected);
++  repeat(4)begin @(negedge clk);if(!ov||ir||task_code!==expected)$fatal(1,"Policy backpressure");end
++  ready=1;@(negedge clk);ready=0;
++ end
++endtask
++initial begin
++ repeat(3)@(negedge clk);rst=1;
++ submit(0,0,1,0,2);submit(1,50000,1,1,1);submit(2,100000,1,1,2);submit(3,150000,1,0,0);
++ submit(5,180000,1,1,2); // missing source frame
++ cfg=1;submit(6,200000,1,1,2);submit(7,250000,1,1,1);
++ submit(8,300000,0,1,2);submit(9,350000,0,0,2); // never gate unverified raster
++ submit(9,350000,1,1,2);submit(9,400000,1,1,2);if(!fault)$fatal(1,"Duplicate metadata not flagged");
++ @(negedge clk);rst=0;@(negedge clk);rst=1;
++ submit(32'hffffffff,32'hffff3cb0,1,0,2);submit(0,0,1,0,0);submit(1,50000,1,1,2);
++ $display("PASS motion policy full/roi/skip, source guard, gap/config, backpressure, wrap, stale");$finish;
++end
++endmodule
+--- /dev/null
++++ sim/motion_direction/tb_motion_readout.sv
+@@ -0,0 +1,48 @@
++`timescale 1ns/1ps
++module tb;
++reg clk=0;always #5 clk=~clk;
++reg rst=0,tick=0;reg[31:0]status=32'h207,id=0;reg signed[31:0]h=0,v=0;reg[15:0]sites=12;
++wire[2:0]show;wire held;
++vision_motion_readout #(.CLOCK_HZ(1000))dut(clk,rst,tick,status,id,h,v,sites,show,held);
++integer checks=0,i,d;
++task check(input[2:0]want);begin #1;if(show!==want)$fatal(1,"show=%d want=%d id=%d",show,want,id);checks=checks+1;end endtask
++task reset;begin @(negedge clk);rst=0;tick=0;status=32'h207;id=0;h=0;v=0;sites=12;repeat(3)@(negedge clk);rst=1;end endtask
++task frame;begin repeat(11)@(negedge clk);id=id+1;tick=1;@(negedge clk);tick=0;repeat(4)@(negedge clk);end endtask
++task set_weak(input integer dir);begin h=0;v=0;case(dir)2:h=-100;3:h=100;4:v=-100;5:v=100;endcase end endtask
++initial begin
++ // Every raw per-frame score is below 256, yet consistent four-frame evidence is usable.
++ for(d=2;d<=5;d=d+1)begin reset;set_weak(d);repeat(7)begin frame;check(0);end frame;check(d);end
++ // Ambiguous diagonal and alternating/cancelling evidence must remain unknown.
++ reset;h=100;v=100;repeat(16)frame;check(0);
++ reset;repeat(16)begin h=(id%2)?100:-100;frame;end check(0);
++ // A single strong active frame per window is insufficient.
++ reset;for(i=0;i<16;i=i+1)begin sites=(i%4)==0?12:0;h=(i%4)==0?10000:0;frame;end check(0);
++ // Confirmed direction survives a short UNKNOWN interval and is marked HOLD.
++ reset;set_weak(2);repeat(8)frame;check(2);h=0;v=0;repeat(8)frame;check(2);if(!held)$fatal(1,"Stale evidence not labelled HOLD");checks=checks+1;
++ // No new observations: the previous result has a bounded lifetime.
++ repeat(600)@(negedge clk);check(0);
++ // A reversal needs confirmation and minimum display dwell, then must update.
++ reset;set_weak(2);repeat(8)frame;check(2);set_weak(3);repeat(8)frame;check(2);repeat(8)frame;check(3);
++ // A brief opposite spike cannot flip the direction.
++ reset;set_weak(2);repeat(8)frame;h=10000;frame;h=-100;repeat(7)frame;check(2);
++ // Duplicated IDs do not create a window or refresh stale evidence.
++ reset;set_weak(2);frame;repeat(12)begin repeat(15)@(negedge clk);tick=1;@(negedge clk);tick=0;end check(0);
++ // Gaps, invalid history, faults and impossible site counts invalidate the display.
++ reset;set_weak(2);repeat(8)frame;id=id+4;frame;check(0);
++ repeat(8)frame;check(2);status=32'h205;frame;check(0);
++ status=32'h207;repeat(8)frame;check(2);status=32'h247;frame;check(0);
++ status=32'h207;sites=145;frame;check(0);
++ // All-zero activity is stationary; activity without direction is not stationary.
++ reset;sites=0;repeat(4)frame;check(1);sites=12;frame;check(0);
++ // Signed 32-bit extremes accumulate without wrap/sign reversal.
++ reset;h=32'sh80000000;repeat(8)frame;check(2);
++ reset;v=32'sh7fffffff;repeat(8)frame;check(5);
++ // Equality at 3:2 is accepted, a just-ambiguous ratio is not.
++ reset;h=150;v=100;repeat(8)frame;check(3);
++ reset;h=149;v=100;repeat(8)frame;check(0);
++ // Sequential IDs remain valid across unsigned wrap.
++ reset;id=32'hfffffffc;set_weak(4);repeat(8)frame;check(4);
++ $display("PASS temporal readout black-box checks=%0d weak-direction/ambiguity/noise/hold/dwell/gap/fault/stall/overflow/wrap",checks);$finish;
++end
++initial begin #2000000;$fatal(1,"Readout timeout");end
++endmodule
+--- /dev/null
++++ sim/vision/tb_motion_sidebar.sv
+@@ -0,0 +1,62 @@
++`timescale 1ns/1ps
++module tb;
++reg clk=0;always #5 clk=~clk;
++reg rst_n=0,de=0,hs=0,vs=0;reg[23:0]rgb=0,ui_state=0;
++reg[3:0]ai_status=0;reg motion_enable=0,motion_held=0;reg[2:0]motion_direction=0;
++wire ode,ohs,ovs;wire[23:0]orgb;
++vision_sidebar_overlay dut(.*);
++reg[23:0]vectors[0:11];reg[63:0]names[0:5],wanted;reg[11:0]probe_x,probe_y;
++integer direction,hold_state,slot,frame,row,col,file,checked=0,ink_count=0;reg in_overlay;
++reg[1023:0]vector_file,output_dir;
++task tick;
++ begin @(posedge clk);#1;
++  if({ode,ohs,ovs}!=={de,hs,vs})$fatal(1,"motion UI sync changed");
++  @(negedge clk);
++ end
++endtask
++initial begin
++ if(!$value$plusargs("vectors=%s",vector_file))$fatal(1,"missing RV32I vectors");
++ if(!$value$plusargs("output=%s",output_dir))$fatal(1,"missing output folder");
++ $readmemh(vector_file,vectors);
++ if(vectors[6]!=24'h804001)$fatal(1,"motion ON firmware ABI");
++ names[0]=dut.sidebar_font.ZH_UNKNOWN;names[1]=dut.sidebar_font.ZH_STILL;
++ names[2]=dut.sidebar_font.ZH_LEFT;names[3]=dut.sidebar_font.ZH_RIGHT;
++ names[4]=dut.sidebar_font.ZH_MOVE_UP;names[5]=dut.sidebar_font.ZH_MOVE_DOWN;
++ repeat(3)@(negedge clk);rst_n=1;motion_enable=1;
++ force dut.x=probe_x;force dut.y=probe_y;
++ for(direction=0;direction<6;direction=direction+1)for(hold_state=0;hold_state<2;hold_state=hold_state+1)begin
++  motion_direction=direction;motion_held=hold_state;
++  vs=1;tick;vs=0;tick;
++  wanted={dut.sidebar_font.ZH_MOTION[63:48],names[direction][63:48],hold_state?dut.sidebar_font.ZH_HOLD[63:48]:16'h2020,16'h2020};
++  for(slot=0;slot<8;slot=slot+1)begin
++   probe_x=16+slot*16;probe_y=104;tick;
++   if(!dut.active||dut.sidebar_font.ch_q!==wanted[63-slot*8-:8])$fatal(1,"Chinese direction/HOLD %0d %0d %0d",direction,hold_state,slot);
++   checked=checked+1;
++  end
++ end
++ motion_enable=0;tick;if(dut.active)$fatal(1,"disabled hint visible");
++ release dut.x;release dut.y;rst_n=0;tick;rst_n=1;
++ for(frame=0;frame<2;frame=frame+1)begin
++  ui_state=frame==0?vectors[6]:24'd0;motion_enable=1;motion_direction=frame==0?3:4;motion_held=frame!=0;
++  de=0;vs=1;tick;vs=0;tick;
++  file=$fopen($sformatf("%0s/motion_%0d.ppm",output_dir,frame),"wb");
++  if(!file)$fatal(1,"preview file");$fwrite(file,"P6\n1920 1080\n255\n");
++  for(row=0;row<1080;row=row+1)begin
++   for(col=0;col<1920;col=col+1)begin
++    de=1;rgb=(col>=850&&col<1070&&row>=430&&row<650)?24'h30a0e0:((col%120==0||row%120==0)?24'h606060:24'h303c44);
++    @(posedge clk);#1;
++    in_overlay=frame==0?(row>=128&&row<576&&col<304):(col<160&&row>=96&&row<120);
++    if(!ode||ohs!==hs||ovs!==vs)$fatal(1,"preview sync");
++    if(!in_overlay)begin if(orgb!==rgb)$fatal(1,"motion UI changed image outside overlay %0d,%0d",col,row);checked=checked+1;end
++    if(in_overlay&&orgb==24'hffff80)ink_count=ink_count+1;
++    $fwrite(file,"%c%c%c",orgb[23:16],orgb[15:8],orgb[7:0]);@(negedge clk);
++   end
++   de=0;hs=1;tick;hs=0;tick;
++  end
++  $fclose(file);
++ end
++ if(ink_count<1000)$fatal(1,"motion font absent");
++ $display("PASS motion_sidebar Chinese six states/HOLD and RV32I item16, %0d exact outside pixels/characters, %0d ink pixels",checked,ink_count);$finish;
++end
++initial begin #100000000;$fatal(1,"motion sidebar timeout");end
++endmodule
+--- /dev/null
++++ sim/vision/tb_motion_display.sv
+@@ -0,0 +1,52 @@
++`timescale 1ns/1ps
++module tb;
++reg clk=0;always #5 clk=~clk;
++reg rst_n=0,de=0,hs=0,vs=0,motion_enable=0;reg[7:0]gray=0;reg[2:0]mode=0;reg[1:0]memory_mode=0;
++wire[23:0]rgb,base_rgb;wire ode,ohs,ovs,bde,bhs,bvs;wire[2:0]direction;wire held;
++vision_display #(.LOCAL_MOTION_ENABLE(1),.WIDTH(192),.HEIGHT(96)) dut(
++ .clk(clk),.rst_n(rst_n),.de(1'b0),.hs(1'b0),.vs(1'b0),.r(8'd0),.g(8'd0),.b(8'd0),.mode(mode),.threshold(11'd96),.median_en(1'b0),
++ .memory_mode(memory_mode),.history_index(3'd0),.canny_pixel(1'b0),.canny_ready(1'b1),.canny_coverage(8'd0),
++ .canny_effective_threshold(11'd80),.canny_requested_threshold(11'd80),.shape_enable(1'b0),.shape_threshold(8'd32),
++ .analysis_enabled(1'b0),.analysis_context_changed(1'b0),.frame_id(32'd1),.render_config_id(32'd0),.analysis_context(32'd0),
++ .analysis_result(352'd0),.analysis_match(1'b0),.analysis_identity_match(1'b0),.analysis_age(16'd0),.ui_state(24'd0),
++ .motion_enable(motion_enable),.motion_direction(direction),.motion_held(held),.ode(ode),.ohs(ohs),.ovs(ovs),.orr(rgb[23:16]),.ogg(rgb[15:8]),.obb(rgb[7:0]));
++vision_display #(.WIDTH(192),.HEIGHT(96)) reference(
++ .clk(clk),.rst_n(rst_n),.de(1'b0),.hs(1'b0),.vs(1'b0),.r(8'd0),.g(8'd0),.b(8'd0),.mode(mode),.threshold(11'd96),.median_en(1'b0),
++ .memory_mode(memory_mode),.history_index(3'd0),.canny_pixel(1'b0),.canny_ready(1'b1),.canny_coverage(8'd0),
++ .canny_effective_threshold(11'd80),.canny_requested_threshold(11'd80),.shape_enable(1'b0),.shape_threshold(8'd32),
++ .analysis_enabled(1'b0),.analysis_context_changed(1'b0),.frame_id(32'd1),.render_config_id(32'd0),.analysis_context(32'd0),
++ .analysis_result(352'd0),.analysis_match(1'b0),.analysis_identity_match(1'b0),.analysis_age(16'd0),.ui_state(24'd0),
++ .motion_enable(1'b0),.ode(bde),.ohs(bhs),.ovs(bvs),.orr(base_rgb[23:16]),.ogg(base_rgb[15:8]),.obb(base_rgb[7:0]));
++integer f,ix,iy,p,checked=0,saw_right=0;
++always @(posedge clk)begin #1;if(rst_n)begin
++ if({ode,ohs,ovs,rgb}!=={bde,bhs,bvs,base_rgb})$fatal(1,"motion tap changed video/sync in mode%0d",mode);
++ checked=checked+1;if(direction==3)saw_right=1;
++end end
++task boundary;begin de=0;vs=1;repeat(20)@(negedge clk);vs=0;repeat(20)@(negedge clk);end endtask
++initial begin
++ // Inject aligned frontend outputs; the existing frontend suite tests its pixel arithmetic.
++ force dut.fd0=de;force dut.fh0=hs;force dut.fv0=vs;force dut.gray0=gray;
++ force dut.x0=ix;force dut.y0=iy;force dut.fr0=gray;force dut.fg0=gray;force dut.fb0=gray;
++ force dut.border0=0;force dut.edge0=gray<96;force dut.mag0=11'd512;
++ force reference.fd0=de;force reference.fh0=hs;force reference.fv0=vs;force reference.gray0=gray;
++ force reference.x0=ix;force reference.y0=iy;force reference.fr0=gray;force reference.fg0=gray;force reference.fb0=gray;
++ force reference.border0=0;force reference.edge0=gray<96;force reference.mag0=11'd512;
++ repeat(5)@(negedge clk);rst_n=1;motion_enable=1;
++ for(f=0;f<24;f=f+1)begin
++  $display("motion raster %0d at %0t",f,$time);$fflush();
++  mode=f%8;boundary;p=2+f%8;
++  for(iy=0;iy<96;iy=iy+1)begin
++   for(ix=0;ix<192;ix=ix+1)begin de=1;gray=(iy>=32&&iy<56&&ix>=p*16&&ix<(p+2)*16)?20:180;@(negedge clk);end
++   de=0;repeat(8)@(negedge clk);
++  end
++  repeat(50)@(negedge clk);
++ end
++ boundary;repeat(50)@(negedge clk);
++ if(!saw_right||dut.motion.tap.dropped_frames)$fatal(1,"live direction not reached/dropped frame %0d %0d",saw_right,dut.motion.tap.dropped_frames);
++ memory_mode=1;repeat(3)@(negedge clk);if(direction||held)$fatal(1,"frozen motion not cleared");
++ memory_mode=2;repeat(3)@(negedge clk);if(direction||held)$fatal(1,"history motion not cleared");
++ memory_mode=0;motion_enable=0;repeat(3)@(negedge clk);if(direction||held)$fatal(1,"disabled motion not cleared");
++ $display("PASS motion_display post-frontend tap+readout, 24 rasters/all8 modes, %0d RGB/sync cycles exact; freeze/history/off reset",checked);$finish;
++end
++initial begin #100000000;$fatal(1,"motion display timeout");end
++endmodule
+--- /dev/null
++++ scripts/motion_reference.py
+@@ -0,0 +1,47 @@
++"""Independent integer reference. All fixtures are generated synthetic data."""
++from pathlib import Path
++import random
++class Reference:
++ def __init__(self):self.previous=self.on=self.off=None
++ def step(self,g,reset=False):
++  valid=self.previous is not None and not reset
++  delta=[[g[y][x]-self.previous[y][x] if valid else 0 for x in range(12)] for y in range(12)]
++  on=[[max(v,0) for v in row] for row in delta];off=[[max(-v,0) for v in row] for row in delta];hx=vy=0
++  if valid:
++   for delayed,current in [(self.on,on),(self.off,off)]:
++    hx+=sum(delayed[y][x]*current[y][x+1]-delayed[y][x+1]*current[y][x] for y in range(12) for x in range(11))
++    vy+=sum(delayed[y][x]*current[y+1][x]-delayed[y+1][x]*current[y][x] for y in range(11) for x in range(12))
++  points=[(x,y) for y in range(12) for x in range(12) if abs(delta[y][x])>8];n=len(points);box=[min(x for x,y in points),min(y for x,y in points),max(x for x,y in points)+1,max(y for x,y in points)+1] if n else [0]*4;code=0
++  if valid and not n:code=1
++  elif valid and max(abs(hx),abs(vy))>=256 and 2*max(abs(hx),abs(vy))>=3*min(abs(hx),abs(vy)):code=(3 if hx>0 else 2) if abs(hx)>=abs(vy) else (5 if vy>0 else 4)
++  self.previous=[row[:] for row in g];self.on=on;self.off=off;value=int(valid)
++  for v,bits in [(code,3),(int(bool(n)),1),(n,16),(hx&0xffffffff,32),(vy&0xffffffff,32)]+[(v,4) for v in box]:value=(value<<bits)|v
++  return value
++
++def fixtures(folder):
++ folder=Path(folder);folder.mkdir(parents=True,exist_ok=True);grids=[];resets=[]
++ for direction in ['right','left','up','down']:
++  for i in range(6):
++   g=[[180]*12 for _ in range(12)];p=2+i if direction in ['right','down'] else 8-i
++   for y in range(12):
++    for x in range(12):
++     if ((4<=y<7 and p<=x<p+2) if direction in ['right','left'] else (p<=y<p+2 and 4<=x<7)):g[y][x]=20
++   grids.append(g);resets.append(i==0)
++ for i in range(8):grids.append([[128]*12 for _ in range(12)]);resets.append(i==0)
++ for i in range(8):grids.append([[32 if i%2 else 224]*12 for _ in range(12)]);resets.append(i==0)
++ rng=random.Random(2214)
++ for i in range(16):grids.append([[rng.choice([0,255]) for _ in range(12)] for _ in range(12)]);resets.append(i==0)
++ for i in range(6):
++  g=[[180]*12 for _ in range(12)]
++  for y in range(2+i,4+i):
++   for x in range(2+i,4+i):g[y][x]=20
++  grids.append(g);resets.append(i==0)
++ ref=Reference();expected=[ref.step(g,r) for g,r in zip(grids,resets)]
++ (folder/'grid_words.mem').write_text(''.join(f'{v:02x}\n' for g in grids for row in g for v in row),encoding='ascii');(folder/'reset_history.mem').write_text(''.join(f'{int(v):x}\n' for v in resets),encoding='ascii');(folder/'core_expected.mem').write_text(''.join(f'{v:026x}\n' for v in expected),encoding='ascii')
++ pixels=[];means=[]
++ for i in range(6):
++  frame=[[20 if 32<=y<56 and 32+16*i<=x<64+16*i else 180 for x in range(192)] for y in range(96)];pixels.extend(v for row in frame for v in row)
++  for gy in range(12):
++   for gx in range(12):means.append(sum(frame[gy*8+sy][gx*16+2*sx+1] for sy in range(8) for sx in range(8))>>6)
++ (folder/'pixel_frames.mem').write_text(''.join(f'{v:02x}\n' for v in pixels),encoding='ascii');(folder/'pixel_grid_expected.mem').write_text(''.join(f'{v:02x}\n' for v in means),encoding='ascii')
++ return dict(core_frames=len(grids),pixel_frames=6,kind='generated_synthetic_only',seed=2214)
+--- /dev/null
++++ scripts/verify_motion_direction.py
+@@ -0,0 +1,57 @@
++"""Offline ordinary-motion and Chinese menu integration; no board access."""
++import argparse
++import json
++import subprocess
++from pathlib import Path
++from motion_reference import fixtures
++
++ROOT = Path(__file__).resolve().parents[1]
++
++
++def main():
++    p = argparse.ArgumentParser()
++    p.add_argument('--output', type=Path, default=ROOT/'results/motion_sidebar_20261022/rtl')
++    p.add_argument('--tests', nargs='+', choices=['core', 'tap', 'policy', 'readout', 'motion_display', 'motion_sidebar'])
++    a = p.parse_args()
++    out = a.output.resolve()
++    out.mkdir(parents=True, exist_ok=True)
++    fixture = fixtures(out/'vectors')
++    rtl = ROOT/'board/ti60f225_v4/rtl/vision'
++    display = ['vision_display', 'vision_frontend', 'vision_window3', 'vision_median9',
++               'vision_sobel', 'vision_shape_classifier', 'vision_osd', 'vision_local_motion_core',
++               'vision_local_motion_tap', 'vision_motion_policy', 'vision_motion_readout']
++    tests = [
++        ('core', 'sim/motion_direction/tb_local_motion_core.sv', ['vision_local_motion_core']),
++        ('tap', 'sim/motion_direction/tb_local_motion_tap.sv', ['vision_local_motion_core', 'vision_local_motion_tap', 'vision_motion_policy']),
++        ('policy', 'sim/motion_direction/tb_motion_policy.sv', ['vision_motion_policy']),
++        ('readout', 'sim/motion_direction/tb_motion_readout.sv', ['vision_motion_readout']),
++        ('motion_display', 'sim/vision/tb_motion_display.sv', display),
++        ('motion_sidebar', 'sim/vision/tb_motion_sidebar.sv', ['vision_sidebar_overlay', 'vision_osd']),
++    ]
++    rows = []
++    for name, bench, sources in tests:
++        if a.tests and name not in a.tests:
++            continue
++        exe = out/(name+'.vvp')
++        cmd = ['C:/iverilog/bin/iverilog.exe', '-g2012', '-s', 'tb', '-o', str(exe)]
++        if name == 'core':
++            cmd += ['-Ptb.FRAMES='+str(fixture['core_frames'])]
++        cmd += [str(ROOT/bench)] + [str(rtl/(n+'.sv')) for n in sources]
++        for stage, args in [('compile', cmd), ('run', ['C:/iverilog/bin/vvp.exe', str(exe),
++                '+vectors='+str(out.parent/'control/ui_vectors.mem'), '+output='+str(out)])]:
++            log = out/(name+'.'+stage+'.log')
++            with log.open('wb') as stream:
++                result = subprocess.run(args, cwd=out, stdout=stream, stderr=subprocess.STDOUT, timeout=600)
++            if result.returncode:
++                print(log.read_text(encoding='utf-8', errors='replace'))
++                result.check_returncode()
++        rows.append(dict(test=name, passed=True))
++        exe.unlink()
++        print('PASS', name, flush=True)
++    (out/'verification.json').write_text(json.dumps(dict(passed=True, tests=rows, fixture=fixture,
++        scope='Synthetic RTL and actual RV32I menu words; not physical keys or camera accuracy',
++        hardware_programmed=False), indent=2), encoding='utf-8')
++
++
++if __name__ == '__main__':
++    main()
+--- /dev/null
++++ docs/MOTION_SIDEBAR_20261022.md
+@@ -0,0 +1,55 @@
++# 按键菜单：运动提示（2026-10-22，离线候选）
++
++运动提示接入当前中文两层菜单的“目标”分类，原八种显示模式和M7几何识别保持。不是替换模式或自动跟踪，没有让运动结果接管一键居中、ROI任务、AI或DDR调度。
++
++## 板端操作
++
++1. 长按KEY0打开一级菜单；用KEY2/KEY3选“目标”，短按KEY0展开。
++2. 用KEY2/KEY3选第四项“运动提示”，短按KEY0进入编辑。
++3. KEY2选“开启”，KEY3选“关闭”；短按KEY0确认。长按KEY0取消草稿，实际开关保持。
++4. 长按KEY0逐级返回并关闭菜单。开启时，原调试HUD下方显示“运动向左 / 向右 / 向上 / 向下 / 静止 / 待判”。
++
++开关与其他视频参数一样，在VS帧边界统一生效。方向与保持标记也按帧快照，避免同帧文字混用不同观测。关闭默认不显示新文字；开启后关闭菜单仍显示提示。冻结F1、历史F2、比较F3时暂停并清除运动状态、隐藏提示，返回F0后重新积累观测；菜单保存的开关选择保持。
++
++## 提示含义和边界
++
++使用当前视图在边缘检测前的灰度，按12×12网格、每格8×8采样求均值，运行整数ON/OFF时延相关。四次新观测形成一窗、两个同向窗口确认方向；短时缺少新证据最多保持700ms，文字明确显示“保持”。保持值不是新的识别结果，也不计为新的方向正确率。没有训练模型，不属于物体类别识别或果蝇连接组推理。
++
++算法只观察当前画面，不判断是哪一个物体；已有ROI启用时观察该视图。移动摄像头、改变照明也可能触发。没有新增全图搜索、持续跟踪或宣称实际方向精度。当前帧池/源帧/配置身份和一键居中规则保持。
++
++## 接口
++
++- 侧栏现有17个条目，新增`SIDE_MOTION=16`，目标组连续为13–16；其他条目ID保持。
++- `settings[31]`为运动开关，复用原32bit设置写入和VS提交握手；原31bit字段保持。软核/IP/cache和共享状态结构均未扩容。
++- 侧栏开启时，原紧凑菜单字段不使用，UI字bit14承载条目bit4；条目低4位仍在bits29:26。视频域24bit映射保持。侧栏关闭时恢复原紧凑菜单语义，诊断解码不会把高条目位报告成旧AI菜单。
++- `vision_sidebar_overlay`复用已有字体实例和未使用的状态载荷位，无新UI帧缓存；实际69条文本、121个汉字，中文ROM仍4RAM，整个侧栏字体仍5RAM。
++- 运动只旁路观察灰度。关闭侧栏或选择新条目不改变M0原图ISP旁路；显示和RGB24快照继续使用同一最终输出。
++
++## 资源和验证
++
++最终整机59878/60800 XLR、249/256 RAM、63/160 DSP，余922 XLR、7RAM、97DSP；WNS+0.237ns、WHS+0.027ns，未分配核心引脚0。比接入前57745/246/62新增2133 XLR、3RAM、1DSP。第一版运动整机60648/247/63；将新增模块的列历史/采样累加改为同步小RAM，并按输入上界收紧内部累加器，整机回收770 XLR、多用2RAM，没有删现有功能。图像快照仍5RAM。
++
++完整相机DDR程序185888B（比对称居中版增加160B），BSS66104B保持；紧凑救援6820B在8KiB内。没有把新救援镜像写入CPU ROM；现有救援程序加载新DDR应用即可进入新菜单。
++
++离线证据：RV32I4664断言、636组居中几何与12组诊断向量；VS原子开关和条目高位CDC；62组核心参考、864网格均值和57项显示读出；24幅对齐灰度光栅/八模式463059周期RGB与同步不变；六种中文状态及保持字、4007168个新UI外像素和96个字符；原侧栏5936988个外部像素保持。融合、边缘覆盖、前端和RGB24行快照另有定向回归。原完整19核心/38视频套件本轮未全量重复执行，合成结果不计实物准确率。
++
++## 复现与制品
++
++从`F:/Project/fpga/vision_base`执行，运行时使用本机PowerShell7及已配置Python：
++
++```text
++python scripts/test_sidebar_center.py
++python scripts/verify_motion_direction.py
++```
++
++第二条覆盖6项运动/显示测试；1080p像素级仿真可能持续数分钟。`--tests motion_sidebar`等用于只重跑改动涉及的用例。前端数值由既有前端回归覆盖，运动显示集成测试注入对齐的前端输出，并未把它写成完整相机RTL仿真。
++
++- 位流：`F:/Project/fpga/vision_base/results/motion_sidebar_20261022/release/ti60f225_oob.bit`
++- 配套DDR应用：`F:/Project/fpga/vision_base/results/motion_sidebar_20261022/firmware/vision.elf`
++- 原权重：`F:/Project/fpga/vision_base/models/shape_cards_bringup/shape_cards_weights.bin`
++- 离线启动包：`F:/Project/fpga/vision_base/results/motion_sidebar_20261022/release/vision_boot.bin`
++- 报告、资源、预览：同目录`REPORT.md`、`resources.json`、`acceptance.json`、`motion_ui_detail.png`。
++
++新菜单需要本轮位流与DDR程序配套。原Flash保持现状；本轮没有访问硬件或写入SRAM/Flash，当前预览为实际RTL生成的合成场景。实际按键、运动效果、相机扰动和长时验收待硬件返回。
++
++运动源码来源为GitHub提交`74cc8f2d531c2119aad1d9ca1c367d6b34dabb11`。仅移植4个运动模块及对应参考/测试，没有覆盖远端旧顶层、Gamma、引脚或工程配置。原始文件保留在本轮`upstream/`，资源优化后的模块在当前工程中。

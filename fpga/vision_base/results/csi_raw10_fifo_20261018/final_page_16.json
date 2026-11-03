@@ -1,0 +1,25 @@
+[
+  {
+    "magic": "56495331",
+    "build": "26100410",
+    "mode": 5,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "threshold": 80,
+    "raw": "564953312610041078b00507000000000000000000000cb5",
+    "canny_completed": 3253,
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1792321319.1489084,
+    "probe_busy": 0,
+    "probe_hold": 0,
+    "probe_request": 0,
+    "probe_ack": 0,
+    "probe_address": 0,
+    "probe_data": "00000000"
+  }
+]

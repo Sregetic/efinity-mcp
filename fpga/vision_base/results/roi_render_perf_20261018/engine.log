@@ -1,0 +1,8 @@
+ENGINE case=100 pixels=96 cycles=126 reads=3 writes=6 error=0
+ENGINE case=101 pixels=96 cycles=129 reads=6 writes=12 error=1
+ENGINE case=102 pixels=96 cycles=126 reads=9 writes=18 error=1
+ENGINE case=190 pixels=2073600 cycles=1039647 reads=3609 writes=32418 error=0
+ENGINE case=191 pixels=2073600 cycles=1048598 reads=12249 writes=64818 error=0
+ENGINE case=192 pixels=2073600 cycles=1039486 reads=14679 writes=97218 error=0
+PASS tb_frame_render_engine
+sim/tb_frame_render_engine.sv:149: $finish called at 31281680000 (1ps)

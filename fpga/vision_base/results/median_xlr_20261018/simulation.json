@@ -1,0 +1,31 @@
+{
+  "tests": [
+    {
+      "test": "frontend",
+      "passed": true
+    },
+    {
+      "test": "color_denoise",
+      "passed": true
+    },
+    {
+      "test": "canny_denoise",
+      "passed": true
+    },
+    {
+      "test": "line_direct",
+      "passed": true
+    },
+    {
+      "test": "fusion_display",
+      "passed": true
+    },
+    {
+      "test": "canny_noise",
+      "passed": true
+    }
+  ],
+  "median_windows": 26912,
+  "scope": "RTL simulation, not board acceptance",
+  "passed": true
+}

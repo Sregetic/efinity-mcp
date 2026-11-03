@@ -1,0 +1,2 @@
+PASS edge probe 1536 bits, 2304 active pixels unaffected, crossed rows, front frame stable
+sim/vision/tb_edge_probe.sv:32: $finish called at 73990000 (1ps)

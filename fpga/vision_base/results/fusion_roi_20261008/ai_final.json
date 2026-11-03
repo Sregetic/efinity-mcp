@@ -1,0 +1,10 @@
+{
+  "ai_enabled": 1,
+  "ai_match": 0,
+  "ai_age_frames": 1,
+  "ai_flags": 8,
+  "ai_geometry_policy": 1,
+  "ai_frame": 69580,
+  "ai_render_config": 0,
+  "ai_context": 12
+}

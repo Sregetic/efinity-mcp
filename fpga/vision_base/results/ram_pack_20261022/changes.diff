@@ -1,0 +1,453 @@
+--- before/board/ti60f225_v4/rtl/cam_i2c_ctrl/i2c/i2c_master_reg_rom.v
++++ after/board/ti60f225_v4/rtl/cam_i2c_ctrl/i2c/i2c_master_reg_rom.v
+@@ -11,8 +11,11 @@
+ );
+ 
+ reg  [ROM_SIZE-1:0]   ROM [0:TOTAL_ROM_DEPTH-1];
+-wire [ROM_SIZE-1:0]   DATAA = {ROM_SIZE{1'b0}};
+-wire [ADDR_WIDTH-1:0] RADDR;
++reg [19:0] packed_rom [0:TOTAL_ROM_DEPTH-1], packed_q;
++(* syn_ramstyle="logic" *)reg [8:0] prefixes[0:15];
++integer entry,slot,prefix_count,prefix_index;
++reg [8:0] prefix_key;
++localparam PACK_LENGTH=INIT_FILE==""&&TOTAL_ROM_DEPTH>166?166:TOTAL_ROM_DEPTH;
+    
+ // initial begin
+ // 		//9134				//addr /data/read_en[1]
+@@ -79,10 +82,9 @@
+ //     ROM[8'h3c] = {16'hffff, 8'hff,1'b0 };
+       
+ // end 
+-generate if(INIT_FILE != "")begin:external_sensor_rom
+- initial $readmemh(INIT_FILE,ROM);
+-end else begin:sc431hai_rom
+ initial begin
++ if(INIT_FILE != "")$readmemh(INIT_FILE,ROM);
++ else begin
+     
+ ROM[8'h00] = {16'h0100,8'h00,1'b0};
+ ROM[8'h01] = {16'h36e9,8'h80,1'b0};
+@@ -251,25 +253,20 @@
+ ROM[8'ha4] = {16'h3e07,8'h80,1'b0}; // 1x digital gain, independent of power-on defaults
+ ROM[8'ha5] = {16'h0100,8'h01,1'b0}; // Start after geometry, gain and orientation
+ end
+-end endgenerate
+-// write is unused
+-wire [ADDR_WIDTH-1:0] ADDRA = {ADDR_WIDTH{1'b0}}; 
+-wire                  WEA   = 1'b0; 
+-always @ (posedge clock)
+-begin
+-    if (WEA) begin
+-        ROM[ADDRA] <= DATAA;
+-    end
++ // Startup address prefixes are constant; keep the original word and flag ABI.
++ prefix_count=0;
++ for(entry=0;entry<PACK_LENGTH;entry=entry+1)begin
++  prefix_key={ROM[entry][24:17],ROM[entry][0]};prefix_index=-1;
++  for(slot=0;slot<16;slot=slot+1)
++   if(slot<prefix_count&&prefixes[slot]==prefix_key)prefix_index=slot;
++  if(prefix_index==-1)begin
++   prefixes[prefix_count]=prefix_key;prefix_index=prefix_count;prefix_count=prefix_count+1;
++  end
++  packed_rom[entry]={prefix_index[3:0],ROM[entry][16:1]};
++ end
+ end
+-   
+-assign RADDR = addr_ptr;
+-   
+-reg [ROM_SIZE-1:0] RDATA;
+-always @ (posedge clock)
+-begin
+-     RDATA <= ROM[RADDR];
+-end
+-
+-assign rdata_out = RDATA;
++always @(posedge clock)packed_q<=packed_rom[addr_ptr];
++wire [8:0] prefix=prefixes[packed_q[19:16]];
++assign rdata_out = {prefix[8:1],packed_q[15:0],prefix[0]};
+    
+ endmodule			      
+--- before/board/ti60f225_v4/rtl/vision/vision_canny_raster.sv
++++ after/board/ti60f225_v4/rtl/vision/vision_canny_raster.sv
+@@ -2,8 +2,8 @@
+ // is a node; segments join only existing 8-connected neighbors. No live RGB
+ // is mixed with the retained Canny frame. Detection remains W x H.
+ module vision_canny_raster #(parameter W=480,H=270,CW=9,
+- parameter COVERAGE_FILE="./rtl/vision/canny_coverage_q5.mem",
+- parameter FIT_FILE="./rtl/vision/canny_fit_q4.mem")(
++ parameter INDEX_FILE="./rtl/vision/canny_coverage_index.mem",
++ parameter PALETTE_FILE="./rtl/vision/canny_coverage_palette.mem")(
+  input clk,rst_n,vblank,de,input[11:0]x,y,input bitmap,ready,
+  output reg[CW-1:0]fetch_x,fetch_y,output pixel,
+  output reg[31:0]coarse_edges,display_edges,output[7:0]coverage
+@@ -84,13 +84,13 @@
+  assign pixel=in_canvas&&
+               ((center&&(node||horizontal||vertical||descending||ascending))||bridge);
+  // Coverage is independent of the unchanged binary recognition graph.
+- reg[79:0]coverage_rom[0:511],coverage_word;
+- initial $readmemh(COVERAGE_FILE,coverage_rom);
++ (* syn_ramstyle="logic" *)reg[5:0]coverage_index[0:511];
++ reg[4:0]coverage_palette[0:1023],curve_level;
++ initial begin $readmemh(INDEX_FILE,coverage_index);$readmemh(PALETTE_FILE,coverage_palette);end
+  wire[8:0]next_tile=de&&x[1:0]==0?(y[1:0]==0?fresh:row_q):tile;
+- always @(posedge clk)coverage_word<=coverage_rom[next_tile];
+- wire[4:0]curve_level=coverage_word[5*{uy,ux}+:5];
++ always @(posedge clk)curve_level<=coverage_palette[{coverage_index[next_tile],y[1:0],x[1:0]}];
+  wire fit_enable;wire[7:0]fit_coverage;
+- vision_canny_line_fit #(.W(W),.H(H),.CW(CW),.FIT_FILE(FIT_FILE)) line_fit(
++ vision_canny_line_fit #(.W(W),.H(H),.CW(CW)) line_fit(
+   .clk(clk),.rst_n(rst_n),.valid(fit_rq),.ix(fit_qx),.bitmap(fit_zero_q?1'b0:bitmap),.first_row(fit_first_q),
+   .de(de),.x(x),.ux(ux),.uy(uy),.tx(tx),.ty(ty),.enable(fit_enable),.coverage(fit_coverage));
+  assign coverage=!in_canvas?8'd0:(fit_primed&&fit_enable)?fit_coverage:{curve_level,curve_level[4:2]};
+@@ -106,8 +106,7 @@
+ endmodule
+ 
+ // Nine connected samples, or five near turns; four clocks share the tracer.
+-module vision_canny_line_fit #(parameter W=480,H=270,CW=9,
+- parameter FIT_FILE="./rtl/vision/canny_fit_q4.mem")(
++module vision_canny_line_fit #(parameter W=480,H=270,CW=9)(
+  input clk,rst_n,valid,input[CW-1:0]ix,input bitmap,first_row,
+  input de,input[11:0]x,input[1:0]ux,uy,input[CW-1:0]tx,ty,
+  output enable,output[7:0]coverage);
+@@ -234,13 +233,19 @@
+   end
+   if(!rst_n)begin busy<=0;done<=0;end
+  end
+- // Two read ports share one constant table instead of two fit arithmetic paths.
+- reg[9:0]fit_rom[0:1023];initial $readmemh(FIT_FILE,fit_rom);
++ // Exact ROM formulas, including signed rounding and output-width truncation.
++ wire signed[13:0]fit_sum={{7{result_sum[6]}},result_sum},fit_weight={{6{result_weight[7]}},result_weight};
++ wire signed[13:0]c51=(fit_sum<<<5)+(fit_sum<<<4)+(fit_sum<<<1)+fit_sum+14'sd2;
++ wire signed[13:0]c57=(fit_sum<<<6)-(fit_sum<<<3)+fit_sum+14'sd4;
++ wire signed[13:0]s13=(fit_weight<<<3)+(fit_weight<<<2)+fit_weight+14'sd4;
++ wire signed[13:0]s17=(fit_weight<<<4)+fit_weight+14'sd32;
++ wire signed[13:0]fit_center=14'sd32+(result_short?(c51>>>2):(c57>>>3));
++ wire signed[13:0]fit_slope=result_short?(s13>>>3):(s17>>>6);
+  reg signed[9:0]center_q=0;reg signed[5:0]slope=0;
+  reg write_pending=0,write_valid=0,write_horizontal=0;reg[CW-1:0]write_x=0;
+  always @(posedge clk)begin
+-  center_q<=fit_rom[{2'b0,result_short,result_sum}];
+-  slope<=fit_rom[{1'b1,result_short,result_weight}];
++  center_q<=fit_center[9:0];
++  slope<=fit_slope[5:0];
+   write_pending<=done;write_x<=result_x;write_valid<=result_valid;write_horizontal<=result_horizontal;
+   if(!rst_n)write_pending<=0;
+  end
+--- before/board/ti60f225_v4/rtl/vision/vision_local_motion_core.sv
++++ after/board/ti60f225_v4/rtl/vision/vision_local_motion_core.sv
+@@ -10,13 +10,13 @@
+  output reg[15:0]active_sites,output reg roi_valid,
+  output reg[CW-1:0]roi_x0,roi_x1,output reg[RW-1:0]roi_y0,roi_y1,
+  output reg fault);
+-localparam IDLE=0,READ=1,LOAD=2,MULTIPLY=3,COMMIT=4,FINISH=5;
++localparam IDLE=0,READ=1,READ_LINE=2,LOAD=3,MULTIPLY=4,COMMIT=5,STORE_LINE=6,FINISH=7;
+ reg[2:0]state;reg[AW-1:0]index;reg[CW-1:0]col;reg[RW-1:0]row;
+ reg packet_open,history_valid,warm;reg[7:0]gray_latched,current_on,current_off;
+ // Store signed contrast instead of two disjoint ON/OFF bytes: 8+9 bits/site.
+-reg[16:0]cells[0:N-1],cell_q;
+-// Per-column previous-row history shares the existing READ stage, not a register mux.
+-(* syn_ramstyle="block_ram" *)reg[17:0]line_store[0:COLS-1];reg[17:0]above,left;
++localparam LINE_BASE=1<<AW;
++(* syn_ramstyle="block_ram",syn_ramdecomp="area" *)reg[17:0]history[0:LINE_BASE+COLS-1];
++reg[17:0]history_q;reg[16:0]cell_q;reg[17:0]above,left;
+ reg[2:0]term;reg[7:0]mul_a,mul_b;wire[15:0]product=mul_a*mul_b;
+ wire signed[31:0]signed_product={16'd0,product};
+ localparam SUM_W=$clog2(2*N*255*255+1)+1;
+@@ -32,8 +32,15 @@
+ wire[7:0]oa_on=old_above>0?old_above[7:0]:0,oa_off=old_above<0?neg_oa[7:0]:0;
+ wire[7:0]na_on=now_above>0?now_above[7:0]:0,na_off=now_above<0?neg_na[7:0]:0;
+ wire[8:0]stored_delta=warm?delta:9'd0;
+-always @(posedge clk)if(rst_n&&!abort_frame&&state==COMMIT)
+- line_store[col]<={warm?cell_q[8:0]:9'd0,stored_delta};
++// Separate cell/line reads and writes share one physical RAM port pair.
++wire[AW:0]history_read=state==READ?{1'b0,index}:LINE_BASE+col;
++wire[AW:0]history_write=state==COMMIT?{1'b0,index}:LINE_BASE+col;
++wire[17:0]history_data=state==COMMIT?{1'b0,gray_latched,stored_delta}:
++                                     {warm?cell_q[8:0]:9'd0,stored_delta};
++always @(posedge clk)begin
++ history_q<=history[history_read];
++ if(rst_n&&!abort_frame&&(state==COMMIT||state==STORE_LINE))history[history_write]<=history_data;
++end
+ wire[31:0]abs_h=hx[SUM_W-1]?-hx:hx,abs_v=vy[SUM_W-1]?-vy:vy;
+ wire[31:0]major=abs_h>=abs_v?abs_h:abs_v,minor=abs_h>=abs_v?abs_v:abs_h;
+ assign in_ready=state==IDLE&&(!out_valid||out_ready);
+@@ -78,8 +85,10 @@
+      state<=READ;
+     end
+    end
+-   READ:begin cell_q<=cells[index];above<=line_store[col];state<=LOAD;end
++   READ:state<=READ_LINE;
++   READ_LINE:begin cell_q<=history_q[16:0];state<=LOAD;end
+    LOAD:begin
++    above<=history_q;
+     current_on<=(warm&&delta>0)?delta[7:0]:8'd0;
+     current_off<=(warm&&delta<0)?negative_delta[7:0]:8'd0;
+     term<=0;state<=MULTIPLY;
+@@ -90,13 +99,15 @@
+     if(term==7)state<=COMMIT;else term<=term+1'b1;
+    end
+    COMMIT:begin
+-    cells[index]<={gray_latched,stored_delta};
+     left<={warm?cell_q[8:0]:9'd0,stored_delta};
+     if(warm&&(current_on>8||current_off>8))begin
+      count_active<=count_active+1'b1;
+      if(col<xmin)xmin<=col;if(col>xmax)xmax<=col;
+      if(row<ymin)ymin<=row;if(row>ymax)ymax<=row;
+     end
++    state<=STORE_LINE;
++   end
++   STORE_LINE:begin
+     if(index==N-1)state<=FINISH;
+     else begin index<=index+1'b1;if(col==COLS-1)begin col<=0;row<=row+1'b1;end else col<=col+1'b1;state<=IDLE;end
+    end
+--- before/board/ti60f225_v4/rtl/vision/vision_osd.sv
++++ after/board/ti60f225_v4/rtl/vision/vision_osd.sv
+@@ -261,7 +261,10 @@
+ reg[7:0]ch_q=32;reg[5:0]bitidx_q=0;reg ink_region_q=0;
+ // Keep the original ASCII HUD font and a separate compact Chinese menu subset.
+ reg font[0:8191];reg font_ink=0;integer letter,position;reg[34:0]pattern;
+-reg chinese_font[0:CHINESE_GLYPHS*256-1];reg chinese_ink=0,chinese_q=0;
++// All shipped glyphs have a blank last column: three 5bit words per row.
++(* syn_ramdecomp="area" *)reg[4:0]chinese_font[0:CHINESE_GLYPHS*48-1];
++reg[4:0]chinese_word=0;reg[2:0]chinese_offset=0;reg chinese_blank=1,chinese_q=0;
++wire chinese_ink=!chinese_blank&&chinese_word[4-chinese_offset];
+ integer cn_letter,cn_position;reg[255:0]cn_pattern;
+ initial begin
+  for(letter=0;letter<128;letter=letter+1)begin
+@@ -270,8 +273,8 @@
+  end
+  for(cn_letter=0;cn_letter<CHINESE_GLYPHS;cn_letter=cn_letter+1)begin
+   cn_pattern=chinese_glyph(cn_letter);
+-  for(cn_position=0;cn_position<256;cn_position=cn_position+1)
+-   chinese_font[cn_letter*256+cn_position]=cn_pattern[255-cn_position];
++  for(cn_position=0;cn_position<48;cn_position=cn_position+1)
++   chinese_font[cn_letter*48+cn_position]=cn_pattern[255-(cn_position/3)*16-(cn_position%3)*5-:5];
+  end
+ end
+ wire sidebar=ui_state[23],editing=ui_state[22];
+@@ -484,11 +487,17 @@
+   bitidx=34-(side_py>>1)*5-(side_x[3:0]>>1);
+  end
+ end
++wire[3:0]chinese_col=side_x[3:0];
++wire[1:0]chinese_segment=chinese_col<5?0:chinese_col<10?1:2;
++wire[12:0]chinese_row={2'b0,ch[6:0],side_py[3:0]};
++wire[12:0]chinese_address=(chinese_row<<1)+chinese_row+chinese_segment;
+ // Split character selection from font decode; RGB/control use the same extra beat.
+ always @(posedge clk)begin
+  ch_q<=ch;bitidx_q<=bitidx;
+  font_ink<=font[{ch[6:0],bitidx}];
+- chinese_ink<=chinese_font[{ch[6:0],side_py[3:0],side_x[3:0]}];chinese_q<=ch[7];
++ chinese_word<=chinese_font[chinese_address];
++ chinese_offset<=chinese_col<5?chinese_col:chinese_col<10?chinese_col-5:chinese_col-10;
++ chinese_blank<=chinese_col==15;chinese_q<=ch[7];
+  active<=sidebar?side_active:MOTION_HINT?motion_active:(x>=8&&x<((mode==5||mode==6||ai_page)?428:356)&&((y>=4&&y<20)||(shape_enable&&y>=22&&y<38)||(hud&&((y>=40&&y<56)||(y>=58&&y<74)||(y>=76&&y<92)))));
+  ink_region_q<=(sidebar||motion_active)?(side_x>=16&&side_slot<8&&(ch[7]?side_py<16:(side_x[3:0]<10&&side_py<14&&bitidx<35))):(column<10&&local_y<14&&bitidx<35);
+  marker_q<=sidebar&&side_active&&((side_left&&side_row=={4'b0,side_group}+6'd1&&(side_x<4||(root_only&&(y[5:0]==0||y[5:0]==63))))||(!side_left&&side_selected&&(side_x<4||y[5:0]==0||y[5:0]==63)));
+--- before/docs/PROJECT_MASTER_STATUS.md
++++ after/docs/PROJECT_MASTER_STATUS.md
+@@ -1,4 +1,14 @@
+ # 项目总目标与状态（统一范围表）
++
++## 2026-10-22 六项RAM打包优化完成（离线候选，未烧录）
++
++当前完整中文菜单/对称居中/运动提示版从59878XLR/249RAM/63DSP变为 **60510/60800XLR、239/256RAM、63/160DSP**：实际释放10RAM，增加632XLR，余290XLR/17RAM/97DSP。原生map/interface/P&R/位流生成通过，最终WNS+0.112ns、WHS+0.028ns、未分配核心引脚0，原14项接口缺省标记保持。逻辑占99.52%，后续加硬件前优先回收XLR，不以空余RAM替代逻辑预算。
++
++六项均已合入：Canny覆盖率字典省3、精确整数拟合省2、相机初始化ROM省1、中文字库无损打包省1、I/D cache完整23bit标签重排省2、运动历史/上一行状态共存储省1。cache仍各2KiB，运动单网格多2拍但原帧边界发布保持；原ISP/Gamma/色调/分辨率、ROI/帧池/DDR/AI固件保持，RGB24图像回读仍5RAM。相对上轮仅5个RTL和2个新字典文件属于原生输入变化。
++
++生产RTL的8192覆盖率/65536拟合组合、修改前后两帧完整1080p的4147200像素/4773472周期一致；55552字模像素、10000标签读写、三profile启动/复位/RAW流及17前缀拒绝通过。运动62帧/864网格/57读出、24光栅八模式463059 RGB同步周期、中文提示4007264菜单外像素/字符及RGB24快照/叠加/融合定向回归通过。未整套重跑未变化的核心/视频测试，未计实物验收。
++
++新位流results/ram_pack_20261022/release/ti60f225_oob.bit，配原results/motion_sidebar_20261022/firmware/vision.elf（185888B）和原权重；artifacts/camera已同步离线构建。没有访问板卡或写SRAM/Flash，最近实机记录仍为10-18 SRAM/10-17 Flash。详细结果、资源代价、对照图和验收边界见results/ram_pack_20261022/REPORT.md、resources.json和acceptance.json。完整项目范围保持。
+ 
+ ## 2026-10-22 运动提示接入中文按键菜单（离线候选，未烧录）
+ 
+--- before/docs/SYSTEM_SCOPE_AND_ROADMAP.md
++++ after/docs/SYSTEM_SCOPE_AND_ROADMAP.md
+@@ -1,4 +1,12 @@
+ # 完整视觉系统：长期范围与实施路线
++
++## 2026-10-22 六项RAM打包优化完成（离线候选，未烧录）
++
++完整功能构建已实际回收10块RAM：249→239/256，余17；XLR59878→60510/60800，余290（99.52%），DSP63保持。最终WNS+0.112ns/WHS+0.028ns、未分配核心引脚0。Canny字典/精确拟合、相机ROM、中文字库、完整cache标签及运动状态存储均已合入；原图ISP/Gamma/色调、ROI/帧池/DDR/AI程序和RGB24回读保持。后续重点先回收XLR，不把RAM余量当作大型AI核空间。
++
++当前生产RTL与旧版两帧1080p的4147200像素/4773472周期逐拍一致；8192覆盖率/65536拟合输入、全部55552字模像素、10000标签读写、三相机启动/复位/流、运动/中文菜单/八模式与RGB24快照定向检查通过。资源及离线证据见results/ram_pack_20261022/REPORT.md；没有新实物/长时/断电验收，未整套重复未变化的测试。
++
++新位流results/ram_pack_20261022/release/ti60f225_oob.bit配原motion_sidebar_20261022 DDR程序和原权重；本轮未写SRAM/Flash。原B1–B5/A1–A6/X1–X7/I1–I3/F1/F2/V1/V2范围保持，实物识别/紫闪/长时/冷启动等既有未验收项不因本轮离线资源收敛而关闭。
+ 
+ ## 2026-10-22 运动提示接入中文按键菜单（离线候选，未烧录）
+ 
+--- before/rtl/sapphire_ram.sv
++++ after/rtl/sapphire_ram.sv
+@@ -19,6 +19,16 @@
+    if(!wrMaskEnable||wr_mask[j])memory[wr_addr][j*LANE_WIDTH+:LANE_WIDTH]<=wr_data[j*LANE_WIDTH+:LANE_WIDTH];
+   always @(posedge rd_clk)if(rd_en)q<=memory[rd_addr];
+   assign rd_data=q;
++ end else if(wordCount==32&&wrDataWidth==23&&rdDataWidth==23&&
++             wrAddressWidth==5&&rdAddressWidth==5&&!clockCrossing&&!wrMaskEnable)begin:cache_tags
++  // The emitted I/D tags need all23 bits, but one RAM port is at most20 wide.
++  simple_dual_port_ram #(.DATA_WIDTH(20),.ADDR_WIDTH(5),.OUTPUT_REG("FALSE")) low(
++   .wclk(wr_clk),.we(wr_en),.waddr(wr_addr),.wdata(wr_data[19:0]),
++   .rclk(rd_clk),.re(rd_en),.raddr(rd_addr),.rdata(rd_data[19:0]));
++  (* syn_ramstyle="registers" *)reg[2:0]high[0:31];reg[2:0]q;
++  always @(posedge wr_clk)if(wr_en)high[wr_addr]<=wr_data[22:20];
++  always @(posedge rd_clk)if(rd_en)q<=high[rd_addr];
++  assign rd_data[22:20]=q;
+  end else begin:block_ram
+  for(i=0;i<LANES;i=i+1)begin:lane
+   simple_dual_port_ram #(.DATA_WIDTH(LANE_WIDTH),.ADDR_WIDTH(wrAddressWidth),.OUTPUT_REG("FALSE")) ram(
+--- before/scripts/generate_canny_coverage.py
++++ after/scripts/generate_canny_coverage.py
+@@ -6,6 +6,8 @@
+ ROOT=Path(__file__).resolve().parents[1]
+ OUTPUT=ROOT/'board/ti60f225_v4/rtl/vision/canny_coverage_q5.mem'
+ FIT_OUTPUT=ROOT/'board/ti60f225_v4/rtl/vision/canny_fit_q4.mem'
++INDEX_OUTPUT=OUTPUT.with_name('canny_coverage_index.mem')
++PALETTE_OUTPUT=OUTPUT.with_name('canny_coverage_palette.mem')
+ SPURS={0b111010000,0b000010111,0b100110100,0b001011001}
+ OFFSETS=[(-1,-1),(0,-1),(1,-1),(-1,0),(0,0),(1,0),(-1,1),(0,1),(1,1)]
+ 
+@@ -70,7 +72,13 @@
+     assert not table[0].any() and table[16,10]==31
+     assert np.all(table[16+128+2].reshape(4,4)[:,2]==31)
+     assert np.all(table[16+32+8].reshape(4,4)[2,:]==31)
+-    text=''.join(f'{word:020x}\n' for word in words(table))
++    values=words(table)
++    text=''.join(f'{word:020x}\n' for word in values)
++    palette=list(dict.fromkeys(values))
++    assert len(palette)<=64
++    index_text=''.join(f'{palette.index(word):02x}\n' for word in values)
++    levels=[(word>>(5*phase))&31 for word in palette for phase in range(16)]
++    palette_text=''.join(f'{v:02x}\n' for v in levels+[0]*(1024-len(levels)))
+     fit=[0]*1024
+     for short in (0,1):
+         for code in range(128):
+@@ -83,8 +91,11 @@
+     if args.check:
+         assert OUTPUT.read_text(encoding='ascii')==text,'Coverage ROM differs from generator'
+         assert FIT_OUTPUT.read_text(encoding='ascii')==fit_text,'Fit ROM differs from generator'
++        assert INDEX_OUTPUT.read_text(encoding='ascii')==index_text,'Coverage dictionary differs from generator'
++        assert PALETTE_OUTPUT.read_text(encoding='ascii')==palette_text,'Coverage palette differs from generator'
+     else:
+         OUTPUT.write_text(text,encoding='ascii');FIT_OUTPUT.write_text(fit_text,encoding='ascii')
+-    print('PASS 512 contour neighborhoods and shared1024x10 Q4 fit ROM; binary graph unchanged')
++        INDEX_OUTPUT.write_text(index_text,encoding='ascii');PALETTE_OUTPUT.write_text(palette_text,encoding='ascii')
++    print(f'PASS 512 contour neighborhoods, {len(palette)} lossless palette entries and exact Q4 fit reference; binary graph unchanged')
+ 
+ if __name__=='__main__':main()
+--- before/scripts/generate_sidebar_chinese.py
++++ after/scripts/generate_sidebar_chinese.py
+@@ -47,6 +47,7 @@
+         cell = Image.new("L", (16, 16))
+         ImageDraw.Draw(cell).text((0, -5), ch, font=font, fill=255)
+         bits = [int(value >= 96) for value in cell.tobytes()]
++        assert not any(bits[15::16]), f'Packed font requires its existing blank last column: {ch}'
+         pattern = int("".join(map(str, bits)), 2)
+         assert pattern and pattern not in patterns, f"Empty or duplicate glyph: {ch}"
+         patterns.append(pattern)
+--- before/scripts/synthesize.ps1
++++ after/scripts/synthesize.ps1
+@@ -38,12 +38,15 @@
+     $words=@(Get-Content -LiteralPath $initFile.FullName)
+     if($words.Count -ne $selectedProfile.init_length -or $words.Count -lt 3){throw 'Sensor initialization length mismatch.'}
+     $registers=@{}
++    $prefixes=@{}
+     foreach($word in $words){
+         if($word -notmatch '^[0-1][0-9a-fA-F]{6}$'){throw 'Sensor table requires 25-bit hexadecimal write words.'}
+         $packed=[Convert]::ToUInt32($word,16)
+         if($packed -band 1){throw 'Sensor boot table requires write entries.'}
+         $registers[[int]($packed -shr 9)]=[int](($packed -shr 1) -band 255)
++        $prefixes[[int]($packed -shr 17)]=$true
+     }
++    if($prefixes.Count -gt 16){throw 'Sensor boot ROM supports at most16 distinct address prefixes.'}
+     if($Sensor -eq 'sc2210'){
+         if($registers[0x0100] -ne 1 -or $registers[0x3031] -ne 10 -or (($registers[0x3018] -shr 5)+1) -ne $selectedProfile.lanes -or (($registers[0x320e] -shl 8) -bor $registers[0x320f]) -ne $selectedProfile.vts){throw 'SC2210 table/profile format, lane count, stream or VTS mismatch.'}
+         if($selectedProfile.exposure_min -lt 1 -or $selectedProfile.exposure_max -gt ($selectedProfile.vts-4) -or $selectedProfile.exposure_initial -lt $selectedProfile.exposure_min -or $selectedProfile.exposure_initial -gt $selectedProfile.exposure_max -or $selectedProfile.hs_byteclk_mhz -le 0 -or $selectedProfile.mclk_hz -lt 6000000 -or $selectedProfile.mclk_hz -gt 27000000){throw 'SC2210 clock or exposure profile out of datasheet range.'}
+--- before/scripts/test_sensor_profiles.py
++++ after/scripts/test_sensor_profiles.py
+@@ -66,6 +66,13 @@
+    wrong=dict(data,init_sha256=hashlib.sha256(bad_mem.read_bytes()).hexdigest());bad.write_text(json.dumps(wrong))
+    rbad=subprocess.run([*args,str(bad)],capture_output=True,text=True)
+    assert rbad.returncode!=0 and 'Bayer phase mismatch' in rbad.stderr,rbad.stderr
++   # The packed20bit ROM has16 prefix codes; reject overflow before synthesis.
++   too_many=expected+[(prefix<<17) for prefix in range(0x60,0x66)]
++   bad_mem.write_text(''.join(f'{w:07x}\n' for w in too_many))
++   wrong=dict(data,init_length=len(too_many),init_sha256=hashlib.sha256(bad_mem.read_bytes()).hexdigest())
++   bad.write_text(json.dumps(wrong))
++   rbad=subprocess.run([*args,str(bad)],capture_output=True,text=True)
++   assert rbad.returncode!=0 and 'at most16 distinct address prefixes' in rbad.stderr,rbad.stderr
+   rom=ROOT/'board/ti60f225_v4/rtl/cam_i2c_ctrl/i2c'
+   exe=tmp/'boot.vvp'
+   subprocess.run([IVERILOG,'-g2012','-s','tb','-Ptb.N='+str(data['init_length']),'-Ptb.INIT_FILE="'+str(table).replace('\\','/')+'"',
+--- before/scripts/verify_vision_features.ps1
++++ after/scripts/verify_vision_features.ps1
+@@ -24,6 +24,7 @@
+   @{name='sensor_init';src=@('../cam_i2c_ctrl/i2c/i2c_master_reg_rom.v')},
+   @{name='canny_raster';src=@('vision_canny_raster.sv','vision_sparse_window.sv')},
+   @{name='canny_fit';src=@('vision_canny_raster.sv','vision_sparse_window.sv')},
++  @{name='canny_storage';src=@('vision_canny_raster.sv','vision_sparse_window.sv')},
+   @{name='line_snapshot';src=@('vision_line_snapshot.sv')},
+   @{name='hysteresis_random';src=@('vision_hysteresis_sweep.sv','vision_hysteresis.sv')},
+   @{name='weak_tiles';src=@('vision_hysteresis_sweep.sv','vision_hysteresis.sv')},
+--- before/sim/tb_sapphire_ram.sv
++++ after/sim/tb_sapphire_ram.sv
+@@ -4,6 +4,9 @@
+  reg we=0,re=0;reg[3:0]mask=0;reg[3:0]wa=0,ra=0;reg[31:0]data=0;wire[31:0]q;
+  wire[21:0]tag;wire[5:0]pending;
+  wire[7:0]aq;
++ reg twe=0,tre=0;reg[4:0]twa=0,tra=0;reg[22:0]td=0;wire[22:0]tq;
++ reg[22:0]gold[0:31],expected_tag;integer i;
++ Ram_1w_1rs #(.wordCount(32),.wordWidth(23),.wrAddressWidth(5),.rdAddressWidth(5),.wrDataWidth(23),.rdDataWidth(23)) actual_tags(clk,twe,1'b1,twa,td,clk,tre,tra,tq);
+  Ram_1w_1ra async0(clk,we,1'b1,wa[1:0],data[7:0],ra[1:0],aq);
+  Ram_1w_1rs #(.wordCount(16),.wrAddressWidth(4),.rdAddressWidth(4),.wrMaskWidth(4),.wrMaskEnable(1)) bytes0(clk,we,mask,wa,data,clk,re,ra,q);
+  Ram_1w_1rs #(.wordCount(64),.wordWidth(22),.wrAddressWidth(6),.rdAddressWidth(6),.wrDataWidth(22),.rdDataWidth(22)) tags0(clk,we,1'b1,{2'b0,wa},data[21:0],clk,re,{2'b0,ra},tag);
+@@ -14,6 +17,18 @@
+   if(q!==32'h12345678||tag!==22'h345678||pending!==6'h38||aq!==8'h78)$fatal(1,"one-cycle read/tag width/metadata/async UART");
+   re=0;write_word(32'habcd0000,12);if(q!==32'h12345678)$fatal(1,"read enable did not hold data");
+   re=1;@(negedge clk);if(q!==32'habcd5678||aq!==0)$fatal(1,"masked cache write/async UART");
+-  $display("PASS Sapphire RAM byte mask,22bit tags,one-cycle read and read-enable hold");$finish;
++  for(i=0;i<32;i=i+1)begin
++   @(negedge clk);twe=1;twa=i;td=$urandom;gold[i]=td;
++  end
++  @(negedge clk);twe=0;tre=1;tra=0;
++  @(posedge clk);#1;expected_tag=gold[0];if(tq!==expected_tag)$fatal(1,"23bit tag initial read");
++  for(i=0;i<10000;i=i+1)begin
++   @(negedge clk);twe=$urandom;tre=$urandom;twa=$urandom;tra=i%3==0?twa:$urandom;td=$urandom;
++   if(tre)expected_tag=gold[tra];
++   @(posedge clk);#1;
++   if(tq!==expected_tag)$fatal(1,"Full tag/read-hold/old-word mismatch cycle%0d",i);
++   if(twe)gold[twa]=td;
++  end
++  $display("PASS Sapphire RAM masks/22bit legacy/metadata/UART and10000 full23bit tag cycles including read-hold and same-address old-value");$finish;
+  end
+ endmodule
+--- before/sim/vision/tb_canny_fit.sv
++++ after/sim/vision/tb_canny_fit.sv
+@@ -3,7 +3,7 @@
+ localparam W=48,H=36,PW=W*4,PH=H*4;
+ reg clk=0,rst=0,vblank=0,de=0,ready=1,bitmap=0;reg[11:0]x=0,y=0;
+ wire[8:0]fx,fy;wire[7:0]coverage;wire pixel;wire[31:0]coarse,shown;
+-vision_canny_raster #(.W(W),.H(H),.COVERAGE_FILE("board/ti60f225_v4/rtl/vision/canny_coverage_q5.mem"),.FIT_FILE("board/ti60f225_v4/rtl/vision/canny_fit_q4.mem"))
++vision_canny_raster #(.W(W),.H(H),.INDEX_FILE("board/ti60f225_v4/rtl/vision/canny_coverage_index.mem"),.PALETTE_FILE("board/ti60f225_v4/rtl/vision/canny_coverage_palette.mem"))
+  dut(clk,rst,vblank,de,x,y,bitmap,ready,fx,fy,pixel,coarse,shown,coverage);
+ always #5 clk=~clk;
+ reg map[0:W*H-1];reg[79:0]lut[0:511];reg[4:0]level;reg[7:0]expected;
+--- before/sim/vision/tb_canny_raster.sv
++++ after/sim/vision/tb_canny_raster.sv
+@@ -3,7 +3,7 @@
+ localparam W=16,H=12,PW=W*4,PH=H*4;
+ reg clk=0,rst=0,vblank=0,de=0,ready=1,bitmap=0;reg[11:0]x=0,y=0;
+ wire[8:0]fx,fy;wire[7:0]coverage;wire pixel;wire[31:0]coarse,shown;
+-vision_canny_raster #(.W(W),.H(H),.COVERAGE_FILE("board/ti60f225_v4/rtl/vision/canny_coverage_q5.mem"),.FIT_FILE("board/ti60f225_v4/rtl/vision/canny_fit_q4.mem")) dut(clk,rst,vblank,de,x,y,bitmap,ready,fx,fy,pixel,coarse,shown,coverage);
++vision_canny_raster #(.W(W),.H(H),.INDEX_FILE("board/ti60f225_v4/rtl/vision/canny_coverage_index.mem"),.PALETTE_FILE("board/ti60f225_v4/rtl/vision/canny_coverage_palette.mem")) dut(clk,rst,vblank,de,x,y,bitmap,ready,fx,fy,pixel,coarse,shown,coverage);
+ always #5 clk=~clk;
+ reg map[0:W*H-1],gold[0:PW*PH-1];
+ always @(posedge clk)bitmap<=fx<W&&fy<H?map[fy*W+fx]:0;
+@@ -39,7 +39,7 @@
+     end
+     level=lut[pattern][5*((yy%4)*4+xx%4)+:5];expected_coverage={level,level[4:2]};
+     if(xx/4<2||xx/4>=W-2||yy/4<2||yy/4>=H-2)expected_coverage=0;
+-    if(coverage!==expected_coverage)$fatal(1,"coverage mismatch frame%0d x%0d y%0d got%0d want%0d tile%b word%h",f,xx,yy,coverage,expected_coverage,dut.tile,dut.coverage_word);
++    if(coverage!==expected_coverage)$fatal(1,"coverage mismatch frame%0d x%0d y%0d got%0d want%0d tile%b level%0d",f,xx,yy,coverage,expected_coverage,dut.tile,dut.curve_level);
+     if(f==4&&coverage!==0)$fatal(1,"halo ghost on flat frame");
+     if(coverage!=0&&coverage!=255)halos=halos+1;
+     checks=checks+1;if(pixel)lit=lit+1;

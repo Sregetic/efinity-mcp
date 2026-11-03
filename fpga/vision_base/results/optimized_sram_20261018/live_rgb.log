@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "samples": 113,
+  "seconds": 29.875,
+  "rates": {
+    "source_frame_hz": 29.99163179916318,
+    "display_frame_hz": 29.99163179916318,
+    "canny_hz": 29.99163179916318,
+    "camera_hz": 29.99163179916318,
+    "hdmi_scans_hz": 59.98326359832636
+  },
+  "max_magenta_pixels": 0,
+  "mean_row_change": 2.7473787822420634,
+  "exposure_range": [
+    808,
+    808
+  ],
+  "scope": "Live M0 row500 RGB and internal counters, not all frames or external HDMI measurement"
+}

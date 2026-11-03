@@ -1,0 +1,2 @@
+PASS fusion display completed-frame tags, source-gray geometry, fresh/stale ROI and no retagging
+sim/vision/tb_fusion_display.sv:26: $finish called at 66000 (1ps)

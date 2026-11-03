@@ -1,0 +1,5 @@
+{
+  "passed": true,
+  "text": "CANNY    T0024 MED1 F1 I2 C1 R0016",
+  "source": "Actual FPGA RGB888 line readback"
+}

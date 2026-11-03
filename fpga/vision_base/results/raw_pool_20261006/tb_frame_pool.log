@@ -1,0 +1,2 @@
+PASS tb_frame_pool
+sim/tb_frame_pool.sv:564: $finish called at 470000 (1ps)

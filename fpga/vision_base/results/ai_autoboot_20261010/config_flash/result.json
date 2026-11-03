@@ -1,0 +1,9 @@
+{
+  "configuration_flash_written": true,
+  "address": 0,
+  "native_onchip_verify": "passed; write.log",
+  "application_region_verified_after_configuration": true,
+  "physical_power_cycle_verified": false,
+  "startup_result": "../connectome_20261010/autoboot/result.json",
+  "note": "Earlier5kHz static-region verification hit120s timeout; current explicit25kHz verification passed"
+}

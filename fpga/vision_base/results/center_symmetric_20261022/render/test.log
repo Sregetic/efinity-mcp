@@ -1,0 +1,8 @@
+PASS center RTL sample=0 pixels=2073600
+PASS center RTL sample=1 pixels=2073600
+PASS center RTL sample=2 pixels=548864
+PASS center RTL sample=3 pixels=622592
+PASS center RTL sample=4 pixels=2073600
+PASS center RTL sample=5 pixels=2073600
+PASS tb_roi_axi_scaler six firmware center descriptors, native geometry, AXI/backpressure and source pixels
+sim/tb_roi_axi_scaler.sv:205: $finish called at 60791710000 (1ps)

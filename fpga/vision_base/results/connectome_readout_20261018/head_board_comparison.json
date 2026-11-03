@@ -1,0 +1,93 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "frozen",
+      "sequence": 1,
+      "source": 137307,
+      "render": 27,
+      "context": 37,
+      "scores": [
+        54,
+        74,
+        -12,
+        -34
+      ],
+      "label": 1,
+      "readout_ms": 0.17121,
+      "circuit_ms": 4.07571,
+      "same_source_numeric_checked": true
+    },
+    {
+      "case": "stable",
+      "sequence": 1,
+      "source": 137307,
+      "render": 27,
+      "context": 37,
+      "scores": [
+        54,
+        74,
+        -12,
+        -34
+      ],
+      "label": 1,
+      "readout_ms": 0.17121,
+      "circuit_ms": 4.07571,
+      "same_source_numeric_checked": true
+    },
+    {
+      "case": "rerender",
+      "sequence": 2,
+      "source": 137307,
+      "render": 28,
+      "context": 37,
+      "scores": [
+        66,
+        -8,
+        19,
+        4
+      ],
+      "label": 0,
+      "readout_ms": 0.16933,
+      "circuit_ms": 4.11081,
+      "same_source_numeric_checked": true
+    },
+    {
+      "case": "selftest",
+      "sequence": 2,
+      "source": 137307,
+      "render": 28,
+      "context": 37,
+      "scores": [
+        66,
+        -8,
+        19,
+        4
+      ],
+      "label": 0,
+      "readout_ms": 0.16933,
+      "circuit_ms": 4.11081,
+      "same_source_numeric_checked": true
+    },
+    {
+      "case": "live",
+      "sequence": 3,
+      "source": 143829,
+      "render": 0,
+      "context": 37,
+      "scores": [
+        61,
+        9,
+        7,
+        4
+      ],
+      "label": 0,
+      "readout_ms": 0.17064,
+      "circuit_ms": 4.09151,
+      "same_source_numeric_checked": false
+    }
+  ],
+  "full_source_numeric_cases": 4,
+  "record_identity_cases": 5,
+  "real_accuracy_verified": false
+}

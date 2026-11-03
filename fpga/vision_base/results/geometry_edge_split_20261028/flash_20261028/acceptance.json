@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "configuration_flash_written": true,
+  "application_flash_written": true,
+  "flash_readback_verified": true,
+  "rom_autoload_actual_ddr_bytes_verified": true,
+  "program_bytes": 206480,
+  "weights_bytes": 4400,
+  "boot_package_bytes": 210912,
+  "hardware_resources": {
+    "xlr": 58458,
+    "ram": 243,
+    "dsp": 64
+  },
+  "hardware_source_changed": false,
+  "canny_source_changed": false,
+  "full_flash_backup": "app/flash_before.bin",
+  "source_fps": 29.96825396825397,
+  "recognition_scene": "current camera scene, no detected targets",
+  "geometry_updates_per_second": 5.358575383703875,
+  "face_updates_per_second": 5.358575383703875,
+  "latest_geometry_ms": 179.46722,
+  "latest_face_ms": 180.19979,
+  "ai_startup_selftest": 2,
+  "menu_event_checks_passed": true,
+  "config_or_power_reload_verified_by_user": true,
+  "physical_power_cycle_method_confirmed": false,
+  "post_reload_version_read": false
+}

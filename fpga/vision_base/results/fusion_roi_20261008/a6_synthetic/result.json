@@ -1,0 +1,216 @@
+{
+  "passed": true,
+  "scope": "Production A6 host/RTL parity; input kind explicit; physical card acceptance remains separate",
+  "cases": [
+    {
+      "image": "F:/Project/fpga/vision_base/results/fusion_roi_20261008/a6_samples/background_stripes.png",
+      "input_kind": "synthetic",
+      "host_rtl_equal": true,
+      "valid": false,
+      "class_id": 0,
+      "label": "NONE",
+      "reject_flags": 4,
+      "background": 240,
+      "corner_means": [
+        240,
+        240,
+        240,
+        240
+      ],
+      "filled_area": 242109,
+      "fill_ratio": 1.0,
+      "bbox": [
+        680,
+        320,
+        1228,
+        760
+      ]
+    },
+    {
+      "image": "F:/Project/fpga/vision_base/results/fusion_roi_20261008/a6_samples/blank.png",
+      "input_kind": "synthetic",
+      "host_rtl_equal": true,
+      "valid": false,
+      "class_id": 0,
+      "label": "NONE",
+      "reject_flags": 1,
+      "background": 240,
+      "corner_means": [
+        240,
+        240,
+        240,
+        240
+      ],
+      "filled_area": 0,
+      "bbox": null
+    },
+    {
+      "image": "F:/Project/fpga/vision_base/results/fusion_roi_20261008/a6_samples/clipped_rect.png",
+      "input_kind": "synthetic",
+      "host_rtl_equal": true,
+      "valid": false,
+      "class_id": 0,
+      "label": "NONE",
+      "reject_flags": 2,
+      "background": 240,
+      "corner_means": [
+        240,
+        240,
+        240,
+        240
+      ],
+      "filled_area": 5976,
+      "fill_ratio": 0.095006438689369,
+      "bbox": [
+        640,
+        420,
+        900,
+        660
+      ]
+    },
+    {
+      "image": "F:/Project/fpga/vision_base/results/fusion_roi_20261008/a6_samples/filled_circle.png",
+      "input_kind": "synthetic",
+      "host_rtl_equal": true,
+      "valid": true,
+      "class_id": 1,
+      "label": "CIRCLE",
+      "reject_flags": 0,
+      "background": 240,
+      "corner_means": [
+        240,
+        240,
+        240,
+        240
+      ],
+      "filled_area": 31689,
+      "fill_ratio": 0.784361773223435,
+      "bbox": [
+        860,
+        440,
+        1060,
+        640
+      ]
+    },
+    {
+      "image": "F:/Project/fpga/vision_base/results/fusion_roi_20261008/a6_samples/filled_rect.png",
+      "input_kind": "synthetic",
+      "host_rtl_equal": true,
+      "valid": true,
+      "class_id": 2,
+      "label": "RECT",
+      "reject_flags": 0,
+      "background": 240,
+      "corner_means": [
+        240,
+        240,
+        240,
+        240
+      ],
+      "filled_area": 77361,
+      "fill_ratio": 1.0,
+      "bbox": [
+        800,
+        420,
+        1120,
+        660
+      ]
+    },
+    {
+      "image": "F:/Project/fpga/vision_base/results/fusion_roi_20261008/a6_samples/hollow_circle_inverse.png",
+      "input_kind": "synthetic",
+      "host_rtl_equal": true,
+      "valid": true,
+      "class_id": 1,
+      "label": "CIRCLE",
+      "reject_flags": 0,
+      "background": 15,
+      "corner_means": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "filled_area": 31689,
+      "fill_ratio": 0.784361773223435,
+      "bbox": [
+        860,
+        440,
+        1060,
+        640
+      ]
+    },
+    {
+      "image": "F:/Project/fpga/vision_base/results/fusion_roi_20261008/a6_samples/hollow_circle.png",
+      "input_kind": "synthetic",
+      "host_rtl_equal": true,
+      "valid": true,
+      "class_id": 1,
+      "label": "CIRCLE",
+      "reject_flags": 0,
+      "background": 240,
+      "corner_means": [
+        240,
+        240,
+        240,
+        240
+      ],
+      "filled_area": 31689,
+      "fill_ratio": 0.784361773223435,
+      "bbox": [
+        860,
+        440,
+        1060,
+        640
+      ]
+    },
+    {
+      "image": "F:/Project/fpga/vision_base/results/fusion_roi_20261008/a6_samples/hollow_rect_inverse.png",
+      "input_kind": "synthetic",
+      "host_rtl_equal": true,
+      "valid": true,
+      "class_id": 2,
+      "label": "RECT",
+      "reject_flags": 0,
+      "background": 15,
+      "corner_means": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "filled_area": 77361,
+      "fill_ratio": 1.0,
+      "bbox": [
+        800,
+        420,
+        1120,
+        660
+      ]
+    },
+    {
+      "image": "F:/Project/fpga/vision_base/results/fusion_roi_20261008/a6_samples/hollow_rect.png",
+      "input_kind": "synthetic",
+      "host_rtl_equal": true,
+      "valid": true,
+      "class_id": 2,
+      "label": "RECT",
+      "reject_flags": 0,
+      "background": 240,
+      "corner_means": [
+        240,
+        240,
+        240,
+        240
+      ],
+      "filled_area": 77361,
+      "fill_ratio": 1.0,
+      "bbox": [
+        800,
+        420,
+        1120,
+        660
+      ]
+    }
+  ]
+}

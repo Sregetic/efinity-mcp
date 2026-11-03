@@ -1,0 +1,7 @@
+WARNING: cannot find correct IV value
+Running: efx_run_map.py ti60f225_oob --family Titanium --device Ti60F225 --project_xml F:\Project\fpga\vision_base\board\ti60f225_v4\ti60f225_oob.xml --output_dir outflow --work_dir work_syn --timeout 3600 --opt root=ti60f225_oob_top --opt veri_options=verilog_mode=sv_09,vhdl_mode=vhdl_2008 work-dir=work_syn write_efx_verilog=on
+   map :	PASS 
+Running: efx_run_pt_unified.py ti60f225_oob Titanium Ti60F225 --output_dir outflow --timing_model I3 --project_xml ti60f225_oob.xml
+   interface :	PASS 
+Running: efx_run_pnr.py ti60f225_oob --prj F:\Project\fpga\vision_base\board\ti60f225_v4\ti60f225_oob.xml --family Titanium --device Ti60F225 --timing_model I3 --output_dir outflow --work_dir work_pnr --timeout 3445 --opt sdc_file=ti60f225_oob.sdc
+   pnr :	FAIL 

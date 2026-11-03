@@ -1,0 +1,3 @@
+PASS signed Canny center offset 256 cases
+PASS9-point fit 138240 raster pixels, 6528 fitted pixels, 8256 pixel-area cases, +/- shallow/steep slopes and empty next frame
+sim/vision/tb_canny_fit.sv:118: $finish called at 1540220000 (1ps)

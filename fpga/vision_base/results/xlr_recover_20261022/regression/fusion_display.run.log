@@ -1,0 +1,2 @@
+PASS fusion display completed-frame tags, source-gray geometry, fresh/stale ROI and no retagging
+F:\Project\fpga\vision_base\sim\vision\tb_fusion_display.sv:30: $finish called at 106000 (1ps)

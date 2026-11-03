@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "tests": [
+    {
+      "test": "canny_raster",
+      "passed": true
+    },
+    {
+      "test": "canny_fit",
+      "passed": true
+    },
+    {
+      "test": "line_snapshot",
+      "passed": true
+    },
+    {
+      "test": "edge_overlay",
+      "passed": true
+    },
+    {
+      "test": "fusion_display",
+      "passed": true
+    },
+    {
+      "test": "edge_strength",
+      "passed": true
+    }
+  ],
+  "scope": "Targeted RTL regression, not physical acceptance"
+}

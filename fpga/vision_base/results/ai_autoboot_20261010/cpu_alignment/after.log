@@ -1,0 +1,2 @@
+PASS tb_frame_memory_system capture/ROI/freeze/scan 512 pixels, read/write error nonpublication, legacy R=219 B=87 CPU R=218 B=114 shared AXI; aligned byte/halfword/word stores in all128-bit lanes
+sim/tb_frame_memory_system.sv:288: $finish called at 41150000 (1ps)

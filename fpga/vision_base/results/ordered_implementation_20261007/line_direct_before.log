@@ -1,0 +1,2 @@
+FATAL: sim/vision/tb_line_direct.sv:22: 2PPC lane1 mismatch x4 y4
+       Time: 155440000  Scope: tb

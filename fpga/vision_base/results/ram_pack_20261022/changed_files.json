@@ -1,0 +1,33 @@
+{
+  "modified": [
+    "board/ti60f225_v4/rtl/cam_i2c_ctrl/i2c/i2c_master_reg_rom.v",
+    "board/ti60f225_v4/rtl/vision/vision_canny_raster.sv",
+    "board/ti60f225_v4/rtl/vision/vision_local_motion_core.sv",
+    "board/ti60f225_v4/rtl/vision/vision_osd.sv",
+    "docs/PROJECT_MASTER_STATUS.md",
+    "docs/SYSTEM_SCOPE_AND_ROADMAP.md",
+    "rtl/sapphire_ram.sv",
+    "scripts/generate_canny_coverage.py",
+    "scripts/generate_sidebar_chinese.py",
+    "scripts/synthesize.ps1",
+    "scripts/test_sensor_profiles.py",
+    "scripts/verify_vision_features.ps1",
+    "sim/tb_sapphire_ram.sv",
+    "sim/vision/tb_canny_fit.sv",
+    "sim/vision/tb_canny_raster.sv"
+  ],
+  "added": [
+    "board/ti60f225_v4/rtl/vision/canny_coverage_index.mem",
+    "board/ti60f225_v4/rtl/vision/canny_coverage_palette.mem",
+    "sim/vision/tb_canny_storage.sv"
+  ],
+  "native_inputs": [
+    "rtl/sapphire_ram.sv",
+    "board/ti60f225_v4/rtl/cam_i2c_ctrl/i2c/i2c_master_reg_rom.v",
+    "board/ti60f225_v4/rtl/vision/canny_coverage_index.mem",
+    "board/ti60f225_v4/rtl/vision/canny_coverage_palette.mem",
+    "board/ti60f225_v4/rtl/vision/vision_canny_raster.sv",
+    "board/ti60f225_v4/rtl/vision/vision_local_motion_core.sv",
+    "board/ti60f225_v4/rtl/vision/vision_osd.sv"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "seconds": 10.539969205856323,
+  "samples": 50,
+  "camera_hz": 30.075989199652053,
+  "canny_hz": 29.98111226211372,
+  "all_ready": true,
+  "all_fault_zero": true
+}

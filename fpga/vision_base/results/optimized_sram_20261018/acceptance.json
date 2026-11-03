@@ -1,0 +1,257 @@
+{
+  "passed": true,
+  "sram_programmed": true,
+  "flash_written": false,
+  "firmware_downloaded": false,
+  "autonomous_application_boot_verified": true,
+  "cpu_state": 1,
+  "release": "F:/Project/fpga/vision_base/results/tone_config_xlr_20261018/release/ti60f225_oob.bit",
+  "resources": {
+    "xlr": 56997,
+    "xlr_used_percent": 93.74506578947368,
+    "free_xlr": 3803,
+    "ram": 237,
+    "free_ram": 19,
+    "dsp": 62,
+    "free_dsp": 98,
+    "wns_ns": 0.254,
+    "whs_ns": 0.026,
+    "unassigned_core_pins": 0
+  },
+  "images": {
+    "passed": true,
+    "source_frame": 12655,
+    "render_config": 10,
+    "images": 9,
+    "width": 1920,
+    "height": 1080,
+    "total_exported_pixels": 18662400,
+    "rows_checked": 9720,
+    "pixels_compared_per_mode": 2056320,
+    "excluded": "OSD rectangle x0..431,y0..39 only; no edge or color exclusions",
+    "canny_binary_edges": 4277,
+    "canny_plane_unchanged": true,
+    "canny_image_epoch": 212,
+    "canny_before_epoch": 113,
+    "canny_after_epoch": 352,
+    "comparisons": {
+      "canny": {
+        "different_channels": 0,
+        "different_pixels": 0,
+        "max_abs_error": 0
+      },
+      "canny_overlay": {
+        "different_channels": 0,
+        "different_pixels": 0,
+        "max_abs_error": 0
+      },
+      "split": {
+        "different_channels": 0,
+        "different_pixels": 0,
+        "max_abs_error": 0
+      },
+      "sobel_overlay": {
+        "different_channels": 0,
+        "different_pixels": 0,
+        "max_abs_error": 0
+      }
+    },
+    "border_regions": {
+      "left": {
+        "pixels": 33280,
+        "visible_canny_pixels": 302
+      },
+      "right": {
+        "pixels": 34560,
+        "visible_canny_pixels": 376
+      },
+      "top": {
+        "pixels": 47616,
+        "visible_canny_pixels": 216
+      },
+      "bottom": {
+        "pixels": 61440,
+        "visible_canny_pixels": 229
+      }
+    },
+    "live_check_bands": [
+      [
+        406,
+        447
+      ],
+      [
+        383,
+        424
+      ],
+      [
+        1782,
+        1823
+      ]
+    ]
+  },
+  "key_event_cases": 17,
+  "key_scope": "Actual SRAM bootstrap firmware, injected physical-key policy events, DDR and frame publication; not human key presses or real-card accuracy",
+  "history_static_slots": 6,
+  "history_autoplay_index": 6,
+  "ai_camera": {
+    "passed": true,
+    "source": 12655,
+    "render": 10,
+    "sequence": 1,
+    "invoke_ms": 2666.94506,
+    "preprocess_ms": 40.05906,
+    "total_ms": 2707.31189,
+    "objects": 0,
+    "errors": 0,
+    "cold_start_int8_flyhash_connectome_selftest": 2,
+    "raw_status": [
+      1179602226,
+      3,
+      1,
+      12655,
+      12655,
+      10,
+      29,
+      2,
+      4005906,
+      266694506,
+      30777,
+      270731189,
+      0,
+      0,
+      0,
+      100000000,
+      149388,
+      0,
+      0,
+      24,
+      128,
+      27648,
+      576,
+      0
+    ],
+    "fusion": [
+      1179996977,
+      5,
+      87297,
+      12655,
+      12655,
+      10,
+      2,
+      29,
+      4294967295,
+      0,
+      2155905151,
+      0,
+      70780800,
+      98,
+      0,
+      0
+    ],
+    "scope": "Actual camera/DMA/CPU/FOMO completion and initial three-vector arithmetic selftest, not real-card accuracy",
+    "postprocess_ms": 0.30777,
+    "timing_layout": "firmware/vision/fomo_camera.cc:64-65: [8] preprocess, [9] invoke, [10] postprocess, [11] total"
+  },
+  "live_rgb": {
+    "passed": true,
+    "samples": 113,
+    "seconds": 29.875,
+    "rates": {
+      "source_frame_hz": 29.99163179916318,
+      "display_frame_hz": 29.99163179916318,
+      "canny_hz": 29.99163179916318,
+      "camera_hz": 29.99163179916318,
+      "hdmi_scans_hz": 59.98326359832636
+    },
+    "max_magenta_pixels": 0,
+    "mean_row_change": 2.7473787822420634,
+    "exposure_range": [
+      808,
+      808
+    ],
+    "scope": "Live M0 row500 RGB and internal counters, not all frames or external HDMI measurement"
+  },
+  "live_canny": {
+    "passed": true,
+    "samples": 60,
+    "seconds": 14.75,
+    "row": 500,
+    "bands": [
+      [
+        406,
+        447
+      ],
+      [
+        735,
+        776
+      ],
+      [
+        1782,
+        1823
+      ]
+    ],
+    "missing_samples": [
+      0,
+      0,
+      0
+    ],
+    "minimum_band_pixels": [
+      5,
+      4,
+      5
+    ],
+    "first_display_source": 40241,
+    "last_display_source": 40683,
+    "first_canny_epoch": 8460,
+    "last_canny_epoch": 8902,
+    "scope": "Sampled live display row, not every frame or the full image; source and Canny plane are not held"
+  },
+  "final_settings": {
+    "mode": 5,
+    "median": 1,
+    "memory": 0,
+    "index": 0,
+    "sobel_threshold": 128,
+    "canny_threshold": 80,
+    "shape_threshold": 32,
+    "menu": 0,
+    "roi_enabled": 0,
+    "roi": [
+      0,
+      0,
+      1920,
+      1080
+    ],
+    "output_size": [
+      1920,
+      1080
+    ],
+    "position": [
+      0,
+      0
+    ]
+  },
+  "tone": 3,
+  "physical_gains_rgb": [
+    336,
+    256,
+    504
+  ],
+  "color_order": 2,
+  "ae_enabled": 1,
+  "deadline_counts": {
+    "after_boot": 0,
+    "after_key_tests": 0,
+    "freeze_start": 1,
+    "freeze_end": 1,
+    "after_ai_and_restore": 5,
+    "final": 5
+  },
+  "deadline_scope": "Full ROI render/control transitions; unchanged through frozen export and stable live sampling. Full ROI rendering is not certified as60/30fps.",
+  "image_readback_retained": true,
+  "internal_visual_inspection": true,
+  "external_hdmi_monitor_measurement": false,
+  "real_card_recognition_accuracy_verified": false,
+  "camera_movement_purple_flash_reproduced": false,
+  "physical_power_cycle_verified": false
+}

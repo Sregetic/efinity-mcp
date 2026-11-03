@@ -1,0 +1,2 @@
+PASS mapped Efinity DSP primitives 65536 exact cycle pairs
+F:/Project/fpga/vision_base/results/xlr_recover_20261022/tb_mapped_fit.sv:14: $finish called at 655366000 (1ps)

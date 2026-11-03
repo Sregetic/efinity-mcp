@@ -1,0 +1,65 @@
+{
+  "status": "offline_candidate",
+  "mode": 7,
+  "classes": 52,
+  "maximum_boxes": 4,
+  "recognizer": "shared accepted-Canny contour geometry; directional extrema, height, baseline",
+  "canny_changed": false,
+  "independent_ai_changed": false,
+  "resources": {
+    "Unassigned Core Pins": 0,
+    "XLRs": 59206,
+    "Memory Blocks": 243,
+    "DSP Blocks": 64
+  },
+  "xlr_delta": 748,
+  "ram_delta": 0,
+  "dsp_delta": 0,
+  "wns_ns": 0.13,
+  "whs_ns": 0.026,
+  "application_bytes": 345920,
+  "bss_bytes": 219280,
+  "application_delta": 139440,
+  "bss_delta": 17532,
+  "native_letter_validation": {
+    "frames": 79,
+    "cases": 312,
+    "exact": 306,
+    "ambiguous_I_l": 6,
+    "exact_classes": 52,
+    "display_errors": 0,
+    "fonts": [
+      "Arial",
+      "Times New Roman",
+      "Noto Sans SC Medium"
+    ],
+    "reference_sizes": [
+      256,
+      384,
+      512
+    ],
+    "validation_sizes": [
+      400,
+      480
+    ],
+    "edge_box_height_pixels": [
+      180,
+      496
+    ],
+    "median_enabled": true,
+    "edge_threshold": 96
+  },
+  "regression_cases": 26,
+  "host_sanitizers": "ASan/UBSan pass",
+  "rv32": "all candidate identities and displayed boxes equal host",
+  "label_pixels": 2073600,
+  "full_rgb_pixels": 2073600,
+  "sidebar_outside_pixels": 5834589,
+  "sram_written": false,
+  "flash_written": false,
+  "usb_interfaces_enumerated": 0,
+  "board_recognition_rate_hz": null,
+  "board_recognition_accuracy": null,
+  "production_flash": "results/geometry_edge_split_20261028/release",
+  "requires_matching_configuration_and_application": true
+}

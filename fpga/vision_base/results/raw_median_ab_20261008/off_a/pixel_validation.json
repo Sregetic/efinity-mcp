@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "frame_id": 635884,
+  "roi": [
+    900,
+    450,
+    200,
+    200
+  ],
+  "revision": "old",
+  "pixels_exact": 40000,
+  "old_reference": {
+    "mean": 130.864175,
+    "fine_std": 1.3729557305772826
+  },
+  "new_reference": {
+    "mean": 131.1151,
+    "fine_std": 0.8247524054824703
+  },
+  "actual": {
+    "mean": 130.864175,
+    "fine_std": 1.3729557305772826
+  },
+  "fine_reduction_percent": 39.92869638005815,
+  "comparison": "Same captured source; old-path reference, not a second hardware photograph"
+}

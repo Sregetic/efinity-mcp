@@ -1,0 +1,3 @@
+SYSTEM FULL1920x1080 shared-bus render_cycles=1059470 deadline_misses=0
+PASS tb_frame_memory_system capture/ROI/freeze/scan 2074112 pixels, read/write error nonpublication, legacy R=108920 B=72591 CPU R=108919 B=72591 shared AXI
+sim/tb_frame_memory_system.sv:257: $finish called at 34306540000 (1ps)

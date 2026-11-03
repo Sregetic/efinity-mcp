@@ -1,0 +1,3 @@
+PASS RV32I M7 independent geometry advances during slow face work; VBlank miss/copy rejection preserve completed lanes; late token/status ordering; lane source IDs; primary metadata; frozen cache; cancellation/context/threshold; no new DMA lease; original UI threshold controls
+PASS RV32I all shared-edge geometry fixtures equal host boxes
+PASS RV32I all312 native glyph cases/79frames/full candidate identities and four displayed boxes equal ASan host

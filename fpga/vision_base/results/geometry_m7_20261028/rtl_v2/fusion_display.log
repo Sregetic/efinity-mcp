@@ -1,0 +1,61 @@
+Reading pref.tcl
+
+# 2020.4
+
+# vsim -c -lib results/geometry_m7_20261028/rtl_v2/work tb -do "run -all; quit -f" 
+# Start time: 04:16:12 on Oct 28,2026
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2241) Connection width does not match width of port 'ui_state'. The port definition is at: F:\Project\fpga\vision_base\board\ti60f225_v4\rtl\vision\vision_display.sv(9).
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2685) [TFMPC] - Too few port connections for 'dut'.  Expected 67, found 37.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'geometry_edge_threshold'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'geometry_raw_read'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'geometry_bitmap_hold'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'geometry_pready'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'geometry_prdata'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'geometry_pwdata'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'geometry_pwrite'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'geometry_penable'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'geometry_psel'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'geometry_paddr'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'geometry_cpu_rst_n'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'geometry_cpu_clk'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'geometry_source_errors'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'canny_completed'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'canny_capture_start'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'geometry_changed'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'geometry_source_valid'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'geometry_rst_n'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'motion_held'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'motion_direction'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'motion_enable'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'coordinate_de'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'shape_status'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'debug_edge'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'debug_mag'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'ovs'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'ohs'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'ode'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'cy'.
+# ** Warning: sim/vision/tb_fusion_display.sv(6): (vopt-2718) [TFMPC] - Missing connection for port 'cx'.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=32.
+# //  ModelSim SE-64 2020.4 Oct 13 2020
+# //
+# //  Copyright 1991-2020 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  ModelSim SE-64 and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.tb(fast)
+# run -all
+# PASS fusion display completed-frame tags, AI geometry grayscale input, fresh/stale ROI and no retagging
+# ** Note: $finish    : sim/vision/tb_fusion_display.sv(30)
+#    Time: 106 ns  Iteration: 0  Instance: /tb
+# End time: 04:16:13 on Oct 28,2026, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 32

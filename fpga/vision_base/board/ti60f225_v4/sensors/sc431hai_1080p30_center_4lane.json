@@ -1,0 +1,33 @@
+{
+  "sensor": "sc431hai",
+  "mode": "Centered digital window; keep1440p30 sensor readout timing",
+  "width": 1920,
+  "height": 1080,
+  "raw_bits": 10,
+  "bayer": "BGGR",
+  "lanes": 4,
+  "fps": 30,
+  "hs_byteclk_mhz": 70,
+  "mipi_clock_mode": "Discontinuous",
+  "vts": 1500,
+  "exposure_min": 112,
+  "exposure_max": 2950,
+  "exposure_initial": 444,
+  "init_file": "sc431hai_1080p30_center_4lane.mem",
+  "init_length": 166,
+  "init_sha256": "6bdfa23f165d8d49c3210fc86ada51cd209cf6708a399b8a788ebfb30a05ffee",
+  "source": "Existing166-write SC431HAI ROM, only output-window registers differ (seven byte values changed)",
+  "sensor_output_origin": [
+    324,
+    184
+  ],
+  "crop_from_existing_active": [
+    320,
+    180
+  ],
+  "full_active_size": [
+    2560,
+    1440
+  ],
+  "note": "No binning or full-field scaling. Pixel pitch, PLL, HTS/VTS, orientation and gain stay unchanged; Bayer parity retained."
+}

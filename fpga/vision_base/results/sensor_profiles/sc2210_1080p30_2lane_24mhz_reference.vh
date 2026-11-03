@@ -1,0 +1,12 @@
+// Sensor: sc2210, explicit profile
+`define VISION_SENSOR_SC2210 1
+`define VISION_SENSOR_NATIVE_1080 1
+`define VISION_SENSOR_LANES 2
+`define VISION_SENSOR_BYTECLK_MHZ 47
+`define VISION_SENSOR_DPHY_CLOCK_MODE "Discontinuous"
+`define VISION_SENSOR_INIT_LENGTH 253
+`define VISION_SENSOR_INIT_FILE "F:/efinity-ci/upload-current-20261007/fpga/vision_base/board/ti60f225_v4/sensors/sc2210_1080p30_2lane_24mhz_reference.mem"
+`define VISION_SENSOR_EXPOSURE_MIN 112
+`define VISION_SENSOR_EXPOSURE_MAX 1121
+`define VISION_SENSOR_EXPOSURE_INITIAL 444
+

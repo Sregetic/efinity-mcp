@@ -1,0 +1,42 @@
+{
+  "scope": "Icarus RTL simulation, not Efinity area/timing or board acceptance",
+  "passed": true,
+  "cases": [
+    {
+      "name": "display_gamma_2p2-8",
+      "passed": true,
+      "result": "PASS gamma width=8 checked=25185 legacy_checked=21064 curve=F:/Project/fpga/vision_base/board/ti60f225_v4/rtl/gamma_conrrection/display_gamma_2p2.mem",
+      "memory_order_notices": 3
+    },
+    {
+      "name": "display_gamma_2p2-10",
+      "passed": true,
+      "result": "PASS gamma width=10 checked=28257 legacy_checked=24136 curve=F:/Project/fpga/vision_base/board/ti60f225_v4/rtl/gamma_conrrection/display_gamma_2p2.mem",
+      "memory_order_notices": 3
+    },
+    {
+      "name": "2P2-8",
+      "passed": true,
+      "result": "PASS gamma width=8 checked=25185 legacy_checked=21064 curve=F:/Project/fpga/vision_base/board/ti60f225_v4/rtl/gamma_conrrection/2P2.mem",
+      "memory_order_notices": 3
+    },
+    {
+      "name": "2P2-10",
+      "passed": true,
+      "result": "PASS gamma width=10 checked=28257 legacy_checked=24136 curve=F:/Project/fpga/vision_base/board/ti60f225_v4/rtl/gamma_conrrection/2P2.mem",
+      "memory_order_notices": 3
+    },
+    {
+      "name": "address_probe-8",
+      "passed": true,
+      "result": "PASS gamma width=8 checked=25185 legacy_checked=21064 curve=F:/Project/fpga/vision_base/results/tone_config_xlr_20261018/gamma/address_probe.mem",
+      "memory_order_notices": 3
+    },
+    {
+      "name": "address_probe-10",
+      "passed": true,
+      "result": "PASS gamma width=10 checked=28257 legacy_checked=24136 curve=F:/Project/fpga/vision_base/results/tone_config_xlr_20261018/gamma/address_probe.mem",
+      "memory_order_notices": 3
+    }
+  ]
+}

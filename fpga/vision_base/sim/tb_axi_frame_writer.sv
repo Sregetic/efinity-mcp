@@ -62,6 +62,7 @@ module tb_axi_frame_writer #(
     ) dut (
         .clk(clk),
         .rst_n(rst_n),
+        .abort(1'b0),
         .job_valid(job_valid),
         .job_ready(job_ready),
         .base_addr(base_addr),

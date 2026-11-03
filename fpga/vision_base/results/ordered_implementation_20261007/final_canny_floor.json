@@ -1,0 +1,27 @@
+[
+  {
+    "magic": "56495331",
+    "build": "26091785",
+    "mode": 5,
+    "median": 1,
+    "memory": 0,
+    "index": 2,
+    "threshold": 16,
+    "raw": "564953312609178578b1010701b801000204000060020063",
+    "canny_fault": 0,
+    "canny_busy": 1,
+    "canny_ready": 1,
+    "history_count": 6,
+    "keys_n": 7,
+    "sample_time_s": 1791313478.7942197,
+    "physical_gains_rgb": [
+      440,
+      256,
+      516
+    ],
+    "tone_mode": 3,
+    "sobel_threshold": 96,
+    "canny_threshold": 16,
+    "canny_effective_threshold": 24
+  }
+]

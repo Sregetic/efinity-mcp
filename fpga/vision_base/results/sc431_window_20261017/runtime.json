@@ -1,0 +1,53 @@
+{
+  "seconds": 59.73399999999674,
+  "samples": 158,
+  "deltas": {
+    "raw_overflows": 0,
+    "capture_discarded": 0,
+    "scan_bad_frames": 0
+  },
+  "first": {
+    "time_s": 93664.312,
+    "capture": 11877,
+    "display": 11877,
+    "canny": 1335,
+    "canny_fault": 0,
+    "raw_overflows": 0,
+    "sensor": 11894,
+    "width": 1920,
+    "height": 1080,
+    "words": 518400,
+    "data_type": 43,
+    "normalized_words": 518400,
+    "normalized_height": 1080,
+    "normalized_width": 1920,
+    "capture_discarded": 0,
+    "scan_bad_frames": 0
+  },
+  "last": {
+    "time_s": 93724.046,
+    "capture": 13669,
+    "display": 13669,
+    "canny": 3127,
+    "canny_fault": 0,
+    "raw_overflows": 0,
+    "sensor": 13686,
+    "width": 1920,
+    "height": 1080,
+    "words": 518400,
+    "data_type": 43,
+    "normalized_words": 518400,
+    "normalized_height": 1080,
+    "normalized_width": 1920,
+    "capture_discarded": 0,
+    "scan_bad_frames": 0
+  },
+  "passed": true,
+  "source_id_progress_rates": {
+    "sensor": 29.99966518230987,
+    "capture": 29.99966518230987,
+    "display": 29.99966518230987,
+    "canny": 29.99966518230987
+  },
+  "rate_note": "Display source-ID progression only. Distinct visible source updates measured separately in display_updates.json."
+}

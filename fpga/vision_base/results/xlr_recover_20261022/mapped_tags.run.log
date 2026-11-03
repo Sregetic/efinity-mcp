@@ -1,0 +1,2 @@
+PASS mapped Efinity RAM/FF primitives10000 full23bit tag cycles and read-hold/old-word cases
+F:\Project\fpga\vision_base\results\xlr_recover_20261022\tb_mapped_tags.sv:18: $finish called at 100336000 (1ps)

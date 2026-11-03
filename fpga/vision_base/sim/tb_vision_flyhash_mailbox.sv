@@ -1,0 +1,78 @@
+`timescale 1ns/1ps
+module tb_vision_flyhash_mailbox #(parameter RAW_READ_PORT=1);
+ reg clk=0,cpu_clk=0;always #3.367 clk=~clk;always #5 cpu_clk=~cpu_clk;
+ reg rst_n=0,cpu_rst_n=0,cmd_event=0;reg[7:0]cmd_op=0;reg[23:0]cmd_value=0;
+ reg context_valid=1;reg[31:0]frame_id=11,config_id=22,epoch=33,stream_errors=0;
+ wire[31:0]status,result_frame_id,result_config_id,result_epoch,firmware_state,full_cycles;
+ reg raw_bitmap_enable=0;wire bitmap_req,bitmap_busy;reg bitmap_ready=1;wire[11:0]bitmap_address;
+ reg bitmap_valid=0;reg[31:0]bitmap_data=0;
+ reg[15:0]paddr=0;reg psel=0,penable=0,pwrite=0;reg[31:0]pwdata=0;
+ wire[31:0]prdata;wire pready,pslverror;
+ vision_flyhash_mailbox #(.RAW_READ_PORT(RAW_READ_PORT)) dut(.*);
+ integer delay_n=0;reg[11:0]saved_address=0;
+ always @(posedge clk)begin
+  bitmap_valid<=0;
+  if(bitmap_req&&bitmap_ready)begin delay_n<=4;saved_address<=bitmap_address;end
+  if(delay_n>0)begin delay_n<=delay_n-1;if(delay_n==1)begin bitmap_valid<=1;bitmap_data<=32'habcdef00|saved_address;end end
+ end
+ task command(input[7:0]op,input[23:0]value);begin
+  @(negedge clk);cmd_event=1;cmd_op=op;cmd_value=value;
+  @(negedge clk);cmd_event=0;repeat(10)@(negedge cpu_clk);
+ end endtask
+ task write_reg(input[15:0]addr,input[31:0]data);begin
+  @(negedge cpu_clk);paddr=addr;pwdata=data;pwrite=1;psel=1;penable=0;
+  @(negedge cpu_clk);penable=1;do @(posedge cpu_clk);while(!pready);
+  @(negedge cpu_clk);psel=0;penable=0;pwrite=0;
+ end endtask
+ task read_reg(input[15:0]addr,output[31:0]data);begin
+  @(negedge cpu_clk);paddr=addr;pwrite=0;psel=1;penable=0;
+  @(negedge cpu_clk);penable=1;do @(posedge cpu_clk);while(!pready);
+  data=prdata;@(negedge cpu_clk);psel=0;penable=0;
+ end endtask
+ task complete(input[15:0]token);integer j;begin
+  write_reg(16'h2c,token);
+  write_reg(16'h24,25000);write_reg(16'h28,token);repeat(10)@(negedge clk);
+ end endtask
+ reg[31:0]v,tick0;reg[15:0]token,old_token;integer i;
+ initial begin
+  repeat(5)@(negedge cpu_clk);rst_n=1;cpu_rst_n=1;
+  read_reg(16'h30,tick0);repeat(11)@(negedge cpu_clk);read_reg(16'h30,v);
+  if(v-tick0!=14)$fatal(1,"APB timer is not native CPU clock cycles");
+  command(8'h50,0);if(!status[28]||status[30])$fatal(1,"start before boot accepted");
+  write_reg(4,1);repeat(10)@(negedge clk);
+  command(8'h50,0);
+  if(!status[30]||status[29]||status[28])$fatal(1,"DDR host start");
+  read_reg(8,v);token=v[15:0];if(!v[31]||v[30])$fatal(1,"DDR CPU job snapshot");
+  read_reg(16'h34,v);if(v!=32'h07620000)$fatal(1,"result DDR address");
+  read_reg(16'h38,v);if(v!=32'h07620100)$fatal(1,"input DDR address");
+  command(8'h51,16'h1234);read_reg(8,v);if(v[15:0]!=token)$fatal(1,"removed byte feed changed task");
+  complete(token-1);if(status[31])$fatal(1,"stale result published");
+  complete(token);
+  if(!status[31]||status[30]||status[28]||status[26:20]!=64||full_cycles!=25000||result_frame_id!=11||result_config_id!=22||result_epoch!=33)$fatal(1,"result binding/status");
+  command(8'h54,0);read_reg(8,v);token=v;old_token=token;
+  if(!v[30]||!bitmap_busy)$fatal(1,"auto start");
+  write_reg(16'h1c,123);read_reg(16'h20,v);if(v!=32'habcdef7b)$fatal(1,"bitmap handshake");
+  epoch=34;repeat(12)@(negedge clk);
+  if(status[30]||status[31]||!status[28])$fatal(1,"changed frame context not cancelled");
+  complete(old_token);if(status[31])$fatal(1,"cancelled result published");
+  command(8'h54,0);read_reg(8,v);token=v;
+  bitmap_ready=0;write_reg(16'h1c,40);command(8'h52,0);read_reg(16'h20,v);
+  if(v!=0||status[30])$fatal(1,"aborted bitmap read left blocked");bitmap_ready=1;
+  command(8'h54,0);read_reg(8,v);old_token=v;command(8'h52,0);command(8'h50,0);
+  complete(old_token);if(status[31])$fatal(1,"cancelled result completed a new DDR task");
+  command(8'h52,0);
+  command(8'h54,0);cpu_rst_n=0;repeat(12)@(negedge clk);
+  if(status[30]||status[31]||status[27])$fatal(1,"CPU reset left accepted task");
+  if(RAW_READ_PORT)begin
+   cpu_rst_n=1;raw_bitmap_enable=1;repeat(12)@(negedge clk);
+   for(i=0;i<4050;i=i+1)begin
+    write_reg(16'h1c,i);read_reg(16'h20,v);
+    if(v!==(32'habcdef00|i)||bitmap_busy)$fatal(1,"independent raw word %0d returned %h",i,v);
+   end
+   bitmap_ready=0;write_reg(16'h1c,17);raw_bitmap_enable=0;repeat(12)@(negedge clk);read_reg(16'h20,v);
+   if(v!=0)$fatal(1,"raw cancellation blocked or returned stale bits");
+  end
+  $display("PASS tb_vision_flyhash_mailbox DDR payload addresses / bitmap backpressure / full32 cycles / nonce / context / CPU reset");$finish;
+ end
+ initial begin #3000000;$fatal(1,"mailbox watchdog");end
+endmodule

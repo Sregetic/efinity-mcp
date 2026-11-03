@@ -7,6 +7,7 @@ try {
  $tests=@(
  @{name='chroma_tone';src='board/ti60f225_v4/rtl/vision/rgb_chroma_tone.sv'},
  @{name='chroma_shadow';src='board/ti60f225_v4/rtl/vision/rgb_chroma_tone.sv'},
+ @{name='chroma_singleclip';src='board/ti60f225_v4/rtl/vision/rgb_chroma_tone.sv'},
  @{name='camera_auto_exposure';src='board/ti60f225_v4/rtl/vision/camera_auto_exposure.sv'},
  @{name='sensor_exposure_writer';src='board/ti60f225_v4/rtl/vision/sensor_exposure_writer.sv'},
  @{name='i2c_readback';src='board/ti60f225_v4/rtl/cam_i2c_ctrl/i2c/i2c_16addr_8data.v'})

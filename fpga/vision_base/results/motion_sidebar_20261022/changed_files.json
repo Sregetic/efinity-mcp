@@ -1,0 +1,36 @@
+{
+  "modified": [
+    "docs/PROJECT_MASTER_STATUS.md",
+    "docs/SIDEBAR_HIERARCHY_20261022.md",
+    "docs/SYSTEM_SCOPE_AND_ROADMAP.md",
+    "rtl/vision_control_bridge.sv",
+    "scripts/generate_sidebar_chinese.py",
+    "scripts/test_sidebar_center.py",
+    "scripts/vision_control.py",
+    "sim/tb_vision_control_bridge.sv",
+    "board/ti60f225_v4/ti60f225_oob.xml",
+    "board/ti60f225_v4/rtl/ti60f225_oob_top.v",
+    "board/ti60f225_v4/rtl/vision/vision_display.sv",
+    "board/ti60f225_v4/rtl/vision/vision_osd.sv",
+    "board/ti60f225_v4/rtl/vision/vision_sidebar_overlay.sv",
+    "firmware/vision/control_service.h",
+    "sim/vision/tb_edge_overlay.sv",
+    "sim/vision/tb_osd.sv",
+    "sim/vision/tb_sidebar_video.sv"
+  ],
+  "added": [
+    "board/ti60f225_v4/rtl/vision/vision_local_motion_core.sv",
+    "board/ti60f225_v4/rtl/vision/vision_local_motion_tap.sv",
+    "board/ti60f225_v4/rtl/vision/vision_motion_policy.sv",
+    "board/ti60f225_v4/rtl/vision/vision_motion_readout.sv",
+    "sim/motion_direction/tb_local_motion_core.sv",
+    "sim/motion_direction/tb_local_motion_tap.sv",
+    "sim/motion_direction/tb_motion_policy.sv",
+    "sim/motion_direction/tb_motion_readout.sv",
+    "sim/vision/tb_motion_sidebar.sv",
+    "sim/vision/tb_motion_display.sv",
+    "scripts/motion_reference.py",
+    "scripts/verify_motion_direction.py",
+    "docs/MOTION_SIDEBAR_20261022.md"
+  ]
+}

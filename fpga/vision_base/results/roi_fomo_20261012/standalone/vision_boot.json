@@ -1,0 +1,9 @@
+{
+  "address": 7340032,
+  "limit": 8388608,
+  "image_bytes": 182160,
+  "format": "VBO1 version1 header32, flat DDR app, weights; independent CRC32",
+  "elf": "F:\\Project\\fpga\\vision_base\\results\\roi_fomo_20261012\\camera_cooperative\\vision.elf",
+  "weights": "F:\\Project\\fpga\\vision_base\\results\\roi_fomo_20261012\\camera_final_load\\weights.bin",
+  "configuration_flash_written": false
+}

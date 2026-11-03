@@ -1,0 +1,2 @@
+PASS tb_stream_cdc 2048 tagged beats, async clocks, FIFO wrap/full, stalled stability and reset
+sim/tb_stream_cdc.sv:35: $finish called at 47175000 (1ps)

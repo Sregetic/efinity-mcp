@@ -1,0 +1,346 @@
+{
+  "passed": true,
+  "scope": "Native route and actual SC431HAI board/CPU/image-readback acceptance; not physical panel, motion-contact or recognition accuracy acceptance",
+  "resources": {
+    "before": {
+      "xlr": 57356,
+      "ram": 244,
+      "dsp": 62,
+      "wns_ns": 0.254,
+      "whs_ns": 0.026
+    },
+    "after": {
+      "xlr": 56916,
+      "ram": 241,
+      "dsp": 62,
+      "free_xlr": 3884,
+      "free_ram": 15,
+      "free_dsp": 98,
+      "wns_ns": 0.285,
+      "whs_ns": 0.026,
+      "unassigned_core_pins": 0
+    },
+    "released": {
+      "xlr": 440,
+      "ram": 3,
+      "dsp": 0
+    },
+    "changed_build_inputs": [
+      "board/ti60f225_v4/rtl/csi_rx_controller.sv"
+    ],
+    "csi_before": {
+      "ff": 1461,
+      "srl": 0,
+      "add": 218,
+      "lut": 2543,
+      "ram": 11
+    },
+    "csi_after": {
+      "ff": 1304,
+      "srl": 0,
+      "add": 215,
+      "lut": 2083,
+      "ram": 8
+    },
+    "snapshot_ram": 5,
+    "sensor_profile": {
+      "sensor": "sc431hai",
+      "mode": "Centered digital window; keep1440p30 sensor readout timing",
+      "width": 1920,
+      "height": 1080,
+      "raw_bits": 10,
+      "bayer": "BGGR",
+      "lanes": 4,
+      "fps": 30,
+      "hs_byteclk_mhz": 70,
+      "mipi_clock_mode": "Discontinuous",
+      "vts": 1500,
+      "exposure_min": 112,
+      "exposure_max": 2950,
+      "exposure_initial": 444,
+      "init_file": "sc431hai_1080p30_center_4lane.mem",
+      "init_length": 166,
+      "init_sha256": "6bdfa23f165d8d49c3210fc86ada51cd209cf6708a399b8a788ebfb30a05ffee",
+      "source": "Existing166-write SC431HAI ROM, only output-window registers differ (seven byte values changed)",
+      "sensor_output_origin": [
+        324,
+        184
+      ],
+      "crop_from_existing_active": [
+        320,
+        180
+      ],
+      "full_active_size": [
+        2560,
+        1440
+      ],
+      "note": "No binning or full-field scaling. Pixel pitch, PLL, HTS/VTS, orientation and gain stay unchanged; Bayer parity retained."
+    },
+    "flash_written": false
+  },
+  "sram_programmed": true,
+  "flash_written": false,
+  "ddr_application_preserved": "F:\\Project\\fpga\\vision_base\\results\\connectome_readout_20261018\\firmware\\vision.elf",
+  "program_bytes_verified": 178896,
+  "weights_bytes_verified": 4400,
+  "video_seconds": 59.96899999998277,
+  "video_rates": {
+    "capture": 29.998832730252577,
+    "display": 29.998832730252577,
+    "canny": 30.015508012481735
+  },
+  "key_cases": 17,
+  "history_slots": 6,
+  "history_autoplay_separate": true,
+  "camera_ai_cases": 5,
+  "ai_numeric": {
+    "passed": true,
+    "sequence": 1,
+    "source_frame": 43417,
+    "source_config": 43417,
+    "render_config": 10,
+    "context": 21,
+    "model": 2,
+    "preprocessing_ms": 25.61738,
+    "invoke_ms": 1159.57356,
+    "postprocessing_ms": 0.22324,
+    "fomo_total_ms": 1185.41418,
+    "arena_used_bytes": 149388,
+    "max_lsb_diff": 0,
+    "mismatched_output_bytes": 0,
+    "objects": [],
+    "layer_ms": [
+      103.96632,
+      139.67683,
+      29.69282,
+      163.26836,
+      113.99893,
+      15.88097,
+      41.59363,
+      113.74173,
+      15.8632,
+      8.82257,
+      41.07224,
+      29.25115,
+      8.73658,
+      38.00278,
+      62.05884,
+      15.78359,
+      4.51746,
+      37.6154,
+      61.91475,
+      15.78158,
+      4.48052,
+      37.60483,
+      35.1551,
+      1.64808,
+      18.8535
+    ],
+    "gray_same_source": true,
+    "legacy_model": 1,
+    "legacy_gray_sum": 60157,
+    "fusion_record": [
+      1179996977,
+      5,
+      87297,
+      43417,
+      43417,
+      10,
+      2,
+      21,
+      4294967295,
+      0,
+      2155905151,
+      0,
+      70780800,
+      445,
+      0,
+      0
+    ],
+    "input_reference": "Independent same-frame pre-Gamma RGB bulk snapshot sampled by the RV32I contract",
+    "scope": "Actual camera source/board output; optional full CPU input dump is separate; not real-card accuracy acceptance",
+    "legacy_int8_exact": true,
+    "flyhash_exact": true,
+    "connectome_states_exact": 80,
+    "connectome_readout": {
+      "exact": true,
+      "scores": [
+        56,
+        59,
+        4,
+        -38
+      ],
+      "label": 1,
+      "version": 65537,
+      "training_kind": 1,
+      "readout_ms": 0.17073,
+      "circuit_ms": 4.14939,
+      "real_accuracy_verified": false
+    }
+  },
+  "full_images": 9,
+  "transferred_pixels": 18662400,
+  "image_verification": {
+    "passed": true,
+    "source_frame": 55318,
+    "render_config": 16,
+    "images": 9,
+    "size": [
+      1920,
+      1080
+    ],
+    "canny_edges": 4458,
+    "canny_plane_unchanged": true,
+    "comparisons": {
+      "canny": {
+        "pixels": 2056320,
+        "different_channels": 0,
+        "maximum_error": 0
+      },
+      "canny_overlay": {
+        "pixels": 2056320,
+        "different_channels": 0,
+        "maximum_error": 0
+      },
+      "split": {
+        "pixels": 2056320,
+        "different_channels": 0,
+        "maximum_error": 0
+      },
+      "sobel_overlay": {
+        "pixels": 2056320,
+        "different_channels": 0,
+        "maximum_error": 0
+      }
+    },
+    "camera_statistics": {
+      "mean_rgb": [
+        94.84090760030864,
+        123.70996576003087,
+        122.46199701003087
+      ],
+      "std_rgb": [
+        39.73302116463222,
+        36.702784518568215,
+        41.085328071059564
+      ],
+      "minimum": 0,
+      "maximum": 255,
+      "different_time_strip_comparison": {
+        "before_mean_rgb": [
+          97.10130208333334,
+          131.79520399305557,
+          129.3791449652778
+        ],
+        "after_mean_rgb": [
+          86.31807725694445,
+          116.70208333333333,
+          114.15321180555556
+        ],
+        "scope": "Different capture times, not identical-frame equivalence"
+      }
+    },
+    "scope": "Actual same-frame images vs unchanged reference, not old/new sensors sharing a frame"
+  },
+  "concurrent_roi": {
+    "passed": true,
+    "samples": 1736,
+    "seconds": 19.98399999999674,
+    "min_ms": 15.97451,
+    "median_ms": 17.70981,
+    "max_ms": 18.53215,
+    "mean_ms": 17.601174948156682,
+    "observed_publications": 596,
+    "observed_publications_hz": 29.82385908727468,
+    "max_poll_gap_ms": 30.999999988125637,
+    "scan_bad_delta": 0,
+    "discard_delta": 0,
+    "deadline_delta": 529
+  },
+  "restored_video": {
+    "passed": true,
+    "seconds": 11.985000000015134,
+    "samples": 1041,
+    "rates": {
+      "capture": 29.95410930325796,
+      "display": 30.037546933629155,
+      "canny": 29.95410930325796
+    },
+    "csi_error_mask": "0x7ffd (FIFO-empty is normal)",
+    "geometry": {
+      "width_words": 480,
+      "lines": 1080,
+      "words": 518400,
+      "ppc": 4,
+      "datatype": 43
+    },
+    "end_geometry": {
+      "width_words": 480,
+      "lines": 1080,
+      "words": 518400,
+      "ppc": 4,
+      "datatype": 43
+    },
+    "scan_bad_delta": 0,
+    "discard_delta": 0
+  },
+  "final": {
+    "roi_frame_id": 80241,
+    "applied_config_id": 0,
+    "roi_enabled": 0,
+    "roi_frame_ok": 1,
+    "source_held": 0,
+    "source_frozen": 0,
+    "render_busy": 0,
+    "render_pending": 0,
+    "capture_active": 1,
+    "config_busy": 0,
+    "config_error": 0,
+    "render_error": 0,
+    "scan_error": 0,
+    "commit_rejected": 0,
+    "mode": 5,
+    "median": 1,
+    "memory": 0,
+    "threshold": 80,
+    "canny_ready": 1,
+    "canny_fault": 0,
+    "roi": [
+      0,
+      0,
+      1920,
+      1080
+    ],
+    "output_size": [
+      1920,
+      1080
+    ],
+    "capture_discarded": 0,
+    "scan_bad_frames": 0,
+    "render_cycles": 1683455,
+    "requested_config_id": 17,
+    "accepted_config_id": 17,
+    "rejected_config_id": 0,
+    "held_source_frame_id": 70602,
+    "held_raw_id_sample": 70602,
+    "rgb_capture_count": 80247,
+    "position": [
+      0,
+      0
+    ],
+    "display_size": [
+      1920,
+      1080
+    ],
+    "render_deadline_misses": 939,
+    "sobel_threshold": 128,
+    "canny_threshold": 80,
+    "canny_effective_threshold": 80,
+    "menu": 0,
+    "menu_value": 0,
+    "shape_threshold": 32,
+    "index": 0
+  },
+  "receiver_standalone_pixel_simulation_passed": false,
+  "receiver_structure_synthesis_passed": true
+}

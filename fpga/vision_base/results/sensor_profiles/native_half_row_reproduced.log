@@ -1,0 +1,2 @@
+FATAL: F:\efinity-ci\upload-current-20261007\fpga\vision_base\sim\vision\tb_raw_frontend.sv:18: native RAW row underrun after 816 pairs
+       Time: 169511615  Scope: tb_raw_frontend

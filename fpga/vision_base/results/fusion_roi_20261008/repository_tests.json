@@ -1,0 +1,8 @@
+{
+  "skip_reason": "Windows symlink privilege unavailable",
+  "compileall_src_passed": true,
+  "scope": "adapter software; not board or native timing",
+  "skipped": 1,
+  "passed": 71,
+  "real_mcp_required": true
+}

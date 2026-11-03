@@ -2,7 +2,8 @@ module i2c_master_reg_rom #(
 
     parameter ROM_SIZE                     = 25,   
     parameter TOTAL_ROM_DEPTH              = 256, // 6*7
-    parameter ADDR_WIDTH                   = 8   // alt_clogb2(42) 
+    parameter ADDR_WIDTH                   = 8,
+    parameter INIT_FILE                    = ""
 ) (
     input  wire                  clock,
     input  wire [ADDR_WIDTH-1:0] addr_ptr,
@@ -10,8 +11,11 @@ module i2c_master_reg_rom #(
 );
 
 reg  [ROM_SIZE-1:0]   ROM [0:TOTAL_ROM_DEPTH-1];
-wire [ROM_SIZE-1:0]   DATAA = {ROM_SIZE{1'b0}};
-wire [ADDR_WIDTH-1:0] RADDR;
+reg [19:0] packed_rom [0:TOTAL_ROM_DEPTH-1], packed_q;
+(* syn_ramstyle="logic" *)reg [8:0] prefixes[0:15];
+integer entry,slot,prefix_count,prefix_index;
+reg [8:0] prefix_key;
+localparam PACK_LENGTH=INIT_FILE==""&&TOTAL_ROM_DEPTH>166?166:TOTAL_ROM_DEPTH;
    
 // initial begin
 // 		//9134				//addr /data/read_en[1]
@@ -79,6 +83,8 @@ wire [ADDR_WIDTH-1:0] RADDR;
       
 // end 
 initial begin
+ if(INIT_FILE != "")$readmemh(INIT_FILE,ROM);
+ else begin
     
 ROM[8'h00] = {16'h0100,8'h00,1'b0};
 ROM[8'h01] = {16'h36e9,8'h80,1'b0};
@@ -224,7 +230,7 @@ ROM[8'h8c] = {16'h57ac,8'h00,1'b0};
 ROM[8'h8d] = {16'h57ad,8'h00,1'b0};
 ROM[8'h8e] = {16'h36e9,8'h53,1'b0};
 ROM[8'h8f] = {16'h37f9,8'h53,1'b0};
-ROM[8'h90] = {16'h0100,8'h01,1'b0};
+ROM[8'h90] = {16'h3e06,8'h00,1'b0}; // Explicit unity digital gain (SDK cmos_gains_update)
 ROM[8'h91] = {16'h3200,8'h00,1'b0};
 ROM[8'h92] = {16'h3201,8'h00,1'b0};
 ROM[8'h93] = {16'h3202,8'h00,1'b0};
@@ -244,25 +250,23 @@ ROM[8'ha0] = {16'h3213,8'h04,1'b0};
 ROM[8'ha1] = {16'h3E08,8'h80,1'b0};
 ROM[8'ha2] = {16'h3E09,8'h2a,1'b0};
 ROM[8'ha3] = {16'h3221,8'h66,1'b0};
-end 
-// write is unused
-wire [ADDR_WIDTH-1:0] ADDRA = {ADDR_WIDTH{1'b0}}; 
-wire                  WEA   = 1'b0; 
-always @ (posedge clock)
-begin
-    if (WEA) begin
-        ROM[ADDRA] <= DATAA;
-    end
+ROM[8'ha4] = {16'h3e07,8'h80,1'b0}; // 1x digital gain, independent of power-on defaults
+ROM[8'ha5] = {16'h0100,8'h01,1'b0}; // Start after geometry, gain and orientation
 end
-   
-assign RADDR = addr_ptr;
-   
-reg [ROM_SIZE-1:0] RDATA;
-always @ (posedge clock)
-begin
-     RDATA <= ROM[RADDR];
+ // Startup address prefixes are constant; keep the original word and flag ABI.
+ prefix_count=0;
+ for(entry=0;entry<PACK_LENGTH;entry=entry+1)begin
+  prefix_key={ROM[entry][24:17],ROM[entry][0]};prefix_index=-1;
+  for(slot=0;slot<16;slot=slot+1)
+   if(slot<prefix_count&&prefixes[slot]==prefix_key)prefix_index=slot;
+  if(prefix_index==-1)begin
+   prefixes[prefix_count]=prefix_key;prefix_index=prefix_count;prefix_count=prefix_count+1;
+  end
+  packed_rom[entry]={prefix_index[3:0],ROM[entry][16:1]};
+ end
 end
-
-assign rdata_out = RDATA;
+always @(posedge clock)packed_q<=packed_rom[addr_ptr];
+wire [8:0] prefix=prefixes[packed_q[19:16]];
+assign rdata_out = {prefix[8:1],packed_q[15:0],prefix[0]};
    
 endmodule			      

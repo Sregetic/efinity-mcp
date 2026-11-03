@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "write_khz": 500,
+  "static_read_khz": 25,
+  "payload_bytes": 177728,
+  "weights_bytes": 4400,
+  "elf": "F:\\Project\\fpga\\vision_base\\results\\roi_fomo_20261012\\camera_cooperative\\vision.elf",
+  "byte_exact": true,
+  "flash_written": false
+}

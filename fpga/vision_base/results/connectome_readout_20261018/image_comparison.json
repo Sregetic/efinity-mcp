@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "comparisons": [
+    {
+      "mode": "source",
+      "source": 94587,
+      "render": 25,
+      "pixels": 46080,
+      "max_difference": 0
+    },
+    {
+      "mode": "0",
+      "source": 94587,
+      "render": 25,
+      "pixels": 46080,
+      "max_difference": 0
+    },
+    {
+      "mode": "5",
+      "source": 94587,
+      "render": 25,
+      "pixels": 46080,
+      "max_difference": 0
+    }
+  ],
+  "total_pixels": 138240,
+  "scope": "Three same-frame 24-row strips; not new full-frame/all-mode optical acceptance"
+}

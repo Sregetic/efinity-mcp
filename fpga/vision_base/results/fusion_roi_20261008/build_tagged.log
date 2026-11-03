@@ -1,0 +1,9 @@
+WARNING: cannot find correct IV value
+Creating F:/Project/fpga/vision_base/results/fusion_roi_20261008/release_tagged
+Creating F:/Project/fpga/vision_base/results/fusion_roi_20261008/work_tagged
+Running: efx_run_map.py ti60f225_oob --family Titanium --device Ti60F225 --project_xml F:\Project\fpga\vision_base\board\ti60f225_v4\ti60f225_oob.xml --output_dir F:/Project/fpga/vision_base/results/fusion_roi_20261008/release_tagged --work_dir F:/Project/fpga/vision_base/results/fusion_roi_20261008/work_tagged --timeout 3600 --opt top-params=IMAGE_DEBUG top-params=2 top-params=SAPPHIRE_ENABLE top-params=1 top-params=RAW_TO_POOL top-params=1 top-params=ANALYSIS_DMA_ENABLE top-params=1 top-params=DISPLAY_LATENCY_PROBE top-params=0 --opt root=ti60f225_oob_top --opt veri_options=verilog_mode=sv_09,vhdl_mode=vhdl_2008 work-dir=F:/Project/fpga/vision_base/results/fusion_roi_20261008/work_tagged write_efx_verilog=on
+   map :	PASS 
+Running: efx_run_pt_unified.py ti60f225_oob Titanium Ti60F225 --output_dir F:/Project/fpga/vision_base/results/fusion_roi_20261008/release_tagged --timing_model I3 --project_xml ti60f225_oob.xml --work_dir F:/Project/fpga/vision_base/results/fusion_roi_20261008/work_tagged
+   interface :	PASS 
+Running: efx_run_pnr.py ti60f225_oob --prj F:\Project\fpga\vision_base\board\ti60f225_v4\ti60f225_oob.xml --family Titanium --device Ti60F225 --timing_model I3 --output_dir F:/Project/fpga/vision_base/results/fusion_roi_20261008/release_tagged --work_dir F:/Project/fpga/vision_base/results/fusion_roi_20261008/work_tagged --timeout 3461 --opt seed=1 --opt sdc_file=ti60f225_oob.sdc
+   pnr :	FAIL 

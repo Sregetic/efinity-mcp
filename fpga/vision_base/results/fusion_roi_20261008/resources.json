@@ -1,0 +1,18 @@
+{
+  "whs_ns": 0.026,
+  "delta_dsp": 0,
+  "baseline_dsp": 59,
+  "dsp_capacity": 160,
+  "unassigned_core_pins": 0,
+  "wns_ns": 0.08,
+  "delta_xlr": 1951,
+  "baseline_ram": 247,
+  "baseline_xlr": 57838,
+  "xlr": 59789,
+  "seed": 1,
+  "delta_ram": 0,
+  "ram_capacity": 256,
+  "dsp": 59,
+  "xlr_capacity": 60800,
+  "ram": 247
+}

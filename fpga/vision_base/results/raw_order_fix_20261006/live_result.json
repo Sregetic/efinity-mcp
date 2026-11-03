@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "seconds": 59.70300000021234,
+  "samples": 185,
+  "camera_fps": 29.99849253795672,
+  "raw_mean_range": [
+    16.2138671875,
+    16.294921875
+  ],
+  "first": {
+    "t": 1362088.64,
+    "capture_id": 19273,
+    "display_id": 19273,
+    "mode": 1,
+    "memory": 0,
+    "raw_overflows": 0,
+    "capture_discarded": 0,
+    "scan_bad_frames": 0,
+    "raw_sum": 16651,
+    "raw_count": 1024
+  },
+  "last": {
+    "t": 1362148.343,
+    "capture_id": 21064,
+    "display_id": 21064,
+    "mode": 1,
+    "memory": 0,
+    "raw_overflows": 0,
+    "capture_discarded": 0,
+    "scan_bad_frames": 0,
+    "raw_sum": 16628,
+    "raw_count": 1024
+  },
+  "scope": "Live publication and transport; image quality checked separately"
+}

@@ -1,0 +1,58 @@
+--- before/vision_hysteresis_sweep.sv
++++ after/vision_hysteresis_sweep.sv
+@@ -20,18 +20,11 @@
+ // Conservative16x16 weak-presence mask. Promotion only removes weak pixels;
+ // a tile captured without any weak pixel can be skipped on every sweep.
+ localparam TILE_COLS=(W+15)/16,TILE_ROWS=(H+15)/16;
+-(* syn_ramstyle="registers" *)reg[TILE_COLS-1:0]weak_tiles[0:TILE_ROWS-1];
+-wire empty_tile=!weak_tiles[py>>4][px>>4];
++(* syn_ramstyle="block_ram" *)reg[TILE_COLS-1:0]weak_tiles[0:TILE_ROWS-1];
++reg[TILE_ROWS-1:0]tile_rows_valid=0;
++wire[TILE_COLS-1:0]tile_value;
++wire empty_tile=!tile_rows_valid[py>>4]||!tile_value[px>>4];
+ wire clear_tiles=!rst_n||(state==WAIT_FRAME&&vblank)||(state==PUBLISH&&vblank);
+-genvar tr;
+-generate for(tr=0;tr<TILE_ROWS;tr=tr+1)begin:weak_mask_rows
+- // Keep this clear in the data path: an extra510-fanout dedicated SR exceeds
+- // Titanium's two-reset-per-region limit next to the existing camera resets.
+- (* syn_keep="true" *)wire[TILE_COLS-1:0]mask_d=clear_tiles?{TILE_COLS{1'b0}}:
+-  ((state==CAPTURE&&class_valid&&classification==1&&(class_y>>4)==tr)?
+-   weak_tiles[tr]|(TILE_COLS'(1)<<(class_x>>4)):weak_tiles[tr]);
+- always @(posedge clk)weak_tiles[tr]<=mask_d;
+-end endgenerate
+ wire[CW-1:0]tile_end=px|CW'(15),tile_start=px&~CW'(15);
+ wire scan_row_end=reverse?(empty_tile?tile_start==0:px==0):(empty_tile?tile_end>=W-1:px==W-1);
+ wire scan_end=scan_row_end&&(reverse?py==0:py==H-1);
+@@ -147,6 +140,32 @@
+ wire skip_prune=state==PRUNE_CHECK&&map_q!=2;
+ wire[AW-1:0]read_addr=(state==PRUNE_NREAD||state==PRUNE_NCHECK)?prune_neighbor_addr:((state==NREAD||state==NCHECK)?fetch_addr:
+                               (skip_prune?scan_addr+1'b1:((state==ADVANCE||skip_center)?next_scan_addr:scan_addr)));
++// Prefetch the same next center as map_ram, without adding a scan cycle.
++wire[CW-1:0]tile_read_row=state==CAPTURE?(class_y>>4):
++                        ((state==ADVANCE||skip_center)?(scan_next_y>>4):(py>>4));
++reg[CW-1:0]tile_read_row_q=0,tile_write_row=0,tile_write_col=0,tile_last_row=0;
++reg tile_pending=0,tile_last_we=0;
++reg[TILE_COLS-1:0]tile_q,tile_last_data=0;
++wire tile_we=tile_pending&&!clear_tiles;
++wire[TILE_COLS-1:0]tile_data=(tile_rows_valid[tile_write_row]?tile_value:{TILE_COLS{1'b0}})|
++                             (TILE_COLS'(1)<<tile_write_col);
++// Forward read/write collisions, including consecutive weak samples in one row.
++assign tile_value=(tile_last_we&&tile_last_row==tile_read_row_q)?tile_last_data:tile_q;
++always @(posedge clk)begin
++ tile_q<=weak_tiles[tile_read_row];
++ if(tile_we)weak_tiles[tile_write_row]<=tile_data;
++end
++// Clear row validity in the data path instead of resetting the RAM contents.
++(* syn_keep="true" *)wire[TILE_ROWS-1:0]tile_rows_d=clear_tiles?{TILE_ROWS{1'b0}}:
++ (tile_we?(tile_rows_valid|(TILE_ROWS'(1)<<tile_write_row)):tile_rows_valid);
++always @(posedge clk)begin
++ tile_rows_valid<=tile_rows_d;
++ tile_read_row_q<=tile_read_row;
++ tile_pending<=!clear_tiles&&storing&&classification==1;
++ tile_write_row<=class_y>>4;tile_write_col<=class_x>>4;
++ tile_last_we<=tile_we;
++ if(tile_we)begin tile_last_row<=tile_write_row;tile_last_data<=tile_data;end
++end
+ // Write only the back plane; publish the completed plane at vblank.
+ wire edge_we=clearing||storing||promoting||prune_erase;
+ wire edge_data=promoting||(storing&&classification==2);

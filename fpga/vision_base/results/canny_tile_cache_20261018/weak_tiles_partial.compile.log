@@ -1,0 +1,5 @@
+.W=37: No such file or directory
+<command line>: error: invalid value specified for defparam: tb
+error: Unable to find the root module "tb" in the Verilog source.
+     : Perhaps ``-s tb'' is incorrect?
+1 error(s) during elaboration.

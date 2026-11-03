@@ -1,0 +1,9 @@
+Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+vmap -c 
+Copying E:/modeltech64_2020.4/win64/../modelsim.ini to modelsim.ini
+Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+vmap -modelsimini F:\Project\fpga\vision_base\results\xlr_recover_20261022\modelsim.ini xlr_motion_work F:\Project\fpga\vision_base\results\xlr_recover_20261022\modelsim_work 
+Modifying F:\Project\fpga\vision_base\results\xlr_recover_20261022\modelsim.ini
+Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+vmap -modelsimini F:/Project/fpga/vision_base/results/xlr_recover_20261022/modelsim.ini xlr_motion_work F:/Project/fpga/vision_base/results/xlr_recover_20261022/modelsim_work 
+Modifying F:/Project/fpga/vision_base/results/xlr_recover_20261022/modelsim.ini

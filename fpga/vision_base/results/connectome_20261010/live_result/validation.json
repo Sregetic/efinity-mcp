@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "sequence": 1867,
+  "frame_id": 38333,
+  "source_config_id": 38333,
+  "model_id": 1,
+  "roi": [
+    640,
+    300,
+    640,
+    480
+  ],
+  "class_name": "blank",
+  "gray_pixels": 1024,
+  "features": 128,
+  "hidden": 32,
+  "logits": 4,
+  "flyhash_bits": 256,
+  "training_kind": "synthetic_bringup_only",
+  "real_card_accuracy_verified": false,
+  "dma_microseconds": 3564.31,
+  "network_microseconds": 2240.12,
+  "total_cpu_microseconds": 23837.7
+}

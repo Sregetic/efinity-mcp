@@ -1,0 +1,71 @@
+{
+  "passed": true,
+  "source_frame": 12655,
+  "render_config": 10,
+  "images": 9,
+  "width": 1920,
+  "height": 1080,
+  "total_exported_pixels": 18662400,
+  "rows_checked": 9720,
+  "pixels_compared_per_mode": 2056320,
+  "excluded": "OSD rectangle x0..431,y0..39 only; no edge or color exclusions",
+  "canny_binary_edges": 4277,
+  "canny_plane_unchanged": true,
+  "canny_image_epoch": 212,
+  "canny_before_epoch": 113,
+  "canny_after_epoch": 352,
+  "comparisons": {
+    "canny": {
+      "different_channels": 0,
+      "different_pixels": 0,
+      "max_abs_error": 0
+    },
+    "canny_overlay": {
+      "different_channels": 0,
+      "different_pixels": 0,
+      "max_abs_error": 0
+    },
+    "split": {
+      "different_channels": 0,
+      "different_pixels": 0,
+      "max_abs_error": 0
+    },
+    "sobel_overlay": {
+      "different_channels": 0,
+      "different_pixels": 0,
+      "max_abs_error": 0
+    }
+  },
+  "border_regions": {
+    "left": {
+      "pixels": 33280,
+      "visible_canny_pixels": 302
+    },
+    "right": {
+      "pixels": 34560,
+      "visible_canny_pixels": 376
+    },
+    "top": {
+      "pixels": 47616,
+      "visible_canny_pixels": 216
+    },
+    "bottom": {
+      "pixels": 61440,
+      "visible_canny_pixels": 229
+    }
+  },
+  "live_check_bands": [
+    [
+      406,
+      447
+    ],
+    [
+      383,
+      424
+    ],
+    [
+      1782,
+      1823
+    ]
+  ]
+}

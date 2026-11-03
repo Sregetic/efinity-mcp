@@ -2,6 +2,8 @@
 module tb_frame_render_control;
     reg clk=0;always #5 clk=~clk;
     reg rst_n=0;
+    wire release_source=0;
+    wire[31:0]source_hold_frame_id,source_hold_config_id;
     reg cap_req_valid=0,cap_done_valid=0,cap_done_ok=1;
     wire cap_req_ready,cap_done_ready;wire [1:0] cap_req_bank;
     reg [1:0] cap_done_bank=0;
@@ -18,7 +20,8 @@ module tb_frame_render_control;
     reg scaler_done=0,scaler_error=0,writer_done=0,writer_error=0,vblank=0;
     wire display_valid,display_bank,done,error,busy,pending;
     wire [31:0] display_frame_id,display_config_id,last_cycles,deadline_misses;
-    frame_render_control #(.FRAME_BUDGET_CYCLES(8)) dut(.*);
+    wire pin_history=0,display_use_analysis=0;wire[2:0]display_age=0,analysis_age=0;wire[2:0]history_count;wire[31:0]capture_frame_id;
+    frame_render_control #(.FRAME_BUDGET_CYCLES(8)) dut(.compute_acquire_valid(1'b0),.compute_latest(1'b0),.compute_release(1'b0),.compute_request_frame_id(32'd0),.compute_acquire_ready(),.compute_missing(),.compute_hold_valid(),.compute_hold_bank(),.compute_hold_frame_id(),.compute_hold_config_id(),.*);
     task tick;begin @(posedge clk);#1;end endtask
     task capture;
         begin

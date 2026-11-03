@@ -1,61 +1,51 @@
-# Ti60F225I3 / SC431HAI 视觉工程
+# Ti60F225I3 实时视觉系统
 
-固定 1080p60 视频主链，ROI、内部工作图尺寸和后续分析任务独立配置。基础/高阶算法、RISC-V 与局部 AI 按 `PROJECT.md` 分阶段接入。
+当前输入为 **HD-SDI 摄像头 → HQ12 → HDMI IN**，HDMI OUT 接显示器。工程包含原图/灰度、Sobel/Canny、ROI/缩放、M7 边缘几何、目标列表、居中/跟随、最近三秒轨迹和独立 FOMO。
 
-## 工程入口
+## 先用菜单选择功能
 
-在 Efinity 打开：
+- **KEY1**：打开菜单、返回、关闭；**KEY2/KEY3**：上下；**KEY0**：进入/确认。CONFIG 保留为配置重载键。
+- **图像→显示模式**：上下切换即时预览；边缘阈值直接调节，中值滤波按 KEY0 开关。
+- **视图**：平移、缩放、输出大小/位置在调节时立即生效，不必每步确认。
+- **智能→模型→M7几何，推理模式→自动**：识别圆、矩形及清晰印刷体 A–Z/a–z，最多四个目标。M7 与显示模式独立，Sobel/Canny 边缘及叠加模式都能看识别框/标签。
+- **目标→目标轨迹 / 运动提示**：无需选择或居中，分别显示各已识别目标最近三秒真实轨迹和框内方向。
+- **目标→一键居中**：实时全景列表中用 KEY2/KEY3 选择，KEY0 确认。先开启“持续跟随”则固定初始倍率、平移 ROI 跟随这一个目标；重新选择可换目标。
 
-`F:/Project/fpga/vision_base/board/ti60f225_v4/ti60f225_oob.xml`
+M7 继续使用接受边缘与轮廓几何，不是 OCR/新分类模型；人脸目前停用。完整字母判定比选中目标的局部位置更新慢，不能用视频刷新率表示识别或跟随速度。使用条件与失锁行为见[字母说明](docs/M7_PRINTED_LETTERS.md)、[轨迹与跟随](docs/M7_FOLLOW_TRAJECTORY.md)。
 
-目标器件为 **Titanium / Ti60F225 / I3**，当前工具为 **Efinity 2026.1.132.3.9**。引脚和 PLL 来自 V4 供应商工程，尚待与到货 PCB、相机和转接板核对。
+## 源码、已验证运行和 Flash 分开记录
 
-## 当前实现
+最近已验证的临时配置为四目标连续线版：56540/60800 XLR、240/256 RAM、63/160 DSP；提速应用339016B、BSS612112B。同输入识别后端耗时降低23%–34%，当前背景完整类别约0.88Hz，不是目标跟踪帧率。[提速证据](results/m7_speed_20261102/REPORT.md)。
 
-| 部分 | 已实现内容 | 验证边界 |
-|---|---|---|
-| 摄像头板级基线 | CSI/RAW8 DDR 三帧缓存、去 Bayer、HDMI | Efinity 编译、接口、P&R、位流；尚未上板 |
-| 彩条诊断 | 1920×1080 有效区、2200×1125 总时序、八色条、白边框、移动标记、帧活动 LED | 完整帧仿真及独立板级制品 |
-| RGB565 帧引擎 | 四源 bank、多读者 lease、冻结/实时切换、ROI、2PPC 最近邻缩放、AXI128 读写、结果双缓冲与场消隐发布 | 行为存储逐像素回归；独立物理时序探针 |
+可读性整理后的源码候选为339000B、BSS612112B，保留上述提速；本轮仅构建/自动验证，不重配板子。部署与待验以[项目总状态](docs/PROJECT_MASTER_STATUS.md)为准。
 
-新引擎已形成“取帧 → ROI/缩放 → 写回 → 结果描述符发布”的闭环，但摄像头位流仍走供应商 RAW 缓存路径。真实 RAW→RGB565 采集适配、DDR 多客户端仲裁和结果扫描 DMA 尚未接入；不会将片内 AXI 测试服务当作真实 DDR 带宽证据。
+**Flash 仍是上一 SDI 固化版**，配置/菜单及333704B完整应用在同一 Flash；CONFIG/断电会回该版本，不保留之后的临时连续线和提速。固化回执/恢复证据在本机 `results/hdmi_finalize_20261101/flash/`。原摄像头工程完整备份在本机 `backups/camera_before_hq12_20261101/`，不混入当前 SDI 构建。
 
-## 编译与制品
+## 开发入口
 
-在 PowerShell 7 中执行：
+| 路径 | 用途 |
+|---|---|
+| `board/ti60_hdmi/` | 当前 HDMI 输入整机、约束和构建入口 |
+| `rtl/`、`board/ti60f225_v4/rtl/vision/` | 共享帧池、DDR/ROI、边缘、菜单和显示逻辑 |
+| `firmware/vision/` | 控制、M7、跟随和独立 AI 固件 |
+| `firmware/vision/vision_protocol.h` | APB 寄存器、USER2 命令、按键位、能力标识 |
+| `sim/fixtures/` | 自动验证所需的固定输入 |
+| `scripts/` | 构建、功能验证和显式部署工具 |
+
+先读[代码数据流与测试入口](docs/CODE_STRUCTURE.md)。C/C++ 使用项目 `.clang-format`，不把多条控制语句挤在一行；现有协议数值、控制记录布局和帧边界所有权保持。
+
+### 构建与自动验证
+
+在安装 Efinity 2026.1 / RISC-V 工具链的 Windows 主机，从项目根目录执行：
 
 ```powershell
-# 上板前准备的两个独立版本
-& 'F:/Project/fpga/vision_base/scripts/synthesize.ps1' -Top board -Flow compile -VideoMode pattern
-& 'F:/Project/fpga/vision_base/scripts/synthesize.ps1' -Top board -Flow compile -VideoMode camera
-
-# 新帧引擎的物理时序检查，不连接真实DDR数据路径
-& 'F:/Project/fpga/vision_base/scripts/synthesize.ps1' -Top board -Flow compile -VideoMode timing_probe
+python scripts/build_fomo_firmware.py --camera --cfu-kernels --output-dir build/firmware
+python scripts/test_geometry_m7_firmware.py --service-only --output-dir build/tests/service
+python scripts/test_target_follow.py --no-face --output-dir build/tests/follow
+python scripts/test_target_motion.py --output-dir build/tests/motion
+python scripts/test_geometry_letters_native.py --output-dir build/tests/letters
 ```
 
-制品分别保存于 `artifacts/pattern/`、`artifacts/camera/` 和 `artifacts/timing_probe/`。每份 `manifest.json` 记录 bit/hex 摘要、源文件摘要、模式和最终时序；编译中源代码发生变化或最终 WNS/WHS 为负时，脚本判定失败。XML 的纯格式规范化不视为 RTL 变化。
+原生整机物理构建使用 `board/ti60_hdmi/build.ps1`；先生成共享 Sapphire 硬件/BSP，详见[SDI 构建说明](board/ti60_hdmi/README.md)。本机工具路径由脚本约定，厂商 Python 与普通 Python 分开。软件测试、原生 P&R、板上运行和现场移动效果分别验收。
 
-编译运行综合、接口生成、布局布线和位流生成，不调用下载器。默认 `vision_board_config.vh` 为 camera；脚本正常结束时恢复进入前的配置。若外部强制终止导致配置遗留，应先检查该头文件，再启动下一次编译。`board/.../outflow` 为最近一次编译工作区，交付版本以模式目录为准。
-
-## 仿真与独立综合
-
-```powershell
-& 'F:/Project/fpga/vision_base/scripts/verify.ps1' -Suite full
-& 'F:/Project/fpga/vision_base/scripts/synthesize.ps1' -Top frame_render_engine -Flow map
-```
-
-统一入口包含 9 个 testbench：板级三帧切换、帧池、任务控制、完整彩条时序、AXI 写入器、AXI 行读取、缩放器、读缩放串接及完整帧引擎。覆盖奇数 ROI/尾像素、stride、4 KiB、背压、配置锁存、错误不发布、冻结/实时和场消隐边界。
-
-完整帧引擎长案例逐像素验证三种 1920×1080 结果：1080p 1:1、1280×720 放大、960×540 ROI 放大。每个案例均检查 2,073,600 个实际写回像素。结果宽度须为 8 的倍数；底层 scaler 的奇数输出能力另行测试。
-
-`results/verification.full.json` 与逐项日志记录当前结果及源代码摘要。直接行流测试中的随机延迟与 AXI 集成测试采用不同服务模型，其周期不应混用。帧率验收还需要实际内存服务与上板计数。
-
-## 报告与下一步
-
-- 本轮结果与精确周期/资源：`results/PREHARDWARE_REPORT.md`。
-- 所有权、发布和内存布局：`docs/frame_engine.md`。
-- 读取/缩放/写入接口：`docs/axi_memory.md`、`docs/scaler.md`、`docs/frame_writer.md`。
-- 硬件到货后的步骤与 LED 定义：`docs/BOARD_BRINGUP.md`。
-- 上板测量记录模板：`results/hardware_acceptance.template.json`。
-
-先核对实物并验证彩条、DDR 校准与相机直通，再做真实 DDR 适配和 ROI/冻结联调；之后接入算法、RISC-V 与 AI。原始压缩包、回退备份与必要验收报告保留。
+GitHub 保留源码、必要固定输入和正式报告。编译目录、模拟器缓存、完整本机备份和原始资料压缩包不重复入库；它们在本机或旧提交中保留。当前提交是源码整理，不是新的 Flash 发行版。长期范围见[系统范围与路线](docs/SYSTEM_SCOPE_AND_ROADMAP.md)。

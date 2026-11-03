@@ -1,0 +1,1116 @@
+--- before/board/ti60f225_v4/rtl/ti60f225_oob_top.v
++++ board/ti60f225_v4/rtl/ti60f225_oob_top.v
+@@ -1347,7 +1347,7 @@
+ end endgenerate
+ wire[7:0]control_paddr;wire control_psel,control_penable,control_pwrite,control_pready,control_pslverror;
+ wire[31:0]control_pwdata,control_prdata;
+-wire[14:0]control_ui;wire[7:0]control_shape_threshold;wire tone_shadow_frame;
++wire[23:0]control_ui;wire[7:0]control_shape_threshold;wire tone_shadow_frame;
+ wire[3:0]boot_gpio;
+ assign flash_sck=boot_gpio[0],flash_cs=boot_gpio[1],flash_mosi=boot_gpio[2];
+ assign flash_wp=1'b1,flash_hold=1'b1,{flash_cs_oe,flash_sck_oe,flash_mosi_oe,flash_wp_oe,flash_hold_oe}={5{boot_gpio[3]}};
+@@ -1725,15 +1725,17 @@
+  .r(color_r),.g(color_g),.b(color_b),.mode(feature_mode),.threshold(sobel_threshold),.canny_effective_threshold(canny_effective_threshold),.canny_requested_threshold(canny_threshold),.median_en(feature_median),
+  .memory_mode(memory_mode),.history_index(history_index),.canny_pixel(canny_pixel),.canny_ready(canny_ready),.canny_coverage(canny_coverage),.cx(feature_x),.cy(feature_y),
+  .ode(feature_de),.ohs(feature_hs),.ovs(feature_vs),.orr(feature_r),.ogg(feature_g),.obb(feature_b),.debug_mag(feature_mag),.debug_edge(feature_edge),.shape_enable(shape_enable),.shape_threshold(shape_threshold),.shape_status(shape_status),.coordinate_de(feature_coordinate_de),
+- .ui_state(control_ui),.analysis_enabled(ai_enabled),.analysis_context_changed(ai_context_changed),.frame_id(roi_view_frame),.render_config_id(roi_view_config),.analysis_context(ai_context),
++ .ui_state({9'b0,control_ui[14:0]}),.analysis_enabled(ai_enabled),.analysis_context_changed(ai_context_changed),.frame_id(roi_view_frame),.render_config_id(roi_view_config),.analysis_context(ai_context),
+  .analysis_result(ai_result),.analysis_match(ai_match),.analysis_identity_match(ai_identity),.analysis_age(ai_age),.geometry_done(geometry_done),.geometry_frame(geometry_frame),.geometry_config(geometry_config),.geometry_context(geometry_context));
+ // M0 is an ISP bypass only when filtering is off. HDMI and readback share
+ // this selection so the displayed camera image obeys the same noise switch.
+ wire camera_bypass=feature_mode==0&&!feature_median&&control_ui[14:11]==0;
+-assign {video_r,video_g,video_b}=camera_bypass?color_pixel:{feature_r,feature_g,feature_b};
+-assign video_de=camera_bypass?gamma_valid:feature_de;
+-assign video_hs=camera_bypass?gamma_hs:feature_hs;
+-assign video_vs=camera_bypass?gamma_vs:feature_vs;
++vision_sidebar_overlay sidebar_output(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n),
++ .de(camera_bypass?gamma_valid:feature_de),.hs(camera_bypass?gamma_hs:feature_hs),.vs(camera_bypass?gamma_vs:feature_vs),
++ .rgb(camera_bypass?color_pixel:{feature_r,feature_g,feature_b}),
++ .ui_state({control_ui[23:15],4'b0,control_ui[10:0]}),
++ .ai_status(ai_result[14:11]),
++ .ode(video_de),.ohs(video_hs),.ovs(video_vs),.orgb({video_r,video_g,video_b}));
+ // Exact pre-TMDS output tap, plus the leased shared-range RGB16 source before Gamma.
+ generate if(IMAGE_DEBUG)begin:image_debug
+ vision_line_snapshot image_snapshot(.clk(hdmi_tx_slow_clk),.rst_n(vid_rst_n),
+@@ -2249,7 +2251,7 @@
+     else diag_shift<={32'h56495331,32'h2610051f,flyhash_result[255:128]};
+    end
+    6'd32: begin
+-    if(SAPPHIRE_ENABLE) diag_shift<={32'h56495331,32'h26101040,feature_status,9'b0,shape_threshold,control_ui,roi_requested_id,roi_commit_id};
++    if(SAPPHIRE_ENABLE) diag_shift<={32'h56495331,32'h26101040,feature_status,control_ui[23:15],shape_threshold,control_ui[14:0],roi_requested_id,roi_commit_id};
+     else diag_shift<={32'h56495331,32'h26091707,feature_status,memory_capture_id,memory_display_id,canny_completed};
+    end
+    default: diag_shift<={32'h56495331,32'h26091707,feature_status,memory_capture_id,memory_display_id,canny_completed};
+--- before/board/ti60f225_v4/rtl/vision/vision_display.sv
++++ board/ti60f225_v4/rtl/vision/vision_display.sv
+@@ -6,7 +6,7 @@
+  input shape_enable,input[7:0]shape_threshold,output[63:0]shape_status,output coordinate_de,input[10:0]canny_effective_threshold,canny_requested_threshold,input[7:0]canny_coverage,
+  input analysis_enabled,analysis_context_changed,input[31:0]frame_id,render_config_id,analysis_context,
+  input[351:0]analysis_result,input analysis_match,analysis_identity_match,input[15:0]analysis_age,
+- output reg geometry_done,output reg[31:0]geometry_frame,geometry_config,geometry_context,input[14:0]ui_state);
++ output reg geometry_done,output reg[31:0]geometry_frame,geometry_config,geometry_context,input[23:0]ui_state);
+ wire fd0,fh0,fv0,border0;wire[11:0]x0,y0;wire[7:0]fr0,fg0,fb0,gray0;wire[10:0]mag0;wire[1:0]dir;
+ wire edge0;reg edge1=0;
+ vision_frontend front(clk,rst_n,de,hs,vs,r,g,b,median_en,fd0,fh0,fv0,border0,x0,y0,fr0,fg0,fb0,gray0,mag0,dir,threshold,edge0);
+--- before/board/ti60f225_v4/rtl/vision/vision_osd.sv
++++ board/ti60f225_v4/rtl/vision/vision_osd.sv
+@@ -1,4 +1,4 @@
+-module vision_osd(input[11:0]x,y,input[2:0]mode,input[10:0]threshold,input median_en,input[1:0]memory_mode,input[2:0]history_index,input canny_ready,input[1:0]shape_class,input shape_valid,input shape_enable,output reg active=0,output ink,input[10:0]requested_threshold,input fusion_enabled,input[351:0]fusion_result,input fusion_match,input[15:0]fusion_age,input clk,input[14:0]ui_state);
++module vision_osd(input[11:0]x,y,input[2:0]mode,input[10:0]threshold,input median_en,input[1:0]memory_mode,input[2:0]history_index,input canny_ready,input[1:0]shape_class,input shape_valid,input shape_enable,output reg active=0,output ink,input[10:0]requested_threshold,input fusion_enabled,input[351:0]fusion_result,input fusion_match,input[15:0]fusion_age,input clk,input[23:0]ui_state);
+ function automatic[34:0]glyph(input[7:0]ch);
+  begin case(ch)
+ 8'd48:glyph=35'b01110100011001110101110011000101110;
+@@ -20,6 +20,7 @@
+ 8'd71:glyph=35'b01110100011000010111100011000101110;
+ 8'd72:glyph=35'b10001100011000111111100011000110001;
+ 8'd73:glyph=35'b11111001000010000100001000010011111;
++8'd74:glyph=35'b00111000100001000010100101001001100;
+ 8'd75:glyph=35'b10001100101010011000101001001010001;
+ 8'd76:glyph=35'b10000100001000010000100001000011111;
+ 8'd77:glyph=35'b10001110111010110101100011000110001;
+@@ -68,8 +69,22 @@
+   for(position=0;position<64;position=position+1)font[letter*64+position]=position<35?pattern[position]:1'b0;
+  end
+ end
++wire sidebar=ui_state[23],editing=ui_state[22];
++wire[3:0]selected=ui_state[21:18];wire[2:0]center_status=ui_state[17:15];
++wire[5:0]side_row=y[10:5];wire[4:0]side_slot=(x[8:0]-9'd16)>>4;
++wire[4:0]side_py=y[4:0]-5'd8;reg marker_q=0;
++function automatic[63:0]side_label(input[3:0]item);
++ begin case(item)
++ 0:side_label="MODE    ";1:side_label="THRESH  ";2:side_label="MEDIAN  ";3:side_label="ZOOM    ";
++ 4:side_label="PAN X   ";5:side_label="PAN Y   ";6:side_label="SIZE    ";7:side_label="POS X   ";
++ 8:side_label="POS Y   ";9:side_label="AI      ";10:side_label="RUN AI  ";11:side_label="SELFTEST";
++ 12:side_label="MODEL   ";13:side_label="CENTER  ";14:side_label="TARGET Z";15:side_label="FULLVIEW";
++ endcase end
++endfunction
++reg[63:0]side_text;
++wire side_action=selected==10||selected==11||selected==13||selected==15;
+ wire[3:0]menu=ui_state[14:11];
+-wire[10:0]shown=menu!=0?ui_state[10:0]:threshold;
++wire[10:0]shown=(menu!=0||sidebar)?ui_state[10:0]:threshold;
+ wire[15:0]shown_decimal=decimal(shown),requested_decimal=decimal(requested_threshold);
+ reg[63:0]menu_text;reg[31:0]run_text,test_text;
+ wire ai_page=menu>=8;
+@@ -181,13 +196,40 @@
+   end
+  end
+  bitidx=34-((local_y/2)*5)-(column/2);
++ side_text=0;
++ if(sidebar)begin
++  ch=32;
++  if(side_row==0)side_text=editing?"EDIT    ":"MENU    ";
++   else if((!editing&&side_row>=1&&side_row<=16)||(editing&&side_row==1))
++    side_text=side_label(editing?selected:side_row[3:0]-1'b1);
++  else if(editing&&side_row==3)side_text=side_action?"CONFIRM ":"VALUE   ";
++  else if(editing&&side_row==5)side_text="K2 MORE ";
++  else if(editing&&side_row==6)side_text="K3 LESS ";
++  else if(editing&&side_row==8)side_text="K0 APPLY";
++   else if(side_row==18&&selected==11)side_text={"ST ",test_text," "};
++   else if(side_row==18&&(selected==9||selected==10||selected==12))side_text={"AI ",run_text," "};
++   else if(side_row==18)case(center_status)
++   0:side_text="READY   ";1:side_text="WAIT    ";2:side_text="DONE    ";3:side_text="NO OBJ  ";
++   4:side_text="BUSY    ";5:side_text="STALE   ";default:side_text="ERROR   ";
++  endcase
++  else if(side_row==19)side_text="K0 OK   ";
++  else if(side_row==20)side_text="HOLD K0 ";
++  if(side_slot<8)ch=char8(side_text,side_slot[2:0]);
++  if(((!editing&&side_row=={2'b0,selected}+1'b1)||(editing&&side_row==3&&!side_action))&&side_slot>=12&&side_slot<=15)
++   case(side_slot[1:0])
++    0:ch=48+shown_decimal[15:12];1:ch=48+shown_decimal[11:8];
++    2:ch=48+shown_decimal[7:4];3:ch=48+shown_decimal[3:0];
++   endcase
++  bitidx=34-(side_py>>1)*5-(x[3:0]>>1);
++ end
+ end
+ // Split character selection from font decode; RGB/control use the same extra beat.
+ always @(posedge clk)begin
+  ch_q<=ch;bitidx_q<=bitidx;
+  font_ink<=font[{ch[6:0],bitidx}];
+- active<=(x>=8&&x<((mode==5||mode==6||ai_page)?428:356)&&((y>=4&&y<20)||(shape_enable&&y>=22&&y<38)||(hud&&((y>=40&&y<56)||(y>=58&&y<74)||(y>=76&&y<92)))));
+- ink_region_q<=column<10&&local_y<14&&bitidx<35;
++ active<=sidebar?(x<448&&y<672):(x>=8&&x<((mode==5||mode==6||ai_page)?428:356)&&((y>=4&&y<20)||(shape_enable&&y>=22&&y<38)||(hud&&((y>=40&&y<56)||(y>=58&&y<74)||(y>=76&&y<92)))));
++ ink_region_q<=sidebar?(x>=16&&x<432&&x[3:0]<10&&side_py<14&&bitidx<35):(column<10&&local_y<14&&bitidx<35);
++ marker_q<=sidebar&&!editing&&side_row=={2'b0,selected}+1'b1&&(x<6||(x<448&&(y[4:0]==0||y[4:0]==31)));
+ end
+-assign ink=active&&ink_region_q&&font_ink;
++assign ink=active&&((ink_region_q&&font_ink)||marker_q);
+ endmodule
+--- before/board/ti60f225_v4/ti60f225_oob.xml
++++ board/ti60f225_v4/ti60f225_oob.xml
+@@ -51,6 +51,7 @@
+         <efx:design_file name="rtl/vision/vision_median9.sv" version="default" library="default" />
+         <efx:design_file name="rtl/vision/vision_shape_classifier.sv" version="default" library="default" />
+         <efx:design_file name="rtl/vision/vision_osd.sv" version="default" library="default" />
++        <efx:design_file name="rtl/vision/vision_sidebar_overlay.sv" version="default" library="default" />
+         <efx:design_file name="rtl/vision/vision_sobel.sv" version="default" library="default" />
+         <efx:design_file name="rtl/vision/vision_window3.sv" version="default" library="default" />
+ 
+--- before/docs/BOARD_BUTTON_DEMO_20261009.md
++++ docs/BOARD_BUTTON_DEMO_20261009.md
+@@ -1,6 +1,12 @@
+ # 实体按键演示与本轮 A 项验证
+ 
+ 当前制品、SRAM/Flash部署和资源/时序，以 `docs/PROJECT_MASTER_STATUS.md` 最新摘要及其对应报告为准。实物卡片识别、人工按键和断电启动的验收分别记录；下方注明历史的部署段落不代表当前状态。
++
++## 2026-10-22 新侧栏操作（离线候选，尚未上板）
++
++新位流与配套完整DDR应用下，KEY0长按打开/收起侧栏，KEY2/KEY3短按上下选择；KEY0短按进入编辑，KEY2/KEY3增减草稿，再按KEY0确认，长按KEY0取消并返回。菜单关闭时保留原模式/阈值/历史索引短按，KEY2/KEY3长按冻结/历史不变。CENTER确认后自动将一个新有效目标居中并等比放大一次，TARGET Z设倍率上限，FULLVIEW恢复全幅；F0/F1支持，F2/F3显示BUSY。无目标、旧结果不移动构图。
++
++本轮只做离线仿真与原生P&R，未连接板卡、未写SRAM/Flash；下方旧菜单仍适用于已记录的旧部署。新功能需配套位流及DDR程序，仅加载新位流并运行旧Flash应用时仍是旧菜单。完整菜单表、状态和后续验收步骤见 [侧栏与居中说明](SIDEBAR_CENTER_20261022.md)。
+ 
+ ## 2026-10-17 当前固化设置
+ 
+--- before/docs/PROJECT_MASTER_STATUS.md
++++ docs/PROJECT_MASTER_STATUS.md
+@@ -1,4 +1,14 @@
+ # 项目总目标与状态（统一范围表）
++
++## 2026-10-22 侧栏菜单与单目标居中（离线候选，未烧录）
++
++已实现 KEY0 长按打开/返回侧栏，KEY2/KEY3 上下选择及草稿调节，KEY0 进入/确认；取消不修改实际设置。保留八模式、独立阈值、中值、ROI/缩放/平移/输出位置、AI/FOMO/SELFTEST及原长按冻结/历史。CENTER 复用现有几何或新 FOMO 目标，逆映射到源坐标后一次性居中并等比放大，边缘目标留黑边；FULLVIEW 恢复全幅。请求绑定源帧、渲染配置及处理 context，无目标/旧结果/忙状态不移动当前画面；不是连续跟踪，未新增模型或宣称实物精度通过。
++
++最终整机 57821/60800XLR（95.10%）、242/256RAM、62/160DSP，余2979XLR/14RAM/98DSP；比10-18已验版增加905XLR/1RAM/0DSP。文字表合并从首版245RAM降到242；最终WNS+0.275ns/WHS+0.026ns、未分配核心引脚0。原图ISP旁路与全部算法不变，侧栏在最终输出叠加，视频及同步统一多1拍（约6.73ns），原RGB24图像回读仍5RAM。
++
++RV32I实际控制逻辑2525断言、407组几何、已有ROI逆映射/无目标/过期/确认取消/FOMO请求身份通过；19核心+38视频回归通过，最终两幅1080p侧栏仿真3577692个侧栏外有效像素一致；共享查表262144拍等价。完整相机FOMO/MLP/FlyHash/连接组及伴随读出DDR应用184768B（较原+5872B），BSS66104B保持；紧凑启动程序6656B仍在8KiB内。完整DDR应用提供新菜单，救援程序保留旧紧凑菜单，CPU/IP/ROM/cache未扩容。
++
++源码及artifacts/camera现为离线候选；配套位流在results/sidebar_center_20261022/release/，新DDR程序在该目录firmware/vision.elf，原4400B权重保持。本轮未访问板卡、未写SRAM或Flash；最近已记录的硬件仍为下方10-18 SRAM/10-17 Flash，未现场刷新。实物按键/识别/目标运动/HDMI/长时未验收，后续需同时加载新位流和新DDR程序。操作及证据见docs/SIDEBAR_CENTER_20261022.md和该轮REPORT.md/acceptance.json。完整项目范围保持。
+ 
+ ## 2026-10-18 RAW10专用接收与512深FIFO已写SRAM（Flash保持）
+ 
+--- before/docs/SYSTEM_SCOPE_AND_ROADMAP.md
++++ docs/SYSTEM_SCOPE_AND_ROADMAP.md
+@@ -1,4 +1,8 @@
+ # 完整视觉系统：长期范围与实施路线
++
++## 2026-10-22 侧栏与单目标构图离线候选
++
++已实现板端侧栏选择/草稿调节/确认取消，保留原冻结历史、全部模式及RGB24回读；RISC-V复用原ROI任务提交，将一个新几何/FOMO目标一次性居中并等比放大，不是连续跟踪。最终57821XLR/242RAM/62DSP，余2979XLR/14RAM；WNS+0.275ns/WHS+0.026ns。菜单在最终视频叠加，旁路/检测不变，显示统一多1拍；快照仍5RAM。19核心、38视频、RV32I2525断言/407组几何及侧栏外3577692像素检查通过。原完整相机AI/果蝇DDR应用保持并新增控制代码，184768B，片上ROM/cache未扩大；需配套新位流与DDR应用，紧凑救援程序保留旧菜单。本轮只做离线验证，未访问板卡、未写SRAM/Flash；现场状态仍见下方10-18/10-17记录。操作和实物验收边界见docs/SIDEBAR_CENTER_20261022.md、results/sidebar_center_20261022/REPORT.md及总状态最新摘要。完整范围保持。
+ 
+ ## 2026-10-18 摄像头接收资源优化更新
+ 
+--- before/firmware/vision/ai_main.c
++++ firmware/vision/ai_main.c
+@@ -53,11 +53,12 @@
+ #ifdef VISION_MULHI_CFU
+  if(m->s0>-2||m->s1>-2||m->s0<-30||m->s1<-30){REG(4)=3;for(;;);}
+ #endif
++ control_sidebar_reset();
+  uint32_t last=REG(0x30)-10000000u,sequence=0,failures=0,seen=0,policy=3,policy_geometry_sequence=0;
+  struct fusion_job job={.model=1,.test=1},completed={.model=1,.test=1};
+  uint32_t key[13]={0},ui_request=0,selftest_request=0,completed_flags=0,completed_config=0,completed_scores=0;
+ #ifdef VISION_FOMO
+- unsigned job_fomo=0;uint32_t legacy_model=1;
++ unsigned job_fomo=0;uint32_t legacy_model=1,center_job=0;
+  fomo_camera_init();
+ #endif
+  ai_runtime[1]=1;ai_publish(&job,0,0,0);
+@@ -65,7 +66,7 @@
+  REG(4)=1;
+  for(;;){
+   control_service_step();if(CTRL_R(0x0c)>>31){REG(4)=3;for(;;);}
+-  flyhash_service_step();
++  flyhash_service_step();control_center_step();
+   unsigned current_policy=CONTROL_STATE->ai_policy;
+   if(policy!=current_policy){
+    policy=current_policy;seen=0;policy_geometry_sequence=FUS_R(0x10);FUS_W(4,policy!=0);
+@@ -73,7 +74,7 @@
+   }
+   uint32_t status=DMA(4);
+   if(status&2){
+-   if(status&4){failures++;analysis_result[22]=DMA(0x24);analysis_result[23]=failures;
++   if(status&4){if(CONTROL_STATE->center_stage==3)control_center_finish(CENTER_ERROR);failures++;analysis_result[22]=DMA(0x24);analysis_result[23]=failures;
+     ai_runtime[0]=3;ai_publish(&job,0,FUS_ERROR<<8,0);DMA(0)=2;continue;}
+    if(job.exact&&DMA(0x0c)!=job.g.frame){REG(4)=3;for(;;);}
+    volatile uint16_t *input=(volatile uint16_t *)DMA(0x1c);
+@@ -142,9 +143,11 @@
+      unsigned left=x+b->left*w/96,top=y+b->top*h/96;
+      unsigned right=x+(b->right*w+95)/96,bottom=y+(b->bottom*h+95)/96;
+      fusion_map_box(&job,left,top,right-left,bottom-top);
++     control_center_fomo(center_job,&job,1,left,top,right-left,bottom-top);
+     }else{
+      for(unsigned i=1;i<144;i++)if(fomo_camera_output[i*4]>fomo_camera_output[cell*4])cell=i;
+      job.box0=0xffffffffu;job.box1=0;
++     control_center_fomo(center_job,&job,0,0,0,0,0);
+     }
+     for(unsigned i=0;i<4;i++)o[i]=fomo_camera_output[cell*4+i];
+     fomo_camera_status[3]=job.g.frame;fomo_camera_status[4]=DMA(0x10);
+@@ -195,10 +198,16 @@
+     if(job.g.frame!=analysis_control[1])job.g.hi&=~(1u<<30);job.g.frame=analysis_control[1];
+    }
+    if(!fusion_roi(&job,policy==2,analysis_control[2],analysis_control[3])){
++#ifdef VISION_FOMO
++     if(job_fomo&&CONTROL_STATE->center_stage==3)control_center_finish(CENTER_NONE);
++#endif
+     ui_request=CONTROL_STATE->ai_request;ai_runtime[0]=0;ai_publish(&job,0,FUS_NONE<<8,0);continue;
+    }
+    ui_request=CONTROL_STATE->ai_request;ai_runtime[0]=1;
+    if(announce)ai_publish(&job,0,FUS_WAIT<<8,0);
++#ifdef VISION_FOMO
++   center_job=job_fomo&&CONTROL_STATE->center_stage==3?CONTROL_STATE->center_seen:0;
++#endif
+    DMA(8)=job.g.frame;DMA(0x14)=job.xy;DMA(0x18)=job.wh;
+    DMA(0)=1|((!request&&policy==1&&(analysis_control[0]&2))?4:0)
+ #ifdef VISION_FOMO
+--- before/firmware/vision/control_service.h
++++ firmware/vision/control_service.h
+@@ -1,5 +1,6 @@
+ #pragma once
+ #include <stdint.h>
++#include <stddef.h>
+ #ifndef CONTROL_TEST
+ #define CTRL_R(off) (*(volatile uint32_t *)(0xf8100200u+(off)))
+ #define CTRL_W(off,value) (CTRL_R(off)=(value))
+@@ -10,6 +11,10 @@
+  uint32_t roi[4],commit[4],roi_enable,commit_enable,ai_policy;
+  uint32_t menu,key_roi_dirty,shape_threshold;
+  uint32_t ai_manual,ai_request,selftest_request;
++ uint32_t sidebar_open,sidebar_item,sidebar_edit,edit_value,edit_mode,edit_roi[4],edit_enable;
++ uint32_t center_zoom,center_request,center_seen,center_stage,center_sequence,center_serial,center_status;
++ uint32_t center_frame,center_render,center_context,center_settings,center_shape;
++
+ };
+ #ifndef CONTROL_TEST
+ #define CONTROL_STATE ((struct vision_control_state *)0x07620200u)
+@@ -31,22 +36,117 @@
+  for(unsigned i=0;i<4;i++)s->commit[i]=s->roi[i];
+  CTRL_W(0x3c,s->serial);CTRL_W(0x38,1);
+ }
+-static void control_roi_key(struct vision_control_state *s,unsigned up){
+- unsigned x=s->roi[0]>>12,y=s->roi[0]&4095,w=s->roi[1]>>12,h=s->roi[1]&4095;
+- unsigned dw=s->roi[2]>>12,dh=s->roi[2]&4095,dx=s->roi[3]>>12,dy=s->roi[3]&4095;
++static void control_roi_change(uint32_t roi[4],uint32_t *enabled,unsigned menu,unsigned up){
++ unsigned x=roi[0]>>12,y=roi[0]&4095,w=roi[1]>>12,h=roi[1]&4095;
++ unsigned dw=roi[2]>>12,dh=roi[2]&4095,dx=roi[3]>>12,dy=roi[3]&4095;
+  int step=up?32:-32;
+- if(s->menu==2){
++ if(menu==2){
+   unsigned nw=up?(w>240?(w+1)/2:w):(w<960?w*2:1920);
+   unsigned nh=up?(h>135?(h+1)/2:h):(h<540?h*2:1080);
+   x=control_bound((int)x+((int)w-(int)nw)/2,1920-nw);y=control_bound((int)y+((int)h-(int)nh)/2,1080-nh);w=nw;h=nh;
+- }else if(s->menu==3)x=control_bound((int)x+step,1920-w);
+- else if(s->menu==4)y=control_bound((int)y+step/2,1080-h);
+- else if(s->menu==5){dw=up?(dw<960?dw*2:1920):(dw>240?(dw/2)&~7u:dw);dh=up?(dh<540?dh*2:1080):(dh>135?dh/2:dh);}
+- else if(s->menu==6)dx=control_bound((int)dx+step,1920-dw);
+- else if(s->menu==7)dy=control_bound((int)dy+step/2,1080-dh);
++ }else if(menu==3)x=control_bound((int)x+step,1920-w);
++ else if(menu==4)y=control_bound((int)y+step/2,1080-h);
++ else if(menu==5){dw=up?(dw<960?dw*2:1920):(dw>240?(dw/2)&~7u:dw);dh=up?(dh<540?dh*2:1080):(dh>135?dh/2:dh);}
++ else if(menu==6)dx=control_bound((int)dx+step,1920-dw);
++ else if(menu==7)dy=control_bound((int)dy+step/2,1080-dh);
+  dx=control_bound(dx,1920-dw);dy=control_bound(dy,1080-dh);
+- s->roi[0]=(x<<12)|y;s->roi[1]=(w<<12)|h;s->roi[2]=(dw<<12)|dh;s->roi[3]=(dx<<12)|dy;
+- s->roi_enable=w!=1920||h!=1080||dw!=1920||dh!=1080;s->key_roi_dirty=1;
++ roi[0]=(x<<12)|y;roi[1]=(w<<12)|h;roi[2]=(dw<<12)|dh;roi[3]=(dx<<12)|dy;
++ *enabled=w!=1920||h!=1080||dw!=1920||dh!=1080;
++}
++static void control_roi_key(struct vision_control_state *s,unsigned up){
++ control_roi_change(s->roi,&s->roi_enable,s->menu,up);s->key_roi_dirty=1;
++}
++// The existing shared control-state prefix stays CON4; the sidebar extension is
++// application-owned and reset on DDR application entry, preserving live ROI/UI policy.
++static void control_sidebar_reset(void){
++ struct vision_control_state *s=CONTROL_STATE;
++ for(unsigned i=offsetof(struct vision_control_state,sidebar_open)/4;i<sizeof(*s)/4;i++)((volatile uint32_t*)s)[i]=0;
++ s->feature_dirty=1;
++}
++enum { SIDE_MODE,SIDE_THRESHOLD,SIDE_MEDIAN,SIDE_ZOOM,SIDE_PAN_X,SIDE_PAN_Y,
++ SIDE_SIZE,SIDE_POS_X,SIDE_POS_Y,SIDE_AI,SIDE_RUN,SIDE_SELFTEST,SIDE_MODEL,
++ SIDE_CENTER,SIDE_TARGET_ZOOM,SIDE_FULL_VIEW,SIDE_COUNT };
++enum { CENTER_READY,CENTER_WAIT,CENTER_DONE,CENTER_NONE,CENTER_BUSY,CENTER_STALE,CENTER_ERROR };
++static unsigned control_sidebar_value(struct vision_control_state *s){
++ if(s->sidebar_edit)return s->edit_value;
++ unsigned i=s->sidebar_item;
++ if(i==SIDE_MODE)return s->settings&7;
++ if(i==SIDE_THRESHOLD)return (s->settings&7)==7?s->shape_threshold:(s->settings>>(((s->settings&7)==5||(s->settings&7)==6)?20:9))&2047;
++ if(i==SIDE_MEDIAN)return (s->settings>>3)&1;
++ if(i==SIDE_ZOOM)return s->roi[1]>>12;
++ if(i==SIDE_PAN_X)return s->roi[0]>>12;
++ if(i==SIDE_PAN_Y)return s->roi[0]&4095;
++ if(i==SIDE_SIZE)return s->roi[2]>>12;
++ if(i==SIDE_POS_X)return s->roi[3]>>12;
++ if(i==SIDE_POS_Y)return s->roi[3]&4095;
++ if(i==SIDE_AI)return s->ai_policy;
++ if(i==SIDE_MODEL)return (s->ai_manual>>1)&1;
++ if(i==SIDE_TARGET_ZOOM)return s->center_zoom;
++ return 0;
++}
++static void control_sidebar_adjust(struct vision_control_state *s,unsigned up){
++ unsigned i=s->sidebar_item,v=s->edit_value;
++ if(i==SIDE_MODE)s->edit_value=up?(v==7?0:v+1):(v?v-1:7);
++ else if(i==SIDE_THRESHOLD){
++  if(s->edit_mode==7)s->edit_value=up?(v>239?255:v+16):(v<=17?1:v-16);
++  else s->edit_value=up?threshold_up(v):threshold_down(v);
++ }else if(i==SIDE_MEDIAN||i==SIDE_MODEL)s->edit_value=up?1:0;
++ else if(i>=SIDE_ZOOM&&i<=SIDE_POS_Y){
++  control_roi_change(s->edit_roi,&s->edit_enable,i-1,up);
++  if(i==SIDE_ZOOM)s->edit_value=s->edit_roi[1]>>12;
++  else if(i==SIDE_PAN_X)s->edit_value=s->edit_roi[0]>>12;
++  else if(i==SIDE_PAN_Y)s->edit_value=s->edit_roi[0]&4095;
++  else if(i==SIDE_SIZE)s->edit_value=s->edit_roi[2]>>12;
++  else if(i==SIDE_POS_X)s->edit_value=s->edit_roi[3]>>12;
++  else s->edit_value=s->edit_roi[3]&4095;
++ }else if(i==SIDE_AI)s->edit_value=up?(v==2?0:v+1):(v?v-1:2);
++ else if(i==SIDE_TARGET_ZOOM)s->edit_value=up?(v==0?1:v==8?8:v*2):(v<=1?0:v/2);
++}
++static void control_sidebar_confirm(struct vision_control_state *s){
++ unsigned i=s->sidebar_item,v=s->edit_value;
++ if(i==SIDE_MODE)s->settings=(s->settings&~7u)|v;
++ else if(i==SIDE_THRESHOLD){
++  if(s->edit_mode==7)s->shape_threshold=v;
++  else control_threshold(s,s->edit_mode==5||s->edit_mode==6?20:9,v);
++ }else if(i==SIDE_MEDIAN)s->settings=(s->settings&~8u)|(v<<3);
++ else if(i>=SIDE_ZOOM&&i<=SIDE_POS_Y){
++  for(unsigned k=0;k<4;k++)s->roi[k]=s->edit_roi[k];
++  s->roi_enable=s->edit_enable;s->key_roi_dirty=1;
++ }else if(i==SIDE_AI){s->ai_policy=v;s->ai_manual=(s->ai_manual&2)|(v==1);}
++ else if(i==SIDE_RUN){if(!s->ai_policy){s->ai_policy=1;s->ai_manual|=1;}s->ai_request++;}
++ else if(i==SIDE_SELFTEST)s->selftest_request++;
++#ifdef VISION_FOMO
++ else if(i==SIDE_MODEL)s->ai_manual=(s->ai_manual&1)|(v<<1);
++#endif
++ else if(i==SIDE_CENTER){s->center_request++;s->center_status=CENTER_WAIT;}
++ else if(i==SIDE_TARGET_ZOOM)s->center_zoom=v;
++ else if(i==SIDE_FULL_VIEW){s->roi[0]=s->roi[3]=0;s->roi[1]=s->roi[2]=(1920u<<12)|1080;s->roi_enable=0;s->key_roi_dirty=1;s->center_status=CENTER_READY;s->center_stage=0;s->center_seen=s->center_request;}
++ s->sidebar_edit=0;s->feature_dirty=1;
++}
++static void control_sidebar_keys(struct vision_control_state *s,unsigned keys){
++ if(keys&8){
++  if(!s->sidebar_open)s->sidebar_open=1;
++  else if(s->sidebar_edit)s->sidebar_edit=0;
++  else s->sidebar_open=0;
++ }else if(keys&1){
++  if(s->sidebar_edit)control_sidebar_confirm(s);
++  else{
++   s->edit_value=control_sidebar_value(s);s->edit_mode=s->settings&7;
++   for(unsigned k=0;k<4;k++)s->edit_roi[k]=s->roi[k];
++   s->edit_enable=s->roi_enable;s->sidebar_edit=1;
++  }
++ }else for(unsigned key=1;key<=2;key++)if(keys&(1u<<key)){
++  if(s->sidebar_edit)control_sidebar_adjust(s,key==1);
++  else{
++   unsigned i=s->sidebar_item;
++   i=key==1?(i?i-1:SIDE_COUNT-1):(i+1==SIDE_COUNT?0:i+1);
++#ifndef VISION_FOMO
++   if(i==SIDE_MODEL)i=key==1?SIDE_SELFTEST:SIDE_CENTER;
++#endif
++   s->sidebar_item=i;
++  }
++ }
++ s->feature_dirty=1;
+ }
+ static uint32_t control_ui(struct vision_control_state *s){
+  unsigned m=s->menu,v=0;
+@@ -59,15 +159,26 @@
+  else if(m==7)v=s->roi[3]&4095;
+  else if(m==8)v=s->ai_policy;
+  else if(m==10)v=(s->ai_manual>>1)&1;
+- return (s->shape_threshold<<15)|(m<<11)|v;
++ if(s->sidebar_open)v=control_sidebar_value(s);
++ return (s->sidebar_open<<31)|(s->sidebar_edit<<30)|(s->sidebar_item<<26)|(s->center_status<<23)|
++        (s->shape_threshold<<15)|(m<<11)|v;
+ }
+ static void control_event(uint32_t event){
+  struct vision_control_state *s=CONTROL_STATE;
+  unsigned op=event>>24;uint32_t v=event&0xffffff,old_settings=s->settings;
+  unsigned mode=s->settings&7,mem=(s->settings>>4)&3,index=(s->settings>>6)&7;
+  if(op==255||op==0x62){
++#ifdef VISION_BOOTSTRAP
++  // The8KiB rescue image retains the existing compact menu; the full app lives in DDR.
++  if(v&8)s->menu=s->menu==CONTROL_LAST_MENU?0:s->menu+1;
++#else
++  if((v&8)||s->sidebar_open){
++   control_sidebar_keys(s,v&15);
++   // Long freeze/history keep their existing meaning; short menu keys stop here.
++   v&=48;
++  }
++#endif
+   if(v&1)s->settings=(s->settings&~7u)|((mode+1)&7);
+-  if(v&8)s->menu=s->menu==CONTROL_LAST_MENU?0:s->menu+1;
+   for(unsigned key=1;key<=2;key++)if(v&(1u<<key)){
+    if(s->menu==8){
+     if(key==1){s->ai_policy=(s->ai_policy+1)%3;s->ai_manual=(s->ai_manual&2)|(s->ai_policy==1);}
+@@ -98,7 +209,7 @@
+   case 0x34:s->roi_enable=v&1;break;
+   // Development view policy remains continuous; the board FIX page is single-shot.
+   case 0x60:if(v<=2){s->ai_policy=v;s->ai_manual&=2;s->feature_dirty=1;}break;
+-  case 0x61:if(v<=CONTROL_LAST_MENU){s->menu=v;s->feature_dirty=1;}break;
++  case 0x61:if(v<=CONTROL_LAST_MENU){s->menu=v;s->sidebar_open=s->sidebar_edit=0;s->feature_dirty=1;}break;
+   case 0x35:
+    if(s->pending){s->reject=1;CTRL_W(0x38,3);break;}
+    control_submit(s);break;
+--- before/firmware/vision/fomo_camera.cc
++++ firmware/vision/fomo_camera.cc
+@@ -1,5 +1,5 @@
+ #include <stdint.h>
+-#include "control_service.h"
++#include "fusion_service.h"
+ #include "fomo_pixels.h"
+ #include "fomo_runtime.h"
+ extern "C" {
+@@ -14,7 +14,12 @@
+ extern "C" [[noreturn]] void fomo_runtime_fail(uint32_t code){
+  fomo_camera_status[17]=code;fomo_camera_status[1]=4;
+  *reinterpret_cast<volatile uint32_t*>(0xf8100004u)=3;
+- for(;;)control_service_step();
++ for(;;){
++  control_service_step();
++  if(CONTROL_STATE->center_stage||CONTROL_STATE->center_seen!=CONTROL_STATE->center_request){
++   CONTROL_STATE->center_seen=CONTROL_STATE->center_request;control_center_finish(CENTER_ERROR);
++  }
++ }
+ }
+ extern "C" [[noreturn]] void fomo_kernel_fail(){fomo_runtime_fail(7);}
+ extern "C" void DebugLog(const char *s){
+--- before/firmware/vision/fomo_main.cc
++++ firmware/vision/fomo_main.cc
+@@ -1,7 +1,7 @@
+ // Fixed-vector FOMO bring-up on the existing RV32I/DDR system; no camera AI.
+ #include <stdint.h>
+ #include <string.h>
+-#include "control_service.h"
++#include "fusion_service.h"
+ #include "fomo_runtime.h"
+ 
+ extern "C" const uint8_t fomo_model[];
+@@ -26,7 +26,7 @@
+     __asm__ volatile("fence rw,rw" ::: "memory");
+     fomo_status[1] = 4;
+     *reinterpret_cast<volatile uint32_t*>(0xf8100004u) = 3;
+-    for (;;) control_service_step();
++    for (;;) {control_service_step();control_center_step();}
+ }
+ extern "C" [[noreturn]] void fomo_kernel_fail() { fail(7); }
+ extern "C" [[noreturn]] void fomo_runtime_fail(uint32_t code) { fail(code); }
+@@ -68,6 +68,7 @@
+     *reinterpret_cast<volatile uint32_t*>(0xf8100004u) = 1;
+     if (CONTROL_STATE->magic == 0) control_init(); // Same cold-boot contract as ai_main.c.
+     if (CONTROL_STATE->magic != CONTROL_MAGIC) fail(1);
++    control_sidebar_reset();
+     static LayerProfiler profiler;
+     uint64_t begin = fomo_ticks();
+     auto &interpreter = *fomo_create(&profiler);
+@@ -109,7 +110,7 @@
+     }
+     fomo_status[1] = 3;
+     *reinterpret_cast<volatile uint32_t*>(0xf8100004u) = 2;
+-    for (;;) control_service_step();
++    for (;;) {control_service_step();control_center_step();}
+ }
+ extern "C" void trap() {
+     uint32_t cause, pc, value;
+--- before/firmware/vision/fusion_service.h
++++ firmware/vision/fusion_service.h
+@@ -90,3 +90,75 @@
+  for(unsigned i=0;i<11;i++)FUS_W(0x80+4*i,words[i]);
+  FUS_W(8,1);
+ }
++
++/* One-shot display crop. No frame copying and no continuous target tracking. */
++static void control_center_finish(unsigned status){
++ struct vision_control_state *s=CONTROL_STATE;
++ s->center_status=status;s->center_stage=0;s->feature_dirty=1;
++}
++static unsigned control_center_box(uint32_t x,uint32_t y,uint32_t w,uint32_t h,
++                                  uint32_t frame,uint32_t render,uint32_t context){
++ struct vision_control_state *s=CONTROL_STATE;
++ if(!w||!h||x+w>1920||y+h>1080)return 0;
++ if(s->pending||s->key_roi_dirty||s->serial!=s->center_serial||s->settings!=s->center_settings||s->shape_threshold!=s->center_shape){control_center_finish(CENTER_STALE);return 0;}
++ unsigned z=s->center_zoom?s->center_zoom:8;
++ // Fit the entire object plus25% breathing room; manual zoom is an upper bound.
++ while(z>1&&((w+(w+3)/4)*z>1920||(h+(h+3)/4)*z>1080))z>>=1;
++ int cw=1920/z,ch=1080/z,step=8/z;
++ int left=(int)(x+w/2)-cw/2,top=(int)(y+h/2)-ch/2;
++ // Align horizontal output to8 pixels. Center error is at most4 display pixels.
++ left=(left+step/2)&-step;
++ int right=left+cw,bottom=top+ch;
++ unsigned l=left<0?0:left,t=top<0?0:top,rr=right>1920?1920:right,bb=bottom>1080?1080:bottom;
++ s->roi[0]=(l<<12)|t;s->roi[1]=((rr-l)<<12)|(bb-t);
++ s->roi[2]=(((rr-l)*z)<<12)|((bb-t)*z);s->roi[3]=(((l-left)*z)<<12)|((t-top)*z);
++ s->roi_enable=1;s->center_frame=frame;s->center_render=render;s->center_context=context;
++ control_submit(s);s->center_serial=s->serial;s->center_stage=2;
++ return 1;
++}
++static void control_center_step(void){
++ struct vision_control_state *s=CONTROL_STATE;
++ if(s->center_seen!=s->center_request){
++  s->center_seen=s->center_request;s->center_serial=s->serial;s->center_settings=s->settings;s->center_shape=s->shape_threshold;
++  if(s->pending||s->key_roi_dirty||((s->settings>>4)&3)>=2){control_center_finish(CENTER_BUSY);return;}
++  if(FUS_R(0)!=0x26101003u){control_center_finish(CENTER_ERROR);return;}
++  s->center_stage=1;
++ }
++ if(!s->center_stage)return;
++ if(s->center_stage==2){
++  if(!s->pending){control_center_finish(s->good&&s->serial==s->center_serial?CENTER_DONE:CENTER_ERROR);}
++  return;
++ }
++ if(s->pending||s->key_roi_dirty||s->serial!=s->center_serial||s->settings!=s->center_settings||s->shape_threshold!=s->center_shape||((s->settings>>4)&3)>=2){control_center_finish(CENTER_STALE);return;}
++#ifdef VISION_FOMO
++ if(s->center_stage==3){if(!s->ai_policy||!(s->ai_manual&2))control_center_finish(CENTER_STALE);return;}
++#endif
++ if(s->feature_dirty||s->feature_wait)return;
++ if(s->center_stage==1){
++  s->center_sequence=FUS_R(0x10);s->center_stage=4;
++#ifdef VISION_FOMO
++  if((s->ai_manual&2)&&s->ai_policy){s->center_stage=3;s->ai_request++;}
++#endif
++  return;
++ }
++ struct fusion_job j;struct fusion_geometry g=fusion_geometry_read();
++ for(unsigned i=0;i<sizeof(g)/4;i++)((volatile uint32_t*)&j.g)[i]=((const uint32_t*)&g)[i];
++ if(j.g.sequence==s->center_sequence||!j.g.frame)return;
++ if(j.g.render!=(s->enabled?s->serial:0)){control_center_finish(CENTER_STALE);return;}
++ if(!fusion_roi(&j,1,0,0)||!j.geometry_class){control_center_finish(CENTER_NONE);return;}
++ if(!control_center_box(j.xy&65535,j.xy>>16,j.wh&65535,j.wh>>16,j.g.frame,j.g.render,j.g.context)&&s->center_stage)
++  control_center_finish(CENTER_NONE);
++}
++#ifdef VISION_FOMO
++static void control_center_fomo(uint32_t nonce,const struct fusion_job *j,
++                                unsigned valid,uint32_t x,uint32_t y,uint32_t w,uint32_t h){
++ struct vision_control_state *s=CONTROL_STATE;
++ if(!nonce||nonce!=s->center_seen||s->center_stage!=3)return;
++ struct fusion_geometry latest=fusion_geometry_read();
++ if(j->g.render!=(s->enabled?s->serial:0)||j->g.context!=latest.context||
++    (((s->settings>>4)&3)==1&&j->g.frame!=latest.frame)){control_center_finish(CENTER_STALE);return;}
++ if(!valid){control_center_finish(CENTER_NONE);return;}
++ if(!control_center_box(x,y,w,h,j->g.frame,j->g.render,j->g.context)&&s->center_stage)
++  control_center_finish(CENTER_NONE);
++}
++#endif
+--- before/firmware/vision/main.c
++++ firmware/vision/main.c
+@@ -1,10 +1,17 @@
+ #include "flyhash_service.h"
+ #include "int8.h"
++#ifndef VISION_BOOTSTRAP
++#include "fusion_service.h"
++#endif
+ #define REG(off) (*(volatile uint32_t *)(0xf8100000u+(off)))
+ void main(void) {
+     if(int8_dot4(0x80808080u,0x80808080u)!=65536){REG(4)=2;for(;;);}
+     if(CTRL_R(0)!=0x26101002u){REG(4)=3;for(;;);}
+     control_init();REG(4)=1;
+-    for(;;){control_service_step();if(CTRL_R(0x0c)>>31){REG(4)=3;for(;;); }flyhash_service_step();}
++    for(;;){control_service_step();if(CTRL_R(0x0c)>>31){REG(4)=3;for(;;); }flyhash_service_step();
++#ifndef VISION_BOOTSTRAP
++    control_center_step();
++#endif
++    }
+ }
+ void trap(void) {REG(4)=3;for(;;);}
+--- before/rtl/vision_ai_bridge.sv
++++ rtl/vision_ai_bridge.sv
+@@ -68,7 +68,7 @@
+     end
+     if(publish_sync[2]!=publish_ack)begin front<=staging;publish_ack<=publish_sync[2];end
+    end
+-   if(geometry_done&&enabled&&geometry_context==context_id&&geometry_req==geometry_ack_sync[1])begin
++   if(geometry_done&&geometry_context==context_id&&geometry_req==geometry_ack_sync[1])begin
+     geometry_video<={geometry_status,geometry_context,geometry_config,geometry_frame};geometry_req<=~geometry_req;
+    end
+   end
+--- before/rtl/vision_control_bridge.sv
++++ rtl/vision_control_bridge.sv
+@@ -14,7 +14,7 @@
+  output[15:0]roi_x,roi_y,roi_w,roi_h,dst_w,dst_h,
+  output reg[15:0]display_x,display_y,
+  output config_busy,commit_rejected,output[31:0]requested_id,
+- output config_error,output reg[31:0]committed_id,output[31:0]rejected_id,output reg[14:0]ui_state=0,output reg[7:0]shape_threshold=32
++ output config_error,output reg[31:0]committed_id,output[31:0]rejected_id,output reg[23:0]ui_state=0,output reg[7:0]shape_threshold=32
+ );
+  wire[2:0]short_p,long_p;reg[5:0]key_pending=0;
+  vision_keys #(.DEBOUNCE(DEBOUNCE),.LONG_PRESS(LONG_PRESS)) keys(video_clk,rst_n,keys_n,short_p,long_p);
+@@ -36,7 +36,7 @@
+   end
+  end
+  reg[30:0]settings=31'(3|(128<<9)|(128<<20));reg apply_request=0,apply_ack=0;
+- reg[22:0]ui_pending=23'(32<<15);
++ reg[31:0]ui_pending=32'(32<<15);
+  (* async_reg="true" *)reg[2:0]apply_sync=0;(* async_reg="true" *)reg[1:0]ack_sync=0;
+  reg[30:0]active=31'(3|(128<<9)|(128<<20));reg vq=0;
+  wire apply_busy=apply_request!=ack_sync[1];
+@@ -47,7 +47,7 @@
+   if(!rst_n)begin apply_sync<=0;apply_ack<=0;active<=31'(3|(128<<9)|(128<<20));vq<=0;ui_state<=0;shape_threshold<=32;end
+   else begin
+    apply_sync<={apply_sync[1:0],apply_request};vq<=vs;
+-   if(vs&&!vq&&apply_sync[2]!=apply_ack)begin active<=settings;{shape_threshold,ui_state}<=ui_pending;apply_ack<=apply_sync[2];end
++   if(vs&&!vq&&apply_sync[2]!=apply_ack)begin active<=settings;shape_threshold<=ui_pending[22:15];ui_state<={ui_pending[31:23],ui_pending[14:0]};apply_ack<=apply_sync[2];end
+   end
+  end
+  reg[11:0]rx=0,ry=0,rw=W,rh=H,dw=W,dh=H,dx=0,dy=0,jdx=0,jdy=0;
+@@ -72,7 +72,7 @@
+  end
+  always @(posedge clk)begin
+   if(!rst_n)begin
+-   ack_sync<=0;overflow_sync<=0;flash_sync<=0;flash_gpio<=4'b0010;settings<=31'(3|(128<<9)|(128<<20));apply_request<=0;ui_pending<=23'(32<<15);
++   ack_sync<=0;overflow_sync<=0;flash_sync<=0;flash_gpio<=4'b0010;settings<=31'(3|(128<<9)|(128<<20));apply_request<=0;ui_pending<=32'(32<<15);
+    rx<=0;ry<=0;rw<=W;rh<=H;dw<=W;dh<=H;dx<=0;dy<=0;jdx<=0;jdy<=0;
+    roi_enabled<=0;job_pending<=0;error_latch<=0;config_id<=0;requested<=0;rejected<=0;committed_id<=0;fw_busy<=0;fw_rejected<=0;ms<=0;display_x<=0;display_y<=0;
+   end else begin
+@@ -91,7 +91,7 @@
+     8'h38:begin fw_busy<=pwdata[0];fw_rejected<=pwdata[1];if(pwdata[2])error_latch<=1;end
+     8'h3c:requested<=pwdata;
+     8'h40:rejected<=pwdata;
+-    8'h44:ui_pending<=pwdata[22:0];
++    8'h44:ui_pending<=pwdata;
+     8'h48:flash_gpio[2:0]<=pwdata[2:0];
+     8'h4c:flash_gpio[3]<=pwdata[0];
+    endcase
+--- before/scripts/build_vision_firmware.py
++++ scripts/build_vision_firmware.py
+@@ -19,7 +19,7 @@
+ OUT.mkdir(parents=True,exist_ok=True)
+ cmd=[str(BIN/'riscv-none-elf-gcc.exe'),'-march=rv32i_zicsr_zifencei','-mabi=ilp32',
+  '-Os','-flto','-ffunction-sections','-fdata-sections','-ffreestanding','-fno-builtin','-fno-pic','-msmall-data-limit=0','-mno-relax',
+- '-nostdlib','-I'+str(SRC),*(['-DVISION_MULHI_CFU'] if a.mulhi_cfu else []),'-Wl,--gc-sections','-Wl,--defsym=__boot_bytes='+str(a.boot_kb*1024),'-Wl,-Map='+str(OUT/'vision.map'),
++ '-nostdlib',*(['-DVISION_BOOTSTRAP'] if a.load_method=='embedded' else []),'-I'+str(SRC),*(['-DVISION_MULHI_CFU'] if a.mulhi_cfu else []),'-Wl,--gc-sections','-Wl,--defsym=__boot_bytes='+str(a.boot_kb*1024),'-Wl,-Map='+str(OUT/'vision.map'),
+  '-T',str(SRC/('link.ld' if a.load_method=='embedded' else 'link_ddr.ld')),
+  str(SRC/'start.S'),*([str(SRC/'boot_spi.c')] if a.load_method=='embedded' else []),str(a.main.resolve()),str(SRC/'flyhash.c'),'-lgcc','-o',str(OUT/'vision.elf')]
+ subprocess.run(cmd,check=True)
+--- before/scripts/test_control_firmware.py
++++ scripts/test_control_firmware.py
+@@ -68,27 +68,27 @@
+  check(state.pending==2&&!state.warming&&(reg[4]&16));accept();check(state.good);
+  event(4,1);unsigned saved_sobel=threshold(9);event(1,7);event(255,2);check(state.shape_threshold==48&&threshold(9)==saved_sobel);event(255,4);check(state.shape_threshold==32);event(23,1);event(255,4);check(state.shape_threshold==1);event(23,255);event(255,2);check(state.shape_threshold==255);event(23,32);
+  // UI reuses the real key event policy; no host is needed for any action.
+- event(0x61,0);event(255,8);check(state.menu==1);event(255,2);check(state.settings&8);event(255,4);check(!(state.settings&8));
++ event(0x61,1);check(state.menu==1);event(255,2);check(state.settings&8);event(255,4);check(!(state.settings&8));
+  event(0x30,0);event(0x31,(1920u<<12)|1080);event(0x32,(1920u<<12)|1080);event(0x33,0);
+- event(255,8);check(state.menu==2);event(255,2);check(state.roi[0]==((480u<<12)|270)&&state.roi[1]==((960u<<12)|540));
++ event(0x61,2);check(state.menu==2);event(255,2);check(state.roi[0]==((480u<<12)|270)&&state.roi[1]==((960u<<12)|540));
+  apply();check(state.pending==2&&reg[0x44/4]==((32u<<15)|(2u<<11)|960));
+  event(255,2);check(state.roi[1]==((480u<<12)|270)&&state.key_roi_dirty);accept();accept();check(state.good&&!state.pending);
+- event(255,8);check(state.menu==3);unsigned old_x=state.roi[0]>>12;event(255,2);check((state.roi[0]>>12)==old_x+32);
++ event(0x61,3);check(state.menu==3);unsigned old_x=state.roi[0]>>12;event(255,2);check((state.roi[0]>>12)==old_x+32);
+  for(unsigned i=0;i<100;i++)event(255,2);check((state.roi[0]>>12)==1440);event(255,4);check((state.roi[0]>>12)==1408);
+- event(255,8);for(unsigned i=0;i<100;i++)event(255,4);check((state.roi[0]&4095)==0);
+- event(255,8);event(255,4);check(state.roi[2]==((960u<<12)|540));
+- event(255,8);for(unsigned i=0;i<100;i++)event(255,2);check(state.roi[3]>>12==960);
+- event(255,8);for(unsigned i=0;i<100;i++)event(255,2);check((state.roi[3]&4095)==540);
++ event(0x61,4);for(unsigned i=0;i<100;i++)event(255,4);check((state.roi[0]&4095)==0);
++ event(0x61,5);event(255,4);check(state.roi[2]==((960u<<12)|540));
++ event(0x61,6);for(unsigned i=0;i<100;i++)event(255,2);check(state.roi[3]>>12==960);
++ event(0x61,7);for(unsigned i=0;i<100;i++)event(255,2);check((state.roi[3]&4095)==540);
+  event(0x61,5);event(255,2);check(state.roi[2]==((1920u<<12)|1080)&&state.roi[3]==0);
+  event(0x61,2);for(unsigned i=0;i<10;i++)event(255,4);check(state.roi[0]==0&&state.roi[1]==((1920u<<12)|1080)&&!state.roi_enable);
+- event(0x61,7);event(255,8);check(state.menu==8);
++ event(0x61,8);check(state.menu==8);
+  event(255,2);check(state.ai_policy==2&&!state.ai_manual);event(255,2);check(state.ai_policy==0);event(255,4);check(state.ai_request==0);
+  event(255,2);check(state.ai_policy==1&&state.ai_manual);event(255,4);check(state.ai_request==1);
+  event(255,16);check(((state.settings>>4)&3)==0);event(255,16);check(((state.settings>>4)&3)==1);
+- event(255,8);check(state.menu==9);event(255,2);check(state.selftest_request==1);event(255,4);check(state.selftest_request==1);
+- event(255,8);check(state.menu==10);event(255,2);check(state.ai_manual==3);
++ event(0x61,9);check(state.menu==9);event(255,2);check(state.selftest_request==1);event(255,4);check(state.selftest_request==1);
++ event(0x61,10);check(state.menu==10);event(255,2);check(state.ai_manual==3);
+  event(0x60,1);check(state.ai_manual==2);event(0x61,8);event(255,2);check(state.ai_policy==2&&state.ai_manual==2);
+- event(0x61,10);event(255,4);check(state.ai_manual==0);event(255,8);check(state.menu==0);
++ event(0x61,10);event(255,4);check(state.ai_manual==0);event(0x61,0);check(state.menu==0);
+  event(0x60,1);check(!state.ai_manual);apply();accept();control_service_step();check(!state.enabled&&!state.pending);
+  const char *p="PASS RV32I controls independent thresholds16..2047 step16, keys/history,11-page UI/AI single-shot/selftest/FOMO selection, bounded zoom/pan/viewport, coalesced frozen ROI commits, atomic feature wait and disable\n";
+  while(*p)*(volatile unsigned char *)0x10000000=*p++;finish(1);
+--- before/scripts/test_key_ui_board.py
++++ scripts/test_key_ui_board.py
+@@ -37,12 +37,12 @@
+   key(2);settled('Canny64_to80',lambda s:s['canny_threshold']==80)
+   control('--mode',7,'--shape-threshold',32);key(2);assert control(roi=False)['shape_threshold']==48
+   key(4);assert control(roi=False)['shape_threshold']==32
+-  key(8);assert control(roi=False)['menu']==1
++  focus(1);assert control(roi=False)['menu']==1
+   key(2);settled('median_on',lambda s:s['median']==1)
+   key(4);settled('median_off',lambda s:s['median']==0)
+   # Freeze before changing any crop; the displayed original must stay identical.
+   key(16);s=settled('freeze_direct',lambda s:s['memory']==1 and s['source_frozen'] and s['roi_frame_ok'])
+-  held=s['roi_frame_id'];key(8);assert control(roi=False)['menu']==2
++  held=s['roi_frame_id'];focus(2);assert control(roi=False)['menu']==2
+   key(2)
+   ready=lambda s:s['roi_frame_ok'] and not(s['config_busy'] or s['render_busy'] or s['render_pending']) and s['applied_config_id']==s['requested_config_id']
+   s=settled('frozen_zoom2x',lambda s:ready(s) and s['roi']==[480,270,960,540]);assert s['roi_frame_id']==held,(held,s)
+--- before/scripts/verify_vision_features.ps1
++++ scripts/verify_vision_features.ps1
+@@ -13,6 +13,7 @@
+  $rtl='board/ti60f225_v4/rtl/vision/'
+  $tests=@(
+   @{name='osd';src=@('vision_osd.sv')},
++  @{name='sidebar_video';src=@('vision_osd.sv','vision_sidebar_overlay.sv')},
+   @{name='line_direct';src=@('vision_line_direct.sv','vision_window3_pair.sv','vision_line_metrics.sv','vision_frontend.sv','vision_window3.sv','vision_median9.sv','vision_sobel.sv')},
+   @{name='shape_classifier';src=@('vision_shape_classifier.sv')},
+   @{name='shadow_chroma';src=@('../rgb_shadow_denoise.sv')},
+--- before/scripts/vision_control.py
++++ scripts/vision_control.py
+@@ -26,7 +26,8 @@
+ def decode_ui(v):
+  if v>>160!=0x56495331 or (v>>128)&0xffffffff!=0x26101040:raise RuntimeError('Key UI diagnostic mismatch')
+  s=(v>>96)&0xffffffff
+- return dict(menu=(v>>75)&15,menu_value=(v>>64)&2047,shape_threshold=(v>>79)&255,index=(s>>15)&7)
++ return dict(menu=(v>>75)&15,menu_value=(v>>64)&2047,shape_threshold=(v>>79)&255,index=(s>>15)&7,
++             sidebar_open=(v>>95)&1,sidebar_edit=(v>>94)&1,sidebar_item=(v>>90)&15,center_status=(v>>87)&7)
+ p=argparse.ArgumentParser();p.add_argument('--sensor',choices=['sc431hai','sc2210'],default='sc431hai');p.add_argument('--url',default='ftdi://0x0403:0x6011:4:3/2');p.add_argument('--mode',type=int);p.add_argument('--threshold',type=int);p.add_argument('--sobel-threshold',type=int);p.add_argument('--canny-threshold',type=int);p.add_argument('--median',type=int,choices=[0,1]);p.add_argument('--memory',type=int,choices=range(4));p.add_argument('--index',type=int,choices=range(7),help='F2:0..5 static history,6 autoplay; F3:0..5 comparison');p.add_argument('--page',type=int,default=0,choices=range(33));p.add_argument('--color-order',type=int,choices=range(6));p.add_argument('--gamma','--tone',dest='gamma',type=int,choices=[0,1,2,3]);p.add_argument('--gain-r',type=int);p.add_argument('--gain-g',type=int);p.add_argument('--gain-b',type=int);p.add_argument('--samples',type=int,default=5);p.add_argument('--ae',type=int,choices=[0,1]);p.add_argument('--exposure',type=int);p.add_argument('--lcd-test',type=int,choices=[0,1]);p.add_argument('--lcd-bist',type=int,choices=[0,1]);p.add_argument('--lcd-backlight',type=int,choices=[0,1]);p.add_argument('--shape',type=int,choices=[0,1]);p.add_argument('--shape-threshold',type=int,choices=range(1,256))
+ p.add_argument('--menu',type=int,choices=range(11));p.add_argument('--key-event',type=int,choices=range(64),help='Inject the same short/long event bits as hardware keys for automated policy checks');
+ p.add_argument('--ai-policy',type=int,choices=[0,1,2],help='0 off,1 configured ROI on displayed frame,2 geometry-guided ROI');p.add_argument('--ai-status',action='store_true');
+--- before/sim/tb_vision_ai_bridge.sv
++++ sim/tb_vision_ai_bridge.sv
+@@ -43,6 +43,12 @@
+  repeat(8)@(negedge clk);paddr=8'h10;#1;if(prdata!=1)$fatal(1,"old processing geometry accepted");
+  geometry_context=context_id;@(negedge video_clk);geometry_done=1;@(negedge video_clk);geometry_done=0;
+  repeat(8)@(negedge clk);paddr=8'h10;#1;if(prdata!=2)$fatal(1,"fresh geometry lost");
++ write(4,0);repeat(3)@(negedge video_clk);boundary;
++ if(enabled)$fatal(1,"AI OFF did not persist");
++ geometry_context=context_id;@(negedge video_clk);geometry_done=1;@(negedge video_clk);geometry_done=0;
++ repeat(8)@(negedge clk);paddr=8'h10;#1;if(prdata!=3)$fatal(1,"centering geometry missing with AI OFF");
++ write(4,1);repeat(3)@(negedge video_clk);boundary;
++ publish(2);repeat(6)@(negedge video_clk);boundary;
+  frame_ok=0;#1;if(result_match)$fatal(1,"failed scan accepted");
+  if(!result_identity_match)$fatal(1,"ROI top blanking falsely invalidated completed task identity");
+  $display("PASS tb_vision_ai_bridge asynchronous geometry, held packet/backpressure, VS commit, source/config/context/model, age and failed scan");$finish;
+--- before/sim/tb_vision_control_bridge.sv
++++ sim/tb_vision_control_bridge.sv
+@@ -4,7 +4,7 @@
+ reg rst_n=0,vs=0,cmd_event=0;reg[2:0]keys_n=7;reg[7:0]cmd_op=0,paddr=0;reg[23:0]cmd_value=0;
+ reg flash_miso=0;wire[3:0]flash_gpio;
+ reg psel=0,penable=0,pwrite=0;reg[31:0]pwdata=0;wire[31:0]prdata;wire pready,pslverror;
+-wire[7:0]shape_threshold;wire[14:0]ui_state;wire[2:0]mode,history_index;wire median_en;wire[1:0]memory_mode;wire[10:0]sobel_threshold,canny_threshold,threshold;
++wire[7:0]shape_threshold;wire[23:0]ui_state;wire[2:0]mode,history_index;wire median_en;wire[1:0]memory_mode;wire[10:0]sobel_threshold,canny_threshold,threshold;
+ reg job_ready=0,capture_done=0,capture_error=0,source_hold_valid=0,render_done=0,render_error=0,render_pending=0,vblank=0,scan_busy=0;
+ reg[31:0]capture_count=0;wire job_valid,enable,freeze_source;wire[31:0]job_config_id;
+ wire[15:0]roi_x,roi_y,roi_w,roi_h,dst_w,dst_h,display_x,display_y;
+@@ -53,6 +53,9 @@
+  rd('h0c,v);if(!(v&1))$fatal(1,"missing pending atomic commit");frame;
+  if(mode!=5||!median_en||threshold!=48||sobel_threshold!=96||memory_mode!=1)$fatal(1,"atomic settings");
+  if(ui_state!=((3<<11)|1408)||shape_threshold!=48)$fatal(1,"menu/settings not atomic");
++ wr('h44,32'hcc1003c0);wr(8,5|(1<<3)|(1<<4)|(96<<9)|(48<<20));
++ repeat(8)@(negedge video_clk);if(ui_state!=((3<<11)|1408))$fatal(1,"sidebar changed outside VS");frame;
++ if(ui_state!=24'hcc03c0||shape_threshold!=32)$fatal(1,"sidebar selection/edit/value CDC mixed");
+  repeat(8)@(negedge clk);if(!freeze_source)$fatal(1,"freeze CDC");
+  wr('h20,(13<<12)|7);wr('h24,(37<<12)|45);wr('h28,(80<<12)|64);wr('h2c,(8<<12)|12);
+  wr('h34,17);wr('h3c,17);wr('h38,1);wr('h30,7);
+--- before/sim/vision/tb_osd.sv
++++ sim/vision/tb_osd.sv
+@@ -2,11 +2,14 @@
+ module tb;
+ reg clk=0;always #5 clk=~clk;
+ reg[11:0]x=8,y=4;reg[2:0]mode=2;reg[10:0]threshold=96;wire active,ink;
+-reg[14:0]ui=0;
++reg[23:0]ui=0;
+ reg fusion=0,matched=1;reg[351:0]packet=0;reg[15:0]age=0;
+ vision_osd dut(x,y,mode,threshold,1'b1,2'd0,3'd0,1'b1,2'd0,1'b0,1'b0,active,ink,11'd16,fusion,packet,matched,age,clk,ui);
+ task character(input integer position,input[7:0]wanted);
+ begin @(negedge clk);x=8+12*position;@(posedge clk);#1;if(dut.ch_q!==wanted||!active)$fatal(1,"OSD character %0d: %c expected %c",position,dut.ch_q,wanted);end
++endtask
++task side_character(input integer position,input[7:0]wanted);
++begin @(negedge clk);y=18*32+8;x=16+16*position;@(posedge clk);#1;if(dut.ch_q!==wanted||!active)$fatal(1,"sidebar status %0d: %c expected %c",position,dut.ch_q,wanted);end
+ endtask
+ integer j,expected;
+ initial begin
+@@ -43,6 +46,11 @@
+  ui=10<<11;character(0,"N");character(1,"N");character(3,"B");character(6,"E");
+  ui=(10<<11)|1;character(3,"F");character(4,"O");character(5,"M");character(6,"O");
+  y=76;packet[159:128]=2;character(0,"M");character(1,"S");
+- $display("PASS pipelined OSD mode/threshold, fusion TEST/OLD, independent IDs and signed score bytes");$finish;
++ fusion=0;packet[0]=0;ui=24'h800000|(11<<18);packet[14:13]=2;
++ side_character(0,"S");side_character(1,"T");side_character(3,"P");side_character(6,"S");
++ packet[14:13]=3;side_character(3,"F");side_character(6,"L");
++ ui=24'h800000|(9<<18);packet[12:11]=1;side_character(0,"A");side_character(1,"I");side_character(3,"R");side_character(5,"N");
++ packet[12:11]=2;side_character(3,"D");side_character(6,"E");
++ $display("PASS pipelined OSD mode/threshold, fusion TEST/OLD, independent IDs, signed scores, sidebar AI/selftest visible with AI OFF");$finish;
+ end
+ endmodule
+--- /dev/null
++++ board/ti60f225_v4/rtl/vision/vision_sidebar_overlay.sv
+@@ -0,0 +1,23 @@
++// Final scan overlay: opening the sidebar never switches the camera ISP bypass.
++// All pixels and syncs retain their order, with one extra video-clock beat.
++module vision_sidebar_overlay(input clk,rst_n,de,hs,vs,input[23:0]rgb,ui_state,input[3:0]ai_status,
++ output ode,ohs,ovs,output[23:0]orgb);
++ reg[11:0]x=0,y=0;reg de_q=0,hs_q=0,vs_q=0,open_q=0;reg[23:0]rgb_q=0;
++ wire active,ink;
++ vision_osd sidebar_font(.clk(clk),.x(x),.y(y),.ui_state(ui_state),
++  .mode(3'd0),.threshold(11'd0),.median_en(1'b0),.memory_mode(2'd0),.history_index(3'd0),
++  .canny_ready(1'b0),.shape_class(2'd0),.shape_valid(1'b0),.shape_enable(1'b0),
++  .requested_threshold(11'd0),.fusion_enabled(1'b0),.fusion_result({337'd0,ai_status,11'd0}),
++  .fusion_match(1'b0),.fusion_age(16'd0),.active(active),.ink(ink));
++ always @(posedge clk)begin
++  if(!rst_n)begin x<=0;y<=0;de_q<=0;hs_q<=0;vs_q<=0;open_q<=0;rgb_q<=0;end
++  else begin
++   de_q<=de;hs_q<=hs;vs_q<=vs;rgb_q<=rgb;open_q<=ui_state[23];
++   if(vs&&!vs_q)begin x<=0;y<=0;end
++   else if(de)x<=x+1'b1;
++   else if(de_q)begin x<=0;y<=y+1'b1;end
++  end
++ end
++ assign ode=de_q,ohs=hs_q,ovs=vs_q;
++ assign orgb=open_q&&active?(ink?24'hffff80:24'h101010):rgb_q;
++endmodule
+--- /dev/null
++++ scripts/test_sidebar_center.py
+@@ -0,0 +1,133 @@
++"""Offline RV32I sidebar transactions and source-bound one-shot ROI centering."""
++import argparse,ast,json,subprocess
++from pathlib import Path
++ROOT=Path(__file__).resolve().parents[1]
++p=argparse.ArgumentParser();p.add_argument('--output-dir',type=Path,default=ROOT/'results/sidebar_center_20261022/control')
++out=p.parse_args().output_dir;out.mkdir(parents=True,exist_ok=True)
++source=r'''
++#include <stdint.h>
++#define CONTROL_TEST
++#define FUSION_TEST
++#define VISION_FOMO
++static uint32_t c[32],f[64];
++static uint32_t cr(unsigned o){return c[o/4];}
++static void cw(unsigned o,uint32_t v){c[o/4]=v;if(o==8)c[3]|=1;if(o==0x30){c[4]=(c[4]&~32u)|((v&1)<<5);if(v&2)c[4]|=16;if(v&4)c[4]&=~(1u<<11);if(v&8)c[6]=c[0x34/4];}}
++#define CTRL_R(o) cr(o)
++#define CTRL_W(o,v) cw(o,v)
++#define FUS_R(o) (f[(o)/4])
++#define FUS_W(o,v) (f[(o)/4]=(v))
++#define CONTROL_STATE (&state)
++extern struct vision_control_state state;
++#include "fusion_service.h"
++struct vision_control_state state;volatile uint32_t fusion_result[16];
++static unsigned checks=0;
++static void puts(const char*s){while(*s)*(volatile unsigned char*)0x10000000=*s++;}
++static void hex(uint32_t v){const char*s="0123456789abcdef";for(int k=28;k>=0;k-=4)*(volatile unsigned char*)0x10000000=s[(v>>k)&15];}
++static void finish(unsigned ok){*(volatile unsigned*)0x100000=ok?0x5555:0x3333;for(;;);}
++static void check_line(unsigned ok,unsigned line){checks++;if(!ok){puts("FAIL ");hex(line);puts("\n");finish(0);}}
++#define check(x) check_line((x),__LINE__)
++static void key(unsigned bits){control_event(0xff000000u|bits);}
++static void trace(const char*name){puts("UI ");puts(name);puts(" ");hex(control_ui(&state));puts(" ");hex(state.settings);puts("\n");}
++static void reset(void){for(unsigned i=0;i<32;i++)c[i]=0;for(unsigned i=0;i<64;i++)f[i]=0;c[4]=(1<<8)|(1<<6);c[5]=100;f[0]=0x26101003;f[4]=10;f[5]=100;f[7]=5;control_init();state.settings=(state.settings&~48u)|16;}
++static void apply(void){control_service_step();c[3]&=~1u;control_service_step();}
++static void accept(void){c[4]&=~16u;c[4]|=1u<<7;c[6]=c[0x34/4];control_service_step();}
++static void select(unsigned item){if(!state.sidebar_open)key(8);while(state.sidebar_item!=item)key(4);}
++static void action(unsigned item){select(item);key(1);check(state.sidebar_edit);key(1);check(!state.sidebar_edit);}
++static void geometry(unsigned x,unsigned y,unsigned w,unsigned h,unsigned render,unsigned valid){
++ uint64_t box=(1ull<<63)|((uint64_t)valid<<62)|(2ull<<60)|((uint64_t)(x+2)<<36)|((uint64_t)(y+2)<<24)|((uint64_t)(x+w+1)<<12)|(y+h+1);
++ f[4]++;f[6]=render;f[8]=box>>32;f[9]=box;
++}
++static void verify_box(unsigned x,unsigned y,unsigned w,unsigned h,unsigned maxz){
++ reset();state.center_zoom=maxz;state.center_serial=state.serial;state.center_settings=state.settings;state.center_shape=state.shape_threshold;
++ check(control_center_box(x,y,w,h,100,0,5));
++ unsigned sx=state.roi[0]>>12,sy=state.roi[0]&4095,sw=state.roi[1]>>12,sh=state.roi[1]&4095;
++ unsigned dw=state.roi[2]>>12,dh=state.roi[2]&4095,dx=state.roi[3]>>12,dy=state.roi[3]&4095,z=dw/sw;
++ check(sw&&sh&&dw&&dh&&sx+sw<=1920&&sy+sh<=1080&&dx+dw<=1920&&dy+dh<=1080&&!(dw&7));
++ check(z>=1&&z<=8&&(!maxz||z<=maxz)&&dw==sw*z&&dh==sh*z);
++ int cx=(int)(dx+(x+w/2-sx)*z)-960,cy=(int)(dy+(y+h/2-sy)*z)-540;
++ check(cx>=-4&&cx<=4&&cy>=-4&&cy<=4);
++ check(x>=sx&&x+w<=sx+sw&&y>=sy&&y+h<=sy+sh);
++ check(state.center_frame==100&&state.center_context==5&&state.center_stage==2&&state.pending==1);
++}
++void main(void){
++ uint32_t isa;__asm__ volatile("csrr %0,misa":"=r"(isa));check((isa&(1u<<8))&&!(isa&0x102du));
++ reset();check(offsetof(struct vision_control_state,sidebar_open)==120);
++ state.roi[0]=123;state.ai_policy=2;state.sidebar_open=1;state.center_stage=3;control_sidebar_reset();check(state.roi[0]==123&&state.ai_policy==2&&!state.sidebar_open&&!state.center_stage);reset();
++ unsigned original=state.settings;key(8);check(state.sidebar_open&&!state.sidebar_edit);trace("root");
++ key(2);check(state.sidebar_item==15);key(4);check(state.sidebar_item==0);
++ key(1);key(2);check(state.edit_value==6&&state.settings==original);trace("edit_mode");
++ key(8);check(!state.sidebar_edit&&state.sidebar_open&&state.settings==original);trace("cancel");key(8);check(!state.sidebar_open);
++ select(SIDE_MODE);key(1);key(2);check(state.sidebar_edit&&state.settings==original);key(1);check((state.settings&7)==6);
++ select(SIDE_THRESHOLD);key(1);for(unsigned i=0;i<200;i++)key(4);check(state.edit_value==16&&((state.settings>>20)&2047)==80);key(1);check(((state.settings>>20)&2047)==16&&((state.settings>>9)&2047)==128);
++ key(1);for(unsigned i=0;i<200;i++)key(2);check(state.edit_value==2047);key(8);check(((state.settings>>20)&2047)==16);
++ select(SIDE_MEDIAN);key(1);key(4);check(state.settings&8);key(1);check(!(state.settings&8));
++ select(SIDE_ZOOM);key(1);key(2);check(state.edit_value==960&&state.roi[1]==((1920u<<12)|1080)&&!state.pending);trace("edit_zoom");
++ key(8);check(state.roi[1]==((1920u<<12)|1080));key(1);key(2);key(1);check(state.key_roi_dirty&&state.roi[1]==((960u<<12)|540));
++ apply();check(state.pending==2);accept();check(state.good&&!state.pending);
++ select(SIDE_PAN_X);key(1);key(2);check((state.edit_roi[0]>>12)==512&&(state.roi[0]>>12)==480);key(8);check((state.roi[0]>>12)==480);
++ select(SIDE_AI);key(1);key(2);check(!state.ai_policy);key(1);check(state.ai_policy==1&&state.ai_manual==1);
++ action(SIDE_RUN);check(state.ai_request==1);action(SIDE_SELFTEST);check(state.selftest_request==1);
++ select(SIDE_MODEL);key(1);key(2);check(state.ai_manual==1);key(1);check(state.ai_manual==3);
++ select(SIDE_TARGET_ZOOM);key(1);for(unsigned i=0;i<6;i++)key(2);check(state.edit_value==8&&!state.center_zoom);key(1);check(state.center_zoom==8);
++ key(16);check(((state.settings>>4)&3)==0&&state.sidebar_open);key(32);check(((state.settings>>4)&3)==1&&state.sidebar_open);
++ action(SIDE_FULL_VIEW);apply();check(!state.enabled&&!state.pending&&state.roi[0]==0&&state.roi[3]==0);
++ // New geometry is required after confirmation, even when AI is OFF.
++ reset();action(SIDE_CENTER);check(state.center_request==1);apply();control_center_step();check(state.center_stage==4&&!state.pending);
++ control_center_step();check(!state.pending);geometry(700,400,160,120,0,1);control_center_step();check(state.center_stage==2&&state.pending==1&&state.center_frame==100);
++ apply();check(state.pending==2);accept();control_center_step();check(state.center_status==CENTER_DONE&&!state.center_stage);trace("center_done");
++ unsigned serial=state.serial;for(unsigned i=0;i<10;i++){geometry(710,410,160,120,state.serial,1);control_center_step();}check(state.serial==serial);
++ // A target in an already panned/scaled viewport is mapped back to the source.
++ reset();state.enabled=state.good=1;state.freeze=1;c[4]|=128;state.serial=7;
++ state.commit[0]=(480u<<12)|270;state.commit[1]=state.commit[2]=(960u<<12)|540;state.commit[3]=(400u<<12)|200;
++ action(SIDE_CENTER);apply();control_center_step();geometry(700,400,160,120,7,1);control_center_step();
++ check(state.center_stage==2&&state.center_render==7&&state.center_frame==100);
++ check(state.roi[0]==((620u<<12)|395)&&state.roi[1]==((480u<<12)|270)&&state.roi[2]==((1920u<<12)|1080)&&!state.roi[3]);
++ // No target, stale transform, history mode and busy renderer do not alter the view.
++ reset();action(SIDE_CENTER);apply();control_center_step();geometry(700,400,160,120,0,0);control_center_step();check(state.center_status==CENTER_NONE&&!state.pending);trace("no_target");
++ reset();action(SIDE_CENTER);apply();control_center_step();geometry(700,400,160,120,99,1);control_center_step();check(state.center_status==CENTER_STALE&&!state.pending);
++ reset();state.pending=1;action(SIDE_CENTER);control_center_step();check(state.center_status==CENTER_BUSY&&state.pending==1&&state.serial==0);
++ reset();state.settings=(state.settings&~48u)|32;action(SIDE_CENTER);control_center_step();check(state.center_status==CENTER_BUSY&&!state.pending&&((state.settings>>4)&3)==2);
++ reset();action(SIDE_CENTER);apply();control_center_step();state.shape_threshold++;geometry(700,400,160,120,0,1);control_center_step();check(state.center_status==CENTER_STALE&&!state.pending);
++ // A FOMO selection requests a fresh job, not a previously published model result.
++ reset();state.ai_manual=3;state.ai_policy=1;action(SIDE_CENTER);apply();control_center_step();check(state.center_stage==3&&state.ai_request==1);
++ static struct fusion_job j;j.g.frame=100;j.g.context=5;
++ control_center_fomo(0,&j,1,700,400,160,120);check(state.center_stage==3&&!state.pending);
++ control_center_fomo(state.center_seen,&j,1,700,400,160,120);check(state.pending==1&&state.center_stage==2);
++ reset();state.ai_manual=3;state.ai_policy=1;action(SIDE_CENTER);apply();control_center_step();control_center_fomo(state.center_seen,&j,0,0,0,0,0);check(state.center_status==CENTER_NONE);
++ reset();state.ai_manual=3;state.ai_policy=1;action(SIDE_CENTER);apply();control_center_step();j.g.context=4;control_center_fomo(state.center_seen,&j,1,700,400,160,120);check(state.center_status==CENTER_STALE);
++ reset();state.ai_manual=3;state.ai_policy=2;action(SIDE_CENTER);apply();control_center_step();state.ai_policy=0;control_center_step();check(state.center_status==CENTER_STALE&&!state.pending);
++ static const unsigned zs[5]={0,1,2,4,8};
++ for(unsigned iz=0;iz<5;iz++)for(unsigned iy=0;iy<9;iy++)for(unsigned ix=0;ix<9;ix++){
++  unsigned w=40+ix*13,h=30+iy*9,x=(1920-w)*ix/8,y=(1080-h)*iy/8;verify_box(x,y,w,h,zs[iz]);
++ }
++ verify_box(0,0,1920,1080,0);verify_box(100,0,1600,1080,8);
++ puts("PASS sidebar_center checks=");hex(checks);puts(" geometry_cases=407\n");finish(1);
++}
++void trap(void){puts("TRAP\n");finish(0);}
++'''
++(out/'test.c').write_text(source)
++(out/'start.S').write_text('.section .text.start,"ax"\n.global _start\n_start:\n la sp,__stack_top\n la t0,trap\n csrw mtvec,t0\n call main\n j trap\n')
++(out/'link.ld').write_text('OUTPUT_ARCH(riscv)\nENTRY(_start)\nSECTIONS{. = 0x80000000; .text : {*(.text.start) *(.text*)} .rodata : {*(.rodata*)} .data : {*(.data*) *(.sdata*)} .bss : {*(.bss*) *(.sbss*)} __stack_top = 0x80100000;}')
++bin=Path('F:/Efinity/efinity-riscv-ide-2026.1/toolchain/bin')
++cmd=[str(bin/'riscv-none-elf-gcc.exe'),'-march=rv32i_zicsr_zifencei','-mabi=ilp32','-Os','-ffreestanding','-fno-builtin','-mno-relax','-msmall-data-limit=0','-nostdlib','-I'+str(ROOT/'firmware/vision'),'-T',str(out/'link.ld'),str(out/'start.S'),str(out/'test.c'),'-lgcc','-o',str(out/'test.elf')]
++r=subprocess.run(cmd,capture_output=True,text=True);(out/'compile.log').write_text(r.stdout+r.stderr);r.check_returncode()
++r=subprocess.run(['F:/Efinity/efinity-riscv-ide-2026.1/qemu/qemu-system-riscv32.exe','-M','virt','-cpu','rv32,g=false,m=false,a=false,c=false,f=false,d=false','-nographic','-bios','none','-kernel',str(out/'test.elf')],capture_output=True,text=True,timeout=60)
++(out/'test.log').write_text(r.stdout+r.stderr)
++assert r.returncode==0 and 'PASS sidebar_center' in r.stdout,(r.returncode,r.stdout,r.stderr)
++ui=[]
++for line in r.stdout.splitlines():
++ if line.startswith('UI '):
++  _,name,word,settings=line.split();ui.append(dict(name=name,word=int(word,16),ui=((int(word,16)>>23)<<15)|(int(word,16)&32767),settings=int(settings,16)))
++assert ui[0]['ui']==0x800005 and ui[3]['ui']==0xcc03c0,ui
++# Exercise the diagnostic decoder without importing its hardware-only CLI.
++tree=ast.parse((ROOT/'scripts/vision_control.py').read_text())
++decode=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='decode_ui')
++namespace={};exec(compile(ast.Module(body=[decode],type_ignores=[]),'decode_ui','exec'),namespace)
++for v in ui:
++ word=v['word'];record=namespace['decode_ui']((0x56495331<<160)|(0x26101040<<128)|(v['settings']<<96)|(word<<64))
++ assert record==dict(menu=(word>>11)&15,menu_value=word&2047,shape_threshold=(word>>15)&255,index=(v['settings']>>15)&7,
++                     sidebar_open=(word>>31)&1,sidebar_edit=(word>>30)&1,sidebar_item=(word>>26)&15,center_status=(word>>23)&7),record
++(out/'ui_vectors.json').write_text(json.dumps(ui,indent=2));(out/'ui_vectors.mem').write_text(''.join(f'{v["ui"]:06x}\n' for v in ui))
++checks=int(r.stdout.split('checks=')[1].split()[0],16)
++(out/'result.json').write_text(json.dumps(dict(passed=True,isa='RV32I',checks=checks,geometry_cases=407,diagnostic_decode_vectors=len(ui),scope='Production control/MMIO/geometry/FOMO result logic on QEMU; no board timing or real recognition acceptance',ui_vectors=ui),indent=2))
++print(r.stdout.strip())
+--- /dev/null
++++ sim/vision/tb_sidebar_video.sv
+@@ -0,0 +1,47 @@
++`timescale 1ns/1ps
++module tb;
++reg clk=0;always #5 clk=~clk;
++reg rst_n=0,de=0,hs=0,vs=0;reg[23:0]rgb=0,ui_state=0;
++reg[3:0]ai_status=0;
++wire ode,ohs,ovs;wire[23:0]orgb;
++vision_sidebar_overlay dut(.*);
++reg[23:0]words[0:5];integer pix,frame,row,col,file,good=0,outside=0;reg[23:0]expected;reg[31:0]rng=32'h4312210;
++task tick;
++ begin @(posedge clk);#1;
++  if(ode!==de||ohs!==hs||ovs!==vs)$fatal(1,"RGB/sync alignment");
++  if(ode&&(!ui_state[23]||col>=448||row>=672))begin
++   if(orgb!==rgb)$fatal(1,"pixel changed outside sidebar at %0d,%0d",col,row);outside=outside+1;
++  end
++  @(negedge clk);
++ end
++endtask
++initial begin
++ words[0]=24'h800005;words[3]=24'hcc03c0; // Golden RV32I root/edit-zoom UI words.
++ for(pix=65;pix<=90;pix=pix+1)if(dut.sidebar_font.glyph(pix)==0)$fatal(1,"missing uppercase UI glyph %0d",pix);
++ repeat(2)@(negedge clk);rst_n=1;col=1000;row=1000;
++ for(pix=0;pix<65536;pix=pix+1)begin rng=rng^(rng<<13);rng=rng^(rng>>17);rng=rng^(rng<<5);rgb=rng[23:0];de=rng[0];hs=rng[1];vs=rng[2];tick;end
++ // Preview comes from the production font/compositor, on a synthetic test scene.
++ for(frame=0;frame<2;frame=frame+1)begin
++  ui_state=words[frame==0?0:3];de=0;hs=0;vs=1;tick;vs=0;tick;
++  if(frame==0)file=$fopen("results/vision_features/sidebar_menu.ppm","wb");
++  else file=$fopen("results/vision_features/sidebar_edit.ppm","wb");
++  $fwrite(file,"P6\n1920 1080\n255\n");
++  for(row=0;row<1080;row=row+1)begin
++   for(col=0;col<1920;col=col+1)begin
++    de=1;rgb=(col>=850&&col<1070&&row>=430&&row<650)?24'h30a0e0:((col%120==0||row%120==0)?24'h606060:24'h303c44);
++    @(posedge clk);#1;
++    if(!ode)$fatal(1,"DE lost");
++    if(col>=448||row>=672)begin if(orgb!==rgb)$fatal(1,"sidebar leaked outside rectangle");outside=outside+1;end
++    if(col==0&&row==0&&orgb!=24'h101010)$fatal(1,"sidebar background absent");
++    if(col>=16&&col<400&&row<672&&orgb==24'hffff80)good=good+1;
++    $fwrite(file,"%c%c%c",orgb[23:16],orgb[15:8],orgb[7:0]);@(negedge clk);
++   end
++   de=0;hs=1;tick;hs=0;tick;
++  end
++  $fclose(file);
++ end
++ if(good<1000)$fatal(1,"sidebar font missing");
++ $display("PASS sidebar_video outside=%0d ink=%0d exact RGB and sync, mode bypass retained",outside,good);$finish;
++end
++initial begin #100000000;$fatal(1,"watchdog");end
++endmodule
+--- /dev/null
++++ docs/SIDEBAR_CENTER_20261022.md
+@@ -0,0 +1,85 @@
++# 侧栏菜单与单目标居中、放大
++
++日期：2026-10-22。**离线候选，已生成配套位流和完整 DDR 应用；本轮未连接板卡、未写 SRAM 或 Flash。** 当前现场部署记录仍见总状态中 10-18 的 SRAM 与 10-17 的 Flash 段落。
++
++## 按键操作
++
++使用现有 KEY0、KEY2、KEY3，KEY1 仍为复位。短按约 0.2 秒后松开，长按约 1 秒。
++
++| 状态 | KEY0 短按 | KEY0 长按 | KEY2 短按 | KEY3 短按 |
++|---|---|---|---|---|
++| 侧栏关闭 | 原八种显示模式切换 | 打开侧栏 | 原阈值 / 历史索引操作 | 原阈值 / 历史索引操作 |
++| 侧栏列表 | 进入选中项的编辑 / 确认页 | 关闭侧栏 | 上一项 | 下一项 |
++| 编辑 / 确认页 | 提交并返回列表 | 取消草稿并返回列表 | 增加 / 开启 | 减少 / 关闭 |
++
++KEY2 长按仍切换 F0/F1，KEY3 长按仍按原 F1/F2/F3 规则工作，侧栏打开时也保留。F2 静态历史 I0–I5 和 I6 自动播放保持；浏览历史索引前先关闭侧栏。原诊断命令 `0x61` 保留旧菜单页接口，`0x62` 保留同一套按键事件入口。
++
++设置先存为草稿，确认前视频参数和已提交 ROI 保持。确认后复用原参数帧边界提交、ROI 渲染及显示切换握手，不在像素扫描中途改几何。
++
++## 侧栏项目
++
++| 菜单 | 用途 / 数值 |
++|---|---|
++| MODE | 0 原图、1 灰度、2 Sobel、3 分屏、4 Sobel 叠加、5 Canny、6 Canny 叠加、7 SHAPE |
++| THRESH | 当前模式的阈值；Sobel / Canny 分开保存，16–2047、步进 16；SHAPE 为 1–255 |
++| MEDIAN | 中值开关，0 / 1 |
++| ZOOM | 改源裁剪大小；显示源 ROI 宽度，常规全幅依次 1920 / 960 / 480 / 240 |
++| PAN X / PAN Y | 移动源裁剪窗口，每次 32 / 16 个源像素 |
++| SIZE | 改输出窗口大小，显示输出宽度 |
++| POS X / POS Y | 移动输出窗口位置，每次 32 / 16 个显示像素 |
++| AI | 0 OFF、1 FIX 单次、2 几何引导 AUTO |
++| RUN AI | 确认后提交一次分析；原来为 OFF 时切到 FIX 单次 |
++| SELFTEST | 执行原定点自检，不代表实物识别准确率 |
++| MODEL | 0 BASE、1 FOMO；完整相机应用支持，基础控制应用跳过此项 |
++| CENTER | 使用一个新目标结果，自动居中并放大一次 |
++| TARGET Z | CENTER 的倍率上限：0 自动、1 / 2 / 4 / 8；大目标会降低实际倍率以保留整体 |
++| FULLVIEW | 确认后恢复全幅源、全幅输出、零偏移，退出 ROI，并取消待执行的居中 |
++
++屏幕使用原有 ASCII 字库，数字为十进制。Canny 的请求阈值与实际噪声下限仍按原 OSD 的 R / T 分别显示。
++
++选中 SELFTEST 时侧栏页脚显示 `ST NONE/WAIT/PASS/FAIL`，AI 关闭时也可查看。AI / RUN AI / MODEL 的页脚显示 `AI IDLE/RUN/DONE/ERR`；这是任务运行状态，结果与当前画面的身份、年龄仍按原 OSD 判断。
++
++## 单目标居中怎么用
++
++1. 在 F0 实时或 F1 冻结下，让当前几何识别或 FOMO 得到一个有效目标。AI 关闭 / BASE 时使用现有几何检测；FOMO 已启用时请求一次新的 FOMO 分析，沿用当前 FIX / AUTO 的分析区域规则。
++2. 长按 KEY0 打开侧栏，用 KEY2 / KEY3 选择 `CENTER`。
++3. KEY0 进入确认页，再按 KEY0 确认；之后自动完成裁剪、缩放与定位，无需逐项修改 PAN / ZOOM / POS。
++4. 等状态变成 `DONE`，长按 KEY0 收起侧栏。需要恢复时选择 `FULLVIEW` 确认。
++
++这是一次性构图，不是连续跟踪。自动倍率在 1 / 2 / 4 / 8 中选择，给目标留边；目标靠近图像边缘时用黑边保留中心位置，不拉伸纵横比。水平中心取整误差至多 4 个显示像素。几何路径沿用原检测的候选范围和有效性规则；FOMO FIX 使用已提交源 ROI，ROI 关闭时仍为原固定分析区 `[640,300,640,480]`，不是新增全图搜索。
++
++FOMO 等待时间仍由现有推理决定，未新增加速核；本轮没有重测板端耗时。当前模型精度和 A6 实物验收状态保持原记录，菜单和居中联调通过不等于识别精度通过。
++
++| 状态 | 含义 |
++|---|---|
++| READY | 尚未请求 / 已恢复全幅 |
++| WAIT | 等待新目标、AI 任务或原 ROI 提交完成 |
++| DONE | 居中配置已被原渲染提交通路确认 |
++| NO OBJ | 新结果中没有有效目标，当前构图保持 |
++| BUSY | 已有 ROI 提交，或当前处于 F2/F3；返回 F0/F1 后再请求 |
++| STALE | 等待期间模式、处理配置、源变换或结果身份改变，当前构图保持 |
++| ERROR | 原 DMA / 推理 / 渲染通路报告错误 |
++
++请求绑定源 `FRAME_ID`、渲染配置和处理 context；旧配置的目标框不用于调整新画面。几何检测在 AI OFF 时也更新，但 AI 结果显示的启用与身份检查仍保留。
++
++这里保存的是本次识别结果的来源身份；F0 按该坐标调整实时构图，F1 则重渲染持有的同一原帧。两种情况都不会把旧 AI 框当作新配置下的新结果。
++
++## 图像、资源和验证
++
++侧栏在原图 / 模式选择之后叠加，不进入检测或 AI 输入；打开侧栏不切换原图 ISP 旁路。侧栏外 RGB 保持，整条显示 RGB / DE / HS / VS 统一增加 **1 个 148.5MHz 视频时钟，约 6.73ns**，不缓存整帧。原 RGB24 图像回读仍保留 5 块 RAM，可读到最终显示中的侧栏。
++
++整机原生 P&R：**57821/60800 XLR、242/256 RAM、62/160 DSP**，相对 10-18 版增加 905 XLR、1 RAM、0 DSP，余 2979 XLR、14 RAM、98 DSP。最终 WNS +0.275ns、WHS +0.026ns，未分配核心引脚 0。首版文字表重复推断出额外 RAM，合并为一次共享查表后从 245 降到 242；没有删掉回读或既有功能。
++
++离线证据：RV32I 实际固件控制逻辑 2525 个断言 / 407 组居中几何，另含已有平移缩放窗口的逆映射与诊断解码；19 项核心和 38 项视频回归通过。最终侧栏两幅完整 1080p 仿真共核对 3577692 个侧栏外有效像素，RGB 与同步一致；查表合并前后 262144 个时钟逐周期一致。图像回读测试保留 RGB888、192bit 行头、元数据和短行拒绝检查。
++
++完整相机 DDR 应用为 184768B，比原版增加 5872B；BSS 仍为 66104B。片上 8KiB ROM、cache、CPU 和 CFU 配置保持。重新构建的紧凑启动 / 救援程序为 6656B，救援状态保留旧紧凑菜单；**新侧栏依赖配套的完整 DDR 应用，仅烧新位流后继续运行旧 Flash 应用不会出现新菜单。**
++
++## 制品与后续板上验收
++
++- 位流及原生报告：`F:/Project/fpga/vision_base/results/sidebar_center_20261022/release/`。
++- 完整相机应用：`F:/Project/fpga/vision_base/results/sidebar_center_20261022/firmware/vision.elf`。
++- 原权重保持：`F:/Project/fpga/vision_base/models/shape_cards_bringup/shape_cards_weights.bin`。
++- 结果、操作与验收边界：`F:/Project/fpga/vision_base/results/sidebar_center_20261022/REPORT.md`、`acceptance.json`。
++- 预览：该目录的 `sidebar_menu.png` / `sidebar_edit.png` 来自实际 RTL 合成测试场景，不是相机照片。
++
++硬件回到现场后，先加载这对位流和 DDR 应用，仅做 SRAM 验证；依次实测菜单确认 / 取消、阈值独立、F0/F1 CENTER、边缘目标、无目标、FULLVIEW、F2 静态历史、原图及各模式回读，再测连续运行和实际 HDMI 画面。本轮不执行这些硬件操作，Flash 保持现状。

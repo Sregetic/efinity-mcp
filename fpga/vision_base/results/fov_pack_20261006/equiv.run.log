@@ -1,0 +1,4 @@
+PASS FOV frame=0 pixels=2073600, 1080 rows, no overrun
+PASS FOV frame=1 pixels=2073600, 1080 rows, no overrun
+PASS FOV 4147200 pixels, bit-exact filter, bubbles, frame boundary and reset
+sim/vision/tb_bayer_fov_reduce.sv:76: $finish called at 19401970000 (1ps)

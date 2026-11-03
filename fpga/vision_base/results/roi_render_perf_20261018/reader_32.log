@@ -1,0 +1,13 @@
+PASS case axi_line addr=00001000 pixels=8 bursts=1 cycles=13 keep_tail=0 error=0
+PASS case axi_line addr=00001206 pixels=21 bursts=1 cycles=25 keep_tail=1 error=0
+PASS case axi_line addr=00000ffe pixels=33 bursts=2 cycles=39 keep_tail=1 error=0
+PASS case axi_line addr=00001ff2 pixels=600 bursts=4 cycles=447 keep_tail=0 error=0
+PASS case axi_line addr=00004000 pixels=1280 bursts=5 cycles=943 keep_tail=0 error=0
+PASS case axi_line addr=fffffffe pixels=1 bursts=1 cycles=11 keep_tail=1 error=0
+PASS case axi_line addr=00002200 pixels=12 bursts=1 cycles=15 keep_tail=0 error=1
+PASS case axi_line addr=00001001 pixels=8 bursts=0 cycles=1 keep_tail=0 error=1
+PASS case axi_line addr=00001000 pixels=0 bursts=0 cycles=1 keep_tail=0 error=1
+PASS case axi_line addr=fffffffe pixels=2 bursts=0 cycles=1 keep_tail=0 error=1
+PASS case axi_line addr=00008000 pixels=768 bursts=3 cycles=763 keep_tail=0 error=0
+PASS tb_axi_line_reader cases=11 invalid=4
+sim/tb_axi_line_reader.sv:186: $finish called at 22810000 (1ps)

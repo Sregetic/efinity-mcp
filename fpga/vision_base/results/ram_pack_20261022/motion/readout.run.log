@@ -1,0 +1,2 @@
+PASS temporal readout black-box checks=57 weak-direction/ambiguity/noise/hold/dwell/gap/fault/stall/overflow/wrap
+F:\Project\fpga\vision_base\sim\motion_direction\tb_motion_readout.sv:45: $finish called at 42241000 (1ps)

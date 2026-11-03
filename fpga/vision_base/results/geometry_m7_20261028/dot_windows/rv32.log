@@ -1,0 +1,2 @@
+PASS RV32I M7 DMA owner recovery, bad snapshot, exact-lease failure, copy cancellation, 4050 shared reads, distinct source/render/context, result metadata, cache invalidation, independent threshold
+PASS RV32I 17 edge/face fixtures equal host boxes, including native photo and packed-pixel inputs

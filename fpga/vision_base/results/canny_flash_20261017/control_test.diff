@@ -1,0 +1,14 @@
+--- before_test_control_firmware.py
++++ scripts/test_control_firmware.py
+@@ -34,7 +34,10 @@
+ static void apply(void){control_service_step();reg[3]&=~1u;control_service_step();}
+ static void accept(void){reg[4]&=~16u;if(reg[4]&(1u<<6))reg[4]|=1u<<7;reg[6]=reg[0x34/4];control_service_step();}
+ void main(void){
+- reg[4]=1<<8;control_init();check(state.magic==CONTROL_MAGIC&&state.ai_policy==2);event(0x60,1);check(state.ai_policy==1);event(0x60,3);check(state.ai_policy==1);
++ reg[4]=1<<8;control_init();check(state.magic==CONTROL_MAGIC&&state.ai_policy==0);
++ check(state.settings==(5u|8u|(128u<<9)|(80u<<20))&&state.feature_dirty&&!state.roi_enable&&!state.menu);
++ apply();check(reg[2]==state.settings&&!state.feature_dirty&&!state.feature_wait);
++ event(0x60,1);check(state.ai_policy==1);event(0x60,3);check(state.ai_policy==1);
+  event(0x28,96);event(0x29,48);event(1,5);event(255,2);check(threshold(20)==64&&threshold(9)==96);
+  event(255,4);check(threshold(20)==48);event(0x29,0);event(255,4);check(threshold(20)==16);
+  event(0x29,2047);event(255,2);check(threshold(20)==2047);

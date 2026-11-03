@@ -1,0 +1,3 @@
+PASS 2000000 finite FP32 sums bit-exact including cancellation, signed zero and exponent gaps
+PASS 974168 Pico windows: decisions and FP32 scores bit-identical to upstream; 974168 scan positions bit-identical
+PASS 17 M7 C/Canny/face cases; ASan/UBSan clean; F:\Project\fpga\vision_base\results\geometry_m7_20261028\backend_dot

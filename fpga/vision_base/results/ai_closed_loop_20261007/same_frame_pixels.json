@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "source_frame_id": 4694,
+  "roi": [
+    13,
+    7,
+    37,
+    45
+  ],
+  "pixels": 1024,
+  "mismatches": 0,
+  "source": "actual FPGA before-Gamma native-channel RGB snapshot",
+  "method": "same-source lease, floor sampling and fixed-point luma",
+  "capture_card_used": false
+}

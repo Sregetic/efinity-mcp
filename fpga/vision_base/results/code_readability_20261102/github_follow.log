@@ -1,0 +1,2 @@
+PASS TRK1 actual packed raw/Sobel, shared lease release, fixed zoom/ROI, measured timestamps/frame dedup, panorama trail-only, hold/lost/reselection/list reordering, independent slow work across own ROI and manual ROI ownership
+PASS six production follow ROI descriptors and transformed real-observation trail packets

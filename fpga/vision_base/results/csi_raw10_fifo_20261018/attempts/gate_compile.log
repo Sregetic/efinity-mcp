@@ -1,0 +1,55 @@
+Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+Start time: 18:16:46 on Oct 18,2026
+vlog -sv -work F:\Project\fpga\vision_base\results\csi_raw10_fifo_20261018\gate_sim\work F:\Efinity\2026.1\sim_models\verilog\efx_add.v F:\Efinity\2026.1\sim_models\verilog\efx_comb4.v F:\Efinity\2026.1\sim_models\verilog\efx_dpram10.v F:\Efinity\2026.1\sim_models\verilog\efx_dpram_5k.v F:\Efinity\2026.1\sim_models\verilog\efx_dsp12.v F:\Efinity\2026.1\sim_models\verilog\efx_dsp24.v F:\Efinity\2026.1\sim_models\verilog\efx_dsp48.v F:\Efinity\2026.1\sim_models\verilog\efx_ff.v F:\Efinity\2026.1\sim_models\verilog\efx_gbufce.v F:\Efinity\2026.1\sim_models\verilog\efx_lut4.v F:\Efinity\2026.1\sim_models\verilog\efx_mult.v F:\Efinity\2026.1\sim_models\verilog\efx_ram10.v F:\Efinity\2026.1\sim_models\verilog\efx_ram_10k.v F:\Efinity\2026.1\sim_models\verilog\efx_ram_5k.v F:\Efinity\2026.1\sim_models\verilog\efx_srl8.v F:\Project\fpga\vision_base\results\csi_raw10_fifo_20261018\csi_base\outflow\csi_base.map.v F:\Project\fpga\vision_base\results\csi_raw10_fifo_20261018\csi_new\outflow\csi_new.map.v F:\Project\fpga\vision_base\results\csi_raw10_fifo_20261018\tb_rx.sv 
+-- Compiling module EFX_ADD
+-- Compiling module EFX_COMB4
+-- Compiling module EFX_DPRAM10
+-- Compiling module EFX_DPRAM_5K
+-- Compiling module EFX_DSP12
+-- Compiling module EFX_DSP12_pipe
+-- Compiling module EFX_DSP12_mult
+-- Compiling module EFX_DSP12_extender
+-- Compiling module EFX_DSP12_shifter
+-- Compiling module EFX_DSP12_add_sub
+-- Compiling module EFX_DSP24
+-- Compiling module EFX_DSP24_pipe
+-- Compiling module EFX_DSP24_mult
+-- Compiling module EFX_DSP24_extender
+-- Compiling module EFX_DSP24_shifter
+-- Compiling module EFX_DSP24_add_sub
+-- Compiling module EFX_DSP48
+-- Compiling module EFX_DSP48_int
+-- Compiling module EFX_DSP48_float
+-- Compiling module EFX_DSP48_pipe
+-- Compiling module EFX_DSP48_mult_mode
+-- Compiling module EFX_DSP48_mult
+-- Compiling module EFX_DSP48_p_extender
+-- Compiling module EFX_DSP48_c_extender
+-- Compiling module EFX_DSP48_extender
+-- Compiling module EFX_DSP48_shifter_mode
+-- Compiling module EFX_DSP48_shifter
+-- Compiling module EFX_DSP48_add_sub_mode
+-- Compiling module EFX_DSP48_add_sub
+-- Compiling module f_mulAdd
+-- Compiling module fp_fmt_conv
+-- Compiling module EFX_FF
+-- Compiling module EFX_GBUFCE
+-- Compiling module EFX_LUT4
+-- Compiling module EFX_MULT
+-- Compiling module INIT_MULT_FF
+-- Compiling module EFX_RAM10
+-- Compiling module EFX_RAM_10K
+-- Compiling module EFX_RAM_5K
+-- Compiling module EFX_SRL8
+-- Compiling module csi_base
+** Error: (vlog-13069) F:\Project\fpga\vision_base\results\csi_raw10_fifo_20261018\csi_base\outflow\csi_base.map.v(10081): syntax error in protected region.
+
+** Error: F:\Project\fpga\vision_base\results\csi_raw10_fifo_20261018\csi_base\outflow\csi_base.map.v(10081): (vlog-13205) Syntax error found in the scope following '<protected>'. Is there a missing '::'?
+** Error: (vlog-13069) F:\Project\fpga\vision_base\results\csi_raw10_fifo_20261018\csi_new\outflow\csi_new.map.v(6879): syntax error in protected region.
+
+** Error: F:\Project\fpga\vision_base\results\csi_raw10_fifo_20261018\csi_new\outflow\csi_new.map.v(6879): (vlog-13205) Syntax error found in the scope following '<protected>'. Is there a missing '::'?
+** Error: (vlog-13069) F:\Project\fpga\vision_base\results\csi_raw10_fifo_20261018\csi_new\outflow\csi_new.map.v(6879): syntax error in protected region.
+
+** Error: F:\Project\fpga\vision_base\results\csi_raw10_fifo_20261018\csi_new\outflow\csi_new.map.v(6879): (vlog-13205) Syntax error found in the scope following '<protected>'. Is there a missing '::'?
+End time: 18:16:46 on Oct 18,2026, Elapsed time: 0:00:00
+Errors: 6, Warnings: 0

@@ -1,0 +1,13 @@
+NOISE case0 pixels0 high48 mean4
+NOISE case1 pixels0 high80 mean8
+NOISE case2 pixels0 high88 mean9
+NOISE case3 pixels0 high112 mean12
+NOISE case4 pixels0 high152 mean17
+NOISE case5 pixels0 high168 mean19
+NOISE case6 pixels152 high40 mean3
+PASS sudden noise rise holds front contour and retries with calibrated threshold
+NOISE case7 pixels152 high104 mean11
+NOISE case8 pixels153 high168 mean19
+NOISE case9 pixels164 high24 mean1
+PASS Canny RGB/area/median/adaptive/NMS/hysteresis/component pipeline 36864 pixels, flat noise removed, geometry/thin lines retained
+sim/vision/tb_canny_noise.sv:61: $finish called at 14131486000 (1ps)

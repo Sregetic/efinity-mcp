@@ -1,0 +1,43 @@
+{
+  "tool": "Efinity2026.1.132.3.9",
+  "device": "Ti60F225",
+  "parameters": {
+    "IMAGE_DEBUG": 2,
+    "SAPPHIRE_ENABLE": 1,
+    "RAW_TO_POOL": 1,
+    "ANALYSIS_DMA_ENABLE": 1,
+    "DISPLAY_LATENCY_PROBE": 0
+  },
+  "seed": 1,
+  "xlr": 57838,
+  "ram": 247,
+  "dsp": 59,
+  "delta": {
+    "xlr": 1020,
+    "ram": 2,
+    "dsp": 1
+  },
+  "capacity": {
+    "xlr": 60800,
+    "ram": 256,
+    "dsp": 160
+  },
+  "final_timing": {
+    "Worst Negative Slack (WNS)": "0.121 ns",
+    "Worst Hold Slack (WHS)": "0.026 ns",
+    "tx_cal_clk_90edge": "447.027 MHz",
+    "sdram_clk": "448.430 MHz",
+    "rx_cal_clk": "461.042 MHz",
+    "tx_cal_clk": "457.666 MHz",
+    "vid_clk_dvi2": "676.133 MHz",
+    "hdmi_tx_slow_clk": "151.217 MHz",
+    "core_clk": "101.854 MHz",
+    "i_mipi_rx_pclk": "151.930 MHz",
+    "CLK_5M": "160.385 MHz",
+    "i_cam_ck_CLKOUT": "154.727 MHz",
+    "jtag_diag_drck": "247.219 MHz",
+    "jtag_diag_update": "2232.143 MHz",
+    "jtag_inst1_TCK": "264.271 MHz"
+  },
+  "unassigned_core_pins": 0
+}

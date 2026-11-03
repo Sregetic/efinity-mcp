@@ -1,0 +1,8 @@
+{
+  "changed_existing_build_inputs": [
+    "board/ti60f225_v4/rtl/vision/camera_auto_exposure.sv"
+  ],
+  "added_inputs": [],
+  "removed_inputs": [],
+  "sensor_profile_unchanged": true
+}

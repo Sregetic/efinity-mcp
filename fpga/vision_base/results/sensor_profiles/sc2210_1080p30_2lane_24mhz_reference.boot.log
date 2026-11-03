@@ -1,0 +1,2 @@
+PASS sensor boot 253 entries, ROM latency, order, device address, terminal counter
+F:\efinity-ci\upload-current-20261007\fpga\vision_base\sim\vision\tb_sensor_boot.sv:25: $finish called at 20470000 (1ps)
