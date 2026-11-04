@@ -1,19 +1,11 @@
-# Security model
+# 构建与部署边界
 
-This is a **local tool adapter, not a sandbox**. Run under an ordinary user account, not Administrator/root. Only connect trusted MCP clients. Project files, HDL simulation, Tcl constraints, script hooks and vendor tools can execute code with the user's privileges even when process arguments are validated.
+本仓库包含 Ti60 视觉系统及其本机构建、调试工具。HDL、约束、工程钩子和厂商工具会以执行账户的权限运行，只构建已审查的工程。
 
-## Controls
+- GitHub 的硬件工作流仅允许手动触发、受信任的 `main`，不把 PR 代码直接送往本机 Runner。构建与烧录共用设备锁。
+- 构建门控要求本次真实厂商结果、完整引脚/时钟和非负最终时序；失败只上传诊断，不发布可下载位流。
+- SRAM 下载要求明确的构建运行、提交、设备身份和本机一次性审批。`program_vision_sram.ps1` 的 CI 入口与本地入口不能混用，GitHub Actions 不能绕过审批调用本地烧录。
+- SRAM 和 Flash 是不同操作。仓库维护、CI 通过或文件上传均不授权重新配置板卡；Flash 固化只在用户明确要求时进行。
+- 不提交 Efinity 许可证、Runner 凭据、令牌、本地环境文件、Flash 原始转储或无分发许可的第三方 IP。日志和路径在公开前检查。
 
-- Only local operator TOML can register projects, mark them trusted, choose executable paths, or enable programming. There is no MCP configuration-write tool.
-- Paths are checked for canonical containment, including symlink/junction escapes. Command paths are ASCII; shell expansion/control characters are rejected. These checks do not audit every transitive source include or Tcl action.
-- The Linux shell fragment is fixed and passes data via positional arguments. Windows uses the trusted vendor setup batch script and quoted, restricted arguments with delayed expansion disabled. No arbitrary command/option passthrough is accepted.
-- A workspace execution lock serializes builds and programming. Process groups are terminated on timeout/cancel on a best-effort basis. Unexpected crashes do not silently unlock old work.
-- JTAG is disabled by default. When enabled it requires a registered trusted project, an explicit serial-number target URL, matching SHA-256, and an affirmative confirmation. It uses a byte snapshot of that file. These inputs do **not** prove human intent; the MCP host/operator must request genuine approval.
-- JTAG reconfiguration changes live I/O and can affect connected hardware. File hashing cannot prove pin/voltage safety or device compatibility. Only an operator can approve the physical setup. No Flash erase/write commands are exposed.
-- Stdout is reserved for the protocol. Vendor output goes to files. Report/log responses are bounded and flagged as untrusted data. Do not follow instructions embedded in logs.
-
-## Operational limits
-
-No network transport, OAuth, remote board control or privilege elevation is included. A local process able to edit trusted configuration/files is already inside this trust boundary. Avoid shared writable workspaces. Do not pass cloud credentials to vendor processes unnecessarily. Vendor logs may contain sensitive paths or design details; review before sharing. Do not commit real licenses, bitstreams, private IP or project secrets.
-
-If a crash leaves `.efinity-mcp/execution.lock`, inspect its PID/job information and the actual Efinity process tree before manually removing it. Never delete the lock merely to get around a busy error. Stop other servers and GUI builds before recovering.
+操作入口、审批和恢复条件见 [Runner 文档](docs/self-hosted-runner.md)；当前 HDMI 构建依赖见 [整机说明](fpga/vision_base/board/ti60_hdmi/README.md)。不要通过删除锁、放宽检查或修改报告来绕过失败。

@@ -1,109 +1,44 @@
-# efinity-mcp
+# 基于 FPGA 的实时图像边缘检测与智能识别系统
 
-Ti60当前源码：[2026-11-02 HQ12输入、M7提速/跟随轨迹与可读性整理](fpga/vision_base/docs/GITHUB_SNAPSHOT_20261102.md)。完整源码候选339000B/BSS612112B，保留已验证的56540 XLR / 240 RAM / 63 DSP硬件接口；本轮不操作板子或Flash。使用入口与自动验证见该快照。
+基于 **Efinix Ti60F225I3 + Sapphire RISC-V** 的实时视觉作品。当前输入为 **HD-SDI 摄像头 → HQ12 → HDMI IN**，经板上处理后从 HDMI OUT 输出。
 
-Windows 本机 FPGA 构建与独立 SRAM 下载部署说明见 [Self-hosted Runner](docs/self-hosted-runner.md)。本机工作流需先审核合入 main，再手动验收；构建产物通过 Actions artifact 回传。
+## 作品功能
 
-面向 Efinix Efinity 的本地 MCP 适配器。目标是让支持本地 stdio MCP 的客户端调用已有 FPGA 工程的构建流程、读取原始日志与报告，并在明确授权后进行 JTAG 配置。
+- **分级菜单与即时预览**：板上 KEY1 打开/返回菜单，KEY2/KEY3 上下选择，KEY0 进入/确认；显示模式与视图参数调节即时生效。
+- **图像处理**：彩色原图、灰度、Sobel/Canny 边缘及叠加显示，可调边缘阈值、中值滤波、ROI、缩放与平移。
+- **边缘几何识别**：M7 按边缘与轮廓判断圆、矩形和清晰印刷体 A–Z/a–z，最多四个候选，显示逐目标框与标签；人脸当前停用。独立 FOMO 保留。
+- **一键居中与持续跟随**：从实时目标列表选择一个目标居中，可固定初始倍率持续平移 ROI 跟随，并支持重新选择。
+- **运动方向与轨迹**：果蝇启发的局部运动支路辅助搜索；各已识别目标的方向与最近三秒轨迹来自实际中心位置和时间，不要求先居中。
+- **帧缓存**：实时、冻结、历史浏览与对比模式通过板上长按快捷键操作，侧栏没有独立入口。
 
-**v0.1.1 是待 Efinity/板卡实测的适配器，不是 Efinix 官方产品。** 软件测试使用合成的替身程序，不代表已经在 Efinity 2026.1 或 VF-Ti60F225 上完成综合、时序收敛或烧录。适配器不分发 Efinity 安装包、许可证或单独的厂商生成 IP；`fpga/` 子目录另保存本项目源码及已验收制品，验收范围以对应报告为准。
+具体使用和已知条件见 [项目说明](fpga/vision_base/README.md)、[M7 字母](fpga/vision_base/docs/M7_PRINTED_LETTERS.md)、[轨迹与跟随](fpga/vision_base/docs/M7_FOLLOW_TRAJECTORY.md)。
 
-## 已实现的范围
+## 代码与构建入口
 
-| 能力 | 当前行为 |
+| 目录 | 内容 |
 |---|---|
-| MCP 服务 | 官方 Python SDK v1，stdio；不监听网络端口 |
-| 环境检查 | 检查安装目录、setup 脚本、厂商 Python、flow/programmer 脚本是否存在 |
-| 工程注册 | 由本地 TOML 显式登记工程 ID、XML 和输出目录，逐工程授权执行 |
-| 构建/仿真 | `compile`、`map`、`interface`、`pnr`、`pgm`、`rtlsim`、`mapsim` |
-| 长任务 | 即时返回 job ID，轮询、取消、超时、日志增长监控、工作区互斥 |
-| 日志与报告 | 有界日志尾部；原始报告按行读取；记录文件哈希与本次变化 |
-| 设备枚举 | 通过厂商 `--list_usb` 获取 USB 信息，结果在 job 日志中 |
-| JTAG | 默认关闭；指定序列号、预览 SHA-256、明确确认后提交；使用已确认文件快照 |
+| [`fpga/vision_base/`](fpga/vision_base/) | 视觉系统源码、固件、模型、约束与必要验证输入 |
+| [`fpga/vision_base/board/ti60_hdmi/`](fpga/vision_base/board/ti60_hdmi/) | 当前 HDMI 输入整机及原生构建入口 |
+| [`fpga/vision_base/docs/`](fpga/vision_base/docs/) | 数据流、协议、操作和系统状态 |
+| [`fpga/vision_base/results/`](fpga/vision_base/results/) | 与本项目有关的分阶段报告和验收证据，日期不代表当前部署版本 |
+| [`fpga/参考资料/`](fpga/参考资料/) | 赛题与器件、TinyML 技术资料 |
+| [`fpga/output/`](fpga/output/) | 本项目技术方案和参考工程评估 |
+| [`scripts/runner/`](scripts/runner/) | 既有隔离构建与受保护 SRAM 下载工具 |
 
-**特别注意：`pgm` 是生成位流，不是烧录。** 普通构建接口拒绝 `program`，JTAG 接口只接受 `.bit`，不自动把 `.hex` 当成 JTAG 输入，也不提供 Flash 擦写模式。命令依据见 [官方接口来源](docs/vendor-interfaces.md)。
+原生构建需要 Efinity、RISC-V 工具链，以及构建说明列出的第三方接收器文件和官方生成的 Sapphire 网表；这些依赖不随本仓库重新分发。详见 [HDMI 构建说明](fpga/vision_base/board/ti60_hdmi/README.md)。
 
-## 快速开始：Windows
+Runner 保留原相机工程的构建契约，不自动切换成 HDMI 整机；当前作品使用上面的 HDMI 构建入口。Runner 工作流仅手动触发，构建和烧录分开，原审批门控保留。[Runner 说明](docs/self-hosted-runner.md)。
 
-先安装独立的 **Python 3.11 或更高版本**，用于本服务；Efinity 自带 Python 只用于厂商脚本，不在其中安装 MCP 依赖。以下路径只是示例。
+## 源码、运行版本和 Flash
 
-```powershell
-git clone https://github.com/Sregetic/efinity-mcp.git
-cd efinity-mcp
-py -3.12 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -e ".[dev]"
-```
+当前源码整理候选为 339000 B、BSS 612112 B。相关已验证临时硬件为 56540 XLR / 240 RAM / 63 DSP；Flash 仍是此前 SDI 固化版。源码上传不代表重新烧录或新增现场验收，具体以 [项目总状态](fpga/vision_base/docs/PROJECT_MASTER_STATUS.md) 和 [源码快照](fpga/vision_base/docs/GITHUB_SNAPSHOT_20261102.md) 为准。
 
-使用你实际安装的 Python 版本替换 `-3.12`。以下目录和工程名需要替换为你的真实路径；工作区、Efinity 安装目录和 XML 必须已经存在：
+## 仓库范围
 
-```powershell
-.\.venv\Scripts\python.exe -m efinity_mcp --init-config --workspace "D:\fpga" --efinity-home "C:\Efinity\2026.1" --project-xml "edge\demo.xml"
-```
+本仓库当前目录只维护这套视觉作品及其构建、验证资料。原来的 Efinity MCP 适配器服务、客户端配置示例、包清单和专属测试已移出当前版本；仓库 URL 保持不变。旧提交仍可追溯，不在本次清理中重写历史。
 
-这会创建 `efinity-mcp.local.toml`，不会覆盖已有配置，默认不授权工程执行和烧录。已有配置可直接保留；也可以继续采用 `examples/` 内手工配置方式。然后运行：
+自动 CI 检查 Windows 部署入口与构建拒绝门控，不访问板卡，也不替代 HDL 仿真、Efinity P&R 或现场验证。项目算法与视频验证入口见 [代码结构](fpga/vision_base/docs/CODE_STRUCTURE.md)。
 
-```powershell
-.\.venv\Scripts\python.exe -m efinity_mcp --config efinity-mcp.local.toml --doctor
-```
+## 许可
 
-`toolchain_available: true` 仅代表必要文件存在，**不代表许可证、工程、下载器或板卡通过验收**。自动寻找厂商 Python 失败时，按 doctor 提示在 `[efinity]` 中设置真实 `python.exe` 路径。不要把 MCP 虚拟环境解释器误填成厂商解释器。
-
-先验证服务本身可连接，再接入客户端：
-
-```powershell
-.\.venv\Scripts\python.exe -m efinity_mcp --check-mcp
-.\.venv\Scripts\python.exe -m efinity_mcp --print-codex-config
-```
-
-`--check-mcp` 通过真实 SDK 启动子进程，完成握手、工具发现和两个只读调用。`protocol_ok: true` 只表示 MCP 连通，不执行 Efinity、不枚举 USB、不烧录。它会创建服务本地状态目录。`--print-codex-config` 输出包含当前虚拟环境和配置绝对路径的 Codex 配置段；将这一段合并到本地 `~/.codex/config.toml`，不要覆盖原配置。生成的工具列表排除了硬件操作。客户端配置依据见 [官方 MCP 文档](https://developers.openai.com/codex/mcp/)。
-
-服务启动命令：
-
-```powershell
-.\.venv\Scripts\python.exe -m efinity_mcp --config efinity-mcp.local.toml
-```
-
-该命令进入 stdio 服务，等待 MCP 客户端，不显示图形窗口。实际使用时应由客户端启动它；配置样例见 [examples/codex.toml](examples/codex.toml)。
-
-Linux 参见 [examples/efinity-mcp.linux.toml](examples/efinity-mcp.linux.toml)。安装方式是 `python3 -m venv .venv` 后通过 `.venv/bin/python -m pip install -e .` 安装。厂商进程启动前会单独加载 Efinity 的 `bin/setup.sh`；Windows 则加载 `bin/setup.bat`，不会修改系统级环境变量。
-
-## 推荐的首轮操作
-
-先用 `doctor`、`list_projects`、`get_project`、`preview_build` 做只读检查。确认官方示例、工程 XML、引脚和约束可信后，由操作人在本地把该工程的 `trusted` 改成 `true`，重启 MCP 服务。
-
-然后调用 `run_build(project_id="edge", flow="map")`，记录返回的 ID，使用 `get_job` 轮询并用 `get_job_log` 查看日志。基础综合成功后才运行 `compile`。最后调用 `list_reports(project_id="edge", job_id="...")` 和 `read_report` 读取本次生成/变更的文件。
-
-不要同时在 GUI 和 MCP 中构建同一个输出目录，也不要在构建中途修改 RTL 或约束。分阶段 `pnr` / `pgm` 依赖已有前序产物，本服务不伪造或自动推断这些依赖。
-
-## 正确解释结果
-
-`status="succeeded"` 表示厂商**进程退出码为 0**，不表示 RTL 功能正确、时序完全约束、所有时钟满足要求、引脚电压安全或硬件运行正确。当前版本不在未获得真实报告样本的情况下猜测 WNS/LUT 表格格式；`timing_pass` 保持 `null`，以原始报告为准。
-
-每次任务记录命令、时间、退出码、工程 XML 哈希、产物哈希。`job_id` 过滤只列出本次新建/变化的产物；文件后来被改动会标记 `changed_since_job`。这不是完整工程快照，源代码版本仍应由 Git 管理。扫描有上限，截断与跳过计数会显式返回。
-
-## 安全边界
-
-配置中 `trusted=false`、`allow_programming=false` 为默认值。没有任意 Shell/Tcl、任意文件写入、自动重试烧录、自动选第一个下载器或远程 HTTP 服务。MCP 参数不能修改信任配置。
-
-**这不是沙箱。** 已授权 Efinity 工程中的 Tcl、脚本、仿真代码等可能以当前用户权限运行，外部引用也不由本适配器完全审计。只运行自己或老师已审核的工程，使用普通用户账户。MCP 客户端应保留工具审批，不要把设备控制授予陌生客户端。详细边界见 [SECURITY.md](SECURITY.md)。
-
-仅把代码上传 GitHub 不会让本对话直接获得你电脑上的 Efinity：需要在安装 Efinity 的电脑上安装本服务，并在本地 MCP 客户端中配置。远程连接和身份认证不属于此版范围。
-
-## 开发与测试
-
-```bash
-python -m pip install -e ".[dev]"
-python -m pytest -q
-python -m compileall -q src
-python -m build
-```
-
-CI 在 Linux/Windows 上安装真实 MCP SDK，并强制执行 stdio 握手、工具发现、异步构建/失败、轮询、日志和报告读取测试。其 Efinity 后端仍是 `tests/conftest.py` 中明确标注的替身，不下载商业 EDA，也不接触 FPGA。没有安装 SDK 的离线环境会跳过协议测试；CI 设置 `EFINITY_REQUIRE_MCP=1`，不允许因缺依赖而跳过。
-
-当前进度见 [IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md)。根目录的 v0.1.0 ZIP、旧状态文件及 `manifest.json` 是导入时的历史快照，不作为当前源码和测试状态清单。
-
-首轮真机验收、已知限制和下一阶段工作见 [docs/validation.md](docs/validation.md) 和 [docs/roadmap.md](docs/roadmap.md)。
-
-## 许可证
-
-适配器原创代码采用 MIT License。Efinity、厂商库及第三方依赖仍受各自许可证约束。
+原创代码沿用仓库 [MIT License](LICENSE)。第三方代码、模型和厂商资料按各自许可使用，原有版权声明保留。
