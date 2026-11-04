@@ -1,6 +1,8 @@
 # Windows Ti60 Runner deployment
 
-This connects the existing FPGA scripts; the MCP adapter and RTL are unchanged.
+This connects the existing FPGA scripts. The retained Runner targets the original
+camera project, not the current HDMI-input system under
+`fpga/vision_base/board/ti60_hdmi`. RTL and programming gates are unchanged.
 Repository jobs run only trusted `main` commits. No PR or `pull_request_target`
 job is sent to this computer. Review and merge the deployment PR before dispatch.
 
@@ -100,9 +102,8 @@ or GitHub acceptance run.
 The isolated deployment entrypoint also passed all three simulation suites and
 completed a fresh vendor compile with exit 0, WNS 0.472 ns / WHS 0.026 ns.
 Its deployment gate correctly returned failure for the 11 unconfirmed interface
-pins and produced diagnostics only (no deploy directory). Python tests passed
-71 cases; one Windows symlink-privilege case was skipped. The real MCP protocol
-test ran. Both workflows passed actionlint with the configured custom labels.
+pins and produced diagnostics only (no deploy directory). Both workflows passed
+actionlint with the configured custom labels.
 
 The historical failure at 2026-09-16 16:32:29 UTC explicitly recorded
 `Source changed during compilation: board/ti60f225_v4/rtl/vision/vision_hysteresis_sweep.sv`.
@@ -120,7 +121,9 @@ RTL/board constraint issue requires a separately reviewed change.
 Tests: `pwsh -NoProfile -File tests/Test-RunnerGates.ps1` covers failure/missing
 vendor status, negative/missing timing, missing pins, stale/empty bitstreams,
 source mutation and missing clocks. Synthetic tests do not establish FPGA
-correctness. Follow repository Python tests separately from real FPGA acceptance.
+correctness. `python -m pytest -q tests/test_runner_entrypoints.py` checks the
+Windows deployment entrypoints without hardware access. These retained tool
+checks are separate from the vision project RTL/firmware tests.
 
 Service verification: `efinity-ti60-win` is installed as delayed-auto-start under
 NETWORK SERVICE. After restarting only this service, run 35302831027 attempt 2

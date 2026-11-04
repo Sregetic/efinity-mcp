@@ -1,6 +1,6 @@
 # 2026-11-02：当前SDI/M7源码与可读性整理
 
-本快照使用现有`sync/fpga-20261007`分支与[PR #6](https://github.com/Sregetic/efinity-mcp/pull/6)，目标分支`main`。上传不自动合并，也不操作板子。
+本快照已通过[PR #6](https://github.com/Sregetic/efinity-mcp/pull/6)于2026-11-03合入`main`。2026-11-05另行移出根目录的旧MCP适配器服务、示例和专属CI；视觉源码与Runner门控保持，不操作板子。
 
 ## 从这里开始
 
